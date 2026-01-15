@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>625</width>
     <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Missing Files</string>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/project-management/12574#p-39686-missing-files-7</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -36,7 +39,7 @@
       </size>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
      </property>
      <property name="showDropIndicator" stdset="0">
       <bool>false</bool>
@@ -48,13 +51,13 @@
       <bool>true</bool>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
+      <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="textElideMode">
-      <enum>Qt::ElideLeft</enum>
+      <enum>Qt::TextElideMode::ElideLeft</enum>
      </property>
      <attribute name="horizontalHeaderHighlightSections">
       <bool>false</bool>
@@ -85,10 +88,10 @@
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
        </property>
       </widget>
      </item>

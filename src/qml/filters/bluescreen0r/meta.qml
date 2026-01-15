@@ -26,4 +26,5 @@ Metadata {
     qml: 'ui.qml'
     allowMultiple: false
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/chroma-key-simple/12835/1'
 }

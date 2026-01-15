@@ -24,6 +24,7 @@ Metadata {
     mlt_service: "frei0r.IIRblur"
     qml: "ui_frei0r.qml"
     isHidden: true
+    help: 'https://forum.shotcut.org/t/blur-gaussian/12830/1'
 
     keyframes {
         allowAnimateIn: true

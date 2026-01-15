@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'ladspa.1197'
     objectName: '15BandEq'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/equalizer-15-band-audio-filter/32466/1'
 
     keyframes {
         allowAnimateIn: true

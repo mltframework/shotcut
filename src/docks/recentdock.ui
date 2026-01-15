@@ -13,12 +13,15 @@
   <property name="minimumSize">
    <size>
     <width>150</width>
-    <height>114</height>
+    <height>141</height>
    </size>
   </property>
   <property name="windowIcon">
    <iconset theme="document-open-recent" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/document-open-recent.png</normaloff>:/icons/oxygen/32x32/actions/document-open-recent.png</iconset>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/recent-panel/12941/1</string>
   </property>
   <property name="windowTitle">
    <string>Recent</string>
@@ -53,13 +56,13 @@
     <item>
      <widget class="QListView" name="listWidget">
       <property name="contextMenuPolicy">
-       <enum>Qt::CustomContextMenu</enum>
+       <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
       </property>
       <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
       </property>
       <property name="alternatingRowColors">
        <bool>true</bool>

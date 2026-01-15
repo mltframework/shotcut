@@ -3,7 +3,7 @@
  <class>OpenOtherDialog</class>
  <widget class="QDialog" name="OpenOtherDialog">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::WindowModality::WindowModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>Open Other</string>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
+  </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
@@ -23,7 +26,7 @@
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="handleWidth">
       <number>0</number>
@@ -204,10 +207,10 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>

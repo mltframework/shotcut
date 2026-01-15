@@ -10,6 +10,7 @@ Metadata {
     objectName: "bigsh0t_hemi_to_eq"
     qml: "ui.qml"
     icon: "icon.webp"
+    help: 'https://forum.shotcut.org/t/360-hemispherical-to-equirectangular-video-filter/19167/1'
 
     keyframes {
         allowAnimateIn: true

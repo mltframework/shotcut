@@ -26,6 +26,7 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     allowMultiple: true
+    help: 'https://forum.shotcut.org/t/gps-graphic-video-filter/35893/1'
 
     keyframes {
         allowAnimateIn: true

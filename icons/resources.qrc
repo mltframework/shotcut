@@ -8,6 +8,7 @@
         <file>dark/32x32/bookmarks.png</file>
         <file>dark/32x32/chronometer.png</file>
         <file>dark/32x32/color-picker.png</file>
+        <file>dark/32x32/help-contextual.png</file>
         <file>dark/32x32/cpu.png</file>
         <file>dark/32x32/dialog-information.png</file>
         <file>dark/32x32/dialog-ok.png</file>
@@ -152,6 +153,7 @@
         <file>light/32x32/bookmarks.png</file>
         <file>light/32x32/chronometer.png</file>
         <file>light/32x32/color-picker.png</file>
+        <file>light/32x32/help-contextual.png</file>
         <file>light/32x32/cpu.png</file>
         <file>light/32x32/dialog-information.png</file>
         <file>light/32x32/dialog-ok.png</file>
@@ -290,6 +292,7 @@
         <file>oxygen/32x32/actions/4-direction.png</file>
         <file>oxygen/32x32/actions/chronometer.png</file>
         <file>oxygen/32x32/actions/color-picker.png</file>
+        <file>oxygen/32x32/actions/help-contextual.png</file>
         <file>oxygen/32x32/actions/dialog-ok.png</file>
         <file>oxygen/32x32/actions/document-edit.png</file>
         <file>oxygen/32x32/actions/document-export.png</file>
@@ -437,6 +440,7 @@
         <file>oxygen-dark/32x32/actions/audio-meter.png</file>
         <file>oxygen-dark/32x32/actions/chronometer.png</file>
         <file>oxygen-dark/32x32/actions/color-picker.png</file>
+        <file>oxygen-dark/32x32/actions/help-contextual.png</file>
         <file>oxygen-dark/32x32/actions/dialog-ok.png</file>
         <file>oxygen-dark/32x32/actions/document-edit.png</file>
         <file>oxygen-dark/32x32/actions/document-export.png</file>

@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('frequency pass', 'search keywords for the Notch audio filter') + ' notch'
     mlt_service: 'ladspa.1894'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/notch-audio-filter/12913/1'
 
     keyframes {
         allowAnimateIn: true

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     m_loudnessFilter->set("calc_true_peak", Settings.loudnessScopeShowMeter("truepeak"));
 
     setAutoFillBackground(true);
+    setWhatsThis("https://forum.shotcut.org/t/audio-loudness-scope/12917/1");
 
     // Use a timer to update the meters for two reasons:
     // 1) The spec requires 10Hz updates

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ VideoVectorScopeWidget::VideoVectorScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
+    setWhatsThis("https://forum.shotcut.org/t/video-vector-scope/15653/1");
     profileChanged();
     connect(&QmlProfile::singleton(), SIGNAL(profileChanged()), this, SLOT(profileChanged()));
     LOG_DEBUG() << "end";

@@ -10,6 +10,7 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/color-grading/12836/1'
 
     keyframes {
         parameters: [

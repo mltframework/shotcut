@@ -7,18 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>375</height>
+    <height>378</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/open-other-plasma/12930/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="nameLabel">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -26,7 +28,7 @@
       <string>Plasma</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -50,7 +52,7 @@
            <number>100</number>
           </property>
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="notchesVisible">
            <bool>true</bool>
@@ -62,7 +64,7 @@
           <item>
            <spacer name="horizontalSpacer_15">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -75,7 +77,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="speed1Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -91,7 +93,7 @@
           <item>
            <spacer name="horizontalSpacer_16">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -130,7 +132,7 @@
           <item>
            <spacer name="horizontalSpacer_17">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -143,7 +145,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="speed2Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -159,7 +161,7 @@
           <item>
            <spacer name="horizontalSpacer_18">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -198,7 +200,7 @@
           <item>
            <spacer name="horizontalSpacer_19">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -211,7 +213,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="speed3Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -227,7 +229,7 @@
           <item>
            <spacer name="horizontalSpacer_20">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -261,7 +263,7 @@
            <number>100</number>
           </property>
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="notchesVisible">
            <bool>true</bool>
@@ -273,7 +275,7 @@
           <item>
            <spacer name="horizontalSpacer_21">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -286,7 +288,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="speed4Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -302,7 +304,7 @@
           <item>
            <spacer name="horizontalSpacer_22">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -341,7 +343,7 @@
           <item>
            <spacer name="horizontalSpacer_23">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -354,7 +356,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="move1Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -370,7 +372,7 @@
           <item>
            <spacer name="horizontalSpacer_24">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -409,7 +411,7 @@
           <item>
            <spacer name="horizontalSpacer_25">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -422,7 +424,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="move2Spinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -438,7 +440,7 @@
           <item>
            <spacer name="horizontalSpacer_26">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -458,7 +460,7 @@
    <item>
     <spacer name="verticalSpacer_6">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

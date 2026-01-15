@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -128,6 +128,7 @@
     </property>
     <addaction name="actionTopics"/>
     <addaction name="actionKeyboardShortcuts"/>
+    <addaction name="actionWhatsThis"/>
     <addaction name="actionUpgrade"/>
     <addaction name="actionFAQ"/>
     <addaction name="actionTutorials"/>
@@ -373,6 +374,7 @@
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
    <addaction name="actionSubtitles"/>
+   <addaction name="actionWhatsThis"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
    <addaction name="actionLayoutEditing"/>
@@ -452,6 +454,9 @@
    <property name="toolTip">
     <string>Save project as a MLT XML file</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/file-save-and-save-as/12973/1</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+S</string>
    </property>
@@ -465,6 +470,9 @@
    </property>
    <property name="toolTip">
     <string>Save project to a different MLT XML file</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/file-save-and-save-as/12973/1</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+S</string>
@@ -481,6 +489,9 @@
    <property name="toolTip">
     <string>Export</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/export-basics/12953//1</string>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="icon">
@@ -490,6 +501,9 @@
    <property name="text">
     <string>&amp;Undo</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/undo-and-redo/12979/1</string>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
@@ -498,6 +512,9 @@
    </property>
    <property name="text">
     <string>&amp;Redo</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/undo-and-redo/12979/1</string>
    </property>
   </action>
   <action name="actionForum">
@@ -533,6 +550,9 @@
    <property name="toolTip">
     <string>Audio Peak Meter</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/audio-peak-meter-scope/12918/1</string>
+   </property>
   </action>
   <action name="actionProperties">
    <property name="icon">
@@ -541,6 +561,9 @@
    </property>
    <property name="text">
     <string>Properties</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
    </property>
   </action>
   <action name="actionRecent">
@@ -551,6 +574,9 @@
    <property name="text">
     <string>Recent</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/recent-panel/12941/1</string>
+   </property>
   </action>
   <action name="actionPlaylist">
    <property name="icon">
@@ -560,6 +586,9 @@
    <property name="text">
     <string>Playlist</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/about-the-playlist/12951/1</string>
+   </property>
   </action>
   <action name="actionHistory">
    <property name="icon">
@@ -568,6 +597,9 @@
    </property>
    <property name="text">
     <string>History</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/history-panel/12944/1</string>
    </property>
   </action>
   <action name="actionRealtime">
@@ -775,6 +807,9 @@
    <property name="toolTip">
     <string>Filters</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/add-search-remove-and-reorder-filters/48127/1</string>
+   </property>
   </action>
   <action name="actionAddCustomProfile">
    <property name="text">
@@ -828,6 +863,9 @@
    </property>
    <property name="text">
     <string>Timeline</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/about-the-timeline/12952/1</string>
    </property>
   </action>
   <action name="actionRestoreLayout">
@@ -1029,6 +1067,9 @@
    <property name="toolTip">
     <string>Keyframes</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/about-keyframes/12957/1</string>
+   </property>
   </action>
   <action name="actionNew">
    <property name="text">
@@ -1150,6 +1191,9 @@
    <property name="text">
     <string>New Generator</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
    </property>
@@ -1186,6 +1230,9 @@
    <property name="text">
     <string>Jobs</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/jobs-panel/12945/1</string>
+   </property>
   </action>
   <action name="actionMarkers">
    <property name="icon">
@@ -1194,6 +1241,9 @@
    </property>
    <property name="text">
     <string>Markers</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/timeline-markers/30535/1</string>
    </property>
   </action>
   <action name="actionNotes">
@@ -1204,6 +1254,9 @@
    <property name="text">
     <string>Notes</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/notes-panel/33110/1</string>
+   </property>
   </action>
   <action name="actionSubtitles">
    <property name="icon">
@@ -1212,6 +1265,9 @@
    </property>
    <property name="text">
     <string>Subtitles</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">https://forum.shotcut.org/t/subtitles-panel/45312/1</string>
    </property>
   </action>
   <action name="actionPreview540">
@@ -1512,6 +1568,24 @@
    </property>
    <property name="text">
     <string>Files</string>
+   </property>
+  </action>
+  <action name="actionWhatsThis">
+   <property name="icon">
+    <iconset theme="help-contextual" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/help-contextual.png</normaloff>:/icons/oxygen/32x32/actions/help-contextual.png</iconset>
+   </property>
+   <property name="text">
+    <string>What's This?</string>
+   </property>
+   <property name="toolTip">
+    <string>Get help about something by clicking it</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">/1</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Shift+F1</string>
    </property>
   </action>
  </widget>

@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'outline'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/outline-video-filter/49214/1'
 
     keyframes {
         allowAnimateIn: true

@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('frequency', 'search keywords for the Band Pass audio filter') + ' band pass'
     mlt_service: 'ladspa.1892'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/band-pass-audio-filter/12897/1'
 
     keyframes {
         allowAnimateIn: true

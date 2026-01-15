@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "mask_apply"
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/mask-apply/12859/1'
 }

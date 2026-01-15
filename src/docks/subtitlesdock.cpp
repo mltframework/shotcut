@@ -136,6 +136,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
                                         QIcon(":/icons/oxygen/32x32/actions/subtitle.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setWhatsThis("https://forum.shotcut.org/t/subtitles-panel/45312/1");
 
     setupActions();
 

@@ -11,4 +11,5 @@ Metadata {
     qml: "ui.qml"
     isTrackOnly: true
     minimumVersion: '2'
+    help: 'https://forum.shotcut.org/t/track-auto-fade-video-filter/50883/1'
 }

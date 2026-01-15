@@ -13,6 +13,7 @@ Metadata {
     icon: 'icon.webp'
     allowMultiple: false
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/size-position-rotate/12881/1'
 
     keyframes {
         allowTrim: false

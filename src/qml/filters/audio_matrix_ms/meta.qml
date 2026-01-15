@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('middle stereo microphone', 'search keywords for the Mid-Side Matrix audio filter') + ' mid side matrix'
     mlt_service: 'ladspa.1421'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/mid-side-matrix-audio-filter/50888/1'
 
     keyframes {
         allowAnimateIn: true

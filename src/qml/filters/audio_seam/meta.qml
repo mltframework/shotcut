@@ -10,4 +10,5 @@ Metadata {
     objectName: 'audioSeam'
     qml: "ui.qml"
     isTrackOnly: true
+    help: 'https://forum.shotcut.org/t/track-seam-audio-filter/40783/1'
 }

@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "frei0r.dither"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/dither/12843/1'
 
     keyframes {
         allowAnimateIn: true

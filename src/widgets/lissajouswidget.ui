@@ -13,12 +13,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/open-other-lissajous/12929/1</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="nameLabel">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -26,7 +28,7 @@
       <string>Lissajous</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -47,7 +49,7 @@
            <number>100</number>
           </property>
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="notchesVisible">
            <bool>true</bool>
@@ -59,7 +61,7 @@
           <item>
            <spacer name="horizontalSpacer_9">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -72,7 +74,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="xratioSpinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -85,7 +87,7 @@
           <item>
            <spacer name="horizontalSpacer_10">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -121,7 +123,7 @@
           <item>
            <spacer name="horizontalSpacer_11">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -134,7 +136,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="yratioSpinner">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="maximum">
              <double>1.000000000000000</double>
@@ -147,7 +149,7 @@
           <item>
            <spacer name="horizontalSpacer_12">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -167,7 +169,7 @@
    <item>
     <spacer name="verticalSpacer_4">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

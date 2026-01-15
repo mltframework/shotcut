@@ -11,6 +11,7 @@ Metadata {
     qml: "ui.qml"
     vui: "vui.qml"
     icon: "icon.webp"
+    help: 'https://forum.shotcut.org/t/360-equirectangular-to-stereographic-video-filter/48131/1'
 
     keyframes {
         allowAnimateIn: true

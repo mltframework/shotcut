@@ -9,6 +9,7 @@ Metadata {
     needsGPU: true
     qml: "ui_movit.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/saturation/12878/1'
 
     keyframes {
         allowAnimateIn: true

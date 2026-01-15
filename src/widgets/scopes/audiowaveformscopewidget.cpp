@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     setAutoFillBackground(true);
     setMinimumSize(100, 100);
     setMouseTracking(true);
+    setWhatsThis("https://forum.shotcut.org/t/audio-waveform-scope/12920/1");
     LOG_DEBUG() << "end";
 }
 

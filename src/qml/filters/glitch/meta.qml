@@ -24,6 +24,7 @@ Metadata {
     mlt_service: "frei0r.glitch0r"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/glitch/12848/1'
 
     keyframes {
         allowAnimateIn: true

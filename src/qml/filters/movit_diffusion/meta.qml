@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "movit.diffusion"
     needsGPU: true
     qml: "ui.qml"
+    help: 'https://forum.shotcut.org/t/diffusion/12895/1'
 }

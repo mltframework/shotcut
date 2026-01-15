@@ -9,4 +9,5 @@ Metadata {
     objectName: 'maskGlaxnimate'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/mask-draw-glaxnimate-video-filter/34408/1'
 }

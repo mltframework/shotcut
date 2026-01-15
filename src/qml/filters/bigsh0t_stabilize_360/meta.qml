@@ -10,4 +10,5 @@ Metadata {
     objectName: "bigsh0t_stabilize_360"
     qml: "ui.qml"
     icon: "icon.webp"
+    help: 'https://forum.shotcut.org/t/360-stabilize-video-filter/19169/1'
 }

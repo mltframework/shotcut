@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "threshold"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/threshold/12889/1'
 
     keyframes {
         allowAnimateIn: true

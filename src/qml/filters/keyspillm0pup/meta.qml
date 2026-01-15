@@ -23,4 +23,5 @@ Metadata {
     keywords: qsTr('chroma alpha clean suppress', 'search keywords for the Key Spill: Advanced video filter') + ' key spill: advanced #rgba'
     mlt_service: 'frei0r.keyspillm0pup'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/key-spill-advanced/12854/1'
 }

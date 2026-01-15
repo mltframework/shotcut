@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ VideoRgbWaveformScopeWidget::VideoRgbWaveformScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
+    setWhatsThis("https://forum.shotcut.org/t/video-rgb-waveform-scope/15652/1");
     LOG_DEBUG() << "end";
 }
 

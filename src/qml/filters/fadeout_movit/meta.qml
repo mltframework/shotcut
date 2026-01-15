@@ -12,6 +12,7 @@ Metadata {
     icon: 'icon.webp'
     isFavorite: true
     allowMultiple: false
+    help: 'https://forum.shotcut.org/t/fade-out-video/12846/1'
 
     keyframes {
         allowTrim: false

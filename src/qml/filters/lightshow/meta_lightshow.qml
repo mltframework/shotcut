@@ -11,4 +11,5 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     allowMultiple: true
+    help: 'https://forum.shotcut.org/t/audio-light-visualization/12824/1'
 }

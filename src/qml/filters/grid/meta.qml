@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "frei0r.cairoimagegrid"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/grid-video-filter/12850/1'
 
     keyframes {
         allowAnimateIn: true

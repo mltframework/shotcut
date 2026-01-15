@@ -11,6 +11,7 @@ Metadata {
     isFavorite: false
     allowMultiple: false
     seekReverse: true
+    help: 'https://forum.shotcut.org/t/time-remap-filter/27289/1'
 
     keyframes {
         allowTrim: false

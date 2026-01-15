@@ -11,6 +11,7 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/text-rich-video-filter/21039/1'
 
     keyframes {
         allowAnimateIn: true

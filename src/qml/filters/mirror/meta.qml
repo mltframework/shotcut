@@ -9,4 +9,5 @@ Metadata {
     gpuAlt: "movit.mirror"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/mirror-video-filter/12862/1'
 }

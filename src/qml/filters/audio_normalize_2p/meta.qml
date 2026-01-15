@@ -10,6 +10,7 @@ Metadata {
     qml: "ui.qml"
     isClipOnly: true
     allowMultiple: false
+    help: 'https://forum.shotcut.org/t/normalize-two-pass/12912/1'
 
     keyframes {
         allowTrim: false

@@ -24,6 +24,7 @@ Metadata {
     mlt_service: 'avfilter.vibrance'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/vibrance-video-filter/50882/1'
 
     keyframes {
         allowAnimateIn: true

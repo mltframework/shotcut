@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'ladspa.1204'
     objectName: '3BandEq'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/equalizer-3-band-bass-treble-audio-filter/12898/1'
 
     keyframes {
         allowAnimateIn: true

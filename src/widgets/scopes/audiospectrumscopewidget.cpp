@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
 
     // Setup this widget
     qRegisterMetaType<QVector<double>>("QVector<double>");
+    setWhatsThis("https://forum.shotcut.org/t/audio-spectrum-scope/12919/1");
 
     // Create the FFT filter
     Mlt::Profile profile;

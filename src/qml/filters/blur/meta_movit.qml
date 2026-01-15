@@ -9,6 +9,7 @@ Metadata {
     needsGPU: true
     qml: "ui_movit.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/blur-gaussian/12830/1'
 
     keyframes {
         allowAnimateIn: true

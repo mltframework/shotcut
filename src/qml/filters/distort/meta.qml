@@ -24,6 +24,7 @@ Metadata {
     mlt_service: "frei0r.distort0r"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/distort/12842/1'
 
     keyframes {
         allowAnimateIn: true

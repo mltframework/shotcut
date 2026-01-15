@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('frequency', 'search keywords for the High Pass audio filter') + ' high pass'
     mlt_service: 'ladspa.1890'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/high-pass-audio-filter/12907/1'
 
     keyframes {
         allowAnimateIn: true

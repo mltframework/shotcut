@@ -26,4 +26,5 @@ Metadata {
     mlt_service: 'avfilter.deband'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/deband-video-filter/29277/1'
 }

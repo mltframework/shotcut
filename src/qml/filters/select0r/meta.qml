@@ -24,4 +24,5 @@ Metadata {
     mlt_service: 'frei0r.select0r'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/chroma-key-advanced/12834/1'
 }

@@ -8,4 +8,5 @@ Metadata {
     mlt_service: 'frei0r.scanline0r'
     objectName: 'scanlines'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/scan-lines-video-filter/14507/1'
 }

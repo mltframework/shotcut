@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "frei0r.posterize"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/posterize/12872/1'
 
     keyframes {
         allowAnimateIn: true

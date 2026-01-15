@@ -13,4 +13,5 @@ Metadata {
     allowMultiple: false
     isGpuCompatible: false
     isHidden: true
+    help: 'https://forum.shotcut.org/t/blend-mode/12841/1'
 }

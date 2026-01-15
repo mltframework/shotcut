@@ -10,4 +10,5 @@ Metadata {
     qml: 'ui.qml'
     icon: 'icon.webp'
     allowMultiple: true
+    help: 'https://forum.shotcut.org/t/gradient-map-video-filter/47075'
 }

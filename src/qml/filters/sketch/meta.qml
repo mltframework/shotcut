@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "charcoal"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/sketch/12882/1'
 }

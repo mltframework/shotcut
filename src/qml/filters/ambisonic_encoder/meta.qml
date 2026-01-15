@@ -10,6 +10,7 @@ Metadata {
     objectName: "ambisonic-encoder"
     qml: "ui.qml"
     vui: "vui.qml"
+    help: "https://forum.shotcut.org/t/ambisonic-encoder-audio-filter/50886/1"
 
     keyframes {
         allowAnimateIn: true

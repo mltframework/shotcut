@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>566</width>
+    <width>569</width>
     <height>595</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/audio-video-properties/12923/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -34,8 +37,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>544</width>
-        <height>501</height>
+        <width>543</width>
+        <height>534</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -367,7 +370,7 @@
               <bool>false</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>24</number>
+              <number>27</number>
              </attribute>
              <row>
               <property name="text">
@@ -776,7 +779,7 @@
               <bool>false</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>24</number>
+              <number>27</number>
              </attribute>
              <row>
               <property name="text">
@@ -936,7 +939,7 @@
               <bool>false</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>24</number>
+              <number>27</number>
              </attribute>
              <column>
               <property name="text">

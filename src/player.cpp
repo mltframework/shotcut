@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,6 +77,9 @@ Player::Player(QWidget *parent)
     setObjectName("Player");
     Mlt::Controller::singleton();
     setupActions();
+
+    // Set WhatsThis help URL for the Player
+    setWhatsThis("https://forum.shotcut.org/t/source-vs-project-player/12576/1");
 
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);

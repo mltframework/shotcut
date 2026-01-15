@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "invert"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/invert-colors/12853/1'
 }

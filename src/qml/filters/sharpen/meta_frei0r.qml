@@ -9,6 +9,7 @@ Metadata {
     qml: "ui_frei0r.qml"
     icon: 'icon.webp'
     gpuAlt: "movit.sharpen"
+    help: 'https://forum.shotcut.org/t/sharpen-video-filter/12880/1'
 
     keyframes {
         allowAnimateIn: true

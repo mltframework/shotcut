@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,6 +130,7 @@ MarkersDock::MarkersDock(QWidget *parent)
     QIcon filterIcon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setWhatsThis("https://forum.shotcut.org/t/timeline-markers/30535/1");
 
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setFrameShape(QFrame::NoFrame);

@@ -11,6 +11,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     allowMultiple: false
+    help: 'https://forum.shotcut.org/t/fade-out-audio/12905/1'
 
     keyframes {
         allowTrim: false

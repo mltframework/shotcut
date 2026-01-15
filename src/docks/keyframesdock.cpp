@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2025 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     setWindowIcon(icon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumSize(200, 50);
+    setWhatsThis("https://forum.shotcut.org/t/about-keyframes/12957/1");
 
     setupActions();
 
@@ -221,6 +222,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Filter Start"), this);
     action->setShortcut(QKeySequence(Qt::Key_BracketLeft));
+    action->setWhatsThis("https://forum.shotcut.org/t/trimming-filters/13212/1");
     icon = QIcon::fromTheme("keyframes-filter-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png"));
     action->setIcon(icon);
@@ -240,6 +242,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Filter End"), this);
     action->setShortcut(QKeySequence(Qt::Key_BracketRight));
+    action->setWhatsThis("https://forum.shotcut.org/t/trimming-filters/13212/1");
     icon = QIcon::fromTheme("keyframes-filter-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png"));
     action->setIcon(icon);
@@ -259,6 +262,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set First Simple Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::Key_BraceLeft));
+    action->setWhatsThis("https://forum.shotcut.org/t/simple-keyframes/43639/1");
     icon = QIcon::fromTheme("keyframes-simple-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-in.png"));
     action->setIcon(icon);
@@ -278,6 +282,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Second Simple Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::Key_BraceRight));
+    action->setWhatsThis("https://forum.shotcut.org/t/simple-keyframes/43639/1");
     icon = QIcon::fromTheme("keyframes-simple-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-out.png"));
     action->setIcon(icon);

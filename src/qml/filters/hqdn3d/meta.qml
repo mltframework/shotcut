@@ -24,6 +24,7 @@ Metadata {
     mlt_service: "frei0r.hqdn3d"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/reduce-noise-hqdn3d/12873/1'
 
     keyframes {
         allowAnimateIn: true

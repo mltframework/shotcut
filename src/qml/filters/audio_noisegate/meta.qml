@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('hum hiss distortion clean', 'search keywords for the Noise Gate audio filter') + ' noise gate'
     mlt_service: 'ladspa.1410'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/noise-gate-audio-filter/14179/1'
 
     keyframes {
         allowAnimateIn: true

@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "wave"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/wave-video-filter/12893/1'
 }

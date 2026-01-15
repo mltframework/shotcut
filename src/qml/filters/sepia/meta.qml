@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "sepia"
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/sepia-tone/12879/1'
 }

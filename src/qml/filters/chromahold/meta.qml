@@ -24,6 +24,7 @@ Metadata {
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/chroma-hold/12833/1'
 
     keyframes {
         allowAnimateIn: true

@@ -11,4 +11,5 @@ Metadata {
     qml: "ui.qml"
     icon: 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/mute-audio-filter/12910/1'
 }

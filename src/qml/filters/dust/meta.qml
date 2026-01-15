@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "dust"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/old-film-dust/12866/1'
 }

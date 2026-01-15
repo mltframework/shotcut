@@ -11,6 +11,7 @@ Metadata {
     qml: "ui.qml"
     vui: "vui.qml"
     icon: "icon.webp"
+    help: 'https://forum.shotcut.org/t/360-transform-video-filter/19170/1'
 
     keyframes {
         allowAnimateIn: true

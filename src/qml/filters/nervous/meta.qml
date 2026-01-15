@@ -8,4 +8,5 @@ Metadata {
     mlt_service: 'avfilter.random'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/nervous-video-filter/14175/1'
 }

@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/new-project/12978/1</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="1">
     <widget class="QFrame" name="frame_2">
@@ -292,8 +295,8 @@ a project file with the same name.</string>
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>153</width>
-              <height>220</height>
+              <width>164</width>
+              <height>264</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">

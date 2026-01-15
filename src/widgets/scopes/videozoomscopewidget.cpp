@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023 Meltytech, LLC
+ * Copyright (c) 2019-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,6 +104,7 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     , m_lockButton(new QToolButton(this))
 {
     LOG_DEBUG() << "begin";
+    setWhatsThis("https://forum.shotcut.org/t/video-zoom-scope/15654/1");
     QFont font = QWidget::font();
     int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
     font.setPointSize(fontSize);

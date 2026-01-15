@@ -9,6 +9,8 @@ Metadata {
     keywords: qsTr('spherical fill blur zenith nadir', 'search keywords for the 360: Cap Top & Bottom video filter') + ' 360: cap top & bottom bigsh0t'
     objectName: "bigsh0t_eq_cap"
     qml: "ui.qml"
+    help: 'https://forum.shotcut.org/t/350-cap-top-bottom-video-filter/48129/1'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true

@@ -10,4 +10,5 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/white-balance/12894/1'
 }

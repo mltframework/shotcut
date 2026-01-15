@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,6 +147,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
     Q_PROPERTY(QString icon READ iconFilePath WRITE setIconFileName NOTIFY changed)
     Q_PROPERTY(bool seekReverse MEMBER m_seekReverse NOTIFY changed)
+    Q_PROPERTY(QString help MEMBER m_helpText NOTIFY changed)
 
 public:
     enum PluginType {
@@ -211,6 +212,7 @@ public:
     bool isMltVersion(const QString &version);
     QString keywords() const { return m_keywords; }
     bool seekReverse() const { return m_seekReverse; }
+    QString helpText() const { return m_helpText; }
 
 signals:
     void changed();
@@ -238,6 +240,7 @@ private:
     QString m_keywords;
     QString m_icon;
     bool m_seekReverse;
+    QString m_helpText;
 };
 
 #endif // QMLMETADATA_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
 {
     LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
+    setWhatsThis("https://forum.shotcut.org/t/about-filters/48127/1");
     QIcon filterIcon = QIcon::fromTheme("view-filter",
                                         QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
@@ -106,6 +107,7 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
     QMetaObject::invokeMethod(m_qview.rootObject(),
                               "setCurrentFilter",
                               Q_ARG(QVariant, QVariant(index)));
+    m_qview.setWhatsThis(meta ? meta->helpText() : QString());
 }
 
 bool FiltersDock::event(QEvent *event)

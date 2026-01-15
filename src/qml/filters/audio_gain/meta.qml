@@ -11,6 +11,7 @@ Metadata {
     qml: "ui.qml"
     icon: 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/gain-volume-audio-filter/12906/1'
 
     keyframes {
         allowAnimateIn: true

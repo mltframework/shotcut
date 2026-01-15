@@ -7,18 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>394</width>
-    <height>294</height>
+    <height>303</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/open-other-count/12933/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="nameLabel">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -26,7 +28,7 @@
       <string>Count</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -41,7 +43,7 @@
         <string>Direction</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -58,7 +60,7 @@
      <item row="0" column="2">
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -74,7 +76,7 @@
         <string>Style</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -91,7 +93,7 @@
      <item row="1" column="2">
       <spacer name="horizontalSpacer1">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -103,14 +105,14 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label3">
-       <property name="text">
-        <string>Sound</string>
-       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Silent - No sound&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz beep exactly two seconds before the out point&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz beep at frame 0 of every second&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
+       <property name="text">
+        <string>Sound</string>
+       </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -127,7 +129,7 @@
      <item row="2" column="2">
       <spacer name="horizontalSpacer2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -139,14 +141,14 @@
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label4">
-       <property name="text">
-        <string>Background</string>
-       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;None - No background&lt;/p&gt;&lt;p&gt;Clock  - Film style clock animation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
+       <property name="text">
+        <string>Background</string>
+       </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -163,7 +165,7 @@
      <item row="3" column="2">
       <spacer name="horizontalSpacer3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -175,11 +177,11 @@
      </item>
      <item row="4" column="0" colspan="2">
       <widget class="QCheckBox" name="dropCheckBox">
-       <property name="text">
-        <string>Drop Frame</string>
-       </property>
        <property name="toolTip">
         <string>Use SMPTE style drop-frame counting for non-integer frame rates. The clock and timecode will advance two frames every minute if necessary to keep time with wall clock time.</string>
+       </property>
+       <property name="text">
+        <string>Drop Frame</string>
        </property>
       </widget>
      </item>
@@ -189,7 +191,7 @@
         <string>Duration</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -202,10 +204,10 @@
         </size>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
        <property name="accelerated">
         <bool>true</bool>
@@ -224,7 +226,7 @@
      <item row="5" column="2">
       <spacer name="horizontalSpacer4">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -239,7 +241,7 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -253,15 +255,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TimeSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>widgets/timespinbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>ServicePresetWidget</class>
    <extends>QWidget</extends>
    <header>widgets/servicepresetwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>widgets/timespinbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

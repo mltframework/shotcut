@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "tcolor"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/old-film-technocolor/12870/1'
 }

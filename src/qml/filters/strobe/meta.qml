@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "strobe"
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/alpha-strobe-video-filter/50289/1'
 
     keyframes {
         allowAnimateIn: true

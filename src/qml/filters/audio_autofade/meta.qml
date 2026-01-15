@@ -10,4 +10,5 @@ Metadata {
     objectName: 'autoFade'
     qml: "ui.qml"
     isTrackOnly: true
+    help: 'https://forum.shotcut.org/t/track-auto-fade-audio-filter/40782/1'
 }

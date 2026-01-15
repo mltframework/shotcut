@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>370</height>
+    <width>412</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/image-properties/12924/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

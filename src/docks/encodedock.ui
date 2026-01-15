@@ -14,6 +14,9 @@
    <iconset theme="media-record" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/export-basics/12953/1</string>
+  </property>
   <property name="windowTitle">
    <string>Export</string>
   </property>
@@ -143,8 +146,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>429</width>
-           <height>646</height>
+           <width>461</width>
+           <height>856</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -280,6 +283,9 @@
           </item>
           <item>
            <widget class="QTabWidget" name="tabWidget">
+            <property name="whatsThis">
+             <string notr="true">https://forum.shotcut.org/t/advanced-export/12956/1</string>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>

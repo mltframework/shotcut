@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'panner'
     objectName: 'audioPan'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/pan-audio-filter/12914/1'
 
     keyframes {
         allowAnimateIn: true

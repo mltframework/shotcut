@@ -10,6 +10,7 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/opacity/12871/1'
 
     keyframes {
         allowAnimateIn: true
@@ -21,7 +22,7 @@ Metadata {
                 property: 'opacity'
                 isCurve: true
                 minimum: 0
-                maximum: filter.isAtLeastVersion(5) ? 2 : 1
+                maximum: filter ? (filter.isAtLeastVersion(5) ? 2 : 1) : 2
             }
         ]
     }

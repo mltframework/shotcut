@@ -96,6 +96,7 @@
 #include <QClipboard>
 #include <QDirIterator>
 #include <QFileDialog>
+#include <QHelpEvent>
 #include <QImageReader>
 #include <QJSEngine>
 #include <QJsonDocument>
@@ -107,6 +108,7 @@
 #include <QThreadPool>
 #include <QTimer>
 #include <QVersionNumber>
+#include <QWhatsThis>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtNetwork>
 #include <QtWidgets>
@@ -242,12 +244,17 @@ MainWindow::MainWindow()
 
     ProxyManager::removePending();
 
+    for (auto &child : findChildren<QWidget *>()) {
+        if (child->whatsThis().isEmpty() && !child->toolTip().isEmpty())
+            child->setWhatsThis(child->toolTip());
+    }
+
     LOG_DEBUG() << "end";
 }
 
 void MainWindow::connectFocusSignals()
 {
-    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
+    if (!qEnvironmentVariableIsEmpty("OBSERVE_FOCUS")) {
         connect(qApp, &QApplication::focusChanged, this, &MainWindow::onFocusChanged);
         connect(qApp, &QGuiApplication::focusObjectChanged, this, &MainWindow::onFocusObjectChanged);
         connect(qApp, &QGuiApplication::focusWindowChanged, this, &MainWindow::onFocusWindowChanged);
@@ -256,7 +263,7 @@ void MainWindow::connectFocusSignals()
 
 void MainWindow::registerDebugCallback()
 {
-    if (!qgetenv("EVENT_DEBUG").isEmpty())
+    if (!qEnvironmentVariableIsEmpty("EVENT_DEBUG"))
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 }
 
@@ -264,6 +271,7 @@ void MainWindow::connectUISignals()
 {
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(ui->actionWhatsThis, SIGNAL(triggered()), this, SLOT(on_actionWhatsThis_triggered()));
     connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
     connect(ui->mainToolBar,
             SIGNAL(visibilityChanged(bool)),
@@ -305,6 +313,7 @@ void MainWindow::setupAndConnectPlayerWidget()
 {
     m_player = new Player;
     MLT.videoWidget()->installEventFilter(this);
+    qApp->installEventFilter(this); // Install global event filter for WhatsThis events
     ui->centralWidget->layout()->addWidget(m_player);
     connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -3104,6 +3113,22 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
     } else if (event->type() == QEvent::Drop && target == MLT.videoWidget()) {
         dropEvent(static_cast<QDropEvent *>(event));
         return true;
+    } else if (event->type() == QEvent::WhatsThis) {
+        QHelpEvent *whatsThisEvent = static_cast<QHelpEvent *>(event);
+        // Search for whatsThis text in the target widget and its parents
+        QWidget *widget = static_cast<QWidget *>(target);
+        QString text = widget ? widget->whatsThis() : QString();
+        while (widget && text.isEmpty()) {
+            widget = widget->parentWidget();
+            if (widget)
+                text = widget->whatsThis();
+        }
+        if (text.startsWith("http")) {
+            QDesktopServices::openUrl(text);
+            QWhatsThis::leaveWhatsThisMode();
+            return true;
+        }
+        return false;
     } else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
         if (QEvent::KeyPress == event->type()) {
             // Let Shift+Escape be a global hook to defocus a widget (assign global player focus).
@@ -3113,6 +3138,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
                 return true;
             }
         }
+#if 0
         QQuickWidget *focusedQuickWidget = qobject_cast<QQuickWidget *>(qApp->focusWidget());
         if (focusedQuickWidget && focusedQuickWidget->quickWindow()->activeFocusItem()) {
             event->accept();
@@ -3127,6 +3153,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
                 qApp->sendEvent(w, event);
             return true;
         }
+#endif
     }
     return QMainWindow::eventFilter(target, event);
 }
@@ -5824,6 +5851,7 @@ void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
         ui->mainToolBar->removeAction(ui->actionFiles);
         ui->mainToolBar->removeAction(ui->actionMarkers);
         ui->mainToolBar->removeAction(ui->actionNotes);
+        ui->mainToolBar->removeAction(ui->actionWhatsThis);
     }
 }
 
@@ -5977,6 +6005,11 @@ int MainWindow::bottomVideoTrackIndex() const
 void MainWindow::on_actionTopics_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/"));
+}
+
+void MainWindow::on_actionWhatsThis_triggered()
+{
+    QWhatsThis::enterWhatsThisMode();
 }
 
 void MainWindow::on_actionSync_triggered()

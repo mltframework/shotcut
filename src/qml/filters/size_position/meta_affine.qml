@@ -11,6 +11,7 @@ Metadata {
     vui: 'vui_affine.qml'
     icon: 'icon.webp'
     isFavorite: true
+    help: 'https://forum.shotcut.org/t/size-position-rotate/12881/1'
 
     keyframes {
         allowAnimateIn: true

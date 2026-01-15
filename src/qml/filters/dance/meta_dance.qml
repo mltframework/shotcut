@@ -10,4 +10,5 @@ Metadata {
     qml: 'ui_dance.qml'
     icon: 'icon.webp'
     allowMultiple: false
+    help: 'https://forum.shotcut.org/t/audio-dance-visualization/12822/1'
 }

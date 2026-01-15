@@ -14,6 +14,9 @@
    <iconset theme="run-build" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/run-build.png</normaloff>:/icons/oxygen/32x32/actions/run-build.png</iconset>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/jobs-panel/12945/1</string>
+  </property>
   <property name="windowTitle">
    <string>Jobs</string>
   </property>
@@ -37,7 +40,7 @@
     <item>
      <widget class="QScrollArea" name="scrollArea">
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -48,7 +51,7 @@
          <x>0</x>
          <y>0</y>
          <width>283</width>
-         <height>211</height>
+         <height>219</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -67,16 +70,16 @@
         <item>
          <widget class="QTreeView" name="treeView">
           <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
+           <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
           </property>
           <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
           </property>
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
           <property name="textElideMode">
-           <enum>Qt::ElideMiddle</enum>
+           <enum>Qt::TextElideMode::ElideMiddle</enum>
           </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
@@ -137,7 +140,7 @@ the list. This does not stop a currently running job. Right-
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'ladspa.1204'
     objectName: 'parametricEq'
     qml: 'ui.qml'
+    help: 'https://forum.shotcut.org/t/equalizer-parametric-audio-filter/32467/1'
 
     keyframes {
         allowAnimateIn: true

@@ -14,6 +14,9 @@
    <iconset theme="view-media-playlist" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</iconset>
   </property>
+  <property name="whatsThis">
+   <string notr="true">https://forum.shotcut.org/t/about-the-playlist/12951/1</string>
+  </property>
   <property name="windowTitle">
    <string>Playlist</string>
   </property>
@@ -92,7 +95,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QSplitter" name="splitter">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <widget class="BinTree" name="treeWidget">
            <property name="acceptDrops">
@@ -121,7 +124,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="PlaylistTable" name="tableView">
               <property name="contextMenuPolicy">
-               <enum>Qt::CustomContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
               </property>
               <property name="toolTip">
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -133,13 +136,13 @@ p, li { white-space: pre-wrap; }
                <bool>true</bool>
               </property>
               <property name="selectionMode">
-               <enum>QAbstractItemView::ExtendedSelection</enum>
+               <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
               </property>
               <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectRows</enum>
+               <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
               </property>
               <property name="horizontalScrollMode">
-               <enum>QAbstractItemView::ScrollPerPixel</enum>
+               <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
               </property>
               <attribute name="horizontalHeaderHighlightSections">
                <bool>false</bool>
@@ -152,13 +155,13 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="PlaylistListView" name="listView">
               <property name="contextMenuPolicy">
-               <enum>Qt::CustomContextMenu</enum>
+               <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
               </property>
               <property name="selectionMode">
-               <enum>QAbstractItemView::ExtendedSelection</enum>
+               <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
               </property>
               <property name="movement">
-               <enum>QListView::Static</enum>
+               <enum>QListView::Movement::Static</enum>
               </property>
              </widget>
             </item>

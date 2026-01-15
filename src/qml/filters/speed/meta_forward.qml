@@ -12,6 +12,7 @@ Metadata {
     isFavorite: false
     allowMultiple: false
     minimumVersion: '2'
+    help: 'https://forum.shotcut.org/t/speed-forward-only-time-filter/40785/1'
 
     keyframes {
         allowTrim: false

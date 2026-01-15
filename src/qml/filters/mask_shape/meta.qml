@@ -10,6 +10,7 @@ Metadata {
     isGpuCompatible: false
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/mask-from-file/12860/1'
 
     keyframes {
         allowAnimateIn: true

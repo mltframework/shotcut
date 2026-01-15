@@ -10,6 +10,7 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/timer/12890/1'
 
     keyframes {
         allowAnimateIn: true
