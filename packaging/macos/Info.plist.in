@@ -9,7 +9,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>NSHumanReadableCopyright</key>
-        <string>Copyright © 2011-2025 Meltytech, LLC</string>
+	<string>Copyright © 2011-2026 Meltytech, LLC</string>
 	<key>CFBundleSignature</key>
 	<string>scut</string>
 	<key>CFBundleExecutable</key>
@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>@SHOTCUT_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
-	<string>@SHORT_VERSION@</string>
+	<string>@SHOTCUT_VERSION@</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>

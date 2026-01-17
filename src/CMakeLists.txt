@@ -340,7 +340,6 @@ endif()
 if(APPLE)
   target_sources(shotcut PRIVATE macos.mm macos.h
     widgets/metalvideowidget.h widgets/metalvideowidget.mm)
-  string(SUBSTRING ${SHOTCUT_VERSION} 0, 5, SHORT_VERSION)
   set_target_properties(shotcut PROPERTIES
     OUTPUT_NAME "Shotcut"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)
