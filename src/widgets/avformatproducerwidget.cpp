@@ -622,7 +622,10 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // We need to set these force_ properties as a string so they can be properly removed
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
-        emit producerChanged(producer());
+        if (Settings.playerPreviewHardwareDecoder() && Settings.playerPreviewScale() > 0)
+            recreateProducer();
+        else
+            emit producerChanged(producer());
     }
 }
 
