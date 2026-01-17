@@ -24,7 +24,7 @@ DefaultDirName={autopf}\Shotcut
 ; to ask for a Start Menu folder name:
 DisableProgramGroupPage=yes
 UninstallDisplayIcon={app}\shotcut.exe
-LicenseFile=Shotcut\COPYING.txt
+LicenseFile=Shotcut\COPYING.rtf
 Compression=lzma2
 SolidCompression=no
 OutputDir=userdocs:Inno Setup Examples Output
