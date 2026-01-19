@@ -5,7 +5,7 @@ import QtQuick.Dialogs
 import Shotcut.Controls as Shotcut
 Shotcut.KeyframableFilter {
     width: 350
-    height: 650
+    height: 1000
     keyframableParameters: [
         "topStart",
         "topEnd",
