@@ -733,7 +733,7 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1082"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1244"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1247"/>
         <source>Extract Subtitles...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,13 +835,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1006"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="874"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="877"/>
         <source>Reverse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1077"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1146"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -885,138 +885,138 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="794"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="869"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="797"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="872"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="989"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1034"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1037"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1051"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1054"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1107"/>
         <source>Convert %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1055"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1058"/>
         <source>Reversed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1088"/>
         <source>Reverse canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1114"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1117"/>
         <source>Reverse %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1483"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1486"/>
         <source>Choose the Other Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1536"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1539"/>
         <source>Measure %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1148"/>
         <source>Sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1147"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1222"/>
         <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1288"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1241"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1291"/>
         <source>Track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1290"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1243"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1293"/>
         <source>Track %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1246"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1249"/>
         <source>No subtitles found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1305"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1308"/>
         <source>Extract subtitles %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1421"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1465"/>
         <source>Set Equirectangular Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1474"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1477"/>
         <source>Successfully wrote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1476"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1479"/>
         <source>An error occurred saving the projection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1596"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1599"/>
         <source>Bitrate %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1609"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1612"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1646"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1649"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1650"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1653"/>
         <source>Remove...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1689"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1692"/>
         <source>Remove From Open With</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8360,8 +8360,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="146"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1072"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1162"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -8728,8 +8728,8 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1373"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1081"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>A job already exists for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15585,6 +15585,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="653"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="916"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
@@ -17499,6 +17500,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="446"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="525"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1395"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
@@ -17510,7 +17512,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="417"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="404"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="483"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="557"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="562"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20317,11 +20319,6 @@ Click to select, drag to change position</source>
         <location filename="../src/qml/filters/hslprimaries/ui.qml" line="512"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="352"/>
         <source>Lightness Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
-        <source>Blur Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

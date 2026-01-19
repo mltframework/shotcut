@@ -246,7 +246,7 @@ Item {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
     width: 350
-    height: 200
+    height: 250
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set("hfov0", -90);
@@ -517,7 +517,12 @@ Item {
             }
         }
         Label {
-            text: qsTr('Blur Start')
+            text: qsTr('Blur')
+            Layout.alignment: Qt.AlignLeft
+            Layout.columnSpan: 4
+        }
+        Label {
+            text: qsTr('Start')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
