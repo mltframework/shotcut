@@ -67,6 +67,7 @@ private:
     bool fixVersion1701WindowsPathBug(QString &value);
     void checkIncludesSelf(QVector<MltProperty> &properties);
     void checkLumaAlphaOver(const QString &mlt_service, QVector<MltProperty> &properties);
+    void updateMaskApply(const QString &mlt_service, QVector<MltProperty> &properties);
     void checkAudioGain(const QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxCropFilters(QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxChoppyFilter(QString &mlt_service, QVector<MltProperty> &properties);

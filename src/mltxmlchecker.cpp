@@ -265,6 +265,7 @@ void MltXmlChecker::processProperties()
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
+        updateMaskApply(mlt_service, newProperties);
         checkAudioGain(mlt_service, newProperties);
         replaceWebVfxCropFilters(mlt_service, newProperties);
         replaceWebVfxChoppyFilter(mlt_service, newProperties);
@@ -558,6 +559,19 @@ void MltXmlChecker::checkIncludesSelf(QVector<MltProperty> &properties)
         }
         properties << MltProperty(kShotcutCaptionProperty, "INVALID");
         m_isCorrected = true;
+    }
+}
+
+void MltXmlChecker::updateMaskApply(const QString &mlt_service, QVector<MltProperty> &properties)
+{
+    if (mlt_service == "mask_apply") {
+        for (auto &p : properties) {
+            if (p.first == "transition") {
+                p.second = "qtblend";
+                m_isUpdated = true;
+                break;
+            }
+        }
     }
 }
 

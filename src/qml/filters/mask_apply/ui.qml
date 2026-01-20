@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2025 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Item {
     width: 10
     height: 10
     Component.onCompleted: {
-        filter.set('transition', 'frei0r.cairoblend')
+        filter.set('transition', 'qtblend')
         filter.set('transition.threads', 0);
     }
 }
