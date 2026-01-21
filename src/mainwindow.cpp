@@ -2198,6 +2198,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
     // returns false when MLT is unable to open the file, possibly because it has percent sign in the path
     LOG_DEBUG() << url;
     bool modified = false;
+    bool converted = false;
     MltXmlChecker checker;
     QFileInfo info(url);
 
@@ -2213,7 +2214,8 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         }
         switch (checker.check(url)) {
         case QXmlStreamReader::NoError:
-            if (!isCompatibleWithGpuMode(checker, url)) {
+            converted = isCompatibleWithGpuMode(checker, url);
+            if (!converted) {
                 showStatusMessage(tr("Failed to open ").append(url));
                 return true;
             }
@@ -2242,7 +2244,8 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         modified = checkAutoSave(url);
         if (modified) {
             if (checker.check(url) == QXmlStreamReader::NoError) {
-                if (!isCompatibleWithGpuMode(checker, url))
+                converted = isCompatibleWithGpuMode(checker, url);
+                if (!converted)
                     return true;
             } else {
                 showStatusMessage(tr("Failed to open ").append(url));
@@ -2307,6 +2310,8 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
             m_recentDock->add(url);
             LOG_INFO() << url;
         }
+        if (converted)
+            saveXML(url);
     } else if (url != untitledFileName()) {
         showStatusMessage(tr("Failed to open ") + url);
         emit openFailed(url);
