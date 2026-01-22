@@ -26,6 +26,7 @@
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/resourcedialog.h"
+#include "jobs/meltjob.h"
 #include "mainwindow.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
