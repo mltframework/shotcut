@@ -1581,9 +1581,6 @@
    <property name="toolTip">
     <string>Get help about something by clicking it</string>
    </property>
-   <property name="whatsThis">
-    <string notr="true">/1</string>
-   </property>
    <property name="shortcut">
     <string notr="true">Shift+F1</string>
    </property>
