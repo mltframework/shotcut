@@ -10,10 +10,6 @@
     <height>278</height>
    </rect>
   </property>
-  <property name="windowIcon">
-   <iconset theme="view-media-playlist" resource="../../icons/resources.qrc">
-    <normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</iconset>
-  </property>
   <property name="whatsThis">
    <string notr="true">https://forum.shotcut.org/t/about-the-playlist/12951/1</string>
   </property>

@@ -142,10 +142,9 @@ NotesDock::NotesDock(QWidget *parent)
 {
     LOG_DEBUG() << "begin";
     setObjectName("NotesDock");
-    QIcon filterIcon = QIcon::fromTheme("document-edit",
-                                        QIcon(":/icons/oxygen/32x32/actions/document-edit.png"));
-    setWindowIcon(filterIcon);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("document-edit",
+                                  QIcon(":/icons/oxygen/32x32/actions/document-edit.png"));
+    toggleViewAction()->setIcon(icon);
     setWhatsThis("https://forum.shotcut.org/t/notes-panel/33110/1");
 
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));

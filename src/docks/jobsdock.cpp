@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@ JobsDock::JobsDock(QWidget *parent)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("run-build", QIcon(":/icons/oxygen/32x32/actions/run-builld.png"));
+    toggleViewAction()->setIcon(icon);
     ui->treeView->setModel(&JOBS);
     QHeaderView *header = ui->treeView->header();
     header->setStretchLastSection(false);

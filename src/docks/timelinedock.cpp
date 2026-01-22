@@ -26,7 +26,6 @@
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/resourcedialog.h"
-#include "jobs/meltjob.h"
 #include "mainwindow.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
@@ -86,10 +85,9 @@ TimelineDock::TimelineDock(QWidget *parent)
     setAcceptDrops(true);
     QIcon icon = QIcon::fromTheme("view-time-schedule",
                                   QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
-    setWindowIcon(icon);
     setWhatsThis("https://forum.shotcut.org/t/about-the-timeline/12952/1");
 
-    toggleViewAction()->setIcon(windowIcon());
+    toggleViewAction()->setIcon(icon);
     setupActions();
 
     m_mainMenu = new QMenu(tr("Timeline"), this);

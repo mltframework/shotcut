@@ -127,9 +127,8 @@ MarkersDock::MarkersDock(QWidget *parent)
 
     setObjectName("MarkersDock");
     QDockWidget::setWindowTitle(tr("Markers"));
-    QIcon filterIcon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
-    setWindowIcon(filterIcon);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
+    toggleViewAction()->setIcon(icon);
     setWhatsThis("https://forum.shotcut.org/t/timeline-markers/30535/1");
 
     QScrollArea *scrollArea = new QScrollArea();

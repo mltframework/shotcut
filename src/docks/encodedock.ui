@@ -10,10 +10,6 @@
     <height>706</height>
    </rect>
   </property>
-  <property name="windowIcon">
-   <iconset theme="media-record" resource="../../icons/resources.qrc">
-    <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
-  </property>
   <property name="whatsThis">
    <string notr="true">https://forum.shotcut.org/t/export-basics/12953/1</string>
   </property>

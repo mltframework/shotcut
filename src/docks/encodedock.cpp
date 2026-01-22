@@ -107,7 +107,9 @@ EncodeDock::EncodeDock(QWidget *parent)
 #endif
     if (QThread::idealThreadCount() < 3)
         ui->parallelCheckbox->setHidden(true);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("media-record",
+                                  QIcon(":/icons/oxygen/32x32/actions/media-record.png"));
+    toggleViewAction()->setIcon(icon);
 
     connect(ui->videoBitrateCombo,
             SIGNAL(currentIndexChanged(int)),

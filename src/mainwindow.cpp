@@ -423,7 +423,6 @@ void MainWindow::setupAndConnectDocks()
     m_propertiesDock = new QDockWidget(tr("Properties"), this);
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
-    m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
     m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_2));
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
     m_propertiesDock->setMinimumWidth(300);
@@ -747,7 +746,6 @@ void MainWindow::setupAndConnectDocks()
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
     m_historyDock->setObjectName("historyDock");
-    m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_8));
     m_historyDock->setMinimumWidth(150);

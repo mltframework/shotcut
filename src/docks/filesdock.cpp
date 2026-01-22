@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -496,7 +496,9 @@ FilesDock::FilesDock(QWidget *parent)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("system-file-manager",
+                                  QIcon(":/icons/oxygen/32x32/apps/system-file-manager.png"));
+    toggleViewAction()->setIcon(icon);
 
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), ls.first());

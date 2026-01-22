@@ -53,8 +53,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     setObjectName("KeyframesDock");
     QIcon icon = QIcon::fromTheme("chronometer",
                                   QIcon(":/icons/oxygen/32x32/actions/chronometer.png"));
-    setWindowIcon(icon);
-    toggleViewAction()->setIcon(windowIcon());
+    toggleViewAction()->setIcon(icon);
     setMinimumSize(200, 50);
     setWhatsThis("https://forum.shotcut.org/t/about-keyframes/12957/1");
 

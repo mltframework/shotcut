@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -335,7 +335,9 @@ PlaylistDock::PlaylistDock(QWidget *parent)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("view-media-playlist",
+                                  QIcon(":/icons/oxygen/32x32/actions/view-media-playlist.png"));
+    toggleViewAction()->setIcon(icon);
 
     m_proxyModel = new PlaylistProxyModel(this);
     m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);

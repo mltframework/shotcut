@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,9 @@ RecentDock::RecentDock(QWidget *parent)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
-    toggleViewAction()->setIcon(windowIcon());
+    QIcon icon = QIcon::fromTheme("document-open-recent",
+                                  QIcon(":/icons/oxygen/32x32/actions/document-open-recent.png"));
+    toggleViewAction()->setIcon(icon);
     m_recent = Settings.recent();
 
 #ifdef Q_OS_WIN
