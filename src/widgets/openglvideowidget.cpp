@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * Some GL shader based on BSD licensed code from Peter Bengtsson:
  * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
@@ -19,6 +19,7 @@
  */
 
 #include "openglvideowidget.h"
+#include "mainwindow.h"
 
 #include "Logger.h"
 
@@ -86,6 +87,15 @@ void OpenGLVideoWidget::initialize()
     GLint dims[2];
     glGetIntegerv(GL_MAX_VIEWPORT_DIMS, &dims[0]);
     LOG_INFO() << "OpenGL maximum viewport size =" << dims[0] << "x" << dims[1];
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // Turn off the hardware decoder by default on Linux with NVIDIA
+    const auto nvidia
+        = QString::fromUtf8((const char *) glGetString(GL_RENDERER)).toLower().contains("nv");
+    if (nvidia && !Settings.playerPreviewHardwareDecoderIsSet()) {
+        MAIN.turnOffHardwareDecoder();
+    }
+#endif
 
     createShader();
 

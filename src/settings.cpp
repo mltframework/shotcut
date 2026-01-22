@@ -784,6 +784,11 @@ bool ShotcutSettings::playerPreviewHardwareDecoder() const
     return settings.value("player/previewHardwareDecoder", true).toBool();
 }
 
+bool ShotcutSettings::playerPreviewHardwareDecoderIsSet() const
+{
+    return settings.contains("player/previewHardwareDecoder");
+}
+
 void ShotcutSettings::setPlayerPreviewHardwareDecoder(bool b)
 {
     settings.setValue("player/previewHardwareDecoder", b);

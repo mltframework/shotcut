@@ -112,6 +112,7 @@ public:
     void getSelectionRange(int *start, int *end);
     Mlt::Playlist *binPlaylist();
     void showInFiles(const QString &filePath);
+    void turnOffHardwareDecoder();
 
 signals:
     void audioChannelsChanged();

@@ -3509,6 +3509,13 @@ void MainWindow::showInFiles(const QString &filePath)
     m_filesDock->changeDirectory(filePath);
 }
 
+void MainWindow::turnOffHardwareDecoder()
+{
+    ui->actionPreviewHardwareDecoder->setChecked(false);
+    Settings.setPlayerPreviewHardwareDecoder(false);
+    MLT.configureHardwareDecoder(false);
+}
+
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
