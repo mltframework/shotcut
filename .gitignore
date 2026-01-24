@@ -39,7 +39,7 @@ install_manifest.txt
 share/
 src/shotcut_autogen/
 .qt
-translations/.lupdate/shotcut_project.cmake
+translations/.lupdate
 .DS_Store
 scripts/build-shotcut.conf
 *~
