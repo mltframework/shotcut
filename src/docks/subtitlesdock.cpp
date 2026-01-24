@@ -272,6 +272,16 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     toolbar->addWidget(button);
 #endif
 
+    m_searchField = new QLineEdit(this);
+    m_searchField->setPlaceholderText(tr("search"));
+    connect(m_searchField, &QLineEdit::textChanged, this, [&]() {
+        seekToText(m_searchField->text(), 0);
+    });
+    connect(m_searchField, &QLineEdit::returnPressed, this, [&]() {
+        seekToText(m_searchField->text(), 1);
+    });
+    toolbar->addWidget(m_searchField);
+
     vboxLayout->addWidget(toolbar);
 
     QFontMetrics fm(font());
@@ -1385,4 +1395,58 @@ void SubtitlesDock::textToSpeech()
         job->setPostJobAction(new OpenPostJobAction(outFile, outFile, QString()));
         JOBS.add(job);
     });
+}
+
+void SubtitlesDock::seekToText(QString searchText, int step)
+{
+    int trackIndex = m_trackCombo->currentIndex();
+    if (trackIndex < 0) {
+        return;
+    }
+    if (!m_model || m_model->trackCount() == 0 || m_model->itemCount(trackIndex) == 0) {
+        return;
+    }
+    searchText = searchText.simplified().toLower();
+    if (searchText.isEmpty()) {
+        return;
+    }
+
+    QModelIndex start = m_treeView->currentIndex();
+    if (!start.isValid()) {
+        // Start from the beginning
+        start = m_model->itemModelIndex(0, trackIndex);
+    }
+    int startItemIndex = start.row();
+    if (startItemIndex < 0) {
+        return;
+    }
+    int itemIndex = startItemIndex;
+
+    while (true) {
+        itemIndex += step;
+        if (itemIndex >= m_model->itemCount(trackIndex)) {
+            // Wrap around forwards
+            itemIndex = 0;
+        }
+        if (itemIndex < 0) {
+            // Wrap around backwards
+            itemIndex = m_model->itemCount(trackIndex);
+        }
+        if (step && itemIndex == startItemIndex) {
+            // We have gone all the way around. Not found;
+            break;
+        }
+        auto item = m_model->getItem(trackIndex, itemIndex);
+        QString text = QString::fromStdString(item.text).simplified().toLower();
+        if (text.contains(searchText)) {
+            QModelIndex matchIndex = m_model->itemModelIndex(trackIndex, itemIndex);
+            m_treeView->setCurrentIndex(matchIndex);
+            m_treeView->scrollTo(matchIndex); // Make sure it's visible
+            break;
+        }
+        if (step == 0) {
+            // Step == 0 is a way to re-search the current item until it doesn't match
+            step = 1;
+        }
+    }
 }

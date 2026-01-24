@@ -26,6 +26,7 @@ class SubtitlesSelectionModel;
 class QComboBox;
 class QItemSelection;
 class QLabel;
+class QLineEdit;
 class QTextEdit;
 class QTreeView;
 class SpeechDialog;
@@ -88,6 +89,7 @@ private:
     void speechToText();
     void textToSpeech();
     bool findWhisperExe();
+    void seekToText(QString text, int step);
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;
@@ -100,6 +102,7 @@ private:
     QLabel *m_prevLabel;
     QLabel *m_textLabel;
     QLabel *m_nextLabel;
+    QLineEdit *m_searchField;
     int m_pos;
     bool m_textEditInProgress;
     std::unique_ptr<SpeechDialog> m_speechDialog;
