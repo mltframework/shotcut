@@ -758,6 +758,8 @@ void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProper
                     p.second = QString::number(p.second.toFloat() / 15000.0);
                 }
             }
+        } else {
+            properties.removeIf([](const auto &prop) { return prop.first.startsWith("movit."); });
         }
     }
     if (new_mlt_service != mlt_service) {
