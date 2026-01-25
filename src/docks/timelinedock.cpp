@@ -885,6 +885,10 @@ void TimelineDock::setupActions()
             for (auto c : selected) {
                 clipIndex = c.x();
                 trackIndex = c.y();
+                if (isTrackLocked(trackIndex)) {
+                    emit warnTrackLocked(trackIndex);
+                    continue;
+                }
                 if (clipIndexAtPlayhead(trackIndex) == clipIndex && !isBlank(trackIndex, clipIndex)
                     && !isTransition(trackIndex, clipIndex)) {
                     auto info = m_model.getClipInfo(trackIndex, clipIndex);
@@ -902,6 +906,9 @@ void TimelineDock::setupActions()
             trackIndex = currentTrack();
             chooseClipAtPosition(m_position, trackIndex, clipIndex);
             if (trackIndex < 0 || clipIndex < 0) {
+                return;
+            } else if (isTrackLocked(trackIndex)) {
+                emit warnTrackLocked(trackIndex);
                 return;
             } else if (isBlank(trackIndex, clipIndex)) {
                 return;
@@ -935,6 +942,9 @@ void TimelineDock::setupActions()
         for (int trackIndex = 0; trackIndex < m_model.rowCount(); trackIndex++) {
             int clipIndex = clipIndexAtPosition(trackIndex, m_position);
             if (clipIndex < 0 || isBlank(trackIndex, clipIndex)) {
+                continue;
+            }
+            if (isTrackLocked(trackIndex)) {
                 continue;
             }
             if (isTransition(trackIndex, clipIndex)) {
