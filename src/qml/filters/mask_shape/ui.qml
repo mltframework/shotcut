@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 Meltytech, LLC
+ * Copyright (c) 2018-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@ Item {
     id: shapeRoot
 
     property bool blockUpdate: true
-    property double startValue: 50
-    property double middleValue: 50
-    property double endValue: 50
+    property double startValue: 0
+    property double middleValue: 100
+    property double endValue: 0
     property int previousResourceComboIndex
     property string reverseProperty: filter.isAtLeastVersion(3) ? 'filter.invert_mask' : 'filter.reverse'
 
