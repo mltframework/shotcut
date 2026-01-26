@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020-2024 Meltytech, LLC
+** Copyright (c) 2020-2026 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -240,6 +240,7 @@ void QmlRichText::reset()
     emit boldChanged();
     emit italicChanged();
     emit underlineChanged();
+    emit strikeoutChanged();
     emit fontSizeChanged();
     emit textColorChanged();
 }
@@ -323,6 +324,14 @@ bool QmlRichText::underline() const
     return textCursor().charFormat().fontUnderline();
 }
 
+bool QmlRichText::strikeout() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().charFormat().fontStrikeOut();
+}
+
 void QmlRichText::setBold(bool arg)
 {
     QTextCharFormat fmt;
@@ -345,6 +354,14 @@ void QmlRichText::setUnderline(bool arg)
     fmt.setFontUnderline(arg);
     mergeFormatOnWordOrSelection(fmt);
     emit underlineChanged();
+}
+
+void QmlRichText::setStrikeout(bool arg)
+{
+    QTextCharFormat fmt;
+    fmt.setFontStrikeOut(arg);
+    mergeFormatOnWordOrSelection(fmt);
+    emit strikeoutChanged();
 }
 
 int QmlRichText::fontSize() const

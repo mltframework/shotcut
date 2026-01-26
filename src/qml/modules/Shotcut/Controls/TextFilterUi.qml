@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ GridLayout {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
-    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
+    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -105,7 +105,9 @@ GridLayout {
             "family": filter.get('family'),
             "pointSize": getPointSize(),
             "italic": filter.get('style') === 'italic',
-            "weight": filter.getDouble('weight')
+            "weight": filter.getDouble('weight'),
+            "underline" : filter.getDouble('underline'),
+            "strikeout" : filter.getDouble('strikethrough')
         });
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
@@ -247,6 +249,8 @@ GridLayout {
                     filter.set('family', selectedFont.family);
                     filter.set('weight', selectedFont.weight);
                     filter.set('style', selectedFont.italic ? 'italic' : 'normal');
+                    filter.set('underline', selectedFont.underline);
+                    filter.set('strikethrough', selectedFont.strikeout);
                     if (parseInt(filter.get(useFontSizeProperty))) {
                         filter.set('size', selectedFont.pixelSize);
                         filter.set(pointSizeProperty, selectedFont.pointSize);

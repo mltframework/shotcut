@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020-2023 Meltytech, LLC
+** Copyright (c) 2020-2026 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -60,6 +60,7 @@ class QmlRichText : public QObject
     Q_PROPERTY(bool bold READ bold WRITE setBold NOTIFY boldChanged)
     Q_PROPERTY(bool italic READ italic WRITE setItalic NOTIFY italicChanged)
     Q_PROPERTY(bool underline READ underline WRITE setUnderline NOTIFY underlineChanged)
+    Q_PROPERTY(bool strikeout READ strikeout WRITE setStrikeout NOTIFY strikeoutChanged)
     Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QUrl fileUrl READ fileUrl WRITE setFileUrl NOTIFY fileUrlChanged)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
@@ -83,6 +84,7 @@ public:
     bool bold() const;
     bool italic() const;
     bool underline() const;
+    bool strikeout() const;
     int fontSize() const;
     QUrl fileUrl() const;
     QString text() const;
@@ -92,6 +94,7 @@ public slots:
     void setBold(bool arg);
     void setItalic(bool arg);
     void setUnderline(bool arg);
+    void setStrikeout(bool arg);
     void setFontSize(int arg);
     void setTextColor(const QColor &arg);
     void setFontFamily(const QString &arg);
@@ -116,6 +119,7 @@ signals:
     void italicChanged();
     void underlineChanged();
     void fontSizeChanged();
+    void strikeoutChanged();
     void fileUrlChanged();
     void textChanged();
     void error(QString message);

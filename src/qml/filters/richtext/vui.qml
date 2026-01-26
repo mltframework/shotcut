@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2025 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -332,6 +332,8 @@ Shotcut.VuiBase {
                             onTriggered: {
                                 fontDialog.selectedFont.family = document.fontFamily;
                                 fontDialog.selectedFont.pointSize = document.fontSize;
+                                fontDialog.selectedFont.underline = document.underline;
+                                fontDialog.selectedFont.strikeout = document.strikeout;
                                 fontDialog.open();
                             }
                         }
@@ -671,6 +673,8 @@ Shotcut.VuiBase {
         onTriggered: {
             fontDialog.selectedFont.family = document.fontFamily;
             fontDialog.seelctedFont.pointSize = document.fontSize;
+            fontDialog.selectedFont.underline = document.underline;
+            fontDialog.selectedFont.strikeout = document.strikeout;
             fontDialog.open();
         }
     }
@@ -711,6 +715,8 @@ Shotcut.VuiBase {
         onAccepted: {
             document.fontFamily = selectedFont.family;
             document.fontSize = selectedFont.pointSize;
+            document.underline = selectedFont.underline;
+            document.strikeout = selectedFont.strikeout;
         }
     }
 
