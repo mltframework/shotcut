@@ -217,7 +217,7 @@ void MeltJob::onReadyRead()
         index = msg.indexOf("percentage:");
         if (index > -1) {
             int percent = msg.mid(index + 11).toInt();
-            if (percent > 0 && percent != m_previousPercent) {
+            if (percent > m_previousPercent) {
                 emit progressUpdated(m_item, percent);
                 QCoreApplication::processEvents();
                 m_previousPercent = percent;

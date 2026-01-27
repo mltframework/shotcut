@@ -88,7 +88,7 @@ void JobsDock::onProgressUpdated(QStandardItem *item, int percent)
     if (item) {
         QModelIndex index = JOBS.index(item->row(), JobQueue::COLUMN_OUTPUT);
         QProgressBar *progressBar = qobject_cast<QProgressBar *>(ui->treeView->indexWidget(index));
-        if (progressBar && percent > 0)
+        if (progressBar && percent > progressBar->value())
             progressBar->setValue(percent);
     }
 }
