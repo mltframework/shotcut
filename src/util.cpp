@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1213,8 +1213,35 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
     QProcess process;
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // Remove parts of environment variables that our launch script has set
     auto env = QProcessEnvironment::systemEnvironment();
-    env.remove("LD_LIBRARY_PATH");
+    // Get the parent of bin/shotcut
+    QString appDir = QFileInfo(QCoreApplication::applicationDirPath()).dir().absolutePath();
+
+    auto filterEnvVar = [&env, &appDir](const QString &varName) {
+        QString value = env.value(varName);
+        if (!value.isEmpty()) {
+            QStringList paths = value.split(':');
+            QStringList filtered;
+            for (QString &path : paths) {
+                if (!path.contains(appDir)) {
+                    filtered << path;
+                } else {
+                    LOG_DEBUG() << "removing" << path << "from env var" << varName;
+                }
+            }
+            env.insert(varName, filtered.join(':'));
+        }
+    };
+
+    filterEnvVar("FREI0R_PATH");
+    filterEnvVar("LADSPA_PATH");
+    filterEnvVar("LD_LIBRARY_PATH");
+    filterEnvVar("MANPATH");
+    filterEnvVar("PKG_CONFIG_PATH");
+    filterEnvVar("QML2_IMPORT_PATH");
+    filterEnvVar("QT_PLUGIN_PATH");
+
     process.setProcessEnvironment(env);
 #endif
 
