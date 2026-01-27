@@ -1749,6 +1749,7 @@ function bundle_libs
          ($3 !~ /\/libX11\./) &&
          ($3 !~ /\/libX11-xcb\./) &&
          ($3 !~ /\/libanl\./) &&
+         ($3 !~ /\/libatk-1.0\./) &&
          ($3 !~ /\/libasound\./) &&
          ($3 !~ /\/libc\./) &&
          ($3 !~ /\/libcairo\./) &&
