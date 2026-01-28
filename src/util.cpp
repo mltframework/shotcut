@@ -1239,8 +1239,11 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
     filterEnvVar("LD_LIBRARY_PATH");
     filterEnvVar("MANPATH");
     filterEnvVar("PKG_CONFIG_PATH");
-    filterEnvVar("QML2_IMPORT_PATH");
-    filterEnvVar("QT_PLUGIN_PATH");
+    filterEnvVar("PYTHONHOME");
+
+    // These are relative paths and not cleanable with filterEnvVar()
+    env.remove("QML2_IMPORT_PATH");
+    env.remove("QT_PLUGIN_PATH");
 
     process.setProcessEnvironment(env);
 #endif
