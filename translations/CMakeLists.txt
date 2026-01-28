@@ -46,6 +46,7 @@ set(LANGUAGES
     tr
     uk
     zh_CN
+    zh-Hans
     zh_TW
 )
 

@@ -1356,6 +1356,10 @@ void MainWindow::setupSettingsMenu()
                     m_languagesGroup);
     a->setCheckable(true);
     a->setData("zh_CN");
+    a = new QAction(QLocale::languageToString(QLocale::Chinese).append(" (Simplified)"),
+                    m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("zh-Hans");
     a = new QAction(QLocale::languageToString(QLocale::Chinese).append(" (Taiwan)"),
                     m_languagesGroup);
     a->setCheckable(true);

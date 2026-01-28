@@ -207,27 +207,27 @@
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="26"/>
+        <location filename="../src/widgets/alsawidget.ui" line="28"/>
         <source>ALSA Audio</source>
         <translation>ALSA-ljud</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="54"/>
+        <location filename="../src/widgets/alsawidget.ui" line="56"/>
         <source>Apply</source>
         <translation>Tillämpa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="61"/>
+        <location filename="../src/widgets/alsawidget.ui" line="63"/>
         <source>PCM Device</source>
         <translation>PCM-enhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="71"/>
+        <location filename="../src/widgets/alsawidget.ui" line="73"/>
         <source>default</source>
         <translation>standard</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="78"/>
+        <location filename="../src/widgets/alsawidget.ui" line="80"/>
         <source>Channels</source>
         <translation>Kanaler</translation>
     </message>
@@ -263,57 +263,57 @@
 <context>
     <name>AudioLoudnessScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="85"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="86"/>
         <source>Momentary Loudness</source>
         <translation>Momentan ljudstyrka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="88"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="89"/>
         <source>Short Term Loudness</source>
         <translation>Kortsiktig ljudstyrka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="91"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="92"/>
         <source>Integrated Loudness</source>
         <translation>Integrerad ljudstyrka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="94"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="95"/>
         <source>Loudness Range</source>
         <translation>Intervall för ljudstyrka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="97"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="98"/>
         <source>Peak</source>
         <translation>Topp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="100"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="101"/>
         <source>True Peak</source>
         <translation>Verklig topp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="107"/>
         <source>Configure Graphs</source>
         <translation>Konfigurera grafer</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="114"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="115"/>
         <source>Reset</source>
         <translation>Återställ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="115"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="116"/>
         <source>Reset the measurement.</source>
         <translation>Återställ mätningen.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="122"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="123"/>
         <source>Time Since Reset</source>
         <translation>Tid sedan återställning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="178"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="179"/>
         <source>Audio Loudness</source>
         <translation>Ljudstyrka</translation>
     </message>
@@ -321,43 +321,43 @@
 <context>
     <name>AudioPeakMeterScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="90"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="91"/>
         <source>Audio Peak Meter</source>
         <translation>Ljudtoppsmätare</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>LF</source>
         <translation>LF</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>Ls</source>
         <translation>Ls</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>Rs</source>
         <translation>Rs</translation>
     </message>
@@ -373,32 +373,32 @@
 <context>
     <name>AudioSurroundScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="70"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="71"/>
         <source>Audio Surround</source>
         <translation>Surroundljud</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="252"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="253"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="265"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="266"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="279"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="280"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="293"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="294"/>
         <source>LS</source>
         <translation>LS</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="306"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="307"/>
         <source>RS</source>
         <translation>RS</translation>
     </message>
@@ -406,45 +406,45 @@
 <context>
     <name>AudioVectorScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="90"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="91"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="99"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="92"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="100"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="101"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="93"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="95"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="94"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="96"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="94"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="96"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="95"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="97"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="103"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="105"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="104"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="106"/>
         <source>Ls</source>
         <translation>Ls</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="104"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="105"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="107"/>
         <source>Rs</source>
         <translation>Rs</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="109"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="111"/>
         <source>LFE</source>
         <translation>LFE</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="215"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="216"/>
         <source>Audio Vector</source>
         <translation>Ljudvektor</translation>
     </message>
@@ -452,29 +452,29 @@
 <context>
     <name>AudioWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="181"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="182"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="182"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="183"/>
         <source>-inf</source>
         <translation>-inf</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="265"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="266"/>
         <source>Sample: %1
 </source>
         <translation>Sampling: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="273"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="274"/>
         <source>Ch: %1: %2 (%3 dBFS)</source>
         <translation>Kan: %1: %2 (%3 dBFS)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="298"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="299"/>
         <source>Audio Waveform</source>
         <translation>Ljudvågform</translation>
     </message>
@@ -487,362 +487,362 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="60"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="63"/>
         <source>Comments:</source>
         <translation>Kommentarer:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="174"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="177"/>
         <source>Speed</source>
         <translation>Hastighet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="120"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="123"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="289"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="292"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="569"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="572"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>Broadcast Limited (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="574"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
         <source>Full (JPEG)</source>
         <translation>Full (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="472"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="697"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="475"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="700"/>
         <source>Track</source>
         <translation>Spår</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="460"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="463"/>
         <source>Aspect ratio</source>
         <translation>Bildförhållande</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="528"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="295"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="298"/>
         <source>Scan mode</source>
         <translation>Bildåtergivning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="600"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="603"/>
         <source>Interlaced</source>
         <translation>Sammanflätad</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="605"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="608"/>
         <source>Progressive</source>
         <translation>Progressiv</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="374"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="414"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="783"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="377"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="417"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="786"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="816"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="184"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="187"/>
         <source>Timeline</source>
         <translation>Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="199"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="202"/>
         <source>Speed Presets</source>
         <translation>Förinställda hastigheter</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="251"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="254"/>
         <source>Apply</source>
         <translation>Tillämpa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="258"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
         <source>Apply pitch compensation when the speed is changed.</source>
         <translation>Tillämpa tonhöjdskompensation när hastigheten ändras.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="264"/>
         <source>Pitch Compensation</source>
         <translation>Tonhöjdskompensation</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="315"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="318"/>
         <source>Rotation</source>
         <translation>Rotation</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="379"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="419"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="382"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="422"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="384"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="424"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="387"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="427"/>
         <source>Frame rate</source>
         <translation>Bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="389"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="392"/>
         <source>Pixel format</source>
         <translation>Bildpunktsformat</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="394"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="434"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="397"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="437"/>
         <source>Color space</source>
         <translation>Färgrymd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="399"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="439"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="402"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="442"/>
         <source>Color transfer</source>
         <translation>Färgöverföring</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="404"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="803"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="943"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="407"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="806"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="946"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="409"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="808"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="948"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="412"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="811"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="951"/>
         <source>Value</source>
         <translation>Värde</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="429"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="798"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="828"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="432"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="801"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="831"/>
         <source>Format</source>
         <translation>Format</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="614"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
         <source>Bottom Field First</source>
         <translation>Bottenfältet först</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="619"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
         <source>Top Field First</source>
         <translation>Toppfältet först</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="645"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="648"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="650"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="653"/>
         <source>90</source>
         <translation>90</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="655"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="658"/>
         <source>180</source>
         <translation>180</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="660"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
         <source>270</source>
         <translation>270</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="668"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="671"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="691"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="694"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="788"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="818"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="791"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="821"/>
         <source>Channels</source>
         <translation>Kanaler</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="793"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="823"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="796"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
         <source>Sample rate</source>
         <translation>Samplingsfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="836"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation>Justera ljud/video synkronisering. Mittpositionen motsvarar ingen ändring.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="855"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="858"/>
         <source>Sync</source>
         <translation>Synka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="880"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="883"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="909"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="912"/>
         <source>Metadata</source>
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="979"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="982"/>
         <source>Properties Menu</source>
         <translation>Meny för egenskaper</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1017"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1020"/>
         <source>Open With</source>
         <translation>Öppna med</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1024"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation>Uppdatera filen i Shotcut om du ändrat den i en annan app</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1030"/>
         <source>Reload</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1049"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1052"/>
         <source>Show In Folder</source>
         <translation>Visa i mapp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1079"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1244"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1082"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1247"/>
         <source>Extract Subtitles...</source>
         <translation>Extrahera undertexter...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1112"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1115"/>
         <source>Reset</source>
         <translation>Återställ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1117"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1120"/>
         <source>Set Equirectangular...</source>
         <translation>Ställ in ekvirektangulär...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1122"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1125"/>
         <source>Measure Video Quality...</source>
         <translation>Mät videokvalitet...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1130"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1133"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1136"/>
         <source>Export GPX</source>
         <translation>Exportera GPX</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1138"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
         <source>View Bitrate...</source>
         <translation>Visa bitfrekvens...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1144"/>
         <source>View Bitrate</source>
         <translation>Visa bitfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1146"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1149"/>
         <source>Show In Files</source>
         <translation>Visa i filer</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
         <source>Convert to Edit-friendly</source>
         <translation>Konvertera till redigeringsvänligt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="305"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="308"/>
         <source>Color range</source>
         <translation>Färgområde</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
         <source>Convert...</source>
         <translation>Konvertera...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1054"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
         <source>Copy Full File Path</source>
         <translation>Kopiera hela filsökvägen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1059"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1062"/>
         <source>More Information...</source>
         <translation>Mer information...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1064"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1067"/>
         <source>Start Integrity Check Job</source>
         <translation>Starta jobb för integritetskontroll</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1069"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1072"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Konvertera till redigeringsvänlig...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1084"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1087"/>
         <source>Set Creation Time...</source>
         <translation>Ställ in tid för skapandet ...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1092"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1095"/>
         <source>Disable Proxy</source>
         <translation>Inaktivera proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1097"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1100"/>
         <source>Make Proxy</source>
         <translation>Skapa proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1102"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1105"/>
         <source>Delete Proxy</source>
         <translation>Ta bort proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1107"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1110"/>
         <source>Copy Hash Code</source>
         <translation>Kopiera hashkod</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1003"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="874"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1006"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="877"/>
         <source>Reverse...</source>
         <translation>Omvänd...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1074"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1146"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1077"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
         <source>Extract Sub-clip...</source>
         <translation>Extrahera underklipp...</translation>
     </message>
@@ -873,7 +873,7 @@
         <translation>(variabel)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1010"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1013"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
@@ -889,97 +889,97 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="794"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="869"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="797"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="872"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Välj ett redigeringsvänligt format nedan och klicka sedan på OK för att välja ett filnamn. Efter att ha valt ett filnamn skapas ett jobb. När det är klart, dubbelklicka på jobbet för att öppna det.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="989"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1034"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1037"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*mov);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1051"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1054"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1107"/>
         <source>Convert %1</source>
         <translation>Konvertera %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1055"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1058"/>
         <source>Reversed</source>
         <translation>Omvänd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1088"/>
         <source>Reverse canceled</source>
         <translation>Omvändning avbruten</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1114"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1117"/>
         <source>Reverse %1</source>
         <translation>Omvända %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1483"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1486"/>
         <source>Choose the Other Video</source>
         <translation>Välj den andra videon</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1536"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1539"/>
         <source>Measure %1</source>
         <translation>Mätning %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1148"/>
         <source>Sub-clip</source>
         <translation>Underklipp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1147"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1222"/>
         <source>Extract sub-clip %1</source>
         <translation>Extrahera underklipp %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1288"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1241"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1291"/>
         <source>Track %1</source>
         <translation>Spår %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1290"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1243"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1293"/>
         <source>Track %1 (%2)</source>
         <translation>Spår %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1246"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1249"/>
         <source>No subtitles found</source>
         <translation>Inga undertexter hittades</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1305"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1308"/>
         <source>Extract subtitles %1</source>
         <translation>Extrahera undertexter %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1421"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -988,42 +988,42 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1465"/>
         <source>Set Equirectangular Projection</source>
         <translation>Ställ in ekvirektangulär projektion</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1474"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1477"/>
         <source>Successfully wrote %1</source>
         <translation>Lyckades skriva %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1476"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1479"/>
         <source>An error occurred saving the projection.</source>
         <translation>Ett fel inträffade när du sparade projektionen.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1596"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1599"/>
         <source>Bitrate %1</source>
         <translation>Bitfrekvens %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1609"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1612"/>
         <source>System Default</source>
         <translation>Systemstandard</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1646"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1649"/>
         <source>Other...</source>
         <translation>Andra…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1650"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1653"/>
         <source>Remove...</source>
         <translation>Ta bort...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1689"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1692"/>
         <source>Remove From Open With</source>
         <translation>Ta bort från Öppna med</translation>
     </message>
@@ -1036,14 +1036,14 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="107"/>
         <source>Audio/Video Device</source>
         <translation>Ljud-/videoenhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="58"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="60"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="83"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="84"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="90"/>
@@ -1052,12 +1052,12 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="47"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="49"/>
         <source>Video Input</source>
         <translation>Videoingång</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="66"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="68"/>
         <source>Audio Input</source>
         <translation>Ljudingång</translation>
     </message>
@@ -1106,12 +1106,12 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/blipproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="28"/>
         <source>Blip Flash</source>
         <translation>Kort blixt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/blipproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="43"/>
         <source>Frequency</source>
         <translation>Frekvens</translation>
     </message>
@@ -1219,52 +1219,52 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="26"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="28"/>
         <source>Color Bars</source>
         <translation>Testbild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="38"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="40"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="55"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="57"/>
         <source>100% PAL color bars</source>
         <translation>100% PAL testbild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="60"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="62"/>
         <source>100% PAL color bars with red</source>
         <translation>100% PAL testbild med rött</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="65"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="67"/>
         <source>95% BBC PAL color bars</source>
         <translation>95% BBC PAL testbild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="70"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="72"/>
         <source>75% EBU color bars</source>
         <translation>75% EBU testbild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="75"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="77"/>
         <source>SMPTE color bars</source>
         <translation>SMPTE testbild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="80"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="82"/>
         <source>Philips PM5544</source>
         <translation>Philips PM5544</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="85"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="87"/>
         <source>FuBK</source>
         <translation>FuBK</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="90"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="92"/>
         <source>Simplified FuBK</source>
         <translation>Förenklad FuBK</translation>
     </message>
@@ -1290,22 +1290,22 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="20"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="23"/>
         <source>Color</source>
         <translation>Färg</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="30"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="33"/>
         <source>Comments:</source>
         <translation>Kommentarer:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="64"/>
         <source>Color...</source>
         <translation>Färg...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="74"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="77"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
@@ -1358,52 +1358,52 @@ lämna tomt för att använda urklipp:</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="28"/>
         <source>Count</source>
         <translation>Räkna</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="43"/>
         <source>Direction</source>
         <translation>Riktning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="74"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="76"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="107"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="112"/>
         <source>Sound</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="110"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Silent - No sound&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz beep exactly two seconds before the out point&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz beep at frame 0 of every second&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tyst - Inget ljud&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz ljudsignal exakt två sekunder före utgångspunkten&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz ljudsignal vid bildruta 0 på varje sekund&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="143"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="148"/>
         <source>Background</source>
         <translation>Bakgrund</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="146"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="145"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;None - No background&lt;/p&gt;&lt;p&gt;Clock  - Film style clock animation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inget - Ingen bakgrund&lt;/p&gt;&lt;p&gt;Tid  - Filmstil tidsanimation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="179"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="184"/>
         <source>Drop Frame</source>
         <translation>Släppt bildruta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="182"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="181"/>
         <source>Use SMPTE style drop-frame counting for non-integer frame rates. The clock and timecode will advance two frames every minute if necessary to keep time with wall clock time.</source>
         <translation>Använd drop-frame-räkning med SMPTE-stil för bildhastigheter med icke-heltal. Klockan och tidskoden förflyttar vid behov två bildrutor varje minut om det behövs för att hålla tiden med väggklocktiden.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="189"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="191"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
@@ -1500,62 +1500,62 @@ lämna tomt för att använda urklipp:</translation>
         <translation>Lägg till anpassat videoläge</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="32"/>
         <source>Colorspace</source>
         <translation>Färgrymd</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="58"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="61"/>
         <source>ITU-R BT.2020</source>
         <translation>ITU-R BT.2020</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="81"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="84"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="112"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="115"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="182"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="185"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="201"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="204"/>
         <source>Interlaced</source>
         <translation>Sammanflätad</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="206"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="209"/>
         <source>Progressive</source>
         <translation>Progressiv</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="229"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="232"/>
         <source>Aspect ratio</source>
         <translation>Bildförhållande</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="260"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="263"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="348"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="351"/>
         <source>Frames/sec</source>
         <translation>Bildrutor/s</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="449"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="452"/>
         <source>Scan mode</source>
         <translation>Bildåtergivning</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="481"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="484"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
         <translation>&lt;small&gt;(Lämna Namn tomt för att hoppa över att spara en förinställning och använda ett temporärt eller projektspecifikt videoläge.)&lt;/small&gt;</translation>
     </message>
@@ -1573,23 +1573,23 @@ lämna tomt för att använda urklipp:</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="85"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="57"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="59"/>
         <source>Device</source>
         <translation>Enhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="67"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="69"/>
         <source>Signal mode</source>
         <translation>Signalläge</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="85"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="87"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
         <translation>Observera att inte alla kortmodeller stöder automatisk signaldetektering, och inte alla kort stöder alla signallägen.</translation>
     </message>
@@ -1607,24 +1607,24 @@ lämna tomt för att använda urklipp:</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="28"/>
         <location filename="../src/widgets/directshowvideowidget.cpp" line="166"/>
         <source>Audio/Video Device</source>
         <translation>Ljud-/videoenhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="52"/>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="81"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="54"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="83"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="60"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="62"/>
         <source>Video Input</source>
         <translation>Videoingång</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="70"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="72"/>
         <source>Audio Input</source>
         <translation>Ljudingång</translation>
     </message>
@@ -1691,162 +1691,162 @@ lämna tomt för att använda urklipp:</translation>
 <context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="18"/>
+        <location filename="../src/docks/encodedock.ui" line="17"/>
         <source>Export</source>
         <translation>Exportera</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="45"/>
+        <location filename="../src/docks/encodedock.ui" line="44"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
         <translation>&lt;b&gt;Förinställningar&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="58"/>
+        <location filename="../src/docks/encodedock.ui" line="57"/>
         <source>search</source>
         <translation>sök</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="89"/>
+        <location filename="../src/docks/encodedock.ui" line="88"/>
         <source>Add current settings as a new custom preset</source>
         <translation>Lägg till aktuella inställningar som en ny anpassad förinställning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="103"/>
+        <location filename="../src/docks/encodedock.ui" line="102"/>
         <source>Delete currently selected preset</source>
         <translation>Radera vald förinställning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="169"/>
+        <location filename="../src/docks/encodedock.ui" line="168"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Hjälp med export&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Standardinställningarna skapar en H.264/AAC MP4-fil, som är lämplig för de flesta användare och ändamål. Välj en &lt;span style=&quot; font-weight:600;&quot;&gt;förinställning&lt;/span&gt; till vänster innan du bestämmer dig för att använda det &lt;span style=&quot; font-weight:600;&quot;&gt;avancerade&lt;/span&gt; läget. Det &lt;span style=&quot; font-weight:600;&quot;&gt;avancerade&lt;/span&gt; läget förhindrar inte att man skapar en ogiltig kombination av alternativ!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="187"/>
+        <location filename="../src/docks/encodedock.ui" line="186"/>
         <source>From</source>
         <translation>Från</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="217"/>
+        <location filename="../src/docks/encodedock.ui" line="216"/>
         <source>Format</source>
         <translation>Format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="253"/>
+        <location filename="../src/docks/encodedock.ui" line="252"/>
         <source>Use hardware encoder</source>
         <translation>Använd hårdvarukodare</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="260"/>
+        <location filename="../src/docks/encodedock.ui" line="259"/>
         <source>Configure...</source>
         <translation>Konfigurera...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="294"/>
+        <location filename="../src/docks/encodedock.ui" line="296"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="485"/>
+        <location filename="../src/docks/encodedock.ui" line="487"/>
         <source>Interpolation</source>
         <translation>Interpolation</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="539"/>
+        <location filename="../src/docks/encodedock.ui" line="541"/>
         <source>Field order</source>
         <translation>Fältordning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="549"/>
+        <location filename="../src/docks/encodedock.ui" line="551"/>
         <source>Aspect ratio</source>
         <translation>Bildförhållande</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="723"/>
+        <location filename="../src/docks/encodedock.ui" line="725"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="579"/>
+        <location filename="../src/docks/encodedock.ui" line="581"/>
         <source>Scan mode</source>
         <translation>Bildåtergivning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="664"/>
+        <location filename="../src/docks/encodedock.ui" line="666"/>
         <source>Interlaced</source>
         <translation>Sammanflätad</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="669"/>
+        <location filename="../src/docks/encodedock.ui" line="671"/>
         <source>Progressive</source>
         <translation>Progressiv</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="617"/>
+        <location filename="../src/docks/encodedock.ui" line="619"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="569"/>
+        <location filename="../src/docks/encodedock.ui" line="571"/>
         <source>Frames/sec</source>
         <translation>Bildrutor/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="916"/>
+        <location filename="../src/docks/encodedock.ui" line="918"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="824"/>
+        <location filename="../src/docks/encodedock.ui" line="826"/>
         <source>Bottom Field First</source>
         <translation>Bottenfältet först</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="829"/>
+        <location filename="../src/docks/encodedock.ui" line="831"/>
         <source>Top Field First</source>
         <translation>Toppfältet först</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="858"/>
+        <location filename="../src/docks/encodedock.ui" line="860"/>
         <source>One Field (fast)</source>
         <translation>Ett fält (snabbt)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="863"/>
+        <location filename="../src/docks/encodedock.ui" line="865"/>
         <source>Linear Blend (fast)</source>
         <translation>Linjär blandning (snabb)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="868"/>
+        <location filename="../src/docks/encodedock.ui" line="870"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - endast tidsmässigt (bra)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="559"/>
+        <location filename="../src/docks/encodedock.ui" line="561"/>
         <source>Deinterlacer</source>
         <translation>Deinterlacer</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="501"/>
+        <location filename="../src/docks/encodedock.ui" line="503"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Närmsta granne (snabb)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="506"/>
+        <location filename="../src/docks/encodedock.ui" line="508"/>
         <source>Bilinear (good)</source>
         <translation>Bilinjär (bra)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="511"/>
+        <location filename="../src/docks/encodedock.ui" line="513"/>
         <source>Bicubic (better)</source>
         <translation>Bikubisk (bättre)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="811"/>
+        <location filename="../src/docks/encodedock.ui" line="813"/>
         <source>Use preview scaling</source>
         <translation>Använd skalning för förhandsgranskning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="599"/>
+        <location filename="../src/docks/encodedock.ui" line="601"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1861,433 +1861,443 @@ deinterlacer har rapporterats som problematisk
 med parallellbearbetning aktiverad.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="330"/>
+        <location filename="../src/docks/encodedock.ui" line="332"/>
         <source>Reframe</source>
         <translation>Rama om</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="589"/>
+        <location filename="../src/docks/encodedock.ui" line="591"/>
         <source>Color range</source>
         <translation>Färgområde</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="607"/>
+        <location filename="../src/docks/encodedock.ui" line="609"/>
         <source>Parallel processing</source>
         <translation>Parallell behandling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="630"/>
+        <location filename="../src/docks/encodedock.ui" line="632"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>Broadcast Limited (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="635"/>
+        <location filename="../src/docks/encodedock.ui" line="637"/>
         <source>Full (JPEG)</source>
         <translation>Full (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="873"/>
+        <location filename="../src/docks/encodedock.ui" line="875"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - tidsmässig + rumslig (bättre)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="878"/>
+        <location filename="../src/docks/encodedock.ui" line="880"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (bäst)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="955"/>
-        <location filename="../src/docks/encodedock.ui" line="964"/>
-        <location filename="../src/docks/encodedock.ui" line="1647"/>
+        <location filename="../src/docks/encodedock.ui" line="957"/>
+        <location filename="../src/docks/encodedock.ui" line="966"/>
+        <location filename="../src/docks/encodedock.ui" line="1659"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="994"/>
+        <location filename="../src/docks/encodedock.ui" line="996"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1006"/>
+        <location filename="../src/docks/encodedock.ui" line="1008"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = Grupp av bilder, som är det maximala intervallet för nyckelbildrutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1019"/>
+        <location filename="../src/docks/encodedock.ui" line="1021"/>
         <source>frames</source>
         <translation>bildrutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1039"/>
+        <location filename="../src/docks/encodedock.ui" line="1041"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>En fast GOP innebär att nyckelbilder inte kommer
 att infogas vid upptäckta scenförändringar.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1043"/>
+        <location filename="../src/docks/encodedock.ui" line="1045"/>
         <source>Fixed</source>
         <translation>Fast</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1067"/>
-        <location filename="../src/docks/encodedock.ui" line="1689"/>
+        <location filename="../src/docks/encodedock.ui" line="1069"/>
+        <location filename="../src/docks/encodedock.ui" line="1701"/>
         <source>The average bit rate</source>
         <translation>Den genomsnittliga bitfrekvensen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1220"/>
-        <location filename="../src/docks/encodedock.ui" line="1772"/>
+        <location filename="../src/docks/encodedock.ui" line="1222"/>
+        <location filename="../src/docks/encodedock.ui" line="1784"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1242"/>
+        <location filename="../src/docks/encodedock.ui" line="1244"/>
         <source>Disable video</source>
         <translation>Inaktivera video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1249"/>
+        <location filename="../src/docks/encodedock.ui" line="1251"/>
+        <source>&lt;p&gt;The hardware decoder for export is usually not very beneficial and is often slower. It may only mildly reduce CPU usage on some systems. Therefore, we recommend to leave it off, but you can test and decide for yourself.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Hårdvaruavkodaren för export är vanligtvis inte särskilt fördelaktig och är ofta långsammare. Den kan endast minska CPU-användningen något på vissa system. Därför rekommenderar vi att du lämnar den avstängd, men du kan testa och bestämma själv.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="1254"/>
+        <source>Use hardware decoder</source>
+        <translation>Använd hårdvaruavkodaren</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="1261"/>
         <source>Dual pass</source>
         <translation>Dubbla pass</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1256"/>
+        <location filename="../src/docks/encodedock.ui" line="1268"/>
         <source>B frames</source>
         <translation>B-bildrutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1268"/>
+        <location filename="../src/docks/encodedock.ui" line="1280"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>B-bildrutor är dubbelriktade &quot;delta&quot;-bilder
 i temporal komprimering</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1307"/>
+        <location filename="../src/docks/encodedock.ui" line="1319"/>
         <source>Codec threads</source>
         <translation>Kodektrådar</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1322"/>
+        <location filename="../src/docks/encodedock.ui" line="1334"/>
         <source>(0 = auto)</source>
         <translation>(0 = automatisk)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1344"/>
-        <location filename="../src/docks/encodedock.ui" line="1814"/>
+        <location filename="../src/docks/encodedock.ui" line="1356"/>
+        <location filename="../src/docks/encodedock.ui" line="1826"/>
         <source>Rate control</source>
         <translation>Frekvenskontroll</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1357"/>
-        <location filename="../src/docks/encodedock.ui" line="1827"/>
+        <location filename="../src/docks/encodedock.ui" line="1369"/>
+        <location filename="../src/docks/encodedock.ui" line="1839"/>
         <source>Average Bitrate</source>
         <translation>Genomsnittlig bitfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1362"/>
-        <location filename="../src/docks/encodedock.ui" line="1832"/>
+        <location filename="../src/docks/encodedock.ui" line="1374"/>
+        <location filename="../src/docks/encodedock.ui" line="1844"/>
         <source>Constant Bitrate</source>
         <translation>Konstant bitfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1367"/>
-        <location filename="../src/docks/encodedock.ui" line="1837"/>
+        <location filename="../src/docks/encodedock.ui" line="1379"/>
+        <location filename="../src/docks/encodedock.ui" line="1849"/>
         <source>Quality-based VBR</source>
         <translation>Kvalitetsbaserad VBR</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1372"/>
+        <location filename="../src/docks/encodedock.ui" line="1384"/>
         <source>Constrained VBR</source>
         <translation>Begränsad VBR</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1395"/>
+        <location filename="../src/docks/encodedock.ui" line="1407"/>
         <source>Buffer size</source>
         <translation>Buffertstorlek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1417"/>
+        <location filename="../src/docks/encodedock.ui" line="1429"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1439"/>
-        <location filename="../src/docks/encodedock.ui" line="1860"/>
+        <location filename="../src/docks/encodedock.ui" line="1451"/>
+        <location filename="../src/docks/encodedock.ui" line="1872"/>
         <source>Quality</source>
         <translation>Kvalitet</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1451"/>
-        <location filename="../src/docks/encodedock.ui" line="1872"/>
+        <location filename="../src/docks/encodedock.ui" line="1463"/>
+        <location filename="../src/docks/encodedock.ui" line="1884"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1467"/>
-        <location filename="../src/docks/encodedock.ui" line="1888"/>
+        <location filename="../src/docks/encodedock.ui" line="1479"/>
+        <location filename="../src/docks/encodedock.ui" line="1900"/>
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1489"/>
-        <location filename="../src/docks/encodedock.ui" line="1677"/>
+        <location filename="../src/docks/encodedock.ui" line="1501"/>
+        <location filename="../src/docks/encodedock.ui" line="1689"/>
         <source>Bitrate</source>
         <translation>Bitfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1500"/>
+        <location filename="../src/docks/encodedock.ui" line="1512"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1509"/>
+        <location filename="../src/docks/encodedock.ui" line="1521"/>
         <source>Channels</source>
         <translation>Kanaler</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1521"/>
+        <location filename="../src/docks/encodedock.ui" line="1533"/>
         <source>The number of audio channels in the output.</source>
         <translation>Antalet ljudkanaler i utmatningen.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1525"/>
+        <location filename="../src/docks/encodedock.ui" line="1537"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1530"/>
+        <location filename="../src/docks/encodedock.ui" line="1542"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1535"/>
+        <location filename="../src/docks/encodedock.ui" line="1547"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (quad/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1540"/>
+        <location filename="../src/docks/encodedock.ui" line="1552"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 surround)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1615"/>
+        <location filename="../src/docks/encodedock.ui" line="1627"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1637"/>
+        <location filename="../src/docks/encodedock.ui" line="1649"/>
         <source>Sample rate</source>
         <translation>Samplingsfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1794"/>
+        <location filename="../src/docks/encodedock.ui" line="1806"/>
         <source>Disable audio</source>
         <translation>Inaktivera ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1911"/>
+        <location filename="../src/docks/encodedock.ui" line="1923"/>
         <source>Other</source>
         <translation>Annan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1927"/>
+        <location filename="../src/docks/encodedock.ui" line="1939"/>
         <source>Disable subtitles</source>
         <translation>Inaktivera undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1365"/>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
-        <location filename="../src/docks/encodedock.cpp" line="2369"/>
+        <location filename="../src/docks/encodedock.ui" line="1972"/>
+        <location filename="../src/docks/encodedock.cpp" line="1368"/>
+        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="2372"/>
         <source>Export Video/Audio</source>
         <translation>Exportera video/ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1970"/>
+        <location filename="../src/docks/encodedock.ui" line="1982"/>
         <source>Reset options to defaults</source>
         <translation>Återställ alternativ till standard</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1973"/>
+        <location filename="../src/docks/encodedock.ui" line="1985"/>
         <source>Reset</source>
         <translation>Återställ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1980"/>
+        <location filename="../src/docks/encodedock.ui" line="1992"/>
         <source>Advanced</source>
         <translation>Avancerat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1990"/>
+        <location filename="../src/docks/encodedock.ui" line="2002"/>
         <source>Always start in Advanced mode</source>
         <translation>Starta alltid i avancerat läge</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2074"/>
-        <location filename="../src/docks/encodedock.cpp" line="2081"/>
-        <location filename="../src/docks/encodedock.cpp" line="2193"/>
+        <location filename="../src/docks/encodedock.ui" line="2012"/>
+        <location filename="../src/docks/encodedock.cpp" line="2077"/>
+        <location filename="../src/docks/encodedock.cpp" line="2084"/>
+        <location filename="../src/docks/encodedock.cpp" line="2196"/>
         <source>Stream</source>
         <translation>Strömma</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1861"/>
-        <location filename="../src/docks/encodedock.cpp" line="1962"/>
-        <location filename="../src/docks/encodedock.cpp" line="1972"/>
+        <location filename="../src/docks/encodedock.ui" line="2039"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
+        <location filename="../src/docks/encodedock.cpp" line="1965"/>
+        <location filename="../src/docks/encodedock.cpp" line="1975"/>
         <source>Stop Capture</source>
         <translation>Stoppa fångst</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="142"/>
+        <location filename="../src/docks/encodedock.cpp" line="144"/>
         <source>Automatic from extension</source>
         <translation>Automatiskt från tillägg</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="150"/>
-        <location filename="../src/docks/encodedock.cpp" line="160"/>
+        <location filename="../src/docks/encodedock.cpp" line="152"/>
+        <location filename="../src/docks/encodedock.cpp" line="162"/>
         <source>Default for format</source>
         <translation>Standard för format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="469"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Timeline</source>
         <translation>Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="476"/>
-        <location filename="../src/docks/encodedock.cpp" line="482"/>
+        <location filename="../src/docks/encodedock.cpp" line="479"/>
+        <location filename="../src/docks/encodedock.cpp" line="485"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="487"/>
-        <location filename="../src/docks/encodedock.cpp" line="494"/>
+        <location filename="../src/docks/encodedock.cpp" line="490"/>
+        <location filename="../src/docks/encodedock.cpp" line="497"/>
         <source>Marker</source>
         <translation>Markör</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="505"/>
+        <location filename="../src/docks/encodedock.cpp" line="508"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Du måste ange numeriska värden med &quot;%1&quot; som decimalpunkt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="514"/>
-        <location filename="../src/docks/encodedock.cpp" line="1808"/>
-        <location filename="../src/docks/encodedock.cpp" line="1809"/>
+        <location filename="../src/docks/encodedock.cpp" line="517"/>
+        <location filename="../src/docks/encodedock.cpp" line="1811"/>
+        <location filename="../src/docks/encodedock.cpp" line="1812"/>
         <source>Custom</source>
         <translation>Anpassad</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="550"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Stock</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="553"/>
+        <location filename="../src/docks/encodedock.cpp" line="556"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1432"/>
+        <location filename="../src/docks/encodedock.cpp" line="1435"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Di kan inte skriva till en fil som finns i ditt projekt.
 Försök igen med en annan mapp eller annat filnamn.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1530"/>
+        <location filename="../src/docks/encodedock.cpp" line="1533"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut hittade filter som kräver analysjobb som inte har körts.
 Vill du köra analysjobben nu?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
-        <location filename="../src/docks/encodedock.cpp" line="2371"/>
+        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="2374"/>
         <source>Capture File</source>
         <translation>Fånga fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1880"/>
+        <location filename="../src/docks/encodedock.cpp" line="1883"/>
         <source>Export Files</source>
         <translation>Exportera filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1895"/>
+        <location filename="../src/docks/encodedock.cpp" line="1898"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1897"/>
+        <location filename="../src/docks/encodedock.cpp" line="1900"/>
         <source>Determined by Export (*)</source>
         <translation>Bestäms av export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2069"/>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2072"/>
+        <location filename="../src/docks/encodedock.cpp" line="2094"/>
         <source>Stop Stream</source>
         <translation>Stoppa ström</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2083"/>
+        <location filename="../src/docks/encodedock.cpp" line="2086"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Ange nätverksprotokollets schema, adress, port och parametrar som en URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2126"/>
+        <location filename="../src/docks/encodedock.cpp" line="2129"/>
         <source>Add Export Preset</source>
         <translation>Lägg till exportförinställning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2170"/>
+        <location filename="../src/docks/encodedock.cpp" line="2173"/>
         <source>Delete Preset</source>
         <translation>Ta bort förinställning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2171"/>
+        <location filename="../src/docks/encodedock.cpp" line="2174"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Är du säker på att du vill ta bort %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2299"/>
+        <location filename="../src/docks/encodedock.cpp" line="2302"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2353"/>
+        <location filename="../src/docks/encodedock.cpp" line="2356"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2501"/>
+        <location filename="../src/docks/encodedock.cpp" line="2509"/>
         <source>Detect</source>
         <translation>Upptäck</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2558"/>
+        <location filename="../src/docks/encodedock.cpp" line="2566"/>
         <source>(auto)</source>
         <translation>(auto)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2604"/>
+        <location filename="../src/docks/encodedock.cpp" line="2612"/>
         <source>Detecting hardware encoders...</source>
         <translation>Upptäcker hårdvarukodare...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2661"/>
+        <location filename="../src/docks/encodedock.cpp" line="2669"/>
         <source>Nothing found</source>
         <translation>Ingenting hittades</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2663"/>
+        <location filename="../src/docks/encodedock.cpp" line="2671"/>
         <source>Found %1</source>
         <translation>Hittade %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2886"/>
+        <location filename="../src/docks/encodedock.cpp" line="2894"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2298,42 +2308,42 @@ Spara ditt projekt, stäng det och öppna det igen.
 Shotcut kommer att försöka reparera ditt projekt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2935"/>
+        <location filename="../src/docks/encodedock.cpp" line="2943"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Bildförhållandet stämmer inte överens med videoläget för projektet, vilket orsakar svarta staplar.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2973"/>
+        <location filename="../src/docks/encodedock.cpp" line="2981"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Bildfrekvensen är högre än i projektvideoläget, vilket gör att bildrutorna upprepas.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2499"/>
+        <location filename="../src/docks/encodedock.cpp" line="2507"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfigurera hårdvarukodning</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="472"/>
+        <location filename="../src/docks/encodedock.cpp" line="475"/>
         <source>Current Playlist Bin</source>
         <translation>Aktuell spellistebehållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="473"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
         <source>Each Playlist Bin Item</source>
         <translation>Varje objekt i spellistebehållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="1884"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Exportera varje objekt i spellistebehållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1926"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
         <source>Export canceled</source>
         <translation>Export avbruten</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2523"/>
+        <location filename="../src/docks/encodedock.cpp" line="2531"/>
         <source>Export Frames/sec</source>
         <translation>Exportera bildrutor/s</translation>
     </message>
@@ -2536,268 +2546,268 @@ Shotcut kommer att försöka reparera ditt projekt.</translation>
 <context>
     <name>FilesDock</name>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="18"/>
-        <location filename="../src/docks/filesdock.cpp" line="597"/>
+        <location filename="../src/docks/filesdock.ui" line="14"/>
+        <location filename="../src/docks/filesdock.cpp" line="599"/>
         <source>Files</source>
         <translation>Filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="61"/>
+        <location filename="../src/docks/filesdock.ui" line="57"/>
         <source>Location</source>
         <translation>Plats</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="90"/>
+        <location filename="../src/docks/filesdock.ui" line="86"/>
         <source>Add the current folder to the saved locations</source>
         <translation>Lägg till den aktuella mappen i de sparade platserna</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="110"/>
+        <location filename="../src/docks/filesdock.ui" line="106"/>
         <source>Remove the selected location</source>
         <translation>Ta bort den valda platsen</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="502"/>
+        <location filename="../src/docks/filesdock.cpp" line="504"/>
         <source>Home</source>
         <comment>The user&apos;s home folder in the file system</comment>
         <translation>Hem</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="503"/>
+        <location filename="../src/docks/filesdock.cpp" line="505"/>
         <source>Current Project</source>
         <translation>Aktuellt projekt</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="504"/>
+        <location filename="../src/docks/filesdock.cpp" line="506"/>
         <source>Documents</source>
         <translation>Dokument</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="509"/>
+        <location filename="../src/docks/filesdock.cpp" line="511"/>
         <source>Movies</source>
         <comment>The system-provided videos folder called Movies on macOS</comment>
         <translation>Filmer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="513"/>
+        <location filename="../src/docks/filesdock.cpp" line="515"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="516"/>
+        <location filename="../src/docks/filesdock.cpp" line="518"/>
         <source>Pictures</source>
         <comment>The system-provided photos folder</comment>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="520"/>
+        <location filename="../src/docks/filesdock.cpp" line="522"/>
         <source>Volumes</source>
         <comment>The macOS file system location where external drives and network shares are mounted</comment>
         <translation>Volymer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="525"/>
+        <location filename="../src/docks/filesdock.cpp" line="527"/>
         <source>Videos</source>
         <translation>Videor</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="607"/>
+        <location filename="../src/docks/filesdock.cpp" line="609"/>
         <source>Select</source>
         <translation>Välj</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="611"/>
+        <location filename="../src/docks/filesdock.cpp" line="613"/>
         <source>Files Controls</source>
         <translation>Kontroller för filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="616"/>
+        <location filename="../src/docks/filesdock.cpp" line="618"/>
         <source>Files Menu</source>
         <translation>Meny för filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="642"/>
-        <location filename="../src/docks/filesdock.cpp" line="654"/>
+        <location filename="../src/docks/filesdock.cpp" line="644"/>
+        <location filename="../src/docks/filesdock.cpp" line="656"/>
         <source>Files Filters</source>
         <translation>Filter för filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="677"/>
+        <location filename="../src/docks/filesdock.cpp" line="679"/>
         <source>Only show files whose name contains some text</source>
         <translation>Visa bara filer vars namn innehåller någon text</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="678"/>
+        <location filename="../src/docks/filesdock.cpp" line="680"/>
         <source>search</source>
         <translation>sök</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="787"/>
+        <location filename="../src/docks/filesdock.cpp" line="789"/>
         <source>Tiles</source>
         <translation>Rutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="788"/>
+        <location filename="../src/docks/filesdock.cpp" line="790"/>
         <source>View as tiles</source>
         <translation>Visa som rutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="800"/>
+        <location filename="../src/docks/filesdock.cpp" line="802"/>
         <source>Icons</source>
         <translation>Ikoner</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="801"/>
+        <location filename="../src/docks/filesdock.cpp" line="803"/>
         <source>View as icons</source>
         <translation>Visa som ikoner</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="813"/>
+        <location filename="../src/docks/filesdock.cpp" line="815"/>
         <source>Details</source>
         <translation>Detaljer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="814"/>
+        <location filename="../src/docks/filesdock.cpp" line="816"/>
         <source>View as details</source>
         <translation>Visa som detaljerad</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="826"/>
+        <location filename="../src/docks/filesdock.cpp" line="828"/>
         <source>Open In Shotcut</source>
         <translation>Öppna i Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="827"/>
+        <location filename="../src/docks/filesdock.cpp" line="829"/>
         <source>Open the clip in the Source player</source>
         <translation>Öppna klippet i källspelaren</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="835"/>
+        <location filename="../src/docks/filesdock.cpp" line="837"/>
         <source>System Default</source>
         <translation>Systemstandard</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="850"/>
+        <location filename="../src/docks/filesdock.cpp" line="852"/>
         <source>Other...</source>
         <translation>Andra…</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="858"/>
+        <location filename="../src/docks/filesdock.cpp" line="860"/>
         <source>Remove...</source>
         <translation>Ta bort...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="867"/>
+        <location filename="../src/docks/filesdock.cpp" line="869"/>
         <source>Show In File Manager</source>
         <translation>Visa i filhanteraren</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="877"/>
+        <location filename="../src/docks/filesdock.cpp" line="879"/>
         <source>Update Thumbnails</source>
         <translation>Uppdatera miniatyrbilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="885"/>
+        <location filename="../src/docks/filesdock.cpp" line="887"/>
         <source>Select All</source>
         <translation>Markera alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="896"/>
+        <location filename="../src/docks/filesdock.cpp" line="898"/>
         <source>Select None</source>
         <translation>Avmarkera alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="907"/>
+        <location filename="../src/docks/filesdock.cpp" line="909"/>
         <source>Open Previous</source>
         <translation>Öppna tidigare</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="919"/>
+        <location filename="../src/docks/filesdock.cpp" line="921"/>
         <source>Open Next</source>
         <translation>Öppna nästa</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="931"/>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="932"/>
+        <location filename="../src/docks/filesdock.cpp" line="934"/>
         <source>Show or hide video files</source>
         <translation>Visa eller dölj videofiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="937"/>
+        <location filename="../src/docks/filesdock.cpp" line="939"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="938"/>
+        <location filename="../src/docks/filesdock.cpp" line="940"/>
         <source>Show or hide audio files</source>
         <translation>Visa eller dölj ljudfiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="943"/>
+        <location filename="../src/docks/filesdock.cpp" line="945"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="944"/>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
         <source>Show or hide image files</source>
         <translation>Visa eller dölj bildfiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="949"/>
+        <location filename="../src/docks/filesdock.cpp" line="951"/>
         <source>Other</source>
         <translation>Annan</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="950"/>
+        <location filename="../src/docks/filesdock.cpp" line="952"/>
         <source>Show or hide other kinds of files</source>
         <translation>Visa eller dölj andra typer av filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="955"/>
+        <location filename="../src/docks/filesdock.cpp" line="957"/>
         <source>Folders</source>
         <translation>Mappar</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="956"/>
+        <location filename="../src/docks/filesdock.cpp" line="958"/>
         <source>Hide or show the list of folders</source>
         <translation>Dölj eller visa listan över mappar</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="967"/>
+        <location filename="../src/docks/filesdock.cpp" line="969"/>
         <source>Go Up</source>
         <translation>Gå upp</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="968"/>
+        <location filename="../src/docks/filesdock.cpp" line="970"/>
         <source>Show the parent folder</source>
         <translation>Visa den överordnade mappen</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="986"/>
+        <location filename="../src/docks/filesdock.cpp" line="988"/>
         <source>Refresh Folders</source>
         <translation>Uppdatera mappar</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1007"/>
+        <location filename="../src/docks/filesdock.cpp" line="1009"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1031"/>
+        <location filename="../src/docks/filesdock.cpp" line="1033"/>
         <source>Open With</source>
         <translation>Öppna med</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1301"/>
+        <location filename="../src/docks/filesdock.cpp" line="1303"/>
         <source>Remove From Open With</source>
         <translation>Ta bort från Öppna med</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1322"/>
+        <location filename="../src/docks/filesdock.cpp" line="1324"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n objekt</numerusform>
@@ -2805,22 +2815,22 @@ Shotcut kommer att försöka reparera ditt projekt.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1364"/>
+        <location filename="../src/docks/filesdock.cpp" line="1366"/>
         <source>Add Location</source>
         <translation>Lägg till plats</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1365"/>
+        <location filename="../src/docks/filesdock.cpp" line="1367"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1383"/>
+        <location filename="../src/docks/filesdock.cpp" line="1385"/>
         <source>Delete Location</source>
         <translation>Ta bort plats</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1384"/>
+        <location filename="../src/docks/filesdock.cpp" line="1386"/>
         <source>Are you sure you want to remove %1?</source>
         <translation>Är du säker på att du vill ta bort %1?</translation>
     </message>
@@ -3016,62 +3026,62 @@ Shotcut kommer att försöka reparera ditt projekt.</translation>
         <translation>Filter</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="214"/>
+        <location filename="../src/docks/filtersdock.cpp" line="215"/>
         <source>Add</source>
         <translation>Lägg till</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="216"/>
+        <location filename="../src/docks/filtersdock.cpp" line="217"/>
         <source>Choose a filter to add</source>
         <translation>Välj ett filter att lägga till</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="228"/>
+        <location filename="../src/docks/filtersdock.cpp" line="229"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="230"/>
+        <location filename="../src/docks/filtersdock.cpp" line="231"/>
         <source>Remove selected filter</source>
         <translation>Ta bort valt filter</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="237"/>
+        <location filename="../src/docks/filtersdock.cpp" line="238"/>
         <source>Copy Enabled</source>
         <translation>Kopiera aktiverad</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="238"/>
+        <location filename="../src/docks/filtersdock.cpp" line="239"/>
         <source>Copy checked filters to the clipboard</source>
         <translation>Kopiera kontrollerade filter till urklipp</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="245"/>
+        <location filename="../src/docks/filtersdock.cpp" line="246"/>
         <source>Copy Current</source>
         <translation>Kopiera aktuell</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="246"/>
+        <location filename="../src/docks/filtersdock.cpp" line="247"/>
         <source>Copy current filter to the clipboard</source>
         <translation>Kopiera aktuellt filter till urklipp</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="253"/>
+        <location filename="../src/docks/filtersdock.cpp" line="254"/>
         <source>Copy All</source>
         <translation>Kopiera alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="254"/>
+        <location filename="../src/docks/filtersdock.cpp" line="255"/>
         <source>Copy all filters to the clipboard</source>
         <translation>Kopiera alla filter till urklippet</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="261"/>
+        <location filename="../src/docks/filtersdock.cpp" line="262"/>
         <source>Paste Filters</source>
         <translation>Klistra in filter</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="262"/>
+        <location filename="../src/docks/filtersdock.cpp" line="263"/>
         <source>Paste the filters from the clipboard</source>
         <translation>Klistra in filtren från urklippet</translation>
     </message>
@@ -3116,37 +3126,37 @@ Klicka på Avbryt om du inte har Glaxnimate.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="20"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="23"/>
         <source>Animation</source>
         <translation>Animering</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="30"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="33"/>
         <source>Comments:</source>
         <translation>Kommentarer:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="64"/>
         <source>Background color...</source>
         <translation>Bakgrundsfärg...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="76"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="79"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="103"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="106"/>
         <source>Edit...</source>
         <translation>Redigera...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="110"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="113"/>
         <source>Reload</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="132"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="135"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
@@ -3221,105 +3231,105 @@ Klicka för att ändra</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="25"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="28"/>
         <source>HTML</source>
         <translation>HTML</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="150"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="153"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="173"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="176"/>
         <source>Line 1</source>
         <translation>Rad 1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="187"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="190"/>
         <source>Line 2</source>
         <translation>Rad 2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="201"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="204"/>
         <source>Line 3</source>
         <translation>Rad 3</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="215"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="218"/>
         <source>Click to expand or collapse the Body section</source>
         <translation>Klicka för att expandera eller fälla in Body-sektionen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="221"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="224"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="481"/>
         <source>▶ Body</source>
         <translation>▶ Body</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="253"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="256"/>
         <source>Background color...</source>
         <translation>Bakgrundsfärg...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="266"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="269"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="276"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="279"/>
         <source>Click to set color to transparent</source>
         <translation>Klicka för att ställa in färg till transparent</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="279"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="282"/>
         <source>Transparent</source>
         <translation>Genomskinlig</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="301"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="304"/>
         <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
         <translation>Inkludera inte &lt;html&gt;, &lt;head&gt; eller &lt;body&gt; här</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="310"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="313"/>
         <source>Click to expand or collapse the CSS section</source>
         <translation>Klicka för att expandera eller fälla in CSS-sektionen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="316"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="319"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="471"/>
         <source>▶ CSS</source>
         <translation>▶ CSS</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="346"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="349"/>
         <source>Type or paste stylesheets here</source>
         <translation>Skriv eller klistra in stilmallar här</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="355"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="358"/>
         <source>Click to expand or collapse the JavaScript section</source>
         <translation>Klicka för att expandera eller fälla in JavaScript-sektionen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="361"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="364"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="489"/>
         <source>▶ JavaScript</source>
         <translation>▶ JavaScript</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="391"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="394"/>
         <source>Type or paste JavaScript code here</source>
         <translation>Skriv eller klistra in JavaScript-kod här</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="432"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="435"/>
         <source>Generate Image...</source>
         <translation>Generera bild...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="439"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="442"/>
         <source>Generate Video...</source>
         <translation>Generera video...</translation>
     </message>
@@ -3428,127 +3438,127 @@ Klicka för att ändra</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="27"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="30"/>
         <source>Comments:</source>
         <translation>Kommentarer:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="64"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="70"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="73"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="82"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="85"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="134"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="137"/>
         <source>Pixel aspect ratio</source>
         <translation>Bildpunktsförhållande</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="165"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="168"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="193"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="196"/>
         <source>Image sequence</source>
         <translation>Bildsekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="200"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="203"/>
         <source>Repeat</source>
         <translation>Upprepa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="221"/>
         <source> frames</source>
         <translation> bildrutor</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="234"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="237"/>
         <source>per picture</source>
         <translation>per bild</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="247"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="250"/>
         <source>Properties Menu</source>
         <translation>Egenskapsmeny</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="268"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="271"/>
         <source>Open With</source>
         <translation>Öppna med</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="275"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation>Uppdatera filen i Shotcut om du ändrat den i en annan app</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="281"/>
         <source>Reload</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="316"/>
         <source>Copy Full File Path</source>
         <translation>Kopiera hela filsökvägen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="318"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
         <source>Show In Folder</source>
         <translation>Visa i mapp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="351"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="354"/>
         <source>Show In Files</source>
         <translation>Visa i filer</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="323"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
         <source>Set Creation Time...</source>
         <translation>Ställ in tid för skapandet ...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="334"/>
         <source>Disable Proxy</source>
         <translation>Inaktivera proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="339"/>
         <source>Make Proxy</source>
         <translation>Skapa proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="341"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="344"/>
         <source>Delete Proxy</source>
         <translation>Ta bort proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="346"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="349"/>
         <source>Copy Hash Code</source>
         <translation>Kopiera hashkod</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="122"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
         <source>Make the current duration value the default value</source>
         <translation>Gör det aktuella värdet för varaktighet till standardvärde</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="128"/>
         <source>Set Default</source>
         <translation>Ställ in som standard</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="356"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="359"/>
         <source>Reset</source>
         <translation>Återställ</translation>
     </message>
@@ -3598,7 +3608,7 @@ Klicka för att ändra</translation>
         <translation>Ta bort från Öppna med</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="264"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
@@ -3611,22 +3621,22 @@ Klicka för att ändra</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="26"/>
+        <location filename="../src/widgets/isingwidget.ui" line="28"/>
         <source>Ising Model</source>
         <translation>Ising-modellen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="41"/>
+        <location filename="../src/widgets/isingwidget.ui" line="43"/>
         <source>Noise Temperature</source>
         <translation>Brustemperatur</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="106"/>
+        <location filename="../src/widgets/isingwidget.ui" line="108"/>
         <source>Border Growth</source>
         <translation>Väx ram</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="174"/>
+        <location filename="../src/widgets/isingwidget.ui" line="176"/>
         <source>Spontaneous Growth</source>
         <translation>Spontan tillväxt</translation>
     </message>
@@ -3667,12 +3677,12 @@ Klicka för att ändra</translation>
 <context>
     <name>JobsDock</name>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="18"/>
+        <location filename="../src/docks/jobsdock.ui" line="17"/>
         <source>Jobs</source>
         <translation>Jobb</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="115"/>
+        <location filename="../src/docks/jobsdock.ui" line="114"/>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
@@ -3681,68 +3691,68 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
 -klicka på ett jobb för att öppna en meny för att stoppa ett pågående jobb.</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="130"/>
+        <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Remove all of the completed and failed jobs from the list</source>
         <translation>Ta bort alla slutförda och misslyckade jobb från listan</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="133"/>
+        <location filename="../src/docks/jobsdock.ui" line="132"/>
         <source>Clean</source>
         <translation>Töm</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="104"/>
+        <location filename="../src/docks/jobsdock.ui" line="103"/>
         <source>Jobs Menu</source>
         <translation>Jobbmeny</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="120"/>
+        <location filename="../src/docks/jobsdock.ui" line="119"/>
         <source>Pause Queue</source>
         <translation>Pausa kö</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="156"/>
+        <location filename="../src/docks/jobsdock.ui" line="155"/>
         <source>Stop This Job</source>
         <translation>Stoppa detta jobb</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="159"/>
+        <location filename="../src/docks/jobsdock.ui" line="158"/>
         <source>Stop the currently selected job</source>
         <translation>Stoppa det valda jobbet</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="164"/>
+        <location filename="../src/docks/jobsdock.ui" line="163"/>
         <source>View Log</source>
         <translation>Visa logg</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="167"/>
+        <location filename="../src/docks/jobsdock.ui" line="166"/>
         <source>View the messages of MLT and FFmpeg </source>
         <translation>Visa meddelanden från MLT och FFmpeg </translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="172"/>
+        <location filename="../src/docks/jobsdock.ui" line="171"/>
         <source>Run</source>
         <translation>Kör</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="175"/>
+        <location filename="../src/docks/jobsdock.ui" line="174"/>
         <source>Restart a stopped job</source>
         <translation>Starta om ett stoppat jobb</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="180"/>
+        <location filename="../src/docks/jobsdock.ui" line="179"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="185"/>
-        <location filename="../src/docks/jobsdock.ui" line="188"/>
+        <location filename="../src/docks/jobsdock.ui" line="184"/>
+        <location filename="../src/docks/jobsdock.ui" line="187"/>
         <source>Remove Finished</source>
         <translation>Ta bort färdiga</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="153"/>
+        <location filename="../src/docks/jobsdock.cpp" line="154"/>
         <source>Job Log</source>
         <translation>Jobblogg</translation>
     </message>
@@ -3819,7 +3829,7 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="84"/>
         <source>Ease Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="100"/>
@@ -3829,12 +3839,12 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="105"/>
         <source>Ease In</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="121"/>
         <source>Ease In/Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="140"/>
@@ -3857,230 +3867,230 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
         <translation>Ställ in filterstart</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="241"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="242"/>
         <source>Set Filter End</source>
         <translation>Ställ in filterslut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="260"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="262"/>
         <source>Set First Simple Keyframe</source>
         <translation>Ställ in första enkla nyckelbild</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="279"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="282"/>
         <source>Set Second Simple Keyframe</source>
         <translation>Ställ in andra enkla nyckelbild</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="298"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="302"/>
         <source>Scrub While Dragging</source>
         <translation>Skrubba medan du drar</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="311"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="315"/>
         <source>Zoom Keyframes Out</source>
         <translation>Zooma ut nyckelbilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="322"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="326"/>
         <source>Zoom Keyframes In</source>
         <translation>Zooma in nyckelbilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="333"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="337"/>
         <source>Zoom Keyframes To Fit</source>
         <translation>Zooma nyckelbilder för att passa</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="349"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="590"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="353"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="594"/>
         <source>Hold</source>
         <translation>Håll</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="366"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="607"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="370"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="611"/>
         <source>Linear</source>
         <translation>Linjär</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="383"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="624"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="387"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="628"/>
         <source>Smooth</source>
         <translation>Mjuk</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="400"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="404"/>
         <source>Ease Out Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="417"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="421"/>
         <source>Ease Out Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadratisk mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="434"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="438"/>
         <source>Ease Out Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="451"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="455"/>
         <source>Ease Out Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="468"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="472"/>
         <source>Ease Out Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="485"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="489"/>
         <source>Ease Out Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="502"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="506"/>
         <source>Ease Out Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="519"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="523"/>
         <source>Ease Out Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång ut bakåt</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="544"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="548"/>
         <source>Ease Out Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="569"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="573"/>
         <source>Ease Out Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsig mjukgång ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="641"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="645"/>
         <source>Ease In Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="657"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="661"/>
         <source>Ease In Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadratisk mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="673"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="677"/>
         <source>Ease In Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="689"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="693"/>
         <source>Ease In Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="705"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="709"/>
         <source>Ease In Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="721"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="725"/>
         <source>Ease In Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="737"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="741"/>
         <source>Ease In Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="753"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="757"/>
         <source>Ease In Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in bakåt</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="777"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="781"/>
         <source>Ease In Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="801"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="805"/>
         <source>Ease In Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsig mjukgång in</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="817"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="821"/>
         <source>Ease In/Out Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="834"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="838"/>
         <source>Ease In/Out Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="851"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="855"/>
         <source>Ease In/Out Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="868"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="872"/>
         <source>Ease In/Out Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="885"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="889"/>
         <source>Ease In/Out Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="902"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="906"/>
         <source>Ease In/Out Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="919"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="923"/>
         <source>Ease In/Out Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="936"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="940"/>
         <source>Ease In/Out Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in/ut bakåt</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="961"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="965"/>
         <source>Ease In/Out Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="986"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="990"/>
         <source>Ease In/Out Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsande mjukgång in/ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1003"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1007"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1014"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1018"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Bygg om ljudvågform</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1026"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1030"/>
         <source>Seek Previous Keyframe</source>
         <translation>Sök föregående nyckelbild</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1042"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1046"/>
         <source>Seek Next Keyframe</source>
         <translation>Sök nästa nyckelbild</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1058"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1062"/>
         <source>Toggle Keyframe At Playhead</source>
         <translation>Växla nyckelbild vid uppspelningsmarkör</translation>
     </message>
@@ -4105,152 +4115,152 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="82"/>
         <source>Ease In Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="85"/>
         <source>Ease Out Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="88"/>
         <source>Ease In/Out Sinusoidal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinusformad mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="91"/>
         <source>Ease In Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="94"/>
         <source>Ease Out Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="97"/>
         <source>Ease In/Out Quadratic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="100"/>
         <source>Ease In Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="103"/>
         <source>Ease Out Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="106"/>
         <source>Ease In/Out Cubic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kubisk mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="109"/>
         <source>Ease In Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="112"/>
         <source>Ease Out Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="115"/>
         <source>Ease In/Out Quartic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadrantisk mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="118"/>
         <source>Ease In Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="121"/>
         <source>Ease Out Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="124"/>
         <source>Ease In/Out Quintic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvintisk mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="127"/>
         <source>Ease In Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="130"/>
         <source>Ease Out Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="133"/>
         <source>Ease In/Out Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiell mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="136"/>
         <source>Ease In Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="139"/>
         <source>Ease Out Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="142"/>
         <source>Ease In/Out Circular</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulär mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="145"/>
         <source>Ease In Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in bakåt</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="148"/>
         <source>Ease Out Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång ut bakåt</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="151"/>
         <source>Ease In/Out Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjukgång in/ut bakåt</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="154"/>
         <source>Ease In Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="157"/>
         <source>Ease Out Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="160"/>
         <source>Ease In/Out Elastic</source>
-        <translation type="unfinished"></translation>
+        <translation>Elastisk mjukgång in/ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="163"/>
         <source>Ease In Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsande mjukgång in</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="166"/>
         <source>Ease Out Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsande mjukgång ut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="169"/>
         <source>Ease In/Out Bounce</source>
-        <translation type="unfinished"></translation>
+        <translation>Studsande mjukgång in/ut</translation>
     </message>
 </context>
 <context>
@@ -4269,17 +4279,17 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="26"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="28"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="41"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="43"/>
         <source>X Ratio</source>
         <translation>X-förhållande</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="106"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="108"/>
         <source>Y Ratio</source>
         <translation>Y-förhållande</translation>
     </message>
@@ -4300,167 +4310,167 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="25"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="28"/>
         <source>Transition</source>
         <translation>Övergång</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="351"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="354"/>
         <source>Preview</source>
         <translation>Förhandsvisa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="360"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="363"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="92"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="95"/>
         <source>Dissolve</source>
         <translation>Lös upp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="97"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
         <source>Cut</source>
         <translation>Klipp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="110"/>
         <source>Bar Horizontal</source>
         <translation>Horisontell linje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="112"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="115"/>
         <source>Bar Vertical</source>
         <translation>Vertikal linje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="117"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="120"/>
         <source>Barn Door Horizontal</source>
         <translation>Ladugårdsdörr horisontell</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="122"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="125"/>
         <source>Barn Door Vertical</source>
         <translation>Ladugårdsdörr vertikal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="127"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation>Ladugårdsdörr diagonal SV-NÖ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="132"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="135"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation>Ladugårdsdörr diagonal NV-SÖ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="140"/>
         <source>Diagonal Top Left</source>
         <translation>Diagonal övre vänster</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="142"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="145"/>
         <source>Diagonal Top Right</source>
         <translation>Diagonal övre höger</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="147"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="150"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation>Matrix-vattenfall horisontell</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="152"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="155"/>
         <source>Matrix Waterfall Vertical</source>
         <translation>Matrix-vattenfall vertikal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="160"/>
         <source>Matrix Snake Horizontal</source>
         <translation>Matrix-orm horisontell</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="165"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation>Matrix-orm parallell horisontell</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="170"/>
         <source>Matrix Snake Vertical</source>
         <translation>Matrix-orm vertikal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="175"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Matrix-orm parallell vertikal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="177"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="180"/>
         <source>Barn V Up</source>
         <translation>Ladugård V Up</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="182"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="185"/>
         <source>Iris Circle</source>
         <translation>Iris-cirkel</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="187"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="190"/>
         <source>Double Iris</source>
         <translation>Dubbel Iris</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="192"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="195"/>
         <source>Iris Box</source>
-        <translation>Iris Box</translation>
+        <translation>Iris-box</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="197"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="200"/>
         <source>Box Bottom Right</source>
         <translation>Box längst ner till höger</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="202"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="205"/>
         <source>Box Bottom Left</source>
         <translation>Box längst ner till vänster</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="210"/>
         <source>Box Right Center</source>
         <translation>Box höger mitt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="212"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="215"/>
         <source>Clock Top</source>
         <translation>Klocka överst</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="370"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="373"/>
         <source>Get custom transitions on our Web site.</source>
         <translation>Hämta anpassade övergångar på vår webbplats.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="105"/>
         <source>Custom...</source>
         <translation>Anpassad...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="243"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="246"/>
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="341"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="344"/>
         <source>Swap the appearance of the A and B clips</source>
         <translation>Byt utseende på A- och B-klippen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="344"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="347"/>
         <source>Invert Wipe</source>
         <translation>Inverterad torkning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="39"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="42"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="234"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="240"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="261"/>
@@ -4469,28 +4479,28 @@ listan. Detta stoppar inte ett pågående jobb. Höger-
         <translation>Mjukhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="52"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="55"/>
         <source>Change the softness of the edge of the wipe</source>
         <translation>Ändra mjukheten i kanten på torkningen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="68"/>
-        <location filename="../src/widgets/lumamixtransition.ui" line="311"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="71"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="314"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="222"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="225"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="235"/>
         <source>Save the custom transition as a favorite</source>
         <translation>Spara den anpassade övergången som en favorit</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="252"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="255"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
@@ -4499,12 +4509,12 @@ och tonar in ljudet från klipp B under hela
 övergångens varaktighet.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="257"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="260"/>
         <source>Cross-fade</source>
         <translation>Övertoning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="271"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="274"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
@@ -4515,17 +4525,17 @@ eller välj endast klipp A:s ljud (0%) eller
 klipp B:s ljud (100%).</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="277"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="280"/>
         <source>Mix:</source>
         <translation>Mixa:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="287"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="290"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="304"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="307"/>
         <source>B</source>
         <translation>B</translation>
     </message>
@@ -4579,420 +4589,420 @@ klipp B:s ljud (100%).</translation>
         <translation>&amp;Hjälp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="145"/>
+        <location filename="../src/mainwindow.ui" line="146"/>
         <source>Audio Channels</source>
         <translation>Ljudkanaler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="256"/>
+        <location filename="../src/mainwindow.ui" line="260"/>
         <source>Deinterlacer</source>
         <translation>Deinterlacer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="266"/>
+        <location filename="../src/mainwindow.ui" line="270"/>
         <source>Interpolation</source>
         <translation>Interpolation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="154"/>
+        <location filename="../src/mainwindow.ui" line="155"/>
         <source>Video Mode</source>
         <translation>Videoläge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="275"/>
+        <location filename="../src/mainwindow.ui" line="279"/>
         <source>External Monitor</source>
         <translation>Extern skärm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="169"/>
+        <location filename="../src/mainwindow.ui" line="170"/>
         <source>Language</source>
         <translation>Språk</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="174"/>
+        <location filename="../src/mainwindow.ui" line="175"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="183"/>
+        <location filename="../src/mainwindow.ui" line="184"/>
         <source>Display Method</source>
         <translation>Visningsmetod</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="209"/>
+        <location filename="../src/mainwindow.ui" line="210"/>
         <source>App Data Directory</source>
         <translation>Katalog för appdata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="216"/>
+        <location filename="../src/mainwindow.ui" line="217"/>
         <source>Preview Scaling</source>
         <translation>Skalning av förhandsvisning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="234"/>
+        <location filename="../src/mainwindow.ui" line="238"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="238"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
         <source>Storage</source>
         <translation>Lagring</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="329"/>
+        <location filename="../src/mainwindow.ui" line="333"/>
         <source>Toolbar</source>
         <translation>Verktygsfält</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="388"/>
+        <location filename="../src/mainwindow.ui" line="393"/>
         <source>&amp;Open File...</source>
         <translation>Ö&amp;ppna fil...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="402"/>
+        <location filename="../src/mainwindow.ui" line="407"/>
         <source>E&amp;xit</source>
         <translation>A&amp;vsluta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="405"/>
+        <location filename="../src/mainwindow.ui" line="410"/>
         <source>Quit the application</source>
         <translation>Avsluta programmet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="418"/>
         <source>&amp;About Shotcut</source>
         <translation>&amp;Om Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="421"/>
+        <location filename="../src/mainwindow.ui" line="426"/>
         <source>About Qt</source>
         <translation>Om Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="429"/>
+        <location filename="../src/mainwindow.ui" line="434"/>
         <source>Open Other...</source>
         <translation>Öppna annan...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="432"/>
+        <location filename="../src/mainwindow.ui" line="437"/>
         <source>Open a device, stream or generator</source>
         <translation>Öppna en enhet, ström eller generator</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="447"/>
+        <location filename="../src/mainwindow.ui" line="452"/>
         <source>&amp;Save</source>
         <translation>&amp;Spara</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="450"/>
+        <location filename="../src/mainwindow.ui" line="455"/>
         <source>Save project as a MLT XML file</source>
         <translation>Spara projekt som MLT XML-fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="461"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Save &amp;As...</source>
         <translation>Spara s&amp;om...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="464"/>
+        <location filename="../src/mainwindow.ui" line="472"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Spara projekt som en annan MLT XML-fil</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="476"/>
-        <location filename="../src/mainwindow.ui" line="479"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
+        <location filename="../src/mainwindow.ui" line="490"/>
         <source>Export</source>
         <translation>Exportera</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="192"/>
+        <location filename="../src/mainwindow.ui" line="193"/>
         <source>Job Priority</source>
         <translation>Jobbprioritering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="488"/>
+        <location filename="../src/mainwindow.ui" line="502"/>
         <source>&amp;Undo</source>
         <translation>Å&amp;ngra</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="497"/>
+        <location filename="../src/mainwindow.ui" line="514"/>
         <source>&amp;Redo</source>
         <translation>&amp;Gör om</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="502"/>
+        <location filename="../src/mainwindow.ui" line="522"/>
         <source>Forum...</source>
         <translation>Forum...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="507"/>
+        <location filename="../src/mainwindow.ui" line="527"/>
         <source>FAQ...</source>
         <translation>Frågor och svar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="516"/>
-        <location filename="../src/mainwindow.cpp" line="4113"/>
+        <location filename="../src/mainwindow.ui" line="536"/>
+        <location filename="../src/mainwindow.cpp" line="4224"/>
         <source>Enter Full Screen</source>
         <translation>Öppna helskärm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="528"/>
+        <location filename="../src/mainwindow.ui" line="548"/>
         <source>Peak Meter</source>
         <translation>Ljudtoppsmätare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="414"/>
-        <location filename="../src/mainwindow.cpp" line="2563"/>
+        <location filename="../src/mainwindow.ui" line="563"/>
+        <location filename="../src/mainwindow.cpp" line="423"/>
+        <location filename="../src/mainwindow.cpp" line="2648"/>
         <source>Properties</source>
         <translation>Egenskaper</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="549"/>
-        <location filename="../src/mainwindow.cpp" line="2572"/>
+        <location filename="../src/mainwindow.ui" line="575"/>
+        <location filename="../src/mainwindow.cpp" line="2657"/>
         <source>Recent</source>
         <translation>Tidigare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="204"/>
-        <location filename="../src/mainwindow.ui" line="558"/>
+        <location filename="../src/mainwindow.ui" line="205"/>
+        <location filename="../src/mainwindow.ui" line="587"/>
         <source>Playlist</source>
         <translation>Spellista</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
-        <location filename="../src/mainwindow.cpp" line="738"/>
+        <location filename="../src/mainwindow.ui" line="599"/>
+        <location filename="../src/mainwindow.cpp" line="746"/>
         <source>History</source>
         <translation>Historik</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="578"/>
+        <location filename="../src/mainwindow.ui" line="613"/>
         <source>Realtime (frame dropping)</source>
         <translation>Realtid (bildrutetapp)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="589"/>
+        <location filename="../src/mainwindow.ui" line="624"/>
         <source>Progressive</source>
         <translation>Progressiv</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="597"/>
+        <location filename="../src/mainwindow.ui" line="632"/>
         <source>Native 8-bit CPU (fast, flexible)</source>
         <translation>Inbyggd 8-bitars CPU (snabb, flexibel)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="605"/>
+        <location filename="../src/mainwindow.ui" line="640"/>
         <source>Native 10-bit CPU (slower, better)</source>
         <translation>Inbyggd 10-bitars CPU (långsammare, bättre)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="629"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="637"/>
+        <location filename="../src/mainwindow.ui" line="672"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="664"/>
+        <location filename="../src/mainwindow.ui" line="699"/>
         <source>One Field (fast)</source>
         <translation>Ett fält (snabbt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="672"/>
+        <location filename="../src/mainwindow.ui" line="707"/>
         <source>Linear Blend (fast)</source>
         <translation>Linjär blandning (snabb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="680"/>
+        <location filename="../src/mainwindow.ui" line="715"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - endast tidsmässigt (bra)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="707"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Närmsta granne (snabb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="715"/>
+        <location filename="../src/mainwindow.ui" line="750"/>
         <source>Bilinear (good)</source>
         <translation>Bilinjär (bra)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="723"/>
+        <location filename="../src/mainwindow.ui" line="758"/>
         <source>Bicubic (better)</source>
         <translation>Bikubisk (bättre)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="742"/>
-        <location filename="../src/mainwindow.ui" line="883"/>
-        <location filename="../src/mainwindow.cpp" line="2767"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
+        <location filename="../src/mainwindow.ui" line="924"/>
+        <location filename="../src/mainwindow.cpp" line="2852"/>
         <source>Automatic</source>
         <translation>Automatisk</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="753"/>
-        <location filename="../src/mainwindow.ui" line="1249"/>
+        <location filename="../src/mainwindow.ui" line="788"/>
+        <location filename="../src/mainwindow.ui" line="1308"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="796"/>
         <source>Use JACK Audio</source>
         <translation>Använd JACK Audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="770"/>
-        <location filename="../src/mainwindow.ui" line="773"/>
+        <location filename="../src/mainwindow.ui" line="805"/>
+        <location filename="../src/mainwindow.ui" line="808"/>
         <source>Filters</source>
         <translation>Filter</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="778"/>
-        <location filename="../src/mainwindow.ui" line="1129"/>
+        <location filename="../src/mainwindow.ui" line="816"/>
+        <location filename="../src/mainwindow.ui" line="1173"/>
         <source>Add...</source>
         <translation>Lägg till...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="786"/>
+        <location filename="../src/mainwindow.ui" line="824"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="789"/>
+        <location filename="../src/mainwindow.ui" line="827"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Använd användarens eller plattformens stil, färger och ikoner.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="805"/>
+        <location filename="../src/mainwindow.ui" line="843"/>
         <source>Fusion Dark</source>
         <translation>Fusion Mörk</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="813"/>
+        <location filename="../src/mainwindow.ui" line="851"/>
         <source>Fusion Light</source>
         <translation>Fusion Ljus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="818"/>
+        <location filename="../src/mainwindow.ui" line="856"/>
         <source>Tutorials...</source>
         <translation>Handledningar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="199"/>
-        <location filename="../src/mainwindow.ui" line="827"/>
-        <location filename="../src/mainwindow.cpp" line="2582"/>
+        <location filename="../src/mainwindow.ui" line="200"/>
+        <location filename="../src/mainwindow.ui" line="865"/>
+        <location filename="../src/mainwindow.cpp" line="2667"/>
         <source>Timeline</source>
         <translation>Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="832"/>
-        <location filename="../src/mainwindow.ui" line="835"/>
+        <location filename="../src/mainwindow.ui" line="873"/>
+        <location filename="../src/mainwindow.ui" line="876"/>
         <source>Restore Default Layout</source>
         <translation>Återställ standardlayout</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="843"/>
+        <location filename="../src/mainwindow.ui" line="884"/>
         <source>Show Title Bars</source>
         <translation>Visa titelfält</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="851"/>
+        <location filename="../src/mainwindow.ui" line="892"/>
         <source>Show Toolbar</source>
         <translation>Visa verktygsfält</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="856"/>
+        <location filename="../src/mainwindow.ui" line="897"/>
         <source>Upgrade...</source>
         <translation>Uppgradera...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="861"/>
+        <location filename="../src/mainwindow.ui" line="902"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Öppna MLT XML som klipp...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="905"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>Öppna en MLT XML-projektfil som ett virtuellt klipp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="913"/>
         <source>Scrub Audio</source>
         <translation>Skrubba ljud</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="907"/>
+        <location filename="../src/mainwindow.ui" line="948"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Programvara (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
+        <location filename="../src/mainwindow.ui" line="956"/>
         <source>Low</source>
         <translation>Låg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="923"/>
+        <location filename="../src/mainwindow.ui" line="964"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="933"/>
+        <location filename="../src/mainwindow.ui" line="974"/>
         <source>Application Log...</source>
         <translation>Applikationslogg...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="941"/>
-        <location filename="../src/mainwindow.ui" line="1032"/>
-        <location filename="../src/mainwindow.ui" line="1035"/>
+        <location filename="../src/mainwindow.ui" line="982"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1079"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="252"/>
-        <location filename="../src/mainwindow.ui" line="1387"/>
+        <location filename="../src/mainwindow.ui" line="256"/>
+        <location filename="../src/mainwindow.ui" line="1454"/>
         <source>Player</source>
         <translation>Uppspelare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.ui" line="990"/>
         <source>User Interface</source>
         <translation>Användargränssnitt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="998"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1202"/>
+        <location filename="../src/mainwindow.ui" line="1255"/>
         <source>Notes</source>
         <translation>Anteckningar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1416"/>
+        <location filename="../src/mainwindow.ui" line="1483"/>
         <source>Markers as Chapters...</source>
         <translation>Markörer som kapitel...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1419"/>
-        <location filename="../src/mainwindow.ui" line="1422"/>
-        <location filename="../src/mainwindow.cpp" line="6205"/>
+        <location filename="../src/mainwindow.ui" line="1486"/>
+        <location filename="../src/mainwindow.ui" line="1489"/>
+        <location filename="../src/mainwindow.cpp" line="6329"/>
         <source>Export Chapters</source>
         <translation>Exportera kapitel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1427"/>
+        <location filename="../src/mainwindow.ui" line="1494"/>
         <source>Audio/Video Device...</source>
         <translation>Ljud/Video-enhet...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1007"/>
-        <location filename="../src/mainwindow.ui" line="1327"/>
+        <location filename="../src/mainwindow.ui" line="1048"/>
+        <location filename="../src/mainwindow.ui" line="1386"/>
         <source>Set...</source>
         <translation>Ställ in...</translation>
     </message>
@@ -5007,74 +5017,74 @@ klipp B:s ljud (100%).</translation>
         <translation>Up&amp;pspelare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="141"/>
+        <location filename="../src/mainwindow.ui" line="142"/>
         <source>&amp;Settings</source>
         <translation>&amp;Inställningar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="225"/>
+        <location filename="../src/mainwindow.ui" line="229"/>
         <source>Time Format</source>
         <translation>Tidsformat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
+        <location filename="../src/mainwindow.ui" line="295"/>
         <source>Backup</source>
         <translation>Säkerhetskopia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="391"/>
+        <location filename="../src/mainwindow.ui" line="396"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Öppna en video-, ljud-, bild- eller projektfil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="531"/>
+        <location filename="../src/mainwindow.ui" line="551"/>
         <source>Audio Peak Meter</source>
         <translation>Ljudtoppsmätare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="645"/>
+        <location filename="../src/mainwindow.ui" line="680"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (quad/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="653"/>
+        <location filename="../src/mainwindow.ui" line="688"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 surround)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="688"/>
+        <location filename="../src/mainwindow.ui" line="723"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - tidsmässig + rumslig (bättre)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="696"/>
+        <location filename="../src/mainwindow.ui" line="731"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (bäst)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="731"/>
+        <location filename="../src/mainwindow.ui" line="766"/>
         <source>Lanczos (best)</source>
         <translation>Lanczos (bäst)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="928"/>
+        <location filename="../src/mainwindow.ui" line="969"/>
         <source>Resources...</source>
         <translation>Resurser...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
-        <location filename="../src/mainwindow.ui" line="1335"/>
+        <location filename="../src/mainwindow.ui" line="1053"/>
+        <location filename="../src/mainwindow.ui" line="1394"/>
         <source>Show...</source>
         <translation>Visa...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1056"/>
         <source>Show</source>
         <translation>Visa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1024"/>
-        <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.ui" line="1065"/>
+        <location filename="../src/mainwindow.ui" line="1068"/>
         <source>Keyframes</source>
         <translation>Nyckelbildrutor</translation>
     </message>
@@ -5084,362 +5094,377 @@ klipp B:s ljud (100%).</translation>
         <translation>Ny</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="160"/>
+        <location filename="../src/mainwindow.ui" line="161"/>
         <source>Processing Mode</source>
         <translation>Behandlingsläge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
+        <location filename="../src/mainwindow.ui" line="648"/>
         <source>Linear 10-bit CPU (slowest, best)</source>
         <translation>Linjär 10-bitars CPU (långsammast, bäst)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="621"/>
+        <location filename="../src/mainwindow.ui" line="656"/>
         <source>Linear 10-bit GPU/CPU (Experimental)</source>
         <translation>Linjär 10-bitars GPU/CPU (Experimentell)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="797"/>
+        <location filename="../src/mainwindow.ui" line="835"/>
         <source>System Fusion</source>
         <translation>System Fusion</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="993"/>
+        <location filename="../src/mainwindow.ui" line="1034"/>
         <source>Video/Audio...</source>
         <translation>Video/ljud...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="996"/>
-        <location filename="../src/mainwindow.ui" line="999"/>
+        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1040"/>
         <source>Export Video/Audio</source>
         <translation>Exportera video/ljud</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1038"/>
+        <location filename="../src/mainwindow.ui" line="1082"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1043"/>
-        <location filename="../src/mainwindow.cpp" line="1643"/>
-        <location filename="../src/mainwindow.cpp" line="5174"/>
+        <location filename="../src/mainwindow.ui" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1658"/>
+        <location filename="../src/mainwindow.cpp" line="5286"/>
         <source>Screen Snapshot</source>
         <translation>Skärmbild</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1046"/>
+        <location filename="../src/mainwindow.ui" line="1090"/>
         <source>Capture a screenshot</source>
         <translation>Fånga en skärmbild</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1054"/>
-        <location filename="../src/mainwindow.cpp" line="1650"/>
-        <location filename="../src/mainwindow.cpp" line="5232"/>
-        <location filename="../src/mainwindow.cpp" line="5248"/>
-        <location filename="../src/mainwindow.cpp" line="5288"/>
+        <location filename="../src/mainwindow.ui" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1665"/>
+        <location filename="../src/mainwindow.cpp" line="5344"/>
+        <location filename="../src/mainwindow.cpp" line="5360"/>
+        <location filename="../src/mainwindow.cpp" line="5400"/>
         <source>Screen Recording</source>
         <translation>Skärminspelning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1057"/>
+        <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Record the screen</source>
         <translation>Spela in skärmen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1120"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1079"/>
+        <location filename="../src/mainwindow.ui" line="1123"/>
         <source>Switch to the audio layout</source>
         <translation>Växla till ljudlayouten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1082"/>
+        <location filename="../src/mainwindow.ui" line="1126"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1090"/>
+        <location filename="../src/mainwindow.ui" line="1134"/>
         <source>Logging</source>
         <translation>Loggning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1093"/>
+        <location filename="../src/mainwindow.ui" line="1137"/>
         <source>Switch to the logging layout</source>
         <translation>Växla till loggningslayouten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1096"/>
+        <location filename="../src/mainwindow.ui" line="1140"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1104"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>Editing</source>
         <translation>Redigering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1107"/>
+        <location filename="../src/mainwindow.ui" line="1151"/>
         <source>Switch to the editing layout</source>
         <translation>Växla till redigeringslayouten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1110"/>
+        <location filename="../src/mainwindow.ui" line="1154"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1118"/>
+        <location filename="../src/mainwindow.ui" line="1162"/>
         <source>FX</source>
         <translation>FX</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1121"/>
+        <location filename="../src/mainwindow.ui" line="1165"/>
         <source>Switch to the effects layout</source>
         <translation>Växla till effektlayouten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1124"/>
+        <location filename="../src/mainwindow.ui" line="1168"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1148"/>
+        <location filename="../src/mainwindow.ui" line="1192"/>
         <source>New Generator</source>
         <translation>Ny generator</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1193"/>
+        <location filename="../src/mainwindow.ui" line="1243"/>
         <source>Markers</source>
         <translation>Markörer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1211"/>
+        <location filename="../src/mainwindow.ui" line="1267"/>
         <source>Subtitles</source>
         <translation>Undertexter</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1241"/>
+        <location filename="../src/mainwindow.ui" line="1300"/>
         <source>1080p</source>
         <translation>1080p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1271"/>
+        <location filename="../src/mainwindow.ui" line="1330"/>
         <source>Timecode (Drop-Frame)</source>
         <translation>Tidskod (Bildrutetapp)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1279"/>
+        <location filename="../src/mainwindow.ui" line="1338"/>
         <source>Frames</source>
         <translation>Bildrutor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1287"/>
+        <location filename="../src/mainwindow.ui" line="1346"/>
         <source>Clock</source>
         <translation>Klocka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1295"/>
+        <location filename="../src/mainwindow.ui" line="1354"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation>Tidskod (icke-bildrutetapp)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1300"/>
+        <location filename="../src/mainwindow.ui" line="1359"/>
         <source>Topics</source>
         <translation>Ämnen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1308"/>
+        <location filename="../src/mainwindow.ui" line="1367"/>
         <source>Synchronization...</source>
         <translation>Synkronisering...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1311"/>
+        <location filename="../src/mainwindow.ui" line="1370"/>
         <source>Synchronization</source>
         <translation>Synkronisering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1319"/>
+        <location filename="../src/mainwindow.ui" line="1378"/>
         <source>Use Proxy</source>
         <translation>Använd proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1330"/>
+        <location filename="../src/mainwindow.ui" line="1389"/>
         <source>Set the proxy storage folder</source>
         <translation>Ange lagringsmapp för proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1338"/>
+        <location filename="../src/mainwindow.ui" line="1397"/>
         <source>Show the proxy storage folder</source>
         <translation>Visa proxyns lagringsmapp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1349"/>
+        <location filename="../src/mainwindow.ui" line="1408"/>
         <source>Use Project Folder</source>
         <translation>Använd projektmapp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1352"/>
+        <location filename="../src/mainwindow.ui" line="1411"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Lagra proxies i projektmappen om detta har definierats</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1360"/>
+        <location filename="../src/mainwindow.ui" line="1419"/>
         <source>Use Hardware Encoder</source>
         <translation>Använd hårdvarukodare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1365"/>
+        <location filename="../src/mainwindow.ui" line="1427"/>
+        <source>Use Hardware Decoder</source>
+        <translation>Använd hårdvaruavkodaren</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1432"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Konfigurera hårdvarukodare...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1376"/>
+        <location filename="../src/mainwindow.ui" line="1443"/>
         <source>Switch to the color layout</source>
         <translation>Växla till färglayout</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1446"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1390"/>
+        <location filename="../src/mainwindow.ui" line="1457"/>
         <source>Switch to the player only layout</source>
         <translation>Växla till layouten för enbart uppspelare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1393"/>
+        <location filename="../src/mainwindow.ui" line="1460"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1406"/>
+        <location filename="../src/mainwindow.ui" line="1473"/>
         <source>Playlist Project</source>
         <translation>Spellisteprojekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1411"/>
+        <location filename="../src/mainwindow.ui" line="1478"/>
         <source>Clip-only Project</source>
         <translation>Projekt med enbart klipp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1432"/>
+        <location filename="../src/mainwindow.ui" line="1499"/>
         <source>Reset...</source>
         <translation>Återställ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1437"/>
-        <location filename="../src/mainwindow.ui" line="1440"/>
+        <location filename="../src/mainwindow.ui" line="1504"/>
+        <location filename="../src/mainwindow.ui" line="1507"/>
         <source>Backup and Save</source>
         <translation>Säkerhetskopiera och spara</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1443"/>
+        <location filename="../src/mainwindow.ui" line="1510"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1451"/>
+        <location filename="../src/mainwindow.ui" line="1518"/>
         <source>Manually</source>
         <translation>Manuellt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1459"/>
+        <location filename="../src/mainwindow.ui" line="1526"/>
         <source>Hourly</source>
         <translation>Varje timme</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1467"/>
+        <location filename="../src/mainwindow.ui" line="1534"/>
         <source>Daily</source>
         <translation>Dagligen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1478"/>
+        <location filename="../src/mainwindow.ui" line="1545"/>
         <source>Weekly</source>
         <translation>Veckovis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1483"/>
+        <location filename="../src/mainwindow.ui" line="1550"/>
         <source>Show Project in Folder</source>
         <translation>Visa projekt i mapp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1494"/>
+        <location filename="../src/mainwindow.ui" line="1561"/>
         <source>Pause After Seek</source>
         <translation>Paus efter sökning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1503"/>
-        <location filename="../src/mainwindow.cpp" line="5236"/>
+        <location filename="../src/mainwindow.ui" line="1570"/>
+        <location filename="../src/mainwindow.cpp" line="5348"/>
         <source>Files</source>
         <translation>Filer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1134"/>
-        <location filename="../src/mainwindow.ui" line="1139"/>
+        <location filename="../src/mainwindow.ui" line="1579"/>
+        <source>What&apos;s This?</source>
+        <translation>Vad är detta?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1582"/>
+        <source>Get help about something by clicking it</source>
+        <translation>Få hjälp om någonting genom att klicka på det</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1178"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
         <source>Remove...</source>
         <translation>Ta bort...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="519"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="968"/>
+        <location filename="../src/mainwindow.ui" line="1009"/>
         <source>EDL...</source>
         <translation>EDL...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="979"/>
+        <location filename="../src/mainwindow.ui" line="1020"/>
         <source>Frame...</source>
         <translation>Bildruta...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1065"/>
+        <location filename="../src/mainwindow.ui" line="1109"/>
         <source>Actions and Shortcuts...</source>
         <translation>Åtgärder och genvägar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1159"/>
+        <location filename="../src/mainwindow.ui" line="1206"/>
         <source>Clear Recent on Exit</source>
         <translation>Töm senaste vid avslut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1167"/>
+        <location filename="../src/mainwindow.ui" line="1214"/>
         <source>Show Text Under Icons</source>
         <translation>Visa text under ikoner</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1175"/>
+        <location filename="../src/mainwindow.ui" line="1222"/>
         <source>Show Small Icons</source>
         <translation>Visa små ikoner</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1184"/>
+        <location filename="../src/mainwindow.ui" line="1231"/>
         <source>Jobs</source>
         <translation>Jobb</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1219"/>
+        <location filename="../src/mainwindow.ui" line="1278"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1230"/>
+        <location filename="../src/mainwindow.ui" line="1289"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1260"/>
+        <location filename="../src/mainwindow.ui" line="1319"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="158"/>
+        <location filename="../src/mainwindow.cpp" line="160"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -5448,101 +5473,147 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Installera det med hjälp av din pakethanterare. Det kan heta libsdl2-2.0-0, SDL2 eller liknande.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
+        <location filename="../src/mainwindow.cpp" line="1267"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Skärm %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1299"/>
+        <location filename="../src/mainwindow.cpp" line="1303"/>
         <source>Off</source>
         <translation>Av</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1302"/>
+        <location filename="../src/mainwindow.cpp" line="1306"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1305"/>
+        <location filename="../src/mainwindow.cpp" line="1309"/>
         <source>External</source>
         <translation>Extern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1328"/>
+        <location filename="../src/mainwindow.cpp" line="1332"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1373"/>
-        <location filename="../src/mainwindow.cpp" line="1597"/>
+        <location filename="../src/mainwindow.ui" line="1440"/>
+        <location filename="../src/mainwindow.cpp" line="1612"/>
         <source>Color</source>
         <translation>Färg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1601"/>
+        <location filename="../src/mainwindow.cpp" line="1616"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.cpp" line="1627"/>
         <source>Image/Video from HTML</source>
         <translation>Bild/video från HTML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1617"/>
+        <location filename="../src/mainwindow.cpp" line="1632"/>
         <source>Noise</source>
         <translation>Brus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1622"/>
+        <location filename="../src/mainwindow.cpp" line="1637"/>
         <source>Color Bars</source>
         <translation>Testbild</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1627"/>
+        <location filename="../src/mainwindow.cpp" line="1642"/>
         <source>Audio Tone</source>
         <translation>Ljudton</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1632"/>
+        <location filename="../src/mainwindow.cpp" line="1647"/>
         <source>Count</source>
         <translation>Antal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1652"/>
         <source>Blip Flash</source>
         <translation>Kort blixt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1676"/>
-        <location filename="../src/mainwindow.cpp" line="1678"/>
-        <location filename="../src/mainwindow.cpp" line="2142"/>
-        <location filename="../src/mainwindow.cpp" line="2150"/>
-        <location filename="../src/mainwindow.cpp" line="2173"/>
-        <location filename="../src/mainwindow.cpp" line="2236"/>
-        <location filename="../src/mainwindow.cpp" line="4825"/>
-        <location filename="../src/mainwindow.cpp" line="4838"/>
-        <location filename="../src/mainwindow.cpp" line="5981"/>
+        <location filename="../src/mainwindow.cpp" line="1691"/>
+        <location filename="../src/mainwindow.cpp" line="1693"/>
+        <location filename="../src/mainwindow.cpp" line="2221"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
+        <location filename="../src/mainwindow.cpp" line="2253"/>
+        <location filename="../src/mainwindow.cpp" line="2318"/>
+        <location filename="../src/mainwindow.cpp" line="4937"/>
+        <location filename="../src/mainwindow.cpp" line="4950"/>
+        <location filename="../src/mainwindow.cpp" line="6105"/>
         <source>Failed to open </source>
         <translation>Misslyckades med att öppna </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1747"/>
+        <location filename="../src/mainwindow.cpp" line="1729"/>
+        <source>The file you opened uses GPU processing, which is not enabled.
+Do you want Shotcut to convert it for CPU? Conversion is an approximation.
+
+If you choose Yes, Shotcut will create a copy of your project
+with &quot;- Converted for CPU&quot; in the file name and open it.</source>
+        <translation>Filen du öppnade använder GPU-bearbetning, vilket inte är aktiverat.
+Vill du att Shotcut ska konvertera den för CPU? Konverteringen är en approximation.
+
+Om du väljer Ja kommer Shotcut att skapa en kopia av ditt projekt
+med ”- Konverterad för CPU” i filnamnet och öppna den.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1746"/>
+        <source>The file you opened uses CPU processing, which is not enabled.
+Do you want Shotcut to convert it for GPU?
+
+If you choose Yes, Shotcut will create a copy of your project
+with &quot;- Converted for GPU&quot; in the file name and open it.</source>
+        <translation>Filen du öppnade använder CPU-bearbetning, vilket inte är aktiverat.
+Vill du att Shotcut ska konvertera den för GPU?
+
+Om du väljer Ja kommer Shotcut att skapa en kopia av ditt projekt
+med ”- Konverterad för GPU” i filnamnet och öppna den.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1767"/>
+        <source>Converted for GPU</source>
+        <translation>Konverterad för GPU</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1768"/>
+        <source>Converted for CPU</source>
+        <translation>Konverterad för CPU</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1771"/>
+        <source>Save Converted XML</source>
+        <translation>Spara konverterad XML</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1807"/>
+        <source>Converting the project failed.</source>
+        <translation>Konvertering av projektet misslyckades.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1817"/>
         <source>Repaired</source>
         <translation>Reparerad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1748"/>
+        <location filename="../src/mainwindow.cpp" line="1818"/>
         <source>Save Repaired XML</source>
         <translation>Spara reparerad XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1785"/>
+        <location filename="../src/mainwindow.cpp" line="1854"/>
         <source>Repairing the project failed.</source>
         <translation>Misslyckad reparation av projektet.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1798"/>
+        <location filename="../src/mainwindow.cpp" line="1867"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5555,22 +5626,22 @@ Om du väljer Ja, kommer Shotcut att skapa en kopia av ditt projekt
 med &quot;- Reparerad&quot; i filnamnet och öppnar den.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1833"/>
+        <location filename="../src/mainwindow.cpp" line="1902"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Automatiskt sparade filer finns. Vill du återskapa dem nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1905"/>
+        <location filename="../src/mainwindow.cpp" line="1974"/>
         <source>You cannot add a project to itself!</source>
         <translation>Du kan inte lägga till ett projekt till sig själv!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1968"/>
+        <location filename="../src/mainwindow.cpp" line="2038"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Det uppstod ett fel vid sparandet. Försök igen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2053"/>
+        <location filename="../src/mainwindow.cpp" line="2130"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5579,7 +5650,7 @@ It was made with version </source>
 Den gjordes med version </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2084"/>
+        <location filename="../src/mainwindow.cpp" line="2161"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5590,48 +5661,48 @@ Stäng andra program eller webbläsarflikar och försök igen.
 Eller spara och starta om Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2136"/>
+        <location filename="../src/mainwindow.cpp" line="2214"/>
         <source>Opening %1</source>
         <translation>Öppnar %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2278"/>
-        <location filename="../src/mainwindow.cpp" line="4812"/>
+        <location filename="../src/mainwindow.cpp" line="2360"/>
+        <location filename="../src/mainwindow.cpp" line="4924"/>
         <source>Open File</source>
         <translation>Öppna fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2280"/>
+        <location filename="../src/mainwindow.cpp" line="2362"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Alla filer (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2546"/>
+        <location filename="../src/mainwindow.cpp" line="2631"/>
         <source>Preferences</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2556"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Rename Clip</source>
         <translation>Byt namn på klipp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2565"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>Find</source>
         <translation>Hitta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2574"/>
+        <location filename="../src/mainwindow.cpp" line="2659"/>
         <source>Reload</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2584"/>
+        <location filename="../src/mainwindow.cpp" line="2669"/>
         <source>Rerun Filter Analysis</source>
         <translation>Återkörning av filteranalys</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2598"/>
+        <location filename="../src/mainwindow.cpp" line="2683"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Detta kommer att starta %n analysjobb. Fortsätta?</numerusform>
@@ -5639,139 +5710,148 @@ Eller spara och starta om Shotcut.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2616"/>
+        <location filename="../src/mainwindow.cpp" line="2701"/>
         <source>No filters to analyze.</source>
         <translation>Inga filter att analysera.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2756"/>
+        <location filename="../src/mainwindow.cpp" line="2841"/>
         <source>Untitled</source>
         <translation>Namnlös</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2761"/>
+        <location filename="../src/mainwindow.cpp" line="2846"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3bilder/s %4ch</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2788"/>
+        <location filename="../src/mainwindow.cpp" line="2873"/>
         <source>About %1</source>
         <translation>Om %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2917"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>Non-Broadcast</source>
         <translation>Icke-utsändning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2922"/>
+        <location filename="../src/mainwindow.cpp" line="3007"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD bredbild NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2923"/>
+        <location filename="../src/mainwindow.cpp" line="3008"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD bredbild PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2934"/>
+        <location filename="../src/mainwindow.cpp" line="3019"/>
         <source>Square 1080p 30 fps</source>
-        <translation>Kvadratisk 1080p 30 fps</translation>
+        <translation>Kvadratisk 1080p 30 bilder/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2935"/>
+        <location filename="../src/mainwindow.cpp" line="3020"/>
         <source>Square 1080p 60 fps</source>
-        <translation>Kvadratisk 1080p 60 fps</translation>
+        <translation>Kvadratisk 1080p 60 bilder/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2936"/>
+        <location filename="../src/mainwindow.cpp" line="3021"/>
         <source>Vertical HD 30 fps</source>
-        <translation>Vertikal HD 30 fps</translation>
+        <translation>Vertikal HD 30 bilder/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2937"/>
+        <location filename="../src/mainwindow.cpp" line="3022"/>
         <source>Vertical HD 60 fps</source>
-        <translation>Vertikal HD 60 fps</translation>
+        <translation>Vertikal HD 60 bilder/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2938"/>
+        <location filename="../src/mainwindow.cpp" line="3023"/>
         <source>Custom</source>
         <translation>Användardefinierad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
-        <location filename="../src/mainwindow.cpp" line="3260"/>
+        <location filename="../src/mainwindow.cpp" line="3054"/>
+        <location filename="../src/mainwindow.cpp" line="3363"/>
         <source>Saved %1</source>
         <translation>Sparad %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3251"/>
-        <location filename="../src/mainwindow.cpp" line="3274"/>
-        <location filename="../src/mainwindow.cpp" line="4596"/>
+        <location filename="../src/mainwindow.cpp" line="3354"/>
+        <location filename="../src/mainwindow.cpp" line="3377"/>
+        <location filename="../src/mainwindow.cpp" line="4708"/>
         <source>Save XML</source>
         <translation>Spara XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3370"/>
+        <location filename="../src/mainwindow.cpp" line="3473"/>
         <source>Timeline is not loaded</source>
         <translation>Tidslinjen är inte inläst</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3380"/>
+        <location filename="../src/mainwindow.cpp" line="3483"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>Intervallmarkören finns inte under tidslinjemarkören</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3445"/>
+        <location filename="../src/mainwindow.cpp" line="3555"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Det finns ofullständiga jobb.
 Vill du fortfarande avsluta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3457"/>
+        <location filename="../src/mainwindow.cpp" line="3567"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>En export pågår.
 Vill du fortfarande avsluta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4128"/>
+        <location filename="../src/mainwindow.cpp" line="4239"/>
         <source>GPU processing is not supported</source>
         <translation>GPU-behandling stöds inte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4598"/>
+        <location filename="../src/mainwindow.cpp" line="4710"/>
         <source>Saved backup %1</source>
         <translation>Sparad säkerhetskopia %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3336"/>
+        <location filename="../src/mainwindow.cpp" line="3439"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Vill du också ändra videoläget till %1 x %2?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4292"/>
+        <location filename="../src/mainwindow.cpp" line="1094"/>
+        <source>GPU processing is experimental and does not work on all computers. Plan to do some testing after turning this on.
+
+Do you want to enable GPU processing and restart Shotcut?</source>
+        <translation>GPU-bearbetning är experimentell och fungerar inte på alla datorer. Planera att göra några tester efter att du har aktiverat denna funktion.
+
+Vill du aktivera GPU-bearbetning och starta om Shotcut?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4403"/>
         <source>Opened Files</source>
         <translation>Öppnade filer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5274"/>
+        <location filename="../src/mainwindow.cpp" line="5386"/>
         <source>Screen recorder launched</source>
         <translation>Skärminspelare startad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5276"/>
+        <location filename="../src/mainwindow.cpp" line="5388"/>
         <source>Failed to launch screen recorder</source>
         <translation>Misslyckades med att starta skärminspelare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5585"/>
+        <location filename="../src/mainwindow.cpp" line="5697"/>
         <source>Add To Timeline</source>
         <translation>Lägg till i tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5729"/>
+        <location filename="../src/mainwindow.cpp" line="5841"/>
         <source>GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU processing and restart Shotcut?</source>
@@ -5780,315 +5860,291 @@ Do you want to disable GPU processing and restart Shotcut?</source>
 Vill du inaktivera GPU-behandling och starta om Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6181"/>
+        <location filename="../src/mainwindow.cpp" line="6087"/>
+        <source>Do you want to create missing proxies for every file in this project?</source>
+        <translation>Vill du skapa saknade proxies för varje fil i detta projekt?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="6305"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Inkludera intervall (Varaktighet &gt; 1 bildruta)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6192"/>
+        <location filename="../src/mainwindow.cpp" line="6316"/>
         <source>Choose Markers</source>
         <translation>Välj markörer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6209"/>
+        <location filename="../src/mainwindow.cpp" line="6333"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Text (*.txt);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6264"/>
+        <location filename="../src/mainwindow.cpp" line="6388"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Misslyckades med att öppna export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6305"/>
+        <location filename="../src/mainwindow.cpp" line="6429"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Detta kommer att återställa &lt;b&gt;alla&lt;/b&gt; inställningar och Shotcut måste startas om efteråt.
 Vill du återställa och starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1752"/>
-        <location filename="../src/mainwindow.cpp" line="3278"/>
+        <location filename="../src/mainwindow.cpp" line="1775"/>
+        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="3381"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="483"/>
+        <location filename="../src/mainwindow.cpp" line="491"/>
         <source>View Mode</source>
         <translation>Visningsläge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3418"/>
+        <location filename="../src/mainwindow.cpp" line="3528"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektet har ändrats.
 Vill du spara dina ändringar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4116"/>
+        <location filename="../src/mainwindow.cpp" line="4227"/>
         <source>Exit Full Screen</source>
         <translation>Avsluta helskärm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4643"/>
+        <location filename="../src/mainwindow.cpp" line="4755"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>Shotcut måste startas om för att ändra extern skärm.
 Vill du starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5175"/>
+        <location filename="../src/mainwindow.cpp" line="5287"/>
         <source>screenshot</source>
         <translation>skärmbild</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5176"/>
+        <location filename="../src/mainwindow.cpp" line="5288"/>
         <source>PNG Files (*.png)</source>
         <translation>PNG-filer (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5233"/>
+        <location filename="../src/mainwindow.cpp" line="5345"/>
         <source>screen</source>
         <translation>skärm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <location filename="../src/mainwindow.cpp" line="6066"/>
         <source>Turn Proxy On</source>
         <translation>Aktivera proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <location filename="../src/mainwindow.cpp" line="6066"/>
         <source>Turn Proxy Off</source>
         <translation>Stäng av proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5945"/>
+        <location filename="../src/mainwindow.cpp" line="6071"/>
         <source>Converting</source>
         <translation>Konverterar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5961"/>
-        <source>Do you want to create missing proxies for every file in this project?
-
-You must reopen your project after all proxy jobs are finished.</source>
-        <translation>Vill du skapa saknade proxyer för varje fil i det här projektet?
-
-Du måste öppna projektet igen efter att alla proxyjobb har slutförts.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="5999"/>
+        <location filename="../src/mainwindow.cpp" line="6123"/>
         <source>Proxy Folder</source>
         <translation>Proxymapp</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6017"/>
+        <location filename="../src/mainwindow.cpp" line="6141"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Vill du flytta alla filer från den gamla mappen till den nya mappen?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6025"/>
+        <location filename="../src/mainwindow.cpp" line="6149"/>
         <source>Moving Files</source>
         <translation>Flyttar filer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="321"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>Set Loop Range</source>
         <translation>Ställ in slingintervall</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="487"/>
+        <location filename="../src/mainwindow.cpp" line="495"/>
         <source>Thumbnails</source>
         <translation>Miniatyrer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="579"/>
+        <location filename="../src/mainwindow.cpp" line="587"/>
         <source>Scrolling</source>
         <translation>Rullning</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <source>GPU processing is experimental and does not work on all computers. Plan to do some testing after turning this on.
-At this time, a project created with GPU processing cannot be converted to a CPU-only project later.
-Do you want to enable GPU processing and restart Shotcut?</source>
-        <translation>GPU-behandling är experimentell och fungerar inte på alla datorer. Planera att göra några tester efter att denna aktiverats.
-Just nu kan inte ett projekt som skapats med GPU-handling konverteras till ett projekt med endast-CPU senare.
-Vill du aktivera GPU-behandling och starta om Shotcut?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1112"/>
+        <location filename="../src/mainwindow.cpp" line="1117"/>
         <source>Shotcut must restart to disable GPU processing.
 Disable GPU processing and restart?</source>
         <translation>Shotcut måste starta om för att inaktivera GPU-behandling.
 Inaktivera GPU-behandling och starta om?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1144"/>
+        <location filename="../src/mainwindow.cpp" line="1149"/>
         <source>Audio API</source>
         <translation>Ljud-API</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1165"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>default</source>
         <translation>standard</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1177"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Du måste starta om Shotcut för att ändra ljud-API:et.
 Vill du starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1290"/>
+        <location filename="../src/mainwindow.cpp" line="1294"/>
         <source>SDR</source>
         <translation>SDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1293"/>
+        <location filename="../src/mainwindow.cpp" line="1297"/>
         <source>HLG HDR</source>
         <translation>HLG HDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1319"/>
+        <location filename="../src/mainwindow.cpp" line="1323"/>
         <source>DeckLink Gamma</source>
         <translation>DeckLink Gamma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1607"/>
+        <location filename="../src/mainwindow.cpp" line="1622"/>
         <source>Drawing/Animation</source>
         <translation>Ritning/animering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1712"/>
-        <source>The file you opened uses GPU processing, which is not enabled.</source>
-        <translation>Filen som du öppnar använder GPU-behandling, vilket inte är aktiverat.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1725"/>
-        <source>The file you opened uses CPU effects that are incompatible with GPU processing.
-Do you want to disable GPU processing and restart?</source>
-        <translation>Filen som du öppnade använder CPU-effekter som är inkompatibla med GPU-behandling.
-Vill du inaktivera GPU-behandling och starta om?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="4148"/>
+        <location filename="../src/mainwindow.cpp" line="4259"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Klicka här för att leta efter en ny version av Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4263"/>
+        <location filename="../src/mainwindow.cpp" line="4374"/>
         <source>Open Files</source>
         <translation>Öppna filer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4322"/>
+        <location filename="../src/mainwindow.cpp" line="4433"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Du måste starta om Shotcut för att växla till det nya språket.
 Vill du starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4365"/>
+        <location filename="../src/mainwindow.cpp" line="4476"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Misslyckades att ansluta till JACK. Verifiera att JACK är installerat och startat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4575"/>
+        <location filename="../src/mainwindow.cpp" line="4687"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Du måste starta om %1 för att byta till det nya temat.
 Vill du starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4618"/>
+        <location filename="../src/mainwindow.cpp" line="4730"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Granska hela ditt projekt efter att du har gjort denna ändring.&lt;/p&gt;Shotcut justerar inte automatiskt saker som är känsliga för storlek och position om du ändrar upplösning eller bildförhållande.&lt;p&gt;Tidpunkten för redigeringar och nyckelbilder kan vara något annorlunda om du ändrar bildfrekvens.&lt;p&gt;Det är en bra idé att använda &lt;b&gt;Arkiv &gt; Säkerhetskopiera och spara&lt;/b&gt; före eller efter den här åtgärden.&lt;/p&gt;&lt;p&gt;Vill du ändra &lt;b&gt;videoläget&lt;/b&gt; nu?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4632"/>
+        <location filename="../src/mainwindow.cpp" line="4744"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Visa inte detta mer.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4789"/>
+        <location filename="../src/mainwindow.cpp" line="4901"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Vill du automatiskt söka efter nya uppdateringar i framtiden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4796"/>
+        <location filename="../src/mainwindow.cpp" line="4908"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Visa inte detta mer.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4814"/>
+        <location filename="../src/mainwindow.cpp" line="4926"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4868"/>
+        <location filename="../src/mainwindow.cpp" line="4980"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Du måste starta om Shotcut för att ändra visningsmetod.
 Vill du starta om nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4898"/>
+        <location filename="../src/mainwindow.cpp" line="5010"/>
         <source>Application Log</source>
         <translation>Applikationslogg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4901"/>
+        <location filename="../src/mainwindow.cpp" line="5013"/>
         <source>Previous</source>
         <translation>Föregående</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4963"/>
+        <location filename="../src/mainwindow.cpp" line="5075"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut version %1 finns tillgänglig. Klicka här för att hämta den.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4969"/>
+        <location filename="../src/mainwindow.cpp" line="5081"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Du har den senaste versionen av Shotcut installerad.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4983"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Misslyckades med att läsa version.json vid kontroll. Klicka här för att komma till webbplatsen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="971"/>
-        <location filename="../src/mainwindow.ui" line="974"/>
-        <location filename="../src/mainwindow.cpp" line="5003"/>
+        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.cpp" line="5115"/>
         <source>Export EDL</source>
         <translation>Exportera EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5007"/>
+        <location filename="../src/mainwindow.cpp" line="5119"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5054"/>
-        <location filename="../src/mainwindow.cpp" line="6261"/>
+        <location filename="../src/mainwindow.cpp" line="5166"/>
+        <location filename="../src/mainwindow.cpp" line="6385"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Ett JavaScript-fel inträffade under exporten.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5057"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
         <source>Failed to open export-edl.js</source>
         <translation>Misslyckades med att öppna export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5088"/>
+        <location filename="../src/mainwindow.cpp" line="5200"/>
         <source>Export frame from proxy?</source>
         <translation>Exportera bildruta från proxy?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5089"/>
+        <location filename="../src/mainwindow.cpp" line="5201"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6097,46 +6153,46 @@ Do you still want to continue?</source>
 Vill du fortfarande fortsätta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="985"/>
-        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <location filename="../src/mainwindow.ui" line="1023"/>
+        <location filename="../src/mainwindow.ui" line="1026"/>
+        <location filename="../src/mainwindow.cpp" line="5213"/>
         <source>Export Frame</source>
         <translation>Exportera bildruta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5107"/>
+        <location filename="../src/mainwindow.cpp" line="5219"/>
         <source>Unable to export frame.</source>
         <translation>Kunde inte exportera bildruta.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5115"/>
+        <location filename="../src/mainwindow.cpp" line="5227"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Du måste starta om Shotcut för att ändra datakatalogen.
 Vill du fortsätta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5126"/>
+        <location filename="../src/mainwindow.cpp" line="5238"/>
         <source>Data Directory</source>
         <translation>Datakatalog</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5473"/>
+        <location filename="../src/mainwindow.cpp" line="5585"/>
         <source>Add Custom Layout</source>
         <translation>Lägg till anpassad layout</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5474"/>
+        <location filename="../src/mainwindow.cpp" line="5586"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5514"/>
+        <location filename="../src/mainwindow.cpp" line="5626"/>
         <source>Remove Video Mode</source>
         <translation>Ta bort videoläge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5531"/>
+        <location filename="../src/mainwindow.cpp" line="5643"/>
         <source>Remove Layout</source>
         <translation>Ta bort layout</translation>
     </message>
@@ -6250,39 +6306,39 @@ Vill du fortsätta?</translation>
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="47"/>
+        <location filename="../src/jobs/meltjob.cpp" line="48"/>
         <source>View XML</source>
         <translation>Visa XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="48"/>
+        <location filename="../src/jobs/meltjob.cpp" line="49"/>
         <source>View the MLT XML for this job</source>
         <translation>Visa MLT XML för detta jobb</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="58"/>
+        <location filename="../src/jobs/meltjob.cpp" line="59"/>
         <source>Open</source>
         <translation>Öppna</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="60"/>
+        <location filename="../src/jobs/meltjob.cpp" line="61"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Öppna utmatningsfil i Shotcut-spelaren</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="64"/>
-        <location filename="../src/jobs/meltjob.cpp" line="69"/>
+        <location filename="../src/jobs/meltjob.cpp" line="65"/>
         <location filename="../src/jobs/meltjob.cpp" line="70"/>
+        <location filename="../src/jobs/meltjob.cpp" line="71"/>
         <source>Show In Folder</source>
         <translation>Visa i mapp</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="65"/>
+        <location filename="../src/jobs/meltjob.cpp" line="66"/>
         <source>Show In Files</source>
         <translation>Visa i filer</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="196"/>
+        <location filename="../src/jobs/meltjob.cpp" line="201"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -6549,17 +6605,17 @@ Installera tilläggen %2.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="28"/>
         <source>Network Stream</source>
         <translation>Nätverksström</translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="43"/>
         <source>&amp;URL</source>
         <translation>&amp;URL</translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="57"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="59"/>
         <source>Apply</source>
         <translation>Tillämpa</translation>
     </message>
@@ -6572,77 +6628,77 @@ Installera tilläggen %2.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="61"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="64"/>
         <source>Projects</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="188"/>
-        <location filename="../src/widgets/newprojectfolder.ui" line="205"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="191"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="208"/>
         <source>PushButton</source>
         <translation>Tryckknapp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="231"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="234"/>
         <source>Start</source>
         <translation>Starta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="372"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="375"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="218"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="221"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
         <translation>En mapp med detta namn kommer att skapas som innehåller
 en projektfil med samma namn.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="159"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="162"/>
         <source>Projects folder</source>
         <translation>Projektmapp</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="263"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="266"/>
         <source>Project name</source>
         <translation>Projektnamn</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="253"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
         <source>Video mode</source>
         <translation>Videoläge</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="201"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="204"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
         <translation>Detta är den mapp som ska innehålla Shotcut-projektmappar.
 En mapp skapas i denna mapp för varje projekt.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="315"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="318"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
-        <translation>Automatisk innebär att upplösningen och bildfrekvensen baseras på den &lt;b&gt;första&lt;/b&gt; filen som du &lt;b&gt;lägger till&lt;/b&gt; i projektet. Om den första filen inte är ett videoklipp (t.ex. en bild eller ett ljud) blir det 1920x1080p 25 fps.</translation>
+        <translation>Automatisk innebär att upplösningen och bildfrekvensen baseras på den &lt;b&gt;första&lt;/b&gt; filen som du &lt;b&gt;lägger till&lt;/b&gt; i projektet. Om den första filen inte är ett videoklipp (t.ex. en bild eller ett ljud) blir det 1920x1080p 25 bilder/s.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="143"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="146"/>
         <source>New Project</source>
         <translation>Nytt projekt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="357"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Automatic</source>
         <translation>Automatiskt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="362"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="365"/>
         <source>Add...</source>
         <translation>Lägg till...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="367"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="370"/>
         <source>Remove...</source>
         <translation>Ta bort...</translation>
     </message>
@@ -6696,7 +6752,7 @@ Försök igen med en annan mapp.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/noisewidget.ui" line="26"/>
+        <location filename="../src/widgets/noisewidget.ui" line="28"/>
         <source>Noise</source>
         <translation>Brus</translation>
     </message>
@@ -6722,7 +6778,7 @@ Försök igen med en annan mapp.</translation>
         <translation>Öppna annan</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.ui" line="55"/>
+        <location filename="../src/openotherdialog.ui" line="58"/>
         <source>1</source>
         <translation>1</translation>
     </message>
@@ -6910,37 +6966,37 @@ Försök igen med en annan mapp.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="26"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="28"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="41"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="43"/>
         <source>Speed 1</source>
         <translation>Hastighet 1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="112"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="114"/>
         <source>Speed 2</source>
         <translation>Hastighet 2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="180"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="182"/>
         <source>Speed 3</source>
         <translation>Hastighet 3</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="252"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="254"/>
         <source>Speed 4</source>
         <translation>Hastighet 4</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="323"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="325"/>
         <source>Move 1</source>
         <translation>Flytta 1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="391"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="393"/>
         <source>Move 2</source>
         <translation>Flytta 2</translation>
     </message>
@@ -6948,436 +7004,436 @@ Försök igen med en annan mapp.</translation>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="91"/>
+        <location filename="../src/player.cpp" line="94"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="92"/>
+        <location filename="../src/player.cpp" line="95"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="155"/>
+        <location filename="../src/player.cpp" line="158"/>
         <source>Adjust the audio volume</source>
         <translation>Justera ljudvolymen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="177"/>
+        <location filename="../src/player.cpp" line="180"/>
         <source>Silence the audio</source>
         <translation>Tysta ljudet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="196"/>
+        <location filename="../src/player.cpp" line="199"/>
         <source>Current position</source>
         <translation>Aktuell position</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="202"/>
+        <location filename="../src/player.cpp" line="205"/>
         <source>Total Duration</source>
         <translation>Total varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="380"/>
+        <location filename="../src/player.cpp" line="383"/>
         <source>In Point</source>
         <translation>I punkt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="388"/>
+        <location filename="../src/player.cpp" line="391"/>
         <source>Selected Duration</source>
         <translation>Vald varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="242"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Zoom Fit</source>
         <translation>Zooma för att passa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="191"/>
+        <location filename="../src/player.cpp" line="194"/>
         <source>Current/Total Times</source>
         <translation>Aktuella/totala tider</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="210"/>
+        <location filename="../src/player.cpp" line="213"/>
         <source>Player Controls</source>
         <translation>Spelarkontroller</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="221"/>
-        <location filename="../src/player.cpp" line="375"/>
+        <location filename="../src/player.cpp" line="224"/>
+        <location filename="../src/player.cpp" line="378"/>
         <source>Player Options</source>
         <translation>Spelaralternativ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="248"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Zoom 10%</source>
         <translation>Zooma 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="254"/>
+        <location filename="../src/player.cpp" line="257"/>
         <source>Zoom 25%</source>
         <translation>Zooma 25%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="260"/>
+        <location filename="../src/player.cpp" line="263"/>
         <source>Zoom 50%</source>
         <translation>Zooma 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="270"/>
         <source>Zoom 100%</source>
         <translation>Zooma 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="273"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>Zoom 200%</source>
         <translation>Zooma 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="311"/>
+        <location filename="../src/player.cpp" line="314"/>
         <source>Toggle zoom</source>
         <translation>Växla zoom</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="318"/>
+        <location filename="../src/player.cpp" line="321"/>
         <source>2x2 Grid</source>
         <translation>2x2 rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="323"/>
+        <location filename="../src/player.cpp" line="326"/>
         <source>3x3 Grid</source>
         <translation>3x3 rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="327"/>
+        <location filename="../src/player.cpp" line="330"/>
         <source>4x4 Grid</source>
         <translation>4x4 rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="331"/>
+        <location filename="../src/player.cpp" line="334"/>
         <source>16x16 Grid</source>
         <translation>16x16 rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="339"/>
+        <location filename="../src/player.cpp" line="342"/>
         <source>10 Pixel Grid</source>
-        <translation>10 pixel rutnät</translation>
+        <translation>10-bildpunkters rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="462"/>
+        <location filename="../src/player.cpp" line="465"/>
         <source>Play/Pause</source>
         <translation>Spela upp/paus</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="466"/>
+        <location filename="../src/player.cpp" line="469"/>
         <source>Toggle play or pause</source>
         <translation>Växla mellan uppspelning eller paus</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="477"/>
+        <location filename="../src/player.cpp" line="480"/>
         <source>Loop</source>
         <translation>Slinga</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="483"/>
+        <location filename="../src/player.cpp" line="486"/>
         <source>Toggle player looping</source>
         <translation>Växla uppspelning som slinga</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="487"/>
+        <location filename="../src/player.cpp" line="490"/>
         <source>Loop All</source>
         <translation>Upprepa alla</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="488"/>
+        <location filename="../src/player.cpp" line="491"/>
         <source>Loop back to the beginning when the end is reached</source>
         <translation>Börja om från början när slutet är nått</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="495"/>
+        <location filename="../src/player.cpp" line="498"/>
         <source>Loop Marker</source>
         <translation>Slingmarkör</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="499"/>
         <source>Loop around the marker under the cursor in the timeline</source>
         <translation>Slinga runt markören under markören i tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="507"/>
+        <location filename="../src/player.cpp" line="510"/>
         <source>Loop Selection</source>
         <translation>Slingmarkering</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="508"/>
+        <location filename="../src/player.cpp" line="511"/>
         <source>Loop around the selected clips</source>
         <translation>Slinga runt de markerade klippen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="516"/>
+        <location filename="../src/player.cpp" line="519"/>
         <source>Nothing selected</source>
         <translation>Ingenting markerat</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="521"/>
+        <location filename="../src/player.cpp" line="524"/>
         <source>Loop Around Cursor</source>
         <translation>Slinga runt markör</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="522"/>
+        <location filename="../src/player.cpp" line="525"/>
         <source>Loop around the current cursor position</source>
         <translation>Slinga runt den aktuella pekarpositionen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="551"/>
+        <location filename="../src/player.cpp" line="554"/>
         <source>Skip to the next point</source>
         <translation>Hoppa till nästa punkt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="574"/>
+        <location filename="../src/player.cpp" line="577"/>
         <source>Skip to the previous point</source>
         <translation>Hoppa till föregående punkt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="599"/>
+        <location filename="../src/player.cpp" line="602"/>
         <source>Play quickly backwards</source>
         <translation>Spela snabbt baklänges</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="609"/>
+        <location filename="../src/player.cpp" line="612"/>
         <source>Play quickly forwards</source>
         <translation>Spela snabbt framåt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="613"/>
+        <location filename="../src/player.cpp" line="616"/>
         <source>Seek Start</source>
         <translation>Sök start</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="618"/>
+        <location filename="../src/player.cpp" line="621"/>
         <source>Seek End</source>
         <translation>Sök slut</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="628"/>
+        <location filename="../src/player.cpp" line="631"/>
         <source>Next Frame</source>
         <translation>Nästa bildruta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="634"/>
+        <location filename="../src/player.cpp" line="637"/>
         <source>Previous Frame</source>
         <translation>Föregående bildruta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="640"/>
+        <location filename="../src/player.cpp" line="643"/>
         <source>Forward One Second</source>
         <translation>Framåt en sekund</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="645"/>
+        <location filename="../src/player.cpp" line="648"/>
         <source>Backward One Second</source>
         <translation>Bakåt en sekund</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="650"/>
+        <location filename="../src/player.cpp" line="653"/>
         <source>Forward Two Seconds</source>
         <translation>Framåt två sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="655"/>
+        <location filename="../src/player.cpp" line="658"/>
         <source>Backward Two Seconds</source>
         <translation>Bakåt två sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="660"/>
+        <location filename="../src/player.cpp" line="663"/>
         <source>Forward Five Seconds</source>
         <translation>Framåt fem sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="665"/>
+        <location filename="../src/player.cpp" line="668"/>
         <source>Backward Five Seconds</source>
         <translation>Bakåt fem sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="670"/>
+        <location filename="../src/player.cpp" line="673"/>
         <source>Forward Ten Seconds</source>
         <translation>Framåt tio sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="675"/>
+        <location filename="../src/player.cpp" line="678"/>
         <source>Backward Ten Seconds</source>
         <translation>Bakåt tio sekunder</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="680"/>
+        <location filename="../src/player.cpp" line="683"/>
         <source>Forward Jump</source>
         <translation>Hoppa framåt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="687"/>
+        <location filename="../src/player.cpp" line="690"/>
         <source>Backward Jump</source>
         <translation>Hoppa bakåt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="694"/>
+        <location filename="../src/player.cpp" line="697"/>
         <source>Set Jump Time</source>
         <translation>Ställ in hopptid</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="705"/>
+        <location filename="../src/player.cpp" line="708"/>
         <source>Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="718"/>
+        <location filename="../src/player.cpp" line="721"/>
         <source>Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="731"/>
+        <location filename="../src/player.cpp" line="734"/>
         <source>Set Time Position</source>
         <translation>Ställ in tidsposition</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="761"/>
+        <location filename="../src/player.cpp" line="764"/>
         <source>Pause playback</source>
         <translation>Pausa uppspelning</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="763"/>
-        <location filename="../src/player.cpp" line="768"/>
-        <location filename="../src/player.cpp" line="773"/>
+        <location filename="../src/player.cpp" line="766"/>
+        <location filename="../src/player.cpp" line="771"/>
+        <location filename="../src/player.cpp" line="776"/>
         <source>Player</source>
         <translation>Uppspelare</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="765"/>
+        <location filename="../src/player.cpp" line="768"/>
         <source>Focus Player</source>
         <translation>Fokusera spelare</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="770"/>
+        <location filename="../src/player.cpp" line="773"/>
         <source>Toggle Filter Overlay</source>
         <translation>Växla filteröverlägg</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="923"/>
+        <location filename="../src/player.cpp" line="928"/>
         <source>Not Seekable</source>
         <translation>Inte sökbar</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="335"/>
+        <location filename="../src/player.cpp" line="338"/>
         <source>20 Pixel Grid</source>
         <translation>20-bildpunkters rutnät</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
+        <location filename="../src/player.cpp" line="282"/>
         <source>Zoom 300%</source>
         <translation>Zooma 300%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="288"/>
         <source>Zoom 400%</source>
         <translation>Zooma 400%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Zoom 500%</source>
         <translation>Zooma 500%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Zoom 750%</source>
         <translation>Zooma 750%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="303"/>
+        <location filename="../src/player.cpp" line="306"/>
         <source>Zoom 1000%</source>
         <translation>Zooma 1000%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="343"/>
+        <location filename="../src/player.cpp" line="346"/>
         <source>80/90% Safe Areas</source>
         <translation>80/90% säkra områden</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="347"/>
+        <location filename="../src/player.cpp" line="350"/>
         <source>EBU R95 Safe Areas</source>
         <translation>EBU R95 säkra områden</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="352"/>
+        <location filename="../src/player.cpp" line="355"/>
         <source>Snapping</source>
         <translation>Fästning</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="362"/>
+        <location filename="../src/player.cpp" line="365"/>
         <source>Toggle grid display on the player</source>
         <translation>Växla rutnätsvisning på spelaren</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="738"/>
+        <location filename="../src/player.cpp" line="741"/>
         <source>Switch Source/Project</source>
         <translation>Växla källa/projekt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="758"/>
+        <location filename="../src/player.cpp" line="761"/>
         <source>Pause</source>
         <translation>Paus</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="545"/>
+        <location filename="../src/player.cpp" line="548"/>
         <source>Skip Next</source>
         <translation>Hoppa till nästa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="568"/>
+        <location filename="../src/player.cpp" line="571"/>
         <source>Skip Previous</source>
         <translation>Hoppa till föregående</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="593"/>
+        <location filename="../src/player.cpp" line="596"/>
         <source>Rewind</source>
         <translation>Spola tillbaka</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="603"/>
+        <location filename="../src/player.cpp" line="606"/>
         <source>Fast Forward</source>
         <translation>Spola framåt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="369"/>
+        <location filename="../src/player.cpp" line="372"/>
         <source>Volume</source>
         <translation>Volym</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="370"/>
+        <location filename="../src/player.cpp" line="373"/>
         <source>Show the volume control</source>
         <translation>Visa volymkontrollen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1278"/>
+        <location filename="../src/player.cpp" line="1283"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation>Skalning av proxy och förhandsgranskning är PÅ vid %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1283"/>
+        <location filename="../src/player.cpp" line="1288"/>
         <source>Proxy is ON at %1p</source>
         <translation>Proxy är PÅ vid %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1288"/>
+        <location filename="../src/player.cpp" line="1293"/>
         <source>Preview scaling is ON at %1p</source>
         <translation>Skalning av förhandsvisning är PÅ vid %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1403"/>
+        <location filename="../src/player.cpp" line="1408"/>
         <source>Unmute</source>
         <translation>Aktivera ljud</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1372"/>
-        <location filename="../src/player.cpp" line="1412"/>
+        <location filename="../src/player.cpp" line="1377"/>
+        <location filename="../src/player.cpp" line="1417"/>
         <source>Mute</source>
         <translation>Inaktivera ljud</translation>
     </message>
@@ -7385,13 +7441,13 @@ Försök igen med en annan mapp.</translation>
 <context>
     <name>PlaylistDock</name>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="382"/>
+        <location filename="../src/docks/playlistdock.ui" line="17"/>
+        <location filename="../src/docks/playlistdock.cpp" line="384"/>
         <source>Playlist</source>
         <translation>Spellista</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="59"/>
+        <location filename="../src/docks/playlistdock.ui" line="58"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -7410,404 +7466,404 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dra och släpp&lt;/span&gt; för att ordna om objekten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="127"/>
+        <location filename="../src/docks/playlistdock.ui" line="126"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dubbelklicka på ett objekt i spellistan för att öppna det i spelaren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="601"/>
+        <location filename="../src/docks/playlistdock.cpp" line="603"/>
         <source>Add the Source to the playlist</source>
         <translation>Lägg till källan till spellistan</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="612"/>
+        <location filename="../src/docks/playlistdock.cpp" line="614"/>
         <source>Remove cut</source>
         <translation>Ta bort klippning</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="630"/>
+        <location filename="../src/docks/playlistdock.cpp" line="632"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="642"/>
+        <location filename="../src/docks/playlistdock.cpp" line="644"/>
         <source>View as tiles</source>
         <translation>Visa som rutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="655"/>
+        <location filename="../src/docks/playlistdock.cpp" line="657"/>
         <source>View as icons</source>
         <translation>Visa som ikoner</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="668"/>
+        <location filename="../src/docks/playlistdock.cpp" line="670"/>
         <source>View as details</source>
         <translation>Visa som detaljerad</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="607"/>
+        <location filename="../src/docks/playlistdock.cpp" line="609"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="720"/>
+        <location filename="../src/docks/playlistdock.cpp" line="722"/>
         <source>Set Creation Time...</source>
         <translation>Ställ in tid för skapandet ...</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="706"/>
-        <location filename="../src/docks/playlistdock.cpp" line="707"/>
+        <location filename="../src/docks/playlistdock.cpp" line="708"/>
+        <location filename="../src/docks/playlistdock.cpp" line="709"/>
         <source>Insert</source>
         <translation>Infoga</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="451"/>
+        <location filename="../src/docks/playlistdock.cpp" line="453"/>
         <source>Playlist Menu</source>
         <translation>Meny för spellista</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="599"/>
+        <location filename="../src/docks/playlistdock.cpp" line="601"/>
         <source>Append</source>
         <translation>Lägg till efter</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="681"/>
+        <location filename="../src/docks/playlistdock.cpp" line="683"/>
         <source>Open the clip in the Source player</source>
         <translation>Öppna klippet i källspelaren</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="691"/>
+        <location filename="../src/docks/playlistdock.cpp" line="693"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>Gå till början av det här klippet i Projekt-spelaren</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="728"/>
+        <location filename="../src/docks/playlistdock.cpp" line="730"/>
         <source>Remove All</source>
         <translation>Ta bort alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="729"/>
+        <location filename="../src/docks/playlistdock.cpp" line="731"/>
         <source>Remove all items from the playlist</source>
         <translation>Ta bort alla objekt från spellistan</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="805"/>
+        <location filename="../src/docks/playlistdock.cpp" line="807"/>
         <source>Hidden</source>
         <translation>Dolda</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="817"/>
+        <location filename="../src/docks/playlistdock.cpp" line="819"/>
         <source>In and Out - Left/Right</source>
         <translation>In och ut - vänster/höger</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="833"/>
+        <location filename="../src/docks/playlistdock.cpp" line="835"/>
         <source>In and Out - Top/Bottom</source>
         <translation>In och ut - uppifrån/nerifrån</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="850"/>
+        <location filename="../src/docks/playlistdock.cpp" line="852"/>
         <source>In Only - Small</source>
         <translation>Endast in - Liten</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="866"/>
+        <location filename="../src/docks/playlistdock.cpp" line="868"/>
         <source>In Only - Large</source>
         <translation>Endast in - Stor</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="772"/>
+        <location filename="../src/docks/playlistdock.cpp" line="774"/>
         <source>Add Selected to Timeline</source>
         <translation>Lägg till markerat på tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="779"/>
+        <location filename="../src/docks/playlistdock.cpp" line="781"/>
         <source>Add Selected to Slideshow</source>
         <translation>Lägg till markerade objekt i bildspelet</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="883"/>
+        <location filename="../src/docks/playlistdock.cpp" line="885"/>
         <source>Play After Open</source>
         <translation>Spela efter öppning</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="734"/>
+        <location filename="../src/docks/playlistdock.cpp" line="736"/>
         <source>Select All</source>
         <translation>Markera alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="740"/>
+        <location filename="../src/docks/playlistdock.cpp" line="742"/>
         <source>Select None</source>
         <translation>Avmarkera alla</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="712"/>
+        <location filename="../src/docks/playlistdock.cpp" line="714"/>
         <source>Update Thumbnails</source>
         <translation>Uppdatera miniatyrbilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="786"/>
+        <location filename="../src/docks/playlistdock.cpp" line="788"/>
         <source>Sort By Name</source>
         <translation>Sortera efter namn</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="794"/>
+        <location filename="../src/docks/playlistdock.cpp" line="796"/>
         <source>Sort By Date</source>
         <translation>Sortera efter datum</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="667"/>
+        <location filename="../src/docks/playlistdock.cpp" line="669"/>
         <source>Details</source>
         <translation>Detaljer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="412"/>
+        <location filename="../src/docks/playlistdock.cpp" line="414"/>
         <source>Select</source>
         <translation>Välj</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="429"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
+        <location filename="../src/docks/playlistdock.cpp" line="431"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1136"/>
         <source>Bins</source>
         <translation>Behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="436"/>
+        <location filename="../src/docks/playlistdock.cpp" line="438"/>
         <source>Columns</source>
         <translation>Kolumner</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="446"/>
+        <location filename="../src/docks/playlistdock.cpp" line="448"/>
         <source>Playlist Controls</source>
         <translation>Spellistekontroller</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="480"/>
-        <location filename="../src/docks/playlistdock.cpp" line="484"/>
+        <location filename="../src/docks/playlistdock.cpp" line="482"/>
+        <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Playlist Filters</source>
         <translation>Filter för spellistor</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="508"/>
+        <location filename="../src/docks/playlistdock.cpp" line="510"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation>Visa bara filer vars namn, sökväg eller kommentar innehåller någon text</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="509"/>
+        <location filename="../src/docks/playlistdock.cpp" line="511"/>
         <source>search</source>
         <translation>sök</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="623"/>
+        <location filename="../src/docks/playlistdock.cpp" line="625"/>
         <source>Add files to playlist</source>
         <translation>Lägg till filer i spellistan</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="641"/>
+        <location filename="../src/docks/playlistdock.cpp" line="643"/>
         <source>Tiles</source>
         <translation>Rutor</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="654"/>
+        <location filename="../src/docks/playlistdock.cpp" line="656"/>
         <source>Icons</source>
         <translation>Ikoner</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="680"/>
+        <location filename="../src/docks/playlistdock.cpp" line="682"/>
         <source>Open</source>
         <translation>Öppna</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="690"/>
+        <location filename="../src/docks/playlistdock.cpp" line="692"/>
         <source>GoTo</source>
         <translation>Gå till</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="696"/>
+        <location filename="../src/docks/playlistdock.cpp" line="698"/>
         <source>Copy</source>
         <translation>Kopiera</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="697"/>
+        <location filename="../src/docks/playlistdock.cpp" line="699"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>Öppna en kopia av klippet i Käll-spelaren</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="748"/>
+        <location filename="../src/docks/playlistdock.cpp" line="750"/>
         <source>Move Up</source>
         <translation>Flytta upp</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="760"/>
+        <location filename="../src/docks/playlistdock.cpp" line="762"/>
         <source>Move Down</source>
         <translation>Flytta ner</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="891"/>
+        <location filename="../src/docks/playlistdock.cpp" line="893"/>
         <source>Open Previous</source>
         <translation>Öppna föregående</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="904"/>
+        <location filename="../src/docks/playlistdock.cpp" line="906"/>
         <source>Open Next</source>
         <translation>Öppna nästa</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="917"/>
+        <location filename="../src/docks/playlistdock.cpp" line="919"/>
         <source>Select Clip 1</source>
         <translation>Välj klipp 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="929"/>
+        <location filename="../src/docks/playlistdock.cpp" line="931"/>
         <source>Select Clip 2</source>
         <translation>Välj klipp 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="941"/>
+        <location filename="../src/docks/playlistdock.cpp" line="943"/>
         <source>Select Clip 3</source>
         <translation>Välj klipp 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="953"/>
+        <location filename="../src/docks/playlistdock.cpp" line="955"/>
         <source>Select Clip 4</source>
         <translation>Välj klipp 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="965"/>
+        <location filename="../src/docks/playlistdock.cpp" line="967"/>
         <source>Select Clip 5</source>
         <translation>Välj klipp 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="977"/>
+        <location filename="../src/docks/playlistdock.cpp" line="979"/>
         <source>Select Clip 6</source>
         <translation>Välj klipp 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="989"/>
+        <location filename="../src/docks/playlistdock.cpp" line="991"/>
         <source>Select Clip 7</source>
         <translation>Välj klipp 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1001"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1003"/>
         <source>Select Clip 8</source>
         <translation>Välj klipp 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1013"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1015"/>
         <source>Select Clip 9</source>
         <translation>Välj klipp 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1025"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1027"/>
         <source>Thumbnails</source>
         <translation>Miniatyrer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1034"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1036"/>
         <source>Clip</source>
         <translation>Klipp</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1043"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1045"/>
         <source>In</source>
         <translation>In</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1052"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1054"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1061"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1063"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1070"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1072"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1081"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1088"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1089"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
         <source>Show or hide video files</source>
         <translation>Visa eller dölj videofiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1094"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1096"/>
         <source>Audio</source>
         <translation>Ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1095"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1097"/>
         <source>Show or hide audio files</source>
         <translation>Visa eller dölj ljudfiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1100"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1101"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1103"/>
         <source>Show or hide image files</source>
         <translation>Visa eller dölj bildfiler</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1106"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1108"/>
         <source>Other</source>
         <translation>Annan</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1107"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1109"/>
         <source>Show or hide other kinds of files</source>
         <translation>Visa eller dölj andra typer av filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1112"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1113"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1115"/>
         <source>New Bin</source>
         <translation>Ny behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1164"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1166"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1137"/>
         <source>Show or hide the list of bins</source>
         <translation>Visa eller dölj listan över behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1144"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1145"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
         <source>Remove Bin</source>
         <translation>Ta bort behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1156"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1157"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1158"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1159"/>
         <source>Rename Bin</source>
         <translation>Byt namn på behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1178"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1180"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1213"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1215"/>
         <source>Replace %n playlist items</source>
         <translation>
             <numerusform>Ersätt %n objekt i spellistan</numerusform>
@@ -7815,7 +7871,7 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="2136"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2138"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n objekt</numerusform>
@@ -7823,18 +7879,18 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="433"/>
+        <location filename="../src/docks/playlistdock.cpp" line="435"/>
         <source>Sort</source>
         <translation>Sortera</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1534"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1766"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1536"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1768"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Du kan inte infoga en spellista i en spellista!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1551"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
         <source>Remove %n playlist items</source>
         <translation>
             <numerusform>Ta bort %n objekt i spellistan</numerusform>
@@ -7842,39 +7898,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="622"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1308"/>
+        <location filename="../src/docks/playlistdock.cpp" line="624"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1310"/>
         <source>Add Files</source>
         <translation>Lägg till filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1262"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1264"/>
         <source>Appending</source>
         <translation>Lägger till</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1318"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1327"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1320"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1329"/>
         <source>Failed to open </source>
         <translation>Misslyckades med att öppna </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1393"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1395"/>
         <source>Dropped Files</source>
         <translation>Släppta filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1857"/>
         <source>Generating</source>
         <translation>Generering</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2074"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
         <source>Open File</source>
         <translation>Öppna fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2078"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Alla filer (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -8050,7 +8106,7 @@ p, li { white-space: pre-wrap; }
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/pulseaudiowidget.ui" line="26"/>
+        <location filename="../src/widgets/pulseaudiowidget.ui" line="28"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
@@ -8377,20 +8433,20 @@ p, li { white-space: pre-wrap; }
         <translation>Justera gain/volym</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4275"/>
+        <location filename="../src/mainwindow.cpp" line="4386"/>
         <source>You cannot add a project to itself!</source>
         <translation>Du kan inte lägga till ett projekt till sig själv!</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="118"/>
+        <location filename="../src/mltxmlchecker.cpp" line="120"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Filen är inte en MLT XML-fil.</translation>
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="146"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1072"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1162"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -8486,34 +8542,39 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>transparent</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3136"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3160"/>
         <source>Drop Files</source>
         <translation>Släpp filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3143"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3167"/>
         <source>Failed to open </source>
         <translation>Misslyckades med att öppna </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3159"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3183"/>
         <source>Not adding non-seekable file: </source>
         <translation>Lägger inte till icke-sökbar fil: </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1250"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1252"/>
         <source>Generating Playlist for Bin</source>
         <translation>Genererar spellista för behållare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1853"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
         <source>Generate Slideshow</source>
         <translation>Generera bildspel</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="363"/>
+        <location filename="../src/proxymanager.cpp" line="367"/>
         <source>Make proxy for %1</source>
         <translation>Skapa proxy för %1</translation>
+    </message>
+    <message>
+        <location filename="../src/proxymanager.cpp" line="775"/>
+        <source>Generating Proxies</source>
+        <translation>Genererar proxies</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="67"/>
@@ -8721,7 +8782,7 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Flytta undertext</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="526"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="525"/>
         <source>Imported %1 subtitle item(s)</source>
         <translation>
             <numerusform>Importerade %1 undertextobjekt</numerusform>
@@ -8729,13 +8790,13 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="628"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="643"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="627"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
         <source>Importing subtitles...</source>
         <translation>Importerar undertexter...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="664"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="663"/>
         <source>Imported %n subtitle item(s)</source>
         <translation>
             <numerusform>Importerade %n undertextobjekt</numerusform>
@@ -8743,8 +8804,8 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="516"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="659"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="515"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="658"/>
         <source>No subtitles found to import</source>
         <translation>Inga undertexter hittades för att importera</translation>
     </message>
@@ -8760,9 +8821,9 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Lägg till undertext</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1372"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
+        <location filename="../src/docks/encodedock.cpp" line="1375"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1081"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>A job already exists for %1</source>
         <translation>Det finns redan ett jobb för %1</translation>
     </message>
@@ -8970,23 +9031,23 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
 <context>
     <name>RecentDock</name>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="24"/>
+        <location filename="../src/docks/recentdock.ui" line="23"/>
         <source>Recent</source>
         <translation>Tidigare</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="46"/>
+        <location filename="../src/docks/recentdock.ui" line="45"/>
         <source>Show only files with name matching text</source>
         <translation>Visa endast filer med namn som matchar text</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="49"/>
+        <location filename="../src/docks/recentdock.ui" line="48"/>
         <source>search</source>
         <translation>sök</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="76"/>
-        <location filename="../src/docks/recentdock.ui" line="79"/>
+        <location filename="../src/docks/recentdock.ui" line="75"/>
+        <location filename="../src/docks/recentdock.ui" line="78"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
@@ -9099,7 +9160,7 @@ Om ja, välj ett format nedan och klicka sedan på OK för att välja ett filnam
         <translation>Öppna fångsten</translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="273"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="274"/>
         <source>Remux %1</source>
         <translation>Remux %1</translation>
     </message>
@@ -9958,344 +10019,344 @@ Om varaktigheten är 0 kommer ingen övergång att skapas.</translation>
     <name>SubtitlesDock</name>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="134"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="180"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="179"/>
         <source>Subtitles</source>
         <translation>Undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="150"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="149"/>
         <source>Add clips to the Timeline to begin editing subtitles.</source>
         <translation>Lägg till klipp på tidslinjen för att börja redigera undertexter.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="181"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="180"/>
         <source>Tracks</source>
         <translation>Spår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="203"/>
         <source>Columns</source>
         <translation>Kolumner</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="205"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="208"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="207"/>
         <source>End</source>
         <translation>Slut</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="211"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="210"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="217"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="216"/>
         <source>Subtitle Controls</source>
         <translation>Kontroller för undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="223"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="222"/>
         <source>Subtitles Menu</source>
         <translation>Undertextmeny</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="281"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="280"/>
         <source>Previous</source>
         <translation>Föregående</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="283"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="282"/>
         <source>Current</source>
         <translation>Aktuell</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="285"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="284"/>
         <source>Next</source>
         <translation>Nästa</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="317"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="316"/>
         <source>Add Subtitle Track</source>
         <translation>Lägg till undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="320"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="319"/>
         <source>Add a subtitle track</source>
         <translation>Lägg till ett undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="328"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="327"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="566"/>
         <source>Remove Subtitle Track</source>
         <translation>Ta bort undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="331"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="330"/>
         <source>Remove this subtitle track</source>
         <translation>Ta bort detta undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="339"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="338"/>
         <source>Edit Subtitle Track</source>
         <translation>Redigera undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="342"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="341"/>
         <source>Edit this subtitle track</source>
         <translation>Redigera detta undertextspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="350"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="349"/>
         <source>Import Subtitles From File</source>
         <translation>Importera undertexter från fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="353"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="352"/>
         <source>Import subtitles from an srt file at the current position</source>
         <translation>Importera undertexter från en srt-fil vid den aktuella positionen</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="361"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="360"/>
         <source>Export Subtitles To File</source>
         <translation>Exportera undertexter till fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="364"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="363"/>
         <source>Export the current subtitle track to an SRT file</source>
         <translation>Exportera det aktuella undertextspåret till en SRT-fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="372"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="371"/>
         <source>Create/Edit Subtitle</source>
         <translation>Skapa/redigera undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="376"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="375"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
         <translation>Skapa eller redigera en undertext vid markörens position.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="380"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
         <source>Add Subtitle Item</source>
         <translation>Lägg till undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="384"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="383"/>
         <source>Add a subtitle at the cursor position</source>
         <translation>Lägg till en undertext vid markörens position</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="388"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="387"/>
         <source>Remove Subtitle Item</source>
         <translation>Ta bort undertextobjekt</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="391"/>
         <source>Remove the selected subtitle item</source>
         <translation>Ta bort den markerade undertexten</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="396"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="395"/>
         <source>Set Subtitle Start</source>
         <translation>Ställ in undertextens start</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="401"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="400"/>
         <source>Set the selected subtitle to start at the cursor position</source>
         <translation>Ställ in den valda undertexten så att den börjar vid markörens position</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="405"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="404"/>
         <source>Set Subtitle End</source>
         <translation>Ställ in undertextens slut</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="409"/>
         <source>Set the selected subtitle to end at the cursor position</source>
         <translation>Ställ in den valda undertexten så att den slutar vid markörens position</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="414"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="413"/>
         <source>Move Subtitles</source>
         <translation>Flytta undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="418"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="417"/>
         <source>Move the selected subtitles to the cursor position</source>
         <translation>Flytta den valda undertexten till markörens position</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="421"/>
         <source>Burn In Subtitles on Output</source>
         <translation>Bränn in undertexter på utdata</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="428"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
         <source>Generate Text on Timeline</source>
         <translation>Generera text på tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="430"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="429"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
         <translation>Skapa ett nytt videospår på tidslinjen med text som visar dessa undertexter.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="433"/>
         <source>Speech to Text...</source>
         <translation>Tal till text...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="435"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
         <translation>Upptäck tal och transkribera till ett nytt undertextspår.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="441"/>
         <source>Text to Speech...</source>
         <translation>Text till tal...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="443"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
         <source>Convert the current subtitle track to spoken audio.</source>
         <translation>Konvertera det aktuella undertextspåret till talat ljud.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="449"/>
         <source>Track Timeline Cursor</source>
         <translation>Spåra tidslinjemarkör</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="451"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
         <source>Track the timeline cursor</source>
         <translation>Spåra tidslinjemarkören</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="458"/>
         <source>Show Previous/Next</source>
         <translation>Visa föregående/nästa</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="460"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
         <source>Show the previous and next subtitles</source>
         <translation>Visa föregående och nästa undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="533"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="532"/>
         <source>Add a clip to the timeline to create subtitles.</source>
         <translation>Lägg till ett klipp på tidslinjen för att skapa undertexter.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1098"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1100"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1120"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1097"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1099"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1119"/>
         <source>Subtitle Track %1</source>
         <translation>Undertextspår %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1161"/>
         <source>Generate subtitle text on timeline</source>
         <translation>Generera undertexter på tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1163"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
         <source>Text style preset</source>
         <translation>Förinställd textstil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1165"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1164"/>
         <source>Default subtitle style</source>
         <translation>Standardstil för undertexter</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1308"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1307"/>
         <source>Extracting Audio</source>
         <translation>Extrahera ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1326"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1325"/>
         <source>Speech to Text</source>
         <translation>Tal till text</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="544"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="597"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1257"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="543"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="596"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1256"/>
         <source>Subtitle track already exists: %1</source>
         <translation>Undertextspår finns redan: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
         <source>Create or edit a Subtitle Burn In filter on the timeline output.</source>
         <translation>Skapa eller redigera ett filter för inbränning av undertext på tidslinjeutmatningen.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="568"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
         <translation>Det här spåret används av ett undertextfilter.
 Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="614"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="613"/>
         <source>Import Subtitle File</source>
         <translation>Importera undertextfil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="616"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="615"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
         <translation>Undertextfiler (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="624"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
         <source>Unable to find subtitle file.</source>
         <translation>Det går inte att hitta undertextfilen.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="672"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="671"/>
         <source>Export SRT File</source>
         <translation>Exportera SRT-fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="674"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="673"/>
         <source>SRT Files (*.srt *.SRT)</source>
         <translation>SRT-filer (*.srt *.SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="739"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="738"/>
         <source>A subtitle already exists at this time.</source>
         <translation>En undertitel finns redan vid denna tidpunkt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="749"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="748"/>
         <source>Not enough space to add subtitle.</source>
         <translation>Det finns inte tillräckligt med utrymme för att lägga till undertexter.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="786"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="785"/>
         <source>Start time can not be after end time.</source>
         <translation>Starttiden kan inte ligga efter sluttiden.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="792"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="791"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation>Starttiden kan inte ligga före föregående undertext.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="810"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="809"/>
         <source>End time can not be before start time.</source>
         <translation>Sluttiden kan inte vara före starttiden.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="817"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="816"/>
         <source>End time can not be after next subtitle.</source>
         <translation>Sluttiden kan inte ligga efter nästa undertext.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="839"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="838"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation>Går inte att flytta. Undertexter finns redan vid denna tidpunkt.</translation>
     </message>
@@ -10489,42 +10550,42 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="25"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="28"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="38"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="41"/>
         <source>Type or paste the text here</source>
         <translation>Skriv eller klistra in text här</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="47"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="50"/>
         <source>Background color...</source>
         <translation>Bakgrundsfärg...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="60"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="63"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="87"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="90"/>
         <source>Simple</source>
         <translation>Enkel</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="97"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="100"/>
         <source>Rich</source>
         <translation>Rik</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="104"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="107"/>
         <source>Typewriter</source>
         <translation>Skrivmaskin</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="126"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="129"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
         <translation>Textattribut är tillgängliga i panelen &lt;b&gt;Filter&lt;/b&gt; efter att du har klickat på &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
@@ -10613,39 +10674,39 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1324"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1347"/>
         <source>Drawing/Animation</source>
         <translation>Ritning/animering</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1720"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1744"/>
         <source>This track is locked</source>
         <translation>Detta spåret är låst</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1725"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1749"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Du kan inte lägga till en källa som inte är sökbar.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2125"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2159"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2149"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2183"/>
         <source>Track %1 was not moved</source>
         <translation>Spår %1 flyttades inte</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2130"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2154"/>
         <source>Can not move audio track above video track</source>
         <translation>Kan inte flytta ljudspåret över videospåret</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2146"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2170"/>
         <source>Can not move video track below audio track</source>
         <translation>Kan inte flytta videospår under ljudspår</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1445"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2287"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1469"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2311"/>
         <source>Align To Reference Track</source>
         <translation>Justera mot referensspår</translation>
     </message>
@@ -10815,398 +10876,398 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Klipp &amp;ut</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="693"/>
+        <location filename="../src/docks/timelinedock.cpp" line="694"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopiera</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="722"/>
+        <location filename="../src/docks/timelinedock.cpp" line="724"/>
         <source>&amp;Paste</source>
         <translation>Klistra &amp;in</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="736"/>
+        <location filename="../src/docks/timelinedock.cpp" line="739"/>
         <source>Nudge Forward</source>
         <translation>Knuffa framåt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="751"/>
+        <location filename="../src/docks/timelinedock.cpp" line="755"/>
         <source>Nudge Forward is not available</source>
         <translation>Knuffa framåt är inte tillgängligt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="773"/>
+        <location filename="../src/docks/timelinedock.cpp" line="777"/>
         <source>Nudge Backward</source>
         <translation>Knuffa bakåt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="783"/>
+        <location filename="../src/docks/timelinedock.cpp" line="788"/>
         <source>Nudge Backward is not available</source>
         <translation>Knuffa bakåt är inte tillgängligt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="805"/>
+        <location filename="../src/docks/timelinedock.cpp" line="810"/>
         <source>Append</source>
         <translation>Lägg till efter</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="816"/>
+        <location filename="../src/docks/timelinedock.cpp" line="821"/>
         <source>Ripple Delete</source>
         <translation>Krusningsborttagning</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="833"/>
+        <location filename="../src/docks/timelinedock.cpp" line="838"/>
         <source>Lift</source>
         <translation>Lyft</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="851"/>
+        <location filename="../src/docks/timelinedock.cpp" line="856"/>
         <source>Overwrite</source>
         <translation>Skriv över</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="864"/>
+        <location filename="../src/docks/timelinedock.cpp" line="869"/>
         <source>Split At Playhead</source>
         <translation>Dela upp vid uppspelningsmarkör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="921"/>
+        <location filename="../src/docks/timelinedock.cpp" line="933"/>
         <source>Split All Tracks At Playhead</source>
         <translation>Dela upp alla spår vid uppspelningsmarkör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="952"/>
+        <location filename="../src/docks/timelinedock.cpp" line="967"/>
         <source>Replace</source>
         <translation>Ersätt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="971"/>
+        <location filename="../src/docks/timelinedock.cpp" line="986"/>
         <source>Create/Edit Marker</source>
         <translation>Skapa/redigera markör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="984"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1000"/>
         <source>Previous Marker</source>
         <translation>Tidigare markör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="998"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1015"/>
         <source>Next Marker</source>
         <translation>Nästa markör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1030"/>
         <source>Delete Marker</source>
         <translation>Ta bort markör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1023"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1041"/>
         <source>Cycle Marker Color</source>
         <translation>Färg på cykelmarkör</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1057"/>
         <source>Create Marker Around Selected Clip</source>
         <translation>Skapa markör runt valt klipp</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1050"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1068"/>
         <source>Rectangle Selection</source>
         <translation>Rektangelval</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1080"/>
         <source>Adjust Clip Gain/Volume</source>
         <translation>Justera klippets gain/volym</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1072"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1091"/>
         <source>Automatically Add Tracks</source>
         <translation>Lägg till spår automatiskt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1083"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
         <source>Snap</source>
         <translation>Fäst</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1097"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1116"/>
         <source>Scrub While Dragging</source>
         <translation>Skrubba medan du drar</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1110"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1129"/>
         <source>Ripple</source>
         <translation>Krusning</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1124"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1143"/>
         <source>Ripple All Tracks</source>
         <translation>Krusning på alla spår</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1138"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1158"/>
         <source>Ripple Markers</source>
         <translation>Krusningsmarkörer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1153"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1174"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation>Växla krusning och alla spår</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1161"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation>Växla krusning, alla spår och markörer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1191"/>
         <source>Show Audio Waveforms</source>
         <translation>Visa ljudvågformer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1184"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1205"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Använd vågformer med högre prestanda</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1200"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1221"/>
         <source>Show Video Thumbnails</source>
         <translation>Visa videominiatyrer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1211"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1232"/>
         <source>No</source>
         <translation>Nr</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1224"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1245"/>
         <source>Page</source>
         <translation>Sida</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1237"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1258"/>
         <source>Smooth</source>
         <translation>Mjuk</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1250"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1271"/>
         <source>Center the Playhead</source>
         <translation>Centrera uppspelningsmarkören</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1264"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1285"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Bläddra till uppspelningsmarkör vid zoom</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1276"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1297"/>
         <source>Zoom Timeline Out</source>
         <translation>Zooma ut tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1287"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1308"/>
         <source>Zoom Timeline In</source>
         <translation>Zooma in tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1298"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1319"/>
         <source>Zoom Timeline To Fit</source>
         <translation>Zooma in tidslinjen så att den passar</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1310"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1331"/>
         <source>New Generator</source>
         <translation>Ny generator</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1318"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
         <source>Color</source>
         <translation>Färg</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1320"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1343"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1328"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1351"/>
         <source>Noise</source>
         <translation>Brus</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1331"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1354"/>
         <source>Color Bars</source>
         <translation>Testbild</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1335"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1358"/>
         <source>Audio Tone</source>
         <translation>Ljudton</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1338"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1361"/>
         <source>Count</source>
         <translation>Antal</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1364"/>
         <source>Blip Flash</source>
         <translation>Kort blixt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1364"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1388"/>
         <source>Properties</source>
         <translation>Egenskaper</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1371"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1395"/>
         <source>Rejoin With Next Clip</source>
         <translation>Sammanfoga med nästa klipp</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1387"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1411"/>
         <source>Detach Audio</source>
         <translation>Koppla från ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1415"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1439"/>
         <source>Freeze Frame</source>
         <translation>Frys bildrutan</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1465"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1489"/>
         <source>Apply Copied Filters</source>
         <translation>Tillämpa kopierade filter</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1489"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
         <source>Update Thumbnails</source>
         <translation>Uppdatera miniatyrbilder</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1537"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Bygg om ljudvågform</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1537"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1561"/>
         <source>Ripple Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1544"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1568"/>
         <source>Ripple Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1551"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1575"/>
         <source>Group/Ungroup</source>
         <translation>Gruppera/avgruppera</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2387"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2411"/>
         <source>Append multiple to timeline</source>
         <translation>Lägg till flera på tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2449"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2473"/>
         <source>Ripple delete transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2498"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2522"/>
         <source>Lift transition</source>
         <translation>Lyft övergång</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2573"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2597"/>
         <source>Cut %1 from timeline</source>
         <translation>Klipp ut %1 från tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2575"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2599"/>
         <source>Remove %1 from timeline</source>
         <translation>Ta bort %1 från tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2598"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2622"/>
         <source>Lift %1 from timeline</source>
         <translation>Lyft %1 från tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2949"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2973"/>
         <source>There is nothing in the Source player.</source>
         <translation>Det finns inget i Käll-spelaren.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2964"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2988"/>
         <source>You cannot replace a transition.</source>
         <translation>Du kan inte ersätta en övergång.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2994"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3018"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Välj ett klipp i tidslinjen för att skapa en markör runt det</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3015"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3039"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Lade till markör: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3035"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3059"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Lade till markör: &quot;%1&quot;. Håll %2 och dra för att skapa ett intervall</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3151"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3175"/>
         <source>Failed to open </source>
         <translation>Misslyckades med att öppna </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3186"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3210"/>
         <source>Dropped Files</source>
         <translation>Släppta filer</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3234"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3258"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation>Du kan inte frysa en bildruta i en övergång.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3253"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3277"/>
         <source>Freeze Frame is not available.</source>
         <translation>Frys bildruta är inte tillgängligt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3288"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3312"/>
         <source>Insert Freeze Frame</source>
         <translation>Infoga frys bildruta</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3316"/>
         <source>The play head is not over the selected clip.</source>
         <translation>Uppspelningsmarkören är inte över det valda klippet.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3664"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3688"/>
         <source>Insert multiple into timeline</source>
         <translation>Infoga flera i tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3807"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3831"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Skriv över flera på tidslinjen</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="904"/>
-        <location filename="../src/docks/timelinedock.cpp" line="936"/>
+        <location filename="../src/docks/timelinedock.cpp" line="916"/>
+        <location filename="../src/docks/timelinedock.cpp" line="951"/>
         <source>You cannot split a transition.</source>
         <translation>Du kan inte dela upp en övergång.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="4256"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4280"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Ersätt %n tidslinjeklipp</numerusform>
@@ -11214,44 +11275,44 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4309"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4333"/>
         <source>voiceover</source>
         <translation>voiceover</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4310"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4334"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Alla filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1347"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4312"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4336"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4452"/>
         <source>Record Audio</source>
         <translation>Spela in ljud</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4326"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4350"/>
         <source>Record Audio: %1</source>
         <translation>Spela in ljud: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4393"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4417"/>
         <source>Audio Recording In Progress</source>
         <translation>Ljudinspelning pågår</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4403"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4427"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Ljudinspelningsfel: kontrollera PulseAudio-inställningarna</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4407"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4431"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Ljudinspelningsfel: välj Arkiv &gt; Öppna annan &gt; Ljud-/videoenhet</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4458"/>
         <source>Saving audio recording...</source>
         <translation>Sparar ljudinspelning...</translation>
     </message>
@@ -11264,46 +11325,46 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="26"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="28"/>
         <source>Timeline</source>
         <translation>Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="104"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="106"/>
         <source>Frame rate</source>
         <translation>Bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="246"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="248"/>
         <source>Edit...</source>
         <translation>Redigera...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="73"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="114"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="179"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="186"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="237"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="75"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="116"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="181"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="188"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="239"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="39"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="41"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="227"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="229"/>
         <source>Scan mode</source>
         <translation>Bildåtergivning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="169"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="171"/>
         <source>Aspect ratio</source>
         <translation>Bildförhållande</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="193"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="195"/>
         <source>Colorspace</source>
         <translation>Färgrymd</translation>
     </message>
@@ -11331,27 +11392,27 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="28"/>
         <source>Audio Tone</source>
         <translation>Ljudton</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="43"/>
         <source>Frequency</source>
         <translation>Frekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="51"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="53"/>
         <source> Hz</source>
         <translation> Hz</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="80"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="82"/>
         <source>Level</source>
         <translation>Nivå</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="90"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="92"/>
         <source> dB</source>
         <translation> dB</translation>
     </message>
@@ -11407,7 +11468,7 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="38"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="40"/>
         <source>Blend mode</source>
         <translation>Blandningsläge</translation>
     </message>
@@ -11417,182 +11478,180 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
         <translation>Spår: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="98"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="130"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="99"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="131"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
         <source>Over</source>
         <translation>Över</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
         <source>Add</source>
         <translation>Lägg till</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
         <source>Saturate</source>
         <translation>Mätta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
         <source>Multiply</source>
         <translation>Multiplicera</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
         <source>Screen</source>
         <translation>Skärm</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
         <source>Overlay</source>
         <translation>Överlägg</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
         <source>Darken</source>
         <translation>Mörka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
         <source>Dodge</source>
         <translation>Sänk exponering</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
         <source>Burn</source>
         <translation>Öka exponering</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="66"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="110"/>
         <source>Hard Light</source>
         <translation>Hårt ljus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Source Over</source>
         <translation>Källa över</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Destination Over</source>
         <translation>Destination över</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Clear</source>
         <translation>Töm</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Destination</source>
         <translation>Destination</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Source In</source>
         <translation>Källa in</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Destination In</source>
         <translation>Destination in</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Source Out</source>
         <translation>Källa ut</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Destination Out</source>
         <translation>Destination ut</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
         <source>Source Atop</source>
         <translation>Källa överst</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>Destination Atop</source>
         <translation>Destination överst</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>XOR</source>
         <translation>XOR</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>Plus</source>
         <translation>Plus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
         <source>Lighten</source>
         <translation>Ljusare</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="66"/>
         <source>Color Dodge</source>
         <translation>Färgskugga</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
         <source>Color Burn</source>
         <translation>Efterbelys färg</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="111"/>
         <source>Soft Light</source>
         <translation>Mjukt ljus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="110"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="70"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="112"/>
         <source>Difference</source>
         <translation>Skillnad</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="111"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="71"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="113"/>
         <source>Exclusion</source>
         <translation>Uteslutning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="112"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="114"/>
         <source>HSL Hue</source>
         <translation>HSL-nyans</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="113"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="115"/>
         <source>HSL Saturation</source>
         <translation>HSL-mättnad</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="114"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="116"/>
         <source>HSL Color</source>
         <translation>HSL-färg</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="115"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="117"/>
         <source>HSL Luminosity</source>
         <translation>HSL-ljusstyrka</translation>
     </message>
@@ -11600,64 +11659,64 @@ Ta bort undertextfiltret innan du tar bort det här spåret.</translation>
 <context>
     <name>TranscodeDialog</name>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="38"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
         <source>good</source>
         <translation>bra</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="48"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
         <source>better</source>
         <translation>bättre</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="58"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
         <source>best</source>
         <translation>bäst</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="94"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
         <source>medium</source>
         <translation>mellan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation>Visa inte detta mer.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="206"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
         <source>Change the frame rate from its source.</source>
         <translation>Ändra bildfrekvensen från dess källa.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="262"/>
-        <location filename="../src/dialogs/transcodedialog.ui" line="266"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="265"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="269"/>
         <source>Same as original</source>
         <translation>Samma som original</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="271"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="274"/>
         <source>44100</source>
         <translation>44100</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="276"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="279"/>
         <source>48000</source>
         <translation>48000</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
         <translation>Detta är användbart när källvideon är HDR (High Dynamic Range), vilket kräver tonmappning till det gamla standardområdet.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="252"/>
         <source>Frame rate conversion</source>
         <translation>Konvertering av bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
         <source>This option converts only the trimmed portion of the source
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
@@ -11668,52 +11727,52 @@ ersätts inte alla matchande källklipp, utan endast det
 som för tillfället är valt.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
         <source>BIG</source>
         <translation>STOR</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
         <source>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</source>
         <translation>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;ENORM&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="174"/>
         <source>Use sub-clip</source>
         <translation>Använd underklips</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="219"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="222"/>
         <source>Sample rate</source>
         <translation>Samplingsfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="239"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
         <translation>Om källan är sammanflätad konverteras varje sammanflätat fält till en progressiv bildruta, vilket ger dubbel bildfrekvens.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="245"/>
         <source>Deinterlace</source>
         <translation>Deinterlace</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
         <translation>Aktivera detta för att hålla sektionen Avancerat öppen till nästa gång denna dialogruta visas.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="184"/>
         <source>Keep Advanced open</source>
         <translation>Håll Avancerat öppen</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
         <source>Override the frame rate to a specific value.</source>
         <translation>Åsidosätt bildfrekvensen till ett specifikt värde.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="188"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="191"/>
         <source>Frame rate conversion method
 
 Duplicate: Duplicate frames.
@@ -11726,17 +11785,17 @@ Blandning: Blanda bildrutor.
 Rörelsekompensation: Interpolera nya bildrutor med hjälp av rörelsekompensation. Denna metod är mycket långsam och kan resultera i artefakter.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="212"/>
         <source>Override frame rate</source>
         <translation>Åsidosätt bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="229"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="232"/>
         <source>Frames/sec</source>
         <translation>Bildrutor/s</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="161"/>
         <source>Convert to BT.709 colorspace</source>
         <translation>Konvertera till BT.709 färgrymd</translation>
     </message>
@@ -11989,17 +12048,17 @@ Rörelsekompensation: Interpolera nya bildrutor med hjälp av rörelsekompensati
         <translation>Saknade filer</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="26"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="29"/>
         <source>There are missing files in your project. Double-click each row to locate a file.</source>
         <translation>Det saknas filer i ditt projekt. Dubbelklicka på varje rad för att hitta en fil.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="78"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>This looks at every file in a folder to see if it matches any of the missing files.</source>
         <translation>Den här funktionen tittar på varje fil i en mapp för att se om den matchar någon av de saknade filerna.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="84"/>
         <source>Search in Folder...</source>
         <translation>Sök i mappen...</translation>
     </message>
@@ -12027,122 +12086,122 @@ Rörelsekompensation: Interpolera nya bildrutor med hjälp av rörelsekompensati
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="36"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="39"/>
         <source>Apply</source>
         <translation>Tillämpa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="43"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
         <source>Set the path to the video device file</source>
         <translation>Ange sökvägen till filen för videoenheten</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="49"/>
         <source>/dev/video0</source>
         <translation>/dev/video0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="72"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="74"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="82"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="84"/>
         <source>fps</source>
         <translation>bilder/s</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="102"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="104"/>
         <source>Height</source>
         <translation>Höjd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="115"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="117"/>
         <source>Frame rate</source>
         <translation>Bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="125"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="127"/>
         <source>Resolution</source>
         <translation>Upplösning</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="135"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="137"/>
         <source>Device</source>
         <translation>Enhet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="145"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="147"/>
         <source>TV Tuner</source>
         <translation>TV-mottagare</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="157"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="159"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="167"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="169"/>
         <source>Set the television standard</source>
         <translation>Ställ in TV-standarden</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="171"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="173"/>
         <source>Automatic</source>
         <translation>Automatisk</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="176"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="178"/>
         <source>NTSC</source>
         <translation>NTSC</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="181"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="183"/>
         <source>PAL</source>
         <translation>PAL</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="186"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="188"/>
         <source>SECAM</source>
         <translation>SECAM</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="194"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="196"/>
         <source>Channel</source>
         <translation>Kanal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="213"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="215"/>
         <source>Audio Input</source>
         <translation>Ljudingång</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="223"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="225"/>
         <source>Width</source>
         <translation>Bredd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="236"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="238"/>
         <source>pixels</source>
         <translation>bildpunkter</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="249"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="251"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="257"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="259"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="262"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="264"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="267"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="269"/>
         <source>ALSA</source>
         <translation>ALSA</translation>
     </message>
@@ -12150,39 +12209,39 @@ Rörelsekompensation: Interpolera nya bildrutor med hjälp av rörelsekompensati
 <context>
     <name>VideoHistogramScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="103"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="104"/>
         <source>Luma</source>
         <translation>Luma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="109"/>
         <source>Red</source>
         <translation>Röd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="113"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="114"/>
         <source>Green</source>
         <translation>Grön</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="118"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="119"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="205"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="206"/>
         <source>Value: %1
 IRE: %2</source>
         <translation>Värde: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="207"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="208"/>
         <source>Value: %1</source>
         <translation>Värde: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="215"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="216"/>
         <source>Video Histogram</source>
         <translation>Videohistogram</translation>
     </message>
@@ -12228,47 +12287,47 @@ IRE: %2</translation>
 <context>
     <name>VideoRgbParadeScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="133"/>
         <source>255</source>
         <translation>255</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="136"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="137"/>
         <source>191</source>
         <translation>191</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="140"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="141"/>
         <source>127</source>
         <translation>127</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="145"/>
         <source>64</source>
         <translation>64</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="148"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="149"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="158"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="159"/>
         <source>Red</source>
         <translation>Röd</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="160"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="161"/>
         <source>Green</source>
         <translation>Grön</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="162"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="163"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="173"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="174"/>
         <source>Channel: %1
 Pixel: %2
 Value: %3</source>
@@ -12277,14 +12336,14 @@ Bildpunkt: %2
 Värde: %3</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="175"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="176"/>
         <source>Channel: %1
 Value: %2</source>
         <translation>Kanal: %1
 Värde: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="182"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="183"/>
         <source>Video RGB Parade</source>
         <translation>Video RGB Parade</translation>
     </message>
@@ -12292,44 +12351,44 @@ Värde: %2</translation>
 <context>
     <name>VideoRgbWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="128"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="129"/>
         <source>255</source>
         <translation>255</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="133"/>
         <source>191</source>
         <translation>191</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="136"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="137"/>
         <source>127</source>
         <translation>127</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="140"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="141"/>
         <source>64</source>
         <translation>64</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="145"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="159"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="160"/>
         <source>Pixel: %1
 Value: %2</source>
         <translation>Bildpunkt: %1
 Värde: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="161"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="162"/>
         <source>Value: %1</source>
         <translation>Värde: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="168"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="169"/>
         <source>Video RGB Waveform</source>
         <translation>Video RGB-vågform</translation>
     </message>
@@ -12337,12 +12396,12 @@ Värde: %2</translation>
 <context>
     <name>VideoVectorScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="53"/>
+        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="54"/>
         <source>Video Vector</source>
         <translation>Video vektor</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="243"/>
+        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="244"/>
         <source>U: %1
 V: %2</source>
         <translation>U: %1
@@ -12352,30 +12411,30 @@ V: %2</translation>
 <context>
     <name>VideoWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="120"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="121"/>
         <source>100</source>
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="124"/>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="125"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="126"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="145"/>
         <source>Pixel: %1
 IRE: %2</source>
         <translation>Bildpunkt: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="146"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="147"/>
         <source>IRE: %1</source>
         <translation>IRE: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="153"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="154"/>
         <source>Video Waveform</source>
         <translation>Videovågform</translation>
     </message>
@@ -12383,62 +12442,62 @@ IRE: %2</translation>
 <context>
     <name>VideoZoomScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="123"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="124"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="125"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="126"/>
         <source>y</source>
         <translation>y</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="128"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="129"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="130"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="131"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="133"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="135"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="136"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="137"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="138"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="139"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="140"/>
         <source>V</source>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="157"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="158"/>
         <source>Pick a pixel from the source player</source>
         <translation>Välj en bildpunkt från källspelaren</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="164"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="165"/>
         <source>Lock/Unlock the selected pixel</source>
         <translation>Lås/lås upp den valda bildpunkten</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="273"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="274"/>
         <source>%1x</source>
         <translation>%1x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="321"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="322"/>
         <source>Video Zoom</source>
         <translation>Videozoom</translation>
     </message>
@@ -12634,23 +12693,23 @@ IRE: %2</translation>
 <context>
     <name>meta</name>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="6"/>
         <source>Alpha Channel: Adjust</source>
         <translation>Alfa-kanal: Justera</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="7"/>
         <source>transparency shave shrink grow soft feather</source>
         <comment>search keywords for the Alpha Channel: Adjust video filter</comment>
         <translation>transparens raka krympa växa mjuk fjäder</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_view/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/alpha_view/meta.qml" line="6"/>
         <source>Alpha Channel: View</source>
         <translation>Alfa-kanal: Visa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_view/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/alpha_view/meta.qml" line="7"/>
         <source>transparency</source>
         <comment>search keywords for the Alpha Channel: View video filter</comment>
         <translation>transparens</translation>
@@ -12667,9 +12726,9 @@ IRE: %2</translation>
         <translation>panorera kanal mixer uttoning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_pan/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/reframe/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/audio_balance/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_pan/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/reframe/meta.qml" line="23"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
@@ -12685,14 +12744,14 @@ IRE: %2</translation>
         <translation>frekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="19"/>
         <source>Center Frequency</source>
         <translation>Centrumfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="27"/>
         <source>Bandwidth</source>
         <translation>Bandbredd</translation>
     </message>
@@ -12779,12 +12838,12 @@ IRE: %2</translation>
         <translation>ljudstyrka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_gain/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/brightness/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/contrast/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/dither/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/opacity/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/threshold/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_gain/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/brightness/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/contrast/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/dither/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/opacity/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/threshold/meta.qml" line="19"/>
         <source>Level</source>
         <translation>Nivå</translation>
     </message>
@@ -12800,25 +12859,25 @@ IRE: %2</translation>
         <translation>frekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="19"/>
         <source>Cutoff</source>
         <translation>Klipp av</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="35"/>
         <source>Rolloff rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="42"/>
         <source>Wetness</source>
         <translation>Våthet</translation>
     </message>
@@ -12922,37 +12981,37 @@ IRE: %2</translation>
         <translation>fördröjningstid eko</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="19"/>
         <source>Room size</source>
         <translation>Rumsstorlek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="27"/>
         <source>Reverb time</source>
         <translation>Reverb-tid</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="35"/>
         <source>Damping</source>
         <translation>Dämpning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="43"/>
         <source>Input bandwidth</source>
         <translation>Bandbredd för ingång</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="51"/>
         <source>Dry signal level</source>
         <translation>Nivå för torr signal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="58"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="59"/>
         <source>Early reflection level</source>
         <translation>Tidig reflektionsnivå</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="66"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="67"/>
         <source>Tail level</source>
         <translation>Svansnivå</translation>
     </message>
@@ -13001,17 +13060,17 @@ IRE: %2</translation>
         <translation>korrigera skuggor lyfta mellantoner gamma högdagrar förstärkning nyans ljushet ljusstyrka värde</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="18"/>
         <source>Shadows (Lift)</source>
         <translation>Skuggor (Lyft)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="23"/>
         <source>Midtones (Gamma)</source>
         <translation>Mellantoner (Gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="28"/>
         <source>Highlights (Gain)</source>
         <translation>Framhävningar (Förstärk)</translation>
     </message>
@@ -13049,43 +13108,43 @@ IRE: %2</translation>
         <translation>typ typsnitt tidskod tidsstämpel datum filnamn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="40"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
         <source>Font color</source>
         <translation>Teckenfärg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="47"/>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="46"/>
         <source>Outline</source>
         <translation>Kontur</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="37"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="52"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="37"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="54"/>
         <source>Background</source>
         <translation>Bakgrund</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="36"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/richtext/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/spot_remover/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/spot_remover/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="21"/>
         <source>Position / Size</source>
         <translation>Position / Storlek</translation>
     </message>
@@ -13127,28 +13186,28 @@ IRE: %2</translation>
         <translation>prickar partiklar brus smuts</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="6"/>
         <source>Hue/Lightness/Saturation</source>
         <translation>Färgton/Ljusstyrka/Mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="7"/>
         <source>color value desaturate grayscale</source>
         <comment>search keywords for the Hue/Lightness/Saturation video filter</comment>
         <translation>färgvärde avmättad gråskala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="19"/>
         <source>Hue</source>
         <translation>Nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="26"/>
         <source>Lightness</source>
         <translation>Ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="33"/>
         <source>Saturation</source>
         <translation>Färgmättnad</translation>
     </message>
@@ -13175,33 +13234,33 @@ IRE: %2</translation>
         <translation>chroma alpha clean undertrycka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="6"/>
         <source>Lens Correction</source>
         <translation>Linskorrigering</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="7"/>
         <source>deform lens distort wide angle panoramic hemispherical fisheye</source>
         <comment>search keywords for the Lens Correction video filter</comment>
         <translation>deformera lins förvränga vidvinkel panoramautsikt hemisfärisk fisheye</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="19"/>
         <source>X Center</source>
         <translation>X-centrum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="26"/>
         <source>Y Center</source>
         <translation>Y-centrum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="33"/>
         <source>Correction at Center</source>
         <translation>Korrigering i centrum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="40"/>
         <source>Correction at Edges</source>
         <translation>Korrigering vid kanter</translation>
     </message>
@@ -13217,12 +13276,12 @@ IRE: %2</translation>
         <translation>brus projektor linjer defekt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/lut3d/meta.qml" line="6"/>
         <source>LUT (3D)</source>
         <translation>LUT (3D)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/lut3d/meta.qml" line="7"/>
         <source>lookup table color</source>
         <comment>search keywords for the LUT (3D) video filter</comment>
         <translation>slå upp tabellfärg</translation>
@@ -13244,18 +13303,18 @@ IRE: %2</translation>
         <translation>sfärisk projektion</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="21"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/nosync/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/nosync/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="26"/>
         <source>Horizontal</source>
         <translation>Horisontell</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="28"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
-        <location filename="../src/qml/filters/nosync/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/nosync/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="19"/>
         <source>Vertical</source>
         <translation>Vertikal</translation>
     </message>
@@ -13271,15 +13330,15 @@ IRE: %2</translation>
         <translation>stereomikrofon i mitten</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="19"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="19"/>
         <source>Width</source>
         <translation>Bredd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="26"/>
         <source>Height</source>
         <translation>Höjd</translation>
     </message>
@@ -13295,12 +13354,12 @@ IRE: %2</translation>
         <translation>horisontell flip transpose flop</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="6"/>
         <source>Mosaic</source>
         <translation>Mosaik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="7"/>
         <source>pixelize pixelate</source>
         <comment>search keywords for the Mosaic video filter</comment>
         <translation>pixelisera</translation>
@@ -13328,12 +13387,12 @@ IRE: %2</translation>
         <translation>glitch blinkande ljusstyrka vertikal glidning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="43"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="58"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="44"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="59"/>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="44"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="43"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="61"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="44"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="62"/>
         <source>Opacity</source>
         <translation>Opacitet</translation>
     </message>
@@ -13355,12 +13414,12 @@ IRE: %2</translation>
         <translation>matt stencil alfa rektangel ellips cirkel triangel diamant</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="21"/>
         <source>Size &amp; Position</source>
         <translation>Storlek och position</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="27"/>
         <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
         <source>Rotation</source>
         <translation>Rotation</translation>
@@ -13414,12 +13473,12 @@ IRE: %2</translation>
         <translation>teckning målning tecknad serie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="6"/>
         <source>Key Spill: Simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="7"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Simple video filter</comment>
         <translation>chroma alpha clean undertrycka</translation>
@@ -13447,12 +13506,12 @@ IRE: %2</translation>
         <translation>projektorfilm</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="6"/>
         <source>Unpremultiply Alpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="7"/>
         <source>disassociate associated straight</source>
         <comment>search keywords for the Unpremultiply Alpha video filter</comment>
         <translation>separera associerad rak</translation>
@@ -13480,9 +13539,9 @@ IRE: %2</translation>
         <translation>trimma ta bort oval ellips</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_circle/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/outline/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/outline/meta.qml" line="19"/>
         <source>Color</source>
         <translation>Färg</translation>
     </message>
@@ -13503,50 +13562,50 @@ IRE: %2</translation>
         <translation>sfärisk projektion dubbel fisheye</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="48"/>
-        <location filename="../src/qml/filters/crop_circle/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="24"/>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="20"/>
         <source>Radius</source>
         <translation>Radie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="56"/>
         <source>Front X</source>
         <translation>Fram X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="62"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="63"/>
         <source>Front Y</source>
         <translation>Front Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="69"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="70"/>
         <source>Front Up</source>
         <translation>Front upp</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="76"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="77"/>
         <source>Back X</source>
         <translation>Bak X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="83"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="84"/>
         <source>Back Y</source>
         <translation>Bak Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="90"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="91"/>
         <source>Back Up</source>
         <translation>Bak upp</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="98"/>
         <source>Nadir Radius</source>
         <translation>Nadir-radie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="104"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
         <source>Nadir Start</source>
         <translation>Nadir-start</translation>
     </message>
@@ -13557,17 +13616,17 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="27"/>
         <source>Cyan</source>
         <translation>Cyan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="34"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="41"/>
         <source>Yellow</source>
         <translation>Gul</translation>
     </message>
@@ -13606,17 +13665,17 @@ IRE: %2</translation>
         <translation>gammavärde svart vit färg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="19"/>
         <source>Input Black</source>
         <translation>Ingång svart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="26"/>
         <source>Input White</source>
         <translation>Ingång vit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="33"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -13659,39 +13718,39 @@ IRE: %2</translation>
         <translation>hum hiss distorsion ren</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="19"/>
         <source>Key Filter: Low Frequency</source>
         <translation>Nyckelfilter: Låg frekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="26"/>
         <source>Key Filter: High Frequency</source>
         <translation>Nyckelfilter: Hög frekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/mask_shape/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="21"/>
         <location filename="../src/qml/filters/threshold/meta.qml" line="6"/>
         <source>Threshold</source>
         <translation>Tröskelvärde</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="40"/>
         <source>Attack</source>
         <translation>Attack</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="47"/>
         <source>Hold</source>
         <translation>Håll</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="54"/>
         <source>Decay</source>
         <translation>Trappa av</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="60"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="61"/>
         <source>Range</source>
         <translation>Intervall</translation>
     </message>
@@ -13718,7 +13777,7 @@ IRE: %2</translation>
         <translation>färg nyans välj välj plocka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/chromahold/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/chromahold/meta.qml" line="35"/>
         <source>Distance</source>
         <translation>Avstånd</translation>
     </message>
@@ -13734,12 +13793,12 @@ IRE: %2</translation>
         <translation>upprepa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grid/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="19"/>
         <source>Rows</source>
         <translation>Rader</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grid/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="26"/>
         <source>Columns</source>
         <translation>Kolumner</translation>
     </message>
@@ -13755,18 +13814,18 @@ IRE: %2</translation>
         <translation>deformera vicka våg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="35"/>
         <source>Amplitude</source>
         <translation>Amplitud</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="35"/>
         <source>Frequency</source>
         <translation>Frekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="49"/>
         <source>Velocity</source>
         <translation>Hastighet</translation>
     </message>
@@ -13782,27 +13841,27 @@ IRE: %2</translation>
         <translation>defekt trasig förvränga</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="42"/>
         <source>Block height</source>
         <translation>Blockhöjd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="49"/>
         <source>Shift intensity</source>
         <translation>Skiftningsintensitet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
         <source>Color intensity</source>
         <translation>Färgintensitet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="6"/>
         <source>RGB Shift</source>
         <translation>RGB-skiftning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="7"/>
         <source>glitch chroma analog split</source>
         <comment>search keywords for the RGB Shift video filter</comment>
         <translation>glitch chroma analog split</translation>
@@ -13830,11 +13889,11 @@ IRE: %2</translation>
         <translation>sfärisk projektion liten liten planet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="49"/>
-        <location filename="../src/qml/filters/blur_exponential/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/blur_exponential/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="20"/>
         <source>Amount</source>
         <translation>Mängd</translation>
     </message>
@@ -13888,44 +13947,44 @@ IRE: %2</translation>
         <translation>denoise artefakt smuts slät</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="35"/>
         <source>Spatial</source>
         <translation>Spatial</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="42"/>
         <source>Temporal</source>
         <translation>Tidsmässig</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_fast/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/noise_fast/meta.qml" line="6"/>
         <source>Noise: Fast</source>
         <translation>Brus: Snabb</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/noise_fast/meta.qml" line="7"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Fast video filter</comment>
         <translation>smuts grunge</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="6"/>
         <source>Noise: Keyframes</source>
         <translation>Brus: Nyckelbilder</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="7"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Keyframes video filter</comment>
         <translation>smuts grunge</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/smartblur/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/smartblur/meta.qml" line="6"/>
         <source>Reduce Noise: Smart Blur</source>
         <translation>Minska brus: Smart oskärpa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/smartblur/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/smartblur/meta.qml" line="7"/>
         <source>denoise artifact clean</source>
         <comment>search keywords for the Reduce Noise: Smart Blur video filter</comment>
         <translation>denoise artefakt ren</translation>
@@ -13942,12 +14001,12 @@ IRE: %2</translation>
         <translation>trimma ta bort kvadrat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="26"/>
         <source>Corner radius</source>
         <translation>Hörnradie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="33"/>
         <source>Padding color</source>
         <translation>Utfyllningsfärg</translation>
     </message>
@@ -13974,22 +14033,22 @@ IRE: %2</translation>
         <translation>sträck ut olinjärt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="36"/>
         <source>Center</source>
         <translation>Centrum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="43"/>
         <source>Linear width</source>
         <translation>Linjär bredd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="50"/>
         <source>Linear scale factor</source>
         <translation>Linjär skalfaktor</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="56"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="57"/>
         <source>Non-Linear scale factor</source>
         <translation>Icke-linjär skalfaktor</translation>
     </message>
@@ -14005,7 +14064,7 @@ IRE: %2</translation>
         <translation>reducera färger banding tecknad film</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/posterize/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="20"/>
         <source>Levels</source>
         <comment>Posterize filter</comment>
         <translation>Nivåer</translation>
@@ -14044,24 +14103,24 @@ IRE: %2</translation>
         <translation>temporal mix psykedelisk rörelseoskärpa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="6"/>
         <source>Vertigo</source>
         <translation>Vertigo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="7"/>
         <source>temporal mix dizzy psychedelic</source>
         <comment>search keywords for the Vertigo video filter</comment>
         <translation>temporal mix yr psykedelisk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="20"/>
         <source>Speed</source>
         <translation>Hastighet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="27"/>
         <source>Zoom</source>
         <translation>Zooma</translation>
     </message>
@@ -14077,7 +14136,7 @@ IRE: %2</translation>
         <translation>bildfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/choppy/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="20"/>
         <source>Repeat</source>
         <translation>Upprepa</translation>
     </message>
@@ -14095,7 +14154,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="6"/>
         <source>Scan Lines</source>
-        <translation>Skanlinjer</translation>
+        <translation>Skanningslinjer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="7"/>
@@ -14115,22 +14174,22 @@ IRE: %2</translation>
         <translation>sfärisk matt stencil</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="21"/>
         <source>Horizontal Start</source>
         <translation>Horisontell start</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="28"/>
         <source>Horizontal End</source>
         <translation>Horisontellt slut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="35"/>
         <source>Vertical Start</source>
         <translation>Vertikal start</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="42"/>
         <source>Vertical End</source>
         <translation>Vertikalt slut</translation>
     </message>
@@ -14157,44 +14216,44 @@ IRE: %2</translation>
         <translation>rumslig surround binaural</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="22"/>
         <source>Yaw</source>
         <translation>Yaw</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="27"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="28"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="28"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="27"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="29"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="29"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="29"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
         <translation>Tonläge</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="36"/>
         <source>Roll</source>
         <translation>Roll</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="42"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="43"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="43"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="42"/>
         <source>FOV</source>
         <comment>field of view</comment>
         <translation>FOV</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
-        <location filename="../src/qml/filters/fisheye/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/fisheye/meta.qml" line="6"/>
         <source>Fisheye</source>
         <translation>Fisköga</translation>
     </message>
@@ -14210,22 +14269,22 @@ IRE: %2</translation>
         <translation>sträcka förvränga klämma vrida deformera</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="36"/>
         <source>Corners</source>
         <translation>Hörn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="42"/>
         <source>Stretch X</source>
         <translation>Sträck ut X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="49"/>
         <source>Stretch Y</source>
         <translation>Sträck ut Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="56"/>
         <source>Feathering</source>
         <translation>Avtunning</translation>
     </message>
@@ -14252,12 +14311,12 @@ IRE: %2</translation>
         <translation>sfärisk yaw pitch roll</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="6"/>
         <source>Reduce Noise: Wavelet</source>
         <translation>Minska brus: Wavelet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="7"/>
         <source>vague denoise artifact dirt</source>
         <comment>search keywords for the Reduce Noise: Wavelet video filter</comment>
         <translation>vag denoise artefakt smuts</translation>
@@ -14274,7 +14333,7 @@ IRE: %2</translation>
         <translation>typ teckensnitt format överlägg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="27"/>
         <source>Background color</source>
         <translation>Bakgrundsfärg</translation>
     </message>
@@ -14301,12 +14360,12 @@ IRE: %2</translation>
         <translation>fas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fspp/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="6"/>
         <source>Reduce Noise: Quantization</source>
         <translation>Minska bruset: Kvantisering</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="7"/>
         <source>denoise artifact postprocess compress</source>
         <comment>search keywords for the Reduce Noise: Quantization video filter</comment>
         <translation>denoise artefakt efterbearbetning komprimera</translation>
@@ -14323,7 +14382,7 @@ IRE: %2</translation>
         <translation>temporal hastighet ramp omvänd snabb slow motion</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/time_remap/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="22"/>
         <source>Time</source>
         <translation>Tid</translation>
     </message>
@@ -14361,12 +14420,12 @@ IRE: %2</translation>
         <translation>spegelupprepning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="6"/>
         <source>Mask: Chroma Key</source>
         <translation>Mask: Chroma Key</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="7"/>
         <source>matte stencil alpha color</source>
         <comment>search keywords for the Mask: Chroma Key video filter</comment>
         <translation>matt stencil alfafärg</translation>
@@ -14383,9 +14442,9 @@ IRE: %2</translation>
         <translation>tonfrekvens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="20"/>
         <source>Equalizer</source>
         <translation>Equalizer</translation>
     </message>
@@ -14424,7 +14483,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
-        <location filename="../src/qml/filters/audio_pitch/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_pitch/meta.qml" line="20"/>
         <source>Pitch</source>
         <comment>audio pitch or tone</comment>
         <translation>Tonläge</translation>
@@ -14458,7 +14517,7 @@ IRE: %2</translation>
         <translation>rotoscope matt stencil alfa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fisheye/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/fisheye/meta.qml" line="7"/>
         <source>deform lens distort wide angle panoramic hemispherical</source>
         <comment>search keywords for the Fisheye video filter</comment>
         <translation>deformera lins förvränga vidvinkel panoramautsikt hemisfärisk</translation>
@@ -14547,12 +14606,12 @@ IRE: %2</translation>
         <translation>rumslig surround panorering</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="21"/>
         <source>Azimuth</source>
         <translation>Azimut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="28"/>
         <source>Elevation</source>
         <translation>Höjd</translation>
     </message>
@@ -14568,12 +14627,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="31"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="32"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="39"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
@@ -14589,22 +14648,22 @@ IRE: %2</translation>
         <translation>färgintensitet mättnad vibe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="35"/>
         <source>Intensity</source>
         <translation>Intensitet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="42"/>
         <source>Red</source>
         <translation>Röd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="49"/>
         <source>Green</source>
         <translation>Grön</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="56"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
@@ -14653,97 +14712,97 @@ IRE: %2</translation>
         <translation>nyans mättnad ljushet färg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="19"/>
         <source>Overlap</source>
         <translation>Överlappa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="26"/>
         <source>Red Hue</source>
         <translation>Röd nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="33"/>
         <source>Red Saturation</source>
         <translation>Röd mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="40"/>
         <source>Red Lightness</source>
         <translation>Röd ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="47"/>
         <source>Yellow Hue</source>
         <translation>Gul nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="54"/>
         <source>Yellow Saturation</source>
         <translation>Gul mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="60"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="61"/>
         <source>Yellow Lightness</source>
         <translation>Gul ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="67"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="68"/>
         <source>Green Hue</source>
         <translation>Grön nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="74"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="75"/>
         <source>Green Saturation</source>
         <translation>Grön mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="81"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="82"/>
         <source>Green Lightness</source>
         <translation>Grön ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="88"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="89"/>
         <source>Cyan Hue</source>
         <translation>Cyan nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="95"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="96"/>
         <source>Cyan Saturation</source>
         <translation>Cyan mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="102"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="103"/>
         <source>Cyan Lightness</source>
         <translation>Cyan ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="109"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="110"/>
         <source>Blue Hue</source>
         <translation>Blå nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="116"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="117"/>
         <source>Blue Saturation</source>
         <translation>Blå mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="123"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="124"/>
         <source>Blue Lightness</source>
         <translation>Blå ljushet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="130"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="131"/>
         <source>Magenta Hue</source>
         <translation>Magenta nyans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="137"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="138"/>
         <source>Magenta Saturation</source>
         <translation>Magenta mättnad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="144"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="145"/>
         <source>Magenta Lightness</source>
         <translation>Magenta ljushet</translation>
     </message>
@@ -14759,32 +14818,32 @@ IRE: %2</translation>
         <translation>nyans mättnad ljushet färgprimärer</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="19"/>
         <source>Blend</source>
         <translation>Blandning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="26"/>
         <source>Hue Shift</source>
         <translation>Nyansskiftning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="33"/>
         <source>Saturation Scale</source>
         <translation>Mättnadsskala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="40"/>
         <source>Lightness Scale</source>
         <translation>Ljushetsskala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="47"/>
         <source>Hue Center</source>
         <translation>Nyanscentrum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="54"/>
         <source>Hue Range</source>
         <translation>Nyansintervall</translation>
     </message>
@@ -14800,92 +14859,92 @@ IRE: %2</translation>
         <translation>sfärisk fyllning oskärpa zenit nadir</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="40"/>
         <source>topStart</source>
         <translation>toppStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="47"/>
         <source>topEnd</source>
         <translation>toppEnd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="52"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="54"/>
         <source>topBlendIn</source>
         <translation>toppBlendIn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="59"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="61"/>
         <source>topBlendOut</source>
         <translation>toppBlendOut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="66"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="68"/>
         <source>topFadeIn</source>
         <translation>topFadeIn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="73"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="75"/>
         <source>topBlurWidthStart</source>
         <translation>topBlurWidthStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="80"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="82"/>
         <source>topBlurWidthEnd</source>
         <translation>topBlurWidthEnd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="87"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="89"/>
         <source>topBlurHeightStart</source>
         <translation>topBlurHeightStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="94"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="96"/>
         <source>topBlurHeightEnd</source>
         <translation>topBlurHeightEnd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="104"/>
         <source>bottomStart</source>
         <translation>bottenStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="109"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="111"/>
         <source>bottomEnd</source>
         <translation>bottenEnd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="116"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="118"/>
         <source>bottomBlendIn</source>
         <translation>bottenBlendIn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="123"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="125"/>
         <source>bottomBlendOut</source>
         <translation>bottenBlendOut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="130"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="132"/>
         <source>bottomFadeIn</source>
         <translation>bottenFadeIn</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="137"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="139"/>
         <source>bottomBlurWidthStart</source>
         <translation>bottomBlurWidthStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="144"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="146"/>
         <source>bottomBlurWidthEnd</source>
         <translation>bottenBlurWidthEnd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="151"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="153"/>
         <source>bottomBlurHeightStart</source>
         <translation>bottomBlurHeightStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="158"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="160"/>
         <source>bottomBlurHeightEnd</source>
         <translation>bottomBlurHeightEnd</translation>
     </message>
@@ -14901,32 +14960,32 @@ IRE: %2</translation>
         <translation>sfärisk sträckning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="20"/>
         <source>hfov0</source>
         <translation>hfov0</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="27"/>
         <source>hfov1</source>
         <translation>hfov1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="34"/>
         <source>vfov0</source>
         <translation>vfov0</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="41"/>
         <source>vfov1</source>
         <translation>vfov1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="48"/>
         <source>blurStart</source>
         <translation>oskärpaStart</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="55"/>
         <source>blurEnd</source>
         <translation>oskärpaSlut</translation>
     </message>
@@ -14964,7 +15023,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/strobe/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="19"/>
         <source>Interval</source>
         <translation>Intervall</translation>
     </message>
@@ -14975,7 +15034,7 @@ IRE: %2</translation>
         <translation>strecktjocklek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/outline/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/outline/meta.qml" line="25"/>
         <source>Thickness</source>
         <translation>Tjocklek</translation>
     </message>
@@ -15005,12 +15064,12 @@ IRE: %2</translation>
         <translation>transformera zooma rotera förvränga fylla flytta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="21"/>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="22"/>
         <source>Size &amp; Position</source>
         <translation>Storlek och position</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="26"/>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="27"/>
         <source>Rotation</source>
         <translation>Rotation</translation>
     </message>
@@ -15018,18 +15077,18 @@ IRE: %2</translation>
 <context>
     <name>meta_av</name>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="22"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="6"/>
         <source>Blur: Gaussian</source>
         <translation>Oskärpa: Gaussisk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="23"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="7"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Box video filter</comment>
         <translation>mjuka upp dölja dölja</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="35"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="20"/>
         <source>Amount</source>
         <translation>Mängd</translation>
     </message>
@@ -15048,12 +15107,12 @@ IRE: %2</translation>
         <translation>mjuka upp dölja dölja rikta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="18"/>
+        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="19"/>
         <source>Width</source>
         <translation>Bredd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="25"/>
+        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="26"/>
         <source>Height</source>
         <translation>Höjd</translation>
     </message>
@@ -15118,7 +15177,7 @@ IRE: %2</translation>
         <translation>temporal hastighet ramp snabb slow motion</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/meta_forward.qml" line="23"/>
+        <location filename="../src/qml/filters/speed/meta_forward.qml" line="24"/>
         <source>Speed</source>
         <translation>Hastighet</translation>
     </message>
@@ -15137,7 +15196,7 @@ IRE: %2</translation>
         <translation>temporal hastighet ramp snabb slow motion omvänd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="24"/>
+        <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="25"/>
         <source>Speed</source>
         <translation>Hastighet</translation>
     </message>
@@ -15156,7 +15215,7 @@ IRE: %2</translation>
         <translation>glans oskärpa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="20"/>
         <source>Blur</source>
         <translation>Oskärpa</translation>
     </message>
@@ -15172,7 +15231,7 @@ IRE: %2</translation>
         <translation>färg desaturera gråskala chroma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="20"/>
         <source>Level</source>
         <translation>Nivå</translation>
     </message>
@@ -15188,12 +15247,12 @@ IRE: %2</translation>
         <translation>skärpa fokus klar skarp</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="20"/>
         <source>Amount</source>
         <translation>Mängd</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="26"/>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="27"/>
         <source>Size</source>
         <translation>Storlek</translation>
     </message>
@@ -15245,8 +15304,8 @@ IRE: %2</translation>
         <translation>mjuka upp dölja dölja</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_movit.qml" line="19"/>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/blur/meta_movit.qml" line="20"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="20"/>
         <source>Radius</source>
         <translation>Radie</translation>
     </message>
@@ -15262,10 +15321,10 @@ IRE: %2</translation>
         <translation>ljushetsvärde</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/brightness/meta_movit.qml" line="21"/>
-        <location filename="../src/qml/filters/contrast/meta_movit.qml" line="21"/>
-        <location filename="../src/qml/filters/opacity/meta_movit.qml" line="20"/>
-        <location filename="../src/qml/filters/saturation/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/brightness/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/contrast/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/opacity/meta_movit.qml" line="21"/>
+        <location filename="../src/qml/filters/saturation/meta_movit.qml" line="20"/>
         <source>Level</source>
         <translation>Nivå</translation>
     </message>
@@ -15281,17 +15340,17 @@ IRE: %2</translation>
         <translation>korrigera skuggor lyfta mellantoner gamma högdagrar förstärkning nyans ljushet ljusstyrka värde</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="17"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="18"/>
         <source>Shadows (Lift)</source>
         <translation>Skuggor (Lyft)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="23"/>
         <source>Midtones (Gamma)</source>
         <translation>Mellantoner (Gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="27"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="28"/>
         <source>Highlights (Gain)</source>
         <translation>Framhävningar (Förstärk)</translation>
     </message>
@@ -15318,12 +15377,12 @@ IRE: %2</translation>
         <translation>glans oskärpa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="27"/>
         <source>Highlight blurriness</source>
         <translation>Framhävningsoskärpa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="33"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="34"/>
         <source>Highlight cutoff</source>
         <translation>Framhävningsstopp</translation>
     </message>
@@ -15372,22 +15431,22 @@ IRE: %2</translation>
         <translation>skärpa fokus klar skarp</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="20"/>
         <source>Circle radius</source>
         <translation>Cirkelradie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="27"/>
         <source>Gaussian radius</source>
         <translation>Gaussisk radie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="33"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="34"/>
         <source>Correlation</source>
         <translation>Korrelation</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="40"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="41"/>
         <source>Noise</source>
         <translation>Brus</translation>
     </message>
@@ -15403,12 +15462,12 @@ IRE: %2</translation>
         <translation>mörka kanter bleknar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="20"/>
         <source>Outer radius</source>
         <translation>Yttre radie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="27"/>
         <source>Inner radius</source>
         <translation>Inre radie</translation>
     </message>
@@ -15447,7 +15506,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
-        <location filename="../src/qml/filters/size_position/meta_movit.qml" line="24"/>
+        <location filename="../src/qml/filters/size_position/meta_movit.qml" line="25"/>
         <source>Size &amp; Position</source>
         <translation>Storlek och position</translation>
     </message>
@@ -15456,6 +15515,17 @@ IRE: %2</translation>
         <source>transform zoom distort fill move</source>
         <comment>search keywords for the Size and Position filter</comment>
         <translation>transformera zooma förvränga fylla flytta</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_movit.qml" line="6"/>
+        <source>Blend Mode</source>
+        <translation>Blandningsläge</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_movit.qml" line="7"/>
+        <source>blending composite porter duff</source>
+        <comment>search keywords for the Blend Mode video filter</comment>
+        <translation type="unfinished">blandning komposit porter duff</translation>
     </message>
 </context>
 <context>
@@ -15472,17 +15542,17 @@ IRE: %2</translation>
         <translation>mörka kanter bleknar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="18"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="19"/>
         <source>Radius</source>
         <translation>Radie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="25"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="26"/>
         <source>Feathering</source>
         <translation>Avtunning</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="32"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="33"/>
         <source>Opacity</source>
         <translation>Opacitet</translation>
     </message>
@@ -15629,6 +15699,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="653"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="916"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
@@ -15805,7 +15876,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="65"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="139"/>
         <location filename="../src/qml/filters/choppy/ui.qml" line="62"/>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="69"/>
         <location filename="../src/qml/filters/color/ui.qml" line="177"/>
@@ -16195,7 +16266,7 @@ Används för att korrigera för överdriven amplitud som orsakas av det extra d
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="168"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="163"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="167"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="131"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="89"/>
@@ -17549,6 +17620,7 @@ Klicka på &quot;Öppna&quot; för att läsa in en fil.</translation>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="446"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="525"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1395"/>
         <source>Start</source>
         <translation>Start</translation>
@@ -17560,7 +17632,7 @@ Klicka på &quot;Öppna&quot; för att läsa in en fil.</translation>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="417"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="404"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="483"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="557"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="562"/>
         <source>End</source>
         <translation>Slut</translation>
     </message>
@@ -17932,7 +18004,7 @@ Sidorna av bilden är inte fixerade</translation>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="967"/>
         <source>User set pixel aspect ratios
 Change top/side distortion bias</source>
-        <translation>Användarinställt bildförhållande för pixlar
+        <translation>Användarinställt bildförhållande för bildpunkter
 Ändra förvrängning av topp/sida</translation>
     </message>
     <message>
@@ -20421,11 +20493,6 @@ Klicka för att välja, dra för att ändra position</translation>
         <translation>Ljushetsskala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
-        <source>Blur Start</source>
-        <translation>Oskärpestart</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
         <source>File for zenith correction</source>
         <translation>Fil för zenitkorrigering</translation>
@@ -21116,6 +21183,131 @@ Klicka för att välja, dra för att ändra position</translation>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="171"/>
         <source>Inner radius</source>
         <translation>Inre radie</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="50"/>
+        <source>Blend mode</source>
+        <translation>Blandningsläge</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="66"/>
+        <source>Source Over</source>
+        <translation>Källa över</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="71"/>
+        <source>Destination Over</source>
+        <translation>Mål över</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="76"/>
+        <source>Clear</source>
+        <translation>Töm</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="81"/>
+        <source>Source</source>
+        <translation>Källa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="86"/>
+        <source>Destination</source>
+        <translation>Mål</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="91"/>
+        <source>Source In</source>
+        <translation>Källa in</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="96"/>
+        <source>Destination In</source>
+        <translation>Mål in</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="101"/>
+        <source>Source Out</source>
+        <translation>Källa ut</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="106"/>
+        <source>Destination Out</source>
+        <translation>Mål ut</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="111"/>
+        <source>Source Atop</source>
+        <translation>Källa ovanpå</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="116"/>
+        <source>Destination Atop</source>
+        <translation>Mål ovanpå</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="121"/>
+        <source>XOR</source>
+        <translation>XOR</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="126"/>
+        <source>Plus</source>
+        <translation>Plus</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="131"/>
+        <source>Multiply</source>
+        <translation>Föröka</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="136"/>
+        <source>Screen</source>
+        <translation>Skärm</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="141"/>
+        <source>Overlay</source>
+        <translation>Överlägg</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="146"/>
+        <source>Darken</source>
+        <translation>Mörkare</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="151"/>
+        <source>Lighten</source>
+        <translation>Ljusare</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="156"/>
+        <source>Color Dodge</source>
+        <translation>Färgskugga</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="161"/>
+        <source>Color Burn</source>
+        <translation>Efterbelys färg</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="166"/>
+        <source>Hard Light</source>
+        <translation>Hårt ljus</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="171"/>
+        <source>Soft Light</source>
+        <translation>Mjukt ljus</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="176"/>
+        <source>Difference</source>
+        <translation>Skillnad</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="181"/>
+        <source>Exclusion</source>
+        <translation>Uteslutning</translation>
     </message>
 </context>
 <context>

@@ -207,27 +207,27 @@
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="26"/>
+        <location filename="../src/widgets/alsawidget.ui" line="28"/>
         <source>ALSA Audio</source>
         <translation>ALSA Garsas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="54"/>
+        <location filename="../src/widgets/alsawidget.ui" line="56"/>
         <source>Apply</source>
         <translation>Taikyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="61"/>
+        <location filename="../src/widgets/alsawidget.ui" line="63"/>
         <source>PCM Device</source>
         <translation>PCM įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="71"/>
+        <location filename="../src/widgets/alsawidget.ui" line="73"/>
         <source>default</source>
         <translation>numatytasis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/alsawidget.ui" line="78"/>
+        <location filename="../src/widgets/alsawidget.ui" line="80"/>
         <source>Channels</source>
         <translation>Kanalai</translation>
     </message>
@@ -263,57 +263,57 @@
 <context>
     <name>AudioLoudnessScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="85"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="86"/>
         <source>Momentary Loudness</source>
         <translation>Momentinis Garsumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="88"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="89"/>
         <source>Short Term Loudness</source>
         <translation>Trumpalaikis Garsumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="91"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="92"/>
         <source>Integrated Loudness</source>
         <translation>Integruotas Garsumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="94"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="95"/>
         <source>Loudness Range</source>
         <translation>Garsumo Diapazonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="97"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="98"/>
         <source>Peak</source>
         <translation>Viršūnė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="100"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="101"/>
         <source>True Peak</source>
         <translation>Tikroji Viršūnė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="107"/>
         <source>Configure Graphs</source>
         <translation>Konfigūruoti Grafikus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="114"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="115"/>
         <source>Reset</source>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="115"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="116"/>
         <source>Reset the measurement.</source>
         <translation>Atstatyti matavimą.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="122"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="123"/>
         <source>Time Since Reset</source>
         <translation>Laikas Nuo Atstatymo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="178"/>
+        <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="179"/>
         <source>Audio Loudness</source>
         <translation>Audio Garsumas</translation>
     </message>
@@ -321,43 +321,43 @@
 <context>
     <name>AudioPeakMeterScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="90"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="91"/>
         <source>Audio Peak Meter</source>
         <translation>Audio Piko Matuoklis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>L</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>R</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>LF</source>
         <translation>KP</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>Ls</source>
         <translation>Ka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="112"/>
         <source>Rs</source>
         <translation>Da</translation>
     </message>
@@ -373,32 +373,32 @@
 <context>
     <name>AudioSurroundScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="70"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="71"/>
         <source>Audio Surround</source>
         <translation>Erdvinis garsas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="252"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="253"/>
         <source>L</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="265"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="266"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="279"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="280"/>
         <source>R</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="293"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="294"/>
         <source>LS</source>
         <translation>LS</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="306"/>
+        <location filename="../src/widgets/scopes/audiosurroundscopewidget.cpp" line="307"/>
         <source>RS</source>
         <translation>RS</translation>
     </message>
@@ -406,45 +406,45 @@
 <context>
     <name>AudioVectorScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="90"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="91"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="99"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="92"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="100"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="101"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="93"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="95"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="94"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="96"/>
         <source>L</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="94"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="96"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="95"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="97"/>
         <source>R</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="103"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="105"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="104"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="106"/>
         <source>Ls</source>
         <translation>Ka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="104"/>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="105"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="107"/>
         <source>Rs</source>
         <translation>Da</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="109"/>
         <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="110"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="111"/>
         <source>LFE</source>
         <translation>LFE</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="215"/>
+        <location filename="../src/widgets/scopes/audiovectorscopewidget.cpp" line="216"/>
         <source>Audio Vector</source>
         <translation>Garso vektorius</translation>
     </message>
@@ -452,29 +452,29 @@
 <context>
     <name>AudioWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="181"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="182"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="182"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="183"/>
         <source>-inf</source>
         <translation>-inf</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="265"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="266"/>
         <source>Sample: %1
 </source>
         <translation>Meginiai: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="273"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="274"/>
         <source>Ch: %1: %2 (%3 dBFS)</source>
         <translation>Ch: %1: %2 (%3 dBFS)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="298"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="299"/>
         <source>Audio Waveform</source>
         <translation>Garso Bangos Forma</translation>
     </message>
@@ -487,362 +487,362 @@
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="60"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="63"/>
         <source>Comments:</source>
         <translation>Komentarai:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="174"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="177"/>
         <source>Speed</source>
         <translation>Greitis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="120"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="123"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="289"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="292"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="569"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="572"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>Ribota Tranciliacija (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="574"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
         <source>Full (JPEG)</source>
         <translation>Visas (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="472"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="697"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="475"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="700"/>
         <source>Track</source>
         <translation>Takelis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="460"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="463"/>
         <source>Aspect ratio</source>
         <translation>Kraštinių santykis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="528"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="295"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="298"/>
         <source>Scan mode</source>
         <translation>Skenavimo režimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="600"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="603"/>
         <source>Interlaced</source>
         <translation>Susipynęs</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="605"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="608"/>
         <source>Progressive</source>
         <translation>Progresyvus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="374"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="414"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="783"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="377"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="417"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="786"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="816"/>
         <source>Codec</source>
         <translation>Kodeksas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="184"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="187"/>
         <source>Timeline</source>
         <translation>Laiko Juosta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="199"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="202"/>
         <source>Speed Presets</source>
         <translation>Greičio ruošiniai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="251"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="254"/>
         <source>Apply</source>
         <translation>Taikyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="258"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
         <source>Apply pitch compensation when the speed is changed.</source>
         <translation>Taikyti pikio kompensavimą, kai yra keičiamas greitis. </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="264"/>
         <source>Pitch Compensation</source>
         <translation>Piko Kompensavimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="315"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="318"/>
         <source>Rotation</source>
         <translation>Sukimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="379"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="419"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="382"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="422"/>
         <source>Resolution</source>
         <translation>Rezoliucija</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="384"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="424"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="387"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="427"/>
         <source>Frame rate</source>
         <translation>Kadrų dažnis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="389"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="392"/>
         <source>Pixel format</source>
         <translation>Pikselių formatas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="394"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="434"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="397"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="437"/>
         <source>Color space</source>
         <translation>Spalvų erdvė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="399"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="439"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="402"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="442"/>
         <source>Color transfer</source>
         <translation>Spalvų perdavimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="404"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="803"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="943"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="407"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="806"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="946"/>
         <source>Name</source>
         <translation>pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="409"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="808"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="948"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="412"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="811"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="951"/>
         <source>Value</source>
         <translation>Vertė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="429"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="798"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="828"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="432"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="801"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="831"/>
         <source>Format</source>
         <translation>Formatas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="614"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
         <source>Bottom Field First</source>
         <translation>Pirmesnis Apatinis Laukas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="619"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
         <source>Top Field First</source>
         <translation>Pirmesnis viršutinis laukas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="645"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="648"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="650"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="653"/>
         <source>90</source>
         <translation>90</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="655"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="658"/>
         <source>180</source>
         <translation>180</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="660"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
         <source>270</source>
         <translation>270</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="668"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="671"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="691"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="694"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="788"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="818"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="791"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="821"/>
         <source>Channels</source>
         <translation>Kanalai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="793"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="823"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="796"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
         <source>Sample rate</source>
         <translation>Mėginių dažnis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="836"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation>Regurliuoti garso/vaizdo sinchronizavimą. Centrinė padėtis nekeičia  parametrų.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="855"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="858"/>
         <source>Sync</source>
         <translation>Sinchronizuoti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="880"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="883"/>
         <source> ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="909"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="912"/>
         <source>Metadata</source>
         <translation>Metaduomenys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="979"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="982"/>
         <source>Properties Menu</source>
         <translation>Savybių Meniu</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1017"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1020"/>
         <source>Open With</source>
         <translation>Atverti su</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1024"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1030"/>
         <source>Reload</source>
         <translation>Įkelti iš naujo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1049"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1052"/>
         <source>Show In Folder</source>
         <translation>Rodyti aplanke</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1079"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1244"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1082"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1247"/>
         <source>Extract Subtitles...</source>
         <translation>Atskirti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1112"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1115"/>
         <source>Reset</source>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1117"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1120"/>
         <source>Set Equirectangular...</source>
         <translation>Nustatyti Lygiakampį...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1122"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1125"/>
         <source>Measure Video Quality...</source>
         <translation>Išmatuoti Vaizdo Kokybę...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1130"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1133"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1136"/>
         <source>Export GPX</source>
         <translation>Iškelti GPX</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1138"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
         <source>View Bitrate...</source>
         <translation>Rodyti bitų spartą...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1144"/>
         <source>View Bitrate</source>
         <translation>Rodyti bitų spartą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1146"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1149"/>
         <source>Show In Files</source>
         <translation>Rodyti rinkmenose</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
         <source>Convert to Edit-friendly</source>
         <translation>Konvertuoti į Patogią-Redaguoti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="305"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="308"/>
         <source>Color range</source>
         <translation>Spalvų diapazonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
         <source>Convert...</source>
         <translation>Konvertuoti...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1054"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
         <source>Copy Full File Path</source>
         <translation>Kopijuoti visą rinkmenos kelią</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1059"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1062"/>
         <source>More Information...</source>
         <translation>Daugiau Informacijos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1064"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1067"/>
         <source>Start Integrity Check Job</source>
         <translation>Pradėti Vientisumo Patikros Darbą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1069"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1072"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Konvertuoti į Patogų-Redaguoti...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1084"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1087"/>
         <source>Set Creation Time...</source>
         <translation>Nustatyti Sukūrimo Laiką...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1092"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1095"/>
         <source>Disable Proxy</source>
         <translation>Išjungti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1097"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1100"/>
         <source>Make Proxy</source>
         <translation>Sukurti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1102"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1105"/>
         <source>Delete Proxy</source>
         <translation>Ištrinti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1107"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1110"/>
         <source>Copy Hash Code</source>
         <translation>Nukopijuokite Maišos Kodą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1003"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="874"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1006"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="877"/>
         <source>Reverse...</source>
         <translation>Apversti...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1074"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1146"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1077"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
         <source>Extract Sub-clip...</source>
         <translation>Išgauti Sub-Kilpą...</translation>
     </message>
@@ -873,7 +873,7 @@
         <translation>(kintamasis)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1010"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1013"/>
         <source>Proxy</source>
         <translation>Pakaitalas</translation>
     </message>
@@ -889,97 +889,97 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="794"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="869"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="797"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="872"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Pasirinkite patogų redagavimui formatą žemiau, tada spustelėkite GERAI, kad pasirinktumėte rinkmenos pavadinimą. Užduotis sukuriama pasirinkus rinkmenos pavadinimą. Baigę dukart spustelėkite užduotį, kad ją atvertumėte.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="989"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1034"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1037"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1051"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1054"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1107"/>
         <source>Convert %1</source>
         <translation>Konvertuoti %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1055"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1058"/>
         <source>Reversed</source>
         <translation>Apversta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1088"/>
         <source>Reverse canceled</source>
         <translation>Atgalinis rodymas atšauktas.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1114"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1117"/>
         <source>Reverse %1</source>
         <translation>Apversti %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1483"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1486"/>
         <source>Choose the Other Video</source>
         <translation>Pasirinkti Kitą Vaizdo Įrašą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1536"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1539"/>
         <source>Measure %1</source>
         <translation>Matuoti %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1148"/>
         <source>Sub-clip</source>
         <translation>Sub-Klipas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1147"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1222"/>
         <source>Extract sub-clip %1</source>
         <translation>Išgauti sub-klipą %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1288"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1241"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1291"/>
         <source>Track %1</source>
         <translation>Takelis %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1290"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1243"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1293"/>
         <source>Track %1 (%2)</source>
         <translation>Takelis %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1246"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1249"/>
         <source>No subtitles found</source>
         <translation>Nerasti subtitrai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1305"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1308"/>
         <source>Extract subtitles %1</source>
         <translation>Išskleisti subtitrus %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1421"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -988,42 +988,42 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1465"/>
         <source>Set Equirectangular Projection</source>
         <translation>Nustatykite Lygiakampę Projekciją</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1474"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1477"/>
         <source>Successfully wrote %1</source>
         <translation>Sėkmingai parašyta %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1476"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1479"/>
         <source>An error occurred saving the projection.</source>
         <translation>Išsaugant projekciją įvyko klaida.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1596"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1599"/>
         <source>Bitrate %1</source>
         <translation>Bitų sparta %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1609"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1612"/>
         <source>System Default</source>
         <translation>Sistemos numatytieji nustatymai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1646"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1649"/>
         <source>Other...</source>
         <translation>Kiti...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1650"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1653"/>
         <source>Remove...</source>
         <translation>Pašalinti...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1689"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1692"/>
         <source>Remove From Open With</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1036,14 +1036,14 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="107"/>
         <source>Audio/Video Device</source>
         <translation>Garso/Vaizdo Įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="58"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="60"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="83"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="84"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="90"/>
@@ -1052,12 +1052,12 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="47"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="49"/>
         <source>Video Input</source>
         <translation>Vaizdo Įvestis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="66"/>
+        <location filename="../src/widgets/avfoundationproducerwidget.ui" line="68"/>
         <source>Audio Input</source>
         <translation>Garso Įvestis</translation>
     </message>
@@ -1106,12 +1106,12 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/blipproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="28"/>
         <source>Blip Flash</source>
         <translation>Blip Blykstė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/blipproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="43"/>
         <source>Frequency</source>
         <translation>Dažnis</translation>
     </message>
@@ -1220,52 +1220,52 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="26"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="28"/>
         <source>Color Bars</source>
         <translation>Spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="38"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="40"/>
         <source>Type</source>
         <translation>Tipas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="55"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="57"/>
         <source>100% PAL color bars</source>
         <translation>100% PAL spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="60"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="62"/>
         <source>100% PAL color bars with red</source>
         <translation>100% PAL spalvų juostos su raudona</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="65"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="67"/>
         <source>95% BBC PAL color bars</source>
         <translation>95% BBC PAL spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="70"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="72"/>
         <source>75% EBU color bars</source>
         <translation>75% EBU spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="75"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="77"/>
         <source>SMPTE color bars</source>
         <translation>SMPTE spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="80"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="82"/>
         <source>Philips PM5544</source>
         <translation>Philips PM5544</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="85"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="87"/>
         <source>FuBK</source>
         <translation>FuBK</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorbarswidget.ui" line="90"/>
+        <location filename="../src/widgets/colorbarswidget.ui" line="92"/>
         <source>Simplified FuBK</source>
         <translation>Supaprastintas FuBK</translation>
     </message>
@@ -1291,22 +1291,22 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="20"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="23"/>
         <source>Color</source>
         <translation>Spalva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="30"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="33"/>
         <source>Comments:</source>
         <translation>Komentarai:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="64"/>
         <source>Color...</source>
         <translation>Spalva...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="74"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="77"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
@@ -1359,52 +1359,52 @@ palikite tuščią, jei norite naudoti iškarpinę:</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="28"/>
         <source>Count</source>
         <translation>Skaičiavimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="43"/>
         <source>Direction</source>
         <translation>Kryptis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="74"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="76"/>
         <source>Style</source>
         <translation>Stilius</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="107"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="112"/>
         <source>Sound</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="110"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Silent - No sound&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz beep exactly two seconds before the out point&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz beep at frame 0 of every second&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tylus - Be garso&lt;/p&gt;&lt;p&gt;2-Pop - 1kHz pyptelėjimas tiksliai dvi sekundės prieš šią vietą&lt;/p&gt;&lt;p&gt;Kadras 0 - A 1kHz pyptelėjimas kiekvienos sekundės kadre 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="143"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="148"/>
         <source>Background</source>
         <translation>Fonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="146"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="145"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;None - No background&lt;/p&gt;&lt;p&gt;Clock  - Film style clock animation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joks - Be fono&lt;/p&gt;&lt;p&gt;Laikrodis - Filmo stiliaus laikrodžio animacija&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="179"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="184"/>
         <source>Drop Frame</source>
         <translation>Nukirsti Kadrą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="182"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="181"/>
         <source>Use SMPTE style drop-frame counting for non-integer frame rates. The clock and timecode will advance two frames every minute if necessary to keep time with wall clock time.</source>
         <translation>Naudokite SMPTE stiliaus nukirstų-kadrų skaičiavimą, kai kadrų dažnis nėra sveikasis skaičius. Laikrodis ir laiko kodas kas minutę pastūmės du kadrus į priekį, kad laikas atitiktų realų pasaulio laiką.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/countproducerwidget.ui" line="189"/>
+        <location filename="../src/widgets/countproducerwidget.ui" line="191"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
@@ -1501,62 +1501,62 @@ palikite tuščią, jei norite naudoti iškarpinę:</translation>
         <translation>Pridėti Pritaikomą Vaizdo Režimą</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="32"/>
         <source>Colorspace</source>
         <translation>Spalvų Erdvė</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="58"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="61"/>
         <source>ITU-R BT.2020</source>
         <translation>ITU-R BT.2020</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="81"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="84"/>
         <source>Resolution</source>
         <translation>Rezoliucija</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="112"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="115"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="182"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="185"/>
         <source>Name</source>
         <translation>pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="201"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="204"/>
         <source>Interlaced</source>
         <translation>Susipynęs</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="206"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="209"/>
         <source>Progressive</source>
         <translation>Progresyvus</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="229"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="232"/>
         <source>Aspect ratio</source>
         <translation>Kraštinių santykis</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="260"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="263"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="348"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="351"/>
         <source>Frames/sec</source>
         <translation>KadraI/sek</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="449"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="452"/>
         <source>Scan mode</source>
         <translation>Skenevimo režimas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="481"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="484"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
         <translation>&lt;small&gt;(Palikite pavadinimo lauką tuščią, jei norite praleisti ruošinio išsaugojimą ir naudoti laikiną arba projektui skirtą vaizdo įrašo veikseną).&lt;/small&gt;</translation>
     </message>
@@ -1574,23 +1574,23 @@ palikite tuščią, jei norite naudoti iškarpinę:</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="85"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="57"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="59"/>
         <source>Device</source>
         <translation>Įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="67"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="69"/>
         <source>Signal mode</source>
         <translation>Signalo režimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/decklinkproducerwidget.ui" line="85"/>
+        <location filename="../src/widgets/decklinkproducerwidget.ui" line="87"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
         <translation>Atminkite, kad ne visi kortelių modeliai palaiko automatinį signalo aptikimą ir ne visos kortelės palaiko visų signalų veiksenas.</translation>
     </message>
@@ -1608,24 +1608,24 @@ palikite tuščią, jei norite naudoti iškarpinę:</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="28"/>
         <location filename="../src/widgets/directshowvideowidget.cpp" line="166"/>
         <source>Audio/Video Device</source>
         <translation>Garso/Vaizdo Įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="52"/>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="81"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="54"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="83"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="60"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="62"/>
         <source>Video Input</source>
         <translation>Vaizdo Įvestis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/directshowvideowidget.ui" line="70"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="72"/>
         <source>Audio Input</source>
         <translation>Garso Įvestis</translation>
     </message>
@@ -1692,162 +1692,162 @@ palikite tuščią, jei norite naudoti iškarpinę:</translation>
 <context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="18"/>
+        <location filename="../src/docks/encodedock.ui" line="17"/>
         <source>Export</source>
         <translation>Eksportuoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="45"/>
+        <location filename="../src/docks/encodedock.ui" line="44"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
         <translation>&lt;b&gt;Ruošiniai&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="58"/>
+        <location filename="../src/docks/encodedock.ui" line="57"/>
         <source>search</source>
         <translation>ieškoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="89"/>
+        <location filename="../src/docks/encodedock.ui" line="88"/>
         <source>Add current settings as a new custom preset</source>
         <translation>Pridėti dabartinius nustatymus kaip naują pasrinktinį ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="103"/>
+        <location filename="../src/docks/encodedock.ui" line="102"/>
         <source>Delete currently selected preset</source>
         <translation>Ištrinti šiuo metu pasirinktą ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="169"/>
+        <location filename="../src/docks/encodedock.ui" line="168"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Iškelties pagalba&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Pagal numatytus nustatymus sukuriama H.264/AAC MP4 rinkmena, kuri tinkama daugeliui vartotojų ir atvejų. Kairėje pasirinkite &lt;span style=&quot; font-weight:600;&quot;&gt;Ruošinį&lt;/span&gt; prieš nuspręsdami naudoti &lt;span style=&quot; font-weight:600;&quot;&gt;išplėstinę&lt;/span&gt; veikseną. &lt;span style=&quot; font-weight:600;&quot;&gt;Išplėstinė&lt;/span&gt; veiksena neapsaugo nuo neteisingų parinkčių derinio!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="187"/>
+        <location filename="../src/docks/encodedock.ui" line="186"/>
         <source>From</source>
         <translation>Iš</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="217"/>
+        <location filename="../src/docks/encodedock.ui" line="216"/>
         <source>Format</source>
         <translation>Formatas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="253"/>
+        <location filename="../src/docks/encodedock.ui" line="252"/>
         <source>Use hardware encoder</source>
         <translation>Naudokite aparatūros kodavimo priemonę</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="260"/>
+        <location filename="../src/docks/encodedock.ui" line="259"/>
         <source>Configure...</source>
         <translation>Konfigūruoti...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="294"/>
+        <location filename="../src/docks/encodedock.ui" line="296"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="485"/>
+        <location filename="../src/docks/encodedock.ui" line="487"/>
         <source>Interpolation</source>
         <translation>Interpoliacija</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="539"/>
+        <location filename="../src/docks/encodedock.ui" line="541"/>
         <source>Field order</source>
         <translation>Lauko tvarka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="549"/>
+        <location filename="../src/docks/encodedock.ui" line="551"/>
         <source>Aspect ratio</source>
         <translation>Kraštinių santykis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="723"/>
+        <location filename="../src/docks/encodedock.ui" line="725"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="579"/>
+        <location filename="../src/docks/encodedock.ui" line="581"/>
         <source>Scan mode</source>
         <translation>Skenevimo režimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="664"/>
+        <location filename="../src/docks/encodedock.ui" line="666"/>
         <source>Interlaced</source>
         <translation>Susipynęs</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="669"/>
+        <location filename="../src/docks/encodedock.ui" line="671"/>
         <source>Progressive</source>
         <translation>Progresyvus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="617"/>
+        <location filename="../src/docks/encodedock.ui" line="619"/>
         <source>Resolution</source>
         <translation>Rezoliucija</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="569"/>
+        <location filename="../src/docks/encodedock.ui" line="571"/>
         <source>Frames/sec</source>
         <translation>KadraI/sek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="916"/>
+        <location filename="../src/docks/encodedock.ui" line="918"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="824"/>
+        <location filename="../src/docks/encodedock.ui" line="826"/>
         <source>Bottom Field First</source>
         <translation>Pirmesnis apatinis laukas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="829"/>
+        <location filename="../src/docks/encodedock.ui" line="831"/>
         <source>Top Field First</source>
         <translation>Pirmesnis viršutinis laukas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="858"/>
+        <location filename="../src/docks/encodedock.ui" line="860"/>
         <source>One Field (fast)</source>
         <translation>One Field (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="863"/>
+        <location filename="../src/docks/encodedock.ui" line="865"/>
         <source>Linear Blend (fast)</source>
         <translation>Linear Blend (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="868"/>
+        <location filename="../src/docks/encodedock.ui" line="870"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - temporal only (geras)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="559"/>
+        <location filename="../src/docks/encodedock.ui" line="561"/>
         <source>Deinterlacer</source>
         <translation>Deinterlacer</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="501"/>
+        <location filename="../src/docks/encodedock.ui" line="503"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Nearest Neighbor (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="506"/>
+        <location filename="../src/docks/encodedock.ui" line="508"/>
         <source>Bilinear (good)</source>
         <translation>Bilinear (geras)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="511"/>
+        <location filename="../src/docks/encodedock.ui" line="513"/>
         <source>Bicubic (better)</source>
         <translation>Bicubic (geresnis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="811"/>
+        <location filename="../src/docks/encodedock.ui" line="813"/>
         <source>Use preview scaling</source>
         <translation>Naudokite peržiūros mastelio pakeitimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="599"/>
+        <location filename="../src/docks/encodedock.ui" line="601"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1862,433 +1862,443 @@ jog konvertacija gali būti problematiška
 su įjungtu lygiagrečiu apdorojimu.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="330"/>
+        <location filename="../src/docks/encodedock.ui" line="332"/>
         <source>Reframe</source>
         <translation>Perkadravimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="589"/>
+        <location filename="../src/docks/encodedock.ui" line="591"/>
         <source>Color range</source>
         <translation>Spalvų gama</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="607"/>
+        <location filename="../src/docks/encodedock.ui" line="609"/>
         <source>Parallel processing</source>
         <translation>Lygiagretus apdorojimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="630"/>
+        <location filename="../src/docks/encodedock.ui" line="632"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>Ribota Tranciliacija (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="635"/>
+        <location filename="../src/docks/encodedock.ui" line="637"/>
         <source>Full (JPEG)</source>
         <translation>Visas (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="873"/>
+        <location filename="../src/docks/encodedock.ui" line="875"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF – laikinas + erdvinis (geresnis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="878"/>
+        <location filename="../src/docks/encodedock.ui" line="880"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (geriausias)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="955"/>
-        <location filename="../src/docks/encodedock.ui" line="964"/>
-        <location filename="../src/docks/encodedock.ui" line="1647"/>
+        <location filename="../src/docks/encodedock.ui" line="957"/>
+        <location filename="../src/docks/encodedock.ui" line="966"/>
+        <location filename="../src/docks/encodedock.ui" line="1659"/>
         <source>Codec</source>
         <translation>Kodeksas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="994"/>
+        <location filename="../src/docks/encodedock.ui" line="996"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1006"/>
+        <location filename="../src/docks/encodedock.ui" line="1008"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = group of pictures / nuotraukų grupė, didžiausias bazinių kadrų intervalas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1019"/>
+        <location filename="../src/docks/encodedock.ui" line="1021"/>
         <source>frames</source>
         <translation>kadrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1039"/>
+        <location filename="../src/docks/encodedock.ui" line="1041"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>Fiksuotas GOP reiškia, kad baziniai kadrai
 aptikus scenos pakeitimų nebus įterpti.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1043"/>
+        <location filename="../src/docks/encodedock.ui" line="1045"/>
         <source>Fixed</source>
         <translation>Fiksuotas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1067"/>
-        <location filename="../src/docks/encodedock.ui" line="1689"/>
+        <location filename="../src/docks/encodedock.ui" line="1069"/>
+        <location filename="../src/docks/encodedock.ui" line="1701"/>
         <source>The average bit rate</source>
         <translation>Vidutinė bitų sparta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1220"/>
-        <location filename="../src/docks/encodedock.ui" line="1772"/>
+        <location filename="../src/docks/encodedock.ui" line="1222"/>
+        <location filename="../src/docks/encodedock.ui" line="1784"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1242"/>
+        <location filename="../src/docks/encodedock.ui" line="1244"/>
         <source>Disable video</source>
         <translation>Išjungti vaizdą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1249"/>
+        <location filename="../src/docks/encodedock.ui" line="1251"/>
+        <source>&lt;p&gt;The hardware decoder for export is usually not very beneficial and is often slower. It may only mildly reduce CPU usage on some systems. Therefore, we recommend to leave it off, but you can test and decide for yourself.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="1254"/>
+        <source>Use hardware decoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="1261"/>
         <source>Dual pass</source>
         <translation>Dvigubas praėjimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1256"/>
+        <location filename="../src/docks/encodedock.ui" line="1268"/>
         <source>B frames</source>
         <translation>B kadrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1268"/>
+        <location filename="../src/docks/encodedock.ui" line="1280"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>B kadrai yra dvikrypčiai „delta“ paveikslėliai
 esant temporal compression / laikinai kompresijai</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1307"/>
+        <location filename="../src/docks/encodedock.ui" line="1319"/>
         <source>Codec threads</source>
         <translation>Kodeko gijos</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1322"/>
+        <location filename="../src/docks/encodedock.ui" line="1334"/>
         <source>(0 = auto)</source>
         <translation>(0 = auto)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1344"/>
-        <location filename="../src/docks/encodedock.ui" line="1814"/>
+        <location filename="../src/docks/encodedock.ui" line="1356"/>
+        <location filename="../src/docks/encodedock.ui" line="1826"/>
         <source>Rate control</source>
         <translation>Dažnio kontroliavimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1357"/>
-        <location filename="../src/docks/encodedock.ui" line="1827"/>
+        <location filename="../src/docks/encodedock.ui" line="1369"/>
+        <location filename="../src/docks/encodedock.ui" line="1839"/>
         <source>Average Bitrate</source>
         <translation>Vidutinė Bitų-Sparta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1362"/>
-        <location filename="../src/docks/encodedock.ui" line="1832"/>
+        <location filename="../src/docks/encodedock.ui" line="1374"/>
+        <location filename="../src/docks/encodedock.ui" line="1844"/>
         <source>Constant Bitrate</source>
         <translation>Pastovi Bitų-Sparta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1367"/>
-        <location filename="../src/docks/encodedock.ui" line="1837"/>
+        <location filename="../src/docks/encodedock.ui" line="1379"/>
+        <location filename="../src/docks/encodedock.ui" line="1849"/>
         <source>Quality-based VBR</source>
         <translation>Kokybe-Pagrįstas VBR</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1372"/>
+        <location filename="../src/docks/encodedock.ui" line="1384"/>
         <source>Constrained VBR</source>
         <translation>Apribotas VBR</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1395"/>
+        <location filename="../src/docks/encodedock.ui" line="1407"/>
         <source>Buffer size</source>
         <translation>Buferio dydis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1417"/>
+        <location filename="../src/docks/encodedock.ui" line="1429"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1439"/>
-        <location filename="../src/docks/encodedock.ui" line="1860"/>
+        <location filename="../src/docks/encodedock.ui" line="1451"/>
+        <location filename="../src/docks/encodedock.ui" line="1872"/>
         <source>Quality</source>
         <translation>Kokybė</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1451"/>
-        <location filename="../src/docks/encodedock.ui" line="1872"/>
+        <location filename="../src/docks/encodedock.ui" line="1463"/>
+        <location filename="../src/docks/encodedock.ui" line="1884"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1467"/>
-        <location filename="../src/docks/encodedock.ui" line="1888"/>
+        <location filename="../src/docks/encodedock.ui" line="1479"/>
+        <location filename="../src/docks/encodedock.ui" line="1900"/>
         <source>TextLabel</source>
         <translation>Teksto etiketė</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1489"/>
-        <location filename="../src/docks/encodedock.ui" line="1677"/>
+        <location filename="../src/docks/encodedock.ui" line="1501"/>
+        <location filename="../src/docks/encodedock.ui" line="1689"/>
         <source>Bitrate</source>
         <translation>Bitų sparta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1500"/>
+        <location filename="../src/docks/encodedock.ui" line="1512"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1509"/>
+        <location filename="../src/docks/encodedock.ui" line="1521"/>
         <source>Channels</source>
         <translation>Kanalai</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1521"/>
+        <location filename="../src/docks/encodedock.ui" line="1533"/>
         <source>The number of audio channels in the output.</source>
         <translation>Garso kanalų skaičius išvestyje.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1525"/>
+        <location filename="../src/docks/encodedock.ui" line="1537"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1530"/>
+        <location filename="../src/docks/encodedock.ui" line="1542"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1535"/>
+        <location filename="../src/docks/encodedock.ui" line="1547"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (keturgubas / ambisoninis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1540"/>
+        <location filename="../src/docks/encodedock.ui" line="1552"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 erdvinis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1615"/>
+        <location filename="../src/docks/encodedock.ui" line="1627"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1637"/>
+        <location filename="../src/docks/encodedock.ui" line="1649"/>
         <source>Sample rate</source>
         <translation>Mėginių dažnis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1794"/>
+        <location filename="../src/docks/encodedock.ui" line="1806"/>
         <source>Disable audio</source>
         <translation>Išjungti garsą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1911"/>
+        <location filename="../src/docks/encodedock.ui" line="1923"/>
         <source>Other</source>
         <translation>Kiti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1927"/>
+        <location filename="../src/docks/encodedock.ui" line="1939"/>
         <source>Disable subtitles</source>
         <translation>Išjungti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1365"/>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
-        <location filename="../src/docks/encodedock.cpp" line="2369"/>
+        <location filename="../src/docks/encodedock.ui" line="1972"/>
+        <location filename="../src/docks/encodedock.cpp" line="1368"/>
+        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="2372"/>
         <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1970"/>
+        <location filename="../src/docks/encodedock.ui" line="1982"/>
         <source>Reset options to defaults</source>
         <translation>Atkurti numatytąsias parinktis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1973"/>
+        <location filename="../src/docks/encodedock.ui" line="1985"/>
         <source>Reset</source>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1980"/>
+        <location filename="../src/docks/encodedock.ui" line="1992"/>
         <source>Advanced</source>
         <translation>Išplėstinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1990"/>
+        <location filename="../src/docks/encodedock.ui" line="2002"/>
         <source>Always start in Advanced mode</source>
         <translation>Visada pradėti Išlėstiniame režime</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2074"/>
-        <location filename="../src/docks/encodedock.cpp" line="2081"/>
-        <location filename="../src/docks/encodedock.cpp" line="2193"/>
+        <location filename="../src/docks/encodedock.ui" line="2012"/>
+        <location filename="../src/docks/encodedock.cpp" line="2077"/>
+        <location filename="../src/docks/encodedock.cpp" line="2084"/>
+        <location filename="../src/docks/encodedock.cpp" line="2196"/>
         <source>Stream</source>
         <translation>Srautas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1861"/>
-        <location filename="../src/docks/encodedock.cpp" line="1962"/>
-        <location filename="../src/docks/encodedock.cpp" line="1972"/>
+        <location filename="../src/docks/encodedock.ui" line="2039"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
+        <location filename="../src/docks/encodedock.cpp" line="1965"/>
+        <location filename="../src/docks/encodedock.cpp" line="1975"/>
         <source>Stop Capture</source>
         <translation>Sustabdyti fiksavimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="142"/>
+        <location filename="../src/docks/encodedock.cpp" line="144"/>
         <source>Automatic from extension</source>
         <translation>Automatiškai iš plėtinio</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="150"/>
-        <location filename="../src/docks/encodedock.cpp" line="160"/>
+        <location filename="../src/docks/encodedock.cpp" line="152"/>
+        <location filename="../src/docks/encodedock.cpp" line="162"/>
         <source>Default for format</source>
         <translation>Numatytasis formatui</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="469"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Timeline</source>
         <translation>Laiko Juosta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="476"/>
-        <location filename="../src/docks/encodedock.cpp" line="482"/>
+        <location filename="../src/docks/encodedock.cpp" line="479"/>
+        <location filename="../src/docks/encodedock.cpp" line="485"/>
         <source>Source</source>
         <translation>Šaltinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="487"/>
-        <location filename="../src/docks/encodedock.cpp" line="494"/>
+        <location filename="../src/docks/encodedock.cpp" line="490"/>
+        <location filename="../src/docks/encodedock.cpp" line="497"/>
         <source>Marker</source>
         <translation>Žymė</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="505"/>
+        <location filename="../src/docks/encodedock.cpp" line="508"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Turite įvesti skaitines vertes, naudodami „%1“ kaip dešimtainį tašką.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="514"/>
-        <location filename="../src/docks/encodedock.cpp" line="1808"/>
-        <location filename="../src/docks/encodedock.cpp" line="1809"/>
+        <location filename="../src/docks/encodedock.cpp" line="517"/>
+        <location filename="../src/docks/encodedock.cpp" line="1811"/>
+        <location filename="../src/docks/encodedock.cpp" line="1812"/>
         <source>Custom</source>
         <translation>Pritaikomas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="550"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Stock</source>
         <translation>Atsargos</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="553"/>
+        <location filename="../src/docks/encodedock.cpp" line="556"/>
         <source>Default</source>
         <translation>Numatytasis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1432"/>
+        <location filename="../src/docks/encodedock.cpp" line="1435"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Negalite rašyti į rinkmeną, kuri yra jūsų projekte.
 Bandykite dar kartą naudojant kitą aplanką arba rinkmenos pavadinimą.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1530"/>
+        <location filename="../src/docks/encodedock.cpp" line="1533"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut aptiko filtrus, kuriems reikalingos analizės darbai nebuvo paleisti.
 Ar norite atlikti analizės darbus dabar?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
-        <location filename="../src/docks/encodedock.cpp" line="2371"/>
+        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="2374"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1880"/>
+        <location filename="../src/docks/encodedock.cpp" line="1883"/>
         <source>Export Files</source>
         <translation>Iškelti rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1895"/>
+        <location filename="../src/docks/encodedock.cpp" line="1898"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1897"/>
+        <location filename="../src/docks/encodedock.cpp" line="1900"/>
         <source>Determined by Export (*)</source>
         <translation>Nustatyta pagal iškeltį (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2069"/>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2072"/>
+        <location filename="../src/docks/encodedock.cpp" line="2094"/>
         <source>Stop Stream</source>
         <translation>Sustabdyti srautą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2083"/>
+        <location filename="../src/docks/encodedock.cpp" line="2086"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Įveskite tinklo protokolo schemą, adresą, prievadą ir parametrus kaip URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2126"/>
+        <location filename="../src/docks/encodedock.cpp" line="2129"/>
         <source>Add Export Preset</source>
         <translation>Pridėti iškelties ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2170"/>
+        <location filename="../src/docks/encodedock.cpp" line="2173"/>
         <source>Delete Preset</source>
         <translation>Ištrinti ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2171"/>
+        <location filename="../src/docks/encodedock.cpp" line="2174"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ar tikrai norite ištrinti %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2299"/>
+        <location filename="../src/docks/encodedock.cpp" line="2302"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2353"/>
+        <location filename="../src/docks/encodedock.cpp" line="2356"/>
         <source>KiB (%1s)</source>
         <translation>KB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2501"/>
+        <location filename="../src/docks/encodedock.cpp" line="2509"/>
         <source>Detect</source>
         <translation>Aptikti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2558"/>
+        <location filename="../src/docks/encodedock.cpp" line="2566"/>
         <source>(auto)</source>
         <translation>(automatinis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2604"/>
+        <location filename="../src/docks/encodedock.cpp" line="2612"/>
         <source>Detecting hardware encoders...</source>
         <translation>Aptinkami aparatinės įrangos kodavimo įrenginiai...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2661"/>
+        <location filename="../src/docks/encodedock.cpp" line="2669"/>
         <source>Nothing found</source>
         <translation>Nieko nerasta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2663"/>
+        <location filename="../src/docks/encodedock.cpp" line="2671"/>
         <source>Found %1</source>
         <translation>Rasta %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2886"/>
+        <location filename="../src/docks/encodedock.cpp" line="2894"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2299,42 +2309,42 @@ Išsaugokite projektą, užverkite jį ir vėl atverkite.
 Shotcut bandys pataisyti jūsų projektą.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2935"/>
+        <location filename="../src/docks/encodedock.cpp" line="2943"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Vaizdo įrašo santykis neatitinka projekto vaizdo veiksenos, todėl rodomos juodos juostos.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2973"/>
+        <location filename="../src/docks/encodedock.cpp" line="2981"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Kadrų dažnis yra didesnis nei projekto vaizdo veiksenoje, todėl kadrai kartojasi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2499"/>
+        <location filename="../src/docks/encodedock.cpp" line="2507"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfigūruoti aparatinį kodavimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="472"/>
+        <location filename="../src/docks/encodedock.cpp" line="475"/>
         <source>Current Playlist Bin</source>
         <translation>Dabartinis grojaraščio skyrius</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="473"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
         <source>Each Playlist Bin Item</source>
         <translation>Kiekvienas grojaraščio skyriaus elementas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="1884"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Iškelti kiekvieną grojaraščio skyriaus elementą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1926"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
         <source>Export canceled</source>
         <translation>Iškeltis atšaukta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2523"/>
+        <location filename="../src/docks/encodedock.cpp" line="2531"/>
         <source>Export Frames/sec</source>
         <translation>Iškelti kadrus/s</translation>
     </message>
@@ -2537,268 +2547,268 @@ Shotcut bandys pataisyti jūsų projektą.</translation>
 <context>
     <name>FilesDock</name>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="18"/>
-        <location filename="../src/docks/filesdock.cpp" line="597"/>
+        <location filename="../src/docks/filesdock.ui" line="14"/>
+        <location filename="../src/docks/filesdock.cpp" line="599"/>
         <source>Files</source>
         <translation>Rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="61"/>
+        <location filename="../src/docks/filesdock.ui" line="57"/>
         <source>Location</source>
         <translation>Vieta</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="90"/>
+        <location filename="../src/docks/filesdock.ui" line="86"/>
         <source>Add the current folder to the saved locations</source>
         <translation>Pridėti dabartinį aplanką prie išsaugotų vietų</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.ui" line="110"/>
+        <location filename="../src/docks/filesdock.ui" line="106"/>
         <source>Remove the selected location</source>
         <translation>Pašalinti pasirinktą vietą</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="502"/>
+        <location filename="../src/docks/filesdock.cpp" line="504"/>
         <source>Home</source>
         <comment>The user&apos;s home folder in the file system</comment>
         <translation>Pagrindinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="503"/>
+        <location filename="../src/docks/filesdock.cpp" line="505"/>
         <source>Current Project</source>
         <translation>Esamas projektas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="504"/>
+        <location filename="../src/docks/filesdock.cpp" line="506"/>
         <source>Documents</source>
         <translation>Dokumentai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="509"/>
+        <location filename="../src/docks/filesdock.cpp" line="511"/>
         <source>Movies</source>
         <comment>The system-provided videos folder called Movies on macOS</comment>
         <translation>Filmai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="513"/>
+        <location filename="../src/docks/filesdock.cpp" line="515"/>
         <source>Music</source>
         <translation>Muzika</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="516"/>
+        <location filename="../src/docks/filesdock.cpp" line="518"/>
         <source>Pictures</source>
         <comment>The system-provided photos folder</comment>
         <translation>Nuotraukos</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="520"/>
+        <location filename="../src/docks/filesdock.cpp" line="522"/>
         <source>Volumes</source>
         <comment>The macOS file system location where external drives and network shares are mounted</comment>
         <translation>Garsai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="525"/>
+        <location filename="../src/docks/filesdock.cpp" line="527"/>
         <source>Videos</source>
         <translation>Vaizdo įrašai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="607"/>
+        <location filename="../src/docks/filesdock.cpp" line="609"/>
         <source>Select</source>
         <translation>Pasirinkti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="611"/>
+        <location filename="../src/docks/filesdock.cpp" line="613"/>
         <source>Files Controls</source>
         <translation>Rinkmenų valdikliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="616"/>
+        <location filename="../src/docks/filesdock.cpp" line="618"/>
         <source>Files Menu</source>
         <translation>Rinkmenų meniu</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="642"/>
-        <location filename="../src/docks/filesdock.cpp" line="654"/>
+        <location filename="../src/docks/filesdock.cpp" line="644"/>
+        <location filename="../src/docks/filesdock.cpp" line="656"/>
         <source>Files Filters</source>
         <translation>Rinkmenų filtrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="677"/>
+        <location filename="../src/docks/filesdock.cpp" line="679"/>
         <source>Only show files whose name contains some text</source>
         <translation>Rodyti tik rinkmenas, kurių pavadinimuose yra teksto</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="678"/>
+        <location filename="../src/docks/filesdock.cpp" line="680"/>
         <source>search</source>
         <translation>ieškoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="787"/>
+        <location filename="../src/docks/filesdock.cpp" line="789"/>
         <source>Tiles</source>
         <translation>Plytelės</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="788"/>
+        <location filename="../src/docks/filesdock.cpp" line="790"/>
         <source>View as tiles</source>
         <translation>Rodyti plyteles</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="800"/>
+        <location filename="../src/docks/filesdock.cpp" line="802"/>
         <source>Icons</source>
         <translation>Piktogramos</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="801"/>
+        <location filename="../src/docks/filesdock.cpp" line="803"/>
         <source>View as icons</source>
         <translation>Rodyti piktogramas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="813"/>
+        <location filename="../src/docks/filesdock.cpp" line="815"/>
         <source>Details</source>
         <translation>Išsamiau</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="814"/>
+        <location filename="../src/docks/filesdock.cpp" line="816"/>
         <source>View as details</source>
         <translation>Rodyti išsamią informaciją</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="826"/>
+        <location filename="../src/docks/filesdock.cpp" line="828"/>
         <source>Open In Shotcut</source>
         <translation>Atverti Shotcut programoje</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="827"/>
+        <location filename="../src/docks/filesdock.cpp" line="829"/>
         <source>Open the clip in the Source player</source>
         <translation>Atverti klipą šaltinio grotuve</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="835"/>
+        <location filename="../src/docks/filesdock.cpp" line="837"/>
         <source>System Default</source>
         <translation>Sistemos numatytieji nustatymai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="850"/>
+        <location filename="../src/docks/filesdock.cpp" line="852"/>
         <source>Other...</source>
         <translation>Kiti...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="858"/>
+        <location filename="../src/docks/filesdock.cpp" line="860"/>
         <source>Remove...</source>
         <translation>Pašalinti...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="867"/>
+        <location filename="../src/docks/filesdock.cpp" line="869"/>
         <source>Show In File Manager</source>
         <translation>Rodyti rinkmenų tvarkyklėje</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="877"/>
+        <location filename="../src/docks/filesdock.cpp" line="879"/>
         <source>Update Thumbnails</source>
         <translation>Atnaujinti Miniatiūras</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="885"/>
+        <location filename="../src/docks/filesdock.cpp" line="887"/>
         <source>Select All</source>
         <translation>Pasirinkti Viską</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="896"/>
+        <location filename="../src/docks/filesdock.cpp" line="898"/>
         <source>Select None</source>
         <translation>Nepasirinkta</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="907"/>
+        <location filename="../src/docks/filesdock.cpp" line="909"/>
         <source>Open Previous</source>
         <translation>Atverti ankstesnį</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="919"/>
+        <location filename="../src/docks/filesdock.cpp" line="921"/>
         <source>Open Next</source>
         <translation>Atverti sekantį</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="931"/>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="932"/>
+        <location filename="../src/docks/filesdock.cpp" line="934"/>
         <source>Show or hide video files</source>
         <translation>Rodyti arba slėpti vaizdo įrašų rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="937"/>
+        <location filename="../src/docks/filesdock.cpp" line="939"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="938"/>
+        <location filename="../src/docks/filesdock.cpp" line="940"/>
         <source>Show or hide audio files</source>
         <translation>Rodyti arba slėpti garso rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="943"/>
+        <location filename="../src/docks/filesdock.cpp" line="945"/>
         <source>Image</source>
         <translation>Paveikslas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="944"/>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
         <source>Show or hide image files</source>
         <translation>Rodyti arba slėpti nuotraukų rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="949"/>
+        <location filename="../src/docks/filesdock.cpp" line="951"/>
         <source>Other</source>
         <translation>Kiti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="950"/>
+        <location filename="../src/docks/filesdock.cpp" line="952"/>
         <source>Show or hide other kinds of files</source>
         <translation>Rodyti arba slėpti kitos rūšies rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="955"/>
+        <location filename="../src/docks/filesdock.cpp" line="957"/>
         <source>Folders</source>
         <translation>Aplankai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="956"/>
+        <location filename="../src/docks/filesdock.cpp" line="958"/>
         <source>Hide or show the list of folders</source>
         <translation>Aplankų sąrašo slėpimas arba rodymas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="967"/>
+        <location filename="../src/docks/filesdock.cpp" line="969"/>
         <source>Go Up</source>
         <translation>Eiti aukštyn</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="968"/>
+        <location filename="../src/docks/filesdock.cpp" line="970"/>
         <source>Show the parent folder</source>
         <translation>Rodyti pirminį aplanką</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="986"/>
+        <location filename="../src/docks/filesdock.cpp" line="988"/>
         <source>Refresh Folders</source>
         <translation>Atnaujinti aplankus</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1007"/>
+        <location filename="../src/docks/filesdock.cpp" line="1009"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1031"/>
+        <location filename="../src/docks/filesdock.cpp" line="1033"/>
         <source>Open With</source>
         <translation>Atverti su</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1301"/>
+        <location filename="../src/docks/filesdock.cpp" line="1303"/>
         <source>Remove From Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1322"/>
+        <location filename="../src/docks/filesdock.cpp" line="1324"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n elementas</numerusform>
@@ -2807,22 +2817,22 @@ Shotcut bandys pataisyti jūsų projektą.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1364"/>
+        <location filename="../src/docks/filesdock.cpp" line="1366"/>
         <source>Add Location</source>
         <translation>Pridėti vietą</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1365"/>
+        <location filename="../src/docks/filesdock.cpp" line="1367"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1383"/>
+        <location filename="../src/docks/filesdock.cpp" line="1385"/>
         <source>Delete Location</source>
         <translation>Pašalinti vietą</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1384"/>
+        <location filename="../src/docks/filesdock.cpp" line="1386"/>
         <source>Are you sure you want to remove %1?</source>
         <translation>Ar tikrai norite pašalinti %1?</translation>
     </message>
@@ -3018,62 +3028,62 @@ Shotcut bandys pataisyti jūsų projektą.</translation>
         <translation>Filtrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="214"/>
+        <location filename="../src/docks/filtersdock.cpp" line="215"/>
         <source>Add</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="216"/>
+        <location filename="../src/docks/filtersdock.cpp" line="217"/>
         <source>Choose a filter to add</source>
         <translation>Pasirinkite filtrą, kurį norite pridėti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="228"/>
+        <location filename="../src/docks/filtersdock.cpp" line="229"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="230"/>
+        <location filename="../src/docks/filtersdock.cpp" line="231"/>
         <source>Remove selected filter</source>
         <translation>Pašalinti pasirinktą filtrą</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="237"/>
+        <location filename="../src/docks/filtersdock.cpp" line="238"/>
         <source>Copy Enabled</source>
         <translation>Kopijavimas įjungtas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="238"/>
+        <location filename="../src/docks/filtersdock.cpp" line="239"/>
         <source>Copy checked filters to the clipboard</source>
         <translation>Nukopijuoti pažymėtus filtrus į iškarpinę</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="245"/>
+        <location filename="../src/docks/filtersdock.cpp" line="246"/>
         <source>Copy Current</source>
         <translation>Kopijuoti esamą</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="246"/>
+        <location filename="../src/docks/filtersdock.cpp" line="247"/>
         <source>Copy current filter to the clipboard</source>
         <translation>Nukopijuoti dabartinį filtrą į iškarpinę</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="253"/>
+        <location filename="../src/docks/filtersdock.cpp" line="254"/>
         <source>Copy All</source>
         <translation>Kopijuoti visus</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="254"/>
+        <location filename="../src/docks/filtersdock.cpp" line="255"/>
         <source>Copy all filters to the clipboard</source>
         <translation>Nukopijuoti visus filtrus į iškarpinę</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="261"/>
+        <location filename="../src/docks/filtersdock.cpp" line="262"/>
         <source>Paste Filters</source>
         <translation>Įklijuoti filtrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="262"/>
+        <location filename="../src/docks/filtersdock.cpp" line="263"/>
         <source>Paste the filters from the clipboard</source>
         <translation>Įklijuoti filtrus iš iškarpinės</translation>
     </message>
@@ -3118,37 +3128,37 @@ Spustelėkite ATŠAUKTI, jei neturite Glaxnimate.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="20"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="23"/>
         <source>Animation</source>
         <translation>Animacija</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="30"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="33"/>
         <source>Comments:</source>
         <translation>Komentarai:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="64"/>
         <source>Background color...</source>
         <translation>Fono spalva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="76"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="79"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="103"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="106"/>
         <source>Edit...</source>
         <translation>Taisa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="110"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="113"/>
         <source>Reload</source>
         <translation>Įkelti iš naujo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="132"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="135"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
@@ -3223,105 +3233,105 @@ Spauskite norėdami pakeisti</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="25"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="28"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="150"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="153"/>
         <source>Text</source>
         <translation>Tekstas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="173"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="176"/>
         <source>Line 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="187"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="190"/>
         <source>Line 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="201"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="204"/>
         <source>Line 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="215"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="218"/>
         <source>Click to expand or collapse the Body section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="221"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="224"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="481"/>
         <source>▶ Body</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="253"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="256"/>
         <source>Background color...</source>
         <translation>Fono spalva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="266"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="269"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="276"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="279"/>
         <source>Click to set color to transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="279"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="282"/>
         <source>Transparent</source>
         <translation>Permatomas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="301"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="304"/>
         <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="310"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="313"/>
         <source>Click to expand or collapse the CSS section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="316"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="319"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="471"/>
         <source>▶ CSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="346"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="349"/>
         <source>Type or paste stylesheets here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="355"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="358"/>
         <source>Click to expand or collapse the JavaScript section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="361"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="364"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="489"/>
         <source>▶ JavaScript</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="391"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="394"/>
         <source>Type or paste JavaScript code here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="432"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="435"/>
         <source>Generate Image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="439"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="442"/>
         <source>Generate Video...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3430,127 +3440,127 @@ Spauskite norėdami pakeisti</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="27"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="30"/>
         <source>Comments:</source>
         <translation>Komentarai:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="64"/>
         <source>Resolution</source>
         <translation>Rezoliucija</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="70"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="73"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="82"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="85"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="134"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="137"/>
         <source>Pixel aspect ratio</source>
         <translation>Taškų kraštinių santykis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="165"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="168"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="193"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="196"/>
         <source>Image sequence</source>
         <translation>Nuotraukų seka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="200"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="203"/>
         <source>Repeat</source>
         <translation>Kartoti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="221"/>
         <source> frames</source>
         <translation>kadrai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="234"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="237"/>
         <source>per picture</source>
         <translation>per nuotrauką</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="247"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="250"/>
         <source>Properties Menu</source>
         <translation>Savybių Meniu</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="268"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="271"/>
         <source>Open With</source>
         <translation>Atverti su</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="275"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="281"/>
         <source>Reload</source>
         <translation>Įkelti iš naujo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="316"/>
         <source>Copy Full File Path</source>
         <translation>Kopijuoti visą rinkmenos kelią</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="318"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
         <source>Show In Folder</source>
         <translation>Rodyti aplanke</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="351"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="354"/>
         <source>Show In Files</source>
         <translation>Rodyti rinkmenose</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="323"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
         <source>Set Creation Time...</source>
         <translation>Nustatyti Sukūrimo Laiką...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="334"/>
         <source>Disable Proxy</source>
         <translation>Išjungti Proxy</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="339"/>
         <source>Make Proxy</source>
         <translation>Sukurti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="341"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="344"/>
         <source>Delete Proxy</source>
         <translation>Ištrinti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="346"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="349"/>
         <source>Copy Hash Code</source>
         <translation>Nukopijuokite Maišos Kodą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="122"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
         <source>Make the current duration value the default value</source>
         <translation>Pakeisti dabartinę trukmės reikšmę į numatytąją reikšmę</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="128"/>
         <source>Set Default</source>
         <translation>Nustatyti Numatytąjį</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="356"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="359"/>
         <source>Reset</source>
         <translation>Atstatyti</translation>
     </message>
@@ -3600,7 +3610,7 @@ Spauskite norėdami pakeisti</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="264"/>
         <source>Proxy</source>
         <translation>Pakaitalas</translation>
     </message>
@@ -3613,22 +3623,22 @@ Spauskite norėdami pakeisti</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="26"/>
+        <location filename="../src/widgets/isingwidget.ui" line="28"/>
         <source>Ising Model</source>
         <translation>Ising Modelis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="41"/>
+        <location filename="../src/widgets/isingwidget.ui" line="43"/>
         <source>Noise Temperature</source>
         <translation>Triukšmo Temperatūra</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="106"/>
+        <location filename="../src/widgets/isingwidget.ui" line="108"/>
         <source>Border Growth</source>
         <translation>Ribos Augimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/isingwidget.ui" line="174"/>
+        <location filename="../src/widgets/isingwidget.ui" line="176"/>
         <source>Spontaneous Growth</source>
         <translation>Spontaniškas Augimas</translation>
     </message>
@@ -3669,12 +3679,12 @@ Spauskite norėdami pakeisti</translation>
 <context>
     <name>JobsDock</name>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="18"/>
+        <location filename="../src/docks/jobsdock.ui" line="17"/>
         <source>Jobs</source>
         <translation>Užduotys</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="115"/>
+        <location filename="../src/docks/jobsdock.ui" line="114"/>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
@@ -3684,68 +3694,68 @@ mygtuku spustelėkite užduotį, kad atidarytumėte meniu ir
 sustabdytumėte šiuo metu vykdomą užduotį.</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="130"/>
+        <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Remove all of the completed and failed jobs from the list</source>
         <translation>Iš sąrašo pašalinkiti visas atliktas ir nepavykusias užduotis</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="133"/>
+        <location filename="../src/docks/jobsdock.ui" line="132"/>
         <source>Clean</source>
         <translation>Išvalyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="104"/>
+        <location filename="../src/docks/jobsdock.ui" line="103"/>
         <source>Jobs Menu</source>
         <translation>Užduočių Meniu</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="120"/>
+        <location filename="../src/docks/jobsdock.ui" line="119"/>
         <source>Pause Queue</source>
         <translation>Pristabdyti eilę</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="156"/>
+        <location filename="../src/docks/jobsdock.ui" line="155"/>
         <source>Stop This Job</source>
         <translation>Sustabdyti Šią Užduotį</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="159"/>
+        <location filename="../src/docks/jobsdock.ui" line="158"/>
         <source>Stop the currently selected job</source>
         <translation>Sustabdykite dabar pasirinktą užduotį</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="164"/>
+        <location filename="../src/docks/jobsdock.ui" line="163"/>
         <source>View Log</source>
         <translation>Peržiūrėti Žurnalą</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="167"/>
+        <location filename="../src/docks/jobsdock.ui" line="166"/>
         <source>View the messages of MLT and FFmpeg </source>
         <translation>Peržiūrėkite MLT ir FFmpeg pranešimus</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="172"/>
+        <location filename="../src/docks/jobsdock.ui" line="171"/>
         <source>Run</source>
         <translation>Paleisti</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="175"/>
+        <location filename="../src/docks/jobsdock.ui" line="174"/>
         <source>Restart a stopped job</source>
         <translation>Iš naujo paleiskite sustabdytą užduotį</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="180"/>
+        <location filename="../src/docks/jobsdock.ui" line="179"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="185"/>
-        <location filename="../src/docks/jobsdock.ui" line="188"/>
+        <location filename="../src/docks/jobsdock.ui" line="184"/>
+        <location filename="../src/docks/jobsdock.ui" line="187"/>
         <source>Remove Finished</source>
         <translation>Pašalinti Pabaigtus</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="153"/>
+        <location filename="../src/docks/jobsdock.cpp" line="154"/>
         <source>Job Log</source>
         <translation>Užduočių Žurnalas</translation>
     </message>
@@ -3861,230 +3871,230 @@ sustabdytumėte šiuo metu vykdomą užduotį.</translation>
         <translation>Nustatyti filtro pradžią</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="241"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="242"/>
         <source>Set Filter End</source>
         <translation>Nustatyti filtro pabaigą</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="260"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="262"/>
         <source>Set First Simple Keyframe</source>
         <translation>Nustatyti pirmą paprastą pagrindinį kadrą</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="279"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="282"/>
         <source>Set Second Simple Keyframe</source>
         <translation>Nustatyti antrą paprastą pagrindinį kadrą</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="298"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="302"/>
         <source>Scrub While Dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="311"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="315"/>
         <source>Zoom Keyframes Out</source>
         <translation>Pagrindinių kadrų tolinimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="322"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="326"/>
         <source>Zoom Keyframes In</source>
         <translation>Pagrindinių kadrų artinimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="333"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="337"/>
         <source>Zoom Keyframes To Fit</source>
         <translation>Pagrindinių kadrų mastelio keitimas, kad tilptų</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="349"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="590"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="353"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="594"/>
         <source>Hold</source>
         <translation>Laikyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="366"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="607"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="370"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="611"/>
         <source>Linear</source>
         <translation>Linijinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="383"/>
-        <location filename="../src/docks/keyframesdock.cpp" line="624"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="387"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="628"/>
         <source>Smooth</source>
         <translation>Lygiai</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="400"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="404"/>
         <source>Ease Out Sinusoidal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="417"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="421"/>
         <source>Ease Out Quadratic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="434"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="438"/>
         <source>Ease Out Cubic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="451"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="455"/>
         <source>Ease Out Quartic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="468"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="472"/>
         <source>Ease Out Quintic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="485"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="489"/>
         <source>Ease Out Exponential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="502"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="506"/>
         <source>Ease Out Circular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="519"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="523"/>
         <source>Ease Out Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="544"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="548"/>
         <source>Ease Out Elastic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="569"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="573"/>
         <source>Ease Out Bounce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="641"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="645"/>
         <source>Ease In Sinusoidal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="657"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="661"/>
         <source>Ease In Quadratic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="673"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="677"/>
         <source>Ease In Cubic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="689"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="693"/>
         <source>Ease In Quartic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="705"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="709"/>
         <source>Ease In Quintic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="721"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="725"/>
         <source>Ease In Exponential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="737"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="741"/>
         <source>Ease In Circular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="753"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="757"/>
         <source>Ease In Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="777"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="781"/>
         <source>Ease In Elastic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="801"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="805"/>
         <source>Ease In Bounce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="817"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="821"/>
         <source>Ease In/Out Sinusoidal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="834"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="838"/>
         <source>Ease In/Out Quadratic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="851"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="855"/>
         <source>Ease In/Out Cubic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="868"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="872"/>
         <source>Ease In/Out Quartic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="885"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="889"/>
         <source>Ease In/Out Quintic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="902"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="906"/>
         <source>Ease In/Out Exponential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="919"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="923"/>
         <source>Ease In/Out Circular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="936"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="940"/>
         <source>Ease In/Out Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="961"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="965"/>
         <source>Ease In/Out Elastic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="986"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="990"/>
         <source>Ease In/Out Bounce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1003"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1007"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1014"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1018"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Atkurti Garso Bangos Formą</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1026"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1030"/>
         <source>Seek Previous Keyframe</source>
         <translation>Ieškoti ankstesnio pagrindinio kadro</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1042"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1046"/>
         <source>Seek Next Keyframe</source>
         <translation>Ieškoti sekančio pagrindinio kadro</translation>
     </message>
     <message>
-        <location filename="../src/docks/keyframesdock.cpp" line="1058"/>
+        <location filename="../src/docks/keyframesdock.cpp" line="1062"/>
         <source>Toggle Keyframe At Playhead</source>
         <translation>Perjungti pagrindinį kadrą ties atkūrimo galvute</translation>
     </message>
@@ -4273,17 +4283,17 @@ sustabdytumėte šiuo metu vykdomą užduotį.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="26"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="28"/>
         <source>Lissajous</source>
         <translation>Lisažu</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="41"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="43"/>
         <source>X Ratio</source>
         <translation>X santykis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lissajouswidget.ui" line="106"/>
+        <location filename="../src/widgets/lissajouswidget.ui" line="108"/>
         <source>Y Ratio</source>
         <translation>Y santykis</translation>
     </message>
@@ -4304,167 +4314,167 @@ sustabdytumėte šiuo metu vykdomą užduotį.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="25"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="28"/>
         <source>Transition</source>
         <translation>Perėjimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="351"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="354"/>
         <source>Preview</source>
         <translation>Peržiūra</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="360"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="363"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="92"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="95"/>
         <source>Dissolve</source>
         <translation>Ištirpimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="97"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
         <source>Cut</source>
         <translation>Kirpti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="110"/>
         <source>Bar Horizontal</source>
         <translation>Juosta Horizontali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="112"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="115"/>
         <source>Bar Vertical</source>
         <translation>Juosta Vertikali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="117"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="120"/>
         <source>Barn Door Horizontal</source>
         <translation>Tvarto Durys Horizontalios</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="122"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="125"/>
         <source>Barn Door Vertical</source>
         <translation>Tvarto Durys Vertikalios</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="127"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation>Tvarto Durys Įstrižainė PV-ŠR</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="132"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="135"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation>Tvarto Durys Įstrižainė ŠV-PR</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="140"/>
         <source>Diagonal Top Left</source>
         <translation>Istrižas Viršaus Kairė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="142"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="145"/>
         <source>Diagonal Top Right</source>
         <translation>Istrižas Viršaus Dešinė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="147"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="150"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation>Horizontalus matricos krioklys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="152"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="155"/>
         <source>Matrix Waterfall Vertical</source>
         <translation>Vertikalus matricos krioklys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="160"/>
         <source>Matrix Snake Horizontal</source>
         <translation>Matricos gyvatė horizontali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="165"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation>Matrix Gyvatė Lygiagreti Horizontali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="170"/>
         <source>Matrix Snake Vertical</source>
         <translation>Matricos gyvatė vertikali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="175"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Matrix Gyvatė Lygiagreti Vertikali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="177"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="180"/>
         <source>Barn V Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="182"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="185"/>
         <source>Iris Circle</source>
         <translation>Iriso apksritimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="187"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="190"/>
         <source>Double Iris</source>
         <translation>Dvigubas irisas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="192"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="195"/>
         <source>Iris Box</source>
         <translation>Iriso dėžutė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="197"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="200"/>
         <source>Box Bottom Right</source>
         <translation>Dėžutė apačia dešinė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="202"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="205"/>
         <source>Box Bottom Left</source>
         <translation>Dėžutė apačia kairė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="210"/>
         <source>Box Right Center</source>
         <translation>Dėžutė dešinė centras</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="212"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="215"/>
         <source>Clock Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="370"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="373"/>
         <source>Get custom transitions on our Web site.</source>
         <translation>Gaukite pasirinktinius perėjimus mūsų tinklalapyje.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="105"/>
         <source>Custom...</source>
         <translation>Pritaikomas...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="243"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="246"/>
         <source>TextLabel</source>
         <translation>Teksto etiketė</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="341"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="344"/>
         <source>Swap the appearance of the A and B clips</source>
         <translation>Sukeisti A ir B klipų matomumą vietomis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="344"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="347"/>
         <source>Invert Wipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="39"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="42"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="234"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="240"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="261"/>
@@ -4473,40 +4483,40 @@ sustabdytumėte šiuo metu vykdomą užduotį.</translation>
         <translation>Švelnumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="52"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="55"/>
         <source>Change the softness of the edge of the wipe</source>
         <translation>Pakeiskite servetėlės ​​krašto minkštumą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="68"/>
-        <location filename="../src/widgets/lumamixtransition.ui" line="311"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="71"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="314"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="222"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="225"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="235"/>
         <source>Save the custom transition as a favorite</source>
         <translation>Išsaugoti pasirinktinį perėjimą kaip mėgstamiausią</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="252"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="255"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
         <translation>Automatiškai nutildyti A klipo garsą ir pagarsinti B klipo garsą perėjimo metu.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="257"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="260"/>
         <source>Cross-fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="271"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="274"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
@@ -4514,17 +4524,17 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="277"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="280"/>
         <source>Mix:</source>
         <translation>Maiša:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="287"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="290"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="304"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="307"/>
         <source>B</source>
         <translation>B</translation>
     </message>
@@ -4578,420 +4588,420 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>&amp;Pagalba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="145"/>
+        <location filename="../src/mainwindow.ui" line="146"/>
         <source>Audio Channels</source>
         <translation>Garso kanalai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="256"/>
+        <location filename="../src/mainwindow.ui" line="260"/>
         <source>Deinterlacer</source>
         <translation>Deinterlacer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="266"/>
+        <location filename="../src/mainwindow.ui" line="270"/>
         <source>Interpolation</source>
         <translation>Interpoliacija</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="154"/>
+        <location filename="../src/mainwindow.ui" line="155"/>
         <source>Video Mode</source>
         <translation>Vaizdo įrašo veiksena</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="275"/>
+        <location filename="../src/mainwindow.ui" line="279"/>
         <source>External Monitor</source>
         <translation>Išorinis vaizduoklis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="169"/>
+        <location filename="../src/mainwindow.ui" line="170"/>
         <source>Language</source>
         <translation>Kalba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="174"/>
+        <location filename="../src/mainwindow.ui" line="175"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="183"/>
+        <location filename="../src/mainwindow.ui" line="184"/>
         <source>Display Method</source>
         <translation>Atvaizdavimo būdas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="209"/>
+        <location filename="../src/mainwindow.ui" line="210"/>
         <source>App Data Directory</source>
         <translation>Programos duomenų aplankas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="216"/>
+        <location filename="../src/mainwindow.ui" line="217"/>
         <source>Preview Scaling</source>
         <translation>Peržiūros mastelio keitimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="234"/>
+        <location filename="../src/mainwindow.ui" line="238"/>
         <source>Proxy</source>
         <translation>Pakaitalas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="238"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
         <source>Storage</source>
         <translation>Talpykla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="329"/>
+        <location filename="../src/mainwindow.ui" line="333"/>
         <source>Toolbar</source>
         <translation>Įrankių juosta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="388"/>
+        <location filename="../src/mainwindow.ui" line="393"/>
         <source>&amp;Open File...</source>
         <translation>&amp;Atverti rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="402"/>
+        <location filename="../src/mainwindow.ui" line="407"/>
         <source>E&amp;xit</source>
         <translation>&amp;Išeiti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="405"/>
+        <location filename="../src/mainwindow.ui" line="410"/>
         <source>Quit the application</source>
         <translation>Išjungti programą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="418"/>
         <source>&amp;About Shotcut</source>
         <translation>&amp;Apie Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="421"/>
+        <location filename="../src/mainwindow.ui" line="426"/>
         <source>About Qt</source>
         <translation>Apie Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="429"/>
+        <location filename="../src/mainwindow.ui" line="434"/>
         <source>Open Other...</source>
         <translation>Atverti kita...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="432"/>
+        <location filename="../src/mainwindow.ui" line="437"/>
         <source>Open a device, stream or generator</source>
         <translation>Atverti įrenginį, srautą arba generatorių</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="447"/>
+        <location filename="../src/mainwindow.ui" line="452"/>
         <source>&amp;Save</source>
         <translation>Iš&amp;saugoti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="450"/>
+        <location filename="../src/mainwindow.ui" line="455"/>
         <source>Save project as a MLT XML file</source>
         <translation>Išsaugoti projektą MLT XML formatu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="461"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Save &amp;As...</source>
         <translation>Išsaugoti &amp;kaip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="464"/>
+        <location filename="../src/mainwindow.ui" line="472"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Išsaugoti projektą į atskirą MLT XML rinkmeną</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="476"/>
-        <location filename="../src/mainwindow.ui" line="479"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
+        <location filename="../src/mainwindow.ui" line="490"/>
         <source>Export</source>
         <translation>Eksportuoti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="192"/>
+        <location filename="../src/mainwindow.ui" line="193"/>
         <source>Job Priority</source>
         <translation>Užduoties Pirmenybė</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="488"/>
+        <location filename="../src/mainwindow.ui" line="502"/>
         <source>&amp;Undo</source>
         <translation>&amp;Grąžinti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="497"/>
+        <location filename="../src/mainwindow.ui" line="514"/>
         <source>&amp;Redo</source>
         <translation>&amp;Atstatyti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="502"/>
+        <location filename="../src/mainwindow.ui" line="522"/>
         <source>Forum...</source>
         <translation>Diskusijos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="507"/>
+        <location filename="../src/mainwindow.ui" line="527"/>
         <source>FAQ...</source>
         <translation>DUK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="516"/>
-        <location filename="../src/mainwindow.cpp" line="4113"/>
+        <location filename="../src/mainwindow.ui" line="536"/>
+        <location filename="../src/mainwindow.cpp" line="4224"/>
         <source>Enter Full Screen</source>
         <translation>Viso ekrano veiksena</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="528"/>
+        <location filename="../src/mainwindow.ui" line="548"/>
         <source>Peak Meter</source>
         <translation>Piko matuoklis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="414"/>
-        <location filename="../src/mainwindow.cpp" line="2563"/>
+        <location filename="../src/mainwindow.ui" line="563"/>
+        <location filename="../src/mainwindow.cpp" line="423"/>
+        <location filename="../src/mainwindow.cpp" line="2648"/>
         <source>Properties</source>
         <translation>Savybės</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="549"/>
-        <location filename="../src/mainwindow.cpp" line="2572"/>
+        <location filename="../src/mainwindow.ui" line="575"/>
+        <location filename="../src/mainwindow.cpp" line="2657"/>
         <source>Recent</source>
         <translation>Esamas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="204"/>
-        <location filename="../src/mainwindow.ui" line="558"/>
+        <location filename="../src/mainwindow.ui" line="205"/>
+        <location filename="../src/mainwindow.ui" line="587"/>
         <source>Playlist</source>
         <translation>Grojaraštis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
-        <location filename="../src/mainwindow.cpp" line="738"/>
+        <location filename="../src/mainwindow.ui" line="599"/>
+        <location filename="../src/mainwindow.cpp" line="746"/>
         <source>History</source>
         <translation>Istorija</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="578"/>
+        <location filename="../src/mainwindow.ui" line="613"/>
         <source>Realtime (frame dropping)</source>
         <translation>Tikralaikis (nukerta kadrus)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="589"/>
+        <location filename="../src/mainwindow.ui" line="624"/>
         <source>Progressive</source>
         <translation>Progresyvus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="597"/>
+        <location filename="../src/mainwindow.ui" line="632"/>
         <source>Native 8-bit CPU (fast, flexible)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="605"/>
+        <location filename="../src/mainwindow.ui" line="640"/>
         <source>Native 10-bit CPU (slower, better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="629"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="637"/>
+        <location filename="../src/mainwindow.ui" line="672"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="664"/>
+        <location filename="../src/mainwindow.ui" line="699"/>
         <source>One Field (fast)</source>
         <translation>Vienas Laukas (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="672"/>
+        <location filename="../src/mainwindow.ui" line="707"/>
         <source>Linear Blend (fast)</source>
         <translation>Linear Blend (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="680"/>
+        <location filename="../src/mainwindow.ui" line="715"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - temporal only (geras)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="707"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Nearest Neighbor (greitas)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="715"/>
+        <location filename="../src/mainwindow.ui" line="750"/>
         <source>Bilinear (good)</source>
         <translation>Bilinear (geras)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="723"/>
+        <location filename="../src/mainwindow.ui" line="758"/>
         <source>Bicubic (better)</source>
         <translation>Bicubic (geresnis)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="742"/>
-        <location filename="../src/mainwindow.ui" line="883"/>
-        <location filename="../src/mainwindow.cpp" line="2767"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
+        <location filename="../src/mainwindow.ui" line="924"/>
+        <location filename="../src/mainwindow.cpp" line="2852"/>
         <source>Automatic</source>
         <translation>Automatinis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="753"/>
-        <location filename="../src/mainwindow.ui" line="1249"/>
+        <location filename="../src/mainwindow.ui" line="788"/>
+        <location filename="../src/mainwindow.ui" line="1308"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="796"/>
         <source>Use JACK Audio</source>
         <translation>Naudoti JACK garsą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="770"/>
-        <location filename="../src/mainwindow.ui" line="773"/>
+        <location filename="../src/mainwindow.ui" line="805"/>
+        <location filename="../src/mainwindow.ui" line="808"/>
         <source>Filters</source>
         <translation>Filtrai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="778"/>
-        <location filename="../src/mainwindow.ui" line="1129"/>
+        <location filename="../src/mainwindow.ui" line="816"/>
+        <location filename="../src/mainwindow.ui" line="1173"/>
         <source>Add...</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="786"/>
+        <location filename="../src/mainwindow.ui" line="824"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="789"/>
+        <location filename="../src/mainwindow.ui" line="827"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Naudoti vartotojo arba platformos stilių, spalvas ir piktogramas.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="805"/>
+        <location filename="../src/mainwindow.ui" line="843"/>
         <source>Fusion Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="813"/>
+        <location filename="../src/mainwindow.ui" line="851"/>
         <source>Fusion Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="818"/>
+        <location filename="../src/mainwindow.ui" line="856"/>
         <source>Tutorials...</source>
         <translation>Pamokos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="199"/>
-        <location filename="../src/mainwindow.ui" line="827"/>
-        <location filename="../src/mainwindow.cpp" line="2582"/>
+        <location filename="../src/mainwindow.ui" line="200"/>
+        <location filename="../src/mainwindow.ui" line="865"/>
+        <location filename="../src/mainwindow.cpp" line="2667"/>
         <source>Timeline</source>
         <translation>Laiko Juosta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="832"/>
-        <location filename="../src/mainwindow.ui" line="835"/>
+        <location filename="../src/mainwindow.ui" line="873"/>
+        <location filename="../src/mainwindow.ui" line="876"/>
         <source>Restore Default Layout</source>
         <translation>Atstatyti į numatytąjį išdėstymą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="843"/>
+        <location filename="../src/mainwindow.ui" line="884"/>
         <source>Show Title Bars</source>
         <translation>Rodyti pavadinimų juostas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="851"/>
+        <location filename="../src/mainwindow.ui" line="892"/>
         <source>Show Toolbar</source>
         <translation>Rodyti įrankių juostą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="856"/>
+        <location filename="../src/mainwindow.ui" line="897"/>
         <source>Upgrade...</source>
         <translation>Atnaujinimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="861"/>
+        <location filename="../src/mainwindow.ui" line="902"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Atverti MLT XML kaip klipą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="905"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>Atverti MLT XML projekto rinkmeną kaip virtualų klipą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="913"/>
         <source>Scrub Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="907"/>
+        <location filename="../src/mainwindow.ui" line="948"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Programinė įranga (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
+        <location filename="../src/mainwindow.ui" line="956"/>
         <source>Low</source>
         <translation>Žemas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="923"/>
+        <location filename="../src/mainwindow.ui" line="964"/>
         <source>Normal</source>
         <translation>Normalus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="933"/>
+        <location filename="../src/mainwindow.ui" line="974"/>
         <source>Application Log...</source>
         <translation>Programos žurnalas...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="941"/>
-        <location filename="../src/mainwindow.ui" line="1032"/>
-        <location filename="../src/mainwindow.ui" line="1035"/>
+        <location filename="../src/mainwindow.ui" line="982"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1079"/>
         <source>Project</source>
         <translation>Projektas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="252"/>
-        <location filename="../src/mainwindow.ui" line="1387"/>
+        <location filename="../src/mainwindow.ui" line="256"/>
+        <location filename="../src/mainwindow.ui" line="1454"/>
         <source>Player</source>
         <translation>Grotuvas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.ui" line="990"/>
         <source>User Interface</source>
         <translation>Vartotojo sąsaja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="998"/>
         <source>Close</source>
         <translation>Užverti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1202"/>
+        <location filename="../src/mainwindow.ui" line="1255"/>
         <source>Notes</source>
         <translation>Pastabos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1416"/>
+        <location filename="../src/mainwindow.ui" line="1483"/>
         <source>Markers as Chapters...</source>
         <translation>Žymės kaip skyriai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1419"/>
-        <location filename="../src/mainwindow.ui" line="1422"/>
-        <location filename="../src/mainwindow.cpp" line="6205"/>
+        <location filename="../src/mainwindow.ui" line="1486"/>
+        <location filename="../src/mainwindow.ui" line="1489"/>
+        <location filename="../src/mainwindow.cpp" line="6329"/>
         <source>Export Chapters</source>
         <translation>Iškelti skyrius</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1427"/>
+        <location filename="../src/mainwindow.ui" line="1494"/>
         <source>Audio/Video Device...</source>
         <translation>Garso / vaizdo įrašų įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1007"/>
-        <location filename="../src/mainwindow.ui" line="1327"/>
+        <location filename="../src/mainwindow.ui" line="1048"/>
+        <location filename="../src/mainwindow.ui" line="1386"/>
         <source>Set...</source>
         <translation>Rinkiniai</translation>
     </message>
@@ -5006,74 +5016,74 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>&amp;Grotuvas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="141"/>
+        <location filename="../src/mainwindow.ui" line="142"/>
         <source>&amp;Settings</source>
         <translation>&amp;Nustatymai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="225"/>
+        <location filename="../src/mainwindow.ui" line="229"/>
         <source>Time Format</source>
         <translation>Laiko formatas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
+        <location filename="../src/mainwindow.ui" line="295"/>
         <source>Backup</source>
         <translation>Atsarginė kopija</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="391"/>
+        <location filename="../src/mainwindow.ui" line="396"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Atvertos vaizdo įrašo, garso, paveikslo arba projekto rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="531"/>
+        <location filename="../src/mainwindow.ui" line="551"/>
         <source>Audio Peak Meter</source>
         <translation>Audio Piko Matuoklis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="645"/>
+        <location filename="../src/mainwindow.ui" line="680"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (keturgubas / ambisoninis)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="653"/>
+        <location filename="../src/mainwindow.ui" line="688"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 erdvinis)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="688"/>
+        <location filename="../src/mainwindow.ui" line="723"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF – laikinas + erdvinis (geresnis)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="696"/>
+        <location filename="../src/mainwindow.ui" line="731"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (geriausias)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="731"/>
+        <location filename="../src/mainwindow.ui" line="766"/>
         <source>Lanczos (best)</source>
         <translation>Lanczos (geriausias)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="928"/>
+        <location filename="../src/mainwindow.ui" line="969"/>
         <source>Resources...</source>
         <translation>Ištekliai...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
-        <location filename="../src/mainwindow.ui" line="1335"/>
+        <location filename="../src/mainwindow.ui" line="1053"/>
+        <location filename="../src/mainwindow.ui" line="1394"/>
         <source>Show...</source>
         <translation>Rodyti...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1056"/>
         <source>Show</source>
         <translation>Rodyti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1024"/>
-        <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.ui" line="1065"/>
+        <location filename="../src/mainwindow.ui" line="1068"/>
         <source>Keyframes</source>
         <translation>Baziniai kadrai</translation>
     </message>
@@ -5083,362 +5093,377 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Naujas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="160"/>
+        <location filename="../src/mainwindow.ui" line="161"/>
         <source>Processing Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
+        <location filename="../src/mainwindow.ui" line="648"/>
         <source>Linear 10-bit CPU (slowest, best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="621"/>
+        <location filename="../src/mainwindow.ui" line="656"/>
         <source>Linear 10-bit GPU/CPU (Experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="797"/>
+        <location filename="../src/mainwindow.ui" line="835"/>
         <source>System Fusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="993"/>
+        <location filename="../src/mainwindow.ui" line="1034"/>
         <source>Video/Audio...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="996"/>
-        <location filename="../src/mainwindow.ui" line="999"/>
+        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1040"/>
         <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1038"/>
+        <location filename="../src/mainwindow.ui" line="1082"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1043"/>
-        <location filename="../src/mainwindow.cpp" line="1643"/>
-        <location filename="../src/mainwindow.cpp" line="5174"/>
+        <location filename="../src/mainwindow.ui" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1658"/>
+        <location filename="../src/mainwindow.cpp" line="5286"/>
         <source>Screen Snapshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1046"/>
+        <location filename="../src/mainwindow.ui" line="1090"/>
         <source>Capture a screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1054"/>
-        <location filename="../src/mainwindow.cpp" line="1650"/>
-        <location filename="../src/mainwindow.cpp" line="5232"/>
-        <location filename="../src/mainwindow.cpp" line="5248"/>
-        <location filename="../src/mainwindow.cpp" line="5288"/>
+        <location filename="../src/mainwindow.ui" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1665"/>
+        <location filename="../src/mainwindow.cpp" line="5344"/>
+        <location filename="../src/mainwindow.cpp" line="5360"/>
+        <location filename="../src/mainwindow.cpp" line="5400"/>
         <source>Screen Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1057"/>
+        <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Record the screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1120"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1079"/>
+        <location filename="../src/mainwindow.ui" line="1123"/>
         <source>Switch to the audio layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1082"/>
+        <location filename="../src/mainwindow.ui" line="1126"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1090"/>
+        <location filename="../src/mainwindow.ui" line="1134"/>
         <source>Logging</source>
         <translation>Registravimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1093"/>
+        <location filename="../src/mainwindow.ui" line="1137"/>
         <source>Switch to the logging layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1096"/>
+        <location filename="../src/mainwindow.ui" line="1140"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1104"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>Editing</source>
         <translation>Redaguojama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1107"/>
+        <location filename="../src/mainwindow.ui" line="1151"/>
         <source>Switch to the editing layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1110"/>
+        <location filename="../src/mainwindow.ui" line="1154"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1118"/>
+        <location filename="../src/mainwindow.ui" line="1162"/>
         <source>FX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1121"/>
+        <location filename="../src/mainwindow.ui" line="1165"/>
         <source>Switch to the effects layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1124"/>
+        <location filename="../src/mainwindow.ui" line="1168"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1148"/>
+        <location filename="../src/mainwindow.ui" line="1192"/>
         <source>New Generator</source>
         <translation>Naujas generatorius</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1193"/>
+        <location filename="../src/mainwindow.ui" line="1243"/>
         <source>Markers</source>
         <translation>Žymės</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1211"/>
+        <location filename="../src/mainwindow.ui" line="1267"/>
         <source>Subtitles</source>
         <translation>Subtitrai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1241"/>
+        <location filename="../src/mainwindow.ui" line="1300"/>
         <source>1080p</source>
         <translation>1080p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1271"/>
+        <location filename="../src/mainwindow.ui" line="1330"/>
         <source>Timecode (Drop-Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1279"/>
+        <location filename="../src/mainwindow.ui" line="1338"/>
         <source>Frames</source>
         <translation>Kadrai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1287"/>
+        <location filename="../src/mainwindow.ui" line="1346"/>
         <source>Clock</source>
         <translation>Laikrodis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1295"/>
+        <location filename="../src/mainwindow.ui" line="1354"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1300"/>
+        <location filename="../src/mainwindow.ui" line="1359"/>
         <source>Topics</source>
         <translation>Temos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1308"/>
+        <location filename="../src/mainwindow.ui" line="1367"/>
         <source>Synchronization...</source>
         <translation>Sinchrnonizavimas...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1311"/>
+        <location filename="../src/mainwindow.ui" line="1370"/>
         <source>Synchronization</source>
         <translation>Sinchronizavimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1319"/>
+        <location filename="../src/mainwindow.ui" line="1378"/>
         <source>Use Proxy</source>
         <translation>Naudoti Pakaitalą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1330"/>
+        <location filename="../src/mainwindow.ui" line="1389"/>
         <source>Set the proxy storage folder</source>
         <translation>Parinkti pakaitalo saugojimo aplanką</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1338"/>
+        <location filename="../src/mainwindow.ui" line="1397"/>
         <source>Show the proxy storage folder</source>
         <translation>Rodyti pakaitalo saugojimo aplanką</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1349"/>
+        <location filename="../src/mainwindow.ui" line="1408"/>
         <source>Use Project Folder</source>
         <translation>Naudoti projekto aplanką</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1352"/>
+        <location filename="../src/mainwindow.ui" line="1411"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Saugoti tarpinius serverius projekto aplanke, jei apibrėžta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1360"/>
+        <location filename="../src/mainwindow.ui" line="1419"/>
         <source>Use Hardware Encoder</source>
         <translation>Naudoti aparatinės įrangos kodavimo įrenginį</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1365"/>
+        <location filename="../src/mainwindow.ui" line="1427"/>
+        <source>Use Hardware Decoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1432"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Konfigūruoti aparatinės įrangos kodavimo įrenginį</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1376"/>
+        <location filename="../src/mainwindow.ui" line="1443"/>
         <source>Switch to the color layout</source>
         <translation>Perjungti į spalvų išdėstymą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1446"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1390"/>
+        <location filename="../src/mainwindow.ui" line="1457"/>
         <source>Switch to the player only layout</source>
         <translation>Perjungti į tik grotuvui skirtą išdėstymą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1393"/>
+        <location filename="../src/mainwindow.ui" line="1460"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1406"/>
+        <location filename="../src/mainwindow.ui" line="1473"/>
         <source>Playlist Project</source>
         <translation>Grojaraščio projektas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1411"/>
+        <location filename="../src/mainwindow.ui" line="1478"/>
         <source>Clip-only Project</source>
         <translation>Tik klipų projektas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1432"/>
+        <location filename="../src/mainwindow.ui" line="1499"/>
         <source>Reset...</source>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1437"/>
-        <location filename="../src/mainwindow.ui" line="1440"/>
+        <location filename="../src/mainwindow.ui" line="1504"/>
+        <location filename="../src/mainwindow.ui" line="1507"/>
         <source>Backup and Save</source>
         <translation>Padaryti kopiją ir išsaugoti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1443"/>
+        <location filename="../src/mainwindow.ui" line="1510"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1451"/>
+        <location filename="../src/mainwindow.ui" line="1518"/>
         <source>Manually</source>
         <translation>Rankiniu būdu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1459"/>
+        <location filename="../src/mainwindow.ui" line="1526"/>
         <source>Hourly</source>
         <translation>Kas valandą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1467"/>
+        <location filename="../src/mainwindow.ui" line="1534"/>
         <source>Daily</source>
         <translation>Kasdien</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1478"/>
+        <location filename="../src/mainwindow.ui" line="1545"/>
         <source>Weekly</source>
         <translation>Kas savaitę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1483"/>
+        <location filename="../src/mainwindow.ui" line="1550"/>
         <source>Show Project in Folder</source>
         <translation>Rodyti projektą aplanke</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1494"/>
+        <location filename="../src/mainwindow.ui" line="1561"/>
         <source>Pause After Seek</source>
         <translation>Pristabdymas po paieškos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1503"/>
-        <location filename="../src/mainwindow.cpp" line="5236"/>
+        <location filename="../src/mainwindow.ui" line="1570"/>
+        <location filename="../src/mainwindow.cpp" line="5348"/>
         <source>Files</source>
         <translation>Rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1134"/>
-        <location filename="../src/mainwindow.ui" line="1139"/>
+        <location filename="../src/mainwindow.ui" line="1579"/>
+        <source>What&apos;s This?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1582"/>
+        <source>Get help about something by clicking it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1178"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
         <source>Remove...</source>
         <translation>Pašalinti...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="519"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="968"/>
+        <location filename="../src/mainwindow.ui" line="1009"/>
         <source>EDL...</source>
         <translation>EDL...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="979"/>
+        <location filename="../src/mainwindow.ui" line="1020"/>
         <source>Frame...</source>
         <translation>Kadras</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1065"/>
+        <location filename="../src/mainwindow.ui" line="1109"/>
         <source>Actions and Shortcuts...</source>
         <translation>Veiksmai ir spartieji klavišai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1159"/>
+        <location filename="../src/mainwindow.ui" line="1206"/>
         <source>Clear Recent on Exit</source>
         <translation>Išvalyti paskutinius išeinant</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1167"/>
+        <location filename="../src/mainwindow.ui" line="1214"/>
         <source>Show Text Under Icons</source>
         <translation>Rodyti tekstą po piktogramomis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1175"/>
+        <location filename="../src/mainwindow.ui" line="1222"/>
         <source>Show Small Icons</source>
         <translation>Rodyti mažas piktogramas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1184"/>
+        <location filename="../src/mainwindow.ui" line="1231"/>
         <source>Jobs</source>
         <translation>Užduotys</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1219"/>
+        <location filename="../src/mainwindow.ui" line="1278"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1230"/>
+        <location filename="../src/mainwindow.ui" line="1289"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1260"/>
+        <location filename="../src/mainwindow.ui" line="1319"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="158"/>
+        <location filename="../src/mainwindow.cpp" line="160"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -5447,101 +5472,139 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Įdiekite ją naudodami paketų tvarkyklę. Ji gali būti pavadinta libsdl2-2.0-0, SDL2 arba panašiai.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
+        <location filename="../src/mainwindow.cpp" line="1267"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Ekranas %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1299"/>
+        <location filename="../src/mainwindow.cpp" line="1303"/>
         <source>Off</source>
         <translation>Išjungta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1302"/>
+        <location filename="../src/mainwindow.cpp" line="1306"/>
         <source>Internal</source>
         <translation>Vidinis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1305"/>
+        <location filename="../src/mainwindow.cpp" line="1309"/>
         <source>External</source>
         <translation>Išorinis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1328"/>
+        <location filename="../src/mainwindow.cpp" line="1332"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1373"/>
-        <location filename="../src/mainwindow.cpp" line="1597"/>
+        <location filename="../src/mainwindow.ui" line="1440"/>
+        <location filename="../src/mainwindow.cpp" line="1612"/>
         <source>Color</source>
         <translation>Spalva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1601"/>
+        <location filename="../src/mainwindow.cpp" line="1616"/>
         <source>Text</source>
         <translation>Tekstas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.cpp" line="1627"/>
         <source>Image/Video from HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1617"/>
+        <location filename="../src/mainwindow.cpp" line="1632"/>
         <source>Noise</source>
         <translation>Triukšmas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1622"/>
+        <location filename="../src/mainwindow.cpp" line="1637"/>
         <source>Color Bars</source>
         <translation>Spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1627"/>
+        <location filename="../src/mainwindow.cpp" line="1642"/>
         <source>Audio Tone</source>
         <translation>Garso tonas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1632"/>
+        <location filename="../src/mainwindow.cpp" line="1647"/>
         <source>Count</source>
         <translation>Skaičiavimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1652"/>
         <source>Blip Flash</source>
         <translation>Blip Blykstė</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1676"/>
-        <location filename="../src/mainwindow.cpp" line="1678"/>
-        <location filename="../src/mainwindow.cpp" line="2142"/>
-        <location filename="../src/mainwindow.cpp" line="2150"/>
-        <location filename="../src/mainwindow.cpp" line="2173"/>
-        <location filename="../src/mainwindow.cpp" line="2236"/>
-        <location filename="../src/mainwindow.cpp" line="4825"/>
-        <location filename="../src/mainwindow.cpp" line="4838"/>
-        <location filename="../src/mainwindow.cpp" line="5981"/>
+        <location filename="../src/mainwindow.cpp" line="1691"/>
+        <location filename="../src/mainwindow.cpp" line="1693"/>
+        <location filename="../src/mainwindow.cpp" line="2221"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
+        <location filename="../src/mainwindow.cpp" line="2253"/>
+        <location filename="../src/mainwindow.cpp" line="2318"/>
+        <location filename="../src/mainwindow.cpp" line="4937"/>
+        <location filename="../src/mainwindow.cpp" line="4950"/>
+        <location filename="../src/mainwindow.cpp" line="6105"/>
         <source>Failed to open </source>
         <translation>Nepavyko atverti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1747"/>
+        <location filename="../src/mainwindow.cpp" line="1729"/>
+        <source>The file you opened uses GPU processing, which is not enabled.
+Do you want Shotcut to convert it for CPU? Conversion is an approximation.
+
+If you choose Yes, Shotcut will create a copy of your project
+with &quot;- Converted for CPU&quot; in the file name and open it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1746"/>
+        <source>The file you opened uses CPU processing, which is not enabled.
+Do you want Shotcut to convert it for GPU?
+
+If you choose Yes, Shotcut will create a copy of your project
+with &quot;- Converted for GPU&quot; in the file name and open it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1767"/>
+        <source>Converted for GPU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1768"/>
+        <source>Converted for CPU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1771"/>
+        <source>Save Converted XML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1807"/>
+        <source>Converting the project failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1817"/>
         <source>Repaired</source>
         <translation>Sutvarkytas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1748"/>
+        <location filename="../src/mainwindow.cpp" line="1818"/>
         <source>Save Repaired XML</source>
         <translation>Išsaugoti sutvarkytą XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1785"/>
+        <location filename="../src/mainwindow.cpp" line="1854"/>
         <source>Repairing the project failed.</source>
         <translation>Nepavyko sutvarkyti projekto.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1798"/>
+        <location filename="../src/mainwindow.cpp" line="1867"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5554,22 +5617,22 @@ Ar norite, kad Shotcut bandytų jas ištaisyti?
 Jei pasirinksite „Taip“, Shotcut sukurs jūsų projekto kopiją su „- Remontuota“ rinkmenos pavadinime ir ją atvers.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1833"/>
+        <location filename="../src/mainwindow.cpp" line="1902"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Yra automatiškai išsaugotos rinkmenos. Ar norite jas atkurti dabar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1905"/>
+        <location filename="../src/mainwindow.cpp" line="1974"/>
         <source>You cannot add a project to itself!</source>
         <translation>Negalite pridėti projekto prie jo paties!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1968"/>
+        <location filename="../src/mainwindow.cpp" line="2038"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Įvyko klaida išsaugant. Bandykite dar kartą.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2053"/>
+        <location filename="../src/mainwindow.cpp" line="2130"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5578,7 +5641,7 @@ It was made with version </source>
 Ji buvo sukurta su versija</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2084"/>
+        <location filename="../src/mainwindow.cpp" line="2161"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5589,48 +5652,48 @@ Užverkite kitas programas arba žiniatinklio naršyklės skirtukus ir bandykite
 Arba išsaugokite ir paleiskite Shotcut iš naujo.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2136"/>
+        <location filename="../src/mainwindow.cpp" line="2214"/>
         <source>Opening %1</source>
         <translation>Atveriamas %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2278"/>
-        <location filename="../src/mainwindow.cpp" line="4812"/>
+        <location filename="../src/mainwindow.cpp" line="2360"/>
+        <location filename="../src/mainwindow.cpp" line="4924"/>
         <source>Open File</source>
         <translation>Atverti rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2280"/>
+        <location filename="../src/mainwindow.cpp" line="2362"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Visi rinkmenos (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2546"/>
+        <location filename="../src/mainwindow.cpp" line="2631"/>
         <source>Preferences</source>
         <translation>Nustatymai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2556"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Rename Clip</source>
         <translation>Pervadinti klipą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2565"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>Find</source>
         <translation>Rasti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2574"/>
+        <location filename="../src/mainwindow.cpp" line="2659"/>
         <source>Reload</source>
         <translation>Įkelti iš naujo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2584"/>
+        <location filename="../src/mainwindow.cpp" line="2669"/>
         <source>Rerun Filter Analysis</source>
         <translation>Pakartotinai atlikti filtro analizę</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2598"/>
+        <location filename="../src/mainwindow.cpp" line="2683"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Tai paleis %n analizės užduotį. Tęsti?</numerusform>
@@ -5639,444 +5702,430 @@ Arba išsaugokite ir paleiskite Shotcut iš naujo.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2616"/>
+        <location filename="../src/mainwindow.cpp" line="2701"/>
         <source>No filters to analyze.</source>
         <translation>Nėra filtrų analizei.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2756"/>
+        <location filename="../src/mainwindow.cpp" line="2841"/>
         <source>Untitled</source>
         <translation>Be pavadinimo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2761"/>
+        <location filename="../src/mainwindow.cpp" line="2846"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2788"/>
+        <location filename="../src/mainwindow.cpp" line="2873"/>
         <source>About %1</source>
         <translation>Apie %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2917"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>Non-Broadcast</source>
         <translation>Netransliuojamas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2922"/>
+        <location filename="../src/mainwindow.cpp" line="3007"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD plačiaekranis NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2923"/>
+        <location filename="../src/mainwindow.cpp" line="3008"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD plačiaekranis PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2934"/>
+        <location filename="../src/mainwindow.cpp" line="3019"/>
         <source>Square 1080p 30 fps</source>
         <translation>Kvadratinis 1080p 30 k/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2935"/>
+        <location filename="../src/mainwindow.cpp" line="3020"/>
         <source>Square 1080p 60 fps</source>
         <translation>Kvadratinis 1080p 60 k/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2936"/>
+        <location filename="../src/mainwindow.cpp" line="3021"/>
         <source>Vertical HD 30 fps</source>
         <translation>Vertikalus HD 30 k/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2937"/>
+        <location filename="../src/mainwindow.cpp" line="3022"/>
         <source>Vertical HD 60 fps</source>
         <translation>Vertikalus HD 60 k/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2938"/>
+        <location filename="../src/mainwindow.cpp" line="3023"/>
         <source>Custom</source>
         <translation>Pritaikomas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
-        <location filename="../src/mainwindow.cpp" line="3260"/>
+        <location filename="../src/mainwindow.cpp" line="3054"/>
+        <location filename="../src/mainwindow.cpp" line="3363"/>
         <source>Saved %1</source>
         <translation>Išsaugota %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3251"/>
-        <location filename="../src/mainwindow.cpp" line="3274"/>
-        <location filename="../src/mainwindow.cpp" line="4596"/>
+        <location filename="../src/mainwindow.cpp" line="3354"/>
+        <location filename="../src/mainwindow.cpp" line="3377"/>
+        <location filename="../src/mainwindow.cpp" line="4708"/>
         <source>Save XML</source>
         <translation>Išsaugoti XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3370"/>
+        <location filename="../src/mainwindow.cpp" line="3473"/>
         <source>Timeline is not loaded</source>
         <translation>Laiko juosta neįkelta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3380"/>
+        <location filename="../src/mainwindow.cpp" line="3483"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3445"/>
+        <location filename="../src/mainwindow.cpp" line="3555"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3457"/>
+        <location filename="../src/mainwindow.cpp" line="3567"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>Vykdomas iškeltis.
 Ar vis dar norite išeiti?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4128"/>
+        <location filename="../src/mainwindow.cpp" line="4239"/>
         <source>GPU processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4598"/>
+        <location filename="../src/mainwindow.cpp" line="4710"/>
         <source>Saved backup %1</source>
         <translation>Išsaugota atsarginė kopija %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3336"/>
+        <location filename="../src/mainwindow.cpp" line="3439"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4292"/>
+        <location filename="../src/mainwindow.cpp" line="1094"/>
+        <source>GPU processing is experimental and does not work on all computers. Plan to do some testing after turning this on.
+
+Do you want to enable GPU processing and restart Shotcut?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4403"/>
         <source>Opened Files</source>
         <translation>Atvertos rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5274"/>
+        <location filename="../src/mainwindow.cpp" line="5386"/>
         <source>Screen recorder launched</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5276"/>
+        <location filename="../src/mainwindow.cpp" line="5388"/>
         <source>Failed to launch screen recorder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5585"/>
+        <location filename="../src/mainwindow.cpp" line="5697"/>
         <source>Add To Timeline</source>
         <translation>Pridėti į laiko juostą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5729"/>
+        <location filename="../src/mainwindow.cpp" line="5841"/>
         <source>GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU processing and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6181"/>
+        <location filename="../src/mainwindow.cpp" line="6087"/>
+        <source>Do you want to create missing proxies for every file in this project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="6305"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6192"/>
+        <location filename="../src/mainwindow.cpp" line="6316"/>
         <source>Choose Markers</source>
         <translation>Pasirinkti žymę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6209"/>
+        <location filename="../src/mainwindow.cpp" line="6333"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Tekstas (*.txt);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6264"/>
+        <location filename="../src/mainwindow.cpp" line="6388"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Nepavyko atverti export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6305"/>
+        <location filename="../src/mainwindow.cpp" line="6429"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1752"/>
-        <location filename="../src/mainwindow.cpp" line="3278"/>
+        <location filename="../src/mainwindow.cpp" line="1775"/>
+        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="3381"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="483"/>
+        <location filename="../src/mainwindow.cpp" line="491"/>
         <source>View Mode</source>
         <translation>Peržiūros veiksena</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3418"/>
+        <location filename="../src/mainwindow.cpp" line="3528"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4116"/>
+        <location filename="../src/mainwindow.cpp" line="4227"/>
         <source>Exit Full Screen</source>
         <translation>Išeiti iš viso ekrano</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4643"/>
+        <location filename="../src/mainwindow.cpp" line="4755"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5175"/>
+        <location filename="../src/mainwindow.cpp" line="5287"/>
         <source>screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5176"/>
+        <location filename="../src/mainwindow.cpp" line="5288"/>
         <source>PNG Files (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5233"/>
+        <location filename="../src/mainwindow.cpp" line="5345"/>
         <source>screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <location filename="../src/mainwindow.cpp" line="6066"/>
         <source>Turn Proxy On</source>
         <translation>Įjungti pakaitalus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <location filename="../src/mainwindow.cpp" line="6066"/>
         <source>Turn Proxy Off</source>
         <translation>Išjungti pakaitalus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5945"/>
+        <location filename="../src/mainwindow.cpp" line="6071"/>
         <source>Converting</source>
         <translation>Konvertuojama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5961"/>
-        <source>Do you want to create missing proxies for every file in this project?
-
-You must reopen your project after all proxy jobs are finished.</source>
-        <translation>Ar norite sukurti trūkstamus pakaitalus kiekvienai šio projekto rinkmenai?
-
-Pasibaigus visoms pakaitalų kūrimo užduotims, turitėsite iš naujo atverti projektą.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="5999"/>
+        <location filename="../src/mainwindow.cpp" line="6123"/>
         <source>Proxy Folder</source>
         <translation>Pakaitalo aplankas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6017"/>
+        <location filename="../src/mainwindow.cpp" line="6141"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Ar norite perkelti visas rinkmenas iš seno aplanko į naują?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6025"/>
+        <location filename="../src/mainwindow.cpp" line="6149"/>
         <source>Moving Files</source>
         <translation>Perkeliamos rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="321"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>Set Loop Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="487"/>
+        <location filename="../src/mainwindow.cpp" line="495"/>
         <source>Thumbnails</source>
         <translation>Miniatiūros</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="579"/>
+        <location filename="../src/mainwindow.cpp" line="587"/>
         <source>Scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <source>GPU processing is experimental and does not work on all computers. Plan to do some testing after turning this on.
-At this time, a project created with GPU processing cannot be converted to a CPU-only project later.
-Do you want to enable GPU processing and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1112"/>
+        <location filename="../src/mainwindow.cpp" line="1117"/>
         <source>Shotcut must restart to disable GPU processing.
 Disable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1144"/>
+        <location filename="../src/mainwindow.cpp" line="1149"/>
         <source>Audio API</source>
         <translation>Garso API</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1165"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>default</source>
         <translation>numatytasis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1177"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1290"/>
+        <location filename="../src/mainwindow.cpp" line="1294"/>
         <source>SDR</source>
         <translation>SDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1293"/>
+        <location filename="../src/mainwindow.cpp" line="1297"/>
         <source>HLG HDR</source>
         <translation>HLG HDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1319"/>
+        <location filename="../src/mainwindow.cpp" line="1323"/>
         <source>DeckLink Gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1607"/>
+        <location filename="../src/mainwindow.cpp" line="1622"/>
         <source>Drawing/Animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1712"/>
-        <source>The file you opened uses GPU processing, which is not enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1725"/>
-        <source>The file you opened uses CPU effects that are incompatible with GPU processing.
-Do you want to disable GPU processing and restart?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="4148"/>
+        <location filename="../src/mainwindow.cpp" line="4259"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4263"/>
+        <location filename="../src/mainwindow.cpp" line="4374"/>
         <source>Open Files</source>
         <translation>Atverti rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4322"/>
+        <location filename="../src/mainwindow.cpp" line="4433"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4365"/>
+        <location filename="../src/mainwindow.cpp" line="4476"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4575"/>
+        <location filename="../src/mainwindow.cpp" line="4687"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Norėdami perjungti į naują temą, turite paleisti %1 iš naujo.
 Ar norite paleisti iš naujo dabar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4618"/>
+        <location filename="../src/mainwindow.cpp" line="4730"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Atlikę šį pakeitimą, peržiūrėkite visą savo projektą.&lt;/p&gt;&lt;p&gt;Shotcut automatiškai nekeičia elementų, kurie jautrūs dydžiui ir padėčiai, jei keičiate skiriamąją gebą ar kraštinių santykį.&lt;/p&lt;br&gt;Redagavimo laikas ir pagrindiniai kadrai gali šiek tiek skirtis, jei pakeisite kadrų dažnį.&lt;/p&gt;&lt;p&gt;Tai gera mintis naudoti &lt;b&gt;Rinkmena &gt; Atsarginė kopija ir Išsaugoti&lt;/b&gt; prieš arba po šio veiksmo.&lt;/p&gt;&lt;p&gt;Ar norite pakeisti &lt;b&gt;Vaizdo įrašo veikseną&lt;/b&gt; dabar?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4632"/>
+        <location filename="../src/mainwindow.cpp" line="4744"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Daugiau nerodyti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4789"/>
+        <location filename="../src/mainwindow.cpp" line="4901"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Ar norite ateityje automatiškai tikrinti, ar yra atnaujinimų?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4796"/>
+        <location filename="../src/mainwindow.cpp" line="4908"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Daugiau nerodyti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4814"/>
+        <location filename="../src/mainwindow.cpp" line="4926"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4868"/>
+        <location filename="../src/mainwindow.cpp" line="4980"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Norėdami pakeisti rodymo būdą, turite paleisti Shotcut iš naujo.
 Ar norite paleisti iš naujo dabar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4898"/>
+        <location filename="../src/mainwindow.cpp" line="5010"/>
         <source>Application Log</source>
         <translation>Programos žurnalas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4901"/>
+        <location filename="../src/mainwindow.cpp" line="5013"/>
         <source>Previous</source>
         <translation>Ankstesnis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4963"/>
+        <location filename="../src/mainwindow.cpp" line="5075"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 versija jau prieinama! Spustelėkite čia, kad ją gautumėte.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4969"/>
+        <location filename="../src/mainwindow.cpp" line="5081"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Naudojate naujausią Shotcut versiją.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4983"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Tikrinimo metu nepavyko nuskaityti version.json rinkmenos. Spustelėkite čia, kad pereitumėte į tinklalapį.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="971"/>
-        <location filename="../src/mainwindow.ui" line="974"/>
-        <location filename="../src/mainwindow.cpp" line="5003"/>
+        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.cpp" line="5115"/>
         <source>Export EDL</source>
         <translation>Iškelti EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5007"/>
+        <location filename="../src/mainwindow.cpp" line="5119"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5054"/>
-        <location filename="../src/mainwindow.cpp" line="6261"/>
+        <location filename="../src/mainwindow.cpp" line="5166"/>
+        <location filename="../src/mainwindow.cpp" line="6385"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Iškeliant įvyko JavaScript klaida.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5057"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
         <source>Failed to open export-edl.js</source>
         <translation>Nepavyko atverti export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5088"/>
+        <location filename="../src/mainwindow.cpp" line="5200"/>
         <source>Export frame from proxy?</source>
         <translation>Eksportuoti kadrą iš pakaitalo?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5089"/>
+        <location filename="../src/mainwindow.cpp" line="5201"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6085,45 +6134,45 @@ Do you still want to continue?</source>
 Ar vis tiek norite tęsti?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="985"/>
-        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <location filename="../src/mainwindow.ui" line="1023"/>
+        <location filename="../src/mainwindow.ui" line="1026"/>
+        <location filename="../src/mainwindow.cpp" line="5213"/>
         <source>Export Frame</source>
         <translation>Iškelti kadrą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5107"/>
+        <location filename="../src/mainwindow.cpp" line="5219"/>
         <source>Unable to export frame.</source>
         <translation>Neįmanoma iškelti kadro.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5115"/>
+        <location filename="../src/mainwindow.cpp" line="5227"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5126"/>
+        <location filename="../src/mainwindow.cpp" line="5238"/>
         <source>Data Directory</source>
         <translation>Duomenų aplankas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5473"/>
+        <location filename="../src/mainwindow.cpp" line="5585"/>
         <source>Add Custom Layout</source>
         <translation>Pridėti Pritaikomą Išdėstymą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5474"/>
+        <location filename="../src/mainwindow.cpp" line="5586"/>
         <source>Name</source>
         <translation>pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5514"/>
+        <location filename="../src/mainwindow.cpp" line="5626"/>
         <source>Remove Video Mode</source>
         <translation>Pašalinti Vaizdo Režimą</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5531"/>
+        <location filename="../src/mainwindow.cpp" line="5643"/>
         <source>Remove Layout</source>
         <translation>Pašalinti Išdėstymą</translation>
     </message>
@@ -6237,39 +6286,39 @@ Do you want to continue?</source>
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="47"/>
+        <location filename="../src/jobs/meltjob.cpp" line="48"/>
         <source>View XML</source>
         <translation>Peržiūrėti XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="48"/>
+        <location filename="../src/jobs/meltjob.cpp" line="49"/>
         <source>View the MLT XML for this job</source>
         <translation>Peržiūrėkite šio darbo MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="58"/>
+        <location filename="../src/jobs/meltjob.cpp" line="59"/>
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="60"/>
+        <location filename="../src/jobs/meltjob.cpp" line="61"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Atverti išvesties rinkmeną Shotcut grotuve</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="64"/>
-        <location filename="../src/jobs/meltjob.cpp" line="69"/>
+        <location filename="../src/jobs/meltjob.cpp" line="65"/>
         <location filename="../src/jobs/meltjob.cpp" line="70"/>
+        <location filename="../src/jobs/meltjob.cpp" line="71"/>
         <source>Show In Folder</source>
         <translation>Rodyti aplanke</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="65"/>
+        <location filename="../src/jobs/meltjob.cpp" line="66"/>
         <source>Show In Files</source>
         <translation>Rodyti rinkmenose</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="196"/>
+        <location filename="../src/jobs/meltjob.cpp" line="201"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -6534,17 +6583,17 @@ Please install the %2 plugins.</source>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="28"/>
         <source>Network Stream</source>
         <translation>Tinklo srautas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="43"/>
         <source>&amp;URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/networkproducerwidget.ui" line="57"/>
+        <location filename="../src/widgets/networkproducerwidget.ui" line="59"/>
         <source>Apply</source>
         <translation>Taikyti</translation>
     </message>
@@ -6557,75 +6606,75 @@ Please install the %2 plugins.</source>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="61"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="64"/>
         <source>Projects</source>
         <translation>Projektai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="188"/>
-        <location filename="../src/widgets/newprojectfolder.ui" line="205"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="191"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="208"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="231"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="234"/>
         <source>Start</source>
         <translation>Pradižia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="372"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="375"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="218"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="221"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
         <translation>Aplankas bus sukuriamas tokiu pačiu pavadinimu, kaip ir projekto rinkmenos pavadinimas.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="159"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="162"/>
         <source>Projects folder</source>
         <translation>Projektų aplankas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="263"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="266"/>
         <source>Project name</source>
         <translation>Projekto pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="253"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
         <source>Video mode</source>
         <translation>Vaizdo įrašo veiksena</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="201"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="204"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="315"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="318"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
         <translation>Automatinis reiškia, kad raiška ir kadrų dažnis priklauso nuo &lt;b&gt;pirmos&lt;/b&gt; prie projekto &lt;b&gt;pridėtos&lt;/b&gt; rinkmenos. Jei pirmoji rinkmena nėra vaizdo klipas (pavyzdžiui, nuotrauka arba garso įrašas), tai jo raiška bus 1920x1080p 25 k/s.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="143"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="146"/>
         <source>New Project</source>
         <translation>Naujas projektas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="357"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Automatic</source>
         <translation>Automatinis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="362"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="365"/>
         <source>Add...</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="367"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="370"/>
         <source>Remove...</source>
         <translation>Pašalinti...</translation>
     </message>
@@ -6676,7 +6725,7 @@ Try again with a different folder.</source>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/noisewidget.ui" line="26"/>
+        <location filename="../src/widgets/noisewidget.ui" line="28"/>
         <source>Noise</source>
         <translation>Triukšmas</translation>
     </message>
@@ -6702,7 +6751,7 @@ Try again with a different folder.</source>
         <translation>Atverti kitą</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.ui" line="55"/>
+        <location filename="../src/openotherdialog.ui" line="58"/>
         <source>1</source>
         <translation>1</translation>
     </message>
@@ -6890,37 +6939,37 @@ Try again with a different folder.</source>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="26"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="28"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="41"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="43"/>
         <source>Speed 1</source>
         <translation>Greitis 1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="112"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="114"/>
         <source>Speed 2</source>
         <translation>Greitis 2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="180"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="182"/>
         <source>Speed 3</source>
         <translation>Greitis 3</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="252"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="254"/>
         <source>Speed 4</source>
         <translation>Greitis 4</translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="323"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="325"/>
         <source>Move 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/plasmawidget.ui" line="391"/>
+        <location filename="../src/widgets/plasmawidget.ui" line="393"/>
         <source>Move 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6928,436 +6977,436 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="91"/>
+        <location filename="../src/player.cpp" line="94"/>
         <source>Source</source>
         <translation>Šaltinis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="92"/>
+        <location filename="../src/player.cpp" line="95"/>
         <source>Project</source>
         <translation>Projektas</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="155"/>
+        <location filename="../src/player.cpp" line="158"/>
         <source>Adjust the audio volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="177"/>
+        <location filename="../src/player.cpp" line="180"/>
         <source>Silence the audio</source>
         <translation>Nutildyti garsą</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="196"/>
+        <location filename="../src/player.cpp" line="199"/>
         <source>Current position</source>
         <translation>Esama padėtis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="202"/>
+        <location filename="../src/player.cpp" line="205"/>
         <source>Total Duration</source>
         <translation>Visa trukmė</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="380"/>
+        <location filename="../src/player.cpp" line="383"/>
         <source>In Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="388"/>
+        <location filename="../src/player.cpp" line="391"/>
         <source>Selected Duration</source>
         <translation>Pasirinkta trukmė</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="242"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Zoom Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="191"/>
+        <location filename="../src/player.cpp" line="194"/>
         <source>Current/Total Times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="210"/>
+        <location filename="../src/player.cpp" line="213"/>
         <source>Player Controls</source>
         <translation>Grotuvo valdikliai</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="221"/>
-        <location filename="../src/player.cpp" line="375"/>
+        <location filename="../src/player.cpp" line="224"/>
+        <location filename="../src/player.cpp" line="378"/>
         <source>Player Options</source>
         <translation>Grotuvo parinktys</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="248"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Zoom 10%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="254"/>
+        <location filename="../src/player.cpp" line="257"/>
         <source>Zoom 25%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="260"/>
+        <location filename="../src/player.cpp" line="263"/>
         <source>Zoom 50%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="270"/>
         <source>Zoom 100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="273"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>Zoom 200%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="311"/>
+        <location filename="../src/player.cpp" line="314"/>
         <source>Toggle zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="318"/>
+        <location filename="../src/player.cpp" line="321"/>
         <source>2x2 Grid</source>
         <translation>2x2 tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="323"/>
+        <location filename="../src/player.cpp" line="326"/>
         <source>3x3 Grid</source>
         <translation>3x3 tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="327"/>
+        <location filename="../src/player.cpp" line="330"/>
         <source>4x4 Grid</source>
         <translation>4x4 tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="331"/>
+        <location filename="../src/player.cpp" line="334"/>
         <source>16x16 Grid</source>
         <translation>16x16 tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="339"/>
+        <location filename="../src/player.cpp" line="342"/>
         <source>10 Pixel Grid</source>
         <translation>10 taškų tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="462"/>
+        <location filename="../src/player.cpp" line="465"/>
         <source>Play/Pause</source>
         <translation>Paleisti arba pristabdyti</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="466"/>
+        <location filename="../src/player.cpp" line="469"/>
         <source>Toggle play or pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="477"/>
+        <location filename="../src/player.cpp" line="480"/>
         <source>Loop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="483"/>
+        <location filename="../src/player.cpp" line="486"/>
         <source>Toggle player looping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="487"/>
+        <location filename="../src/player.cpp" line="490"/>
         <source>Loop All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="488"/>
+        <location filename="../src/player.cpp" line="491"/>
         <source>Loop back to the beginning when the end is reached</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="495"/>
+        <location filename="../src/player.cpp" line="498"/>
         <source>Loop Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="499"/>
         <source>Loop around the marker under the cursor in the timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="507"/>
+        <location filename="../src/player.cpp" line="510"/>
         <source>Loop Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="508"/>
+        <location filename="../src/player.cpp" line="511"/>
         <source>Loop around the selected clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="516"/>
+        <location filename="../src/player.cpp" line="519"/>
         <source>Nothing selected</source>
         <translation>Nieko nepasirinkta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="521"/>
+        <location filename="../src/player.cpp" line="524"/>
         <source>Loop Around Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="522"/>
+        <location filename="../src/player.cpp" line="525"/>
         <source>Loop around the current cursor position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="551"/>
+        <location filename="../src/player.cpp" line="554"/>
         <source>Skip to the next point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="574"/>
+        <location filename="../src/player.cpp" line="577"/>
         <source>Skip to the previous point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="599"/>
+        <location filename="../src/player.cpp" line="602"/>
         <source>Play quickly backwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="609"/>
+        <location filename="../src/player.cpp" line="612"/>
         <source>Play quickly forwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="613"/>
+        <location filename="../src/player.cpp" line="616"/>
         <source>Seek Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="618"/>
+        <location filename="../src/player.cpp" line="621"/>
         <source>Seek End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="628"/>
+        <location filename="../src/player.cpp" line="631"/>
         <source>Next Frame</source>
         <translation>Sekantis kadras</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="634"/>
+        <location filename="../src/player.cpp" line="637"/>
         <source>Previous Frame</source>
         <translation>Ankstesnis kadras</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="640"/>
+        <location filename="../src/player.cpp" line="643"/>
         <source>Forward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="645"/>
+        <location filename="../src/player.cpp" line="648"/>
         <source>Backward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="650"/>
+        <location filename="../src/player.cpp" line="653"/>
         <source>Forward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="655"/>
+        <location filename="../src/player.cpp" line="658"/>
         <source>Backward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="660"/>
+        <location filename="../src/player.cpp" line="663"/>
         <source>Forward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="665"/>
+        <location filename="../src/player.cpp" line="668"/>
         <source>Backward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="670"/>
+        <location filename="../src/player.cpp" line="673"/>
         <source>Forward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="675"/>
+        <location filename="../src/player.cpp" line="678"/>
         <source>Backward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="680"/>
+        <location filename="../src/player.cpp" line="683"/>
         <source>Forward Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="687"/>
+        <location filename="../src/player.cpp" line="690"/>
         <source>Backward Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="694"/>
+        <location filename="../src/player.cpp" line="697"/>
         <source>Set Jump Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="705"/>
+        <location filename="../src/player.cpp" line="708"/>
         <source>Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="718"/>
+        <location filename="../src/player.cpp" line="721"/>
         <source>Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="731"/>
+        <location filename="../src/player.cpp" line="734"/>
         <source>Set Time Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="761"/>
+        <location filename="../src/player.cpp" line="764"/>
         <source>Pause playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="763"/>
-        <location filename="../src/player.cpp" line="768"/>
-        <location filename="../src/player.cpp" line="773"/>
+        <location filename="../src/player.cpp" line="766"/>
+        <location filename="../src/player.cpp" line="771"/>
+        <location filename="../src/player.cpp" line="776"/>
         <source>Player</source>
         <translation>Grotuvas</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="765"/>
+        <location filename="../src/player.cpp" line="768"/>
         <source>Focus Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="770"/>
+        <location filename="../src/player.cpp" line="773"/>
         <source>Toggle Filter Overlay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="923"/>
+        <location filename="../src/player.cpp" line="928"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="335"/>
+        <location filename="../src/player.cpp" line="338"/>
         <source>20 Pixel Grid</source>
         <translation>20 taškų tinklelis</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
+        <location filename="../src/player.cpp" line="282"/>
         <source>Zoom 300%</source>
         <translation>Mastelio keitimas 300 %</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="288"/>
         <source>Zoom 400%</source>
         <translation>Mastelio keitimas 400 %</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Zoom 500%</source>
         <translation>Mastelio keitimas 500 %</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Zoom 750%</source>
         <translation>Mastelio keitimas 750 %</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="303"/>
+        <location filename="../src/player.cpp" line="306"/>
         <source>Zoom 1000%</source>
         <translation>Mastelio keitimas 1000 %</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="343"/>
+        <location filename="../src/player.cpp" line="346"/>
         <source>80/90% Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="347"/>
+        <location filename="../src/player.cpp" line="350"/>
         <source>EBU R95 Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="352"/>
+        <location filename="../src/player.cpp" line="355"/>
         <source>Snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="362"/>
+        <location filename="../src/player.cpp" line="365"/>
         <source>Toggle grid display on the player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="738"/>
+        <location filename="../src/player.cpp" line="741"/>
         <source>Switch Source/Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="758"/>
+        <location filename="../src/player.cpp" line="761"/>
         <source>Pause</source>
         <translation>Pauzė</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="545"/>
+        <location filename="../src/player.cpp" line="548"/>
         <source>Skip Next</source>
         <translation>Praleisti sekantį</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="568"/>
+        <location filename="../src/player.cpp" line="571"/>
         <source>Skip Previous</source>
         <translation>Praleisti ankstesnį</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="593"/>
+        <location filename="../src/player.cpp" line="596"/>
         <source>Rewind</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="603"/>
+        <location filename="../src/player.cpp" line="606"/>
         <source>Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="369"/>
+        <location filename="../src/player.cpp" line="372"/>
         <source>Volume</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="370"/>
+        <location filename="../src/player.cpp" line="373"/>
         <source>Show the volume control</source>
         <translation>Rodyti garsumo valdiklį</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1278"/>
+        <location filename="../src/player.cpp" line="1283"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation>Pakaitalas ir peržiūra yra ĮJUNGTI %1p kokybe</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1283"/>
+        <location filename="../src/player.cpp" line="1288"/>
         <source>Proxy is ON at %1p</source>
         <translation>Pakaitalas yra ĮJUNGTAS %1p kokybe</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1288"/>
+        <location filename="../src/player.cpp" line="1293"/>
         <source>Preview scaling is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1403"/>
+        <location filename="../src/player.cpp" line="1408"/>
         <source>Unmute</source>
         <translation>Su garsu</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1372"/>
-        <location filename="../src/player.cpp" line="1412"/>
+        <location filename="../src/player.cpp" line="1377"/>
+        <location filename="../src/player.cpp" line="1417"/>
         <source>Mute</source>
         <translation>Be garso</translation>
     </message>
@@ -7365,13 +7414,13 @@ Try again with a different folder.</source>
 <context>
     <name>PlaylistDock</name>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="382"/>
+        <location filename="../src/docks/playlistdock.ui" line="17"/>
+        <location filename="../src/docks/playlistdock.cpp" line="384"/>
         <source>Playlist</source>
         <translation>Grojaraštis</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="59"/>
+        <location filename="../src/docks/playlistdock.ui" line="58"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -7383,404 +7432,404 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="127"/>
+        <location filename="../src/docks/playlistdock.ui" line="126"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="601"/>
+        <location filename="../src/docks/playlistdock.cpp" line="603"/>
         <source>Add the Source to the playlist</source>
         <translation>Pridėti šaltinį prie grojaraščio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="612"/>
+        <location filename="../src/docks/playlistdock.cpp" line="614"/>
         <source>Remove cut</source>
         <translation>Pašalinti iškarpą</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="630"/>
+        <location filename="../src/docks/playlistdock.cpp" line="632"/>
         <source>Update</source>
         <translation>Atnaujinti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="642"/>
+        <location filename="../src/docks/playlistdock.cpp" line="644"/>
         <source>View as tiles</source>
         <translation>Rodyti plyteles</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="655"/>
+        <location filename="../src/docks/playlistdock.cpp" line="657"/>
         <source>View as icons</source>
         <translation>Rodyti kaip piktogramas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="668"/>
+        <location filename="../src/docks/playlistdock.cpp" line="670"/>
         <source>View as details</source>
         <translation>Peržiūrėti kaip išsamią informaciją</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="607"/>
+        <location filename="../src/docks/playlistdock.cpp" line="609"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="720"/>
+        <location filename="../src/docks/playlistdock.cpp" line="722"/>
         <source>Set Creation Time...</source>
         <translation>Nustatyti Sukūrimo Laiką...</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="706"/>
-        <location filename="../src/docks/playlistdock.cpp" line="707"/>
+        <location filename="../src/docks/playlistdock.cpp" line="708"/>
+        <location filename="../src/docks/playlistdock.cpp" line="709"/>
         <source>Insert</source>
         <translation>Įterpti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="451"/>
+        <location filename="../src/docks/playlistdock.cpp" line="453"/>
         <source>Playlist Menu</source>
         <translation>Grojaraščio meniu</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="599"/>
+        <location filename="../src/docks/playlistdock.cpp" line="601"/>
         <source>Append</source>
         <translation>Papildyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="681"/>
+        <location filename="../src/docks/playlistdock.cpp" line="683"/>
         <source>Open the clip in the Source player</source>
         <translation>Atverti klipą šaltinio grotuve</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="691"/>
+        <location filename="../src/docks/playlistdock.cpp" line="693"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="728"/>
+        <location filename="../src/docks/playlistdock.cpp" line="730"/>
         <source>Remove All</source>
         <translation>Pašalinti Visus</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="729"/>
+        <location filename="../src/docks/playlistdock.cpp" line="731"/>
         <source>Remove all items from the playlist</source>
         <translation>Pašalinti visus elementus iš grojaraščio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="805"/>
+        <location filename="../src/docks/playlistdock.cpp" line="807"/>
         <source>Hidden</source>
         <translation>Paslėptas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="817"/>
+        <location filename="../src/docks/playlistdock.cpp" line="819"/>
         <source>In and Out - Left/Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="833"/>
+        <location filename="../src/docks/playlistdock.cpp" line="835"/>
         <source>In and Out - Top/Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="850"/>
+        <location filename="../src/docks/playlistdock.cpp" line="852"/>
         <source>In Only - Small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="866"/>
+        <location filename="../src/docks/playlistdock.cpp" line="868"/>
         <source>In Only - Large</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="772"/>
+        <location filename="../src/docks/playlistdock.cpp" line="774"/>
         <source>Add Selected to Timeline</source>
         <translation>Pridėti Pažymėtus į Laiko Juostą</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="779"/>
+        <location filename="../src/docks/playlistdock.cpp" line="781"/>
         <source>Add Selected to Slideshow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="883"/>
+        <location filename="../src/docks/playlistdock.cpp" line="885"/>
         <source>Play After Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="734"/>
+        <location filename="../src/docks/playlistdock.cpp" line="736"/>
         <source>Select All</source>
         <translation>Pasirinkti Viską</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="740"/>
+        <location filename="../src/docks/playlistdock.cpp" line="742"/>
         <source>Select None</source>
         <translation>Nepasirinkta</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="712"/>
+        <location filename="../src/docks/playlistdock.cpp" line="714"/>
         <source>Update Thumbnails</source>
         <translation>Atnaujinti Miniatiūras</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="786"/>
+        <location filename="../src/docks/playlistdock.cpp" line="788"/>
         <source>Sort By Name</source>
         <translation>Rikiuoti pagal pavadinimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="794"/>
+        <location filename="../src/docks/playlistdock.cpp" line="796"/>
         <source>Sort By Date</source>
         <translation>Rikiuoti pagal datą</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="667"/>
+        <location filename="../src/docks/playlistdock.cpp" line="669"/>
         <source>Details</source>
         <translation>Išsamiau</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="412"/>
+        <location filename="../src/docks/playlistdock.cpp" line="414"/>
         <source>Select</source>
         <translation>Pasirinkti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="429"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
+        <location filename="../src/docks/playlistdock.cpp" line="431"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1136"/>
         <source>Bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="436"/>
+        <location filename="../src/docks/playlistdock.cpp" line="438"/>
         <source>Columns</source>
         <translation>Stulpeliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="446"/>
+        <location filename="../src/docks/playlistdock.cpp" line="448"/>
         <source>Playlist Controls</source>
         <translation>Grojaraščio valdikliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="480"/>
-        <location filename="../src/docks/playlistdock.cpp" line="484"/>
+        <location filename="../src/docks/playlistdock.cpp" line="482"/>
+        <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Playlist Filters</source>
         <translation>Grojaraščio filtrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="508"/>
+        <location filename="../src/docks/playlistdock.cpp" line="510"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation>Rodyti tik rinkmenas, kurių pavadinime, kelyje arba komentare yra teksto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="509"/>
+        <location filename="../src/docks/playlistdock.cpp" line="511"/>
         <source>search</source>
         <translation>ieškoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="623"/>
+        <location filename="../src/docks/playlistdock.cpp" line="625"/>
         <source>Add files to playlist</source>
         <translation>Pridėti rinkmenas į grojaraštį</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="641"/>
+        <location filename="../src/docks/playlistdock.cpp" line="643"/>
         <source>Tiles</source>
         <translation>Plytelės</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="654"/>
+        <location filename="../src/docks/playlistdock.cpp" line="656"/>
         <source>Icons</source>
         <translation>Piktogramos</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="680"/>
+        <location filename="../src/docks/playlistdock.cpp" line="682"/>
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="690"/>
+        <location filename="../src/docks/playlistdock.cpp" line="692"/>
         <source>GoTo</source>
         <translation>Eiti į</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="696"/>
+        <location filename="../src/docks/playlistdock.cpp" line="698"/>
         <source>Copy</source>
         <translation>Kopijuoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="697"/>
+        <location filename="../src/docks/playlistdock.cpp" line="699"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="748"/>
+        <location filename="../src/docks/playlistdock.cpp" line="750"/>
         <source>Move Up</source>
         <translation>Perkelti aukštyn</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="760"/>
+        <location filename="../src/docks/playlistdock.cpp" line="762"/>
         <source>Move Down</source>
         <translation>Perkelti žemyn</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="891"/>
+        <location filename="../src/docks/playlistdock.cpp" line="893"/>
         <source>Open Previous</source>
         <translation>Atverti ankstesnį</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="904"/>
+        <location filename="../src/docks/playlistdock.cpp" line="906"/>
         <source>Open Next</source>
         <translation>Atverti sekantį</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="917"/>
+        <location filename="../src/docks/playlistdock.cpp" line="919"/>
         <source>Select Clip 1</source>
         <translation>Pasirinkti klipą 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="929"/>
+        <location filename="../src/docks/playlistdock.cpp" line="931"/>
         <source>Select Clip 2</source>
         <translation>Pasirinkti klipą 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="941"/>
+        <location filename="../src/docks/playlistdock.cpp" line="943"/>
         <source>Select Clip 3</source>
         <translation>Pasirinkti klipą 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="953"/>
+        <location filename="../src/docks/playlistdock.cpp" line="955"/>
         <source>Select Clip 4</source>
         <translation>Pasirinkti klipą 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="965"/>
+        <location filename="../src/docks/playlistdock.cpp" line="967"/>
         <source>Select Clip 5</source>
         <translation>Pasirinkti klipą 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="977"/>
+        <location filename="../src/docks/playlistdock.cpp" line="979"/>
         <source>Select Clip 6</source>
         <translation>Pasirinkti klipą 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="989"/>
+        <location filename="../src/docks/playlistdock.cpp" line="991"/>
         <source>Select Clip 7</source>
         <translation>Pasirinkti klipą 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1001"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1003"/>
         <source>Select Clip 8</source>
         <translation>Pasirinkti klipą 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1013"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1015"/>
         <source>Select Clip 9</source>
         <translation>Pasirinkti klipą 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1025"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1027"/>
         <source>Thumbnails</source>
         <translation>Miniatiūros</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1034"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1036"/>
         <source>Clip</source>
         <translation>Klipas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1043"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1045"/>
         <source>In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1052"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1054"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1061"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1063"/>
         <source>Start</source>
         <translation>Pradižia</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1070"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1072"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1081"/>
         <source>Type</source>
         <translation>Tipas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1088"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1089"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
         <source>Show or hide video files</source>
         <translation>Rodyti arba slėpti vaizdo įrašų rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1094"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1096"/>
         <source>Audio</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1095"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1097"/>
         <source>Show or hide audio files</source>
         <translation>Rodyti arba slėpti garso rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1100"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
         <source>Image</source>
         <translation>Paveikslas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1101"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1103"/>
         <source>Show or hide image files</source>
         <translation>Rodyti arba slėpti nuotraukų rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1106"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1108"/>
         <source>Other</source>
         <translation>Kiti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1107"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1109"/>
         <source>Show or hide other kinds of files</source>
         <translation>Rodyti arba slėpti kitos rūšies rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1112"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1113"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1115"/>
         <source>New Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1164"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1166"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1137"/>
         <source>Show or hide the list of bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1144"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1145"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
         <source>Remove Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1156"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1157"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1158"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1159"/>
         <source>Rename Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1178"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1180"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1213"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1215"/>
         <source>Replace %n playlist items</source>
         <translation>
             <numerusform>Pakeisti %n grojaraščio elementą</numerusform>
@@ -7789,7 +7838,7 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="2136"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2138"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n elementas</numerusform>
@@ -7798,18 +7847,18 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="433"/>
+        <location filename="../src/docks/playlistdock.cpp" line="435"/>
         <source>Sort</source>
         <translation>Rūšiavimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1534"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1766"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1536"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1768"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Negalite įterpti grojaraščio į grojaraštį!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1551"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
         <source>Remove %n playlist items</source>
         <translation>
             <numerusform>Pašalinti %n grojaraščio elementą</numerusform>
@@ -7818,39 +7867,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="622"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1308"/>
+        <location filename="../src/docks/playlistdock.cpp" line="624"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1310"/>
         <source>Add Files</source>
         <translation>Pridėti rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1262"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1264"/>
         <source>Appending</source>
         <translation>Pridedamas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1318"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1327"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1320"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1329"/>
         <source>Failed to open </source>
         <translation>Nepavyko atverti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1393"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1395"/>
         <source>Dropped Files</source>
         <translation>Nuvilktos rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1857"/>
         <source>Generating</source>
         <translation>Kuriama</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2074"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
         <source>Open File</source>
         <translation>Atverti rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2078"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Visos rinkmenos (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -8026,7 +8075,7 @@ p, li { white-space: pre-wrap; }
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/pulseaudiowidget.ui" line="26"/>
+        <location filename="../src/widgets/pulseaudiowidget.ui" line="28"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
@@ -8357,20 +8406,20 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4275"/>
+        <location filename="../src/mainwindow.cpp" line="4386"/>
         <source>You cannot add a project to itself!</source>
         <translation>Negalite pridėti projekto prie jo paties!</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="118"/>
+        <location filename="../src/mltxmlchecker.cpp" line="120"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Ši rinkmena nėra MLT XML rinkmena.</translation>
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="146"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1072"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1162"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -8463,34 +8512,39 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>permatoma</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3136"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3160"/>
         <source>Drop Files</source>
         <translation>Vilkti rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3143"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3167"/>
         <source>Failed to open </source>
         <translation>Nepavyko atverti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3159"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3183"/>
         <source>Not adding non-seekable file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1250"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1252"/>
         <source>Generating Playlist for Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1853"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
         <source>Generate Slideshow</source>
         <translation>Sukurti skaidrių demonstraciją</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="363"/>
+        <location filename="../src/proxymanager.cpp" line="367"/>
         <source>Make proxy for %1</source>
         <translation>Sukurti pakaitalą %1</translation>
+    </message>
+    <message>
+        <location filename="../src/proxymanager.cpp" line="775"/>
+        <source>Generating Proxies</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="67"/>
@@ -8701,7 +8755,7 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Perkelti subtitrus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="526"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="525"/>
         <source>Imported %1 subtitle item(s)</source>
         <translation>
             <numerusform>Įkeltas %1 subtitrų elementas</numerusform>
@@ -8710,13 +8764,13 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="628"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="643"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="627"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
         <source>Importing subtitles...</source>
         <translation>Įkelti subtitrus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="664"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="663"/>
         <source>Imported %n subtitle item(s)</source>
         <translation>
             <numerusform>Įkeltas %n subtitrų elementas</numerusform>
@@ -8725,8 +8779,8 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="516"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="659"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="515"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="658"/>
         <source>No subtitles found to import</source>
         <translation>Nerasta subtitrų, kuriuos būtų galima įkelti</translation>
     </message>
@@ -8742,9 +8796,9 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Pridėti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1372"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
+        <location filename="../src/docks/encodedock.cpp" line="1375"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1081"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>A job already exists for %1</source>
         <translation>Užduotis %1 jau yra</translation>
     </message>
@@ -8952,23 +9006,23 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
 <context>
     <name>RecentDock</name>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="24"/>
+        <location filename="../src/docks/recentdock.ui" line="23"/>
         <source>Recent</source>
         <translation>Esamas</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="46"/>
+        <location filename="../src/docks/recentdock.ui" line="45"/>
         <source>Show only files with name matching text</source>
         <translation>Rodyti tik rinkmenas su atitinkančiu pavadinimu</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="49"/>
+        <location filename="../src/docks/recentdock.ui" line="48"/>
         <source>search</source>
         <translation>ieškoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="76"/>
-        <location filename="../src/docks/recentdock.ui" line="79"/>
+        <location filename="../src/docks/recentdock.ui" line="75"/>
+        <location filename="../src/docks/recentdock.ui" line="78"/>
         <source>Remove</source>
         <translation>Pašalinti</translation>
     </message>
@@ -9081,7 +9135,7 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="273"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="274"/>
         <source>Remux %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9939,344 +9993,344 @@ If the duration is 0, no transition will be created.</source>
     <name>SubtitlesDock</name>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="134"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="180"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="179"/>
         <source>Subtitles</source>
         <translation>Subtitrai</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="150"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="149"/>
         <source>Add clips to the Timeline to begin editing subtitles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="181"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="180"/>
         <source>Tracks</source>
         <translation>Takeliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="203"/>
         <source>Columns</source>
         <translation>Stulpeliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="205"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
         <source>Start</source>
         <translation>Pradižia</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="208"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="207"/>
         <source>End</source>
         <translation>Pabaiga</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="211"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="210"/>
         <source>Duration</source>
         <translation>Trukmė</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="217"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="216"/>
         <source>Subtitle Controls</source>
         <translation>Subtitrų valdikliai</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="223"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="222"/>
         <source>Subtitles Menu</source>
         <translation>Subtitrų meniu</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="281"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="280"/>
         <source>Previous</source>
         <translation>Ankstesnis</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="283"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="282"/>
         <source>Current</source>
         <translation>Dabartinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="285"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="284"/>
         <source>Next</source>
         <translation>Toliau</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="317"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="316"/>
         <source>Add Subtitle Track</source>
         <translation>Pridėti subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="320"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="319"/>
         <source>Add a subtitle track</source>
         <translation>Pridėti subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="328"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="327"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="566"/>
         <source>Remove Subtitle Track</source>
         <translation>Pašalinti subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="331"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="330"/>
         <source>Remove this subtitle track</source>
         <translation>Pašalinti šį subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="339"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="338"/>
         <source>Edit Subtitle Track</source>
         <translation>Taisyti subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="342"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="341"/>
         <source>Edit this subtitle track</source>
         <translation>Taisyti šį subtitrų takelį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="350"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="349"/>
         <source>Import Subtitles From File</source>
         <translation>Įkelti subtitrus iš rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="353"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="352"/>
         <source>Import subtitles from an srt file at the current position</source>
         <translation>Įkelti subtitrus iš srt rinkmenos nuo dabartinės padėties</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="361"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="360"/>
         <source>Export Subtitles To File</source>
         <translation>Iškelti subtitrus į rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="364"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="363"/>
         <source>Export the current subtitle track to an SRT file</source>
         <translation>Iškelti esamą subtitrų takelį į SRT rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="372"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="371"/>
         <source>Create/Edit Subtitle</source>
         <translation>Sukurti / taisyti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="376"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="375"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="380"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
         <source>Add Subtitle Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="384"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="383"/>
         <source>Add a subtitle at the cursor position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="388"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="387"/>
         <source>Remove Subtitle Item</source>
         <translation>Pašalinti subtitrų elementą</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="391"/>
         <source>Remove the selected subtitle item</source>
         <translation>Pašalinti pasirinktą subtitrų elementą</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="396"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="395"/>
         <source>Set Subtitle Start</source>
         <translation>Nustatyti subtitrų pradžią</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="401"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="400"/>
         <source>Set the selected subtitle to start at the cursor position</source>
         <translation>Nustatyti pasirinktų subtitrų pradžią nuo žymeklio pozicijos</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="405"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="404"/>
         <source>Set Subtitle End</source>
         <translation>Nustatyti subtitrų pabaigą</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="409"/>
         <source>Set the selected subtitle to end at the cursor position</source>
         <translation>Nustatyti pasirinktų subtitrų pabaigą žymeklio pozicijoje</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="414"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="413"/>
         <source>Move Subtitles</source>
         <translation>Perkelti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="418"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="417"/>
         <source>Move the selected subtitles to the cursor position</source>
         <translation>Perkelti pasirinktą subtitrą į žymeklio padėtį</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="421"/>
         <source>Burn In Subtitles on Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="428"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
         <source>Generate Text on Timeline</source>
         <translation>Kurti tekstą laiko juostoje</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="430"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="429"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="433"/>
         <source>Speech to Text...</source>
         <translation>Kalbos konvertavimas į tekstą...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="435"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
         <translation>Aptikti kalbą ir perrašyti į naują subtitrų takelį.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="441"/>
         <source>Text to Speech...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="443"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
         <source>Convert the current subtitle track to spoken audio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="449"/>
         <source>Track Timeline Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="451"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
         <source>Track the timeline cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="458"/>
         <source>Show Previous/Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="460"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
         <source>Show the previous and next subtitles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="533"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="532"/>
         <source>Add a clip to the timeline to create subtitles.</source>
         <translation>Pridėkite klipą prie laiko juostos, kad sukurtumėte subtitrus.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1098"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1100"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1120"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1097"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1099"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1119"/>
         <source>Subtitle Track %1</source>
         <translation>Subtitrų takelis %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1161"/>
         <source>Generate subtitle text on timeline</source>
         <translation>Sukurti subtitrų tekstą laiko juostoje</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1163"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
         <source>Text style preset</source>
         <translation>Teksto stiliaus ruošinys</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1165"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1164"/>
         <source>Default subtitle style</source>
         <translation>Numatytasis subtitrų stilius</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1308"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1307"/>
         <source>Extracting Audio</source>
         <translation>Išskleidžiamas garsas</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1326"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1325"/>
         <source>Speech to Text</source>
         <translation>Kalbos į tekstą konvertavimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="544"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="597"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1257"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="543"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="596"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1256"/>
         <source>Subtitle track already exists: %1</source>
         <translation>Subtitrų takelis jau yra: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
         <source>Create or edit a Subtitle Burn In filter on the timeline output.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="568"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
         <translation>Šį takelį naudoja subtitrų filtras.
 Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="614"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="613"/>
         <source>Import Subtitle File</source>
         <translation>Įkelti subtitrų rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="616"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="615"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
         <translation>Subtitrų rinkmenos (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="624"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
         <source>Unable to find subtitle file.</source>
         <translation>Neįmanoma rasti subtitrų rinkmenos.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="672"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="671"/>
         <source>Export SRT File</source>
         <translation>Iškelti SRT rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="674"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="673"/>
         <source>SRT Files (*.srt *.SRT)</source>
         <translation>SRT rinkmenos (*.srt *.SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="739"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="738"/>
         <source>A subtitle already exists at this time.</source>
         <translation>Šiame laike subtitrai jau yra.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="749"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="748"/>
         <source>Not enough space to add subtitle.</source>
         <translation>Nepakanka vietos subtitrams pridėti.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="786"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="785"/>
         <source>Start time can not be after end time.</source>
         <translation>Pradžios laikas negali būti vėlesnis nei pabaigos laikas.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="792"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="791"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation>Pradžios laikas negali būti ankstesnis nei ankstesnis subtitras.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="810"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="809"/>
         <source>End time can not be before start time.</source>
         <translation>Pabaigos laikas negali būti ankstesnis nei pradžios laikas.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="817"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="816"/>
         <source>End time can not be after next subtitle.</source>
         <translation>Pabaigos laikas negali būti už sekančio subtitro.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="839"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="838"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation>Negalima perkelti. Subtitrai jau yra šiame laike.</translation>
     </message>
@@ -10470,42 +10524,42 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="25"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="28"/>
         <source>Text</source>
         <translation>Tekstas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="38"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="41"/>
         <source>Type or paste the text here</source>
         <translation>Rašykite arba įklijuokite tekstą čia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="47"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="50"/>
         <source>Background color...</source>
         <translation>Fono spalva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="60"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="63"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="87"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="90"/>
         <source>Simple</source>
         <translation>Paprastas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="97"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="100"/>
         <source>Rich</source>
         <translation>Išplėstinis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="104"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="107"/>
         <source>Typewriter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="126"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="129"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
         <translation>Teksto atributai yra &lt;b&gt;Filtrų&lt;/b&gt; skydelyje po paspaudimo &lt;b&gt;GERAI&lt;/b&gt;.</translation>
     </message>
@@ -10594,39 +10648,39 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Laiko Juosta</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1324"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1347"/>
         <source>Drawing/Animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1720"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1744"/>
         <source>This track is locked</source>
         <translation>Šis takelis užrakintas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1725"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1749"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Negalite pridėti neieškomo šaltinio.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2125"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2159"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2149"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2183"/>
         <source>Track %1 was not moved</source>
         <translation>Takelis %1 neperkeltas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2130"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2154"/>
         <source>Can not move audio track above video track</source>
         <translation>Nepavyksta perkelti garso takelio virš vaizdo įrašo takelio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2146"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2170"/>
         <source>Can not move video track below audio track</source>
         <translation>Nepavyksta perkelti vaizdo įrašo takelio žemiau garso takelio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1445"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2287"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1469"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2311"/>
         <source>Align To Reference Track</source>
         <translation>Lygiuoti pagal atraminį takelį</translation>
     </message>
@@ -10796,398 +10850,398 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Iškirp&amp;ti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="693"/>
+        <location filename="../src/docks/timelinedock.cpp" line="694"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopijuoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="722"/>
+        <location filename="../src/docks/timelinedock.cpp" line="724"/>
         <source>&amp;Paste</source>
         <translation>Įk&amp;lijuoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="736"/>
+        <location filename="../src/docks/timelinedock.cpp" line="739"/>
         <source>Nudge Forward</source>
         <translation>Stumtelėjimas pirmyn</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="751"/>
+        <location filename="../src/docks/timelinedock.cpp" line="755"/>
         <source>Nudge Forward is not available</source>
         <translation>Stumtelėjimas pirmyn negalimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="773"/>
+        <location filename="../src/docks/timelinedock.cpp" line="777"/>
         <source>Nudge Backward</source>
         <translation>Stumtelėjimas atgal</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="783"/>
+        <location filename="../src/docks/timelinedock.cpp" line="788"/>
         <source>Nudge Backward is not available</source>
         <translation>Stumtelėjimas atgal negalimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="805"/>
+        <location filename="../src/docks/timelinedock.cpp" line="810"/>
         <source>Append</source>
         <translation>Papildyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="816"/>
+        <location filename="../src/docks/timelinedock.cpp" line="821"/>
         <source>Ripple Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="833"/>
+        <location filename="../src/docks/timelinedock.cpp" line="838"/>
         <source>Lift</source>
         <translation>Pakelti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="851"/>
+        <location filename="../src/docks/timelinedock.cpp" line="856"/>
         <source>Overwrite</source>
         <translation>Perrašyti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="864"/>
+        <location filename="../src/docks/timelinedock.cpp" line="869"/>
         <source>Split At Playhead</source>
         <translation>Padalinti ties grojimo tašku</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="921"/>
+        <location filename="../src/docks/timelinedock.cpp" line="933"/>
         <source>Split All Tracks At Playhead</source>
         <translation>Padalinti visus takelius ties grojimo tašku</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="952"/>
+        <location filename="../src/docks/timelinedock.cpp" line="967"/>
         <source>Replace</source>
         <translation>Apkeisti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="971"/>
+        <location filename="../src/docks/timelinedock.cpp" line="986"/>
         <source>Create/Edit Marker</source>
         <translation>Sukurti / taisyti žymę</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="984"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1000"/>
         <source>Previous Marker</source>
         <translation>Ankstesnė žymė</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="998"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1015"/>
         <source>Next Marker</source>
         <translation>Sekanti žymė</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1030"/>
         <source>Delete Marker</source>
         <translation>Ištrinti žymę</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1023"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1041"/>
         <source>Cycle Marker Color</source>
         <translation>Apvalios žymės spalva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1057"/>
         <source>Create Marker Around Selected Clip</source>
         <translation>Sukurti žymę aplink pasirinktą klipą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1050"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1068"/>
         <source>Rectangle Selection</source>
         <translation>Stačiakampis pasirinkimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1080"/>
         <source>Adjust Clip Gain/Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1072"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1091"/>
         <source>Automatically Add Tracks</source>
         <translation>Automatiškai pridėti takelius</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1083"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
         <source>Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1097"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1116"/>
         <source>Scrub While Dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1110"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1129"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1124"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1143"/>
         <source>Ripple All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1138"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1158"/>
         <source>Ripple Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1153"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1174"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1161"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1191"/>
         <source>Show Audio Waveforms</source>
         <translation>Rodyti garso bangos formą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1184"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1205"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Naudoti didesnio našumo bangų formas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1200"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1221"/>
         <source>Show Video Thumbnails</source>
         <translation>Rodyti vaizdo įrašų miniatiūras</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1211"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1232"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1224"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1245"/>
         <source>Page</source>
         <translation>Puslapis</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1237"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1258"/>
         <source>Smooth</source>
         <translation>Lygiai</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1250"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1271"/>
         <source>Center the Playhead</source>
         <translation>Centruoti Grojimo Taške</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1264"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1285"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Nuslinkti į Grojimo Taške Artinant</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1276"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1297"/>
         <source>Zoom Timeline Out</source>
         <translation>Atitolinti laiko juostą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1287"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1308"/>
         <source>Zoom Timeline In</source>
         <translation>Priartinti laiko juostą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1298"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1319"/>
         <source>Zoom Timeline To Fit</source>
         <translation>Priartinti laiko juostą, kad tilptų</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1310"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1331"/>
         <source>New Generator</source>
         <translation>Naujas generatorius</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1318"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
         <source>Color</source>
         <translation>Spalva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1320"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1343"/>
         <source>Text</source>
         <translation>Tekstas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1328"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1351"/>
         <source>Noise</source>
         <translation>Triukšmas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1331"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1354"/>
         <source>Color Bars</source>
         <translation>Spalvų juostos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1335"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1358"/>
         <source>Audio Tone</source>
         <translation>Garso tonas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1338"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1361"/>
         <source>Count</source>
         <translation>Skaičiavimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1364"/>
         <source>Blip Flash</source>
         <translation>Blip blykstė</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1364"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1388"/>
         <source>Properties</source>
         <translation>Savybės</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1371"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1395"/>
         <source>Rejoin With Next Clip</source>
         <translation>Prisijungti prie kito klipo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1387"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1411"/>
         <source>Detach Audio</source>
         <translation>Atjungti garsą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1415"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1439"/>
         <source>Freeze Frame</source>
         <translation>Įšaldyti kadrą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1465"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1489"/>
         <source>Apply Copied Filters</source>
         <translation>Taikyti nukopijuotus filtrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1489"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
         <source>Update Thumbnails</source>
         <translation>Atnaujinti miniatiūras</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1537"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Atkurti garso bangos formą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1537"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1561"/>
         <source>Ripple Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1544"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1568"/>
         <source>Ripple Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1551"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1575"/>
         <source>Group/Ungroup</source>
         <translation>Sugrupuoti / išgrupuoti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2387"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2411"/>
         <source>Append multiple to timeline</source>
         <translation>Pridėti kelis į laiko juostą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2449"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2473"/>
         <source>Ripple delete transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2498"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2522"/>
         <source>Lift transition</source>
         <translation>Pakelti perėjimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2573"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2597"/>
         <source>Cut %1 from timeline</source>
         <translation>iškirpti %1 iš laiko juostos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2575"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2599"/>
         <source>Remove %1 from timeline</source>
         <translation>Pašalinti %1 iš laiko juostos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2598"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2622"/>
         <source>Lift %1 from timeline</source>
         <translation>Pakelti %1 iš laiko juostos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2949"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2973"/>
         <source>There is nothing in the Source player.</source>
         <translation>Šaltinio grotuve nieko nėra.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2964"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2988"/>
         <source>You cannot replace a transition.</source>
         <translation>Jūs negalite apkeisti perėjimo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2994"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3018"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Pasirinkite klipą laiko juostoje, kad sukurtumėte žymekį aplink jį</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3015"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3039"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Pridėta žymė: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3035"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3059"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Pridėtas žymę: „%1“. Laikykite nuspaudę %2 ir vilkite, kad sukurtumėte diapazoną.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3151"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3175"/>
         <source>Failed to open </source>
         <translation>Nepavyko atverti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3186"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3210"/>
         <source>Dropped Files</source>
         <translation>Nuvilktos rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3234"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3258"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation>Negalima įšaldyti kadrą perėjime.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3253"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3277"/>
         <source>Freeze Frame is not available.</source>
         <translation>Kadro įšaldymas negalimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3288"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3312"/>
         <source>Insert Freeze Frame</source>
         <translation>Įterpti įšaldytą kadrą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3316"/>
         <source>The play head is not over the selected clip.</source>
         <translation>Atkūrimo galvutė nėra virš pasirinkto klipo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3664"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3688"/>
         <source>Insert multiple into timeline</source>
         <translation>Į laiko juostą įterpkite kelis</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3807"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3831"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Perrašyti kelis į laiko juostą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="904"/>
-        <location filename="../src/docks/timelinedock.cpp" line="936"/>
+        <location filename="../src/docks/timelinedock.cpp" line="916"/>
+        <location filename="../src/docks/timelinedock.cpp" line="951"/>
         <source>You cannot split a transition.</source>
         <translation>Perėjimo padalinti negalima.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="4256"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4280"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Pakeisti %n laiko juostos klipą</numerusform>
@@ -11196,44 +11250,44 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4309"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4333"/>
         <source>voiceover</source>
         <translation>įgarsinimas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4310"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4334"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1347"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4312"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4336"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4452"/>
         <source>Record Audio</source>
         <translation>Įrašyti garsą</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4326"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4350"/>
         <source>Record Audio: %1</source>
         <translation>Įrašytas garsas: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4393"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4417"/>
         <source>Audio Recording In Progress</source>
         <translation>Vyksta garso įrašymas</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4403"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4427"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Garso įrašymo klaida: patikrinkite PulseAudio nustatymus</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4407"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4431"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Garso įrašymo klaida: pasirinkite rinkmeną &gt; Atverti kitą &gt; Garso / vaizdo įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4458"/>
         <source>Saving audio recording...</source>
         <translation>Išsaugomas garso įrašas...</translation>
     </message>
@@ -11246,46 +11300,46 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="26"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="28"/>
         <source>Timeline</source>
         <translation>Laiko juosta</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="104"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="106"/>
         <source>Frame rate</source>
         <translation>Kadrų dažnis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="246"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="248"/>
         <source>Edit...</source>
         <translation>Taisa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="73"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="114"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="179"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="186"/>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="237"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="75"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="116"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="181"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="188"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="239"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="39"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="41"/>
         <source>Resolution</source>
         <translation>Rezoliucija</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="227"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="229"/>
         <source>Scan mode</source>
         <translation>Nuskaitymo veiksena</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="169"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="171"/>
         <source>Aspect ratio</source>
         <translation>Kraštinių santykis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/timelinepropertieswidget.ui" line="193"/>
+        <location filename="../src/widgets/timelinepropertieswidget.ui" line="195"/>
         <source>Colorspace</source>
         <translation>Spalvų Erdvė</translation>
     </message>
@@ -11313,27 +11367,27 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="28"/>
         <source>Audio Tone</source>
         <translation>Garso tonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="41"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="43"/>
         <source>Frequency</source>
         <translation>Dažnis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="51"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="53"/>
         <source> Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="80"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="82"/>
         <source>Level</source>
         <translation>Lygis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/toneproducerwidget.ui" line="90"/>
+        <location filename="../src/widgets/toneproducerwidget.ui" line="92"/>
         <source> dB</source>
         <translation>dB</translation>
     </message>
@@ -11389,7 +11443,7 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="38"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="40"/>
         <source>Blend mode</source>
         <translation>Maišymo veiksena</translation>
     </message>
@@ -11399,182 +11453,180 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
         <translation>Takelis: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="98"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="130"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="99"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="131"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
         <source>Over</source>
         <translation>Virš</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
         <source>Add</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
         <source>Saturate</source>
         <translation>Sodrinti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
         <source>Multiply</source>
         <translation>Dauginti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
         <source>Screen</source>
         <translation>Ekranas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
         <source>Overlay</source>
         <translation>Persidengimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
         <source>Darken</source>
         <translation>Tamsinti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
         <source>Dodge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
         <source>Burn</source>
         <translation>Deginimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="66"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="110"/>
         <source>Hard Light</source>
         <translation>Stipri šviesa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Source Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Destination Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Clear</source>
         <translation>išvalyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Source</source>
         <translation>Šaltinis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Destination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Source In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Destination In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Source Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Destination Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
         <source>Source Atop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>Destination Atop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>XOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
         <source>Lighten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="66"/>
         <source>Color Dodge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
         <source>Color Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="111"/>
         <source>Soft Light</source>
         <translation>Švelni šviesa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="110"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="70"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="112"/>
         <source>Difference</source>
         <translation>Skirtumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="111"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="71"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="113"/>
         <source>Exclusion</source>
         <translation>Išskyrimas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="112"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="114"/>
         <source>HSL Hue</source>
         <translation>HSL atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="113"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="115"/>
         <source>HSL Saturation</source>
         <translation>HSL sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="114"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="116"/>
         <source>HSL Color</source>
         <translation>HSL spalva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="115"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="117"/>
         <source>HSL Luminosity</source>
         <translation>HSL šviesumas</translation>
     </message>
@@ -11582,64 +11634,64 @@ Prieš pašalindami šį takelį, pašalinkite subtitrų filtrą.</translation>
 <context>
     <name>TranscodeDialog</name>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="38"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
         <source>good</source>
         <translation>gera</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="48"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
         <source>better</source>
         <translation>geresnė</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="58"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
         <source>best</source>
         <translation>geriausia</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="94"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
         <source>medium</source>
         <translation>vidutinė</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation>Daugiau nerodyti.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="206"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
         <source>Change the frame rate from its source.</source>
         <translation>Pakeiskite kadrų dažnį iš jo šaltinio.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="262"/>
-        <location filename="../src/dialogs/transcodedialog.ui" line="266"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="265"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="269"/>
         <source>Same as original</source>
         <translation>Toks pat kaip originalus</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="271"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="274"/>
         <source>44100</source>
         <translation>44100</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="276"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="279"/>
         <source>48000</source>
         <translation>48000</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
         <translation>Tai naudinga, kai šaltinio vaizdo įrašas yra HDR (High Dynamic Range), kuriam reikalingas senojo standartinio diapazono tonų susiejimas.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="252"/>
         <source>Frame rate conversion</source>
         <translation>Kadrų dažnio konvertavimas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
         <source>This option converts only the trimmed portion of the source
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
@@ -11650,52 +11702,52 @@ su trupučiu vietoj viso klipo. Ne visi atitinkantys
 naudojama vietoj šiuo metu pasirinkto klipo.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
         <source>BIG</source>
         <translation>DIDELIS</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
         <source>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</source>
         <translation>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;MILŽINIŠKAS&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="174"/>
         <source>Use sub-clip</source>
         <translation>Naudoti poklipį</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="219"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="222"/>
         <source>Sample rate</source>
         <translation>Mėginių dažnis</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="239"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
         <translation>Jei šaltinis yra persipynęs, kiekvienas susipynęs laukas bus konvertuojamas į progresyvų kadrą, todėl kadrų dažnis padvigubės.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="245"/>
         <source>Deinterlace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
         <translation>Įjunkite tai, kad Išplėstinė parinktis liktų atidarytas kitą kartą, kai pasirodys šis dialogo langas.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="184"/>
         <source>Keep Advanced open</source>
         <translation>Laikyti išplėstinius atvertus</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
         <source>Override the frame rate to a specific value.</source>
         <translation>Perrašyti kadrų dažnį iki konkrečios vertės.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="188"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="191"/>
         <source>Frame rate conversion method
 
 Duplicate: Duplicate frames.
@@ -11708,17 +11760,17 @@ Suliejimas: sulieja kadrus.
 Judesio kompensavimas: Interpoliuoti naujus kadrus naudojant judesio kompensaciją. Šis būdas yra labai lėtas ir gali sukelti artefaktų.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="212"/>
         <source>Override frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="229"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="232"/>
         <source>Frames/sec</source>
         <translation>Kadrai/s</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="161"/>
         <source>Convert to BT.709 colorspace</source>
         <translation>Konvertuoti į BT.709 spalvų sritį</translation>
     </message>
@@ -11970,17 +12022,17 @@ Judesio kompensavimas: Interpoliuoti naujus kadrus naudojant judesio kompensacij
         <translation>Trūkstamos rinkmenos</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="26"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="29"/>
         <source>There are missing files in your project. Double-click each row to locate a file.</source>
         <translation>Jūsų projekte trūksta rinkmenų. Dukart spustelėkite kiekvieną eilutę, kad surastumėte rinkmeną.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="78"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>This looks at every file in a folder to see if it matches any of the missing files.</source>
         <translation>Čia peržiūrima kiekvieną aplanke esanti rinkmena, kad pamatyti, ar ji atitinka kurį nors iš trūkstamų rinkmenų.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="84"/>
         <source>Search in Folder...</source>
         <translation>Paieška aplanke</translation>
     </message>
@@ -12008,122 +12060,122 @@ Judesio kompensavimas: Interpoliuoti naujus kadrus naudojant judesio kompensacij
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="36"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="39"/>
         <source>Apply</source>
         <translation>Taikyti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="43"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
         <source>Set the path to the video device file</source>
         <translation>Nustatyti kelią į vaizdo įrenginio rinkmeną</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="49"/>
         <source>/dev/video0</source>
         <translation>/dev/video0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="72"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="74"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="82"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="84"/>
         <source>fps</source>
         <translation>k/s</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="102"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="104"/>
         <source>Height</source>
         <translation>Aukštis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="115"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="117"/>
         <source>Frame rate</source>
         <translation>Kadrų dažnis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="125"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="127"/>
         <source>Resolution</source>
         <translation>Raiška</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="135"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="137"/>
         <source>Device</source>
         <translation>Įrenginys</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="145"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="147"/>
         <source>TV Tuner</source>
         <translation>TV imtuvas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="157"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="159"/>
         <source>Standard</source>
         <translation>Įprastas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="167"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="169"/>
         <source>Set the television standard</source>
         <translation>Nustatyti televizijos standartą</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="171"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="173"/>
         <source>Automatic</source>
         <translation>Automatinis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="176"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="178"/>
         <source>NTSC</source>
         <translation>NTSC</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="181"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="183"/>
         <source>PAL</source>
         <translation>PAL</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="186"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="188"/>
         <source>SECAM</source>
         <translation>SECAM</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="194"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="196"/>
         <source>Channel</source>
         <translation>Kanalas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="213"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="215"/>
         <source>Audio Input</source>
         <translation>Garso Įvestis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="223"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="225"/>
         <source>Width</source>
         <translation>Plotis</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="236"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="238"/>
         <source>pixels</source>
         <translation>taškai</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="249"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="251"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="257"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="259"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="262"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="264"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="267"/>
+        <location filename="../src/widgets/video4linuxwidget.ui" line="269"/>
         <source>ALSA</source>
         <translation>ALSA</translation>
     </message>
@@ -12131,39 +12183,39 @@ Judesio kompensavimas: Interpoliuoti naujus kadrus naudojant judesio kompensacij
 <context>
     <name>VideoHistogramScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="103"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="104"/>
         <source>Luma</source>
         <translation>Luma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="109"/>
         <source>Red</source>
         <translation>Raudonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="113"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="114"/>
         <source>Green</source>
         <translation>Žalias</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="118"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="119"/>
         <source>Blue</source>
         <translation>Mėlynas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="205"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="206"/>
         <source>Value: %1
 IRE: %2</source>
         <translation>Reikšmė: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="207"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="208"/>
         <source>Value: %1</source>
         <translation>Reikšmė: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="215"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="216"/>
         <source>Video Histogram</source>
         <translation>Vaizdo įrašo histograma</translation>
     </message>
@@ -12209,47 +12261,47 @@ IRE: %2</translation>
 <context>
     <name>VideoRgbParadeScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="133"/>
         <source>255</source>
         <translation>255</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="136"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="137"/>
         <source>191</source>
         <translation>191</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="140"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="141"/>
         <source>127</source>
         <translation>127</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="145"/>
         <source>64</source>
         <translation>64</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="148"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="149"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="158"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="159"/>
         <source>Red</source>
         <translation>Raudonas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="160"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="161"/>
         <source>Green</source>
         <translation>Žalias</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="162"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="163"/>
         <source>Blue</source>
         <translation>Mėlynas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="173"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="174"/>
         <source>Channel: %1
 Pixel: %2
 Value: %3</source>
@@ -12258,14 +12310,14 @@ Taškai: %2
 Reikšmė: %3</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="175"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="176"/>
         <source>Channel: %1
 Value: %2</source>
         <translation>Kanalas: %1
 Reikšmė: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="182"/>
+        <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="183"/>
         <source>Video RGB Parade</source>
         <translation>Vaizdo įrašo RGB paradas</translation>
     </message>
@@ -12273,44 +12325,44 @@ Reikšmė: %2</translation>
 <context>
     <name>VideoRgbWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="128"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="129"/>
         <source>255</source>
         <translation>255</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="133"/>
         <source>191</source>
         <translation>191</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="136"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="137"/>
         <source>127</source>
         <translation>127</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="140"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="141"/>
         <source>64</source>
         <translation>64</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="145"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="159"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="160"/>
         <source>Pixel: %1
 Value: %2</source>
         <translation>Taškai: %1
 Reikšmė: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="161"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="162"/>
         <source>Value: %1</source>
         <translation>Reikšmė: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="168"/>
+        <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="169"/>
         <source>Video RGB Waveform</source>
         <translation>Vaizdo įrašo RGB bangos forma</translation>
     </message>
@@ -12318,12 +12370,12 @@ Reikšmė: %2</translation>
 <context>
     <name>VideoVectorScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="53"/>
+        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="54"/>
         <source>Video Vector</source>
         <translation>Vaizdo įrašo vektorius</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="243"/>
+        <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="244"/>
         <source>U: %1
 V: %2</source>
         <translation>U: %1
@@ -12333,30 +12385,30 @@ V: %2</translation>
 <context>
     <name>VideoWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="120"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="121"/>
         <source>100</source>
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="124"/>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="125"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="126"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="145"/>
         <source>Pixel: %1
 IRE: %2</source>
         <translation>Taškai: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="146"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="147"/>
         <source>IRE: %1</source>
         <translation>IRE: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="153"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="154"/>
         <source>Video Waveform</source>
         <translation>Vaizdo įrašo bangos forma</translation>
     </message>
@@ -12364,62 +12416,62 @@ IRE: %2</translation>
 <context>
     <name>VideoZoomScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="123"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="124"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="125"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="126"/>
         <source>y</source>
         <translation>y</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="128"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="129"/>
         <source>R</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="130"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="131"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="132"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="133"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="135"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="136"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="137"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="138"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="139"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="140"/>
         <source>V</source>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="157"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="158"/>
         <source>Pick a pixel from the source player</source>
         <translation>Pasirinkite tašką iš šaltinio grotuvo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="164"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="165"/>
         <source>Lock/Unlock the selected pixel</source>
         <translation>Užrakinti /atrakinti pasirinktą tašką</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="273"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="274"/>
         <source>%1x</source>
         <translation>%1x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="321"/>
+        <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="322"/>
         <source>Video Zoom</source>
         <translation>Vaizdo įrašo mastelio keitimas</translation>
     </message>
@@ -12615,23 +12667,23 @@ IRE: %2</translation>
 <context>
     <name>meta</name>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="6"/>
         <source>Alpha Channel: Adjust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="7"/>
         <source>transparency shave shrink grow soft feather</source>
         <comment>search keywords for the Alpha Channel: Adjust video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_view/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/alpha_view/meta.qml" line="6"/>
         <source>Alpha Channel: View</source>
         <translation>Alfa kanalas: peržiūra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_view/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/alpha_view/meta.qml" line="7"/>
         <source>transparency</source>
         <comment>search keywords for the Alpha Channel: View video filter</comment>
         <translation>permatomumas</translation>
@@ -12648,9 +12700,9 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_pan/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/reframe/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/audio_balance/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_pan/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/reframe/meta.qml" line="23"/>
         <source>Position</source>
         <translation>Padėtis</translation>
     </message>
@@ -12666,14 +12718,14 @@ IRE: %2</translation>
         <translation>dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="19"/>
         <source>Center Frequency</source>
         <translation>centrinis dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="27"/>
         <source>Bandwidth</source>
         <translation>Pralaidumas</translation>
     </message>
@@ -12760,12 +12812,12 @@ IRE: %2</translation>
         <translation>garsumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_gain/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/brightness/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/contrast/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/dither/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/opacity/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/threshold/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_gain/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/brightness/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/contrast/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/dither/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/opacity/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/threshold/meta.qml" line="19"/>
         <source>Level</source>
         <translation>Lygis</translation>
     </message>
@@ -12781,25 +12833,25 @@ IRE: %2</translation>
         <translation>dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="19"/>
         <source>Cutoff</source>
         <translation>Atkirta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="35"/>
         <source>Rolloff rate</source>
         <translation>Perėjimo sparta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/audio_notch/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/audio_highpass/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_notch/meta.qml" line="42"/>
         <source>Wetness</source>
         <translation>Drėgmė</translation>
     </message>
@@ -12903,37 +12955,37 @@ IRE: %2</translation>
         <translation>uždelsimo laiko aidas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="19"/>
         <source>Room size</source>
         <translation>Kambario dydis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="27"/>
         <source>Reverb time</source>
         <translation>Aidėjimo trukmė</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="35"/>
         <source>Damping</source>
         <translation>Slopinimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="43"/>
         <source>Input bandwidth</source>
         <translation>Įvesties pralaidumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="51"/>
         <source>Dry signal level</source>
         <translation>Sauso signalo lygis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="58"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="59"/>
         <source>Early reflection level</source>
         <translation>Ankstyvasis atspindžio lygis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="66"/>
+        <location filename="../src/qml/filters/audio_reverb/meta.qml" line="67"/>
         <source>Tail level</source>
         <translation>Pėdsako lygis</translation>
     </message>
@@ -12982,17 +13034,17 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="18"/>
         <source>Shadows (Lift)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="23"/>
         <source>Midtones (Gamma)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/color/meta.qml" line="28"/>
         <source>Highlights (Gain)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13030,43 +13082,43 @@ IRE: %2</translation>
         <translation>rūšis šriftas laiko kodas laiko žyma data rinkmenos pavadinimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="40"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
         <source>Font color</source>
         <translation>Šrifto spalva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="47"/>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="46"/>
         <source>Outline</source>
         <translation>Kontūras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="37"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="52"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="37"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="54"/>
         <source>Background</source>
         <translation>Fonas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="36"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/richtext/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/spot_remover/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/spot_remover/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="21"/>
         <source>Position / Size</source>
         <translation>Padėtis / dydis</translation>
     </message>
@@ -13108,28 +13160,28 @@ IRE: %2</translation>
         <translation>taškai dalelės triukšmas purvas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="6"/>
         <source>Hue/Lightness/Saturation</source>
         <translation>Atspalvis / Ryškumas / Sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="7"/>
         <source>color value desaturate grayscale</source>
         <comment>search keywords for the Hue/Lightness/Saturation video filter</comment>
         <translation>spalvos reikšmės išsotinimo pilkos spalvos skalėje</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="19"/>
         <source>Hue</source>
         <translation>Atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="26"/>
         <source>Lightness</source>
         <translation>Šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="33"/>
         <source>Saturation</source>
         <translation>Sodrumas</translation>
     </message>
@@ -13156,33 +13208,33 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="6"/>
         <source>Lens Correction</source>
         <translation>Objektyvo korekcija</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="7"/>
         <source>deform lens distort wide angle panoramic hemispherical fisheye</source>
         <comment>search keywords for the Lens Correction video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="19"/>
         <source>X Center</source>
         <translation>X centras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="26"/>
         <source>Y Center</source>
         <translation>Y centras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="33"/>
         <source>Correction at Center</source>
         <translation>Korekcija centre</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/lenscorrection/meta.qml" line="40"/>
         <source>Correction at Edges</source>
         <translation>Korekcija krašte</translation>
     </message>
@@ -13198,12 +13250,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/lut3d/meta.qml" line="6"/>
         <source>LUT (3D)</source>
         <translation>LUT (3D)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/lut3d/meta.qml" line="7"/>
         <source>lookup table color</source>
         <comment>search keywords for the LUT (3D) video filter</comment>
         <translation>paieškos lentelės spalva</translation>
@@ -13225,18 +13277,18 @@ IRE: %2</translation>
         <translation>sferinė projekcija</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="21"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/nosync/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/nosync/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="26"/>
         <source>Horizontal</source>
         <translation>Horizontalus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="28"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
-        <location filename="../src/qml/filters/nosync/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/nosync/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="19"/>
         <source>Vertical</source>
         <translation>Vertikalus</translation>
     </message>
@@ -13252,15 +13304,15 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="19"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="31"/>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="19"/>
         <source>Width</source>
         <translation>Plotis</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="26"/>
         <source>Height</source>
         <translation>Aukštis</translation>
     </message>
@@ -13276,12 +13328,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="6"/>
         <source>Mosaic</source>
         <translation>Mozaika</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/mosaic/meta.qml" line="7"/>
         <source>pixelize pixelate</source>
         <comment>search keywords for the Mosaic video filter</comment>
         <translation type="unfinished"></translation>
@@ -13309,12 +13361,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="43"/>
-        <location filename="../src/qml/filters/gpstext/meta.qml" line="58"/>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="44"/>
+        <location filename="../src/qml/filters/gpstext/meta.qml" line="59"/>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
-        <location filename="../src/qml/filters/subtitle/meta.qml" line="44"/>
-        <location filename="../src/qml/filters/timer/meta.qml" line="43"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="61"/>
+        <location filename="../src/qml/filters/subtitle/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="44"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="62"/>
         <source>Opacity</source>
         <translation>Permatomumas</translation>
     </message>
@@ -13336,12 +13388,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="21"/>
         <source>Size &amp; Position</source>
         <translation>Dydis ir padėtis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="27"/>
         <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
         <source>Rotation</source>
         <translation>Sukimas</translation>
@@ -13395,12 +13447,12 @@ IRE: %2</translation>
         <translation>piešimas tapyba animacinis filmas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="6"/>
         <source>Key Spill: Simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/spillsuppress/meta.qml" line="7"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Simple video filter</comment>
         <translation type="unfinished"></translation>
@@ -13428,12 +13480,12 @@ IRE: %2</translation>
         <translation>projektoriaus filmas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="6"/>
         <source>Unpremultiply Alpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="7"/>
         <source>disassociate associated straight</source>
         <comment>search keywords for the Unpremultiply Alpha video filter</comment>
         <translation type="unfinished"></translation>
@@ -13461,9 +13513,9 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_circle/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/outline/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/outline/meta.qml" line="19"/>
         <source>Color</source>
         <translation>Spalva</translation>
     </message>
@@ -13484,50 +13536,50 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="48"/>
-        <location filename="../src/qml/filters/crop_circle/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="24"/>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="20"/>
         <source>Radius</source>
         <translation>Spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="56"/>
         <source>Front X</source>
         <translation>Priekis X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="62"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="63"/>
         <source>Front Y</source>
         <translation>Priekis Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="69"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="70"/>
         <source>Front Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="76"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="77"/>
         <source>Back X</source>
         <translation>Galas X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="83"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="84"/>
         <source>Back Y</source>
         <translation>Galas Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="90"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="91"/>
         <source>Back Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="98"/>
         <source>Nadir Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="104"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
         <source>Nadir Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13538,17 +13590,17 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="27"/>
         <source>Cyan</source>
         <translation>Žydra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="34"/>
         <source>Magenta</source>
         <translation>Purpurinė</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="41"/>
         <source>Yellow</source>
         <translation>Geltona</translation>
     </message>
@@ -13587,17 +13639,17 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="19"/>
         <source>Input Black</source>
         <translation>Juodos įvestis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="26"/>
         <source>Input White</source>
         <translation>Baltos įvestis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/levels/meta.qml" line="33"/>
         <source>Gamma</source>
         <translation>Gama</translation>
     </message>
@@ -13640,39 +13692,39 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="19"/>
         <source>Key Filter: Low Frequency</source>
         <translation>Pagrindinis filtras: žemas dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="26"/>
         <source>Key Filter: High Frequency</source>
         <translation>Pagrindinis filtras: aukštas dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/mask_shape/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="21"/>
         <location filename="../src/qml/filters/threshold/meta.qml" line="6"/>
         <source>Threshold</source>
         <translation>Slenkstis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="40"/>
         <source>Attack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="47"/>
         <source>Hold</source>
         <translation>Laikyti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="54"/>
         <source>Decay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="60"/>
+        <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="61"/>
         <source>Range</source>
         <translation>Diapazonas</translation>
     </message>
@@ -13699,7 +13751,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/chromahold/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/chromahold/meta.qml" line="35"/>
         <source>Distance</source>
         <translation>Atstumas</translation>
     </message>
@@ -13715,12 +13767,12 @@ IRE: %2</translation>
         <translation>kartoti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grid/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="19"/>
         <source>Rows</source>
         <translation>Eilutės</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grid/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="26"/>
         <source>Columns</source>
         <translation>Stulpeliai</translation>
     </message>
@@ -13736,18 +13788,18 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="35"/>
         <source>Amplitude</source>
         <translation>Amplitudė</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="35"/>
         <source>Frequency</source>
         <translation>Dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/distort/meta.qml" line="49"/>
         <source>Velocity</source>
         <translation>Greitumas</translation>
     </message>
@@ -13763,27 +13815,27 @@ IRE: %2</translation>
         <translation>defektuoti sugadinti iškreipti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="42"/>
         <source>Block height</source>
         <translation>Bloko aukštis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="49"/>
         <source>Shift intensity</source>
         <translation>Poslinkio intensyvumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
         <source>Color intensity</source>
         <translation>Spalvos intensyvumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="6"/>
         <source>RGB Shift</source>
         <translation>RGB poslinkis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="7"/>
         <source>glitch chroma analog split</source>
         <comment>search keywords for the RGB Shift video filter</comment>
         <translation type="unfinished"></translation>
@@ -13811,11 +13863,11 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="49"/>
-        <location filename="../src/qml/filters/blur_exponential/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/blur_exponential/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="20"/>
         <source>Amount</source>
         <translation>Kiekis</translation>
     </message>
@@ -13869,44 +13921,44 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="35"/>
         <source>Spatial</source>
         <translation>Erdvinis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/hqdn3d/meta.qml" line="42"/>
         <source>Temporal</source>
         <translation>Laikinas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_fast/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/noise_fast/meta.qml" line="6"/>
         <source>Noise: Fast</source>
         <translation>Triukšmas: greitas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/noise_fast/meta.qml" line="7"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Fast video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="6"/>
         <source>Noise: Keyframes</source>
         <translation>Triukšmas: pagrindiniai kadrai</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="7"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Keyframes video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/smartblur/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/smartblur/meta.qml" line="6"/>
         <source>Reduce Noise: Smart Blur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/smartblur/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/smartblur/meta.qml" line="7"/>
         <source>denoise artifact clean</source>
         <comment>search keywords for the Reduce Noise: Smart Blur video filter</comment>
         <translation type="unfinished"></translation>
@@ -13923,12 +13975,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="26"/>
         <source>Corner radius</source>
         <translation>Kampo spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="33"/>
         <source>Padding color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13955,22 +14007,22 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="36"/>
         <source>Center</source>
         <translation>Centras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="43"/>
         <source>Linear width</source>
         <translation>Tiesinis plotis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="50"/>
         <source>Linear scale factor</source>
         <translation>Tiesinio mastelio koeficientas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="56"/>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="57"/>
         <source>Non-Linear scale factor</source>
         <translation>Netiesinio mastelio koeficientas</translation>
     </message>
@@ -13986,7 +14038,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/posterize/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="20"/>
         <source>Levels</source>
         <comment>Posterize filter</comment>
         <translation>Lygiai</translation>
@@ -14025,24 +14077,24 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="6"/>
         <source>Vertigo</source>
         <translation>Galvos svaigimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="7"/>
         <source>temporal mix dizzy psychedelic</source>
         <comment>search keywords for the Vertigo video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="20"/>
         <source>Speed</source>
         <translation>Greitis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="41"/>
-        <location filename="../src/qml/filters/vertigo/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/vertigo/meta.qml" line="27"/>
         <source>Zoom</source>
         <translation>Mastelio keitimas</translation>
     </message>
@@ -14058,7 +14110,7 @@ IRE: %2</translation>
         <translation>k/s kadrų sparta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/choppy/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="20"/>
         <source>Repeat</source>
         <translation>Kartoti</translation>
     </message>
@@ -14096,22 +14148,22 @@ IRE: %2</translation>
         <translation>sferinis matinis trafaretas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="21"/>
         <source>Horizontal Start</source>
         <translation>Horizontali pradžia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="28"/>
         <source>Horizontal End</source>
         <translation>Horizontali pabaiga</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="35"/>
         <source>Vertical Start</source>
         <translation>Vertikali pradžia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="42"/>
         <source>Vertical End</source>
         <translation>Vertikali pabaiga</translation>
     </message>
@@ -14138,44 +14190,44 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="21"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="20"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="22"/>
         <source>Yaw</source>
         <translation>Pokrypis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="27"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="28"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="28"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="27"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="29"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="29"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="28"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="29"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
         <translation>Polinkis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="35"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="34"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="36"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="36"/>
         <source>Roll</source>
         <translation>Posvyris</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="42"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="43"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="43"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="42"/>
         <source>FOV</source>
         <comment>field of view</comment>
         <translation>Matymo laukas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
-        <location filename="../src/qml/filters/fisheye/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="50"/>
+        <location filename="../src/qml/filters/fisheye/meta.qml" line="6"/>
         <source>Fisheye</source>
         <translation>Žuvies akis</translation>
     </message>
@@ -14191,22 +14243,22 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="36"/>
         <source>Corners</source>
         <translation>Kampai</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="42"/>
         <source>Stretch X</source>
         <translation>Tempimas X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="49"/>
         <source>Stretch Y</source>
         <translation>Tempimas Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="56"/>
         <source>Feathering</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14233,12 +14285,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="6"/>
         <source>Reduce Noise: Wavelet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="7"/>
         <source>vague denoise artifact dirt</source>
         <comment>search keywords for the Reduce Noise: Wavelet video filter</comment>
         <translation type="unfinished"></translation>
@@ -14255,7 +14307,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="27"/>
         <source>Background color</source>
         <translation>Fono spalva</translation>
     </message>
@@ -14282,12 +14334,12 @@ IRE: %2</translation>
         <translation>fazė</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fspp/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="6"/>
         <source>Reduce Noise: Quantization</source>
         <translation>Sumažinti triukšmą: kvantavimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="7"/>
         <source>denoise artifact postprocess compress</source>
         <comment>search keywords for the Reduce Noise: Quantization video filter</comment>
         <translation type="unfinished"></translation>
@@ -14304,7 +14356,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/time_remap/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="22"/>
         <source>Time</source>
         <translation>Laikas</translation>
     </message>
@@ -14342,12 +14394,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="6"/>
         <source>Mask: Chroma Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="7"/>
         <source>matte stencil alpha color</source>
         <comment>search keywords for the Mask: Chroma Key video filter</comment>
         <translation type="unfinished"></translation>
@@ -14364,9 +14416,9 @@ IRE: %2</translation>
         <translation>tono dažnis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="19"/>
-        <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="20"/>
         <source>Equalizer</source>
         <translation>Vienodintuvas</translation>
     </message>
@@ -14405,7 +14457,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
-        <location filename="../src/qml/filters/audio_pitch/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/audio_pitch/meta.qml" line="20"/>
         <source>Pitch</source>
         <comment>audio pitch or tone</comment>
         <translation>Polinkis</translation>
@@ -14439,7 +14491,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fisheye/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/fisheye/meta.qml" line="7"/>
         <source>deform lens distort wide angle panoramic hemispherical</source>
         <comment>search keywords for the Fisheye video filter</comment>
         <translation type="unfinished"></translation>
@@ -14528,12 +14580,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="21"/>
         <source>Azimuth</source>
         <translation>Azimutas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="28"/>
         <source>Elevation</source>
         <translation>Aukštingumas</translation>
     </message>
@@ -14549,12 +14601,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="31"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="32"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dropshadow/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/dropshadow/meta.qml" line="39"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
@@ -14570,22 +14622,22 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="35"/>
         <source>Intensity</source>
         <translation>Intensyvumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="42"/>
         <source>Red</source>
         <translation>Raudonas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="48"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="49"/>
         <source>Green</source>
         <translation>Žalias</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vibrance/meta.qml" line="55"/>
+        <location filename="../src/qml/filters/vibrance/meta.qml" line="56"/>
         <source>Blue</source>
         <translation>Mėlynas</translation>
     </message>
@@ -14634,97 +14686,97 @@ IRE: %2</translation>
         <translation>atspalvis sodrumas šviesumas spalva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="19"/>
         <source>Overlap</source>
         <translation>Persidengimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="26"/>
         <source>Red Hue</source>
         <translation>Raudonas atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="33"/>
         <source>Red Saturation</source>
         <translation>Raudonos sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="40"/>
         <source>Red Lightness</source>
         <translation>Raudonas šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="47"/>
         <source>Yellow Hue</source>
         <translation>Geltonas atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="54"/>
         <source>Yellow Saturation</source>
         <translation>Geltonos sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="60"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="61"/>
         <source>Yellow Lightness</source>
         <translation>Geltonas šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="67"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="68"/>
         <source>Green Hue</source>
         <translation>Žalias atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="74"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="75"/>
         <source>Green Saturation</source>
         <translation>Žalios sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="81"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="82"/>
         <source>Green Lightness</source>
         <translation>Žalias šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="88"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="89"/>
         <source>Cyan Hue</source>
         <translation>Žydras atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="95"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="96"/>
         <source>Cyan Saturation</source>
         <translation>Žydros sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="102"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="103"/>
         <source>Cyan Lightness</source>
         <translation>Žydras šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="109"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="110"/>
         <source>Blue Hue</source>
         <translation>Mėlynas atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="116"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="117"/>
         <source>Blue Saturation</source>
         <translation>Mėlynos sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="123"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="124"/>
         <source>Blue Lightness</source>
         <translation>Mėlynas šviesumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="130"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="131"/>
         <source>Magenta Hue</source>
         <translation>Purpurinis atspalvis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="137"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="138"/>
         <source>Magenta Saturation</source>
         <translation>Purpurinės sodrumas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="144"/>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="145"/>
         <source>Magenta Lightness</source>
         <translation>Purpurinis šviesumas</translation>
     </message>
@@ -14740,32 +14792,32 @@ IRE: %2</translation>
         <translation>atspalvis sodrumas šviesumas pagrindinės spalvos</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="19"/>
         <source>Blend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="26"/>
         <source>Hue Shift</source>
         <translation>Atspalvio poslinkis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="33"/>
         <source>Saturation Scale</source>
         <translation>Sodrumo mastelis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="40"/>
         <source>Lightness Scale</source>
         <translation>Šviesumo mastelis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="47"/>
         <source>Hue Center</source>
         <translation>Atspalvio centras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hslrange/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="54"/>
         <source>Hue Range</source>
         <translation>Atspalvių diapazonas</translation>
     </message>
@@ -14781,92 +14833,92 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="40"/>
         <source>topStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="45"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="47"/>
         <source>topEnd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="52"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="54"/>
         <source>topBlendIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="59"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="61"/>
         <source>topBlendOut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="66"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="68"/>
         <source>topFadeIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="73"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="75"/>
         <source>topBlurWidthStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="80"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="82"/>
         <source>topBlurWidthEnd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="87"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="89"/>
         <source>topBlurHeightStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="94"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="96"/>
         <source>topBlurHeightEnd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="104"/>
         <source>bottomStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="109"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="111"/>
         <source>bottomEnd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="116"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="118"/>
         <source>bottomBlendIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="123"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="125"/>
         <source>bottomBlendOut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="130"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="132"/>
         <source>bottomFadeIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="137"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="139"/>
         <source>bottomBlurWidthStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="144"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="146"/>
         <source>bottomBlurWidthEnd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="151"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="153"/>
         <source>bottomBlurHeightStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="158"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="160"/>
         <source>bottomBlurHeightEnd</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14882,32 +14934,32 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="20"/>
         <source>hfov0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="27"/>
         <source>hfov1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="34"/>
         <source>vfov0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="41"/>
         <source>vfov1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="48"/>
         <source>blurStart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="53"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="55"/>
         <source>blurEnd</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14945,7 +14997,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/strobe/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="19"/>
         <source>Interval</source>
         <translation>Intervalas</translation>
     </message>
@@ -14956,7 +15008,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/outline/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/outline/meta.qml" line="25"/>
         <source>Thickness</source>
         <translation>Storis</translation>
     </message>
@@ -14986,12 +15038,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="21"/>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="22"/>
         <source>Size &amp; Position</source>
         <translation>Dydis ir padėtis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="26"/>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="27"/>
         <source>Rotation</source>
         <translation>Sukimas</translation>
     </message>
@@ -14999,18 +15051,18 @@ IRE: %2</translation>
 <context>
     <name>meta_av</name>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="22"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="6"/>
         <source>Blur: Gaussian</source>
         <translation>Suliejimas: Gauso</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="23"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="7"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Box video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="35"/>
+        <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="20"/>
         <source>Amount</source>
         <translation>Kiekis</translation>
     </message>
@@ -15029,12 +15081,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="18"/>
+        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="19"/>
         <source>Width</source>
         <translation>Plotis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="25"/>
+        <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="26"/>
         <source>Height</source>
         <translation>Aukštis</translation>
     </message>
@@ -15099,7 +15151,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/meta_forward.qml" line="23"/>
+        <location filename="../src/qml/filters/speed/meta_forward.qml" line="24"/>
         <source>Speed</source>
         <translation>Greitis</translation>
     </message>
@@ -15118,7 +15170,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="24"/>
+        <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="25"/>
         <source>Speed</source>
         <translation>Greitis</translation>
     </message>
@@ -15137,7 +15189,7 @@ IRE: %2</translation>
         <translation>blizgesio suliejimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="20"/>
         <source>Blur</source>
         <translation>Suliejimas</translation>
     </message>
@@ -15153,7 +15205,7 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="20"/>
         <source>Level</source>
         <translation>Lygis</translation>
     </message>
@@ -15169,12 +15221,12 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="19"/>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="20"/>
         <source>Amount</source>
         <translation>Kiekis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="26"/>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="27"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
@@ -15226,8 +15278,8 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/meta_movit.qml" line="19"/>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/blur/meta_movit.qml" line="20"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="20"/>
         <source>Radius</source>
         <translation>Spindulys</translation>
     </message>
@@ -15243,10 +15295,10 @@ IRE: %2</translation>
         <translation>šviesumo vertė</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/brightness/meta_movit.qml" line="21"/>
-        <location filename="../src/qml/filters/contrast/meta_movit.qml" line="21"/>
-        <location filename="../src/qml/filters/opacity/meta_movit.qml" line="20"/>
-        <location filename="../src/qml/filters/saturation/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/brightness/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/contrast/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/opacity/meta_movit.qml" line="21"/>
+        <location filename="../src/qml/filters/saturation/meta_movit.qml" line="20"/>
         <source>Level</source>
         <translation>Lygis</translation>
     </message>
@@ -15262,17 +15314,17 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="17"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="18"/>
         <source>Shadows (Lift)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="22"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="23"/>
         <source>Midtones (Gamma)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/meta_movit.qml" line="27"/>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="28"/>
         <source>Highlights (Gain)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15299,12 +15351,12 @@ IRE: %2</translation>
         <translation>blizgesio suliejimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="27"/>
         <source>Highlight blurriness</source>
         <translation>Paryškinkite suliejimą</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/meta_movit.qml" line="33"/>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="34"/>
         <source>Highlight cutoff</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15353,22 +15405,22 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="20"/>
         <source>Circle radius</source>
         <translation>Apskritimo spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="27"/>
         <source>Gaussian radius</source>
         <translation>Gauso spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="33"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="34"/>
         <source>Correlation</source>
         <translation>Koreliacija</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="40"/>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="41"/>
         <source>Noise</source>
         <translation>Triukšmas</translation>
     </message>
@@ -15384,12 +15436,12 @@ IRE: %2</translation>
         <translation>tamsių kraštų blukimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="19"/>
+        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="20"/>
         <source>Outer radius</source>
         <translation>Išorinis spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters/vignette/meta_movit.qml" line="27"/>
         <source>Inner radius</source>
         <translation>Vidinis spindulys</translation>
     </message>
@@ -15428,7 +15480,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
-        <location filename="../src/qml/filters/size_position/meta_movit.qml" line="24"/>
+        <location filename="../src/qml/filters/size_position/meta_movit.qml" line="25"/>
         <source>Size &amp; Position</source>
         <translation>Dydis ir padėtis</translation>
     </message>
@@ -15436,6 +15488,17 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="8"/>
         <source>transform zoom distort fill move</source>
         <comment>search keywords for the Size and Position filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_movit.qml" line="6"/>
+        <source>Blend Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_movit.qml" line="7"/>
+        <source>blending composite porter duff</source>
+        <comment>search keywords for the Blend Mode video filter</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15453,17 +15516,17 @@ IRE: %2</translation>
         <translation>tamsių kraštų blukimas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="18"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="19"/>
         <source>Radius</source>
         <translation>Spindulys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="25"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="26"/>
         <source>Feathering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="32"/>
+        <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="33"/>
         <source>Opacity</source>
         <translation>Permatomumas</translation>
     </message>
@@ -15610,6 +15673,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="653"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="916"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
@@ -15786,7 +15850,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="65"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="139"/>
         <location filename="../src/qml/filters/choppy/ui.qml" line="62"/>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="69"/>
         <location filename="../src/qml/filters/color/ui.qml" line="177"/>
@@ -16177,7 +16241,7 @@ Naudojamas koreguoti per didelei amplitudei, kurią sukelia papildomas dinaminis
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="168"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="163"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="167"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="131"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="89"/>
@@ -17531,6 +17595,7 @@ Norėdami įkelti rinkmeną, spauskite Atverti.</translation>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="446"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="525"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1395"/>
         <source>Start</source>
         <translation>Pradižia</translation>
@@ -17542,7 +17607,7 @@ Norėdami įkelti rinkmeną, spauskite Atverti.</translation>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="417"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="404"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="483"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="557"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="562"/>
         <source>End</source>
         <translation>Pabaiga</translation>
     </message>
@@ -20378,11 +20443,6 @@ Click to select, drag to change position</source>
         <translation>Šviesumo mastelis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
-        <source>Blur Start</source>
-        <translation>Suliejimo pradžia</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
         <source>File for zenith correction</source>
         <translation>Zenito korekcijos rinkmena</translation>
@@ -21073,6 +21133,131 @@ Click to select, drag to change position</source>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="171"/>
         <source>Inner radius</source>
         <translation>Vidinis spindulys</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="50"/>
+        <source>Blend mode</source>
+        <translation type="unfinished">Maišymo veiksena</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="66"/>
+        <source>Source Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="71"/>
+        <source>Destination Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="76"/>
+        <source>Clear</source>
+        <translation type="unfinished">išvalyti</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="81"/>
+        <source>Source</source>
+        <translation type="unfinished">Šaltinis</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="86"/>
+        <source>Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="91"/>
+        <source>Source In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="96"/>
+        <source>Destination In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="101"/>
+        <source>Source Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="106"/>
+        <source>Destination Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="111"/>
+        <source>Source Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="116"/>
+        <source>Destination Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="121"/>
+        <source>XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="126"/>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="131"/>
+        <source>Multiply</source>
+        <translation type="unfinished">Dauginti</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="136"/>
+        <source>Screen</source>
+        <translation type="unfinished">Ekranas</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="141"/>
+        <source>Overlay</source>
+        <translation type="unfinished">Persidengimas</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="146"/>
+        <source>Darken</source>
+        <translation type="unfinished">Tamsinti</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="151"/>
+        <source>Lighten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="156"/>
+        <source>Color Dodge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="161"/>
+        <source>Color Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="166"/>
+        <source>Hard Light</source>
+        <translation type="unfinished">Stipri šviesa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="171"/>
+        <source>Soft Light</source>
+        <translation type="unfinished">Švelni šviesa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="176"/>
+        <source>Difference</source>
+        <translation type="unfinished">Skirtumas</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_movit.qml" line="181"/>
+        <source>Exclusion</source>
+        <translation type="unfinished">Išskyrimas</translation>
     </message>
 </context>
 <context>
