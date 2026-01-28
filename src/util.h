@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,6 +108,7 @@ public:
                                           std::function<void(bool)> callback);
     static bool isChromiumAvailable();
     static bool startDetached(const QString &program, const QStringList &arguments);
+    static bool openUrl(const QUrl &url);
 };
 
 #endif // UTIL_H

@@ -1100,7 +1100,7 @@ void FilesDock::openClip(const QString &filePath)
 #else
     const auto scheme = QLatin1String("file://");
 #endif
-    QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
+    Util::openUrl({scheme + filePath, QUrl::TolerantMode});
 }
 
 void FilesDock::onOpenActionTriggered()

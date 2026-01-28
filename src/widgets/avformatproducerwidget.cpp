@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1618,7 +1618,7 @@ void AvformatProducerWidget::on_openWithButton_clicked()
 #else
         const auto scheme = QLatin1String("file://");
 #endif
-        if (QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode})) {
+        if (Util::openUrl({scheme + filePath, QUrl::TolerantMode})) {
             m_watcher.reset(new QFileSystemWatcher({filePath}));
             connect(m_watcher.get(),
                     &QFileSystemWatcher::fileChanged,
@@ -1630,7 +1630,7 @@ void AvformatProducerWidget::on_openWithButton_clicked()
     menu.addSeparator();
     // custom options
     auto programs = Settings.filesOpenOther(mediaType());
-    for (const auto &program : programs) {
+    for (auto &program : programs) {
         auto action = menu.addAction(QFileInfo(program).baseName(), this, [=]() {
             LOG_DEBUG() << program << filePath;
             if (Util::startDetached(program, {QDir::toNativeSeparators(filePath)})) {

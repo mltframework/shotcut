@@ -128,7 +128,7 @@ void Util::showInFolder(const QString &path)
     if (!QProcess::execute("/usr/bin/osascript", args))
         return;
 #endif
-    QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir() ? path : info.path()));
+    Util::openUrl(QUrl::fromLocalFile(info.isDir() ? path : info.path()));
 }
 
 bool Util::warnIfNotWritable(const QString &filePath, QWidget *parent, const QString &caption)
@@ -1249,4 +1249,14 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
 #endif
 
     return process.startDetached(program, arguments);
+}
+
+bool Util::openUrl(const QUrl &url)
+{
+    auto success = QDesktopServices::openUrl(url);
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (!success)
+        success = startDetached("xdg-open", {url.toString()});
+#endif
+    return success;
 }

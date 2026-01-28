@@ -3127,7 +3127,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
                 text = widget->whatsThis();
         }
         if (text.startsWith("http")) {
-            QDesktopServices::openUrl(text);
+            Util::openUrl(text);
             QWhatsThis::leaveWhatsThisMode();
             return true;
         }
@@ -3873,12 +3873,12 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::on_actionFAQ_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/FAQ/"));
+    Util::openUrl(QUrl("https://www.shotcut.org/FAQ/"));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://forum.shotcut.org/"));
+    Util::openUrl(QUrl("https://forum.shotcut.org/"));
 }
 
 bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
@@ -4804,7 +4804,7 @@ void MainWindow::on_actionJobPriorityNormal_triggered()
 
 void MainWindow::on_actionTutorials_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/tutorials/"));
+    Util::openUrl(QUrl("https://www.shotcut.org/tutorials/"));
 }
 
 void MainWindow::on_actionRestoreLayout_triggered()
@@ -5096,7 +5096,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
 
 void MainWindow::onUpgradeTriggered()
 {
-    QDesktopServices::openUrl(QUrl(m_upgradeUrl));
+    Util::openUrl(QUrl(m_upgradeUrl));
 }
 
 void MainWindow::onClipCopied()
@@ -5312,7 +5312,7 @@ void MainWindow::on_actionScreenRecording_triggered()
     QString filenameExtension;
     auto mode = ScreenCapture::Interactive;
 #ifdef Q_OS_WIN
-    QDesktopServices::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
+    Util::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
     return;
 #elif defined(Q_OS_MAC)
     filenameExtension = ".mov";
@@ -6014,7 +6014,7 @@ int MainWindow::bottomVideoTrackIndex() const
 
 void MainWindow::on_actionTopics_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/"));
+    Util::openUrl(QUrl("https://www.shotcut.org/howtos/"));
 }
 
 void MainWindow::on_actionWhatsThis_triggered()
