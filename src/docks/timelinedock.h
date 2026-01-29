@@ -150,7 +150,9 @@ public slots:
     void copy(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString &value);
     void toggleTrackMute(int trackIndex);
+    void toggleOtherTracksMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
+    void toggleOtherTracksHidden(int trackIndex);
     void setTrackComposite(int trackIndex, bool composite);
     void setTrackLock(int trackIndex, bool lock);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);

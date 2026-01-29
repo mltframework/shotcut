@@ -100,8 +100,10 @@ TimelineDock::TimelineDock(QWidget *parent)
     trackOperationsMenu->addAction(Actions["timelineMoveTrackUpAction"]);
     trackOperationsMenu->addAction(Actions["timelineMoveTrackDownAction"]);
     trackOperationsMenu->addAction(Actions["timelineToggleTrackHiddenAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleOtherTracksHiddenAction"]);
     trackOperationsMenu->addAction(Actions["timelineToggleTrackLockedAction"]);
     trackOperationsMenu->addAction(Actions["timelineToggleTrackMuteAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleOtherTracksMuteAction"]);
     trackOperationsMenu->addAction(Actions["timelineToggleTrackBlendingAction"]);
     m_mainMenu->addMenu(trackOperationsMenu);
     QMenu *trackHeightMenu = new QMenu(tr("Track Height"), this);
@@ -450,6 +452,16 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineToggleTrackHiddenAction", action);
 
+    action = new QAction(tr("Show/Hide Other Tracks"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isMultitrackValid())
+            return;
+        show();
+        raise();
+        toggleOtherTracksHidden(currentTrack());
+    });
+    Actions.add("timelineToggleOtherTracksHiddenAction", action);
+
     action = new QAction(tr("Lock/Unlock Selected Track"), this);
 #ifdef Q_OS_MAC
     // macOS uses Cmd+H to hide an app and Cmd+M to minimize. Therefore, we force
@@ -484,6 +496,16 @@ void TimelineDock::setupActions()
         toggleTrackMute(currentTrack());
     });
     Actions.add("timelineToggleTrackMuteAction", action);
+
+    action = new QAction(tr("Mute/Unmute Other Tracks"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isMultitrackValid())
+            return;
+        show();
+        raise();
+        toggleOtherTracksMute(currentTrack());
+    });
+    Actions.add("timelineToggleOtherTracksMuteAction", action);
 
     action = new QAction(tr("Blend/Unblend Selected Track"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_B));
@@ -3339,9 +3361,39 @@ void TimelineDock::toggleTrackMute(int trackIndex)
     MAIN.undoStack()->push(new Timeline::MuteTrackCommand(m_model, trackIndex));
 }
 
+void TimelineDock::toggleOtherTracksMute(int trackIndex)
+{
+    int trackCount = m_model.rowCount();
+    if (trackCount == 1 || trackIndex < 0 || trackIndex >= trackCount) {
+        return;
+    }
+    MAIN.undoStack()->beginMacro(tr("Toggle other tracks mute"));
+    for (int otherTrackIndex = 0; otherTrackIndex < trackCount; otherTrackIndex++) {
+        if (otherTrackIndex != trackIndex) {
+            MAIN.undoStack()->push(new Timeline::MuteTrackCommand(m_model, otherTrackIndex));
+        }
+    }
+    MAIN.undoStack()->endMacro();
+}
+
 void TimelineDock::toggleTrackHidden(int trackIndex)
 {
     MAIN.undoStack()->push(new Timeline::HideTrackCommand(m_model, trackIndex));
+}
+
+void TimelineDock::toggleOtherTracksHidden(int trackIndex)
+{
+    int trackCount = m_model.rowCount();
+    if (trackCount == 1 || trackIndex < 0 || trackIndex >= trackCount) {
+        return;
+    }
+    MAIN.undoStack()->beginMacro(tr("Toggle other tracks hidden"));
+    for (int otherTrackIndex = 0; otherTrackIndex < trackCount; otherTrackIndex++) {
+        if (otherTrackIndex != trackIndex) {
+            MAIN.undoStack()->push(new Timeline::HideTrackCommand(m_model, otherTrackIndex));
+        }
+    }
+    MAIN.undoStack()->endMacro();
 }
 
 void TimelineDock::setTrackComposite(int trackIndex, bool composite)

@@ -213,10 +213,20 @@ Rectangle {
                 icon.height: 16
                 padding: 1
                 focusPolicy: Qt.NoFocus
-                onClicked: timeline.toggleTrackMute(index)
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: (mouse) => {
+                        if (mouse.modifiers & Qt.AltModifier) {
+                            timeline.toggleOtherTracksMute(index)
+                        } else {
+                            timeline.toggleTrackMute(index)
+                        }
+                    }
+                }
 
                 Shotcut.HoverTip {
-                    text: isMute ? qsTr('Unmute') : qsTr('Mute')
+                    text: qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks')
                 }
             }
 
@@ -230,10 +240,20 @@ Rectangle {
                 icon.height: 16
                 padding: 1
                 focusPolicy: Qt.NoFocus
-                onClicked: timeline.toggleTrackHidden(index)
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: (mouse) => {
+                        if (mouse.modifiers & Qt.AltModifier) {
+                            timeline.toggleOtherTracksHidden(index)
+                        } else {
+                            timeline.toggleTrackHidden(index)
+                        }
+                    }
+                }
 
                 Shotcut.HoverTip {
-                    text: isHidden ? qsTr('Show') : qsTr('Hide')
+                    text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks')
                 }
             }
 
