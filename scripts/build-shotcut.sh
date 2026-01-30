@@ -1903,6 +1903,7 @@ function deploy_mac
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -delete_rpath "$QTDIR/lib" "$exe" 2> /dev/null
+    cmd install_name_tool -delete_rpath "/opt/local/lib" "$exe" 2> /dev/null
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
   cmd cp -p /opt/local/lib/libaom.3.dylib Frameworks
@@ -1914,6 +1915,8 @@ function deploy_mac
   log fixing rpath of executable "whisper-cli"
   cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/src MacOS/whisper-cli 2> /dev/null
   cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src MacOS/whisper-cli 2> /dev/null
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src/ggml-blas MacOS/whisper-cli 2> /dev/null
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src/ggml-metal MacOS/whisper-cli 2> /dev/null
   cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/whisper-cli
 
   # MLT plugins

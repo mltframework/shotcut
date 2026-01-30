@@ -4,7 +4,7 @@ sudo xcode-select -s /Applications/Xcode.app/
 
 SIGNER="Developer ID Application: Meltytech, LLC (Y6RX44QG2G)"
 find ~/Desktop/Shotcut.app -type d -name __pycache__ -exec rm -r {} \+
-find ~/Desktop/Shotcut.app/Contents \( -name '*.o' -or -name '*.a' \) -exec rm {} \;
+find ~/Desktop/Shotcut.app/Contents \( -name '*.o' -or -name '*.a' -or -name '*.dSYM' \) -exec rm {} \;
 xattr -cr ~/Desktop/Shotcut.app
 
 # Strip any pre-existing signatures so we can overwrite (Qt SDK, etc.)
@@ -18,20 +18,23 @@ find ~/Desktop/Shotcut.app/Contents/MacOS -type f -exec \
 # Re-sign all dylibs and plugins
 find ~/Desktop/Shotcut.app/Contents -type f \( -name '*.dylib' -o -name '*.so' \) -exec \
   codesign --options=runtime --timestamp --force --verbose --sign "$SIGNER" \
-  {} \;
+    --preserve-metadata=identifier,entitlements \
+    {} \;
 
 # Re-sign executables with entitlements
 find ~/Desktop/Shotcut.app/Contents/MacOS -type f -exec \
   codesign --options=runtime --timestamp --force --verbose --sign "$SIGNER" \
+    --preserve-metadata=identifier,entitlements \
     --entitlements ./notarization.entitlements \
     {} \;
 
 # Re-sign the app bundle last
 codesign --options=runtime --timestamp --force --verbose --sign "$SIGNER" \
-  --entitlements ./notarization.entitlements \
+  --preserve-metadata=identifier,entitlements \
+  --entitlements ./notarization.entitlements --generate-entitlement-der \
   ~/Desktop/Shotcut.app
 
-codesign --verify --deep --strict --verbose=2 ~/Desktop/Shotcut.app
+codesign --verify --deep --strict --verbose=4 ~/Desktop/Shotcut.app
 spctl -a -t exec -vv ~/Desktop/Shotcut.app
 
 TMP=$(mktemp -d)
