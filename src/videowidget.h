@@ -124,6 +124,7 @@ signals:
     void imageReady();
     void snapToGridChanged();
     void toggleZoom(bool);
+    void stepZoom(float, float);
 
 private:
     QRectF m_rect;
@@ -157,6 +158,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;
+    void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     bool event(QEvent *event) override;
     void createShader();

@@ -422,6 +422,7 @@ Player::Player(QWidget *parent)
     connect(MLT.videoWidget(),
             SIGNAL(offsetChanged(const QPoint &)),
             SLOT(onOffsetChanged(const QPoint &)));
+    connect(MLT.videoWidget(), SIGNAL(stepZoom(float, float)), SLOT(stepZoom(float, float)));
 
     connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
         updateSelection();
@@ -1445,6 +1446,34 @@ void Player::setZoom(float factor, const QIcon &icon)
         m_zoomButton->setIcon(icon);
         m_zoomButton->setChecked(true);
     }
+}
+
+void Player::stepZoom(float step, float fit)
+{
+    if (m_zoomToggleFactor == 0.0) {
+        // Use suggested fit value
+        m_zoomToggleFactor = fit;
+    }
+    m_zoomToggleFactor += step;
+    if (m_zoomToggleFactor < 0.05) {
+        m_zoomToggleFactor = 0.05;
+    } else if (m_zoomToggleFactor > 10.0) {
+        m_zoomToggleFactor = 10.0;
+    }
+    // Find a suitable icon
+    QIcon icon;
+    foreach (QAction *a, m_zoomMenu->actions()) {
+        float actionFactor = a->data().toFloat();
+        if (actionFactor == 0.0) {
+            continue;
+        }
+        if (m_zoomToggleFactor == actionFactor || m_zoomToggleFactor < 1.0 && actionFactor < 1.0
+            || m_zoomToggleFactor > 1.0 && actionFactor > 1.0) {
+            icon = a->icon();
+            break;
+        }
+    }
+    setZoom(m_zoomToggleFactor, icon);
 }
 
 void Player::onZoomTriggered()
