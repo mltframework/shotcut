@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ public:
     bool paused() const;
     void setTarget(const QString &target) { m_target = target; }
     QString target() { return m_target; }
+    bool hasPostJobAction() const { return !m_postJobAction.isNull(); }
 
 public slots:
     void start(const QString &program, const QStringList &arguments);
