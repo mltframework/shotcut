@@ -183,6 +183,7 @@ private slots:
     void onOutChanged(int out);
     void onVolumeTriggered();
     void setZoom(float factor, const QIcon &icon);
+    void stepZoom(float step, float fit);
     void onZoomTriggered();
     void toggleZoom(bool checked);
     void onGridToggled();

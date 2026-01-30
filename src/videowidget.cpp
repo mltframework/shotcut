@@ -223,6 +223,33 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     drag->exec(Qt::CopyAction);
 }
 
+void VideoWidget::wheelEvent(QWheelEvent *event)
+{
+    if (event->modifiers() & Qt::ShiftModifier) {
+        float step = event->angleDelta().y();
+        if (step == 0.0) {
+            step = event->angleDelta().x();
+        }
+        if (step != 0.0) {
+            // Convert to degrees
+            step = step / 8.0 / 15.0;
+            // Convert to zoom factor step (increments of 0.05)
+            step = step * 0.05;
+            // Calculate the zoom level that would fit
+            float estimatedFitX = width() / MLT.profile().width();
+            float estimatedFitY = height() / MLT.profile().height();
+            float estimatedFit = estimatedFitX;
+            if (estimatedFit > estimatedFitY) {
+                estimatedFit = estimatedFitY;
+            }
+            emit stepZoom(step, estimatedFit);
+            event->accept();
+        }
+    } else {
+        QQuickWidget::wheelEvent(event);
+    }
+}
+
 void VideoWidget::keyPressEvent(QKeyEvent *event)
 {
     QQuickWidget::keyPressEvent(event);
