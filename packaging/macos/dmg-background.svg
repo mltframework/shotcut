@@ -1,0 +1,23 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c2c2c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e1e1e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#bg-gradient)"/>
+  
+  <!-- Lighter rectangles for icons and labels -->
+  <rect x="95" y="135" width="110" height="110" rx="10" ry="10" fill="#3a3a3a" opacity="0.6"/>
+  <rect x="395" y="135" width="110" height="110" rx="10" ry="10" fill="#3a3a3a" opacity="0.6"/>
+  
+  <!-- Arrow line -->
+  <line x1="220" y1="190" x2="370" y2="190" fill="none"
+        stroke="#115c77" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Arrowhead -->
+  <polygon points="385,190 355,175 355,205" fill="#115c77"/>
+</svg>
