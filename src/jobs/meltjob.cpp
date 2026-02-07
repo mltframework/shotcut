@@ -62,7 +62,7 @@ MeltJob::MeltJob(const QString &name,
         connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
         m_successActions << action;
 
-        action = new QAction(tr("Show In Folder"), this);
+        action = new QAction(tr("Show In Files"), this);
         action->setToolTip(tr("Show In Files"));
         connect(action, SIGNAL(triggered()), this, SLOT(onShowInFilesTriggered()));
         m_successActions << action;
