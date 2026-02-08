@@ -53,10 +53,10 @@
 
 namespace Mlt {
 
-static const int kThumbnailOutSeekFactor = 5;
+static constexpr int kThumbnailOutSeekFactor = 5;
 static Controller *instance = nullptr;
 const QString XmlMimeType("application/vnd.mlt+xml");
-static const char *kMltXmlPropertyName = "string";
+static constexpr char kMltXmlPropertyName[] = "string";
 
 Controller::Controller()
     : m_profile(kDefaultMltProfile)

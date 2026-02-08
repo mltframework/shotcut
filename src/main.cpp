@@ -47,7 +47,7 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 }
 #endif
 
-static const int kMaxCacheCount = 5000;
+static constexpr int kMaxCacheCount = 5000;
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {

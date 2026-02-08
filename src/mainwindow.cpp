@@ -131,9 +131,9 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int AUTOSAVE_TIMEOUT_MS = 60000;
-static const char *kReservedLayoutPrefix = "__%1";
-static const char *kLayoutSwitcherName("layoutSwitcherGrid");
+static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
+static constexpr char kReservedLayoutPrefix[] = "__%1";
+static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
                                            "([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2["
                                            "0-3]|[01][0-9])-([0-5][0-9])-([0-5][0-9]).mlt$");
