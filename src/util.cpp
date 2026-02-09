@@ -60,9 +60,9 @@
 #endif
 
 #ifdef Q_OS_MAC
-static const unsigned int kLowMemoryThresholdPercent = 10U;
+static constexpr unsigned int kLowMemoryThresholdPercent = 10U;
 #else
-static const unsigned int kLowMemoryThresholdKB = 256U * 1024U;
+static constexpr unsigned int kLowMemoryThresholdKB = 256U * 1024U;
 #endif
 static const qint64 kFreeSpaceThesholdGB = 25LL * 1024 * 1024 * 1024;
 

@@ -62,7 +62,7 @@ FileDateDialog::FileDateDialog(QString title, Mlt::Producer *producer, QWidget *
 
     m_dtEdit->setDisplayFormat("yyyy-MM-dd HH:mm:ss");
     m_dtEdit->setCalendarPopup(true);
-    m_dtEdit->setTimeSpec(Qt::LocalTime);
+    m_dtEdit->setTimeZone(QTimeZone::systemTimeZone());
     m_dtEdit->setDateTime(creation_time);
     VLayout->addWidget(m_dtEdit);
 
@@ -79,7 +79,7 @@ FileDateDialog::FileDateDialog(QString title, Mlt::Producer *producer, QWidget *
 void FileDateDialog::accept()
 {
     m_producer->set_creation_time(
-        (int64_t) m_dtEdit->dateTime().toTimeSpec(Qt::LocalTime).toMSecsSinceEpoch());
+        (int64_t) m_dtEdit->dateTime().toTimeZone(QTimeZone::systemTimeZone()).toMSecsSinceEpoch());
     QDialog::accept();
 }
 

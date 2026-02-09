@@ -23,7 +23,7 @@
 #include <QToolTip>
 #include <QtWidgets>
 
-static const int selectionSize = 14; /// the height of the top bar
+static constexpr int selectionSize = 14; /// the height of the top bar
 #ifndef CLAMP
 #define CLAMP(x, min, max) (((x) < (min)) ? (min) : ((x) > (max)) ? (max) : (x))
 #endif

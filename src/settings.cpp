@@ -46,7 +46,7 @@ struct ModeMap
     ShotcutSettings::ProcessingMode id;
     const char *name;
 };
-static const ModeMap kModeMap[] = {
+static constexpr ModeMap kModeMap[] = {
     {ShotcutSettings::Native8Cpu, "Native8Cpu"},
     {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
     {ShotcutSettings::Native10Cpu, "Native10Cpu"},

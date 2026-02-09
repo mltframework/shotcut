@@ -28,8 +28,8 @@
 
 static QMutex g_mutex;
 static Database *instance = nullptr;
-static const int kMaxThumbnailCount = 5000;
-static const int kDeleteThumbnailsTimeoutMs = 60000;
+static constexpr int kMaxThumbnailCount = 5000;
+static constexpr int kDeleteThumbnailsTimeoutMs = 60000;
 
 Database::Database(QObject *parent)
     : QObject(parent)

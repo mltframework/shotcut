@@ -36,15 +36,15 @@
 
 #include <utime.h>
 
-static const char *kProxySubfolder = "proxies";
-static const char *kProxyVideoExtension = ".mp4";
-static const char *kGoProProxyVideoExtension = ".LRV";
-static const char *kDJIProxyVideoExtension = ".LRF";
-static const char *kProxyPendingVideoExtension = ".pending.mp4";
-static const char *kProxyImageExtension = ".jpg";
-static const char *kProxyPendingImageExtension = ".pending.jpg";
-static const float kProxyResolutionRatio = 1.3f;
-static const int kFallbackProxyResolution = 540;
+static constexpr char kProxySubfolder[] = "proxies";
+static constexpr char kProxyVideoExtension[] = ".mp4";
+static constexpr char kGoProProxyVideoExtension[] = ".LRV";
+static constexpr char kDJIProxyVideoExtension[] = ".LRF";
+static constexpr char kProxyPendingVideoExtension[] = ".pending.mp4";
+static constexpr char kProxyImageExtension[] = ".jpg";
+static constexpr char kProxyPendingImageExtension[] = ".pending.jpg";
+static constexpr float kProxyResolutionRatio = 1.3f;
+static constexpr int kFallbackProxyResolution = 540;
 static const QStringList kPixFmtsWithAlpha
     = {"pal8",         "argb",         "rgba",         "abgr",         "bgra",
        "yuva420p",     "yuva422p",     "yuva444p",     "yuva420p9be",  "yuva420p9le",
