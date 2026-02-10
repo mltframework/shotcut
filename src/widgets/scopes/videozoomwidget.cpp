@@ -256,23 +256,34 @@ void VideoZoomWidget::wheelEvent(QWheelEvent *event)
         return;
 
     QPoint steps = event->angleDelta() / 8 / 15;
-    int newZoom = qBound(MIN_ZOOM, m_zoom + steps.y(), MAX_ZOOM);
 
-    if (newZoom != m_zoom) {
-        // Zoom in on the center pixel.
+    if (event->modifiers() == Qt::ControlModifier) {
+        // Ctrl + wheel to zoom in/out
+        int newZoom = qBound(MIN_ZOOM, m_zoom + steps.y(), MAX_ZOOM);
+        if (newZoom != m_zoom) {
+            // Zoom in on the center pixel.
+            int iWidth = m_frame.get_image_width();
+            int iHeight = m_frame.get_image_height();
+            int maxOffsetX = iWidth - (width() / newZoom);
+            int maxOffsetY = iHeight - (height() / newZoom);
+            QPoint centerPixel = posToPixel(rect().center());
+            m_imageOffset.setX(centerPixel.x() - (width() / newZoom / 2));
+            m_imageOffset.setX(qBound(0, m_imageOffset.x(), maxOffsetX));
+            m_imageOffset.setY(centerPixel.y() - (height() / newZoom / 2));
+            m_imageOffset.setY(qBound(0, m_imageOffset.y(), maxOffsetY));
+            m_zoom = newZoom;
+
+            locker.unlock();
+            emit zoomChanged(m_zoom);
+            update();
+        }
+    } else if (event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::AltModifier) {
         int iWidth = m_frame.get_image_width();
         int iHeight = m_frame.get_image_height();
-        int maxOffsetX = iWidth - (width() / newZoom);
-        int maxOffsetY = iHeight - (height() / newZoom);
-        QPoint centerPixel = posToPixel(rect().center());
-        m_imageOffset.setX(centerPixel.x() - (width() / newZoom / 2));
-        m_imageOffset.setX(qBound(0, m_imageOffset.x(), maxOffsetX));
-        m_imageOffset.setY(centerPixel.y() - (height() / newZoom / 2));
-        m_imageOffset.setY(qBound(0, m_imageOffset.y(), maxOffsetY));
-        m_zoom = newZoom;
-
-        locker.unlock();
-        emit zoomChanged(m_zoom);
+        int maxOffsetX = iWidth - (width() / m_zoom);
+        int maxOffsetY = iHeight - (height() / m_zoom);
+        m_imageOffset.setX(qBound(0, m_imageOffset.x() + steps.x() * m_zoom, maxOffsetX));
+        m_imageOffset.setY(qBound(0, m_imageOffset.y() + steps.y() * m_zoom, maxOffsetY));
         update();
     }
 
