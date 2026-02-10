@@ -59,19 +59,23 @@ void ScreenSelector::setSelectedRect(const QRect &rect)
 void ScreenSelector::startSelection(QPoint initialPos)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    const auto p = MAIN.geometry().center();
-    const auto id = MAIN.window()->winId();
-    for (auto screen : QGuiApplication::screens()) {
-        if (screen->geometry().contains(p)) {
-            m_useDBus = screen->grabWindow(id, p.x(), p.y(), 1, 1).isNull();
-            if (m_useDBus) {
-                emit screenSelected(m_selectionRect);
-                return;
+    if (m_selectionRect.isEmpty()) {
+        // Using as a single point selection.
+        const auto p = MAIN.geometry().center();
+        const auto id = MAIN.window()->winId();
+        for (auto screen : QGuiApplication::screens()) {
+            if (screen->geometry().contains(p)) {
+                m_useDBus = screen->grabWindow(id, p.x(), p.y(), 1, 1).isNull();
+                if (m_useDBus) {
+                    emit screenSelected(m_selectionRect);
+                    return;
+                }
+                break;
             }
-            break;
         }
     }
 #endif
+
     m_selectionInProgress = false;
     grabMouse();
     grabKeyboard();
