@@ -2076,8 +2076,13 @@ void MainWindow::setPreviewScale(int scale)
     }
     if (changed) {
         MLT.configureHardwareDecoder(true);
-        MLT.reload(QString());
-        emit producerOpened(false);
+        LongUiTask longTask(tr("Change Preview Scaling"));
+        QFuture<int> future = QtConcurrent::run([=]() {
+            MLT.reload(QString());
+            emit producerOpened(false);
+            return 0;
+        });
+        longTask.wait<int>(tr("Reloading"), future);
     }
 }
 
@@ -5939,8 +5944,13 @@ void MainWindow::on_actionPreviewHardwareDecoder_triggered(bool checked)
 {
     Settings.setPlayerPreviewHardwareDecoder(checked);
     MLT.configureHardwareDecoder(checked);
-    MLT.reload(QString());
-    emit producerOpened(false);
+    LongUiTask longTask(checked ? tr("Turn Hardware Decoder On") : tr("Turn Hardware Decoder Off"));
+    QFuture<int> future = QtConcurrent::run([=]() {
+        MLT.reload(QString());
+        emit producerOpened(false);
+        return 0;
+    });
+    longTask.wait<int>(tr("Reloading"), future);
 }
 
 QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
