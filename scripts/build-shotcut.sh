@@ -1489,7 +1489,7 @@ Basic Build Instructions for Shotcut
 
 We will not be able to cover everything here, and you are largely on your
 own, but here are some hints. There is a big build bash script that is used
-to make Shotcuts daily builds. It is the authoritative install reference:
+to make Shotcut daily builds. It is the authoritative install reference:
   src/shotcut/scripts/build-shotcut.sh
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.

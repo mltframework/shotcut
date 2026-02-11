@@ -210,7 +210,7 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         if (m_postJobAction) {
             m_postJobAction->doAction();
         }
-        LOG_INFO() << "job succeeeded";
+        LOG_INFO() << "job succeeded";
         m_log.append(QStringLiteral("Completed successfully in %1\n").arg(time.toString()));
         emit progressUpdated(m_item, 100);
         emit finished(this, true);

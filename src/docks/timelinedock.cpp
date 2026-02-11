@@ -3493,7 +3493,7 @@ bool TimelineDock::trimClipIn(
     emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimInCommand *>(m_trimCommand.get())) {
         if (delta < 0) {
-            // Do not trim past the removed tansition
+            // Do not trim past the removed transition
             return false;
         } else {
             // Untrimming - Restore the transition
@@ -3594,7 +3594,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimOutCommand *>(m_trimCommand.get())) {
         if (delta < 0) {
-            // Do not trim past the removed tansition
+            // Do not trim past the removed transition
             return false;
         } else {
             // Untrimming - Restore the transition
