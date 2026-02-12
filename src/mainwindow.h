@@ -300,7 +300,6 @@ private slots:
     void on_actionChannels4_triggered(bool checked);
     void on_actionChannels6_triggered(bool checked);
     void on_actionOneField_triggered(bool checked);
-    void on_actionLinearBlend_triggered(bool checked);
     void on_actionYadifTemporal_triggered(bool checked);
     void on_actionYadifSpatial_triggered(bool checked);
     void on_actionBwdif_triggered(bool checked);

@@ -260,7 +260,6 @@
        <string>Deinterlacer</string>
       </property>
       <addaction name="actionOneField"/>
-      <addaction name="actionLinearBlend"/>
       <addaction name="actionYadifTemporal"/>
       <addaction name="actionYadifSpatial"/>
       <addaction name="actionBwdif"/>
@@ -697,14 +696,6 @@
    </property>
    <property name="text">
     <string>One Field (fast)</string>
-   </property>
-  </action>
-  <action name="actionLinearBlend">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Linear Blend (fast)</string>
    </property>
   </action>
   <action name="actionYadifTemporal">

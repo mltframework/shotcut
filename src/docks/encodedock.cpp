@@ -369,14 +369,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                                               : preset.get("deinterlace_method");
             if (name == "onefield")
                 ui->deinterlacerCombo->setCurrentIndex(0);
-            else if (name == "linearblend")
-                ui->deinterlacerCombo->setCurrentIndex(1);
             else if (name == "yadif-nospatial")
-                ui->deinterlacerCombo->setCurrentIndex(2);
+                ui->deinterlacerCombo->setCurrentIndex(1);
             else if (name == "yadif")
-                ui->deinterlacerCombo->setCurrentIndex(3);
+                ui->deinterlacerCombo->setCurrentIndex(2);
             else if (name == "bwdif")
-                ui->deinterlacerCombo->setCurrentIndex(4);
+                ui->deinterlacerCombo->setCurrentIndex(3);
         } else if (name == "rescale") {
             if (value == "nearest" || value == "neighbor")
                 ui->interpolationCombo->setCurrentIndex(0);
@@ -1074,12 +1072,9 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "deinterlacer", "onefield");
                 break;
             case 1:
-                setIfNotSet(p, "deinterlacer", "linearblend");
-                break;
-            case 2:
                 setIfNotSet(p, "deinterlacer", "yadif-nospatial");
                 break;
-            case 3:
+            case 2:
                 setIfNotSet(p, "deinterlacer", "yadif");
                 break;
             default:
@@ -1632,7 +1627,7 @@ void EncodeDock::resetOptions()
 
     ui->scanModeCombo->setCurrentIndex(1);
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
-    ui->deinterlacerCombo->setCurrentIndex(4);
+    ui->deinterlacerCombo->setCurrentIndex(3);
     ui->interpolationCombo->setCurrentIndex(1);
     ui->rangeComboBox->setCurrentIndex(0);
 

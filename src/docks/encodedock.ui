@@ -853,16 +853,11 @@ with parallel processing enabled.</string>
                    <item>
                     <widget class="QComboBox" name="deinterlacerCombo">
                      <property name="currentIndex">
-                      <number>4</number>
+                      <number>3</number>
                      </property>
                      <item>
                       <property name="text">
                        <string>One Field (fast)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Linear Blend (fast)</string>
                       </property>
                      </item>
                      <item>

@@ -1140,7 +1140,6 @@ void MainWindow::setupSettingsMenu()
     group->addAction(ui->actionChannels6);
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
-    group->addAction(ui->actionLinearBlend);
     group->addAction(ui->actionYadifTemporal);
     group->addAction(ui->actionYadifSpatial);
     group->addAction(ui->actionBwdif);
@@ -2526,8 +2525,6 @@ void MainWindow::readPlayerSettings()
 
     if (deinterlacer == "onefield")
         ui->actionOneField->setChecked(true);
-    else if (deinterlacer == "linearblend")
-        ui->actionLinearBlend->setChecked(true);
     else if (deinterlacer == "yadif-nospatial")
         ui->actionYadifTemporal->setChecked(true);
     else if (deinterlacer == "yadif")
@@ -2807,8 +2804,6 @@ void MainWindow::configureVideoWidget()
         setAudioChannels(6);
     if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlacer", "onefield");
-    else if (ui->actionLinearBlend->isChecked())
-        MLT.videoWidget()->setProperty("deinterlacer", "linearblend");
     else if (ui->actionYadifTemporal->isChecked())
         MLT.videoWidget()->setProperty("deinterlacer", "yadif-nospatial");
     else if (ui->actionYadifSpatial->isChecked())
@@ -4333,11 +4328,6 @@ void MainWindow::changeDeinterlacer(bool checked, const char *method)
 void MainWindow::on_actionOneField_triggered(bool checked)
 {
     changeDeinterlacer(checked, "onefield");
-}
-
-void MainWindow::on_actionLinearBlend_triggered(bool checked)
-{
-    changeDeinterlacer(checked, "linearblend");
 }
 
 void MainWindow::on_actionYadifTemporal_triggered(bool checked)
