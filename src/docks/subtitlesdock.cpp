@@ -639,7 +639,10 @@ void SubtitlesDock::importSubtitles()
     // Convert the subtitles to SRT using FFMpeg
     QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(tmpLocation, "XXXXXX.srt"));
-    tmp->open();
+    if (!tmp->open()) {
+        LOG_ERROR() << "Failed to create temporary file" << tmp->fileName();
+        return;
+    }
     QString tmpFileName = tmp->fileName();
     tmp->close();
     QProcess proc;

@@ -114,8 +114,15 @@ void QmlFile::copyFromFile(QString source)
 
     QFile inFile(source);
     QFile outfile(m_url.toString());
-    inFile.open(QFile::ReadOnly);
-    outfile.open(QFile::WriteOnly);
+    if (!inFile.open(QFile::ReadOnly)) {
+        LOG_ERROR() << "Failed to open source file for reading" << source;
+        return;
+    }
+
+    if (!outfile.open(QFile::WriteOnly)) {
+        LOG_ERROR() << "Failed to open destination file for writing" << m_url.toString();
+        return;
+    }
     outfile.write(inFile.readAll());
     outfile.close();
 }

@@ -433,7 +433,10 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
     // get temp file for input xml
     QString filename(mltFilter.get("filename"));
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(filename));
-    tmp->open();
+    if (!tmp->open()) {
+        LOG_ERROR() << "Failed to create temporary file" << tmp->fileName();
+        return;
+    }
 
     mltFilter.clear("results");
     int disable = mltFilter.get_int("disable");
@@ -482,12 +485,18 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
 
     // get temp filename for output xml
     QScopedPointer<QTemporaryFile> tmpTarget(Util::writableTemporaryFile(filename));
-    tmpTarget->open();
+    if (!tmpTarget->open()) {
+        LOG_ERROR() << "Failed to create temporary file" << tmpTarget->fileName();
+        return;
+    }
     tmpTarget->close();
 
     // parse xml
     QFile f1(tmp->fileName());
-    f1.open(QIODevice::ReadOnly);
+    if (!f1.open(QIODevice::ReadOnly)) {
+        LOG_ERROR() << "Failed to open temporary file for reading" << tmp->fileName();
+        return;
+    }
     QDomDocument dom(tmp->fileName());
     dom.setContent(&f1);
     f1.close();
@@ -522,8 +531,9 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
         if (!filename.isEmpty() && !QFile::exists(filename)) {
             job->setProperty("filename", filename);
             QFile file(filename);
-            file.open(QFile::WriteOnly);
-            file.write("");
+            if (file.open(QFile::WriteOnly)) {
+                file.write("");
+            }
         }
         if (deferJob) {
             QTimer::singleShot(0, this, [=]() { JOBS.add(job); });
@@ -1093,7 +1103,10 @@ void AnalyzeDelegate::updateJob(EncodeJob *job, const QString &results)
 
     // parse the xml
     QFile file(job->xmlPath());
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly)) {
+        LOG_ERROR() << "Failed to open job XML for reading" << job->xmlPath();
+        return;
+    }
     QDomDocument dom(job->xmlPath());
     dom.setContent(&file);
     file.close();
@@ -1136,10 +1149,13 @@ void AnalyzeDelegate::updateJob(EncodeJob *job, const QString &results)
 
     if (isUpdated) {
         // Save the new XML.
-        file.open(QIODevice::WriteOnly);
-        QTextStream textStream(&file);
-        dom.save(textStream, 2);
-        file.close();
+        if (file.open(QIODevice::WriteOnly)) {
+            QTextStream textStream(&file);
+            dom.save(textStream, 2);
+            file.close();
+        } else {
+            LOG_ERROR() << "Failed to open job XML for writing" << job->xmlPath();
+        }
     }
 }
 
@@ -1192,7 +1208,10 @@ QString AnalyzeDelegate::resultsFromXml(const QString &fileName)
 {
     // parse the xml
     QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly)) {
+        LOG_ERROR() << "Failed to open job XML for reading" << fileName;
+        return QString();
+    }
     QDomDocument dom(fileName);
     dom.setContent(&file);
     file.close();

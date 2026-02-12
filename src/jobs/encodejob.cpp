@@ -99,7 +99,10 @@ void EncodeJob::onVideoQualityTriggered()
 
         // Get temp file for the new XML.
         QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(reportPath));
-        tmp->open();
+        if (!tmp->open()) {
+            LOG_ERROR() << "Failed to create temporary file" << tmp->fileName();
+            return;
+        }
 
         // Generate the XML for the comparison.
         Mlt::Tractor tractor(MLT.profile());
@@ -116,7 +119,10 @@ void EncodeJob::onVideoQualityTriggered()
 
             // Add consumer element to XML.
             QFile f1(tmp->fileName());
-            f1.open(QIODevice::ReadOnly);
+            if (!f1.open(QIODevice::ReadOnly)) {
+                LOG_ERROR() << "Failed to open XML file for reading" << tmp->fileName();
+                return;
+            }
             QDomDocument dom(tmp->fileName());
             dom.setContent(&f1);
             f1.close();
@@ -288,7 +294,10 @@ void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         appendToLog(QStringLiteral("Failed with exit code %1\n").arg(exitCode));
         bool isParallel = false;
         // Parse the XML.
-        m_xml->open();
+        if (!m_xml->open()) {
+            LOG_ERROR() << "Failed to open XML file for reading" << m_xml->fileName();
+            return;
+        }
         QDomDocument dom(xmlPath());
         dom.setContent(m_xml.data());
         m_xml->close();
@@ -307,7 +316,10 @@ void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
             QString message(tr("Export job failed; trying again without Parallel processing."));
             MAIN.showStatusMessage(message);
             appendToLog(message.append("\n"));
-            m_xml->open();
+            if (!m_xml->open()) {
+                LOG_ERROR() << "Failed to open XML file for reading" << m_xml->fileName();
+                return;
+            }
             QTextStream textStream(m_xml.data());
             dom.save(textStream, 2);
             m_xml->close();

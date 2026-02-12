@@ -1408,7 +1408,11 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
 
     // get temp filename
     auto tmp = new QTemporaryFile{Util::writableTemporaryFile(target)};
-    tmp->open();
+    if (!tmp->open()) {
+        LOG_ERROR() << "Failed to create temporary file" << tmp->fileName();
+        delete tmp;
+        return nullptr;
+    }
     QString fileName = tmp->fileName();
     auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
     MLT.saveXML(fileName, service, false /* without relative paths */, tmp, isProxy);
@@ -1416,7 +1420,10 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
 
     // parse xml
     QFile f1(fileName);
-    f1.open(QIODevice::ReadOnly);
+    if (!f1.open(QIODevice::ReadOnly)) {
+        LOG_ERROR() << "Failed to open XML file for reading" << fileName;
+        return nullptr;
+    }
     QXmlStreamReader xmlReader(&f1);
     QDomDocument dom(fileName);
     dom.setContent(&xmlReader, false);
@@ -2875,7 +2882,10 @@ bool EncodeDock::checkForMissingFiles()
             = QStringLiteral("%1.XXXXXX").arg(QCoreApplication::applicationName());
         tmp.reset(new QTemporaryFile(info.dir().filePath(templateFileName)));
     }
-    tmp->open();
+    if (!tmp->open()) {
+        LOG_ERROR() << "Encode: Unable to create temporary file for checking missing files";
+        return false;
+    }
     QString fileName = tmp->fileName();
     auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
     MLT.saveXML(fileName, service, false /* without relative paths */, tmp.get(), isProxy);

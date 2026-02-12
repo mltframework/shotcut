@@ -4999,18 +4999,20 @@ void MainWindow::on_actionApplicationLog_triggered()
     TextViewerDialog dialog(this);
     QDir dir = Settings.appDataLocation();
     QFile logFile(dir.filePath("shotcut-log.txt"));
-    logFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    dialog.setText(logFile.readAll());
-    logFile.close();
+    if (logFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        dialog.setText(logFile.readAll());
+        logFile.close();
+    }
     dialog.setWindowTitle(tr("Application Log"));
     const auto previousLogName = dir.filePath("shotcut-log.bak");
     if (QFile::exists(previousLogName)) {
         auto button = dialog.buttonBox()->addButton(tr("Previous"), QDialogButtonBox::ActionRole);
         connect(button, &QAbstractButton::clicked, this, [&]() {
             QFile logFile(previousLogName);
-            logFile.open(QIODevice::ReadOnly | QIODevice::Text);
-            dialog.setText(logFile.readAll());
-            logFile.close();
+            if (logFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                dialog.setText(logFile.readAll());
+                logFile.close();
+            }
             button->setEnabled(false);
         });
     }
@@ -5150,9 +5152,10 @@ void MainWindow::on_actionExportEDL_triggered()
                 if (!result.isError()) {
                     // Save the result with the export file name.
                     QFile f(saveFileName);
-                    f.open(QIODevice::WriteOnly | QIODevice::Text);
-                    f.write(result.toString().toUtf8());
-                    f.close();
+                    if (f.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                        f.write(result.toString().toUtf8());
+                        f.close();
+                    }
                 }
             }
             if (result.isError()) {
@@ -6039,7 +6042,9 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
     if (MLT.producer()) {
         QDir dir(m_currentFile.isEmpty() ? QDir::tempPath() : QFileInfo(m_currentFile).dir());
         QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(dir.filePath("shotcut-XXXXXX.mlt")));
-        tmp->open();
+        if (!tmp->open()) {
+            return;
+        }
         tmp->close();
         QString fileName = tmp->fileName();
         tmp->remove();
@@ -6374,9 +6379,10 @@ void MainWindow::on_actionExportChapters_triggered()
                 if (!result.isError()) {
                     // Save the result with the export file name.
                     QFile f(saveFileName);
-                    f.open(QIODevice::WriteOnly | QIODevice::Text);
-                    f.write(result.toString().toUtf8());
-                    f.close();
+                    if (f.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                        f.write(result.toString().toUtf8());
+                        f.close();
+                    }
                 }
             }
             if (result.isError()) {

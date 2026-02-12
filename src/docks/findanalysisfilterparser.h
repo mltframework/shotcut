@@ -60,9 +60,10 @@ public:
 
                         // Touch file to prevent overwriting the same file
                         QFile file(filename);
-                        file.open(QIODevice::WriteOnly);
-                        file.resize(0);
-                        file.close();
+                        if (file.open(QIODevice::WriteOnly)) {
+                            file.resize(0);
+                            file.close();
+                        }
                     }
                 } else {
                     m_filters << Mlt::Filter(*filter);
