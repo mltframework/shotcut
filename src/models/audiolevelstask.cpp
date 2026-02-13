@@ -205,8 +205,7 @@ void AudioLevelsTask::run()
                 for (int channel = 0; channel < channels; channel++)
                     // Convert real to uchar for caching as image.
                     // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
-                    levels << uchar(
-                        qBound(0.0, 256.0 * frame->get_double(key[channel]) * 0.9, 255.0));
+                    levels << uchar(qBound(0.0, 256.0 * frame->get_double(key[channel]) * 0.9, 255.0));
             } else if (!levels.isEmpty()) {
                 for (int channel = 0; channel < channels; channel++)
                     levels << levels.last();
