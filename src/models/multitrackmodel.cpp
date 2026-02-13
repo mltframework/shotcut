@@ -155,8 +155,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     if (info->producer && info->producer->is_valid()) {
                         info->producer->lock();
                         if (info->producer->get_data(kAudioLevelsProperty)) {
-                            result = QVariant::fromValue(
-                                *((QVariantList *) info->producer->get_data(kAudioLevelsProperty)));
+                            result = QVariant::fromValue(*(
+                                (QVector<uchar> *) info->producer->get_data(kAudioLevelsProperty)));
                         }
                         info->producer->unlock();
                     }
