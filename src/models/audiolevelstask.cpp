@@ -32,14 +32,14 @@
 #include <QString>
 #include <QThreadPool>
 #include <QTime>
-#include <QVector>
+#include <QVariantList>
 
 static QList<AudioLevelsTask *> tasksList;
 static QMutex tasksListMutex;
 
-static void deleteAudioLevels(QVector<uchar> *levels)
+static void deleteQVariantList(QVariantList *list)
 {
-    delete levels;
+    delete list;
 }
 
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index)
@@ -172,7 +172,7 @@ QString AudioLevelsTask::cacheKey()
 void AudioLevelsTask::run()
 {
     // 2 channels interleaved of uchar values
-    QVector<uchar> levels;
+    QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
     if (image.isNull() || m_isForce) {
         const char *key[2] = {"meta.media.audio_level.0", "meta.media.audio_level.1"};
@@ -203,9 +203,9 @@ void AudioLevelsTask::run()
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)
-                    // Convert real to uchar for caching as image.
+                    // Convert real to uint for caching as image.
                     // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
-                    levels << uchar(qBound(0.0, 256.0 * frame->get_double(key[channel]) * 0.9, 255.0));
+                    levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
             } else if (!levels.isEmpty()) {
                 for (int channel = 0; channel < channels; channel++)
                     levels << levels.last();
@@ -216,12 +216,12 @@ void AudioLevelsTask::run()
             if (updateTime.elapsed() > 3 * 1000 && !m_isCanceled) {
                 updateTime.restart();
                 foreach (ProducerAndIndex p, m_producers) {
-                    QVector<uchar> *levelsCopy = new QVector<uchar>(levels);
+                    QVariantList *levelsCopy = new QVariantList(levels);
                     p.first->lock();
                     p.first->set(kAudioLevelsProperty,
                                  levelsCopy,
                                  0,
-                                 (mlt_destructor) deleteAudioLevels);
+                                 (mlt_destructor) deleteQVariantList);
                     p.first->unlock();
                     if (-1
                         != m_object->metaObject()->indexOfMethod(
@@ -240,16 +240,16 @@ void AudioLevelsTask::run()
             for (int i = 0; i < n; i++) {
                 QRgb p;
                 if ((4 * i + 3) < count) {
-                    p = qRgba(levels.at(4 * i),
-                              levels.at(4 * i + 1),
-                              levels.at(4 * i + 2),
-                              levels.at(4 * i + 3));
+                    p = qRgba(levels.at(4 * i).toInt(),
+                              levels.at(4 * i + 1).toInt(),
+                              levels.at(4 * i + 2).toInt(),
+                              levels.at(4 * i + 3).toInt());
                 } else {
-                    uchar last = levels.last();
-                    uchar r = (4 * i + 0) < count ? levels.at(4 * i + 0) : last;
-                    uchar g = (4 * i + 1) < count ? levels.at(4 * i + 1) : last;
-                    uchar b = (4 * i + 2) < count ? levels.at(4 * i + 2) : last;
-                    uchar a = last;
+                    int last = levels.last().toInt();
+                    int r = (4 * i + 0) < count ? levels.at(4 * i + 0).toInt() : last;
+                    int g = (4 * i + 1) < count ? levels.at(4 * i + 1).toInt() : last;
+                    int b = (4 * i + 2) < count ? levels.at(4 * i + 2).toInt() : last;
+                    int a = last;
                     p = qRgba(r, g, b, a);
                 }
                 image.setPixel(i / 2, i % channels, p);
@@ -294,9 +294,9 @@ void AudioLevelsTask::run()
 
     if (levels.size() > 0 && !m_isCanceled) {
         foreach (ProducerAndIndex p, m_producers) {
-            QVector<uchar> *levelsCopy = new QVector<uchar>(levels);
+            QVariantList *levelsCopy = new QVariantList(levels);
             p.first->lock();
-            p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteAudioLevels);
+            p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
             p.first->unlock();
             if (-1
                 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
