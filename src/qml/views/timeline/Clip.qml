@@ -327,10 +327,6 @@ Rectangle {
             model: Math.ceil(clipRoot.width / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
-
-                // right edge
-                // left edge
-                // bottom edge
                 property int channels: 2
 
                 trackIndex: clipRoot.trackIndex

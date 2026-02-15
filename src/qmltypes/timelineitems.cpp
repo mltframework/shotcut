@@ -29,6 +29,7 @@
 #include <QPalette>
 #include <QQmlContext>
 #include <QQuickPaintedItem>
+#include <QTimer>
 
 class TimelineTransition : public QQuickPaintedItem
 {
@@ -131,6 +132,9 @@ public:
         } else {
             LOG_WARNING() << "TimelineWaveform: Failed to find multitrack model in QML context";
         }
+
+        // Trigger initial paint after event loop processes property bindings
+        QTimer::singleShot(0, this, [this]() { update(); });
     }
 
     void paint(QPainter *painter)
