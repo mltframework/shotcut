@@ -43,3 +43,4 @@ translations/.lupdate
 .DS_Store
 scripts/build-shotcut.conf
 *~
+_codeql_detected_source_root
