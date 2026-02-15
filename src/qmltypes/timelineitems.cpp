@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPalette>
+#include <QPointer>
 #include <QQmlContext>
 #include <QQuickPaintedItem>
 #include <QTimer>
@@ -186,6 +187,10 @@ private slots:
                        const QModelIndex &bottomRight,
                        const QVector<int> &roles)
     {
+        // Early return if model is no longer valid
+        if (!m_model)
+            return;
+
         // Check if this update is for our clip and includes AudioLevelsRole
         if (topLeft.isValid()) {
             QModelIndex parentIndex = topLeft.parent();
@@ -202,7 +207,7 @@ private slots:
     }
 
 private:
-    MultitrackModel *m_model;
+    QPointer<MultitrackModel> m_model;
     int m_trackIndex{-1};
     int m_clipIndex{-1};
     int m_inPoint;
