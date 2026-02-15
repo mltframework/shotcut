@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,15 @@
 
 #include "Logger.h"
 #include "mltcontroller.h"
+#include "models/multitrackmodel.h"
 #include "settings.h"
 
 #include <QLinearGradient>
+#include <QModelIndex>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPalette>
+#include <QQmlContext>
 #include <QQuickPaintedItem>
 
 class TimelineTransition : public QQuickPaintedItem
@@ -92,7 +95,8 @@ public:
 class TimelineWaveform : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant levels MEMBER m_audioLevels NOTIFY propertyChanged)
+    Q_PROPERTY(int trackIndex MEMBER m_trackIndex NOTIFY propertyChanged)
+    Q_PROPERTY(int clipIndex MEMBER m_clipIndex NOTIFY propertyChanged)
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
     Q_PROPERTY(int inPoint MEMBER m_inPoint NOTIFY inPointChanged)
     Q_PROPERTY(int outPoint MEMBER m_outPoint NOTIFY outPointChanged)
@@ -100,20 +104,43 @@ class TimelineWaveform : public QQuickPaintedItem
 
 public:
     TimelineWaveform()
+        : m_model(nullptr)
     {
         setAntialiasing(false);
         setOpaquePainting(true);
         if (Settings.timelineFramebufferWaveform())
             setRenderTarget(QQuickPaintedItem::FramebufferObject);
-        connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
+        connect(this, &TimelineWaveform::propertyChanged, this, [this]() { update(); });
+    }
+
+    Q_INVOKABLE void connectToModel()
+    {
+        if (m_model)
+            return; // Already connected
+
+        QObject *obj = qmlContext(this)->contextProperty("multitrack").value<QObject *>();
+        m_model = qobject_cast<MultitrackModel *>(obj);
+        if (m_model) {
+            connect(m_model,
+                    SIGNAL(
+                        dataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)),
+                    this,
+                    SLOT(onDataChanged(const QModelIndex &,
+                                       const QModelIndex &,
+                                       const QVector<int> &)));
+        } else {
+            LOG_WARNING() << "TimelineWaveform: Failed to find multitrack model in QML context";
+        }
     }
 
     void paint(QPainter *painter)
     {
-        if (!m_isActive)
+        if (!m_isActive || !m_model || m_trackIndex < 0 || m_clipIndex < 0)
             return;
-        QVariantList data = m_audioLevels.toList();
-        if (data.isEmpty())
+
+        // Get audio levels pointer directly from the model (no reflection overhead)
+        const QVariantList *data = m_model->getAudioLevels(m_trackIndex, m_clipIndex);
+        if (!data || data->isEmpty())
             return;
 
         // In and out points are # frames at current fps,
@@ -128,11 +155,13 @@ public:
         QPainterPath path;
         path.moveTo(-1, height());
         int i = 0;
+        const int dataSize = data->size();
         for (; i < width(); ++i) {
             int idx = inPoint + int(i * indicesPrPixel);
-            if ((idx < 0) || (idx + 2 >= data.length()))
+            if ((idx < 0) || (idx + 1 >= dataSize))
                 break;
-            qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;
+            // Convert to real only for values actually used
+            qreal level = qMax(data->at(idx).toReal(), data->at(idx + 1).toReal()) / 256.0;
             path.lineTo(i, height() - level * height());
         }
         path.lineTo(i, height());
@@ -148,8 +177,30 @@ signals:
     void inPointChanged();
     void outPointChanged();
 
+private slots:
+    void onDataChanged(const QModelIndex &topLeft,
+                       const QModelIndex &bottomRight,
+                       const QVector<int> &roles)
+    {
+        // Check if this update is for our clip and includes AudioLevelsRole
+        if (topLeft.isValid()) {
+            QModelIndex parentIndex = topLeft.parent();
+            if (parentIndex.isValid()) {
+                int updateTrackIndex = parentIndex.row();
+                int updateClipIndex = topLeft.row();
+                if (updateTrackIndex == m_trackIndex && updateClipIndex == m_clipIndex) {
+                    if (roles.isEmpty() || roles.contains(MultitrackModel::AudioLevelsRole)) {
+                        update();
+                    }
+                }
+            }
+        }
+    }
+
 private:
-    QVariant m_audioLevels;
+    MultitrackModel *m_model;
+    int m_trackIndex{-1};
+    int m_clipIndex{-1};
     int m_inPoint;
     int m_outPoint;
     QColor m_color;

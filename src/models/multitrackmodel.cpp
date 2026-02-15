@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -354,6 +354,26 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[GainRole] = "gain";
     roles[GainEnabledRole] = "gainEnabled";
     return roles;
+}
+
+const QVariantList *MultitrackModel::getAudioLevels(int trackIndex, int clipIndex) const
+{
+    if (!m_tractor || trackIndex < 0 || trackIndex >= m_trackList.size())
+        return nullptr;
+
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex >= 0 && clipIndex < playlist.count()) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            if (info && info->producer && info->producer->is_valid()) {
+                return static_cast<const QVariantList *>(
+                    info->producer->get_data(kAudioLevelsProperty));
+            }
+        }
+    }
+    return nullptr;
 }
 
 void MultitrackModel::setTrackName(int row, const QString &value)
