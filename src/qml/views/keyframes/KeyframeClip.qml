@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2025 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,10 +160,6 @@ Rectangle {
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
-
-                // right edge
-                // left edge
-                // bottom edge
                 property int channels: 2
 
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)

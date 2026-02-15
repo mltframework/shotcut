@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPalette>
+#include <QPointer>
 #include <QQmlContext>
 #include <QQuickPaintedItem>
 
@@ -95,6 +96,7 @@ public:
 class TimelineWaveform : public QQuickPaintedItem
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList levels MEMBER m_audioLevels NOTIFY propertyChanged)
     Q_PROPERTY(int trackIndex MEMBER m_trackIndex NOTIFY propertyChanged)
     Q_PROPERTY(int clipIndex MEMBER m_clipIndex NOTIFY propertyChanged)
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
@@ -104,7 +106,6 @@ class TimelineWaveform : public QQuickPaintedItem
 
 public:
     TimelineWaveform()
-        : m_model(nullptr)
     {
         setAntialiasing(false);
         setOpaquePainting(true);
@@ -135,13 +136,26 @@ public:
 
     void paint(QPainter *painter)
     {
-        if (!m_isActive || !m_model || m_trackIndex < 0 || m_clipIndex < 0)
+        if (!m_isActive)
             return;
 
+        const QVariantList *data = &m_audioLevels;
+
         // Get audio levels pointer directly from the model (no reflection overhead)
-        const QVariantList *data = m_model->getAudioLevels(m_trackIndex, m_clipIndex);
-        if (!data || data->isEmpty())
+        std::unique_ptr<Mlt::ClipInfo> clipInfo;
+        if (m_model && m_trackIndex >= 0 && m_clipIndex >= 0) {
+            clipInfo = m_model->getClipInfo(m_trackIndex, m_clipIndex);
+            if (clipInfo && clipInfo->producer) {
+                clipInfo->producer->lock();
+                data = m_model->getAudioLevels(m_trackIndex, m_clipIndex);
+            }
+        }
+
+        if (!data || data->isEmpty()) {
+            if (clipInfo && clipInfo->producer)
+                clipInfo->producer->unlock();
             return;
+        }
 
         // In and out points are # frames at current fps,
         // but audio levels are created at 25 fps.
@@ -170,6 +184,9 @@ public:
         QPen pen(painter->pen());
         pen.setColor(m_color.darker());
         painter->strokePath(path, pen);
+
+        if (clipInfo && clipInfo->producer)
+            clipInfo->producer->unlock();
     }
 
 signals:
@@ -183,7 +200,7 @@ private slots:
                        const QVector<int> &roles)
     {
         // Check if this update is for our clip and includes AudioLevelsRole
-        if (topLeft.isValid()) {
+        if (m_model && topLeft.isValid()) {
             QModelIndex parentIndex = topLeft.parent();
             if (parentIndex.isValid()) {
                 int updateTrackIndex = parentIndex.row();
@@ -198,7 +215,8 @@ private slots:
     }
 
 private:
-    MultitrackModel *m_model;
+    QVariantList m_audioLevels;
+    QPointer<MultitrackModel> m_model;
     int m_trackIndex{-1};
     int m_clipIndex{-1};
     int m_inPoint;
