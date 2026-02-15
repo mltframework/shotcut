@@ -373,6 +373,7 @@ Rectangle {
                                         speed: producer.speed
                                         outThumbnailVisible: false
                                         onRightClicked: root.clipRightClicked()
+                                        onOutPointChanged: generateWaveform()
                                     }
 
                                     KeyframeClip {
@@ -432,6 +433,7 @@ Rectangle {
                                         speed: producer.speed
                                         inThumbnailVisible: false
                                         onRightClicked: root.clipRightClicked()
+                                        onInPointChanged: generateWaveform()
                                     }
                                 }
                             }
