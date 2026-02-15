@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
+#include "qmltypes/qmlproducer.h"
 #include "settings.h"
 
 #include <QLinearGradient>
@@ -96,7 +97,7 @@ public:
 class TimelineWaveform : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList levels MEMBER m_audioLevels NOTIFY propertyChanged)
+    Q_PROPERTY(QObject *producer MEMBER m_producer)
     Q_PROPERTY(int trackIndex MEMBER m_trackIndex NOTIFY propertyChanged)
     Q_PROPERTY(int clipIndex MEMBER m_clipIndex NOTIFY propertyChanged)
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
@@ -139,11 +140,20 @@ public:
         if (!m_isActive)
             return;
 
-        const QVariantList *data = &m_audioLevels;
-
-        // Get audio levels pointer directly from the model (no reflection overhead)
+        const QVariantList *data = nullptr;
+        QmlProducer *qmlProducer = nullptr;
         std::unique_ptr<Mlt::ClipInfo> clipInfo;
-        if (m_model && m_trackIndex >= 0 && m_clipIndex >= 0) {
+
+        // Get audio levels from producer property if available
+        if (m_producer) {
+            // Read from producer property (keyframes view)
+            qmlProducer = qobject_cast<QmlProducer *>(m_producer);
+            if (qmlProducer) {
+                qmlProducer->producer().lock();
+                data = qmlProducer->audioLevels();
+            }
+        } else if (m_model && m_trackIndex >= 0 && m_clipIndex >= 0) {
+            // Get audio levels pointer directly from the model (timeline view)
             clipInfo = m_model->getClipInfo(m_trackIndex, m_clipIndex);
             if (clipInfo && clipInfo->producer) {
                 clipInfo->producer->lock();
@@ -152,7 +162,9 @@ public:
         }
 
         if (!data || data->isEmpty()) {
-            if (clipInfo && clipInfo->producer)
+            if (qmlProducer)
+                qmlProducer->producer().unlock();
+            else if (clipInfo && clipInfo->producer)
                 clipInfo->producer->unlock();
             return;
         }
@@ -185,7 +197,9 @@ public:
         pen.setColor(m_color.darker());
         painter->strokePath(path, pen);
 
-        if (clipInfo && clipInfo->producer)
+        if (qmlProducer)
+            qmlProducer->producer().unlock();
+        else if (clipInfo && clipInfo->producer)
             clipInfo->producer->unlock();
     }
 
@@ -215,7 +229,7 @@ private slots:
     }
 
 private:
-    QVariantList m_audioLevels;
+    QPointer<QObject> m_producer;
     QPointer<MultitrackModel> m_model;
     int m_trackIndex{-1};
     int m_clipIndex{-1};

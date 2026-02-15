@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ class QmlProducer : public QObject
     Q_PROPERTY(QString mlt_service READ mlt_service() NOTIFY producerChanged)
     Q_PROPERTY(QString hash READ hash() NOTIFY producerChanged)
     Q_PROPERTY(QString name READ name() NOTIFY producerChanged)
-    Q_PROPERTY(QVariant audioLevels READ audioLevels NOTIFY audioLevelsChanged)
     Q_PROPERTY(int fadeIn READ fadeIn NOTIFY producerChanged)
     Q_PROPERTY(int fadeOut READ fadeOut NOTIFY producerChanged)
     Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
@@ -63,7 +62,7 @@ public:
         return m_producer.is_valid() ? m_producer.get(kShotcutHashProperty) : QString();
     }
     QString name();
-    QVariant audioLevels();
+    const QVariantList *audioLevels();
     int fadeIn();
     int fadeOut();
     double speed();
@@ -71,6 +70,7 @@ public:
     void setPosition(int position);
     void seek(int position);
     Mlt::Producer &producer() { return m_producer; }
+    Q_INVOKABLE Mlt::Producer *getMltProducer() { return &m_producer; }
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();

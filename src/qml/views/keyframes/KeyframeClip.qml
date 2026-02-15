@@ -30,7 +30,6 @@ Rectangle {
     property int clipDuration: outPoint - inPoint + 1
     property bool isBlank: false
     property bool isAudio: false
-    property var audioLevels
     property int animateIn: 0
     property int animateOut: 0
     property int trackIndex: 0
@@ -58,8 +57,11 @@ Rectangle {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
-        for (var i = 0; i < waveformRepeater.count; i++)
-            waveformRepeater.itemAt(0).update();
+        for (let i = 0; i < waveformRepeater.count; i++) {
+            var item = waveformRepeater.itemAt(i);
+            item.producer = producer;
+            item.update();
+        }
     }
 
     function imagePath(time) {
@@ -71,7 +73,6 @@ Rectangle {
     border.width: 1
     clip: true
     opacity: isBlank ? 0.5 : 1
-    onAudioLevelsChanged: generateWaveform()
     states: [
         State {
             name: 'normal'
@@ -167,7 +168,6 @@ Rectangle {
                 fillColor: getColor()
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
-                levels: audioLevels
                 active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
@@ -552,5 +552,13 @@ Rectangle {
             position: 1
             color: getColor()
         }
+    }
+
+    Connections {
+        function onAudioLevelsChanged() {
+            generateWaveform();
+        }
+
+        target: producer
     }
 }

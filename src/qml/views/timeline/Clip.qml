@@ -74,8 +74,8 @@ Rectangle {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(clipRoot.width / waveform.maxWidth);
-        for (var i = 0; i < waveformRepeater.count; i++)
-            waveformRepeater.itemAt(0).update();
+        for (let i = 0; i < waveformRepeater.count; i++)
+            waveformRepeater.itemAt(i).update();
     }
 
     function updateThumbnails() {

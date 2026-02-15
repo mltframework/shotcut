@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
 #include "qmltypes/qmlapplication.h"
-#include "settings.h"
 #include "util.h"
 #include "widgets/glaxnimateproducerwidget.h"
 
@@ -94,14 +93,11 @@ QString QmlProducer::name()
     return Util::producerTitle(m_producer);
 }
 
-QVariant QmlProducer::audioLevels()
+const QVariantList *QmlProducer::audioLevels()
 {
     if (!m_producer.is_valid())
-        return QVariant();
-    if (m_producer.get_data(kAudioLevelsProperty))
-        return QVariant::fromValue(*((QVariantList *) m_producer.get_data(kAudioLevelsProperty)));
-    else
-        return QVariant();
+        return nullptr;
+    return static_cast<const QVariantList *>(m_producer.get_data(kAudioLevelsProperty));
 }
 
 int QmlProducer::fadeIn()
