@@ -692,6 +692,10 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("GoTo"), this);
     action->setToolTip(tr("Go to the start of this clip in the Project player"));
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Return));
+    action->setEnabled(false);
+    connect(this, &PlaylistDock::selectionChanged, action, [=]() {
+        action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
+    });
     connect(action, &QAction::triggered, this, &PlaylistDock::onGotoActionTriggered);
     Actions.add("playlistGoToAction", action);
 
@@ -749,6 +753,10 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("Move Up"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Up));
+    action->setEnabled(false);
+    connect(this, &PlaylistDock::selectionChanged, action, [=]() {
+        action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
+    });
     connect(action, &QAction::triggered, m_selectionModel, [=]() {
         raise();
         moveClipUp();
@@ -760,6 +768,10 @@ void PlaylistDock::setupActions()
     Actions.add("playlistMoveUpAction", action);
 
     action = new QAction(tr("Move Down"), this);
+    action->setEnabled(false);
+    connect(this, &PlaylistDock::selectionChanged, action, [=]() {
+        action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
+    });
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Down));
     connect(action, &QAction::triggered, m_selectionModel, [=]() {
         raise();
@@ -772,6 +784,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistMoveDownAction", action);
 
     action = new QAction(tr("Add Selected to Timeline"), this);
+    action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onAddToTimelineActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [=]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
@@ -779,6 +792,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistAddToTimelineAction", action);
 
     action = new QAction(tr("Add Selected to Slideshow"), this);
+    action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onAddToSlideshowActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [=]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
@@ -786,6 +800,10 @@ void PlaylistDock::setupActions()
     Actions.add("playlistAddToSlideshowAction", action);
 
     action = new QAction(tr("Sort By Name"), this);
+    action->setEnabled(false);
+    connect(this, &PlaylistDock::selectionChanged, action, [=]() {
+        action->setEnabled(m_selectionModel->selection().size() > 0);
+    });
     connect(action, &QAction::triggered, this, [&](bool checked) {
         resetPlaylistIndex();
         MAIN.undoStack()->push(
@@ -794,6 +812,10 @@ void PlaylistDock::setupActions()
     Actions.add("playlistSortByNameAction", action);
 
     action = new QAction(tr("Sort By Date"), this);
+    action->setEnabled(false);
+    connect(this, &PlaylistDock::selectionChanged, action, [=]() {
+        action->setEnabled(m_selectionModel->selection().size() > 0);
+    });
     connect(action, &QAction::triggered, this, [&](bool checked) {
         resetPlaylistIndex();
         MAIN.undoStack()->push(
