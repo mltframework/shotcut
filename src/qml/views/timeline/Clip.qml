@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ Rectangle {
     property bool isAudio: false
     property bool isTransition: false
     property bool isFiltered: false
-    property var audioLevels
     property int fadeIn: 0
     property int fadeOut: 0
     property double gain: 0
@@ -75,8 +74,8 @@ Rectangle {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(clipRoot.width / waveform.maxWidth);
-        for (var i = 0; i < waveformRepeater.count; i++)
-            waveformRepeater.itemAt(0).update();
+        for (let i = 0; i < waveformRepeater.count; i++)
+            waveformRepeater.itemAt(i).update();
     }
 
     function updateThumbnails() {
@@ -105,7 +104,6 @@ Rectangle {
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active ? 0.5 : 1
-    onAudioLevelsChanged: generateWaveform(false)
     states: [
         State {
             name: 'normal'
@@ -329,19 +327,18 @@ Rectangle {
             model: Math.ceil(clipRoot.width / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
-
-                // right edge
-                // left edge
-                // bottom edge
                 property int channels: 2
 
+                trackIndex: clipRoot.trackIndex
+                clipIndex: clipRoot.originalClipIndex
                 width: Math.min(clipRoot.width, waveform.maxWidth)
                 height: waveform.height
                 fillColor: clipColor
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
-                levels: audioLevels
                 active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
+
+                Component.onCompleted: connectToModel()
             }
         }
     }

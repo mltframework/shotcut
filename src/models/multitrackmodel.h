@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,6 +101,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
+    const QVariantList *getAudioLevels(int trackIndex, int clipIndex) const;
     bool createIfNeeded();
     void addBackgroundTrack();
     int addAudioTrack();

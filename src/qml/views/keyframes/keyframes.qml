@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2024 Meltytech, LLC
+ * Copyright (c) 2017-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -368,12 +368,12 @@ Rectangle {
                                         mltService: producer.mlt_service
                                         inPoint: producer.in
                                         outPoint: filter !== null ? filter.in - 1 : 0
-                                        audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
                                         outThumbnailVisible: false
                                         onRightClicked: root.clipRightClicked()
+                                        onOutPointChanged: generateWaveform()
                                     }
 
                                     KeyframeClip {
@@ -387,7 +387,6 @@ Rectangle {
                                         outPoint: filter !== null ? filter.out : 0
                                         animateIn: filter !== null ? filter.animateIn : 0
                                         animateOut: filter !== null ? filter.animateOut : 0
-                                        audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
@@ -429,12 +428,12 @@ Rectangle {
                                         mltService: producer.mlt_service
                                         inPoint: filter !== null ? filter.out + 1 : 0
                                         outPoint: producer.out
-                                        audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
                                         inThumbnailVisible: false
                                         onRightClicked: root.clipRightClicked()
+                                        onInPointChanged: generateWaveform()
                                     }
                                 }
                             }
