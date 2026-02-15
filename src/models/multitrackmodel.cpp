@@ -368,8 +368,11 @@ const QVariantList *MultitrackModel::getAudioLevels(int trackIndex, int clipInde
         if (clipIndex >= 0 && clipIndex < playlist.count()) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
             if (info && info->producer && info->producer->is_valid()) {
-                return static_cast<const QVariantList *>(
+                info->producer->lock();
+                const QVariantList *result = static_cast<const QVariantList *>(
                     info->producer->get_data(kAudioLevelsProperty));
+                info->producer->unlock();
+                return result;
             }
         }
     }
