@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ static void deleteQVariantList(QVariantList *list)
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index)
     : QRunnable()
     , m_object(object)
+    , m_qmlProducer(object)
     , m_isCanceled(false)
     , m_isForce(false)
 {
@@ -79,7 +80,11 @@ void AudioLevelsTask::start(Mlt::Producer &producer,
             if (*t == *task) {
                 // If so, then just add ourselves to be notified upon completion.
                 delete task;
-                task = 0;
+                task = nullptr;
+                if (index.isValid())
+                    t->m_object = object;
+                else
+                    t->m_qmlProducer = object;
                 t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
                 break;
             }
@@ -169,6 +174,22 @@ QString AudioLevelsTask::cacheKey()
     return key;
 }
 
+void AudioLevelsTask::notifyQObjects(const QPersistentModelIndex &index)
+{
+    if (index.isValid() && m_object) {
+        // LOG_DEBUG() << "calling audioLevelsReady" << m_object << index;
+        if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
+            QMetaObject::invokeMethod(m_object,
+                                      "audioLevelsReady",
+                                      Q_ARG(const QPersistentModelIndex &, index));
+    } else if (m_qmlProducer) {
+        // LOG_DEBUG() << "calling audioLevelsChanged" << m_qmlProducer;
+        if (-1 != m_qmlProducer->metaObject()->indexOfSignal("audioLevelsChanged()")) {
+            QMetaObject::invokeMethod(m_qmlProducer, "audioLevelsChanged");
+        }
+    }
+}
+
 void AudioLevelsTask::run()
 {
     // 2 channels interleaved of uchar values
@@ -223,12 +244,7 @@ void AudioLevelsTask::run()
                                  0,
                                  (mlt_destructor) deleteQVariantList);
                     p.first->unlock();
-                    if (-1
-                        != m_object->metaObject()->indexOfMethod(
-                            "audioLevelsReady(QPersistentModelIndex)"))
-                        QMetaObject::invokeMethod(m_object,
-                                                  "audioLevelsReady",
-                                                  Q_ARG(const QPersistentModelIndex &, p.second));
+                    notifyQObjects(p.second);
                 }
             }
         }
@@ -298,11 +314,7 @@ void AudioLevelsTask::run()
             p.first->lock();
             p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
             p.first->unlock();
-            if (-1
-                != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
-                QMetaObject::invokeMethod(m_object,
-                                          "audioLevelsReady",
-                                          Q_ARG(const QPersistentModelIndex &, p.second));
+            notifyQObjects(p.second);
         }
     }
 }

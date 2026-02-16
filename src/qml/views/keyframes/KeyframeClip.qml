@@ -59,7 +59,8 @@ Rectangle {
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
         for (let i = 0; i < waveformRepeater.count; i++) {
             var item = waveformRepeater.itemAt(i);
-            item.producer = producer;
+            if (item.producer !== producer)
+                item.producer = producer;
             item.update();
         }
     }

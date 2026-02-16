@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +17,6 @@
 
 #ifndef AUDIOLEVELSTASK_H
 #define AUDIOLEVELSTASK_H
-
-#include "multitrackmodel.h"
 
 #include <MltProducer.h>
 #include <MltProfile.h>
@@ -45,8 +42,10 @@ protected:
 private:
     Mlt::Producer *tempProducer();
     QString cacheKey();
+    void notifyQObjects(const QPersistentModelIndex &index);
 
     QObject *m_object;
+    QObject *m_qmlProducer;
     typedef QPair<Mlt::Producer *, QPersistentModelIndex> ProducerAndIndex;
     QList<ProducerAndIndex> m_producers;
     QScopedPointer<Mlt::Producer> m_tempProducer;

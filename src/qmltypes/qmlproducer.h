@@ -71,7 +71,6 @@ public:
     void seek(int position);
     Mlt::Producer &producer() { return m_producer; }
     Q_INVOKABLE Mlt::Producer *getMltProducer() { return &m_producer; }
-    Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();
     Q_INVOKABLE QString get(QString name, int position = -1);
