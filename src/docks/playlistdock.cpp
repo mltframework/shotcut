@@ -410,6 +410,7 @@ PlaylistDock::PlaylistDock(QWidget *parent)
     m_mainMenu->addAction(Actions["playlistSetFileDateAction"]);
     m_mainMenu->addAction(Actions["playlistAddFilesAction"]);
     m_mainMenu->addAction(Actions["playlistAppendCutAction"]);
+    m_mainMenu->addAction(Actions["playlistLogEventAction"]);
     m_mainMenu->addSeparator();
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
     selectMenu->addAction(Actions["playlistSelectAllAction"]);
@@ -1199,6 +1200,12 @@ void PlaylistDock::setupActions()
         }
     });
 
+    action = new QAction(tr("Log Event"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_E));
+    action->setToolTip(tr("Add an item at the current playback position"));
+    connect(action, &QAction::triggered, this, &PlaylistDock::onLogEventActionTriggered);
+    Actions.add("playlistLogEventAction", action);
+
     action = new QAction(tr("Search"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
     connect(action, &QAction::triggered, this, [=]() {
@@ -1592,6 +1599,46 @@ void PlaylistDock::onRemoveActionTriggered()
         // Remove the playlist index property on the producer.
         resetPlaylistIndex();
         emit enableUpdate(false);
+    }
+}
+
+void PlaylistDock::onLogEventActionTriggered()
+{
+    Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
+    if (!producer.is_valid() || MAIN.isSourceClipMyProject())
+        return;
+
+    // Get current playback position
+    int currentPosition = MLT.producer() && MLT.producer()->is_valid() ? MLT.producer()->position()
+                                                                       : 0;
+    double fps = MLT.profile().fps();
+
+    int inPoint = currentPosition - qFloor(3.0 * fps) - 1;
+    if (inPoint < 0)
+        inPoint = 0;
+
+    int outPoint = currentPosition + qFloor(3.0 * fps);
+    int producerLength = producer.get_length();
+    if (outPoint > producerLength - 1)
+        outPoint = producerLength - 1;
+
+    show();
+    raise();
+
+    if (!MLT.isLiveProducer(&producer)) {
+        ProxyManager::generateIfNotExists(producer);
+        assignToBin(producer);
+        producer.set_in_and_out(inPoint, outPoint);
+        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
+    } else {
+        DurationDialog durationDialog(this);
+        durationDialog.setDuration(outPoint - inPoint + 1);
+        if (durationDialog.exec() == QDialog::Accepted) {
+            producer.set("length", durationDialog.duration());
+            producer.set_in_and_out(0, durationDialog.duration() - 1);
+            assignToBin(producer);
+            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
+        }
     }
 }
 

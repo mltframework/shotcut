@@ -138,6 +138,7 @@ private:
     void onInsertCutActionTriggered();
     void onUpdateActionTriggered();
     void onRemoveActionTriggered();
+    void onLogEventActionTriggered();
     void incrementIndex(int step);
     void setIndex(int row);
     void moveClipUp();
