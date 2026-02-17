@@ -447,8 +447,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
         }
     }
-    vcodec = QString::fromLatin1(preset.get("vcodec"));
-    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, false);
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), false);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
     if (m_extension.isEmpty()) {
@@ -1775,7 +1774,7 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool res
             ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
         }
 #endif
-        if (resetBframes && vcodec.startsWith("h264_"))
+        if (vcodec.startsWith("h264_"))
             ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
