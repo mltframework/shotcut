@@ -32,8 +32,13 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['opacity']
+        simpleProperties: ['geometry', 'fgcolour', 'olcolour', 'bgcolour', 'opacity']
         parameters: [
+            Parameter {
+                name: qsTr('Position / Size')
+                property: 'geometry'
+                isRectangle: true
+            },
             Parameter {
                 name: qsTr('Font color')
                 property: 'fgcolour'
