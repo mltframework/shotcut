@@ -5860,10 +5860,10 @@ void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
     Settings.setTextUnderIcons(b);
     updateLayoutSwitcher();
     if (b && this->width() < 1800) {
-        ui->mainToolBar->removeAction(ui->actionOpenOther2);
         ui->mainToolBar->removeAction(ui->actionFiles);
         ui->mainToolBar->removeAction(ui->actionMarkers);
         ui->mainToolBar->removeAction(ui->actionNotes);
+        ui->mainToolBar->removeAction(ui->actionHistory);
     }
 }
 

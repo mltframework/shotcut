@@ -1350,7 +1350,7 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineZoomFitAction", action);
 
-    action = new QAction(tr("New Generator"), this);
+    action = new QAction(tr("Generate"), this);
     action->setWhatsThis(
         "https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14");
     icon = QIcon::fromTheme("document-new", QIcon(":/icons/oxygen/32x32/actions/document-new.png"));

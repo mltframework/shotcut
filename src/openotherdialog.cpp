@@ -80,7 +80,7 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent)
         }
     }
     if (mltProducers->get_data("glaxnimate")) {
-        QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Animation")));
+        QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Drawing/Animation")));
         item->setData(0, Qt::UserRole, ui->glaxnimateTab->objectName());
     }
     if (mltProducers->get_data("noise")) {

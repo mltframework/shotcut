@@ -1180,7 +1180,7 @@
      <normaloff>:/icons/oxygen/32x32/actions/document-new.png</normaloff>:/icons/oxygen/32x32/actions/document-new.png</iconset>
    </property>
    <property name="text">
-    <string>New Generator</string>
+    <string>Generate</string>
    </property>
    <property name="whatsThis">
     <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>

@@ -74,26 +74,31 @@
     <name>AddEncodePresetDialog</name>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_addencodepresetdialog.h" line="124"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="25"/>
+        <location filename="../src/shotcut_autogen/include/ui_addencodepresetdialog.h" line="125"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="52"/>
+        <location filename="../src/shotcut_autogen/include/ui_addencodepresetdialog.h" line="126"/>
         <source>File name extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="59"/>
+        <location filename="../src/shotcut_autogen/include/ui_addencodepresetdialog.h" line="127"/>
         <source>for example, mp4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="84"/>
+        <location filename="../src/shotcut_autogen/include/ui_addencodepresetdialog.h" line="128"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -203,31 +208,37 @@
     <name>AlsaWidget</name>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="117"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="118"/>
         <source>ALSA Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="56"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="119"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="63"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="120"/>
         <source>PCM Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="73"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="121"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="80"/>
+        <location filename="../src/shotcut_autogen/include/ui_alsawidget.h" line="122"/>
         <source>Channels</source>
         <translation type="unfinished"></translation>
     </message>
@@ -482,67 +493,81 @@
     <name>AvformatProducerWidget</name>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="730"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="63"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="755"/>
         <source>Comments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="177"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="758"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="123"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="757"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="292"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="823"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="572"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="808"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="809"/>
         <source>Full (JPEG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="475"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="700"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="806"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="824"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="463"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="805"/>
         <source>Aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="528"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="807"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="298"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="769"/>
         <source>Scan mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="603"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="811"/>
         <source>Interlaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="608"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="812"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,65 +576,84 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="417"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="786"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="816"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="777"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="792"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="830"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="841"/>
         <source>Codec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="187"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="759"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="202"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="762"/>
         <source>Speed Presets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="254"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="764"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="766"/>
         <source>Apply pitch compensation when the speed is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="264"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="768"/>
         <source>Pitch Compensation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="318"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="771"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="382"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="422"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="779"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="794"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="387"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="427"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="781"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="796"/>
         <source>Frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="392"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="783"/>
         <source>Pixel format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="397"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="437"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="785"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="800"/>
         <source>Color space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="402"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="442"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="787"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="802"/>
         <source>Color transfer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -617,6 +661,9 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="407"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="806"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="946"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="773"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="826"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="857"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -624,6 +671,9 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="412"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="811"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="951"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="775"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="828"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="859"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -631,217 +681,264 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="432"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="801"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="831"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="798"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="836"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="847"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="814"/>
         <source>Bottom Field First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="815"/>
         <source>Top Field First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="648"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="817"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="653"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="818"/>
         <source>90</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="658"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="819"/>
         <source>180</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="820"/>
         <source>270</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="671"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="822"/>
         <source>°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="694"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="855"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="791"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="821"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="832"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="843"/>
         <source>Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="796"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="834"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="845"/>
         <source>Sample rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="851"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="858"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="853"/>
         <source>Sync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="883"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="854"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="912"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="860"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="982"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="862"/>
         <source>Properties Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1020"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="871"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="873"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1030"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="875"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1052"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="731"/>
         <source>Show In Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1082"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1247"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="737"/>
         <source>Extract Subtitles...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1115"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="743"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1120"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="744"/>
         <source>Set Equirectangular...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1125"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="745"/>
         <source>Measure Video Quality...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1133"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1136"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="746"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="748"/>
         <source>Export GPX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="750"/>
         <source>View Bitrate...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1144"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="752"/>
         <source>View Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1149"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="754"/>
         <source>Show In Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="866"/>
         <source>Convert to Edit-friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="308"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="770"/>
         <source>Color range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="868"/>
         <source>Convert...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="732"/>
         <source>Copy Full File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1062"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="733"/>
         <source>More Information...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1067"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="734"/>
         <source>Start Integrity Check Job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1072"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="735"/>
         <source>Convert to Edit-friendly...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1087"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="738"/>
         <source>Set Creation Time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1095"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="739"/>
         <source>Disable Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1100"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="740"/>
         <source>Make Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1105"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="741"/>
         <source>Delete Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1110"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="742"/>
         <source>Copy Hash Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1006"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="877"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="869"/>
         <source>Reverse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1077"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="736"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -873,6 +970,7 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1013"/>
+        <location filename="../src/shotcut_autogen/include/ui_avformatproducerwidget.h" line="870"/>
         <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1025,12 +1123,14 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>AvfoundationProducerWidget</name>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="100"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="107"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="101"/>
         <source>Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1041,16 +1141,20 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="84"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="90"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="99"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="102"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="105"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="49"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="104"/>
         <source>Video Input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="68"/>
+        <location filename="../src/shotcut_autogen/include/ui_avfoundationproducerwidget.h" line="107"/>
         <source>Audio Input</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1095,16 +1199,19 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>BlipProducerWidget</name>
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_blipproducerwidget.h" line="95"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_blipproducerwidget.h" line="96"/>
         <source>Blip Flash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_blipproducerwidget.h" line="97"/>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1208,56 +1315,67 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>ColorBarsWidget</name>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="98"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="99"/>
         <source>Color Bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="40"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="100"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="57"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="101"/>
         <source>100% PAL color bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="62"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="102"/>
         <source>100% PAL color bars with red</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="67"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="103"/>
         <source>95% BBC PAL color bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="72"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="104"/>
         <source>75% EBU color bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="77"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="105"/>
         <source>SMPTE color bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="82"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="106"/>
         <source>Philips PM5544</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="87"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="107"/>
         <source>FuBK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="92"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorbarswidget.h" line="108"/>
         <source>Simplified FuBK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1279,26 +1397,31 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>ColorProducerWidget</name>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorproducerwidget.h" line="113"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="23"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorproducerwidget.h" line="114"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="33"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorproducerwidget.h" line="115"/>
         <source>Comments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="64"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorproducerwidget.h" line="117"/>
         <source>Color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="77"/>
+        <location filename="../src/shotcut_autogen/include/ui_colorproducerwidget.h" line="118"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1346,56 +1469,67 @@ leave blank to use the clipboard:</source>
     <name>CountProducerWidget</name>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="190"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="191"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="192"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="76"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="193"/>
         <source>Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="112"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="197"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="109"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="195"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Silent - No sound&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz beep exactly two seconds before the out point&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz beep at frame 0 of every second&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="148"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="201"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="145"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="199"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;None - No background&lt;/p&gt;&lt;p&gt;Clock  - Film style clock animation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="184"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="205"/>
         <source>Drop Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="181"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="203"/>
         <source>Use SMPTE style drop-frame counting for non-integer frame rates. The clock and timecode will advance two frames every minute if necessary to keep time with wall clock time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="191"/>
+        <location filename="../src/shotcut_autogen/include/ui_countproducerwidget.h" line="206"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1488,66 +1622,79 @@ leave blank to use the clipboard:</source>
     <name>CustomProfileDialog</name>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="336"/>
         <source>Add Custom Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="32"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="337"/>
         <source>Colorspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="61"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="338"/>
         <source>ITU-R BT.2020</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="84"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="340"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="115"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="341"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="185"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="343"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="204"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="344"/>
         <source>Interlaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="209"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="345"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="232"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="347"/>
         <source>Aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="263"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="348"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="351"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="350"/>
         <source>Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="452"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="352"/>
         <source>Scan mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="484"/>
+        <location filename="../src/shotcut_autogen/include/ui_customprofiledialog.h" line="353"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1561,27 +1708,32 @@ leave blank to use the clipboard:</source>
     <name>DecklinkProducerWidget</name>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_decklinkproducerwidget.h" line="108"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="28"/>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="85"/>
+        <location filename="../src/shotcut_autogen/include/ui_decklinkproducerwidget.h" line="109"/>
         <source>SDI/HDMI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="59"/>
+        <location filename="../src/shotcut_autogen/include/ui_decklinkproducerwidget.h" line="110"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="69"/>
+        <location filename="../src/shotcut_autogen/include/ui_decklinkproducerwidget.h" line="111"/>
         <source>Signal mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="87"/>
+        <location filename="../src/shotcut_autogen/include/ui_decklinkproducerwidget.h" line="112"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1595,28 +1747,34 @@ leave blank to use the clipboard:</source>
     <name>DirectShowVideoWidget</name>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="100"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="28"/>
         <location filename="../src/widgets/directshowvideowidget.cpp" line="166"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="101"/>
         <source>Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="54"/>
         <location filename="../src/widgets/directshowvideowidget.ui" line="83"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="102"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="106"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="62"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="104"/>
         <source>Video Input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="72"/>
+        <location filename="../src/shotcut_autogen/include/ui_directshowvideowidget.h" line="105"/>
         <source>Audio Input</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1625,11 +1783,13 @@ leave blank to use the clipboard:</source>
     <name>DurationDialog</name>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_durationdialog.h" line="87"/>
         <source>Set Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
+        <location filename="../src/shotcut_autogen/include/ui_durationdialog.h" line="88"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1684,156 +1844,187 @@ leave blank to use the clipboard:</source>
     <name>EncodeDock</name>
     <message>
         <location filename="../src/docks/encodedock.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1301"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="44"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1302"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="57"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1303"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="88"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1305"/>
         <source>Add current settings as a new custom preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="102"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1308"/>
         <source>Delete currently selected preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="168"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1310"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="186"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1311"/>
         <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="216"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1312"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="252"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1313"/>
         <source>Use hardware encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="259"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1314"/>
         <source>Configure...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="296"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1360"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="487"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1320"/>
         <source>Interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="541"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1325"/>
         <source>Field order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="551"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1326"/>
         <source>Aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="725"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1347"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="581"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1329"/>
         <source>Scan mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="666"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1344"/>
         <source>Interlaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="671"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1345"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="619"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1340"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="571"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1328"/>
         <source>Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="913"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1359"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="826"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1350"/>
         <source>Bottom Field First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="831"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1351"/>
         <source>Top Field First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="860"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1353"/>
         <source>One Field (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="865"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1355"/>
         <source>YADIF - temporal only (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="561"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1327"/>
         <source>Deinterlacer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="503"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1321"/>
         <source>Nearest Neighbor (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="508"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1322"/>
         <source>Bilinear (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="513"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1323"/>
         <source>Bicubic (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="813"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1349"/>
         <source>Use preview scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="601"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1332"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1844,36 +2035,43 @@ with parallel processing enabled.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="332"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1316"/>
         <source>Reframe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="591"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1330"/>
         <source>Color range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="609"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1339"/>
         <source>Parallel processing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="632"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1341"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="637"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1342"/>
         <source>Full (JPEG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="870"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1356"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="875"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1357"/>
         <source>BWDIF (best)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1881,252 +2079,310 @@ with parallel processing enabled.</source>
         <location filename="../src/docks/encodedock.ui" line="952"/>
         <location filename="../src/docks/encodedock.ui" line="961"/>
         <location filename="../src/docks/encodedock.ui" line="1654"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1361"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1402"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1415"/>
         <source>Codec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="991"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1362"/>
         <source>GOP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1003"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1364"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1016"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1366"/>
         <source>frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1036"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1368"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1040"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1371"/>
         <source>Fixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1064"/>
         <location filename="../src/docks/encodedock.ui" line="1696"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1374"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1419"/>
         <source>The average bit rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1217"/>
         <location filename="../src/docks/encodedock.ui" line="1779"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1376"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1421"/>
         <source>b/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1239"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1377"/>
         <source>Disable video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1246"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1379"/>
         <source>&lt;p&gt;The hardware decoder for export is usually not very beneficial and is often slower. It may only mildly reduce CPU usage on some systems. Therefore, we recommend to leave it off, but you can test and decide for yourself.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1249"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1381"/>
         <source>Use hardware decoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1256"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1382"/>
         <source>Dual pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1263"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1383"/>
         <source>B frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1275"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1385"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1314"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1388"/>
         <source>Codec threads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1329"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1389"/>
         <source>(0 = auto)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1351"/>
         <location filename="../src/docks/encodedock.ui" line="1821"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1390"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1423"/>
         <source>Rate control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1364"/>
         <location filename="../src/docks/encodedock.ui" line="1834"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1391"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1424"/>
         <source>Average Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1369"/>
         <location filename="../src/docks/encodedock.ui" line="1839"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1392"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1425"/>
         <source>Constant Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1374"/>
         <location filename="../src/docks/encodedock.ui" line="1844"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1393"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1426"/>
         <source>Quality-based VBR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1379"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1394"/>
         <source>Constrained VBR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1402"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1396"/>
         <source>Buffer size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1424"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1397"/>
         <source>KiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1446"/>
         <location filename="../src/docks/encodedock.ui" line="1867"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1398"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1428"/>
         <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1458"/>
         <location filename="../src/docks/encodedock.ui" line="1879"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1399"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1429"/>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1474"/>
         <location filename="../src/docks/encodedock.ui" line="1895"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1400"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1430"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1496"/>
         <location filename="../src/docks/encodedock.ui" line="1684"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1401"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1416"/>
         <source>Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1507"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1431"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1516"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1403"/>
         <source>Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1528"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1410"/>
         <source>The number of audio channels in the output.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1532"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1404"/>
         <source>1 (mono)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1537"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1405"/>
         <source>2 (stereo)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1542"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1406"/>
         <source>4 (quad/Ambisonics)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1547"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1407"/>
         <source>6 (5.1 surround)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1622"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1413"/>
         <source>Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1644"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1414"/>
         <source>Sample rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1801"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1422"/>
         <source>Disable audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1918"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1433"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1934"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1432"/>
         <source>Disable subtitles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1967"/>
-        <location filename="../src/docks/encodedock.cpp" line="1363"/>
-        <location filename="../src/docks/encodedock.cpp" line="1883"/>
-        <location filename="../src/docks/encodedock.cpp" line="2374"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
+        <location filename="../src/docks/encodedock.cpp" line="1882"/>
+        <location filename="../src/docks/encodedock.cpp" line="2373"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1434"/>
         <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1977"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1436"/>
         <source>Reset options to defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1980"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1438"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1987"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1439"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1997"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1441"/>
         <source>Always start in Advanced mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2007"/>
-        <location filename="../src/docks/encodedock.cpp" line="2079"/>
-        <location filename="../src/docks/encodedock.cpp" line="2086"/>
-        <location filename="../src/docks/encodedock.cpp" line="2198"/>
+        <location filename="../src/docks/encodedock.cpp" line="2078"/>
+        <location filename="../src/docks/encodedock.cpp" line="2085"/>
+        <location filename="../src/docks/encodedock.cpp" line="2197"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1444"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2034"/>
-        <location filename="../src/docks/encodedock.cpp" line="1866"/>
-        <location filename="../src/docks/encodedock.cpp" line="1967"/>
-        <location filename="../src/docks/encodedock.cpp" line="1977"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
+        <location filename="../src/docks/encodedock.cpp" line="1966"/>
+        <location filename="../src/docks/encodedock.cpp" line="1976"/>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1445"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2142,140 +2398,140 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="477"/>
-        <location filename="../src/docks/encodedock.cpp" line="483"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="488"/>
-        <location filename="../src/docks/encodedock.cpp" line="495"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="506"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="515"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1812"/>
         <location filename="../src/docks/encodedock.cpp" line="1813"/>
-        <location filename="../src/docks/encodedock.cpp" line="1814"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="554"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1437"/>
+        <location filename="../src/docks/encodedock.cpp" line="1436"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1535"/>
+        <location filename="../src/docks/encodedock.cpp" line="1534"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1883"/>
-        <location filename="../src/docks/encodedock.cpp" line="2376"/>
+        <location filename="../src/docks/encodedock.cpp" line="1882"/>
+        <location filename="../src/docks/encodedock.cpp" line="2375"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1885"/>
+        <location filename="../src/docks/encodedock.cpp" line="1884"/>
         <source>Export Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1900"/>
+        <location filename="../src/docks/encodedock.cpp" line="1899"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1902"/>
+        <location filename="../src/docks/encodedock.cpp" line="1901"/>
         <source>Determined by Export (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2074"/>
-        <location filename="../src/docks/encodedock.cpp" line="2096"/>
+        <location filename="../src/docks/encodedock.cpp" line="2073"/>
+        <location filename="../src/docks/encodedock.cpp" line="2095"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2088"/>
+        <location filename="../src/docks/encodedock.cpp" line="2087"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2131"/>
+        <location filename="../src/docks/encodedock.cpp" line="2130"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2175"/>
+        <location filename="../src/docks/encodedock.cpp" line="2174"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2176"/>
+        <location filename="../src/docks/encodedock.cpp" line="2175"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2304"/>
+        <location filename="../src/docks/encodedock.cpp" line="2303"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2358"/>
+        <location filename="../src/docks/encodedock.cpp" line="2357"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2511"/>
+        <location filename="../src/docks/encodedock.cpp" line="2510"/>
         <source>Detect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2568"/>
+        <location filename="../src/docks/encodedock.cpp" line="2567"/>
         <source>(auto)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2614"/>
+        <location filename="../src/docks/encodedock.cpp" line="2613"/>
         <source>Detecting hardware encoders...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2671"/>
+        <location filename="../src/docks/encodedock.cpp" line="2670"/>
         <source>Nothing found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2673"/>
+        <location filename="../src/docks/encodedock.cpp" line="2672"/>
         <source>Found %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2899"/>
+        <location filename="../src/docks/encodedock.cpp" line="2898"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2283,43 +2539,48 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2948"/>
+        <location filename="../src/docks/encodedock.cpp" line="2947"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2986"/>
+        <location filename="../src/docks/encodedock.cpp" line="2985"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2509"/>
+        <location filename="../src/docks/encodedock.cpp" line="2508"/>
         <source>Configure Hardware Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="473"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1886"/>
+        <location filename="../src/docks/encodedock.cpp" line="1885"/>
         <source>Export Each Playlist Bin Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1931"/>
+        <location filename="../src/docks/encodedock.cpp" line="1930"/>
         <source>Export canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2533"/>
+        <location filename="../src/docks/encodedock.cpp" line="2532"/>
         <source>Export Frames/sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shotcut_autogen/include/ui_encodedock.h" line="1354"/>
+        <source>Linear Blend (fast)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2523,21 +2784,25 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/docks/filesdock.ui" line="14"/>
         <location filename="../src/docks/filesdock.cpp" line="599"/>
+        <location filename="../src/shotcut_autogen/include/ui_filesdock.h" line="170"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.ui" line="57"/>
+        <location filename="../src/shotcut_autogen/include/ui_filesdock.h" line="171"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.ui" line="86"/>
+        <location filename="../src/shotcut_autogen/include/ui_filesdock.h" line="173"/>
         <source>Add the current folder to the saved locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.ui" line="106"/>
+        <location filename="../src/shotcut_autogen/include/ui_filesdock.h" line="177"/>
         <source>Remove the selected location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3093,41 +3358,49 @@ Click Cancel if you do not have Glaxnimate.</source>
     <name>GlaxnimateProducerWidget</name>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="177"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="23"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="178"/>
         <source>Animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="33"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="179"/>
         <source>Comments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="64"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="181"/>
         <source>Background color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="79"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="182"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="106"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="183"/>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="113"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="184"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="135"/>
+        <location filename="../src/shotcut_autogen/include/ui_glaxnimateproducerwidget.h" line="185"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3197,109 +3470,130 @@ Click to change</source>
     <name>HtmlGeneratorWidget</name>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="341"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="342"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="153"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="343"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="176"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="344"/>
         <source>Line 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="190"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="345"/>
         <source>Line 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="204"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="346"/>
         <source>Line 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="218"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="348"/>
         <source>Click to expand or collapse the Body section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="224"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="481"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="350"/>
         <source>▶ Body</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="256"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="351"/>
         <source>Background color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="269"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="352"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="279"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="354"/>
         <source>Click to set color to transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="282"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="356"/>
         <source>Transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="304"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="357"/>
         <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="313"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="359"/>
         <source>Click to expand or collapse the CSS section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="319"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="471"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="361"/>
         <source>▶ CSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="349"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="362"/>
         <source>Type or paste stylesheets here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="358"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="364"/>
         <source>Click to expand or collapse the JavaScript section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="364"/>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="489"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="366"/>
         <source>▶ JavaScript</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="394"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="367"/>
         <source>Type or paste JavaScript code here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="435"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="368"/>
         <source>Generate Image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="442"/>
+        <location filename="../src/shotcut_autogen/include/ui_htmlgeneratorwidget.h" line="369"/>
         <source>Generate Video...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3404,131 +3698,157 @@ Click to change</source>
     <name>ImageProducerWidget</name>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="299"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="30"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="309"/>
         <source>Comments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="64"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="311"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="73"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="312"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="85"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="313"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="137"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="318"/>
         <source>Pixel aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="168"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="319"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="196"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="320"/>
         <source>Image sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="203"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="321"/>
         <source>Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="221"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="322"/>
         <source> frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="237"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="323"/>
         <source>per picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="250"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="325"/>
         <source>Properties Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="271"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="329"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="331"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="281"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="333"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="316"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="300"/>
         <source>Copy Full File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="301"/>
         <source>Show In Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="354"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="307"/>
         <source>Show In Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="302"/>
         <source>Set Creation Time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="334"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="303"/>
         <source>Disable Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="339"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="304"/>
         <source>Make Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="344"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="305"/>
         <source>Delete Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="349"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="306"/>
         <source>Copy Hash Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="315"/>
         <source>Make the current duration value the default value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="128"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="317"/>
         <source>Set Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="359"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="308"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3577,6 +3897,7 @@ Click to change</source>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="264"/>
+        <location filename="../src/shotcut_autogen/include/ui_imageproducerwidget.h" line="328"/>
         <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3585,26 +3906,31 @@ Click to change</source>
     <name>IsingWidget</name>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_isingwidget.h" line="207"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_isingwidget.h" line="208"/>
         <source>Ising Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_isingwidget.h" line="209"/>
         <source>Noise Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="108"/>
+        <location filename="../src/shotcut_autogen/include/ui_isingwidget.h" line="210"/>
         <source>Border Growth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="176"/>
+        <location filename="../src/shotcut_autogen/include/ui_isingwidget.h" line="211"/>
         <source>Spontaneous Growth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3646,11 +3972,13 @@ Click to change</source>
     <name>JobsDock</name>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="141"/>
         <source>Jobs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="114"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="163"/>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
@@ -3658,62 +3986,75 @@ the list. This does not stop a currently running job. Right-
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="129"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="169"/>
         <source>Remove all of the completed and failed jobs from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="132"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="171"/>
         <source>Clean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="103"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="160"/>
         <source>Jobs Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="119"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="167"/>
         <source>Pause Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="155"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="142"/>
         <source>Stop This Job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="158"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="144"/>
         <source>Stop the currently selected job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="163"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="146"/>
         <source>View Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="166"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="148"/>
         <source>View the messages of MLT and FFmpeg </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="171"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="150"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="174"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="152"/>
         <source>Restart a stopped job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="179"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="154"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="184"/>
         <location filename="../src/docks/jobsdock.ui" line="187"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="155"/>
+        <location filename="../src/shotcut_autogen/include/ui_jobsdock.h" line="157"/>
         <source>Remove Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4241,21 +4582,25 @@ the list. This does not stop a currently running job. Right-
     <name>LissajousWidget</name>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_lissajouswidget.h" line="161"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_lissajouswidget.h" line="162"/>
         <source>Lissajous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_lissajouswidget.h" line="163"/>
         <source>X Ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="108"/>
+        <location filename="../src/shotcut_autogen/include/ui_lissajouswidget.h" line="164"/>
         <source>Y Ratio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4264,6 +4609,7 @@ the list. This does not stop a currently running job. Right-
     <name>ListSelectionDialog</name>
     <message>
         <location filename="../src/dialogs/listselectiondialog.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_listselectiondialog.h" line="61"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4272,166 +4618,199 @@ the list. This does not stop a currently running job. Right-
     <name>LumaMixTransition</name>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="278"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="279"/>
         <source>Transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="354"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="365"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="363"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="366"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="95"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="289"/>
         <source>Dissolve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="291"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="110"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="295"/>
         <source>Bar Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="115"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="297"/>
         <source>Bar Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="120"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="299"/>
         <source>Barn Door Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="125"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="301"/>
         <source>Barn Door Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="303"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="135"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="305"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="140"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="307"/>
         <source>Diagonal Top Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="145"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="309"/>
         <source>Diagonal Top Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="150"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="311"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="155"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="313"/>
         <source>Matrix Waterfall Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="160"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="315"/>
         <source>Matrix Snake Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="165"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="317"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="170"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="319"/>
         <source>Matrix Snake Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="175"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="321"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="180"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="323"/>
         <source>Barn V Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="185"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="325"/>
         <source>Iris Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="190"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="327"/>
         <source>Double Iris</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="195"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="329"/>
         <source>Iris Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="200"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="331"/>
         <source>Box Bottom Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="205"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="333"/>
         <source>Box Bottom Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="210"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="335"/>
         <source>Box Right Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="215"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="337"/>
         <source>Clock Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="373"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="367"/>
         <source>Get custom transitions on our Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="105"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="293"/>
         <source>Custom...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="246"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="344"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="344"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="362"/>
         <source>Swap the appearance of the A and B clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="347"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="364"/>
         <source>Invert Wipe</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4441,32 +4820,39 @@ the list. This does not stop a currently running job. Right-
         <location filename="../src/widgets/lumamixtransition.cpp" line="240"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="261"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="265"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="280"/>
         <source>Softness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="55"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="282"/>
         <source>Change the softness of the edge of the wipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="71"/>
         <location filename="../src/widgets/lumamixtransition.ui" line="314"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="284"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="360"/>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="225"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="340"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="235"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="342"/>
         <source>Save the custom transition as a favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="255"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="346"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
@@ -4474,11 +4860,13 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="260"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="350"/>
         <source>Cross-fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="274"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="352"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
@@ -4487,16 +4875,19 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="280"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="357"/>
         <source>Mix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="290"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="358"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="307"/>
+        <location filename="../src/shotcut_autogen/include/ui_lumamixtransition.h" line="359"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4521,151 +4912,181 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1066"/>
         <source>Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="47"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1316"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="88"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1320"/>
         <source>&amp;View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="92"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1321"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="117"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1322"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="127"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1324"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="146"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1326"/>
         <source>Audio Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="260"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1341"/>
         <source>Deinterlacer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="269"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1342"/>
         <source>Interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="155"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1327"/>
         <source>Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="278"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1343"/>
         <source>External Monitor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="170"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1329"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="175"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1330"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="184"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1331"/>
         <source>Display Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="210"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1335"/>
         <source>App Data Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="217"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1336"/>
         <source>Preview Scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="238"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1338"/>
         <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="242"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1339"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="332"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1345"/>
         <source>Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="392"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1067"/>
         <source>&amp;Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="406"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1071"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="409"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1073"/>
         <source>Quit the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="417"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1075"/>
         <source>&amp;About Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="425"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1076"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="433"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1077"/>
         <source>Open Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="436"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1079"/>
         <source>Open a device, stream or generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="451"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1081"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="454"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1083"/>
         <source>Save project as a MLT XML file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="468"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1085"/>
         <source>Save &amp;As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="471"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1087"/>
         <source>Save project to a different MLT XML file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4673,42 +5094,52 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="51"/>
         <location filename="../src/mainwindow.ui" line="486"/>
         <location filename="../src/mainwindow.ui" line="489"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1089"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1091"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1317"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="193"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1332"/>
         <source>Job Priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="501"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1093"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="513"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1094"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="521"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1095"/>
         <source>Forum...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="526"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1096"/>
         <source>FAQ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="535"/>
         <location filename="../src/mainwindow.cpp" line="4224"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1097"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="547"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1101"/>
         <source>Peak Meter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4716,79 +5147,95 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="562"/>
         <location filename="../src/mainwindow.cpp" line="423"/>
         <location filename="../src/mainwindow.cpp" line="2650"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1105"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="574"/>
         <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1106"/>
         <source>Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="205"/>
         <location filename="../src/mainwindow.ui" line="586"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1107"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1334"/>
         <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="598"/>
         <location filename="../src/mainwindow.cpp" line="746"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1108"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="612"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1109"/>
         <source>Realtime (frame dropping)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="623"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1110"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="631"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1111"/>
         <source>Native 8-bit CPU (fast, flexible)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1112"/>
         <source>Native 10-bit CPU (slower, better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="663"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1115"/>
         <source>1 (mono)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="671"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1116"/>
         <source>2 (stereo)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="698"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1119"/>
         <source>One Field (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="706"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1121"/>
         <source>YADIF - temporal only (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="733"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1124"/>
         <source>Nearest Neighbor (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="741"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1125"/>
         <source>Bilinear (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="749"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1126"/>
         <source>Bicubic (better)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4796,54 +5243,68 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="768"/>
         <location filename="../src/mainwindow.ui" line="915"/>
         <location filename="../src/mainwindow.cpp" line="2852"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1128"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1157"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="779"/>
         <location filename="../src/mainwindow.ui" line="1299"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1129"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1248"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="787"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1130"/>
         <source>Use JACK Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="796"/>
         <location filename="../src/mainwindow.ui" line="799"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1131"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1133"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="807"/>
         <location filename="../src/mainwindow.ui" line="1164"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1135"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1234"/>
         <source>Add...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="815"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1136"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="818"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1138"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="834"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1141"/>
         <source>Fusion Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="842"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1142"/>
         <source>Fusion Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="847"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1143"/>
         <source>Tutorials...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4851,63 +5312,77 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="200"/>
         <location filename="../src/mainwindow.ui" line="856"/>
         <location filename="../src/mainwindow.cpp" line="2669"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1144"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1333"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="864"/>
         <location filename="../src/mainwindow.ui" line="867"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1145"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1147"/>
         <source>Restore Default Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="875"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1149"/>
         <source>Show Title Bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="883"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1150"/>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="888"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1151"/>
         <source>Upgrade...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="893"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1152"/>
         <source>Open MLT XML As Clip...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="896"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1154"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="904"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1156"/>
         <source>Scrub Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="939"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1158"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="947"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1159"/>
         <source>Low</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="955"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1160"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="965"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1162"/>
         <source>Application Log...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4915,32 +5390,46 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="973"/>
         <location filename="../src/mainwindow.ui" line="1067"/>
         <location filename="../src/mainwindow.ui" line="1070"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1163"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1190"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1192"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="256"/>
         <location filename="../src/mainwindow.ui" line="1445"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1282"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1340"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="981"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1164"/>
         <source>User Interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="989"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1165"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="1183"/>
+        <source>Generate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="1246"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1243"/>
         <source>Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1474"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1291"/>
         <source>Markers as Chapters...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4948,140 +5437,172 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="1477"/>
         <location filename="../src/mainwindow.ui" line="1480"/>
         <location filename="../src/mainwindow.cpp" line="6334"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1292"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1294"/>
         <source>Export Chapters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1485"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1296"/>
         <source>Audio/Video Device...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1039"/>
         <location filename="../src/mainwindow.ui" line="1377"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1181"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1260"/>
         <source>Set...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="60"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1318"/>
         <source>Other Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="122"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1323"/>
         <source>&amp;Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="142"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1325"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="229"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1337"/>
         <source>Time Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="294"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1344"/>
         <source>Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="395"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1069"/>
         <source>Open a video, audio, image, or project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="550"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1103"/>
         <source>Audio Peak Meter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="679"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1117"/>
         <source>4 (quad/Ambisonics)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="687"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1118"/>
         <source>6 (5.1 surround)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="714"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1122"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="722"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1123"/>
         <source>BWDIF (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="757"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1127"/>
         <source>Lanczos (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1161"/>
         <source>Resources...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1044"/>
         <location filename="../src/mainwindow.ui" line="1385"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1182"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1264"/>
         <source>Show...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1047"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1184"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1056"/>
         <location filename="../src/mainwindow.ui" line="1059"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1186"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1188"/>
         <source>Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="66"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1319"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="161"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1328"/>
         <source>Processing Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="647"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1113"/>
         <source>Linear 10-bit CPU (slowest, best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="655"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1114"/>
         <source>Linear 10-bit GPU/CPU (Experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="826"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1140"/>
         <source>System Fusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1025"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1176"/>
         <source>Video/Audio...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1028"/>
         <location filename="../src/mainwindow.ui" line="1031"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1177"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1179"/>
         <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1073"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1195"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5089,11 +5610,13 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="1078"/>
         <location filename="../src/mainwindow.cpp" line="1657"/>
         <location filename="../src/mainwindow.cpp" line="5284"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1197"/>
         <source>Screen Snapshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1081"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1199"/>
         <source>Capture a screenshot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5103,319 +5626,388 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.cpp" line="5342"/>
         <location filename="../src/mainwindow.cpp" line="5358"/>
         <location filename="../src/mainwindow.cpp" line="5398"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1201"/>
         <source>Screen Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1092"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1203"/>
         <source>Record the screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1111"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1206"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1114"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1208"/>
         <source>Switch to the audio layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1117"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1211"/>
         <source>Alt+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1125"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1213"/>
         <source>Logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1128"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1215"/>
         <source>Switch to the logging layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1131"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1218"/>
         <source>Alt+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1139"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1220"/>
         <source>Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1142"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1222"/>
         <source>Switch to the editing layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1145"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1225"/>
         <source>Alt+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1153"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1227"/>
         <source>FX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1156"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1229"/>
         <source>Switch to the effects layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1159"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1232"/>
         <source>Alt+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1183"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1120"/>
+        <source>Linear Blend (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1237"/>
         <source>New Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1234"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1242"/>
         <source>Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1258"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1244"/>
         <source>Subtitles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1291"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1247"/>
         <source>1080p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1321"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1250"/>
         <source>Timecode (Drop-Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1329"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1251"/>
         <source>Frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1337"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1252"/>
         <source>Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1345"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1253"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1350"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1254"/>
         <source>Topics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1358"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1255"/>
         <source>Synchronization...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1361"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1257"/>
         <source>Synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1369"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1259"/>
         <source>Use Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1380"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1262"/>
         <source>Set the proxy storage folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1388"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1266"/>
         <source>Show the proxy storage folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1399"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1268"/>
         <source>Use Project Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1402"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1270"/>
         <source>Store proxies in the project folder if defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1410"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1272"/>
         <source>Use Hardware Encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1418"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1273"/>
         <source>Use Hardware Decoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1423"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1274"/>
         <source>Configure Hardware Encoder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1434"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1277"/>
         <source>Switch to the color layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1437"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1280"/>
         <source>Alt+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1448"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1284"/>
         <source>Switch to the player only layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1451"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1287"/>
         <source>Alt+6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1464"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1289"/>
         <source>Playlist Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1469"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1290"/>
         <source>Clip-only Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1490"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1297"/>
         <source>Reset...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1495"/>
         <location filename="../src/mainwindow.ui" line="1498"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1298"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1300"/>
         <source>Backup and Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1501"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1303"/>
         <source>Ctrl+Alt+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1509"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1305"/>
         <source>Manually</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1517"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1306"/>
         <source>Hourly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1525"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1307"/>
         <source>Daily</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1536"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1308"/>
         <source>Weekly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1541"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1309"/>
         <source>Show Project in Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1552"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1310"/>
         <source>Pause After Seek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1561"/>
         <location filename="../src/mainwindow.cpp" line="5346"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1311"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1570"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1312"/>
         <source>What&apos;s This?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1573"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1314"/>
         <source>Get help about something by clicking it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1169"/>
         <location filename="../src/mainwindow.ui" line="1174"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1235"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1236"/>
         <source>Remove...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="538"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1099"/>
         <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1000"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1166"/>
         <source>EDL...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1011"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1171"/>
         <source>Frame...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1100"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1205"/>
         <source>Actions and Shortcuts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1238"/>
         <source>Clear Recent on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1205"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1239"/>
         <source>Show Text Under Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1213"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1240"/>
         <source>Show Small Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1222"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1241"/>
         <source>Jobs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1269"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1245"/>
         <source>540p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1280"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1246"/>
         <source>720p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1310"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1249"/>
         <source>360p</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5454,6 +6046,7 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
     <message>
         <location filename="../src/mainwindow.ui" line="1431"/>
         <location filename="../src/mainwindow.cpp" line="1611"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1275"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6063,6 +6656,8 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow.ui" line="1003"/>
         <location filename="../src/mainwindow.ui" line="1006"/>
         <location filename="../src/mainwindow.cpp" line="5112"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1167"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1169"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6098,6 +6693,8 @@ Do you still want to continue?</source>
         <location filename="../src/mainwindow.ui" line="1014"/>
         <location filename="../src/mainwindow.ui" line="1017"/>
         <location filename="../src/mainwindow.cpp" line="5211"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1172"/>
+        <location filename="../src/shotcut_autogen/include/ui_mainwindow.h" line="1174"/>
         <source>Export Frame</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6539,21 +7136,25 @@ Please install the %2 plugins.</source>
     <name>NetworkProducerWidget</name>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_networkproducerwidget.h" line="97"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_networkproducerwidget.h" line="98"/>
         <source>Network Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_networkproducerwidget.h" line="99"/>
         <source>&amp;URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="59"/>
+        <location filename="../src/shotcut_autogen/include/ui_networkproducerwidget.h" line="100"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6562,79 +7163,95 @@ Please install the %2 plugins.</source>
     <name>NewProjectFolder</name>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="20"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="255"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="64"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="260"/>
         <source>Projects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="191"/>
         <location filename="../src/widgets/newprojectfolder.ui" line="208"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="263"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="268"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="234"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="273"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="375"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="259"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="221"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="270"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="162"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="262"/>
         <source>Projects folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="266"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="275"/>
         <source>Project name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="274"/>
         <source>Video mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="204"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="265"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="318"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="276"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="146"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="261"/>
         <source>New Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="256"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="365"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="257"/>
         <source>Add...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="370"/>
+        <location filename="../src/shotcut_autogen/include/ui_newprojectfolder.h" line="258"/>
         <source>Remove...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6681,11 +7298,13 @@ Try again with a different folder.</source>
     <name>NoiseWidget</name>
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_noisewidget.h" line="59"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_noisewidget.h" line="60"/>
         <source>Noise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6707,11 +7326,13 @@ Try again with a different folder.</source>
     <name>OpenOtherDialog</name>
     <message>
         <location filename="../src/openotherdialog.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_openotherdialog.h" line="349"/>
         <source>Open Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.ui" line="58"/>
+        <location filename="../src/shotcut_autogen/include/ui_openotherdialog.h" line="351"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6790,6 +7411,10 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="83"/>
+        <source>Drawing/Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/openotherdialog.cpp" line="158"/>
         <source>Animation</source>
         <translation type="unfinished"></translation>
@@ -6895,41 +7520,49 @@ Try again with a different folder.</source>
     <name>PlasmaWidget</name>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="348"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="349"/>
         <source>Plasma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="350"/>
         <source>Speed 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="114"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="351"/>
         <source>Speed 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="182"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="352"/>
         <source>Speed 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="254"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="353"/>
         <source>Speed 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="325"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="354"/>
         <source>Move 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="393"/>
+        <location filename="../src/shotcut_autogen/include/ui_plasmawidget.h" line="355"/>
         <source>Move 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7376,11 +8009,13 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="17"/>
         <location filename="../src/docks/playlistdock.cpp" line="384"/>
+        <location filename="../src/shotcut_autogen/include/ui_playlistdock.h" line="145"/>
         <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="58"/>
+        <location filename="../src/shotcut_autogen/include/ui_playlistdock.h" line="146"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -7393,6 +8028,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="126"/>
+        <location filename="../src/shotcut_autogen/include/ui_playlistdock.h" line="156"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8038,11 +8674,13 @@ p, li { white-space: pre-wrap; }
     <name>PulseAudioWidget</name>
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_pulseaudiowidget.h" line="59"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_pulseaudiowidget.h" line="60"/>
         <source>PulseAudio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8748,7 +9386,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1370"/>
+        <location filename="../src/docks/encodedock.cpp" line="1369"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1081"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>A job already exists for %1</source>
@@ -8959,22 +9597,27 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>RecentDock</name>
     <message>
         <location filename="../src/docks/recentdock.ui" line="23"/>
+        <location filename="../src/shotcut_autogen/include/ui_recentdock.h" line="73"/>
         <source>Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="45"/>
+        <location filename="../src/shotcut_autogen/include/ui_recentdock.h" line="79"/>
         <source>Show only files with name matching text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="48"/>
+        <location filename="../src/shotcut_autogen/include/ui_recentdock.h" line="81"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="75"/>
         <location filename="../src/docks/recentdock.ui" line="78"/>
+        <location filename="../src/shotcut_autogen/include/ui_recentdock.h" line="74"/>
+        <location filename="../src/shotcut_autogen/include/ui_recentdock.h" line="76"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9123,21 +9766,25 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>ServicePresetWidget</name>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_servicepresetwidget.h" line="82"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="25"/>
+        <location filename="../src/shotcut_autogen/include/ui_servicepresetwidget.h" line="83"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="45"/>
+        <location filename="../src/shotcut_autogen/include/ui_servicepresetwidget.h" line="84"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="52"/>
+        <location filename="../src/shotcut_autogen/include/ui_servicepresetwidget.h" line="85"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10315,31 +10962,37 @@ Remove the subtitle filter before removing this track.</source>
     <name>SystemSyncDialog</name>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="124"/>
         <source>Player Synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="125"/>
         <source>Adjust your playback audio/video synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="127"/>
         <source>Reset to default value 0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="129"/>
         <source>Video offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="130"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="82"/>
+        <location filename="../src/shotcut_autogen/include/ui_systemsyncdialog.h" line="131"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10473,46 +11126,55 @@ Remove the subtitle filter before removing this track.</source>
     <name>TextProducerWidget</name>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="144"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="145"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="41"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="146"/>
         <source>Type or paste the text here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="50"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="147"/>
         <source>Background color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="63"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="148"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="90"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="149"/>
         <source>Simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="100"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="150"/>
         <source>Rich</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="107"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="151"/>
         <source>Typewriter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="129"/>
+        <location filename="../src/shotcut_autogen/include/ui_textproducerwidget.h" line="152"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10542,6 +11204,7 @@ Remove the subtitle filter before removing this track.</source>
     <name>TextViewerDialog</name>
     <message>
         <location filename="../src/dialogs/textviewerdialog.ui" line="17"/>
+        <location filename="../src/shotcut_autogen/include/ui_textviewerdialog.h" line="62"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11014,7 +11677,7 @@ Remove the subtitle filter before removing this track.</source>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1353"/>
-        <source>New Generator</source>
+        <source>Generate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11268,21 +11931,25 @@ Remove the subtitle filter before removing this track.</source>
     <name>TimelinePropertiesWidget</name>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="243"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="244"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="106"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="247"/>
         <source>Frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="248"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="255"/>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11292,26 +11959,35 @@ Remove the subtitle filter before removing this track.</source>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="181"/>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="188"/>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="239"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="246"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="248"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="250"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="251"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="254"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="41"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="245"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="229"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="253"/>
         <source>Scan mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="171"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="249"/>
         <source>Aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="195"/>
+        <location filename="../src/shotcut_autogen/include/ui_timelinepropertieswidget.h" line="252"/>
         <source>Colorspace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11335,31 +12011,37 @@ Remove the subtitle filter before removing this track.</source>
     <name>ToneProducerWidget</name>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="111"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="28"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="112"/>
         <source>Audio Tone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="43"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="113"/>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="53"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="114"/>
         <source> Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="82"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="115"/>
         <source>Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="92"/>
+        <location filename="../src/shotcut_autogen/include/ui_toneproducerwidget.h" line="116"/>
         <source> dB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11401,11 +12083,13 @@ Remove the subtitle filter before removing this track.</source>
     <name>TrackPropertiesWidget</name>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_trackpropertieswidget.h" line="81"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="40"/>
+        <location filename="../src/shotcut_autogen/include/ui_trackpropertieswidget.h" line="83"/>
         <source>Blend mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11597,63 +12281,76 @@ Remove the subtitle filter before removing this track.</source>
     <name>TranscodeDialog</name>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="252"/>
         <source>good</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="253"/>
         <source>better</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="254"/>
         <source>best</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="255"/>
         <source>medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="258"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="285"/>
         <source>Change the frame rate from its source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="265"/>
         <location filename="../src/dialogs/transcodedialog.ui" line="269"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="295"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="299"/>
         <source>Same as original</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="274"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="296"/>
         <source>44100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="279"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="297"/>
         <source>48000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="263"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="252"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="294"/>
         <source>Frame rate conversion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="267"/>
         <source>This option converts only the trimmed portion of the source
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
@@ -11662,51 +12359,61 @@ only the currently selected one.</source>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="256"/>
         <source>BIG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="257"/>
         <source>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="174"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="272"/>
         <source>Use sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="222"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="288"/>
         <source>Sample rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="291"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="245"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="293"/>
         <source>Deinterlace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="274"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="184"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="276"/>
         <source>Keep Advanced open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="260"/>
         <source>Override the frame rate to a specific value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="191"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="278"/>
         <source>Frame rate conversion method
 
 Duplicate: Duplicate frames.
@@ -11716,16 +12423,19 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="212"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="287"/>
         <source>Override frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="232"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="289"/>
         <source>Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="161"/>
+        <location filename="../src/shotcut_autogen/include/ui_transcodedialog.h" line="265"/>
         <source>Convert to BT.709 colorspace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11973,21 +12683,25 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <name>UnlinkedFilesDialog</name>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_unlinkedfilesdialog.h" line="97"/>
         <source>Missing Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="29"/>
+        <location filename="../src/shotcut_autogen/include/ui_unlinkedfilesdialog.h" line="98"/>
         <source>There are missing files in your project. Double-click each row to locate a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
+        <location filename="../src/shotcut_autogen/include/ui_unlinkedfilesdialog.h" line="100"/>
         <source>This looks at every file in a folder to see if it matches any of the missing files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="84"/>
+        <location filename="../src/shotcut_autogen/include/ui_unlinkedfilesdialog.h" line="102"/>
         <source>Search in Folder...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12011,126 +12725,151 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <name>Video4LinuxWidget</name>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="14"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="222"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="39"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="223"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="225"/>
         <source>Set the path to the video device file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="49"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="227"/>
         <source>/dev/video0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="74"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="228"/>
         <source>Video4Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="84"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="229"/>
         <source>fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="104"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="231"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="117"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="233"/>
         <source>Frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="127"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="234"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="137"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="235"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="147"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="236"/>
         <source>TV Tuner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="159"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="237"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="169"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="244"/>
         <source>Set the television standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="173"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="238"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="178"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="239"/>
         <source>NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="183"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="240"/>
         <source>PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="188"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="241"/>
         <source>SECAM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="196"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="246"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="215"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="247"/>
         <source>Audio Input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="225"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="249"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="238"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="251"/>
         <source>pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="251"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="252"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="259"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="253"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="264"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="254"/>
         <source>PulseAudio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="269"/>
+        <location filename="../src/shotcut_autogen/include/ui_video4linuxwidget.h" line="255"/>
         <source>ALSA</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13034,7 +13773,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="41"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="27"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="43"/>
         <source>Font color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13044,7 +13783,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="33"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="51"/>
         <source>Outline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13053,7 +13792,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="53"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="39"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="54"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="59"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13067,6 +13806,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="21"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="22"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
         <source>Position / Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13314,7 +14054,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="45"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="44"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="62"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="67"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14912,28 +15652,6 @@ IRE: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
-        <source>360: Zenith Correction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="8"/>
-        <source>spherical level</source>
-        <comment>search keywords for the 360: Zenith correction filter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/histeq/meta.qml" line="6"/>
-        <source>Clarity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/histeq/meta.qml" line="7"/>
-        <source>histogram equalization constrast detail color distribution</source>
-        <comment>search keywords for the Clarity video filter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/strobe/meta.qml" line="6"/>
         <source>Alpha Strobe</source>
         <translation type="unfinished"></translation>
@@ -15794,7 +16512,6 @@ IRE: %2</source>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="150"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="308"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="211"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="125"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="65"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="65"/>
@@ -15825,7 +16542,6 @@ IRE: %2</source>
         <location filename="../src/qml/filters/grain/ui.qml" line="48"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="137"/>
         <location filename="../src/qml/filters/halftone/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/histeq/ui.qml" line="50"/>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="70"/>
         <location filename="../src/qml/filters/hslprimaries/ui.qml" line="140"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="109"/>
@@ -17242,7 +17958,6 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="181"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="418"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="189"/>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="101"/>
         <source>Interpolation</source>
         <translation type="unfinished"></translation>
@@ -17269,7 +17984,6 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="820"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="537"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="204"/>
         <source>Yaw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18273,7 +18987,6 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="859"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="920"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="374"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="154"/>
         <source></source>
         <translation></translation>
     </message>
@@ -18284,19 +18997,16 @@ Change top/side distortion bias</source>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="390"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="168"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="395"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="172"/>
         <source>Start Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="407"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="181"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18334,7 +19044,6 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="566"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="641"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="716"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="215"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="212"/>
         <source>Smoothing</source>
         <translation type="unfinished"></translation>
@@ -18343,7 +19052,6 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="589"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="664"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="739"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="233"/>
         <source>Time Bias</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18841,7 +19549,6 @@ All = 360° + Randomize</source>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="367"/>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="149"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="223"/>
         <source>File</source>
         <translation type="unfinished"></translation>
@@ -19309,7 +20016,6 @@ All = 360° + Randomize</source>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/histeq/ui.qml" line="63"/>
         <source>Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20236,7 +20942,6 @@ Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/histeq/ui.qml" line="82"/>
         <location filename="../src/qml/filters/vibrance/ui.qml" line="98"/>
         <source>Intensity</source>
         <translation type="unfinished"></translation>
@@ -20355,16 +21060,6 @@ Click to select, drag to change position</source>
         <location filename="../src/qml/filters/hslprimaries/ui.qml" line="512"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="352"/>
         <source>Lightness Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
-        <source>File for zenith correction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
-        <source>Smooth yaw instead of locking it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
