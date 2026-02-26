@@ -1790,7 +1790,7 @@ deixeu-lo en blanc per utilitzar el porta-retalls:</translation>
         <translation>Fotogrames/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="918"/>
+        <location filename="../src/docks/encodedock.ui" line="913"/>
         <source>:</source>
         <translation>:</translation>
     </message>
@@ -1811,11 +1811,6 @@ deixeu-lo en blanc per utilitzar el porta-retalls:</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="865"/>
-        <source>Linear Blend (fast)</source>
-        <translation>Mescla lineal (ràpid)</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="870"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - només temporal (bo)</translation>
     </message>
@@ -1885,266 +1880,266 @@ amb el processament en paral·lel habilitat.</translation>
         <translation>Completa (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="875"/>
+        <location filename="../src/docks/encodedock.ui" line="870"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - temporal + espacial (millor)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="880"/>
+        <location filename="../src/docks/encodedock.ui" line="875"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (el millor)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="957"/>
-        <location filename="../src/docks/encodedock.ui" line="966"/>
-        <location filename="../src/docks/encodedock.ui" line="1659"/>
+        <location filename="../src/docks/encodedock.ui" line="952"/>
+        <location filename="../src/docks/encodedock.ui" line="961"/>
+        <location filename="../src/docks/encodedock.ui" line="1654"/>
         <source>Codec</source>
         <translation>Còdec</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="996"/>
+        <location filename="../src/docks/encodedock.ui" line="991"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1008"/>
+        <location filename="../src/docks/encodedock.ui" line="1003"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = grup d&apos;imatges, que és el màxim interval entre fotogrames clau</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1021"/>
+        <location filename="../src/docks/encodedock.ui" line="1016"/>
         <source>frames</source>
         <translation>fotogrames</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1041"/>
+        <location filename="../src/docks/encodedock.ui" line="1036"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>Un GOP fix significa que no s&apos;inseriran fotogrames
 clau als canvis d&apos;escena detectats.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1045"/>
+        <location filename="../src/docks/encodedock.ui" line="1040"/>
         <source>Fixed</source>
         <translation>Fix</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1069"/>
-        <location filename="../src/docks/encodedock.ui" line="1701"/>
+        <location filename="../src/docks/encodedock.ui" line="1064"/>
+        <location filename="../src/docks/encodedock.ui" line="1696"/>
         <source>The average bit rate</source>
         <translation>La taxa mitjana de bits</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1222"/>
-        <location filename="../src/docks/encodedock.ui" line="1784"/>
+        <location filename="../src/docks/encodedock.ui" line="1217"/>
+        <location filename="../src/docks/encodedock.ui" line="1779"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1244"/>
+        <location filename="../src/docks/encodedock.ui" line="1239"/>
         <source>Disable video</source>
         <translation>Inhabilita el vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1251"/>
+        <location filename="../src/docks/encodedock.ui" line="1246"/>
         <source>&lt;p&gt;The hardware decoder for export is usually not very beneficial and is often slower. It may only mildly reduce CPU usage on some systems. Therefore, we recommend to leave it off, but you can test and decide for yourself.&lt;/p&gt;</source>
         <translation>&lt;p&gt;El descodificador de maquinari per a l&apos;exportació no sol ser gaire beneficiós i sovint és més lent. En alguns sistemes, només redueix lleugerament l&apos;ús de la CPU. Per tant, recomanem deixar-lo desactivat, tot i que podeu provar-lo i decidir vosaltres mateixos.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1254"/>
+        <location filename="../src/docks/encodedock.ui" line="1249"/>
         <source>Use hardware decoder</source>
         <translation>Utilitza el descodificador de maquinari</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1261"/>
+        <location filename="../src/docks/encodedock.ui" line="1256"/>
         <source>Dual pass</source>
         <translation>Dues passades</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1268"/>
+        <location filename="../src/docks/encodedock.ui" line="1263"/>
         <source>B frames</source>
         <translation>Fotogrames B</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1280"/>
+        <location filename="../src/docks/encodedock.ui" line="1275"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>Els fotogrames B són bidireccionals a les imatges delta durant la compressió temporal</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1319"/>
+        <location filename="../src/docks/encodedock.ui" line="1314"/>
         <source>Codec threads</source>
         <translation>Fils de còdec</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1334"/>
+        <location filename="../src/docks/encodedock.ui" line="1329"/>
         <source>(0 = auto)</source>
         <translation>(0 = automàtic)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1356"/>
-        <location filename="../src/docks/encodedock.ui" line="1826"/>
+        <location filename="../src/docks/encodedock.ui" line="1351"/>
+        <location filename="../src/docks/encodedock.ui" line="1821"/>
         <source>Rate control</source>
         <translation>Control de freqüència</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1369"/>
-        <location filename="../src/docks/encodedock.ui" line="1839"/>
+        <location filename="../src/docks/encodedock.ui" line="1364"/>
+        <location filename="../src/docks/encodedock.ui" line="1834"/>
         <source>Average Bitrate</source>
         <translation>Taxa mitjana de bits</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1374"/>
-        <location filename="../src/docks/encodedock.ui" line="1844"/>
+        <location filename="../src/docks/encodedock.ui" line="1369"/>
+        <location filename="../src/docks/encodedock.ui" line="1839"/>
         <source>Constant Bitrate</source>
         <translation>Taxa de bits constant</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1379"/>
-        <location filename="../src/docks/encodedock.ui" line="1849"/>
+        <location filename="../src/docks/encodedock.ui" line="1374"/>
+        <location filename="../src/docks/encodedock.ui" line="1844"/>
         <source>Quality-based VBR</source>
         <translation>VBR basat en la qualitat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1384"/>
+        <location filename="../src/docks/encodedock.ui" line="1379"/>
         <source>Constrained VBR</source>
         <translation>VBR constret</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1407"/>
+        <location filename="../src/docks/encodedock.ui" line="1402"/>
         <source>Buffer size</source>
         <translation>Mida de la memòria intermèdia</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1429"/>
+        <location filename="../src/docks/encodedock.ui" line="1424"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1451"/>
-        <location filename="../src/docks/encodedock.ui" line="1872"/>
+        <location filename="../src/docks/encodedock.ui" line="1446"/>
+        <location filename="../src/docks/encodedock.ui" line="1867"/>
         <source>Quality</source>
         <translation>Qualitat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1463"/>
-        <location filename="../src/docks/encodedock.ui" line="1884"/>
+        <location filename="../src/docks/encodedock.ui" line="1458"/>
+        <location filename="../src/docks/encodedock.ui" line="1879"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1479"/>
-        <location filename="../src/docks/encodedock.ui" line="1900"/>
+        <location filename="../src/docks/encodedock.ui" line="1474"/>
+        <location filename="../src/docks/encodedock.ui" line="1895"/>
         <source>TextLabel</source>
         <translation>Etiqueta de text</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1501"/>
-        <location filename="../src/docks/encodedock.ui" line="1689"/>
+        <location filename="../src/docks/encodedock.ui" line="1496"/>
+        <location filename="../src/docks/encodedock.ui" line="1684"/>
         <source>Bitrate</source>
         <translation>Taxa de bits</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1512"/>
+        <location filename="../src/docks/encodedock.ui" line="1507"/>
         <source>Audio</source>
         <translation>Àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1521"/>
+        <location filename="../src/docks/encodedock.ui" line="1516"/>
         <source>Channels</source>
         <translation>Canals</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1533"/>
+        <location filename="../src/docks/encodedock.ui" line="1528"/>
         <source>The number of audio channels in the output.</source>
         <translation>El nombre de canals d&apos;àudio a la sortida.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1537"/>
+        <location filename="../src/docks/encodedock.ui" line="1532"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1542"/>
+        <location filename="../src/docks/encodedock.ui" line="1537"/>
         <source>2 (stereo)</source>
         <translation>2 (estèreo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1547"/>
+        <location filename="../src/docks/encodedock.ui" line="1542"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (quadrafònic/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1552"/>
+        <location filename="../src/docks/encodedock.ui" line="1547"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 envoltant)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1627"/>
+        <location filename="../src/docks/encodedock.ui" line="1622"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1649"/>
+        <location filename="../src/docks/encodedock.ui" line="1644"/>
         <source>Sample rate</source>
         <translation>Taxa de mostreig</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1806"/>
+        <location filename="../src/docks/encodedock.ui" line="1801"/>
         <source>Disable audio</source>
         <translation>Inhabilita l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1923"/>
+        <location filename="../src/docks/encodedock.ui" line="1918"/>
         <source>Other</source>
         <translation>Altres</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1939"/>
+        <location filename="../src/docks/encodedock.ui" line="1934"/>
         <source>Disable subtitles</source>
         <translation>Inhabilita els subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1972"/>
-        <location filename="../src/docks/encodedock.cpp" line="1368"/>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
-        <location filename="../src/docks/encodedock.cpp" line="2372"/>
+        <location filename="../src/docks/encodedock.ui" line="1967"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
+        <location filename="../src/docks/encodedock.cpp" line="1882"/>
+        <location filename="../src/docks/encodedock.cpp" line="2373"/>
         <source>Export Video/Audio</source>
         <translation>Exporta el vídeo/àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1982"/>
+        <location filename="../src/docks/encodedock.ui" line="1977"/>
         <source>Reset options to defaults</source>
         <translation>Reinicialitza les opcions als valors predeterminats</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1985"/>
+        <location filename="../src/docks/encodedock.ui" line="1980"/>
         <source>Reset</source>
         <translation>Reinicialitza</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1992"/>
+        <location filename="../src/docks/encodedock.ui" line="1987"/>
         <source>Advanced</source>
         <translation>Avançat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2002"/>
+        <location filename="../src/docks/encodedock.ui" line="1997"/>
         <source>Always start in Advanced mode</source>
         <translation>Comença sembre amb el mode avançat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2012"/>
-        <location filename="../src/docks/encodedock.cpp" line="2077"/>
-        <location filename="../src/docks/encodedock.cpp" line="2084"/>
-        <location filename="../src/docks/encodedock.cpp" line="2196"/>
+        <location filename="../src/docks/encodedock.ui" line="2007"/>
+        <location filename="../src/docks/encodedock.cpp" line="2078"/>
+        <location filename="../src/docks/encodedock.cpp" line="2085"/>
+        <location filename="../src/docks/encodedock.cpp" line="2197"/>
         <source>Stream</source>
         <translation>Flux</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="2039"/>
-        <location filename="../src/docks/encodedock.cpp" line="1864"/>
-        <location filename="../src/docks/encodedock.cpp" line="1965"/>
-        <location filename="../src/docks/encodedock.cpp" line="1975"/>
+        <location filename="../src/docks/encodedock.ui" line="2034"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
+        <location filename="../src/docks/encodedock.cpp" line="1966"/>
+        <location filename="../src/docks/encodedock.cpp" line="1976"/>
         <source>Stop Capture</source>
         <translation>Atura la captura</translation>
     </message>
@@ -2160,142 +2155,142 @@ in temporal compression</source>
         <translation>Per defecte per al format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="472"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation>Línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="479"/>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation>Origen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="490"/>
-        <location filename="../src/docks/encodedock.cpp" line="497"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation>Marcador</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="508"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Heu d&apos;introduir valors numèrics utilitzant &apos;%1&apos; com a punt decimal.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="517"/>
-        <location filename="../src/docks/encodedock.cpp" line="1811"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
         <location filename="../src/docks/encodedock.cpp" line="1812"/>
+        <location filename="../src/docks/encodedock.cpp" line="1813"/>
         <source>Custom</source>
         <translation>Personalitzat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="553"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation>Estoc</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="556"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation>Predeterminat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1435"/>
+        <location filename="../src/docks/encodedock.cpp" line="1436"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>No podeu escriure a un fitxer que estigui al vostre projecte.
 Torneu-ho a provar amb una carpeta o nom de fitxer diferent.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1533"/>
+        <location filename="../src/docks/encodedock.cpp" line="1534"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut ha trobat filtres que necessiten tasques d&apos;anàlisi que no s&apos;han executat.
 Voleu executar les tasques d&apos;anàlisi ara?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
-        <location filename="../src/docks/encodedock.cpp" line="2374"/>
+        <location filename="../src/docks/encodedock.cpp" line="1882"/>
+        <location filename="../src/docks/encodedock.cpp" line="2375"/>
         <source>Capture File</source>
         <translation>Captura a Fitxer</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1883"/>
+        <location filename="../src/docks/encodedock.cpp" line="1884"/>
         <source>Export Files</source>
         <translation>Exporta els fitxers</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1898"/>
+        <location filename="../src/docks/encodedock.cpp" line="1899"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1900"/>
+        <location filename="../src/docks/encodedock.cpp" line="1901"/>
         <source>Determined by Export (*)</source>
         <translation>Determinat per l&apos;exportació (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2072"/>
-        <location filename="../src/docks/encodedock.cpp" line="2094"/>
+        <location filename="../src/docks/encodedock.cpp" line="2073"/>
+        <location filename="../src/docks/encodedock.cpp" line="2095"/>
         <source>Stop Stream</source>
         <translation>Atura el flux</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2086"/>
+        <location filename="../src/docks/encodedock.cpp" line="2087"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Introduïu l&apos;esquema de protocol de xarxa, l&apos;adreça, el port i els paràmetres com un URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2129"/>
+        <location filename="../src/docks/encodedock.cpp" line="2130"/>
         <source>Add Export Preset</source>
         <translation>Afegeix una predefinició d&apos;exportació</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2173"/>
+        <location filename="../src/docks/encodedock.cpp" line="2174"/>
         <source>Delete Preset</source>
         <translation>Suprimeix la predefinició</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2174"/>
+        <location filename="../src/docks/encodedock.cpp" line="2175"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Esteu segur que voleu suprimir %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2302"/>
+        <location filename="../src/docks/encodedock.cpp" line="2303"/>
         <source>None</source>
         <translation>Cap</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2356"/>
+        <location filename="../src/docks/encodedock.cpp" line="2357"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2509"/>
+        <location filename="../src/docks/encodedock.cpp" line="2510"/>
         <source>Detect</source>
         <translation>Detecta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2566"/>
+        <location filename="../src/docks/encodedock.cpp" line="2567"/>
         <source>(auto)</source>
         <translation>(auto)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2612"/>
+        <location filename="../src/docks/encodedock.cpp" line="2613"/>
         <source>Detecting hardware encoders...</source>
         <translation>Detecció dels codificadors de maquinari...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2669"/>
+        <location filename="../src/docks/encodedock.cpp" line="2670"/>
         <source>Nothing found</source>
         <translation>No se n&apos;ha trobat cap</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2671"/>
+        <location filename="../src/docks/encodedock.cpp" line="2672"/>
         <source>Found %1</source>
         <translation>S&apos;ha trobat %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2894"/>
+        <location filename="../src/docks/encodedock.cpp" line="2898"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2306,42 +2301,42 @@ Deseu el projecte, tanqueu-lo i torneu-lo a obrir.
 Shotcut intentarà reparar el projecte.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2943"/>
+        <location filename="../src/docks/encodedock.cpp" line="2947"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>La relació d&apos;aspecte no coincideix amb el mode de vídeo del projecte, la qual cosa fa que apareguin barres negres.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2981"/>
+        <location filename="../src/docks/encodedock.cpp" line="2985"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>La velocitat de fotograma és més gran que en el mode de vídeo del projecte, cosa que fa que els fotogrames es repeteixin.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2507"/>
+        <location filename="../src/docks/encodedock.cpp" line="2508"/>
         <source>Configure Hardware Encoding</source>
         <translation>Configuració de la codificació de maquinari</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="475"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation>Safata de la llista de reproducció actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation>Cada element de la safata de la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1884"/>
+        <location filename="../src/docks/encodedock.cpp" line="1885"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Exporta cada element de la safata de la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1930"/>
         <source>Export canceled</source>
         <translation>Exportació cancel·lada.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2531"/>
+        <location filename="../src/docks/encodedock.cpp" line="2532"/>
         <source>Export Frames/sec</source>
         <translation>Exporta Fotogrames/s</translation>
     </message>
@@ -2396,47 +2391,47 @@ Shotcut intentarà reparar el projecte.</translation>
         <translation>Documents de text (*.txt);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="147"/>
+        <location filename="../src/jobs/encodejob.cpp" line="153"/>
         <source>Set Equirectangular Projection</source>
         <translation>Estableix projecció equirectangular</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="161"/>
+        <location filename="../src/jobs/encodejob.cpp" line="167"/>
         <source>Successfully wrote %1</source>
         <translation>%1 escrit correctament</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="163"/>
+        <location filename="../src/jobs/encodejob.cpp" line="169"/>
         <source>An error occurred saving the projection.</source>
         <translation>S&apos;ha produït un error en desar el projecte.</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="188"/>
+        <location filename="../src/jobs/encodejob.cpp" line="194"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Voleu incloure els rangs (durada &gt; 1 fotograma)?</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="199"/>
+        <location filename="../src/jobs/encodejob.cpp" line="205"/>
         <source>Choose Markers</source>
         <translation>Trieu els marcadors</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="211"/>
+        <location filename="../src/jobs/encodejob.cpp" line="217"/>
         <source>Embed Chapters</source>
         <translation>Incrusta capítols</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="276"/>
+        <location filename="../src/jobs/encodejob.cpp" line="282"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Hi ha hagut un error de javaScript durant l&apos;exportació.</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="279"/>
+        <location filename="../src/jobs/encodejob.cpp" line="285"/>
         <source>Failed to open export-chapters.js</source>
         <translation>No s&apos;ha pogut obrir export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="307"/>
+        <location filename="../src/jobs/encodejob.cpp" line="316"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>Ha fallat la tasca d&apos;exportació; torneu-ho a provar sense processament paral·lel</translation>
     </message>
@@ -3758,12 +3753,12 @@ sobre una tasca per obrir un menú per aturar una tasca en marxa.</translation>
 <context>
     <name>KeyframeClip</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="245"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="242"/>
         <source>Confirm Removing Advanced Keyframes</source>
         <translation>Confirmeu l&apos;eliminació de fotogrames clau avançats</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="246"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="243"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation>Això suprimirà tots els fotogrames clau avançats per habilitar els fotogrames clau simples.&lt;p&gt;Encara voleu fer això?</translation>
     </message>
@@ -4597,7 +4592,7 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Desentrellaçat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="270"/>
+        <location filename="../src/mainwindow.ui" line="269"/>
         <source>Interpolation</source>
         <translation>Interpolació</translation>
     </message>
@@ -4607,7 +4602,7 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Mode de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="279"/>
+        <location filename="../src/mainwindow.ui" line="278"/>
         <source>External Monitor</source>
         <translation>Monitor extern</translation>
     </message>
@@ -4647,69 +4642,69 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Emmagatzematge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="333"/>
+        <location filename="../src/mainwindow.ui" line="332"/>
         <source>Toolbar</source>
         <translation>Barra d&apos;eines</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="393"/>
+        <location filename="../src/mainwindow.ui" line="392"/>
         <source>&amp;Open File...</source>
         <translation>&amp;Obre un fitxer...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="407"/>
+        <location filename="../src/mainwindow.ui" line="406"/>
         <source>E&amp;xit</source>
         <translation>Surt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="410"/>
+        <location filename="../src/mainwindow.ui" line="409"/>
         <source>Quit the application</source>
         <translation>Surt de l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="418"/>
+        <location filename="../src/mainwindow.ui" line="417"/>
         <source>&amp;About Shotcut</source>
         <translation>Qu&amp;ant a Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="426"/>
+        <location filename="../src/mainwindow.ui" line="425"/>
         <source>About Qt</source>
         <translation>Quant a Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="433"/>
         <source>Open Other...</source>
         <translation>Obre altres...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="437"/>
+        <location filename="../src/mainwindow.ui" line="436"/>
         <source>Open a device, stream or generator</source>
         <translation>Obre un dispositiu, un flux o un generador</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="452"/>
+        <location filename="../src/mainwindow.ui" line="451"/>
         <source>&amp;Save</source>
         <translation>De&amp;sa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="455"/>
+        <location filename="../src/mainwindow.ui" line="454"/>
         <source>Save project as a MLT XML file</source>
         <translation>Desa el projecte com a fitxer XML MLT</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="469"/>
+        <location filename="../src/mainwindow.ui" line="468"/>
         <source>Save &amp;As...</source>
         <translation>&amp;Anomena i desa...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="471"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Desa el projecte en un fitxer XML MLT diferent</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="487"/>
-        <location filename="../src/mainwindow.ui" line="490"/>
+        <location filename="../src/mainwindow.ui" line="486"/>
+        <location filename="../src/mainwindow.ui" line="489"/>
         <source>Export</source>
         <translation>Exporta</translation>
     </message>
@@ -4719,288 +4714,288 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Prioritat de la tasca</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="502"/>
+        <location filename="../src/mainwindow.ui" line="501"/>
         <source>&amp;Undo</source>
         <translation>Desfés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="514"/>
+        <location filename="../src/mainwindow.ui" line="513"/>
         <source>&amp;Redo</source>
         <translation>&amp;Refés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="522"/>
+        <location filename="../src/mainwindow.ui" line="521"/>
         <source>Forum...</source>
         <translation>Fòrum...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="527"/>
+        <location filename="../src/mainwindow.ui" line="526"/>
         <source>FAQ...</source>
         <translation>PMF...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="536"/>
+        <location filename="../src/mainwindow.ui" line="535"/>
         <location filename="../src/mainwindow.cpp" line="4224"/>
         <source>Enter Full Screen</source>
         <translation>Passa a pantalla completa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="548"/>
+        <location filename="../src/mainwindow.ui" line="547"/>
         <source>Peak Meter</source>
         <translation>Vúmetre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="563"/>
+        <location filename="../src/mainwindow.ui" line="562"/>
         <location filename="../src/mainwindow.cpp" line="423"/>
-        <location filename="../src/mainwindow.cpp" line="2648"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>Properties</source>
         <translation>Propietats</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="575"/>
-        <location filename="../src/mainwindow.cpp" line="2657"/>
+        <location filename="../src/mainwindow.ui" line="574"/>
+        <location filename="../src/mainwindow.cpp" line="2659"/>
         <source>Recent</source>
         <translation>Fitxers recents</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="205"/>
-        <location filename="../src/mainwindow.ui" line="587"/>
+        <location filename="../src/mainwindow.ui" line="586"/>
         <source>Playlist</source>
         <translation>Llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="599"/>
+        <location filename="../src/mainwindow.ui" line="598"/>
         <location filename="../src/mainwindow.cpp" line="746"/>
         <source>History</source>
         <translation>Historial</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
+        <location filename="../src/mainwindow.ui" line="612"/>
         <source>Realtime (frame dropping)</source>
         <translation>Temps real (descarta fotogrames)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="624"/>
+        <location filename="../src/mainwindow.ui" line="623"/>
         <source>Progressive</source>
         <translation>Progressiu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="632"/>
+        <location filename="../src/mainwindow.ui" line="631"/>
         <source>Native 8-bit CPU (fast, flexible)</source>
         <translation>CPU natiu de 8 bits (ràpid, flexible)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="640"/>
+        <location filename="../src/mainwindow.ui" line="639"/>
         <source>Native 10-bit CPU (slower, better)</source>
         <translation>CPU natiu de 10 bits (més lent, millor)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="664"/>
+        <location filename="../src/mainwindow.ui" line="663"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="672"/>
+        <location filename="../src/mainwindow.ui" line="671"/>
         <source>2 (stereo)</source>
         <translation>2 (estèreo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="699"/>
+        <location filename="../src/mainwindow.ui" line="698"/>
         <source>One Field (fast)</source>
         <translation>Un camp (ràpid)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="707"/>
-        <source>Linear Blend (fast)</source>
-        <translation>Mescla lineal (ràpid)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="715"/>
+        <location filename="../src/mainwindow.ui" line="706"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - només temporal (bo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="742"/>
+        <location filename="../src/mainwindow.ui" line="733"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Per aproximació (ràpida)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="750"/>
+        <location filename="../src/mainwindow.ui" line="741"/>
         <source>Bilinear (good)</source>
         <translation>Bilineal (bona)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="758"/>
+        <location filename="../src/mainwindow.ui" line="749"/>
         <source>Bicubic (better)</source>
         <translation>Bicúbica (més bona)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="777"/>
-        <location filename="../src/mainwindow.ui" line="924"/>
+        <location filename="../src/mainwindow.ui" line="768"/>
+        <location filename="../src/mainwindow.ui" line="915"/>
         <location filename="../src/mainwindow.cpp" line="2852"/>
         <source>Automatic</source>
         <translation>Automàtic</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="788"/>
-        <location filename="../src/mainwindow.ui" line="1308"/>
+        <location filename="../src/mainwindow.ui" line="779"/>
+        <location filename="../src/mainwindow.ui" line="1299"/>
         <source>None</source>
         <translation>Cap</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="796"/>
+        <location filename="../src/mainwindow.ui" line="787"/>
         <source>Use JACK Audio</source>
         <translation>Utilitza l&apos;àudio de JACK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="805"/>
-        <location filename="../src/mainwindow.ui" line="808"/>
+        <location filename="../src/mainwindow.ui" line="796"/>
+        <location filename="../src/mainwindow.ui" line="799"/>
         <source>Filters</source>
         <translation>Filtres</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="816"/>
-        <location filename="../src/mainwindow.ui" line="1173"/>
+        <location filename="../src/mainwindow.ui" line="807"/>
+        <location filename="../src/mainwindow.ui" line="1164"/>
         <source>Add...</source>
         <translation>Afegeix...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="824"/>
+        <location filename="../src/mainwindow.ui" line="815"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="827"/>
+        <location filename="../src/mainwindow.ui" line="818"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Utilitza l&apos;estil, els colors i les icones de l&apos;usuari o de la plataforma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="843"/>
+        <location filename="../src/mainwindow.ui" line="834"/>
         <source>Fusion Dark</source>
         <translation>Fusion Dark</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="851"/>
+        <location filename="../src/mainwindow.ui" line="842"/>
         <source>Fusion Light</source>
         <translation>Fusion Light</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="856"/>
+        <location filename="../src/mainwindow.ui" line="847"/>
         <source>Tutorials...</source>
         <translation>Tutorials...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="200"/>
-        <location filename="../src/mainwindow.ui" line="865"/>
-        <location filename="../src/mainwindow.cpp" line="2667"/>
+        <location filename="../src/mainwindow.ui" line="856"/>
+        <location filename="../src/mainwindow.cpp" line="2669"/>
         <source>Timeline</source>
         <translation>Línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="873"/>
-        <location filename="../src/mainwindow.ui" line="876"/>
+        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="867"/>
         <source>Restore Default Layout</source>
         <translation>Recupera la disposició inicial</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="884"/>
+        <location filename="../src/mainwindow.ui" line="875"/>
         <source>Show Title Bars</source>
         <translation>Mostra les barres dels títols</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="892"/>
+        <location filename="../src/mainwindow.ui" line="883"/>
         <source>Show Toolbar</source>
         <translation>Mostra la barra d&apos;eines</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="897"/>
+        <location filename="../src/mainwindow.ui" line="888"/>
         <source>Upgrade...</source>
         <translation>Actualitza...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="902"/>
+        <location filename="../src/mainwindow.ui" line="893"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Obre un XML MLT com un clip...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="896"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>Obre un projecte XML MLT com a clip virtual</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="913"/>
+        <location filename="../src/mainwindow.ui" line="904"/>
         <source>Scrub Audio</source>
         <translation>Depura l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="948"/>
+        <location filename="../src/mainwindow.ui" line="939"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Programari (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="956"/>
+        <location filename="../src/mainwindow.ui" line="947"/>
         <source>Low</source>
         <translation>Baixa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="964"/>
+        <location filename="../src/mainwindow.ui" line="955"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="974"/>
+        <location filename="../src/mainwindow.ui" line="965"/>
         <source>Application Log...</source>
         <translation>Registre de l&apos;aplicació...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="1076"/>
-        <location filename="../src/mainwindow.ui" line="1079"/>
+        <location filename="../src/mainwindow.ui" line="973"/>
+        <location filename="../src/mainwindow.ui" line="1067"/>
+        <location filename="../src/mainwindow.ui" line="1070"/>
         <source>Project</source>
         <translation>Projecte</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="256"/>
-        <location filename="../src/mainwindow.ui" line="1454"/>
+        <location filename="../src/mainwindow.ui" line="1445"/>
         <source>Player</source>
         <translation>Reproductor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="990"/>
+        <location filename="../src/mainwindow.ui" line="981"/>
         <source>User Interface</source>
         <translation>Interfície d&apos;usuari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="998"/>
+        <location filename="../src/mainwindow.ui" line="989"/>
         <source>Close</source>
         <translation>Tanca</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1255"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
+        <source>Generate</source>
+        <translation>Genera</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1246"/>
         <source>Notes</source>
         <translation>Notes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1483"/>
+        <location filename="../src/mainwindow.ui" line="1474"/>
         <source>Markers as Chapters...</source>
         <translation>Marcadors com a capítols...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1486"/>
-        <location filename="../src/mainwindow.ui" line="1489"/>
-        <location filename="../src/mainwindow.cpp" line="6329"/>
+        <location filename="../src/mainwindow.ui" line="1477"/>
+        <location filename="../src/mainwindow.ui" line="1480"/>
+        <location filename="../src/mainwindow.cpp" line="6334"/>
         <source>Export Chapters</source>
         <translation>Exporta capítols</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1494"/>
+        <location filename="../src/mainwindow.ui" line="1485"/>
         <source>Audio/Video Device...</source>
         <translation>Dispositiu d&apos;àudio/vídeo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1048"/>
-        <location filename="../src/mainwindow.ui" line="1386"/>
+        <location filename="../src/mainwindow.ui" line="1039"/>
+        <location filename="../src/mainwindow.ui" line="1377"/>
         <source>Set...</source>
         <translation>Estableix...</translation>
     </message>
@@ -5025,64 +5020,64 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Format temporal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="295"/>
+        <location filename="../src/mainwindow.ui" line="294"/>
         <source>Backup</source>
         <translation>Còpia de seguretat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="396"/>
+        <location filename="../src/mainwindow.ui" line="395"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Obriu un fitxer de vídeo, àudio, imatge o projecte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="551"/>
+        <location filename="../src/mainwindow.ui" line="550"/>
         <source>Audio Peak Meter</source>
         <translation>Vúmetre de l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="680"/>
+        <location filename="../src/mainwindow.ui" line="679"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (quadrafònic/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="688"/>
+        <location filename="../src/mainwindow.ui" line="687"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 envoltant)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="723"/>
+        <location filename="../src/mainwindow.ui" line="714"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - temporal + espacial (millor)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="731"/>
+        <location filename="../src/mainwindow.ui" line="722"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (el millor)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="766"/>
+        <location filename="../src/mainwindow.ui" line="757"/>
         <source>Lanczos (best)</source>
         <translation>Lanczos (la millor)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="969"/>
+        <location filename="../src/mainwindow.ui" line="960"/>
         <source>Resources...</source>
         <translation>Recursos...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1053"/>
-        <location filename="../src/mainwindow.ui" line="1394"/>
+        <location filename="../src/mainwindow.ui" line="1044"/>
+        <location filename="../src/mainwindow.ui" line="1385"/>
         <source>Show...</source>
         <translation>Mostra...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1056"/>
+        <location filename="../src/mainwindow.ui" line="1047"/>
         <source>Show</source>
         <translation>Mostra</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1065"/>
-        <location filename="../src/mainwindow.ui" line="1068"/>
+        <location filename="../src/mainwindow.ui" line="1056"/>
+        <location filename="../src/mainwindow.ui" line="1059"/>
         <source>Keyframes</source>
         <translation>Fotogrames clau</translation>
     </message>
@@ -5097,367 +5092,362 @@ mescla, o tria només l&apos;àudio del clip A
         <translation>Mode de processament</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="648"/>
+        <location filename="../src/mainwindow.ui" line="647"/>
         <source>Linear 10-bit CPU (slowest, best)</source>
         <translation>CPU lineal de 10 bits (el més lent, el millor)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="656"/>
+        <location filename="../src/mainwindow.ui" line="655"/>
         <source>Linear 10-bit GPU/CPU (Experimental)</source>
         <translation>GPU/CPU lineal de 10 bits (experimental)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="835"/>
+        <location filename="../src/mainwindow.ui" line="826"/>
         <source>System Fusion</source>
         <translation>System Fusion</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1034"/>
+        <location filename="../src/mainwindow.ui" line="1025"/>
         <source>Video/Audio...</source>
         <translation>Vídeo/Àudio...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1037"/>
-        <location filename="../src/mainwindow.ui" line="1040"/>
+        <location filename="../src/mainwindow.ui" line="1028"/>
+        <location filename="../src/mainwindow.ui" line="1031"/>
         <source>Export Video/Audio</source>
         <translation>Exporta el vídeo/àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1082"/>
+        <location filename="../src/mainwindow.ui" line="1073"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1658"/>
-        <location filename="../src/mainwindow.cpp" line="5286"/>
+        <location filename="../src/mainwindow.ui" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1657"/>
+        <location filename="../src/mainwindow.cpp" line="5284"/>
         <source>Screen Snapshot</source>
         <translation>Captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1090"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>Capture a screenshot</source>
         <translation>Fes una captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1098"/>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
-        <location filename="../src/mainwindow.cpp" line="5344"/>
-        <location filename="../src/mainwindow.cpp" line="5360"/>
-        <location filename="../src/mainwindow.cpp" line="5400"/>
+        <location filename="../src/mainwindow.ui" line="1089"/>
+        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="5342"/>
+        <location filename="../src/mainwindow.cpp" line="5358"/>
+        <location filename="../src/mainwindow.cpp" line="5398"/>
         <source>Screen Recording</source>
         <translation>Gravació de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1101"/>
+        <location filename="../src/mainwindow.ui" line="1092"/>
         <source>Record the screen</source>
         <translation>Grava la pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1120"/>
+        <location filename="../src/mainwindow.ui" line="1111"/>
         <source>Audio</source>
         <translation>Àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1123"/>
+        <location filename="../src/mainwindow.ui" line="1114"/>
         <source>Switch to the audio layout</source>
         <translation>Canvia a la disposició d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1126"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1134"/>
+        <location filename="../src/mainwindow.ui" line="1125"/>
         <source>Logging</source>
         <translation>Registre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1137"/>
+        <location filename="../src/mainwindow.ui" line="1128"/>
         <source>Switch to the logging layout</source>
         <translation>Canvia a la disposició de registre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1140"/>
+        <location filename="../src/mainwindow.ui" line="1131"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1148"/>
+        <location filename="../src/mainwindow.ui" line="1139"/>
         <source>Editing</source>
         <translation>Edició</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1151"/>
+        <location filename="../src/mainwindow.ui" line="1142"/>
         <source>Switch to the editing layout</source>
         <translation>Canvia a la disposició d&apos;edició</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1154"/>
+        <location filename="../src/mainwindow.ui" line="1145"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1162"/>
+        <location filename="../src/mainwindow.ui" line="1153"/>
         <source>FX</source>
         <translation>FX</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1165"/>
+        <location filename="../src/mainwindow.ui" line="1156"/>
         <source>Switch to the effects layout</source>
         <translation>Canvia a la disposició d&apos;efectes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1168"/>
+        <location filename="../src/mainwindow.ui" line="1159"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1192"/>
-        <source>New Generator</source>
-        <translation>Nou generador</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1243"/>
+        <location filename="../src/mainwindow.ui" line="1234"/>
         <source>Markers</source>
         <translation>Marcadors</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1267"/>
+        <location filename="../src/mainwindow.ui" line="1258"/>
         <source>Subtitles</source>
         <translation>Subtítols</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1300"/>
+        <location filename="../src/mainwindow.ui" line="1291"/>
         <source>1080p</source>
         <translation>1080p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1330"/>
+        <location filename="../src/mainwindow.ui" line="1321"/>
         <source>Timecode (Drop-Frame)</source>
         <translation>Codi de temps (Fotograma eliminat)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1338"/>
+        <location filename="../src/mainwindow.ui" line="1329"/>
         <source>Frames</source>
         <translation>Fotogrames</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1346"/>
+        <location filename="../src/mainwindow.ui" line="1337"/>
         <source>Clock</source>
         <translation>Rellotge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1354"/>
+        <location filename="../src/mainwindow.ui" line="1345"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation>Codi de temps (Fotograma no eliminat)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1359"/>
+        <location filename="../src/mainwindow.ui" line="1350"/>
         <source>Topics</source>
         <translation>Tòpics</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1367"/>
+        <location filename="../src/mainwindow.ui" line="1358"/>
         <source>Synchronization...</source>
         <translation>Sincronització...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1370"/>
+        <location filename="../src/mainwindow.ui" line="1361"/>
         <source>Synchronization</source>
         <translation>Sincronització</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1378"/>
+        <location filename="../src/mainwindow.ui" line="1369"/>
         <source>Use Proxy</source>
         <translation>Utilitza un servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1389"/>
+        <location filename="../src/mainwindow.ui" line="1380"/>
         <source>Set the proxy storage folder</source>
         <translation>Estableix la carpeta d&apos;emmagatzematge del servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1397"/>
+        <location filename="../src/mainwindow.ui" line="1388"/>
         <source>Show the proxy storage folder</source>
         <translation>Mostra la carpeta d&apos;emmagatzematge del servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1408"/>
+        <location filename="../src/mainwindow.ui" line="1399"/>
         <source>Use Project Folder</source>
         <translation>Utilitza la carpeta de projectes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1411"/>
+        <location filename="../src/mainwindow.ui" line="1402"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Emmagatzema els servidors intermediaris a la carpeta de projecte si està definida</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1419"/>
+        <location filename="../src/mainwindow.ui" line="1410"/>
         <source>Use Hardware Encoder</source>
         <translation>Utilitza el codificador de maquinari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1427"/>
+        <location filename="../src/mainwindow.ui" line="1418"/>
         <source>Use Hardware Decoder</source>
         <translation>Utilitza el descodificador de maquinari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1432"/>
+        <location filename="../src/mainwindow.ui" line="1423"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Configura el codificador de maquinari...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1443"/>
+        <location filename="../src/mainwindow.ui" line="1434"/>
         <source>Switch to the color layout</source>
         <translation>Fes una còpia de seguretat i desa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1446"/>
+        <location filename="../src/mainwindow.ui" line="1437"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1457"/>
+        <location filename="../src/mainwindow.ui" line="1448"/>
         <source>Switch to the player only layout</source>
         <translation>Canvia a la disposició de només reproducció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1460"/>
+        <location filename="../src/mainwindow.ui" line="1451"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1473"/>
+        <location filename="../src/mainwindow.ui" line="1464"/>
         <source>Playlist Project</source>
         <translation>Projecte de llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1478"/>
+        <location filename="../src/mainwindow.ui" line="1469"/>
         <source>Clip-only Project</source>
         <translation>Projecte de només el clip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1499"/>
+        <location filename="../src/mainwindow.ui" line="1490"/>
         <source>Reset...</source>
         <translation>Reinicialitza...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1504"/>
-        <location filename="../src/mainwindow.ui" line="1507"/>
+        <location filename="../src/mainwindow.ui" line="1495"/>
+        <location filename="../src/mainwindow.ui" line="1498"/>
         <source>Backup and Save</source>
         <translation>Fes una còpia de seguretat i desa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1510"/>
+        <location filename="../src/mainwindow.ui" line="1501"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1518"/>
+        <location filename="../src/mainwindow.ui" line="1509"/>
         <source>Manually</source>
         <translation>Manualment</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1526"/>
+        <location filename="../src/mainwindow.ui" line="1517"/>
         <source>Hourly</source>
         <translation>Cada hora</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1534"/>
+        <location filename="../src/mainwindow.ui" line="1525"/>
         <source>Daily</source>
         <translation>Cada dia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1545"/>
+        <location filename="../src/mainwindow.ui" line="1536"/>
         <source>Weekly</source>
         <translation>Cada setmana</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1550"/>
+        <location filename="../src/mainwindow.ui" line="1541"/>
         <source>Show Project in Folder</source>
         <translation>Mostra el projecte a la carpeta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1561"/>
+        <location filename="../src/mainwindow.ui" line="1552"/>
         <source>Pause After Seek</source>
         <translation>Pausa després de desplaçar-te</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1570"/>
-        <location filename="../src/mainwindow.cpp" line="5348"/>
+        <location filename="../src/mainwindow.ui" line="1561"/>
+        <location filename="../src/mainwindow.cpp" line="5346"/>
         <source>Files</source>
         <translation>Fitxers</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1579"/>
+        <location filename="../src/mainwindow.ui" line="1570"/>
         <source>What&apos;s This?</source>
         <translation>Què és això?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1582"/>
+        <location filename="../src/mainwindow.ui" line="1573"/>
         <source>Get help about something by clicking it</source>
         <translation>Obteniu ajuda sobre alguna cosa fent-hi clic</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1178"/>
-        <location filename="../src/mainwindow.ui" line="1183"/>
+        <location filename="../src/mainwindow.ui" line="1169"/>
+        <location filename="../src/mainwindow.ui" line="1174"/>
         <source>Remove...</source>
         <translation>Suprimeix...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="539"/>
+        <location filename="../src/mainwindow.ui" line="538"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1009"/>
+        <location filename="../src/mainwindow.ui" line="1000"/>
         <source>EDL...</source>
         <translation>EDL...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1020"/>
+        <location filename="../src/mainwindow.ui" line="1011"/>
         <source>Frame...</source>
         <translation>Fotograma...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1109"/>
+        <location filename="../src/mainwindow.ui" line="1100"/>
         <source>Actions and Shortcuts...</source>
         <translation>Accions i dreceres...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1206"/>
+        <location filename="../src/mainwindow.ui" line="1197"/>
         <source>Clear Recent on Exit</source>
         <translation>Neteja els recents amb la sortida</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1214"/>
+        <location filename="../src/mainwindow.ui" line="1205"/>
         <source>Show Text Under Icons</source>
         <translation>Mostra el text a sota de les icones</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1222"/>
+        <location filename="../src/mainwindow.ui" line="1213"/>
         <source>Show Small Icons</source>
         <translation>Mostra icones petites</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1231"/>
+        <location filename="../src/mainwindow.ui" line="1222"/>
         <source>Jobs</source>
         <translation>Tasques</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1278"/>
+        <location filename="../src/mainwindow.ui" line="1269"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1289"/>
+        <location filename="../src/mainwindow.ui" line="1280"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1319"/>
+        <location filename="../src/mainwindow.ui" line="1310"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
@@ -5471,86 +5461,86 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Instal·leu-la amb el gestor de paquets. Trobareu aquesta biblioteca amb el nom libsdl2-2.0-0, SDL2, o quelcom semblant.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1267"/>
+        <location filename="../src/mainwindow.cpp" line="1266"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Pantalla %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1303"/>
+        <location filename="../src/mainwindow.cpp" line="1302"/>
         <source>Off</source>
         <translation>Apaga</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1306"/>
+        <location filename="../src/mainwindow.cpp" line="1305"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1309"/>
+        <location filename="../src/mainwindow.cpp" line="1308"/>
         <source>External</source>
         <translation>Extern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1332"/>
+        <location filename="../src/mainwindow.cpp" line="1331"/>
         <source>DeckLink Keyer</source>
         <translation>Comandament DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1440"/>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.ui" line="1431"/>
+        <location filename="../src/mainwindow.cpp" line="1611"/>
         <source>Color</source>
         <translation>Color</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1616"/>
+        <location filename="../src/mainwindow.cpp" line="1615"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1627"/>
+        <location filename="../src/mainwindow.cpp" line="1626"/>
         <source>Image/Video from HTML</source>
         <translation>Imatge/Vídeo des d&apos;HTML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1632"/>
+        <location filename="../src/mainwindow.cpp" line="1631"/>
         <source>Noise</source>
         <translation>Soroll</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1636"/>
         <source>Color Bars</source>
         <translation>Barres de colors</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1642"/>
+        <location filename="../src/mainwindow.cpp" line="1641"/>
         <source>Audio Tone</source>
         <translation>To d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1647"/>
+        <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>Count</source>
         <translation>Compte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1652"/>
+        <location filename="../src/mainwindow.cpp" line="1651"/>
         <source>Blip Flash</source>
         <translation>Flaix amb so</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1691"/>
-        <location filename="../src/mainwindow.cpp" line="1693"/>
-        <location filename="../src/mainwindow.cpp" line="2221"/>
-        <location filename="../src/mainwindow.cpp" line="2229"/>
-        <location filename="../src/mainwindow.cpp" line="2253"/>
-        <location filename="../src/mainwindow.cpp" line="2318"/>
-        <location filename="../src/mainwindow.cpp" line="4937"/>
-        <location filename="../src/mainwindow.cpp" line="4950"/>
-        <location filename="../src/mainwindow.cpp" line="6105"/>
+        <location filename="../src/mainwindow.cpp" line="1690"/>
+        <location filename="../src/mainwindow.cpp" line="1692"/>
+        <location filename="../src/mainwindow.cpp" line="2225"/>
+        <location filename="../src/mainwindow.cpp" line="2233"/>
+        <location filename="../src/mainwindow.cpp" line="2257"/>
+        <location filename="../src/mainwindow.cpp" line="2322"/>
+        <location filename="../src/mainwindow.cpp" line="4932"/>
+        <location filename="../src/mainwindow.cpp" line="4945"/>
+        <location filename="../src/mainwindow.cpp" line="6110"/>
         <source>Failed to open </source>
         <translation>No s&apos;ha pogut obrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1729"/>
+        <location filename="../src/mainwindow.cpp" line="1728"/>
         <source>The file you opened uses GPU processing, which is not enabled.
 Do you want Shotcut to convert it for CPU? Conversion is an approximation.
 
@@ -5562,7 +5552,7 @@ Voleu que Shotcut el converteixi per a CPU? La conversió és una aproximació.
 Si trieu Sí, Shotcut crearà una còpia del projecte amb el sufix «- Converted for CPU» al nom del fitxer i l&apos;obrirà.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1746"/>
+        <location filename="../src/mainwindow.cpp" line="1745"/>
         <source>The file you opened uses CPU processing, which is not enabled.
 Do you want Shotcut to convert it for GPU?
 
@@ -5574,42 +5564,42 @@ Voleu que Shotcut el converteixi per a GPU?
 Si trieu Sí, Shotcut crearà una còpia del projecte amb el sufix «- Converted for GPU» al nom del fitxer i l&apos;obrirà.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1767"/>
+        <location filename="../src/mainwindow.cpp" line="1766"/>
         <source>Converted for GPU</source>
         <translation>Convertit per a GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1768"/>
+        <location filename="../src/mainwindow.cpp" line="1767"/>
         <source>Converted for CPU</source>
         <translation>Convertit per a CPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1771"/>
+        <location filename="../src/mainwindow.cpp" line="1770"/>
         <source>Save Converted XML</source>
         <translation>Desa el XML convertit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1807"/>
+        <location filename="../src/mainwindow.cpp" line="1806"/>
         <source>Converting the project failed.</source>
         <translation>La conversió del projecte ha fallat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1817"/>
+        <location filename="../src/mainwindow.cpp" line="1816"/>
         <source>Repaired</source>
         <translation>Reparat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1818"/>
+        <location filename="../src/mainwindow.cpp" line="1817"/>
         <source>Save Repaired XML</source>
         <translation>Desa el XML reparat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1854"/>
+        <location filename="../src/mainwindow.cpp" line="1853"/>
         <source>Repairing the project failed.</source>
         <translation>La reparació del projecte ha fallat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1867"/>
+        <location filename="../src/mainwindow.cpp" line="1866"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5622,22 +5612,33 @@ Si trieu Sí, Shotcut crearà una còpia del vostre projecte
 afegint &quot;- Repaired&quot; al nom de fitxer i l&apos;obrirà.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1902"/>
+        <location filename="../src/mainwindow.cpp" line="1901"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Hi ha fitxers d&apos;autorecuperació disponibles. Voleu recuperar-los ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1974"/>
+        <location filename="../src/mainwindow.cpp" line="1973"/>
         <source>You cannot add a project to itself!</source>
         <translation>No podeu afegir un projecte a si mateix!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2038"/>
+        <location filename="../src/mainwindow.cpp" line="2037"/>
         <source>There was an error saving. Please try again.</source>
         <translation>S&apos;ha produït un error en desar. Torneu-ho a intentar.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2130"/>
+        <location filename="../src/mainwindow.cpp" line="2078"/>
+        <source>Change Preview Scaling</source>
+        <translation>Canvia l&apos;escalat de previsualització</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2084"/>
+        <location filename="../src/mainwindow.cpp" line="5946"/>
+        <source>Reloading</source>
+        <translation>Recarregant</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2134"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5646,7 +5647,7 @@ It was made with version </source>
 Es va fer amb la versió</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2161"/>
+        <location filename="../src/mainwindow.cpp" line="2165"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5657,48 +5658,48 @@ Tanqueu altres aplicacions o pestanyes del navegador i torneu-ho a provar.
 O deseu i reinicieu el Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2214"/>
+        <location filename="../src/mainwindow.cpp" line="2218"/>
         <source>Opening %1</source>
         <translation>S&apos;està obrint %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2360"/>
-        <location filename="../src/mainwindow.cpp" line="4924"/>
+        <location filename="../src/mainwindow.cpp" line="2364"/>
+        <location filename="../src/mainwindow.cpp" line="4919"/>
         <source>Open File</source>
         <translation>Obre un fitxer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2362"/>
+        <location filename="../src/mainwindow.cpp" line="2366"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tots els fitxers (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2631"/>
+        <location filename="../src/mainwindow.cpp" line="2633"/>
         <source>Preferences</source>
         <translation>Preferències</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2641"/>
+        <location filename="../src/mainwindow.cpp" line="2643"/>
         <source>Rename Clip</source>
         <translation>Canvia el nom del clip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2650"/>
+        <location filename="../src/mainwindow.cpp" line="2652"/>
         <source>Find</source>
         <translation>Troba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/mainwindow.cpp" line="2661"/>
         <source>Reload</source>
         <translation>Recarrega</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2669"/>
+        <location filename="../src/mainwindow.cpp" line="2671"/>
         <source>Rerun Filter Analysis</source>
         <translation>Torna a executar l&apos;anàlisi de filtres</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2683"/>
+        <location filename="../src/mainwindow.cpp" line="2685"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Això iniciarà %n tasques d&apos;anàlisi. Voleu continuar?</numerusform>
@@ -5706,7 +5707,7 @@ O deseu i reinicieu el Shotcut.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2701"/>
+        <location filename="../src/mainwindow.cpp" line="2703"/>
         <source>No filters to analyze.</source>
         <translation>No hi ha cap filtre per analitzar.</translation>
     </message>
@@ -5774,7 +5775,7 @@ O deseu i reinicieu el Shotcut.</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="3354"/>
         <location filename="../src/mainwindow.cpp" line="3377"/>
-        <location filename="../src/mainwindow.cpp" line="4708"/>
+        <location filename="../src/mainwindow.cpp" line="4703"/>
         <source>Save XML</source>
         <translation>Desa l&apos;XML</translation>
     </message>
@@ -5808,7 +5809,7 @@ Encara voleu sortir?</translation>
         <translation>El processament amb GPU no és compatible</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4705"/>
         <source>Saved backup %1</source>
         <translation>Còpia de seguretat desada %1</translation>
     </message>
@@ -5827,67 +5828,67 @@ Do you want to enable GPU processing and restart Shotcut?</source>
 Voleu activar el processament amb GPU i reiniciar Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4403"/>
+        <location filename="../src/mainwindow.cpp" line="4398"/>
         <source>Opened Files</source>
         <translation>Fitxers oberts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5386"/>
+        <location filename="../src/mainwindow.cpp" line="5384"/>
         <source>Screen recorder launched</source>
         <translation>S&apos;ha iniciat la gravadora de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5388"/>
+        <location filename="../src/mainwindow.cpp" line="5386"/>
         <source>Failed to launch screen recorder</source>
         <translation>No s&apos;ha pogut iniciar la gravadora de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5697"/>
+        <location filename="../src/mainwindow.cpp" line="5695"/>
         <source>Add To Timeline</source>
         <translation>Afegeix a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5841"/>
+        <location filename="../src/mainwindow.cpp" line="5839"/>
         <source>GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU processing and restart Shotcut?</source>
         <translation>El processament amb GPU és EXPERIMENTAL, INESTABLE i SENSE SUPORT! Sense suport vol dir que us abstingueu d&apos;informar de cap error.Voleu desactivar el processament amb GPU i reiniciar Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6087"/>
+        <location filename="../src/mainwindow.cpp" line="6092"/>
         <source>Do you want to create missing proxies for every file in this project?</source>
         <translation>Voleu crear els servidors intermediaris que falten per a cada fitxer d&apos;aquest projecte?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6305"/>
+        <location filename="../src/mainwindow.cpp" line="6310"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Voleu incloure els rangs (durada &gt; 1 fotograma)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6316"/>
+        <location filename="../src/mainwindow.cpp" line="6321"/>
         <source>Choose Markers</source>
         <translation>Trieu els marcadors</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6333"/>
+        <location filename="../src/mainwindow.cpp" line="6338"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Text (*.txt);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6388"/>
+        <location filename="../src/mainwindow.cpp" line="6394"/>
         <source>Failed to open export-chapters.js</source>
         <translation>No s&apos;ha pogut obrir export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6429"/>
+        <location filename="../src/mainwindow.cpp" line="6435"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Això reinicialitzarà &lt;b&gt;tota&lt;/b&gt; la configuració, i el Shotcut s&apos;haurà de reiniciar després.
 Voleu reinicialitzar i reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1775"/>
-        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="1774"/>
+        <location filename="../src/mainwindow.cpp" line="1821"/>
         <location filename="../src/mainwindow.cpp" line="3381"/>
         <source>MLT XML (*.mlt)</source>
         <translation>XML MLT (*.mlt)</translation>
@@ -5910,53 +5911,63 @@ Voleu desar-ne els canvis?</translation>
         <translation>Surt de la pantalla completa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4755"/>
+        <location filename="../src/mainwindow.cpp" line="4750"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>Cal reiniciar Shotcut per canviar el monitoratge extern. Voleu reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5287"/>
+        <location filename="../src/mainwindow.cpp" line="5285"/>
         <source>screenshot</source>
         <translation>captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5288"/>
+        <location filename="../src/mainwindow.cpp" line="5286"/>
         <source>PNG Files (*.png)</source>
         <translation>Fitxers PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5345"/>
+        <location filename="../src/mainwindow.cpp" line="5343"/>
         <source>screen</source>
         <translation>pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6066"/>
+        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <source>Turn Hardware Decoder On</source>
+        <translation>Activa el descodificador de maquinari</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5940"/>
+        <source>Turn Hardware Decoder Off</source>
+        <translation>Desactiva el descodificador de maquinari</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="6071"/>
         <source>Turn Proxy On</source>
         <translation>Activa el servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6066"/>
+        <location filename="../src/mainwindow.cpp" line="6071"/>
         <source>Turn Proxy Off</source>
         <translation>Desactiva el servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6071"/>
+        <location filename="../src/mainwindow.cpp" line="6076"/>
         <source>Converting</source>
         <translation>S&apos;està convertint</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6123"/>
+        <location filename="../src/mainwindow.cpp" line="6128"/>
         <source>Proxy Folder</source>
         <translation>Carpeta del servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6141"/>
+        <location filename="../src/mainwindow.cpp" line="6146"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Voleu moure tots els fitxers de la carpeta antiga a la nova?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6149"/>
+        <location filename="../src/mainwindow.cpp" line="6154"/>
         <source>Moving Files</source>
         <translation>S&apos;estan movent els fitxers</translation>
     </message>
@@ -5983,39 +5994,39 @@ Disable GPU processing and restart?</source>
 Voleu desactivar el processament amb GPU i reiniciar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1149"/>
+        <location filename="../src/mainwindow.cpp" line="1148"/>
         <source>Audio API</source>
         <translation>API d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1170"/>
+        <location filename="../src/mainwindow.cpp" line="1169"/>
         <source>default</source>
         <translation>per defecte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1177"/>
+        <location filename="../src/mainwindow.cpp" line="1176"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar el Shotcut per canviar l&apos;API d&apos;àudio.
 Voleu reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1294"/>
+        <location filename="../src/mainwindow.cpp" line="1293"/>
         <source>SDR</source>
         <translation>SDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1297"/>
+        <location filename="../src/mainwindow.cpp" line="1296"/>
         <source>HLG HDR</source>
         <translation>HLG HDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1323"/>
+        <location filename="../src/mainwindow.cpp" line="1322"/>
         <source>DeckLink Gamma</source>
         <translation>Gamma DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1622"/>
+        <location filename="../src/mainwindow.cpp" line="1621"/>
         <source>Drawing/Animation</source>
         <translation>Dibuix/Animació</translation>
     </message>
@@ -6025,119 +6036,119 @@ Voleu reiniciar ara?</translation>
         <translation>Feu clic per comprovar si existeix una versió més recent de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4374"/>
+        <location filename="../src/mainwindow.cpp" line="4369"/>
         <source>Open Files</source>
         <translation>Obre fitxers</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4433"/>
+        <location filename="../src/mainwindow.cpp" line="4428"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar Shotcut per canviar al nou idioma.
 Voleu reiniciar-lo ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4476"/>
+        <location filename="../src/mainwindow.cpp" line="4471"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Ha fallat la connexió a JACK.
 Verifiqueu que JACK està instal·lat i executant-se.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4687"/>
+        <location filename="../src/mainwindow.cpp" line="4682"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar %1 per canviar a un tema nou.
 Voleu reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4730"/>
+        <location filename="../src/mainwindow.cpp" line="4725"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Reviseu tot el projecte després de fer aquest canvi.&lt;/p&gt;El Shotcut no ajusta automàticament aspectes sensibles a la mida i la posició si canvieu la resolució o la relació d&apos;aspecte.&lt;p&gt;Els temps de les edicions i els fotogrames clau poden ser lleugerament diferents si canvieu la velocitat de fotograma.&lt;/p&gt;&lt;p&gt; És un bona idea utilitzar &lt;b&gt;Fitxer &gt; Fes una còpia de seguretat i desa&lt;/b&gt; abans o després d&apos;aquesta operació.&lt;/p&gt;&lt;p&gt; Voleu canviar el &lt;b&gt;mode de vídeo&lt;/b&gt; ara?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4744"/>
+        <location filename="../src/mainwindow.cpp" line="4739"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>No ho mostris més.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4901"/>
+        <location filename="../src/mainwindow.cpp" line="4896"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Voleu cercar automàticament les actualitzacions en el futur?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4908"/>
+        <location filename="../src/mainwindow.cpp" line="4903"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>No ho mostris més.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4926"/>
+        <location filename="../src/mainwindow.cpp" line="4921"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>XML MLT (*.mlt);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4980"/>
+        <location filename="../src/mainwindow.cpp" line="4975"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar Shotcut per canviar el mètode de visualització. Voleu reiniciar-lo ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5010"/>
+        <location filename="../src/mainwindow.cpp" line="5006"/>
         <source>Application Log</source>
         <translation>Registre de l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5013"/>
+        <location filename="../src/mainwindow.cpp" line="5009"/>
         <source>Previous</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5075"/>
+        <location filename="../src/mainwindow.cpp" line="5072"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Hi ha disponible la versió %1 de Shotcut! Feu clic aquí per baixar-la.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5081"/>
+        <location filename="../src/mainwindow.cpp" line="5078"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Esteu executant la versió més recent de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5095"/>
+        <location filename="../src/mainwindow.cpp" line="5092"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Ha fallat la lectura de version.json mentre es comprovava. Feu clic aquí per anar al lloc web.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
-        <location filename="../src/mainwindow.ui" line="1015"/>
-        <location filename="../src/mainwindow.cpp" line="5115"/>
+        <location filename="../src/mainwindow.ui" line="1003"/>
+        <location filename="../src/mainwindow.ui" line="1006"/>
+        <location filename="../src/mainwindow.cpp" line="5112"/>
         <source>Export EDL</source>
         <translation>Exporta l&apos;EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5119"/>
+        <location filename="../src/mainwindow.cpp" line="5116"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5166"/>
-        <location filename="../src/mainwindow.cpp" line="6385"/>
+        <location filename="../src/mainwindow.cpp" line="5164"/>
+        <location filename="../src/mainwindow.cpp" line="6391"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Hi ha hagut un error de javaScript durant l&apos;exportació.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5169"/>
+        <location filename="../src/mainwindow.cpp" line="5167"/>
         <source>Failed to open export-edl.js</source>
         <translation>No s&apos;ha pogut obrir export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5200"/>
+        <location filename="../src/mainwindow.cpp" line="5198"/>
         <source>Export frame from proxy?</source>
         <translation>Voleu exportar el fotograma del servidor intermediari?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5201"/>
+        <location filename="../src/mainwindow.cpp" line="5199"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6146,46 +6157,46 @@ Do you still want to continue?</source>
 Encara voleu continuar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
-        <location filename="../src/mainwindow.ui" line="1026"/>
-        <location filename="../src/mainwindow.cpp" line="5213"/>
+        <location filename="../src/mainwindow.ui" line="1014"/>
+        <location filename="../src/mainwindow.ui" line="1017"/>
+        <location filename="../src/mainwindow.cpp" line="5211"/>
         <source>Export Frame</source>
         <translation>Exporta el fotograma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5219"/>
+        <location filename="../src/mainwindow.cpp" line="5217"/>
         <source>Unable to export frame.</source>
         <translation>No es pot exportar el fotograma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5227"/>
+        <location filename="../src/mainwindow.cpp" line="5225"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Heu de reiniciar Shotcut per canviar el directori de dades.
 Voleu continuar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5238"/>
+        <location filename="../src/mainwindow.cpp" line="5236"/>
         <source>Data Directory</source>
         <translation>Directori de dades</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5585"/>
+        <location filename="../src/mainwindow.cpp" line="5583"/>
         <source>Add Custom Layout</source>
         <translation>Afegeix una disposició personalitzada</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5586"/>
+        <location filename="../src/mainwindow.cpp" line="5584"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5626"/>
+        <location filename="../src/mainwindow.cpp" line="5624"/>
         <source>Remove Video Mode</source>
         <translation>Suprimeix el mode de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5643"/>
+        <location filename="../src/mainwindow.cpp" line="5641"/>
         <source>Remove Layout</source>
         <translation>Suprimeix la disposició</translation>
     </message>
@@ -6319,13 +6330,13 @@ Voleu continuar?</translation>
         <translation>Obre el fitxer de sortida al reproductor de Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="65"/>
         <location filename="../src/jobs/meltjob.cpp" line="70"/>
         <location filename="../src/jobs/meltjob.cpp" line="71"/>
         <source>Show In Folder</source>
         <translation>Mostra a la carpeta</translation>
     </message>
     <message>
+        <location filename="../src/jobs/meltjob.cpp" line="65"/>
         <location filename="../src/jobs/meltjob.cpp" line="66"/>
         <source>Show In Files</source>
         <translation>Mostrar en los archivos</translation>
@@ -6581,7 +6592,7 @@ Això pot donar resultats inesperats</translation>
         <translation>(SERVIDOR INTERMEDIARI)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2698"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2718"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -6850,6 +6861,10 @@ Torneu-ho a provar amb una carpeta diferent.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="83"/>
+        <source>Drawing/Animation</source>
+        <translation>Dibuix/Animació</translation>
+    </message>
+    <message>
         <location filename="../src/openotherdialog.cpp" line="158"/>
         <source>Animation</source>
         <translation>Animació</translation>
@@ -7113,204 +7128,204 @@ Torneu-ho a provar amb una carpeta diferent.</translation>
         <translation>Graella de 10 píxels</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="465"/>
+        <location filename="../src/player.cpp" line="466"/>
         <source>Play/Pause</source>
         <translation>Reprodueix/Pausa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="469"/>
+        <location filename="../src/player.cpp" line="470"/>
         <source>Toggle play or pause</source>
         <translation>Commuta la reproducció o la pausa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="480"/>
+        <location filename="../src/player.cpp" line="481"/>
         <source>Loop</source>
         <translation>Bucle</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="486"/>
+        <location filename="../src/player.cpp" line="487"/>
         <source>Toggle player looping</source>
         <translation>Commuta la reproducció en bucle</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="490"/>
+        <location filename="../src/player.cpp" line="491"/>
         <source>Loop All</source>
         <translation>Reprodueix en bucle tot</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="491"/>
+        <location filename="../src/player.cpp" line="492"/>
         <source>Loop back to the beginning when the end is reached</source>
         <translation>Torna al principi quan s&apos;arribi al final</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="498"/>
+        <location filename="../src/player.cpp" line="499"/>
         <source>Loop Marker</source>
         <translation>Marcador de bucle</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="499"/>
+        <location filename="../src/player.cpp" line="500"/>
         <source>Loop around the marker under the cursor in the timeline</source>
         <translation>Bucle al voltant del marcador situat sota el cursor a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="510"/>
+        <location filename="../src/player.cpp" line="511"/>
         <source>Loop Selection</source>
         <translation>Reprodueix en bucle la selecció</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="511"/>
+        <location filename="../src/player.cpp" line="512"/>
         <source>Loop around the selected clips</source>
         <translation>Bucle al voltant dels clips seleccionats</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="519"/>
+        <location filename="../src/player.cpp" line="520"/>
         <source>Nothing selected</source>
         <translation>No se n&apos;ha seleccionat cap</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="524"/>
+        <location filename="../src/player.cpp" line="525"/>
         <source>Loop Around Cursor</source>
         <translation>Bucle al voltant del cursor</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="525"/>
+        <location filename="../src/player.cpp" line="526"/>
         <source>Loop around the current cursor position</source>
         <translation>Bucle al voltant de la posició actual del cursor</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="554"/>
+        <location filename="../src/player.cpp" line="555"/>
         <source>Skip to the next point</source>
         <translation>Salta al punt següent</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="577"/>
+        <location filename="../src/player.cpp" line="578"/>
         <source>Skip to the previous point</source>
         <translation>Salta al punt anterior</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="602"/>
+        <location filename="../src/player.cpp" line="603"/>
         <source>Play quickly backwards</source>
         <translation>Reprodueix ràpidament cap enrere</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="612"/>
+        <location filename="../src/player.cpp" line="613"/>
         <source>Play quickly forwards</source>
         <translation>Reprodueix ràpidament cap endavant</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="616"/>
+        <location filename="../src/player.cpp" line="617"/>
         <source>Seek Start</source>
         <translation>Desplaça&apos;t a l&apos;inici</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="621"/>
+        <location filename="../src/player.cpp" line="622"/>
         <source>Seek End</source>
         <translation>Desplaça&apos;t al final</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="631"/>
+        <location filename="../src/player.cpp" line="632"/>
         <source>Next Frame</source>
         <translation>Fotograma següent</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="637"/>
+        <location filename="../src/player.cpp" line="638"/>
         <source>Previous Frame</source>
         <translation>Fotograma anterior</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="643"/>
+        <location filename="../src/player.cpp" line="644"/>
         <source>Forward One Second</source>
         <translation>Avança un segon</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="648"/>
+        <location filename="../src/player.cpp" line="649"/>
         <source>Backward One Second</source>
         <translation>Retrocedeix un segon</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="653"/>
+        <location filename="../src/player.cpp" line="654"/>
         <source>Forward Two Seconds</source>
         <translation>Avança dos segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="658"/>
+        <location filename="../src/player.cpp" line="659"/>
         <source>Backward Two Seconds</source>
         <translation>Retrocedeix dos segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="663"/>
+        <location filename="../src/player.cpp" line="664"/>
         <source>Forward Five Seconds</source>
         <translation>Avança cinc segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="668"/>
+        <location filename="../src/player.cpp" line="669"/>
         <source>Backward Five Seconds</source>
         <translation>Retrocedeix cinc segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="673"/>
+        <location filename="../src/player.cpp" line="674"/>
         <source>Forward Ten Seconds</source>
         <translation>Avança deu segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="678"/>
+        <location filename="../src/player.cpp" line="679"/>
         <source>Backward Ten Seconds</source>
         <translation>Retrocedeix deu segons</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="683"/>
+        <location filename="../src/player.cpp" line="684"/>
         <source>Forward Jump</source>
         <translation>Salt cap endavant</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="690"/>
+        <location filename="../src/player.cpp" line="691"/>
         <source>Backward Jump</source>
         <translation>Salt cap enrere</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="697"/>
+        <location filename="../src/player.cpp" line="698"/>
         <source>Set Jump Time</source>
         <translation>Estableix l&apos;interval de salt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="708"/>
+        <location filename="../src/player.cpp" line="709"/>
         <source>Trim Clip In</source>
         <translation>Ajusta el clip</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="721"/>
+        <location filename="../src/player.cpp" line="722"/>
         <source>Trim Clip Out</source>
         <translation>Retalla el clip</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="734"/>
+        <location filename="../src/player.cpp" line="735"/>
         <source>Set Time Position</source>
         <translation>Estableix la posició en el temps</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="764"/>
+        <location filename="../src/player.cpp" line="765"/>
         <source>Pause playback</source>
         <translation>Pausa la reproducció</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="766"/>
-        <location filename="../src/player.cpp" line="771"/>
-        <location filename="../src/player.cpp" line="776"/>
+        <location filename="../src/player.cpp" line="767"/>
+        <location filename="../src/player.cpp" line="772"/>
+        <location filename="../src/player.cpp" line="777"/>
         <source>Player</source>
         <translation>Reproductor</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="768"/>
+        <location filename="../src/player.cpp" line="769"/>
         <source>Focus Player</source>
         <translation>Enfoca el reproductor</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="773"/>
+        <location filename="../src/player.cpp" line="774"/>
         <source>Toggle Filter Overlay</source>
         <translation>Commuta la capa de filtres</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="928"/>
+        <location filename="../src/player.cpp" line="929"/>
         <source>Not Seekable</source>
         <translation>No cercable</translation>
     </message>
@@ -7365,32 +7380,32 @@ Torneu-ho a provar amb una carpeta diferent.</translation>
         <translation>Commuta la visualització de la graella al reproductor</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="741"/>
+        <location filename="../src/player.cpp" line="742"/>
         <source>Switch Source/Project</source>
         <translation>Canvia a la font/projecte</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="761"/>
+        <location filename="../src/player.cpp" line="762"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="548"/>
+        <location filename="../src/player.cpp" line="549"/>
         <source>Skip Next</source>
         <translation>Salta al següent</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="571"/>
+        <location filename="../src/player.cpp" line="572"/>
         <source>Skip Previous</source>
         <translation>Salta a l&apos;anterior</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="596"/>
+        <location filename="../src/player.cpp" line="597"/>
         <source>Rewind</source>
         <translation>Rebobina</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="606"/>
+        <location filename="../src/player.cpp" line="607"/>
         <source>Fast Forward</source>
         <translation>Avança</translation>
     </message>
@@ -7405,28 +7420,28 @@ Torneu-ho a provar amb una carpeta diferent.</translation>
         <translation>Mostra el control de volum</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1283"/>
+        <location filename="../src/player.cpp" line="1284"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation>El servidor intermediari i l&apos;escalat de previsualització estan ACTIVATS a %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1288"/>
+        <location filename="../src/player.cpp" line="1289"/>
         <source>Proxy is ON at %1p</source>
         <translation>El servidor intermediari està ACTIVAT a %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1293"/>
+        <location filename="../src/player.cpp" line="1294"/>
         <source>Preview scaling is ON at %1p</source>
         <translation>L&apos;escalat de previsualització està ACTIVAT a %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1408"/>
+        <location filename="../src/player.cpp" line="1409"/>
         <source>Unmute</source>
         <translation>Treu el silenci</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1377"/>
-        <location filename="../src/player.cpp" line="1417"/>
+        <location filename="../src/player.cpp" line="1378"/>
+        <location filename="../src/player.cpp" line="1418"/>
         <source>Mute</source>
         <translation>Silencia</translation>
     </message>
@@ -7464,399 +7479,409 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Feu dos clics a un element de la llista de reproducció per obrir-lo al reproductor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="603"/>
+        <location filename="../src/docks/playlistdock.cpp" line="604"/>
         <source>Add the Source to the playlist</source>
         <translation>Afegeix l&apos;origen a la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="614"/>
+        <location filename="../src/docks/playlistdock.cpp" line="615"/>
         <source>Remove cut</source>
         <translation>Suprimeix el tall</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="632"/>
+        <location filename="../src/docks/playlistdock.cpp" line="633"/>
         <source>Update</source>
         <translation>Actualitza</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="644"/>
+        <location filename="../src/docks/playlistdock.cpp" line="645"/>
         <source>View as tiles</source>
         <translation>Mostra com a mosaic</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="657"/>
+        <location filename="../src/docks/playlistdock.cpp" line="658"/>
         <source>View as icons</source>
         <translation>Mostra com a icones</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="670"/>
+        <location filename="../src/docks/playlistdock.cpp" line="671"/>
         <source>View as details</source>
         <translation>Mostra com a detalls</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="609"/>
+        <location filename="../src/docks/playlistdock.cpp" line="610"/>
         <source>Remove</source>
         <translation>Suprimeix</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="722"/>
+        <location filename="../src/docks/playlistdock.cpp" line="727"/>
         <source>Set Creation Time...</source>
         <translation>Estableix la data de creació...</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="708"/>
-        <location filename="../src/docks/playlistdock.cpp" line="709"/>
+        <location filename="../src/docks/playlistdock.cpp" line="713"/>
+        <location filename="../src/docks/playlistdock.cpp" line="714"/>
         <source>Insert</source>
         <translation>Insereix</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="453"/>
+        <location filename="../src/docks/playlistdock.cpp" line="454"/>
         <source>Playlist Menu</source>
         <translation>Menú de llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="601"/>
+        <location filename="../src/docks/playlistdock.cpp" line="602"/>
         <source>Append</source>
         <translation>Annexa</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="683"/>
+        <location filename="../src/docks/playlistdock.cpp" line="684"/>
         <source>Open the clip in the Source player</source>
         <translation>Obre el clip al reproductor font</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="693"/>
+        <location filename="../src/docks/playlistdock.cpp" line="694"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>Vés a l&apos;inici d&apos;aquest clip al reproductor del projecte</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="730"/>
+        <location filename="../src/docks/playlistdock.cpp" line="735"/>
         <source>Remove All</source>
         <translation>Suprimeix-ho tot</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="731"/>
+        <location filename="../src/docks/playlistdock.cpp" line="736"/>
         <source>Remove all items from the playlist</source>
         <translation>Suprimeix tots els elements de la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="807"/>
+        <location filename="../src/docks/playlistdock.cpp" line="830"/>
         <source>Hidden</source>
         <translation>Ocult</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="819"/>
+        <location filename="../src/docks/playlistdock.cpp" line="842"/>
         <source>In and Out - Left/Right</source>
         <translation>Entrada i sortida - Esquerra/Dreta</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="835"/>
+        <location filename="../src/docks/playlistdock.cpp" line="858"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Entrada i sortida - Superior/Inferior</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="852"/>
+        <location filename="../src/docks/playlistdock.cpp" line="875"/>
         <source>In Only - Small</source>
         <translation>Només entrada - Petita</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="868"/>
+        <location filename="../src/docks/playlistdock.cpp" line="891"/>
         <source>In Only - Large</source>
         <translation>Només entrada - Gran</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="774"/>
+        <location filename="../src/docks/playlistdock.cpp" line="787"/>
         <source>Add Selected to Timeline</source>
         <translation>Afegeix els seleccionats a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="781"/>
+        <location filename="../src/docks/playlistdock.cpp" line="795"/>
         <source>Add Selected to Slideshow</source>
         <translation>Afegeix els seleccionats al passi de fotos</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="885"/>
+        <location filename="../src/docks/playlistdock.cpp" line="908"/>
         <source>Play After Open</source>
         <translation>Reprodueix després d&apos;obrir</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="736"/>
+        <location filename="../src/docks/playlistdock.cpp" line="741"/>
         <source>Select All</source>
         <translation>Selecciona-ho tot</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="742"/>
+        <location filename="../src/docks/playlistdock.cpp" line="747"/>
         <source>Select None</source>
         <translation>Desselecciona</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="714"/>
+        <location filename="../src/docks/playlistdock.cpp" line="719"/>
         <source>Update Thumbnails</source>
         <translation>Actualitza les miniatures</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="788"/>
+        <location filename="../src/docks/playlistdock.cpp" line="803"/>
         <source>Sort By Name</source>
         <translation>Ordena pel nom</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="796"/>
+        <location filename="../src/docks/playlistdock.cpp" line="815"/>
         <source>Sort By Date</source>
         <translation>Ordena per la data</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="669"/>
+        <location filename="../src/docks/playlistdock.cpp" line="670"/>
         <source>Details</source>
         <translation>Detalls</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="414"/>
+        <location filename="../src/docks/playlistdock.cpp" line="415"/>
         <source>Select</source>
         <translation>Selecciona</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="431"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1136"/>
+        <location filename="../src/docks/playlistdock.cpp" line="432"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1159"/>
         <source>Bins</source>
         <translation>Safates</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="438"/>
+        <location filename="../src/docks/playlistdock.cpp" line="439"/>
         <source>Columns</source>
         <translation>Columnes</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="448"/>
+        <location filename="../src/docks/playlistdock.cpp" line="449"/>
         <source>Playlist Controls</source>
         <translation>Controls de la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="482"/>
-        <location filename="../src/docks/playlistdock.cpp" line="486"/>
+        <location filename="../src/docks/playlistdock.cpp" line="483"/>
+        <location filename="../src/docks/playlistdock.cpp" line="487"/>
         <source>Playlist Filters</source>
         <translation>Filtres de la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="510"/>
+        <location filename="../src/docks/playlistdock.cpp" line="511"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation>Mostra només els fitxers el nom, la ruta o el comentari dels quals contingui text</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="511"/>
+        <location filename="../src/docks/playlistdock.cpp" line="512"/>
         <source>search</source>
         <translation>cerca</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="625"/>
+        <location filename="../src/docks/playlistdock.cpp" line="626"/>
         <source>Add files to playlist</source>
         <translation>Afegeix fitxers a la llista de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="643"/>
+        <location filename="../src/docks/playlistdock.cpp" line="644"/>
         <source>Tiles</source>
         <translation>Mosaic</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="656"/>
+        <location filename="../src/docks/playlistdock.cpp" line="657"/>
         <source>Icons</source>
         <translation>Icones</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="682"/>
+        <location filename="../src/docks/playlistdock.cpp" line="683"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="692"/>
+        <location filename="../src/docks/playlistdock.cpp" line="693"/>
         <source>GoTo</source>
         <translation>Vés a</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="698"/>
+        <location filename="../src/docks/playlistdock.cpp" line="703"/>
         <source>Copy</source>
         <translation>Copia</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="699"/>
+        <location filename="../src/docks/playlistdock.cpp" line="704"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>Obre una còpia del clip al reproductor font</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="750"/>
+        <location filename="../src/docks/playlistdock.cpp" line="755"/>
         <source>Move Up</source>
         <translation>Mou cap amunt</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="762"/>
+        <location filename="../src/docks/playlistdock.cpp" line="771"/>
         <source>Move Down</source>
         <translation>Mou cap avall</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="893"/>
+        <location filename="../src/docks/playlistdock.cpp" line="916"/>
         <source>Open Previous</source>
         <translation>Obre l&apos;anterior</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="906"/>
+        <location filename="../src/docks/playlistdock.cpp" line="929"/>
         <source>Open Next</source>
         <translation>Obre el següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="919"/>
+        <location filename="../src/docks/playlistdock.cpp" line="942"/>
         <source>Select Clip 1</source>
         <translation>Selecciona el clip 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="931"/>
+        <location filename="../src/docks/playlistdock.cpp" line="954"/>
         <source>Select Clip 2</source>
         <translation>Selecciona el clip 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="943"/>
+        <location filename="../src/docks/playlistdock.cpp" line="966"/>
         <source>Select Clip 3</source>
         <translation>Selecciona el clip 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="955"/>
+        <location filename="../src/docks/playlistdock.cpp" line="978"/>
         <source>Select Clip 4</source>
         <translation>Selecciona el clip 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="967"/>
+        <location filename="../src/docks/playlistdock.cpp" line="990"/>
         <source>Select Clip 5</source>
         <translation>Selecciona el clip 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="979"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1002"/>
         <source>Select Clip 6</source>
         <translation>Selecciona el clip 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="991"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1014"/>
         <source>Select Clip 7</source>
         <translation>Selecciona el clip 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1003"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1026"/>
         <source>Select Clip 8</source>
         <translation>Selecciona el clip 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1015"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1038"/>
         <source>Select Clip 9</source>
         <translation>Selecciona el clip 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1027"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1050"/>
         <source>Thumbnails</source>
         <translation>Miniatures</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1036"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1059"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1045"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1068"/>
         <source>In</source>
         <translation>Entrada</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1054"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1077"/>
         <source>Duration</source>
         <translation>Durada</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1063"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1086"/>
         <source>Start</source>
         <translation>Inicia</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1072"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1095"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1081"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1104"/>
         <source>Type</source>
         <translation>Tipus</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1113"/>
         <source>Video</source>
         <translation>Vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
         <source>Show or hide video files</source>
         <translation>Mostra o amaga els fitxers de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1096"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1119"/>
         <source>Audio</source>
         <translation>Àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1097"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1120"/>
         <source>Show or hide audio files</source>
         <translation>Mostra o amaga els fitxers d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1125"/>
         <source>Image</source>
         <translation>Imatge</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1103"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
         <source>Show or hide image files</source>
         <translation>Mostra o amaga els fitxers d&apos;imatge</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1108"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1131"/>
         <source>Other</source>
         <translation>Altres</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1109"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1132"/>
         <source>Show or hide other kinds of files</source>
         <translation>Mostra o amaga altres tipus de fitxers</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1115"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1137"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1138"/>
         <source>New Bin</source>
         <translation>Nova safata</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1166"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1149"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1189"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1137"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1160"/>
         <source>Show or hide the list of bins</source>
         <translation>Mostra o amaga la llista de safates</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1169"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1170"/>
         <source>Remove Bin</source>
         <translation>Suprimeix la safata</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1158"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1159"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1181"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1182"/>
         <source>Rename Bin</source>
         <translation>Canvia el nom de la safata</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1180"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1203"/>
+        <source>Log Event</source>
+        <translation>Registra l&apos;esdeveniment</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1205"/>
+        <source>Add an item at the current playback position</source>
+        <translation>Afegir un element a la posició de reproducció actual</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1209"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1215"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1244"/>
         <source>Replace %n playlist items</source>
         <translation>
             <numerusform>Reemplaça %n element de la llista de reproducció</numerusform>
@@ -7864,7 +7889,7 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="2138"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2207"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n element</numerusform>
@@ -7872,18 +7897,18 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="435"/>
+        <location filename="../src/docks/playlistdock.cpp" line="436"/>
         <source>Sort</source>
         <translation>Ordena</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1536"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1768"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1565"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1837"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>No pots afegir una llista de reproducció dins una altra llista de reproducció!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1582"/>
         <source>Remove %n playlist items</source>
         <translation>
             <numerusform>Suprimeix %n element de la llista de reproducció</numerusform>
@@ -7891,39 +7916,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="624"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1310"/>
+        <location filename="../src/docks/playlistdock.cpp" line="625"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1339"/>
         <source>Add Files</source>
         <translation>Afegeix fitxers</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1264"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1293"/>
         <source>Appending</source>
         <translation>S&apos;està annexant</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1320"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1329"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1349"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1358"/>
         <source>Failed to open </source>
         <translation>No s&apos;ha pogut obrir</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1395"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1424"/>
         <source>Dropped Files</source>
         <translation>Fitxers descartats</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1857"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1926"/>
         <source>Generating</source>
         <translation>S&apos;està generant</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2145"/>
         <source>Open File</source>
         <translation>Obre un fitxer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2078"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2147"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tots els fitxers (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -8121,7 +8146,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="65"/>
-        <source>Insert playist item %1</source>
+        <source>Insert playlist item %1</source>
         <translation>Insereix l&apos;element %1 de la llista de reproducció</translation>
     </message>
     <message>
@@ -8426,7 +8451,7 @@ p, li { white-space: pre-wrap; }
         <translation>Ajusta el guany/volum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4386"/>
+        <location filename="../src/mainwindow.cpp" line="4381"/>
         <source>You cannot add a project to itself!</source>
         <translation>No podeu afegir un projecte a si mateix!</translation>
     </message>
@@ -8535,27 +8560,27 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         <translation>transparent</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3160"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3182"/>
         <source>Drop Files</source>
         <translation>Deixa anar els fitxers</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3167"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3189"/>
         <source>Failed to open </source>
         <translation>No s&apos;ha pogut obrir</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3183"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3205"/>
         <source>Not adding non-seekable file: </source>
         <translation>No s&apos;afegirà el fitxer no cercable:</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1252"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1281"/>
         <source>Generating Playlist for Bin</source>
         <translation>Generació de la llista de reproducció per a la safata</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1924"/>
         <source>Generate Slideshow</source>
         <translation>Genera un passi de fotos</translation>
     </message>
@@ -8681,12 +8706,12 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         <translation>Canvia el filtre %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/models/audiolevelstask.cpp" line="184"/>
+        <location filename="../src/models/audiolevelstask.cpp" line="205"/>
         <source>generating audio waveforms for</source>
         <translation>generant formes d&apos;ona d&apos;àudio per</translation>
     </message>
     <message>
-        <location filename="../src/models/audiolevelstask.cpp" line="267"/>
+        <location filename="../src/models/audiolevelstask.cpp" line="283"/>
         <source>Done</source>
         <translation>Fet</translation>
     </message>
@@ -8775,7 +8800,7 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         <translation>Mou subtítol</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="525"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="535"/>
         <source>Imported %1 subtitle item(s)</source>
         <translation>
             <numerusform>S&apos;ha importat %1 element de subtítols</numerusform>
@@ -8783,13 +8808,13 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="627"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="637"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="655"/>
         <source>Importing subtitles...</source>
         <translation>S&apos;estan important els subtítols...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="663"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="676"/>
         <source>Imported %n subtitle item(s)</source>
         <translation>
             <numerusform>S&apos;ha importat %n element de subtítols</numerusform>
@@ -8797,8 +8822,8 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="515"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="658"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="525"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="671"/>
         <source>No subtitles found to import</source>
         <translation>No s&apos;ha trobat cap subtítol per importar</translation>
     </message>
@@ -8814,7 +8839,7 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         <translation>Annexa el subtítol</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1375"/>
+        <location filename="../src/docks/encodedock.cpp" line="1369"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1081"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>A job already exists for %1</source>
@@ -8912,7 +8937,7 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
         <translation>(per defecte)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="518"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="527"/>
         <source>Analyze %1</source>
         <translation>Analitza %1</translation>
     </message>
@@ -10057,299 +10082,304 @@ Si la durada és 0, no es crearà cap transició.</translation>
         <translation>Menú de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="280"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="276"/>
+        <source>search</source>
+        <translation>cerca</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="290"/>
         <source>Previous</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="282"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="292"/>
         <source>Current</source>
         <translation>Actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="284"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="294"/>
         <source>Next</source>
         <translation>Següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="316"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="326"/>
         <source>Add Subtitle Track</source>
         <translation>Afegeix una pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="319"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="329"/>
         <source>Add a subtitle track</source>
         <translation>Afegeix una pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="327"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="566"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="337"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="576"/>
         <source>Remove Subtitle Track</source>
         <translation>Suprimeix una pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="330"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="340"/>
         <source>Remove this subtitle track</source>
         <translation>Suprimeix aquesta pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="338"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="348"/>
         <source>Edit Subtitle Track</source>
         <translation>Edita una pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="341"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="351"/>
         <source>Edit this subtitle track</source>
         <translation>Edita aquesta pista de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="349"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="359"/>
         <source>Import Subtitles From File</source>
         <translation>Importa subtítols d&apos;un fitxer</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="352"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="362"/>
         <source>Import subtitles from an srt file at the current position</source>
         <translation>Importa subtítols d&apos;un fitxer srt a la posició actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="360"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="370"/>
         <source>Export Subtitles To File</source>
         <translation>Exporta els subtítols a un fitxer</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="363"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="373"/>
         <source>Export the current subtitle track to an SRT file</source>
         <translation>Exporta la pista de subtítols actual a un fitxer SRT</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="371"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="381"/>
         <source>Create/Edit Subtitle</source>
         <translation>Crea/Edita subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="375"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="385"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
         <translation>Crea o edita un subtítol a la posició del cursor.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="389"/>
         <source>Add Subtitle Item</source>
         <translation>Afegeix un element de subtítol</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="383"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="393"/>
         <source>Add a subtitle at the cursor position</source>
         <translation>Afegeix un subtítol a la posició del cursor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="387"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="397"/>
         <source>Remove Subtitle Item</source>
         <translation>Suprimeix l&apos;element de subtítol</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="391"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="401"/>
         <source>Remove the selected subtitle item</source>
         <translation>Suprimeix l&apos;element de subtítol seleccionat</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="395"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="405"/>
         <source>Set Subtitle Start</source>
         <translation>Estableix l&apos;inici dels subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="400"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
         <source>Set the selected subtitle to start at the cursor position</source>
         <translation>Estableix que el subtítol seleccionat comenci a la posició del cursor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="404"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="414"/>
         <source>Set Subtitle End</source>
         <translation>Estableix el final dels subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="409"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="419"/>
         <source>Set the selected subtitle to end at the cursor position</source>
         <translation>Estableix que el subtítol seleccionat acabi a la posició del cursor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="413"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
         <source>Move Subtitles</source>
         <translation>Mou subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="417"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
         <source>Move the selected subtitles to the cursor position</source>
         <translation>Mou els subtítols seleccionats a la posició del cursor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="421"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="431"/>
         <source>Burn In Subtitles on Output</source>
         <translation>Grava els subtítols a la sortida</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="437"/>
         <source>Generate Text on Timeline</source>
         <translation>Genera text a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="429"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="439"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
         <translation>Crea una nova pista de vídeo a la línia de temps amb text que mostri aquests subtítols.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="433"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="443"/>
         <source>Speech to Text...</source>
         <translation>De veu a text...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="444"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
         <translation>Detecta la veu i transcriu-la a una nova pista de subtítols.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="441"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="451"/>
         <source>Text to Speech...</source>
         <translation>De text a veu...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="452"/>
         <source>Convert the current subtitle track to spoken audio.</source>
         <translation>Converteix la pista de subtítols actual a àudio parlat.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="449"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
         <source>Track Timeline Cursor</source>
         <translation>Segueix el cursor de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="460"/>
         <source>Track the timeline cursor</source>
         <translation>Segueix el cursor de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="458"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="468"/>
         <source>Show Previous/Next</source>
         <translation>Mostra anterior/següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="469"/>
         <source>Show the previous and next subtitles</source>
         <translation>Mostra els subtítols anteriors i següents</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="532"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="542"/>
         <source>Add a clip to the timeline to create subtitles.</source>
         <translation>Afegiu un clip a la línia de temps per crear subtítols.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1097"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1099"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1119"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1110"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1112"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1132"/>
         <source>Subtitle Track %1</source>
         <translation>Pista de subtítols %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1161"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1174"/>
         <source>Generate subtitle text on timeline</source>
         <translation>Genera el text dels subtítols a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1175"/>
         <source>Text style preset</source>
         <translation>Estil de text predefinit</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1164"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1177"/>
         <source>Default subtitle style</source>
         <translation>Estil de subtítols predeterminat</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1307"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1320"/>
         <source>Extracting Audio</source>
         <translation>S&apos;està extraient l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1325"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1338"/>
         <source>Speech to Text</source>
         <translation>De veu a text</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="543"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="596"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1256"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="553"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="606"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1269"/>
         <source>Subtitle track already exists: %1</source>
         <translation>La pista de subtítols ja existeix: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="432"/>
         <source>Create or edit a Subtitle Burn In filter on the timeline output.</source>
         <translation>Creeu o editeu un filtre de gravat de subtítols a la sortida de la línia de temps.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="577"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
         <translation>Aquesta pista està sent utilitzada per un filtre de subtítols.
 Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="613"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
         <source>Import Subtitle File</source>
         <translation>Importa fitxer de subtítols</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="615"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="625"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
         <translation>Fitxers de subtítols (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="633"/>
         <source>Unable to find subtitle file.</source>
         <translation>No s&apos;ha pogut trobar el fitxer de subtítols.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="671"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="684"/>
         <source>Export SRT File</source>
         <translation>Exporta fitxer SRT</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="673"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="686"/>
         <source>SRT Files (*.srt *.SRT)</source>
         <translation>Fitxers SRT (*.srt *.SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="738"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="751"/>
         <source>A subtitle already exists at this time.</source>
         <translation>Ja hi ha un subtítol en aquest instant.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="748"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="761"/>
         <source>Not enough space to add subtitle.</source>
         <translation>No hi ha prou espai per afegir subtítols.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="785"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="798"/>
         <source>Start time can not be after end time.</source>
         <translation>L&apos;instant inicial no pot ser posterior a l&apos;instant de finalització.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="791"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="804"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation>L&apos;instant d&apos;inici no pot precedir el subtítol anterior.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="809"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="822"/>
         <source>End time can not be before start time.</source>
         <translation>L&apos;instant de finalització no pot ser anterior a l&apos;instant d&apos;inici.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="816"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="829"/>
         <source>End time can not be after next subtitle.</source>
         <translation>L&apos;instant de finalització no pot ser posterior al subtítol següent.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="838"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="851"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation>No s&apos;ha pogut moure. Ja hi ha subtítols en aquest instant.</translation>
     </message>
@@ -10441,88 +10471,88 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
         <translation>Cursiva</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="208"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="210"/>
         <source>Font</source>
         <translation>Tipus de lletra</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="267"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="271"/>
         <source>Use font size</source>
         <translation>Utilitza la mida de la lletra</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="282"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="286"/>
         <source>Outline</source>
         <translation>Vora</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="303"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="307"/>
         <source>Thickness</source>
         <translation>Gruix</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="318"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="322"/>
         <source>Background</source>
         <translation>Fons</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="339"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="343"/>
         <source>Padding</source>
         <translation>Separació</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="354"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="358"/>
         <source>Opacity</source>
         <translation>Opacitat</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="384"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="388"/>
         <source>Position</source>
         <translation>Posició</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="461"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="465"/>
         <source>Size</source>
         <translation>Mida</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="520"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="524"/>
         <source>Horizontal fit</source>
         <translation>Ajusta horitzontalment</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="527"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="531"/>
         <source>Left</source>
         <translation>Esquerra</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="535"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="539"/>
         <source>Center</source>
         <translation>Centre</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="543"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="547"/>
         <source>Right</source>
         <translation>Dreta</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="560"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="564"/>
         <source>Vertical fit</source>
         <translation>Ajusta verticalment</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="567"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="571"/>
         <source>Top</source>
         <translation>Superior</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="575"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="579"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>Centre</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="583"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="587"/>
         <source>Bottom</source>
         <translation>Inferior</translation>
     </message>
@@ -10667,39 +10697,39 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
         <translation>Línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1347"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1369"/>
         <source>Drawing/Animation</source>
         <translation>Dibuix/Animació</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1744"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1766"/>
         <source>This track is locked</source>
         <translation>Aquesta pista està bloquejada</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1749"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1771"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>No es pot afegir una font no cercable.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2149"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2183"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2171"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2205"/>
         <source>Track %1 was not moved</source>
         <translation>La pista %1 no s&apos;ha mogut</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2154"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2176"/>
         <source>Can not move audio track above video track</source>
         <translation>No es pot moure la pista d&apos;àudio per sobre de la pista de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2192"/>
         <source>Can not move video track below audio track</source>
         <translation>No es pot moure la pista de vídeo per sota de la pista d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1469"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2311"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1491"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2333"/>
         <source>Align To Reference Track</source>
         <translation>Alinea amb la pista de referència</translation>
     </message>
@@ -10709,558 +10739,578 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
         <translation>Operacions de pista</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="107"/>
+        <location filename="../src/docks/timelinedock.cpp" line="109"/>
         <source>Track Height</source>
         <translation>Alçada de la pista</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="112"/>
+        <location filename="../src/docks/timelinedock.cpp" line="114"/>
         <source>Selection</source>
         <translation>Selecció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="125"/>
+        <location filename="../src/docks/timelinedock.cpp" line="127"/>
         <source>Edit</source>
         <translation>Edita</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="142"/>
+        <location filename="../src/docks/timelinedock.cpp" line="144"/>
         <source>View</source>
         <translation>Visualitza</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="148"/>
+        <location filename="../src/docks/timelinedock.cpp" line="150"/>
         <source>Marker</source>
         <translation>Marcador</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="158"/>
+        <location filename="../src/docks/timelinedock.cpp" line="160"/>
         <source>Timeline Clip</source>
         <translation>Clip de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="182"/>
+        <location filename="../src/docks/timelinedock.cpp" line="184"/>
         <source>Timeline Controls</source>
         <translation>Controls de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="186"/>
+        <location filename="../src/docks/timelinedock.cpp" line="188"/>
         <source>Timeline Menu</source>
         <translation>Menú de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="377"/>
+        <location filename="../src/docks/timelinedock.cpp" line="379"/>
         <source>Add Audio Track</source>
         <translation>Afegeix una pista d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="386"/>
+        <location filename="../src/docks/timelinedock.cpp" line="388"/>
         <source>Add Video Track</source>
         <translation>Afegeix una pista de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="395"/>
+        <location filename="../src/docks/timelinedock.cpp" line="397"/>
         <source>Insert Track</source>
         <translation>Afegeix una pista</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="404"/>
+        <location filename="../src/docks/timelinedock.cpp" line="406"/>
         <source>Remove Track</source>
         <translation>Suprimeix la pista</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="415"/>
+        <location filename="../src/docks/timelinedock.cpp" line="417"/>
         <source>Move Track Up</source>
         <translation>Mou la pista cap amunt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="426"/>
+        <location filename="../src/docks/timelinedock.cpp" line="428"/>
         <source>Move Track Down</source>
         <translation>Mou la pista cap avall</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="437"/>
+        <location filename="../src/docks/timelinedock.cpp" line="439"/>
         <source>Show/Hide Selected Track</source>
         <translation>Mostra/Amaga la pista seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="453"/>
+        <location filename="../src/docks/timelinedock.cpp" line="455"/>
+        <source>Show/Hide Other Tracks</source>
+        <translation>Mostra/Amaga les altres pistes</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="465"/>
         <source>Lock/Unlock Selected Track</source>
         <translation>Bloqueja/Desbloqueja la pista seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="472"/>
+        <location filename="../src/docks/timelinedock.cpp" line="484"/>
         <source>Mute/Unmute Selected Track</source>
         <translation>Activa/desactiva el so de la pista seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="488"/>
+        <location filename="../src/docks/timelinedock.cpp" line="500"/>
+        <source>Mute/Unmute Other Tracks</source>
+        <translation>Activa/Desactiva el so de les altres pistes</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="510"/>
         <source>Blend/Unblend Selected Track</source>
         <translation>Mescla/Desmescla la pista seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="506"/>
+        <location filename="../src/docks/timelinedock.cpp" line="528"/>
         <source>Make Tracks Shorter</source>
         <translation>Fes les pistes més estretes</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="515"/>
+        <location filename="../src/docks/timelinedock.cpp" line="537"/>
         <source>Make Tracks Taller</source>
         <translation>Fes les pistes més amples</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="524"/>
+        <location filename="../src/docks/timelinedock.cpp" line="546"/>
         <source>Reset Track Height</source>
         <translation>Reinicialitza l&apos;alçada de la pista</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="533"/>
+        <location filename="../src/docks/timelinedock.cpp" line="555"/>
         <source>Select All</source>
         <translation>Selecciona-ho tot</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="544"/>
+        <location filename="../src/docks/timelinedock.cpp" line="566"/>
         <source>Select All On Current Track</source>
         <translation>Selecciona tot a la pista actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="555"/>
+        <location filename="../src/docks/timelinedock.cpp" line="577"/>
         <source>Select None</source>
         <translation>Desselecciona</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="567"/>
+        <location filename="../src/docks/timelinedock.cpp" line="589"/>
         <source>Select Next Clip</source>
         <translation>Selecciona el clip següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="582"/>
+        <location filename="../src/docks/timelinedock.cpp" line="604"/>
         <source>Select Previous Clip</source>
         <translation>Selecciona el clip anterior</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="597"/>
+        <location filename="../src/docks/timelinedock.cpp" line="619"/>
         <source>Select Clip Above</source>
         <translation>Selecciona el clip superior</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="618"/>
+        <location filename="../src/docks/timelinedock.cpp" line="640"/>
         <source>Select Clip Below</source>
         <translation>Selecciona el clip inferior</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="639"/>
+        <location filename="../src/docks/timelinedock.cpp" line="661"/>
         <source>Set Current Track Above</source>
         <translation>Estableix la pista de sobre com l&apos;actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="648"/>
+        <location filename="../src/docks/timelinedock.cpp" line="670"/>
         <source>Set Current Track Below</source>
         <translation>Estableix la pista de sota com l&apos;actual</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="657"/>
+        <location filename="../src/docks/timelinedock.cpp" line="679"/>
         <source>Select Clip Under Playhead</source>
         <translation>Selecciona el clip sota el capçal de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="672"/>
+        <location filename="../src/docks/timelinedock.cpp" line="694"/>
         <source>Cu&amp;t</source>
         <translation>Re&amp;talla</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="694"/>
+        <location filename="../src/docks/timelinedock.cpp" line="716"/>
         <source>&amp;Copy</source>
         <translation>&amp;Copia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="724"/>
+        <location filename="../src/docks/timelinedock.cpp" line="746"/>
         <source>&amp;Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="739"/>
+        <location filename="../src/docks/timelinedock.cpp" line="761"/>
         <source>Nudge Forward</source>
         <translation>Empeny cap endavant</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="755"/>
+        <location filename="../src/docks/timelinedock.cpp" line="777"/>
         <source>Nudge Forward is not available</source>
         <translation>Empeny cap endavant no està disponible</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="777"/>
+        <location filename="../src/docks/timelinedock.cpp" line="799"/>
         <source>Nudge Backward</source>
         <translation>Empeny cap enrere</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="788"/>
+        <location filename="../src/docks/timelinedock.cpp" line="810"/>
         <source>Nudge Backward is not available</source>
         <translation>Empeny cap enrere no està disponible</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="810"/>
+        <location filename="../src/docks/timelinedock.cpp" line="832"/>
         <source>Append</source>
         <translation>Annexa</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="821"/>
+        <location filename="../src/docks/timelinedock.cpp" line="843"/>
         <source>Ripple Delete</source>
         <translation>Propaga l&apos;eliminació</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="838"/>
+        <location filename="../src/docks/timelinedock.cpp" line="860"/>
         <source>Lift</source>
         <translation>Aixeca</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="856"/>
+        <location filename="../src/docks/timelinedock.cpp" line="878"/>
         <source>Overwrite</source>
         <translation>Sobreescriu</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="869"/>
+        <location filename="../src/docks/timelinedock.cpp" line="891"/>
         <source>Split At Playhead</source>
         <translation>Divideix al capçal de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="933"/>
+        <location filename="../src/docks/timelinedock.cpp" line="955"/>
         <source>Split All Tracks At Playhead</source>
         <translation>Divideix totes les pistes al capçal de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="967"/>
+        <location filename="../src/docks/timelinedock.cpp" line="989"/>
         <source>Replace</source>
         <translation>Substitueix</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="986"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1008"/>
         <source>Create/Edit Marker</source>
         <translation>Crea/Edita marcador</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1000"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1022"/>
         <source>Previous Marker</source>
         <translation>Marcador anterior</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1015"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1037"/>
         <source>Next Marker</source>
         <translation>Marcador següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1030"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1052"/>
         <source>Delete Marker</source>
         <translation>Suprimeix marcador</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1041"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1063"/>
         <source>Cycle Marker Color</source>
         <translation>Canvia el color del marcador</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1057"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1079"/>
         <source>Create Marker Around Selected Clip</source>
         <translation>Crea un marcador al voltant del clip seleccionat</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1068"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1090"/>
         <source>Rectangle Selection</source>
         <translation>Selecció de rectangle</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1080"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
         <source>Adjust Clip Gain/Volume</source>
         <translation>Ajusta el guany/volum del clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1091"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1113"/>
         <source>Automatically Add Tracks</source>
         <translation>Afegeix pistes automàticament</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1124"/>
         <source>Snap</source>
         <translation>Imant</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1116"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1138"/>
         <source>Scrub While Dragging</source>
         <translation>Explora en arrossegar</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1129"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1151"/>
         <source>Ripple</source>
         <translation>Arrissat</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1143"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1165"/>
         <source>Ripple All Tracks</source>
         <translation>Modula totes les pistes</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1158"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1180"/>
         <source>Ripple Markers</source>
         <translation>Propaga marcadors</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1174"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1196"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation>Commuta la propagació i totes les pistes</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1204"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation>Commuta la propagació, totes les pistes i els marcadors</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1191"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1213"/>
         <source>Show Audio Waveforms</source>
         <translation>Mostra les formes d&apos;ones de l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1205"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1227"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Utilitza formes d&apos;ona de més rendiment</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1221"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1243"/>
         <source>Show Video Thumbnails</source>
         <translation>Mostra les miniatures dels vídeos</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1232"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1254"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1245"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1267"/>
         <source>Page</source>
         <translation>Pàgina</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1258"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1280"/>
         <source>Smooth</source>
         <translation>Suavitza</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1271"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1293"/>
         <source>Center the Playhead</source>
         <translation>Centra el capçal de reproducció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1285"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1307"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Desplaça&apos;t al capçal de reproducció en fer zoom</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1297"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1319"/>
         <source>Zoom Timeline Out</source>
         <translation>Allunya&apos;t a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1308"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1330"/>
         <source>Zoom Timeline In</source>
         <translation>Apropa&apos;t a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1319"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
         <source>Zoom Timeline To Fit</source>
         <translation>Apropa&apos;t a la línia de temps per ajustar</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1331"/>
-        <source>New Generator</source>
-        <translation>Nou generador</translation>
+        <location filename="../src/docks/timelinedock.cpp" line="1353"/>
+        <source>Generate</source>
+        <translation>Genera</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1341"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1363"/>
         <source>Color</source>
         <translation>Color</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1343"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1365"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1351"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1373"/>
         <source>Noise</source>
         <translation>Soroll</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1354"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1376"/>
         <source>Color Bars</source>
         <translation>Barres de colors</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1358"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1380"/>
         <source>Audio Tone</source>
         <translation>To d&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1361"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1383"/>
         <source>Count</source>
         <translation>Compte</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1364"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1386"/>
         <source>Blip Flash</source>
         <translation>Flaix amb so</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1388"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1410"/>
         <source>Properties</source>
         <translation>Propietats</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1395"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1417"/>
         <source>Rejoin With Next Clip</source>
         <translation>Torna a unir amb el clip següent</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1411"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1433"/>
         <source>Detach Audio</source>
         <translation>Separa l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1439"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1461"/>
         <source>Freeze Frame</source>
         <translation>Congela el fotograma</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1489"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1511"/>
         <source>Apply Copied Filters</source>
         <translation>Aplica els filtres copiats</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1535"/>
         <source>Update Thumbnails</source>
         <translation>Actualitza les miniatures</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1537"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1559"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Reconstrueix la forma d&apos;ona de l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1561"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1583"/>
         <source>Ripple Trim Clip In</source>
         <translation>Propaga l&apos;ajust del clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1568"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1590"/>
         <source>Ripple Trim Clip Out</source>
         <translation>Propaga la retallada del clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1575"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1597"/>
         <source>Group/Ungroup</source>
         <translation>Agrupa/Desagrupa</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2411"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2433"/>
         <source>Append multiple to timeline</source>
         <translation>Annexa múltiples a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2473"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2495"/>
         <source>Ripple delete transition</source>
         <translation>Propaga l&apos;eliminació de la transició</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2522"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2544"/>
         <source>Lift transition</source>
         <translation>Aixeca la transició</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2597"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2619"/>
         <source>Cut %1 from timeline</source>
         <translation>Talla %1 de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2599"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2621"/>
         <source>Remove %1 from timeline</source>
         <translation>Suprimeix %1 de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2622"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2644"/>
         <source>Lift %1 from timeline</source>
         <translation>Aixeca %1 de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2973"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2995"/>
         <source>There is nothing in the Source player.</source>
         <translation>No hi ha res al reproductor font.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2988"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3010"/>
         <source>You cannot replace a transition.</source>
         <translation>No podeu substituir una transició.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3018"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3040"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Seleccioneu un clip a la línia de temps per crear un marcador al seu voltant</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3061"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Marcador afegit: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3059"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3081"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Marcador afegit: &quot;%1&quot;. Mantingueu %2 premut i arrossegueu per crear un rang</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3197"/>
         <source>Failed to open </source>
         <translation>Ha fallat l&apos;obriment de </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3210"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3232"/>
         <source>Dropped Files</source>
         <translation>Fitxers descartats</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3258"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3280"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation>No es pot congelar un fotograma d&apos;una transició.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3277"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3299"/>
         <source>Freeze Frame is not available.</source>
         <translation>Congela el fotograma no està disponible.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3312"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3334"/>
         <source>Insert Freeze Frame</source>
         <translation>Insereix un fotograma congelat</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3316"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3338"/>
         <source>The play head is not over the selected clip.</source>
         <translation>El capçal de reproducció no està sobre el clip seleccionat.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3688"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3370"/>
+        <source>Toggle other tracks mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3390"/>
+        <source>Toggle other tracks hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3740"/>
         <source>Insert multiple into timeline</source>
         <translation>Insereix múltiples a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3831"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3883"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Sobreescriu múltiples a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="916"/>
-        <location filename="../src/docks/timelinedock.cpp" line="951"/>
+        <location filename="../src/docks/timelinedock.cpp" line="938"/>
+        <location filename="../src/docks/timelinedock.cpp" line="973"/>
         <source>You cannot split a transition.</source>
         <translation>No podeu dividir una transició.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="4280"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4332"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Reemplaça %n clip de la línia de temps</numerusform>
@@ -11268,44 +11318,44 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4333"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4385"/>
         <source>voiceover</source>
         <translation>veu en off</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4334"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4386"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1370"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4336"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4452"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1392"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4388"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4504"/>
         <source>Record Audio</source>
         <translation>Enregistra àudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4350"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4402"/>
         <source>Record Audio: %1</source>
         <translation>Enregistra àudio: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4417"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4469"/>
         <source>Audio Recording In Progress</source>
         <translation>Enregistrament d&apos;àudio en marxa</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4427"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4479"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Error d&apos;enregistrament d&apos;àudio: comproveu la configuració de PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4431"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4483"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Error d&apos;enregistrament d&apos;àudio: seleccioneu Fitxer &gt; Obre altres &gt; Dispositiu d&apos;àudio/vídeo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4458"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4510"/>
         <source>Saving audio recording...</source>
         <translation>S&apos;està desant l&apos;enregistrament d&apos;àudio...</translation>
     </message>
@@ -11418,26 +11468,6 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
-        <source>Unmute</source>
-        <translation>Treu el silenci</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
-        <source>Mute</source>
-        <translation>Silencia</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
-        <source>Show</source>
-        <translation>Mostra</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
-        <source>Hide</source>
-        <translation>Oculta</translation>
-    </message>
-    <message>
         <location filename="../src/qml/views/timeline/TrackHead.qml" line="183"/>
         <source>Unlock track</source>
         <translation>Desbloqueja la pista</translation>
@@ -11448,7 +11478,17 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
         <translation>Bloqueja la pista</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="255"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="229"/>
+        <source>Mute/Unmute - Alt+Click to toggle mute of other tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="256"/>
+        <source>Show/Hide - Alt+Click to toggle visibility of other tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="275"/>
         <source>Filters</source>
         <translation>Filtres</translation>
     </message>
@@ -13105,7 +13145,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="41"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="27"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="43"/>
         <source>Font color</source>
         <translation>Color del tipus de lletra</translation>
     </message>
@@ -13115,7 +13155,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="33"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="46"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="51"/>
         <source>Outline</source>
         <translation>Vora</translation>
     </message>
@@ -13124,7 +13164,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="53"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="39"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="38"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="54"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="59"/>
         <source>Background</source>
         <translation>Fons</translation>
     </message>
@@ -13138,6 +13178,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="21"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="22"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="21"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="38"/>
         <source>Position / Size</source>
         <translation>Posició / Mida</translation>
     </message>
@@ -13385,7 +13426,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="45"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="44"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="62"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="67"/>
         <source>Opacity</source>
         <translation>Opacitat</translation>
     </message>
@@ -14983,28 +15024,6 @@ IRE: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
-        <source>360: Zenith Correction</source>
-        <translation>360: Correcció zenital</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="8"/>
-        <source>spherical level</source>
-        <comment>search keywords for the 360: Zenith correction filter</comment>
-        <translation>esfèrica nivell</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/histeq/meta.qml" line="6"/>
-        <source>Clarity</source>
-        <translation>Claredat</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/histeq/meta.qml" line="7"/>
-        <source>histogram equalization constrast detail color distribution</source>
-        <comment>search keywords for the Clarity video filter</comment>
-        <translation>histograma equalització contrast detall color distribució</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/strobe/meta.qml" line="6"/>
         <source>Alpha Strobe</source>
         <translation>Alfa estroboscòpic</translation>
@@ -15040,6 +15059,28 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/typewriter/meta.qml" line="23"/>
         <source>type typing cursor terminal console</source>
         <comment>search keywords for the Text: Typewriter video filter</comment>
+        <translation>tecleja escriptura cursor terminal consola</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
+        <source>360: Zenith Correction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="8"/>
+        <source>spherical level</source>
+        <comment>search keywords for the 360: Zenith correction filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/histeq/meta.qml" line="6"/>
+        <source>Clarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/histeq/meta.qml" line="7"/>
+        <source>histogram equalization constrast detail color distribution</source>
+        <comment>search keywords for the Clarity video filter</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15981,8 +16022,20 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="97"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="102"/>
-        <source>The duration of fade to apply at the begining and end of each clip</source>
-        <translation>La durada de la fosa que s&apos;ha d&apos;aplicar al principi i al final de cada clip</translation>
+        <source>The duration of fade to apply at the beginning and end of each clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_autofade/ui.qml" line="137"/>
+        <location filename="../src/qml/filters/video_autofade/ui.qml" line="172"/>
+        <source>Status indicator showing when a fade in has occurred.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_autofade/ui.qml" line="167"/>
+        <location filename="../src/qml/filters/video_autofade/ui.qml" line="202"/>
+        <source>Status indicator showing when a fade out has occurred.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="133"/>
@@ -15991,22 +16044,10 @@ IRE: %2</translation>
         <translation>Fosa d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_autofade/ui.qml" line="137"/>
-        <location filename="../src/qml/filters/video_autofade/ui.qml" line="172"/>
-        <source>Status indicator showing when a fade in has occured.</source>
-        <translation>Indicador d&apos;estat que mostra quan s&apos;ha produït una fosa d&apos;entrada.</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="163"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="198"/>
         <source>Fade out</source>
         <translation>Fosa de sortida</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/audio_autofade/ui.qml" line="167"/>
-        <location filename="../src/qml/filters/video_autofade/ui.qml" line="202"/>
-        <source>Status indicator showing when a fade out has occured.</source>
-        <translation>Indicador d&apos;estat que mostra quan s&apos;ha produït una fosa de sortida.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="99"/>
@@ -20486,16 +20527,6 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
         <translation>Escala de lluminositat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
-        <source>File for zenith correction</source>
-        <translation>Fitxer per a la correcció zenital</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
-        <source>Smooth yaw instead of locking it</source>
-        <translation>Guinyada suau en lloc de bloquejar-la</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/strobe/ui.qml" line="116"/>
         <source>Interval</source>
         <translation>Interval</translation>
@@ -20692,6 +20723,16 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="455"/>
         <source>Number of frames for cursor blink cycle.</source>
         <translation>Nombre de fotogrames per al cicle de parpelleig del cursor.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
+        <source>File for zenith correction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
+        <source>Smooth yaw instead of locking it</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -21600,22 +21641,22 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="361"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="363"/>
         <source>Text size</source>
         <translation>Mida del text</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="380"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="382"/>
         <source>Text color</source>
         <translation>Color del text</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="482"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="484"/>
         <source>Collapse Toolbar</source>
         <translation>Contrau la barra d&apos;eines</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="482"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="484"/>
         <source>Expand Toolbar</source>
         <translation>Amplia la barra d&apos;eines</translation>
     </message>
@@ -21625,83 +21666,83 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
         <translation>Menú</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="591"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="593"/>
         <source>Left</source>
         <translation>Esquerra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="602"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="604"/>
         <source>Center</source>
         <translation>Centre</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="613"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="615"/>
         <source>Right</source>
         <translation>Dreta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="624"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="626"/>
         <source>Justify</source>
         <translation>Justifica</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="635"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="637"/>
         <source>Bold</source>
         <translation>Negreta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="646"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="648"/>
         <source>Italic</source>
         <translation>Cursiva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="657"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="659"/>
         <source>Underline</source>
         <translation>Subratllat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="807"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="813"/>
         <source>OK</source>
         <translation>D&apos;acord</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="815"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="821"/>
         <source>Cancel</source>
         <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="326"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="668"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="670"/>
         <source>Font</source>
         <translation>Tipus de lletra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="741"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="747"/>
         <source>Insert Table</source>
         <translation>Insereix taula</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="681"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="685"/>
         <source>Decrease Indent</source>
         <translation>Redueix el sagnat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="690"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="694"/>
         <source>Insert Indent</source>
         <translation>Augmenta el sagnat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="753"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="759"/>
         <source>Rows</source>
         <translation>Files</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="770"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="776"/>
         <source>Columns</source>
         <translation>Columnes</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="786"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="792"/>
         <source>Border</source>
         <translation>Vora</translation>
     </message>
