@@ -569,7 +569,7 @@ function set_globals {
   REPOLOCS[9]="https://github.com/OpenMathLib/OpenBLAS.git"
   REPOLOCS[10]="https://github.com/georgmartius/vid.stab.git"
   REPOLOCS[12]="https://github.com/xiph/opus.git"
-  REPOLOCS[13]="https://github.com/videolan/x265"
+  REPOLOCS[13]="https://bitbucket.org/multicoreware/x265_git.git"
   REPOLOCS[15]="https://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="https://github.com/lu-zero/mfx_dispatch.git"
