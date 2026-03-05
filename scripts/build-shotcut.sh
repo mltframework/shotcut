@@ -231,7 +231,7 @@ function to_key {
     opus)
       echo 12
     ;;
-    x265)
+    x265_git)
       echo 13
     ;;
     nv-codec-headers)
@@ -469,7 +469,7 @@ function set_globals {
         SUBDIRS="x264 $SUBDIRS"
     fi
     if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
-        SUBDIRS="x265 $SUBDIRS"
+        SUBDIRS="x265_git $SUBDIRS"
     fi
     if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
         SUBDIRS="libvpx $SUBDIRS"
@@ -1619,7 +1619,7 @@ function configure_compile_install_subproject {
     # CMake identifies the dylibs with an @rpath that breaks our recursive bundling process.
     # These names need to changed immediately after each lib is installed so that dependants
     # link using the full name, and the bundling process can locate the dependency.
-    if [ "aom" = "$1" -o "x265" = "$1" ]; then
+    if [ "aom" = "$1" -o "x265_git" = "$1" ]; then
       replace_rpath $1
     elif [ "mlt" = "$1" ]; then
       replace_rpath mlt-7
