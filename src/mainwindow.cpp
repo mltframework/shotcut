@@ -2828,10 +2828,13 @@ void MainWindow::configureVideoWidget()
 
 void MainWindow::setCurrentFile(const QString &filename)
 {
-    if (filename == untitledFileName())
-        m_currentFile.clear();
-    else
-        m_currentFile = filename;
+    QString newFile = (filename == untitledFileName()) ? QString() : filename;
+    if (newFile != m_currentFile) {
+        m_lastBackupDateTime = Settings.lastBackupDateTime(newFile);
+        if (!m_lastBackupDateTime.isValid())
+            m_lastBackupDateTime = QFileInfo(newFile).lastModified();
+    }
+    m_currentFile = newFile;
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
 }
@@ -4708,10 +4711,14 @@ void MainWindow::backup()
 
 void MainWindow::backupPeriodically()
 {
-    auto dateTime = QFileInfo(m_currentFile).lastModified();
+    if (m_currentFile.isEmpty())
+        return;
     if (Settings.backupPeriod() > 0 && !kBackupFileRegex.match(m_currentFile).hasMatch()
-        && dateTime.secsTo(QDateTime::currentDateTime()) / 60 > Settings.backupPeriod()) {
+        && m_lastBackupDateTime.secsTo(QDateTime::currentDateTime()) / 60
+               >= Settings.backupPeriod()) {
         backup();
+        m_lastBackupDateTime = QDateTime::currentDateTime();
+        Settings.setLastBackupDateTime(m_currentFile, m_lastBackupDateTime);
     }
 }
 

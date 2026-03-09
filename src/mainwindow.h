@@ -216,6 +216,7 @@ private:
     KeyframesDock *m_keyframesDock;
     QDateTime m_clipboardUpdatedAt;
     QDateTime m_sourceUpdatedAt;
+    QDateTime m_lastBackupDateTime;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
     SubtitlesDock *m_subtitlesDock;

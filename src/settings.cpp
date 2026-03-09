@@ -1736,6 +1736,21 @@ void ShotcutSettings::setBackupPeriod(int minutes)
     settings.setValue("backupPeriod", minutes);
 }
 
+QDateTime ShotcutSettings::lastBackupDateTime(const QString &filePath) const
+{
+    return settings.value("lastBackupDateTimeMap").toMap().value(filePath).toDateTime();
+}
+
+void ShotcutSettings::setLastBackupDateTime(const QString &filePath, const QDateTime &dt)
+{
+    auto map = settings.value("lastBackupDateTimeMap").toMap();
+    if (dt.isValid())
+        map[filePath] = dt;
+    else
+        map.remove(filePath);
+    settings.setValue("lastBackupDateTimeMap", map);
+}
+
 mlt_time_format ShotcutSettings::timeFormat() const
 {
     return (mlt_time_format) settings.value("timeFormat", mlt_time_clock).toInt();

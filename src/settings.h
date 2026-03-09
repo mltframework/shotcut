@@ -311,6 +311,8 @@ public:
     bool warnLowMemory() const;
     int backupPeriod() const;
     void setBackupPeriod(int i);
+    QDateTime lastBackupDateTime(const QString &filePath) const;
+    void setLastBackupDateTime(const QString &filePath, const QDateTime &dt);
     mlt_time_format timeFormat() const;
     void setTimeFormat(int format);
     bool askFlatpakWrappers();
