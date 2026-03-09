@@ -1133,7 +1133,7 @@ function set_globals {
     CONFIG[30]="${CONFIG[30]} -D OpenMP_C_FLAGS=-I/opt/local/include/libomp -D OpenMP_CXX_FLAGS=-I/opt/local/include/libomp -D OpenMP_C_LIB_NAMES=libomp -D OpenMP_CXX_LIB_NAMES=libomp -D OpenMP_libomp_LIBRARY=omp"
     LDFLAGS_[30]="$LDFLAGS -L /opt/local/lib/libomp"
   else
-    CONFIG[30]="${CONFIG[30]} -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS"
+    CONFIG[30]="${CONFIG[30]} -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS -D GGML_VULKAN=1"
     CFLAGS_[30]=$CFLAGS
     LDFLAGS_[30]=$LDFLAGS
   fi
