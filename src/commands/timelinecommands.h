@@ -347,6 +347,7 @@ private:
     bool m_redo;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
+    int m_markersModified;
 };
 
 class TrimCommand : public QUndoCommand

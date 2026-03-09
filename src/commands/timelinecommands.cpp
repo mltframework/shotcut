@@ -641,6 +641,7 @@ MoveClipCommand::MoveClipCommand(
     , m_undoHelper(m_model)
     , m_redo(false)
     , m_earliestStart(-1)
+    , m_markersModified(-1)
 {
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
     m_undoHelper.recordBeforeState();
@@ -810,7 +811,7 @@ void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     m_undoHelper.undoChanges();
-    if (m_rippleMarkers && m_markers.size() >= 0) {
+    if (m_rippleMarkers && m_markersModified == 1) {
         m_markersModel.doReplace(m_markers);
     }
     // Select the original clips after undo.
@@ -852,12 +853,12 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 
 void MoveClipCommand::redoMarkers()
 {
-    if (m_rippleMarkers) {
+    if (m_rippleMarkers && m_markersModified == -1) {
+        m_markersModified = 0;
         if (m_markers.size() == 0) {
             m_markers = m_markersModel.getMarkers();
         }
         QList<Markers::Marker> newMarkers = m_markers;
-        bool markersModified = false;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
             if (marker.start < m_earliestStart
@@ -865,15 +866,15 @@ void MoveClipCommand::redoMarkers()
                 // This marker is in the overwritten segment. Remove it
                 newMarkers.removeAt(i);
                 i--;
-                markersModified = true;
+                m_markersModified = 1;
             } else if (marker.start >= m_earliestStart) {
                 // This marker is after the start of the moved segment. Shift it with the move
                 marker.start += m_positionDelta;
                 marker.end += m_positionDelta;
-                markersModified = true;
+                m_markersModified = 1;
             }
         }
-        if (markersModified) {
+        if (m_markersModified == 1) {
             m_markersModel.doReplace(newMarkers);
         } else {
             m_markers.clear();
