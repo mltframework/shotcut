@@ -68,7 +68,7 @@ LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
-WHISPERCPP_REVISION="v1.8.0"
+WHISPERCPP_REVISION="v1.8.3"
 NV_CODEC_REVISION="sdk/12.0"
 
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
