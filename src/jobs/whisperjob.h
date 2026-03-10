@@ -32,6 +32,7 @@ public:
                const QString &lang,
                bool translate,
                int maxLength,
+               bool useGpu = true,
                QThread::Priority priority = Settings.jobPriority());
     virtual ~WhisperJob();
 
@@ -41,6 +42,7 @@ public slots:
 
 protected slots:
     void onReadyRead();
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
 
 private:
     const QString m_iWavFile;
@@ -48,6 +50,8 @@ private:
     const QString m_lang;
     const bool m_translate;
     const int m_maxLength;
+    const bool m_useGpu;
+    bool m_retryingWithoutGpu;
     int m_previousPercent;
 };
 

@@ -138,9 +138,14 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     grid->addWidget(m_nonspoken, 4, 0, Qt::AlignRight);
     grid->addWidget(new QLabel(tr("Include non-spoken sounds")), 4, 1, Qt::AlignLeft);
 
+    m_useGpu = new QCheckBox(this);
+    m_useGpu->setCheckState(Settings.whisperUseGpu() ? Qt::Checked : Qt::Unchecked);
+    grid->addWidget(m_useGpu, 5, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Use GPU")), 5, 1, Qt::AlignLeft);
+
     QLabel *tracksLabel = new QLabel(tr("Tracks with speech"));
     tracksLabel->setToolTip(tr("Select tracks that contain speech to be transcribed."));
-    grid->addWidget(tracksLabel, 5, 0, Qt::AlignRight);
+    grid->addWidget(tracksLabel, 6, 0, Qt::AlignRight);
     m_trackList = new QListWidget(this);
     m_trackList->setSelectionMode(QAbstractItemView::NoSelection);
     m_trackList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
@@ -172,7 +177,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
             }
         }
     }
-    grid->addWidget(m_trackList, 5, 1, Qt::AlignLeft);
+    grid->addWidget(m_trackList, 6, 1, Qt::AlignLeft);
 
     // The config section is a single widget with a unique grid layout inside of it.
     // The config section is hidden by hiding the config widget (and the layout it contains)
@@ -274,7 +279,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
 
     configLayout->addWidget(m_table, 4, 0, 1, 3);
 
-    grid->addWidget(m_configWidget, 6, 0, 1, 2);
+    grid->addWidget(m_configWidget, 7, 0, 1, 2);
 
     // Add a button box to the dialog
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -294,7 +299,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
         m_configWidget->setVisible(false);
     }
     m_buttonBox->addButton(configButton, QDialogButtonBox::ActionRole);
-    grid->addWidget(m_buttonBox, 7, 0, 1, 2);
+    grid->addWidget(m_buttonBox, 8, 0, 1, 2);
     connect(m_buttonBox,
             SIGNAL(clicked(QAbstractButton *)),
             this,
@@ -321,6 +326,7 @@ void TranscribeAudioDialog::onButtonClicked(QAbstractButton *button)
 {
     QDialogButtonBox::ButtonRole role = m_buttonBox->buttonRole(button);
     if (role == QDialogButtonBox::AcceptRole) {
+        Settings.setWhisperUseGpu(m_useGpu->checkState() == Qt::Checked);
         LOG_DEBUG() << "Accept";
         accept();
     } else if (role == QDialogButtonBox::RejectRole) {
@@ -376,6 +382,11 @@ int TranscribeAudioDialog::maxLineLength()
 bool TranscribeAudioDialog::includeNonspoken()
 {
     return m_nonspoken->checkState() == Qt::Checked;
+}
+
+bool TranscribeAudioDialog::useGpu()
+{
+    return m_useGpu->checkState() == Qt::Checked;
 }
 
 void TranscribeAudioDialog::showEvent(QShowEvent *event)

@@ -370,6 +370,8 @@ public:
     QString whisperExe();
     void setWhisperModel(const QString &path);
     QString whisperModel();
+    void setWhisperUseGpu(bool b);
+    bool whisperUseGpu() const;
 
     // Notes
     void setNotesZoom(int zoom);

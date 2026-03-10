@@ -1341,7 +1341,8 @@ void SubtitlesDock::speechToText()
                                             tmpSrt->fileName(),
                                             dialog.language(),
                                             dialog.translate(),
-                                            dialog.maxLineLength());
+                                            dialog.maxLineLength(),
+                                            dialog.useGpu());
     // Ensure the language code is 3 character (part 2)
     QString langCode = dialog.language();
     QLocale::Language lang = QLocale::codeToLanguage(langCode);

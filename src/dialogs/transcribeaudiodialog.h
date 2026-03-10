@@ -43,6 +43,7 @@ public:
     bool translate();
     int maxLineLength();
     bool includeNonspoken();
+    bool useGpu();
 
 protected:
     virtual void showEvent(QShowEvent *event) override;
@@ -63,6 +64,7 @@ private:
     QCheckBox *m_translate;
     QSpinBox *m_maxLength;
     QCheckBox *m_nonspoken;
+    QCheckBox *m_useGpu;
     QListWidget *m_trackList;
     QWidget *m_configWidget;
     QLineEdit *m_exeLabel;
