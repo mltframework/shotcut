@@ -2151,7 +2151,7 @@ void PlaylistDock::onAddFilesActionTriggered()
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
         for (const auto &s : filenames) {
-            urls << s;
+            urls << QUrl::fromLocalFile(s);
         }
         mimeData.setUrls(urls);
         auto index = m_proxyModel->mapToSource(m_view->currentIndex());
