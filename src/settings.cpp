@@ -20,6 +20,8 @@
 #include "Logger.h"
 #include "qmltypes/qmlapplication.h"
 
+#include <algorithm>
+
 #include <QApplication>
 #include <QAudioDevice>
 #include <QColor>
@@ -1753,11 +1755,22 @@ QDateTime ShotcutSettings::lastBackupDateTime(const QString &filePath) const
 
 void ShotcutSettings::setLastBackupDateTime(const QString &filePath, const QDateTime &dt)
 {
+    static const int kMaxBackupEntries = 100;
     auto map = settings.value("lastBackupDateTimeMap").toMap();
     if (dt.isValid())
         map[filePath] = dt;
     else
         map.remove(filePath);
+    // Prune entries for files that no longer exist.
+    for (const auto &path : map.keys())
+        if (!QFile::exists(path))
+            map.remove(path);
+    // If still over the limit, remove the oldest entries.
+    while (map.size() > kMaxBackupEntries) {
+        map.erase(std::min_element(map.begin(), map.end(), [](const QVariant &a, const QVariant &b) {
+            return a.toDateTime() < b.toDateTime();
+        }));
+    }
     settings.setValue("lastBackupDateTimeMap", map);
 }
 
