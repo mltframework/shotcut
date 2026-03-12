@@ -27,6 +27,8 @@ jobs:
           echo Making build script config file
           echo CLEANUP=0 > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-shotcut.conf
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           echo Renaming build artifacts
           mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
