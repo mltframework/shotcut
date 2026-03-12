@@ -28,7 +28,7 @@ Metadata {
     minimumVersion: '5'
     icon: 'icon.webp'
     help: 'https://forum.shotcut.org/t/text-typewriter-video-filter/50224/1'
-    
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true

@@ -204,10 +204,10 @@ Shotcut.VuiBase {
             scrollGestureEnabled: true
             onWheel: wheel => {
                 if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
-                    var angleDelta = wheel.angleDelta.y
+                    var angleDelta = wheel.angleDelta.y;
                     if (!angleDelta && wheel.modifiers & Qt.AltModifier) {
                         // Qt sends wheel to x when alt is held to cause horizontal scroll
-                        angleDelta = wheel.angleDelta.x
+                        angleDelta = wheel.angleDelta.x;
                     }
                     var degrees = rectangle.rotation - angleDelta / 120 * 5;
                     if (!(wheel.modifiers & Qt.AltModifier))

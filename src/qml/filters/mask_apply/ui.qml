@@ -20,7 +20,7 @@ Item {
     width: 10
     height: 10
     Component.onCompleted: {
-        filter.set('transition', 'qtblend')
+        filter.set('transition', 'qtblend');
         filter.set('transition.threads', 0);
     }
 }

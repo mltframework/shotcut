@@ -38,10 +38,22 @@ DropArea {
                         // Aspect ratio frame overlay
                         let ratioW, ratioH;
                         switch (video.grid) {
-                        case 20001: ratioW = 1;  ratioH = 1;  break;
-                        case 20169: ratioW = 16; ratioH = 9;  break;
-                        case 20043: ratioW = 4;  ratioH = 3;  break;
-                        default:    ratioW = 9;  ratioH = 16; break;
+                        case 20001:
+                            ratioW = 1;
+                            ratioH = 1;
+                            break;
+                        case 20169:
+                            ratioW = 16;
+                            ratioH = 9;
+                            break;
+                        case 20043:
+                            ratioW = 4;
+                            ratioH = 3;
+                            break;
+                        default:
+                            ratioW = 9;
+                            ratioH = 16;
+                            break;
                         }
                         const targetAspect = ratioW / ratioH;
                         const videoAspect = rectW / rectH;
@@ -88,10 +100,22 @@ DropArea {
                     // Aspect ratio frame overlay
                     let ratioW, ratioH;
                     switch (video.grid) {
-                    case 20001: ratioW = 1;  ratioH = 1;  break;
-                    case 20169: ratioW = 16; ratioH = 9;  break;
-                    case 20043: ratioW = 4;  ratioH = 3;  break;
-                    default:    ratioW = 9;  ratioH = 16; break;
+                    case 20001:
+                        ratioW = 1;
+                        ratioH = 1;
+                        break;
+                    case 20169:
+                        ratioW = 16;
+                        ratioH = 9;
+                        break;
+                    case 20043:
+                        ratioW = 4;
+                        ratioH = 3;
+                        break;
+                    default:
+                        ratioW = 9;
+                        ratioH = 16;
+                        break;
                     }
                     const targetAspect = ratioW / ratioH;
                     const videoAspect = rectW / rectH;

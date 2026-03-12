@@ -106,8 +106,8 @@ GridLayout {
             "pointSize": getPointSize(),
             "italic": filter.get('style') === 'italic',
             "weight": filter.getDouble('weight'),
-            "underline" : filter.getDouble('underline'),
-            "strikeout" : filter.getDouble('strikethrough')
+            "underline": filter.getDouble('underline'),
+            "strikeout": filter.getDouble('strikethrough')
         });
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();

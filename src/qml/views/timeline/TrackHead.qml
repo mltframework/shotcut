@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -216,11 +216,11 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: (mouse) => {
+                    onClicked: mouse => {
                         if (mouse.modifiers & Qt.AltModifier) {
-                            timeline.toggleOtherTracksMute(index)
+                            timeline.toggleOtherTracksMute(index);
                         } else {
-                            timeline.toggleTrackMute(index)
+                            timeline.toggleTrackMute(index);
                         }
                     }
                 }
@@ -243,11 +243,11 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: (mouse) => {
+                    onClicked: mouse => {
                         if (mouse.modifiers & Qt.AltModifier) {
-                            timeline.toggleOtherTracksHidden(index)
+                            timeline.toggleOtherTracksHidden(index);
                         } else {
-                            timeline.toggleTrackHidden(index)
+                            timeline.toggleTrackHidden(index);
                         }
                     }
                 }

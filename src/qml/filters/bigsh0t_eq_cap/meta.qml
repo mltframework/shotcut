@@ -14,27 +14,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: [
-            "topStart",
-            "topEnd",
-            "topBlendIn",
-            "topBlendOut",
-            "topFadeIn",
-            "topBlurWidthStart",
-            "topBlurWidthEnd",
-            "topBlurHeightStart",
-            "topBlurHeightEnd",
-
-            "bottomStart",
-            "bottomEnd",
-            "bottomBlendIn",
-            "bottomBlendOut",
-            "bottomFadeIn",
-            "bottomBlurWidthStart",
-            "bottomBlurWidthEnd",
-            "bottomBlurHeightStart",
-            "bottomBlurHeightEnd"
-        ]
+        simpleProperties: ["topStart", "topEnd", "topBlendIn", "topBlendOut", "topFadeIn", "topBlurWidthStart", "topBlurWidthEnd", "topBlurHeightStart", "topBlurHeightEnd", "bottomStart", "bottomEnd", "bottomBlendIn", "bottomBlendOut", "bottomFadeIn", "bottomBlurWidthStart", "bottomBlurWidthEnd", "bottomBlurHeightStart", "bottomBlurHeightEnd"]
         parameters: [
             Parameter {
                 name: qsTr('topStart')
@@ -99,7 +79,6 @@ Metadata {
                 minimum: 0
                 maximum: 90
             },
-
             Parameter {
                 name: qsTr('bottomStart')
                 property: 'bottomStart'

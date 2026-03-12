@@ -3,89 +3,14 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import Shotcut.Controls as Shotcut
+
 Shotcut.KeyframableFilter {
     width: 350
     height: 1000
-    keyframableParameters: [
-        "topStart",
-        "topEnd",
-        "topBlendIn",
-        "topBlendOut",
-        "topFadeIn",
-        "topBlurWidthStart",
-        "topBlurWidthEnd",
-        "topBlurHeightStart",
-        "topBlurHeightEnd",
-        "bottomStart",
-        "bottomEnd",
-        "bottomBlendIn",
-        "bottomBlendOut",
-        "bottomFadeIn",
-        "bottomBlurWidthStart",
-        "bottomBlurWidthEnd",
-        "bottomBlurHeightStart",
-        "bottomBlurHeightEnd"
-        ]
-    startValues: [
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        ]
-    middleValues: [
-        45,
-        80,
-        0,
-        10,
-        10,
-        0,
-        360,
-        0,
-        2,
-        45,
-        80,
-        0,
-        10,
-        10,
-        0,
-        360,
-        0,
-        2
-        ]
-    endValues: [
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        ]
+    keyframableParameters: ["topStart", "topEnd", "topBlendIn", "topBlendOut", "topFadeIn", "topBlurWidthStart", "topBlurWidthEnd", "topBlurHeightStart", "topBlurHeightEnd", "bottomStart", "bottomEnd", "bottomBlendIn", "bottomBlendOut", "bottomFadeIn", "bottomBlurWidthStart", "bottomBlurWidthEnd", "bottomBlurHeightStart", "bottomBlurHeightEnd"]
+    startValues: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,]
+    middleValues: [45, 80, 0, 10, 10, 0, 360, 0, 2, 45, 80, 0, 10, 10, 0, 360, 0, 2]
+    endValues: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,]
     property var allParameters: [
         {
             name: "interpolation",
@@ -192,8 +117,8 @@ Shotcut.KeyframableFilter {
             type: "checkbox",
             def: true
         },
-        ]
-    function isKeyframeButtonChecked(control){
+    ]
+    function isKeyframeButtonChecked(control) {
         return filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(control) > 0;
     }
     function setSimpleControl(parameter, controlSlider, controlKeyframeButton) {
@@ -297,152 +222,152 @@ Shotcut.KeyframableFilter {
         setControlsForAllParameters();
     }
     Component.onCompleted: {
-        defaultOnCompleted()
+        defaultOnCompleted();
     }
-    function updateProperty_interpolation () {
+    function updateProperty_interpolation() {
         if (!blockUpdate) {
             filter.set("interpolation", interpolationComboBox.currentIndex);
         }
     }
-    property alias prop_interpolationComboBox : interpolationComboBox;
-    function updateProperty_topEnabled () {
+    property alias prop_interpolationComboBox: interpolationComboBox
+    function updateProperty_topEnabled() {
         if (!blockUpdate) {
             filter.set("topEnabled", topEnabledCheckBox.checked);
         }
     }
-    property alias prop_topEnabledCheckBox : topEnabledCheckBox;
-    function updateProperty_topStart () {
+    property alias prop_topEnabledCheckBox: topEnabledCheckBox
+    function updateProperty_topStart() {
         if (!blockUpdate) {
             updateFilter("topStart", topStartSlider.value, topStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_topStartSlider : topStartSlider;
-    property alias prop_topStartKeyframesButton : topStartKeyframesButton;
-    function updateProperty_topEnd () {
+    property alias prop_topStartSlider: topStartSlider
+    property alias prop_topStartKeyframesButton: topStartKeyframesButton
+    function updateProperty_topEnd() {
         if (!blockUpdate) {
             updateFilter("topEnd", topEndSlider.value, topEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_topEndSlider : topEndSlider;
-    property alias prop_topEndKeyframesButton : topEndKeyframesButton;
-    function updateProperty_topFadeIn () {
+    property alias prop_topEndSlider: topEndSlider
+    property alias prop_topEndKeyframesButton: topEndKeyframesButton
+    function updateProperty_topFadeIn() {
         if (!blockUpdate) {
             updateFilter("topFadeIn", topFadeInSlider.value, topFadeInKeyframesButton, getPosition());
         }
     }
-    property alias prop_topFadeInSlider : topFadeInSlider;
-    property alias prop_topFadeInKeyframesButton : topFadeInKeyframesButton;
-    function updateProperty_topBlendIn () {
+    property alias prop_topFadeInSlider: topFadeInSlider
+    property alias prop_topFadeInKeyframesButton: topFadeInKeyframesButton
+    function updateProperty_topBlendIn() {
         if (!blockUpdate) {
             updateFilter("topBlendIn", topBlendInSlider.value, topBlendInKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlendInSlider : topBlendInSlider;
-    property alias prop_topBlendInKeyframesButton : topBlendInKeyframesButton;
-    function updateProperty_topBlendOut () {
+    property alias prop_topBlendInSlider: topBlendInSlider
+    property alias prop_topBlendInKeyframesButton: topBlendInKeyframesButton
+    function updateProperty_topBlendOut() {
         if (!blockUpdate) {
             updateFilter("topBlendOut", topBlendOutSlider.value, topBlendOutKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlendOutSlider : topBlendOutSlider;
-    property alias prop_topBlendOutKeyframesButton : topBlendOutKeyframesButton;
-    function updateProperty_topBlurWidthStart () {
+    property alias prop_topBlendOutSlider: topBlendOutSlider
+    property alias prop_topBlendOutKeyframesButton: topBlendOutKeyframesButton
+    function updateProperty_topBlurWidthStart() {
         if (!blockUpdate) {
             updateFilter("topBlurWidthStart", topBlurWidthStartSlider.value, topBlurWidthStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlurWidthStartSlider : topBlurWidthStartSlider;
-    property alias prop_topBlurWidthStartKeyframesButton : topBlurWidthStartKeyframesButton;
-    function updateProperty_topBlurHeightStart () {
+    property alias prop_topBlurWidthStartSlider: topBlurWidthStartSlider
+    property alias prop_topBlurWidthStartKeyframesButton: topBlurWidthStartKeyframesButton
+    function updateProperty_topBlurHeightStart() {
         if (!blockUpdate) {
             updateFilter("topBlurHeightStart", topBlurHeightStartSlider.value, topBlurHeightStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlurHeightStartSlider : topBlurHeightStartSlider;
-    property alias prop_topBlurHeightStartKeyframesButton : topBlurHeightStartKeyframesButton;
-    function updateProperty_topBlurWidthEnd () {
+    property alias prop_topBlurHeightStartSlider: topBlurHeightStartSlider
+    property alias prop_topBlurHeightStartKeyframesButton: topBlurHeightStartKeyframesButton
+    function updateProperty_topBlurWidthEnd() {
         if (!blockUpdate) {
             updateFilter("topBlurWidthEnd", topBlurWidthEndSlider.value, topBlurWidthEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlurWidthEndSlider : topBlurWidthEndSlider;
-    property alias prop_topBlurWidthEndKeyframesButton : topBlurWidthEndKeyframesButton;
-    function updateProperty_topBlurHeightEnd () {
+    property alias prop_topBlurWidthEndSlider: topBlurWidthEndSlider
+    property alias prop_topBlurWidthEndKeyframesButton: topBlurWidthEndKeyframesButton
+    function updateProperty_topBlurHeightEnd() {
         if (!blockUpdate) {
             updateFilter("topBlurHeightEnd", topBlurHeightEndSlider.value, topBlurHeightEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_topBlurHeightEndSlider : topBlurHeightEndSlider;
-    property alias prop_topBlurHeightEndKeyframesButton : topBlurHeightEndKeyframesButton;
-    function updateProperty_bottomEnabled () {
+    property alias prop_topBlurHeightEndSlider: topBlurHeightEndSlider
+    property alias prop_topBlurHeightEndKeyframesButton: topBlurHeightEndKeyframesButton
+    function updateProperty_bottomEnabled() {
         if (!blockUpdate) {
             filter.set("bottomEnabled", bottomEnabledCheckBox.checked);
         }
     }
-    property alias prop_bottomEnabledCheckBox : bottomEnabledCheckBox;
-    function updateProperty_bottomStart () {
+    property alias prop_bottomEnabledCheckBox: bottomEnabledCheckBox
+    function updateProperty_bottomStart() {
         if (!blockUpdate) {
             updateFilter("bottomStart", bottomStartSlider.value, bottomStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomStartSlider : bottomStartSlider;
-    property alias prop_bottomStartKeyframesButton : bottomStartKeyframesButton;
-    function updateProperty_bottomEnd () {
+    property alias prop_bottomStartSlider: bottomStartSlider
+    property alias prop_bottomStartKeyframesButton: bottomStartKeyframesButton
+    function updateProperty_bottomEnd() {
         if (!blockUpdate) {
             updateFilter("bottomEnd", bottomEndSlider.value, bottomEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomEndSlider : bottomEndSlider;
-    property alias prop_bottomEndKeyframesButton : bottomEndKeyframesButton;
-    function updateProperty_bottomFadeIn () {
+    property alias prop_bottomEndSlider: bottomEndSlider
+    property alias prop_bottomEndKeyframesButton: bottomEndKeyframesButton
+    function updateProperty_bottomFadeIn() {
         if (!blockUpdate) {
             updateFilter("bottomFadeIn", bottomFadeInSlider.value, bottomFadeInKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomFadeInSlider : bottomFadeInSlider;
-    property alias prop_bottomFadeInKeyframesButton : bottomFadeInKeyframesButton;
-    function updateProperty_bottomBlendIn () {
+    property alias prop_bottomFadeInSlider: bottomFadeInSlider
+    property alias prop_bottomFadeInKeyframesButton: bottomFadeInKeyframesButton
+    function updateProperty_bottomBlendIn() {
         if (!blockUpdate) {
             updateFilter("bottomBlendIn", bottomBlendInSlider.value, bottomBlendInKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlendInSlider : bottomBlendInSlider;
-    property alias prop_bottomBlendInKeyframesButton : bottomBlendInKeyframesButton;
-    function updateProperty_bottomBlendOut () {
+    property alias prop_bottomBlendInSlider: bottomBlendInSlider
+    property alias prop_bottomBlendInKeyframesButton: bottomBlendInKeyframesButton
+    function updateProperty_bottomBlendOut() {
         if (!blockUpdate) {
             updateFilter("bottomBlendOut", bottomBlendOutSlider.value, bottomBlendOutKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlendOutSlider : bottomBlendOutSlider;
-    property alias prop_bottomBlendOutKeyframesButton : bottomBlendOutKeyframesButton;
-    function updateProperty_bottomBlurWidthStart () {
+    property alias prop_bottomBlendOutSlider: bottomBlendOutSlider
+    property alias prop_bottomBlendOutKeyframesButton: bottomBlendOutKeyframesButton
+    function updateProperty_bottomBlurWidthStart() {
         if (!blockUpdate) {
             updateFilter("bottomBlurWidthStart", bottomBlurWidthStartSlider.value, bottomBlurWidthStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlurWidthStartSlider : bottomBlurWidthStartSlider;
-    property alias prop_bottomBlurWidthStartKeyframesButton : bottomBlurWidthStartKeyframesButton;
-    function updateProperty_bottomBlurHeightStart () {
+    property alias prop_bottomBlurWidthStartSlider: bottomBlurWidthStartSlider
+    property alias prop_bottomBlurWidthStartKeyframesButton: bottomBlurWidthStartKeyframesButton
+    function updateProperty_bottomBlurHeightStart() {
         if (!blockUpdate) {
             updateFilter("bottomBlurHeightStart", bottomBlurHeightStartSlider.value, bottomBlurHeightStartKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlurHeightStartSlider : bottomBlurHeightStartSlider;
-    property alias prop_bottomBlurHeightStartKeyframesButton : bottomBlurHeightStartKeyframesButton;
-    function updateProperty_bottomBlurWidthEnd () {
+    property alias prop_bottomBlurHeightStartSlider: bottomBlurHeightStartSlider
+    property alias prop_bottomBlurHeightStartKeyframesButton: bottomBlurHeightStartKeyframesButton
+    function updateProperty_bottomBlurWidthEnd() {
         if (!blockUpdate) {
             updateFilter("bottomBlurWidthEnd", bottomBlurWidthEndSlider.value, bottomBlurWidthEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlurWidthEndSlider : bottomBlurWidthEndSlider;
-    property alias prop_bottomBlurWidthEndKeyframesButton : bottomBlurWidthEndKeyframesButton;
-    function updateProperty_bottomBlurHeightEnd () {
+    property alias prop_bottomBlurWidthEndSlider: bottomBlurWidthEndSlider
+    property alias prop_bottomBlurWidthEndKeyframesButton: bottomBlurWidthEndKeyframesButton
+    function updateProperty_bottomBlurHeightEnd() {
         if (!blockUpdate) {
             updateFilter("bottomBlurHeightEnd", bottomBlurHeightEndSlider.value, bottomBlurHeightEndKeyframesButton, getPosition());
         }
     }
-    property alias prop_bottomBlurHeightEndSlider : bottomBlurHeightEndSlider;
-    property alias prop_bottomBlurHeightEndKeyframesButton : bottomBlurHeightEndKeyframesButton;
+    property alias prop_bottomBlurHeightEndSlider: bottomBlurHeightEndSlider
+    property alias prop_bottomBlurHeightEndKeyframesButton: bottomBlurHeightEndKeyframesButton
     GridLayout {
         columns: 4
         anchors.fill: parent
@@ -453,35 +378,13 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.Preset {
             id: preset
-            parameters: [
-                "interpolation",
-                "topStart",
-                "topEnd",
-                "topBlendIn",
-                "topBlendOut",
-                "topFadeIn",
-                "topBlurWidthStart",
-                "topBlurWidthEnd",
-                "topBlurHeightStart",
-                "topBlurHeightEnd",
-                "bottomStart",
-                "bottomEnd",
-                "bottomBlendIn",
-                "bottomBlendOut",
-                "bottomFadeIn",
-                "bottomBlurWidthStart",
-                "bottomBlurWidthEnd",
-                "bottomBlurHeightStart",
-                "bottomBlurHeightEnd",
-                "topEnabled",
-                "bottomEnabled"
-                ]
+            parameters: ["interpolation", "topStart", "topEnd", "topBlendIn", "topBlendOut", "topFadeIn", "topBlurWidthStart", "topBlurWidthEnd", "topBlurHeightStart", "topBlurHeightEnd", "bottomStart", "bottomEnd", "bottomBlendIn", "bottomBlendOut", "bottomFadeIn", "bottomBlurWidthStart", "bottomBlurWidthEnd", "bottomBlurHeightStart", "bottomBlurHeightEnd", "topEnabled", "bottomEnabled"]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                defaultBeforePresetLoaded()
+                defaultBeforePresetLoaded();
             }
             onPresetSelected: {
-                defaultPresetSelected()
+                defaultPresetSelected();
             }
         }
         Label {
@@ -489,9 +392,9 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
         ComboBox {
+            id: interpolationComboBox
             currentIndex: 0
             model: ["Nearest-neighbor", "Bilinear"]
-            id: interpolationComboBox
             Layout.columnSpan: 2
             onCurrentIndexChanged: updateProperty_interpolation()
         }
@@ -504,9 +407,9 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignLeft
         }
         CheckBox {
+            id: topEnabledCheckBox
             text: qsTr('')
             checked: true
-            id: topEnabledCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_topEnabled()
         }
@@ -518,15 +421,15 @@ Shotcut.KeyframableFilter {
             id: topStartSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topStart()
         }
         Shotcut.KeyframesButton {
-            id: topStartKeyframesButton;
-            checked: isKeyframeButtonChecked("topStart");
+            id: topStartKeyframesButton
+            checked: isKeyframeButtonChecked("topStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topStart", topStartSlider.value);
@@ -544,15 +447,15 @@ Shotcut.KeyframableFilter {
             id: topEndSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topEnd()
         }
         Shotcut.KeyframesButton {
-            id: topEndKeyframesButton;
-            checked: isKeyframeButtonChecked("topEnd");
+            id: topEndKeyframesButton
+            checked: isKeyframeButtonChecked("topEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topEnd", topEndSlider.value);
@@ -570,15 +473,15 @@ Shotcut.KeyframableFilter {
             id: topFadeInSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topFadeIn()
         }
         Shotcut.KeyframesButton {
-            id: topFadeInKeyframesButton;
-            checked: isKeyframeButtonChecked("topFadeIn");
+            id: topFadeInKeyframesButton
+            checked: isKeyframeButtonChecked("topFadeIn")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topFadeIn", topFadeInSlider.value);
@@ -605,15 +508,15 @@ Shotcut.KeyframableFilter {
             id: topBlendInSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlendIn()
         }
         Shotcut.KeyframesButton {
-            id: topBlendInKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlendIn");
+            id: topBlendInKeyframesButton
+            checked: isKeyframeButtonChecked("topBlendIn")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlendIn", topBlendInSlider.value);
@@ -631,15 +534,15 @@ Shotcut.KeyframableFilter {
             id: topBlendOutSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlendOut()
         }
         Shotcut.KeyframesButton {
-            id: topBlendOutKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlendOut");
+            id: topBlendOutKeyframesButton
+            checked: isKeyframeButtonChecked("topBlendOut")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlendOut", topBlendOutSlider.value);
@@ -666,15 +569,15 @@ Shotcut.KeyframableFilter {
             id: topBlurWidthStartSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlurWidthStart()
         }
         Shotcut.KeyframesButton {
-            id: topBlurWidthStartKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlurWidthStart");
+            id: topBlurWidthStartKeyframesButton
+            checked: isKeyframeButtonChecked("topBlurWidthStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlurWidthStart", topBlurWidthStartSlider.value);
@@ -692,15 +595,15 @@ Shotcut.KeyframableFilter {
             id: topBlurHeightStartSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlurHeightStart()
         }
         Shotcut.KeyframesButton {
-            id: topBlurHeightStartKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlurHeightStart");
+            id: topBlurHeightStartKeyframesButton
+            checked: isKeyframeButtonChecked("topBlurHeightStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlurHeightStart", topBlurHeightStartSlider.value);
@@ -718,15 +621,15 @@ Shotcut.KeyframableFilter {
             id: topBlurWidthEndSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlurWidthEnd()
         }
         Shotcut.KeyframesButton {
-            id: topBlurWidthEndKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlurWidthEnd");
+            id: topBlurWidthEndKeyframesButton
+            checked: isKeyframeButtonChecked("topBlurWidthEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlurWidthEnd", topBlurWidthEndSlider.value);
@@ -744,15 +647,15 @@ Shotcut.KeyframableFilter {
             id: topBlurHeightEndSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_topBlurHeightEnd()
         }
         Shotcut.KeyframesButton {
-            id: topBlurHeightEndKeyframesButton;
-            checked: isKeyframeButtonChecked("topBlurHeightEnd");
+            id: topBlurHeightEndKeyframesButton
+            checked: isKeyframeButtonChecked("topBlurHeightEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "topBlurHeightEnd", topBlurHeightEndSlider.value);
@@ -767,9 +670,9 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignLeft
         }
         CheckBox {
+            id: bottomEnabledCheckBox
             text: qsTr('')
             checked: true
-            id: bottomEnabledCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_bottomEnabled()
         }
@@ -781,15 +684,15 @@ Shotcut.KeyframableFilter {
             id: bottomStartSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomStart()
         }
         Shotcut.KeyframesButton {
-            id: bottomStartKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomStart");
+            id: bottomStartKeyframesButton
+            checked: isKeyframeButtonChecked("bottomStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomStart", bottomStartSlider.value);
@@ -807,15 +710,15 @@ Shotcut.KeyframableFilter {
             id: bottomEndSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomEnd()
         }
         Shotcut.KeyframesButton {
-            id: bottomEndKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomEnd");
+            id: bottomEndKeyframesButton
+            checked: isKeyframeButtonChecked("bottomEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomEnd", bottomEndSlider.value);
@@ -833,15 +736,15 @@ Shotcut.KeyframableFilter {
             id: bottomFadeInSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomFadeIn()
         }
         Shotcut.KeyframesButton {
-            id: bottomFadeInKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomFadeIn");
+            id: bottomFadeInKeyframesButton
+            checked: isKeyframeButtonChecked("bottomFadeIn")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomFadeIn", bottomFadeInSlider.value);
@@ -868,15 +771,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlendInSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlendIn()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlendInKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlendIn");
+            id: bottomBlendInKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlendIn")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlendIn", bottomBlendInSlider.value);
@@ -894,15 +797,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlendOutSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlendOut()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlendOutKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlendOut");
+            id: bottomBlendOutKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlendOut")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlendOut", bottomBlendOutSlider.value);
@@ -929,15 +832,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlurWidthStartSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlurWidthStart()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlurWidthStartKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlurWidthStart");
+            id: bottomBlurWidthStartKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlurWidthStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlurWidthStart", bottomBlurWidthStartSlider.value);
@@ -955,15 +858,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlurHeightStartSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlurHeightStart()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlurHeightStartKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlurHeightStart");
+            id: bottomBlurHeightStartKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlurHeightStart")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlurHeightStart", bottomBlurHeightStartSlider.value);
@@ -981,15 +884,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlurWidthEndSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlurWidthEnd()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlurWidthEndKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlurWidthEnd");
+            id: bottomBlurWidthEndKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlurWidthEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlurWidthEnd", bottomBlurWidthEndSlider.value);
@@ -1007,15 +910,15 @@ Shotcut.KeyframableFilter {
             id: bottomBlurHeightEndSlider
             minimumValue: 0
             maximumValue: 90
-            spinnerWidth: 120;
-            suffix: ' deg';
-            decimals: 3;
-            stepSize: 1;
+            spinnerWidth: 120
+            suffix: ' deg'
+            decimals: 3
+            stepSize: 1
             onValueChanged: updateProperty_bottomBlurHeightEnd()
         }
         Shotcut.KeyframesButton {
-            id: bottomBlurHeightEndKeyframesButton;
-            checked: isKeyframeButtonChecked("bottomBlurHeightEnd");
+            id: bottomBlurHeightEndKeyframesButton
+            checked: isKeyframeButtonChecked("bottomBlurHeightEnd")
             onToggled: {
                 enableControls(true);
                 toggleKeyframes(checked, "bottomBlurHeightEnd", bottomBlurHeightEndSlider.value);
@@ -1028,14 +931,14 @@ Shotcut.KeyframableFilter {
     }
     Connections {
         target: filter
-        onInChanged: updateSimpleKeyframes();
-        onOutChanged: updateSimpleKeyframes();
-        onAnimateInChanged: updateSimpleKeyframes();
-        onAnimateOutChanged: updateSimpleKeyframes();
-        onChanged: setControls();
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+        onChanged: setControls()
     }
     Connections {
-        target: producer;
-        onPositionChanged: setControls();
+        target: producer
+        onPositionChanged: setControls()
     }
 }

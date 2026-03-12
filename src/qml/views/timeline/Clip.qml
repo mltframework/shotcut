@@ -378,7 +378,7 @@ Rectangle {
                     parent.yOffset = 0;
                 }
             }
-            onDoubleClicked: timeline.changeGain(trackIndex, index, 0);
+            onDoubleClicked: timeline.changeGain(trackIndex, index, 0)
         }
     }
 
