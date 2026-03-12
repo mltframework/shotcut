@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,29 @@ Item {
         }
         if (!video.snapToGrid || video.grid === 0)
             return x;
-        if (video.grid !== 95 && video.grid !== 8090) {
+        if (video.grid >= 20001 && video.grid <= 29999) {
+            let ratioW, ratioH;
+            switch (video.grid) {
+            case 20001: ratioW = 1;  ratioH = 1;  break;
+            case 20169: ratioW = 16; ratioH = 9;  break;
+            case 20043: ratioW = 4;  ratioH = 3;  break;
+            default:    ratioW = 9;  ratioH = 16; break;
+            }
+            const targetAspect = ratioW / ratioH;
+            const videoAspect = parent.width / parent.height;
+            let deltas;
+            if (targetAspect >= videoAspect) {
+                deltas = [0, 1];
+            } else {
+                const half = (1 - targetAspect / videoAspect) / 2;
+                deltas = [0, half, 1 - half, 1];
+            }
+            for (let i = 0; i < deltas.length; i++) {
+                const delta = x - deltas[i] * parent.width;
+                if (Math.abs(delta) < snapMargin)
+                    return x - delta;
+            }
+        } else if (video.grid !== 95 && video.grid !== 8090) {
             var n = (video.grid > 10000) ? parent.width / (profile.width / (video.grid - 10000)) : parent.width / video.grid;
             return snapGrid(x, n);
         } else {
@@ -113,7 +135,29 @@ Item {
         }
         if (!video.snapToGrid || video.grid === 0)
             return y;
-        if (video.grid !== 95 && video.grid !== 8090) {
+        if (video.grid >= 20001 && video.grid <= 29999) {
+            let ratioW, ratioH;
+            switch (video.grid) {
+            case 20001: ratioW = 1;  ratioH = 1;  break;
+            case 20169: ratioW = 16; ratioH = 9;  break;
+            case 20043: ratioW = 4;  ratioH = 3;  break;
+            default:    ratioW = 9;  ratioH = 16; break;
+            }
+            const targetAspect = ratioW / ratioH;
+            const videoAspect = parent.width / parent.height;
+            let deltas;
+            if (targetAspect >= videoAspect) {
+                const half = (1 - videoAspect / targetAspect) / 2;
+                deltas = [0, half, 1 - half, 1];
+            } else {
+                deltas = [0, 1];
+            }
+            for (let i = 0; i < deltas.length; i++) {
+                const delta = y - deltas[i] * parent.height;
+                if (Math.abs(delta) < snapMargin)
+                    return y - delta;
+            }
+        } else if (video.grid !== 95 && video.grid !== 8090) {
             var n = (video.grid > 10000) ? parent.height / (profile.height / (video.grid - 10000)) : parent.height / video.grid;
             return snapGrid(y, n);
         } else {
