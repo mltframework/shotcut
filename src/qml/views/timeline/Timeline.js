@@ -233,6 +233,22 @@ function selectClips() {
             }
         }
     }
+    // Expand the rectangle selection to include all members of any partly-selected group.
+    for (let i = 0; i < result.length; i++) {
+        const groupClips = timeline.getGroupForClip(result[i].y, result[i].x)
+        for (let j = 0; j < groupClips.length; j++) {
+            const pt = groupClips[j]
+            let found = false
+            for (let k = 0; k < result.length; k++) {
+                if (result[k].x === pt.x && result[k].y === pt.y) {
+                    found = true
+                    break
+                }
+            }
+            if (!found)
+                result.push(pt)
+        }
+    }
     if (result.length > 0)
         timeline.selection = result;
 }
