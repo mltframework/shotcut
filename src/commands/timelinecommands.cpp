@@ -951,8 +951,6 @@ void TrimClipInCommand::redo()
                     << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
         if (m_ripple) {
-            m_undoHelper->setHints(UndoHelper::SkipXML);
-        } else {
             m_undoHelper->setHints(UndoHelper::RestoreTracks);
         }
         m_undoHelper->recordBeforeState();

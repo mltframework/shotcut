@@ -270,6 +270,34 @@ void UndoHelper::undoChanges()
                                       info.in_delta,
                                       info.out_delta,
                                       info.in_delta);
+                if (!info.xml.isEmpty() && !info.isBlank) {
+                    // Pass all properties for links and filters to restore keyframes that might have  been affected by a resize.
+                    Mlt::Producer originalClip(clip->parent());
+                    Mlt::Producer restoredClip(MLT.profile(),
+                                               "xml-string",
+                                               info.xml.toUtf8().constData());
+                    if (restoredClip.is_valid()
+                        && restoredClip.filter_count() == originalClip.filter_count()) {
+                        for (int j = 0; j < restoredClip.filter_count(); j++) {
+                            QScopedPointer<Mlt::Filter> filter1(originalClip.filter(j));
+                            QScopedPointer<Mlt::Filter> filter2(restoredClip.filter(j));
+                            filter1->inherit(*filter2);
+                        }
+                        if (originalClip.type() == mlt_service_chain_type
+                            && restoredClip.type() == mlt_service_chain_type) {
+                            Mlt::Chain chain1(originalClip);
+                            Mlt::Chain chain2(restoredClip);
+                            if (chain1.link_count() == chain2.link_count()) {
+                                int link_count = chain1.link_count();
+                                for (int j = 0; j < link_count; j++) {
+                                    QScopedPointer<Mlt::Link> link1(chain1.link(j));
+                                    QScopedPointer<Mlt::Link> link2(chain2.link(j));
+                                    link1->inherit(*link2);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
