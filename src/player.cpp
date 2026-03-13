@@ -1022,6 +1022,7 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
     }
     if (position <= m_duration) {
         m_position = position;
+        m_requestedPosition = position;
         m_positionSpinner->blockSignals(true);
         m_positionSpinner->setValue(position);
         m_positionSpinner->blockSignals(false);
