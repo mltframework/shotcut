@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ Item {
         if (application.audioChannels() === 1) {
             fromCombo.enabled = false;
             toCombo.enabled = false;
+        } else if (application.audioChannels() === 4) {
+            fromCombo.model = [qsTr('Front left'), qsTr('Front right'), qsTr('Left surround'), qsTr('Right surround')];
         } else if (application.audioChannels() === 6) {
             fromCombo.model = [qsTr('Front left'), qsTr('Front right'), qsTr('Center'), qsTr('Low frequency'), qsTr('Left surround'), qsTr('Right surround')];
         }
@@ -38,7 +40,7 @@ Item {
             fromCombo.currentIndex = 0;
             filter.set(fromParameter, 0);
             toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1;
-            filter.set(fromParameter, toCombo.currentIndex);
+            filter.set(toParameter, toCombo.currentIndex);
         } else {
             // Initialize parameter values
             fromCombo.currentIndex = filter.get(fromParameter);
