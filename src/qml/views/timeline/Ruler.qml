@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,5 +143,15 @@ Rectangle {
         }
 
         target: multitrack
+    }
+
+    Connections {
+        function onTimeFormatChanged() {
+            const m = repeater.model;
+            repeater.model = 0;
+            repeater.model = m;
+        }
+
+        target: settings
     }
 }
