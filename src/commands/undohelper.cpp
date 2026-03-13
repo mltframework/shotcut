@@ -271,15 +271,19 @@ void UndoHelper::undoChanges()
                 m_model.endInsertRows();
 
                 // Re-apply timeline-specific properties that are not encoded in the producer XML.
-                QScopedPointer<Mlt::Producer> cut(playlist.get_clip(currentIndex));
-                if (cut && cut->is_valid()) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+                if (clip && clip->is_valid()) {
                     // Restore UUID on the parent producer for non-blank clips.
-                    MLT.setUuid(cut->parent(), uid);
-                    // Restore grouping metadata on the cut, if any was recorded.
-                    if (!info.group.isEmpty()) {
-                        cut->set(kShotcutGroupProperty, info.group.toUtf8().constData());
+                    if (info.isBlank) {
+                        MLT.setUuid(*clip, uid);
+                    } else {
+                        MLT.setUuid(clip->parent(), uid);
                     }
-                    AudioLevelsTask::start(cut->parent(), &m_model, modelIndex);
+                    // Restore grouping metadata on the clip, if any was recorded.
+                    if (info.group >= 0) {
+                        clip->set(kShotcutGroupProperty, info.group);
+                    }
+                    AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
                 }
             } else {
                 int filterIn = MLT.filterIn(playlist, currentIndex);
