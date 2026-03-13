@@ -357,7 +357,7 @@ void UndoHelper::setHints(OptimizationHints hints)
     m_hints = hints;
 }
 
-void UndoHelper::storeXmlForClip(const QUuid& uid)
+void UndoHelper::storeXmlForClip(const QUuid &uid)
 {
     m_xmlClips.insert(uid);
 }
