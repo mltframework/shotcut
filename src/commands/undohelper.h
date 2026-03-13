@@ -36,7 +36,7 @@ public:
     void recordAfterState();
     void undoChanges();
     void setHints(OptimizationHints hints);
-    void storeXmlForClip(QUuid uid);
+    void storeXmlForClip(const QUuid &uid);
     QSet<int> affectedTracks() const { return m_affectedTracks; }
 
 private:

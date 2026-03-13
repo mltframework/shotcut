@@ -273,12 +273,8 @@ void UndoHelper::undoChanges()
                 // Re-apply timeline-specific properties that are not encoded in the producer XML.
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
                 if (clip && clip->is_valid()) {
-                    // Restore UUID on the parent producer for non-blank clips.
-                    if (info.isBlank) {
-                        MLT.setUuid(*clip, uid);
-                    } else {
-                        MLT.setUuid(clip->parent(), uid);
-                    }
+                    // Restore UUID on the parent producer for this non-blank clip.
+                    MLT.setUuid(clip->parent(), uid);
                     // Restore grouping metadata on the clip, if any was recorded.
                     if (info.group >= 0) {
                         clip->set(kShotcutGroupProperty, info.group);
@@ -361,7 +357,7 @@ void UndoHelper::setHints(OptimizationHints hints)
     m_hints = hints;
 }
 
-void UndoHelper::storeXmlForClip(QUuid uid)
+void UndoHelper::storeXmlForClip(const QUuid& uid)
 {
     m_xmlClips.insert(uid);
 }
