@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2024 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ void UndoHelper::recordBeforeState()
             }
             m_insertedOrder << uid;
             Info &info = m_state[uid];
-            if (!(m_hints & SkipXML))
+            if (!(m_hints & SkipXML) || m_xmlClips.contains(uid))
                 info.xml = MLT.XML(&clip->parent());
             Mlt::ClipInfo clipInfo;
             playlist.clip_info(j, &clipInfo);
@@ -250,36 +250,61 @@ void UndoHelper::undoChanges()
 
         /* Only in/out points handled so far */
         if (info.changes & ClipInfoModified) {
-            int filterIn = MLT.filterIn(playlist, currentIndex);
-            int filterOut = MLT.filterOut(playlist, currentIndex);
-
-            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
-            if (clip && clip->is_valid()) {
-                UNDOLOG << "resizing clip at" << currentIndex << "in" << info.frame_in << "out"
-                        << info.frame_out;
-                if (clip->parent().get_data("mlt_mix"))
-                    clip->parent().set("mlt_mix", nullptr, 0);
-                if (clip->get_data("mix_in"))
-                    clip->set("mix_in", nullptr, 0);
-                if (clip->get_data("mix_out"))
-                    clip->set("mix_out", nullptr, 0);
-                playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
-                MLT.adjustClipFilters(clip->parent(),
-                                      filterIn,
-                                      filterOut,
-                                      info.in_delta,
-                                      info.out_delta,
-                                      info.in_delta);
-            }
-
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
-            QVector<int> roles;
-            roles << MultitrackModel::InPointRole;
-            roles << MultitrackModel::OutPointRole;
-            roles << MultitrackModel::DurationRole;
-            emit m_model.dataChanged(modelIndex, modelIndex, roles);
-            if (clip && clip->is_valid())
-                AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
+
+            if (!info.isBlank && !info.xml.isEmpty()) {
+                // Restore the clip fully from its stored XML (preserves deleted keyframes).
+                UNDOLOG << "restoring clip from xml at" << currentIndex;
+                m_model.beginRemoveRows(modelIndex.parent(), currentIndex, currentIndex);
+                playlist.remove(currentIndex);
+                m_model.endRemoveRows();
+
+                m_model.beginInsertRows(modelIndex.parent(), currentIndex, currentIndex);
+                Mlt::Producer restoredClip(MLT.profile(),
+                                           "xml-string",
+                                           info.xml.toUtf8().constData());
+                if (restoredClip.type() == mlt_service_tractor_type)
+                    restoredClip.set("mlt_type", "mlt_producer");
+                else
+                    fixTransitions(playlist, currentIndex, restoredClip);
+                playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
+                m_model.endInsertRows();
+                MLT.setUuid(restoredClip, uid);
+                AudioLevelsTask::start(restoredClip, &m_model, modelIndex);
+            } else {
+                int filterIn = MLT.filterIn(playlist, currentIndex);
+                int filterOut = MLT.filterOut(playlist, currentIndex);
+
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+                if (clip && clip->is_valid()) {
+                    UNDOLOG << "resizing clip at" << currentIndex << "in" << info.frame_in << "out"
+                            << info.frame_out;
+                    if (clip->parent().get_data("mlt_mix"))
+                        clip->parent().set("mlt_mix", nullptr, 0);
+                    if (clip->get_data("mix_in"))
+                        clip->set("mix_in", nullptr, 0);
+                    if (clip->get_data("mix_out"))
+                        clip->set("mix_out", nullptr, 0);
+                    playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
+                    MLT.adjustClipFilters(clip->parent(),
+                                          filterIn,
+                                          filterOut,
+                                          info.in_delta,
+                                          info.out_delta,
+                                          info.in_delta);
+                }
+
+                QVector<int> roles;
+                roles << MultitrackModel::InPointRole;
+                roles << MultitrackModel::OutPointRole;
+                roles << MultitrackModel::DurationRole;
+                emit m_model.dataChanged(modelIndex, modelIndex, roles);
+                if (!info.isBlank) {
+                    QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+                    if (clip && clip->is_valid())
+                        AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
+                }
+            }
         }
     }
 
@@ -320,6 +345,11 @@ void UndoHelper::undoChanges()
 void UndoHelper::setHints(OptimizationHints hints)
 {
     m_hints = hints;
+}
+
+void UndoHelper::storeXmlForClip(QUuid uid)
+{
+    m_xmlClips.insert(uid);
 }
 
 void UndoHelper::debugPrintState(const QString &title)
