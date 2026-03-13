@@ -960,7 +960,7 @@ void TrimClipInCommand::redo()
                 Mlt::Playlist playlist(*track);
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(m_clipIndex));
                 if (clip && clip->is_valid())
-                    m_undoHelper->storeXmlForClip(MLT.uuid(clip->parent()));
+                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(clip->parent()));
             }
         }
         m_undoHelper->recordBeforeState();

@@ -3598,7 +3598,7 @@ bool TimelineDock::trimClipIn(
                 // Store XML for only this clip so keyframes deleted during trim can be restored.
                 auto info = m_model.getClipInfo(trackIndex, clipIndex);
                 if (info && info->producer)
-                    m_undoHelper->storeXmlForClip(MLT.uuid(*info->producer));
+                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(*info->producer));
             }
             m_undoHelper->recordBeforeState();
         }
