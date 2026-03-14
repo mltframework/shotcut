@@ -141,6 +141,8 @@ private slots:
 
     void on_aspectDenSpinner_valueChanged(int value);
 
+    void on_coverArtButton_clicked();
+
 private:
     enum {
         RateControlAverage = 0,

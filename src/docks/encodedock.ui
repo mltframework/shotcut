@@ -1929,6 +1929,31 @@ in temporal compression</string>
                </widget>
               </item>
               <item row="2" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_26">
+                <item>
+                 <widget class="QLabel" name="coverArtLabel">
+                  <property name="text">
+                   <string>Cover Art</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="coverArtLineEdit"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="coverArtButton">
+                  <property name="icon">
+                   <iconset theme="document-open" resource="../../icons/resources.qrc">
+                    <normaloff>:/icons/oxygen/32x32/actions/document-open.png</normaloff>:/icons/oxygen/32x32/actions/document-open.png</iconset>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="3" column="0">
                <widget class="QCheckBox" name="disableSubtitlesCheckbox">
                 <property name="text">
                  <string>Disable subtitles</string>
