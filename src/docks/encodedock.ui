@@ -1949,6 +1949,15 @@ in temporal compression</string>
                   <property name="text">
                    <string/>
                   </property>
+                  <property name="toolTip">
+                   <string>Browse for cover art image</string>
+                  </property>
+                  <property name="accessibleName">
+                   <string>Browse cover art</string>
+                  </property>
+                  <property name="accessibleDescription">
+                   <string>Open a file dialog to select a cover art image</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
