@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ public:
     void recordAfterState();
     void undoChanges();
     void setHints(OptimizationHints hints);
+    void storeXmlForClip(const QUuid &uid);
     QSet<int> affectedTracks() const { return m_affectedTracks; }
 
 private:
@@ -84,6 +85,7 @@ private:
     QList<QUuid> m_clipsAdded;
     QList<QUuid> m_insertedOrder;
     QSet<int> m_affectedTracks;
+    QSet<QUuid> m_xmlClips;
     MultitrackModel &m_model;
     OptimizationHints m_hints;
 };

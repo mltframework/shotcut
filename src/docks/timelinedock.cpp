@@ -3591,10 +3591,14 @@ bool TimelineDock::trimClipIn(
     } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (!ripple) {
-                m_undoHelper->setHints(UndoHelper::SkipXML);
-            } else {
+            if (ripple) {
                 m_undoHelper->setHints(UndoHelper::RestoreTracks);
+            } else {
+                m_undoHelper->setHints(UndoHelper::SkipXML);
+                // Store XML for only this clip so keyframes deleted during trim can be restored.
+                auto info = m_model.getClipInfo(trackIndex, clipIndex);
+                if (info && info->producer)
+                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(*info->producer));
             }
             m_undoHelper->recordBeforeState();
         }

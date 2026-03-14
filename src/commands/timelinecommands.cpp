@@ -951,9 +951,17 @@ void TrimClipInCommand::redo()
                     << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
         if (m_ripple) {
-            m_undoHelper->setHints(UndoHelper::SkipXML);
-        } else {
             m_undoHelper->setHints(UndoHelper::RestoreTracks);
+        } else {
+            m_undoHelper->setHints(UndoHelper::SkipXML);
+            auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track && track->is_valid()) {
+                Mlt::Playlist playlist(*track);
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(m_clipIndex));
+                if (clip && clip->is_valid())
+                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(clip->parent()));
+            }
         }
         m_undoHelper->recordBeforeState();
         m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
