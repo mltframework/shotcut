@@ -187,6 +187,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     QChar decimalPoint = MLT.decimalPoint();
     QString acodec = QString::fromLatin1(preset.get("acodec"));
     QString vcodec = QString::fromLatin1(preset.get("vcodec"));
+    ui->coverArtLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
         foreach (const QString &hw, Settings.encodeHardware()) {
@@ -386,6 +387,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->interpolationCombo->setCurrentIndex(3);
         } else if (name == "color_range" && (value == "pc" || value == "jpeg")) {
             ui->rangeComboBox->setCurrentIndex(1);
+        } else if (name == "attached_pic") {
+            ui->coverArtLineEdit->setText(value);
         } else {
             if (name != "an" && name != "vn" && name != "threads"
                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
@@ -625,6 +628,10 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
     if (p && p->is_valid()) {
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             p->parse(line.toUtf8().constData());
+        if (!ui->coverArtLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "attached_pic",
+                        ui->coverArtLineEdit->text().trimmed().toUtf8().constData());
         if (realtime)
             setIfNotSet(p, "real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
@@ -2952,6 +2959,20 @@ void EncodeDock::on_aspectNumSpinner_valueChanged(int value)
 void EncodeDock::on_aspectDenSpinner_valueChanged(int value)
 {
     on_aspectNumSpinner_valueChanged(value);
+}
+
+void EncodeDock::on_coverArtButton_clicked()
+{
+    auto path = QFileDialog::getOpenFileName(this,
+                                             tr("Open Cover Art"),
+                                             Settings.openPath(),
+                                             tr("Images (*.png *.jpg *.jpeg);;All Files (*)"),
+                                             nullptr,
+                                             Util::getFileDialogOptions());
+    if (!path.isEmpty()) {
+        ui->coverArtLineEdit->setText(path);
+        Settings.setOpenPath(QFileInfo(path).path());
+    }
 }
 
 void EncodeDock::setReframeEnabled(bool enabled)
