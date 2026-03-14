@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ Rectangle {
         hoverEnabled: true
         cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
         onPressed: mouse => {
-            if (mouse.button === Qt.LeftButton && !(mouse.modifiers & Qt.ControlModifier)) {
+            if (mouse.button === Qt.LeftButton && !(mouse.modifiers & Qt.ShiftModifier)) {
                 if (!subtitlesSelectionModel.isItemSelected(index)) {
                     subtitlesSelectionModel.selectItem(index);
                 }
@@ -86,7 +86,7 @@ Rectangle {
         }
         onClicked: mouse => {
             if (mouse.button === Qt.LeftButton) {
-                if (mouse.modifiers & Qt.ControlModifier) {
+                if (mouse.modifiers & Qt.ShiftModifier) {
                     subtitlesSelectionModel.selectRange(index);
                 } else {
                     subtitlesSelectionModel.selectItem(index);
