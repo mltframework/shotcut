@@ -99,7 +99,7 @@ Rectangle {
     }
 
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
-    border.width: isBlank && !selected ? 0 : 1
+    border.width: 1
     clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
@@ -293,6 +293,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.leftMargin: parent.border.width
+        anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
@@ -305,6 +306,7 @@ Rectangle {
 
         visible: !elided && isTransition
         anchors.fill: parent
+        anchors.margins: selected ? parent.border.width : 0
         colorA: color
         colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
     }
@@ -331,7 +333,7 @@ Rectangle {
 
                 trackIndex: clipRoot.trackIndex
                 clipIndex: clipRoot.originalClipIndex
-                width: Math.min(clipRoot.width, waveform.maxWidth)
+                width: Math.min(clipRoot.width - 2 * clipRoot.border.width, waveform.maxWidth)
                 height: waveform.height
                 fillColor: clipColor
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
@@ -407,8 +409,7 @@ Rectangle {
         anchors {
             top: parent.top
             left: leftLabelBackground.left
-            topMargin: parent.border.width + 1
-            leftMargin: parent.border.width + 1
+            margins: parent.border.width
         }
     }
 
