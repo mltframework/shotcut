@@ -1419,6 +1419,54 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+ResizeTransitionCommand::ResizeTransitionCommand(MultitrackModel &model,
+                                                 int trackIndex,
+                                                 int transitionIndex,
+                                                 int delta,
+                                                 bool redo,
+                                                 QUndoCommand *parent)
+    : TrimCommand(parent)
+    , m_model(model)
+    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_transitionIndex(transitionIndex)
+    , m_delta(delta)
+    , m_redo(redo)
+{
+    setText(QObject::tr("Resize transition"));
+}
+
+void ResizeTransitionCommand::redo()
+{
+    if (m_redo) {
+        MAIN.filterController()->pauseUndoTracking();
+        m_model.trimTransitionIn(m_trackIndex, m_transitionIndex - 1, -m_delta);
+        m_model.trimTransitionOut(m_trackIndex, m_transitionIndex + 1, -m_delta);
+        MAIN.filterController()->resumeUndoTracking();
+    } else {
+        m_redo = true;
+    }
+}
+
+void ResizeTransitionCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "transitionIndex" << m_transitionIndex << "delta"
+                << m_delta;
+    MAIN.filterController()->pauseUndoTracking();
+    m_model.trimTransitionIn(m_trackIndex, m_transitionIndex - 1, m_delta);
+    m_model.trimTransitionOut(m_trackIndex, m_transitionIndex + 1, m_delta);
+    MAIN.filterController()->resumeUndoTracking();
+}
+
+bool ResizeTransitionCommand::mergeWith(const QUndoCommand *other)
+{
+    const ResizeTransitionCommand *that = static_cast<const ResizeTransitionCommand *>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex
+        || that->m_transitionIndex != m_transitionIndex)
+        return false;
+    m_delta += that->m_delta;
+    return true;
+}
+
 AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(TimelineDock &timeline,
                                                            int trackIndex,
                                                            int clipIndex,

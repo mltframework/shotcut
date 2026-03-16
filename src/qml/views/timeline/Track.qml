@@ -157,6 +157,20 @@ Rectangle {
                 bubbleHelp.show(s);
             }
             onTrimmingIn: (clip, delta, mouse) => {
+                if (clip.isTransition) {
+                    // Require 2 accumulated drag-frames per 1 frame applied to each side.
+                    const halfDelta = clip.originalX >= 2 ? 1 : clip.originalX <= -2 ? -1 : 0;
+                    if (halfDelta !== 0) {
+                        if (timeline.resizeTransition(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, halfDelta)) {
+                            clip.originalX -= halfDelta * 2;
+                            const s = application.timeFromFrames(clip.clipDuration);
+                            bubbleHelp.show(s.substring(3));
+                        } else {
+                            clip.originalX -= delta;
+                        }
+                    }
+                    return;
+                }
                 const originalDelta = delta;
                 const roll = mouse.modifiers & Qt.ControlModifier;
                 const ripple = !roll && (settings.timelineRipple || (mouse.modifiers & Qt.ShiftModifier));
@@ -180,6 +194,11 @@ Rectangle {
                 }
             }
             onTrimmedIn: clip => {
+                if (clip.isTransition) {
+                    bubbleHelp.hide();
+                    timeline.commitTrimCommand();
+                    return;
+                }
                 multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify out point of clip A changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex > 1 && repeater.itemAt(clip.DelegateModel.itemsIndex - 1).isTransition)
@@ -188,6 +207,20 @@ Rectangle {
                 timeline.commitTrimCommand();
             }
             onTrimmingOut: (clip, delta, mouse) => {
+                if (clip.isTransition) {
+                    // Require 2 accumulated drag-frames per 1 frame applied to each side.
+                    const halfDelta = clip.originalX >= 2 ? 1 : clip.originalX <= -2 ? -1 : 0;
+                    if (halfDelta !== 0) {
+                        if (timeline.resizeTransition(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, halfDelta)) {
+                            clip.originalX -= halfDelta * 2;
+                            const s = application.timeFromFrames(clip.clipDuration);
+                            bubbleHelp.show(s.substring(3));
+                        } else {
+                            clip.originalX -= delta;
+                        }
+                    }
+                    return;
+                }
                 const originalDelta = delta;
                 const roll = mouse.modifiers & Qt.ControlModifier;
                 const ripple = !roll && (settings.timelineRipple || (mouse.modifiers & Qt.ShiftModifier));
@@ -211,6 +244,11 @@ Rectangle {
                 }
             }
             onTrimmedOut: clip => {
+                if (clip.isTransition) {
+                    bubbleHelp.hide();
+                    timeline.commitTrimCommand();
+                    return;
+                }
                 multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify in point of clip B changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex + 2 < repeater.count && repeater.itemAt(clip.DelegateModel.itemsIndex + 1).isTransition)

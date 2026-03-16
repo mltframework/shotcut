@@ -2138,6 +2138,29 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
     }
 }
 
+bool MultitrackModel::resizeTransitionValid(int trackIndex, int transitionIndex, int delta)
+{
+    // delta is the QML handle delta; model operations use -delta for both sides.
+    // After both trimTransitionIn and trimTransitionOut with -delta, the transition
+    // length changes by -2*delta total. Require each side to be independently valid
+    // and ensure the combined result keeps positive length.
+    if (!trimTransitionInValid(trackIndex, transitionIndex - 1, -delta))
+        return false;
+    if (!trimTransitionOutValid(trackIndex, transitionIndex + 1, -delta))
+        return false;
+    // When shrinking, both ops reduce the transition by delta each, so check combined.
+    if (delta > 0) {
+        int i = m_trackList.at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (!track)
+            return false;
+        Mlt::Playlist playlist(*track);
+        if (playlist.clip_length(transitionIndex) - 2 * delta <= 0)
+            return false;
+    }
+    return true;
+}
+
 bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, int delta)
 {
     Q_UNUSED(delta)

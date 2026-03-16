@@ -3724,6 +3724,23 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     return true;
 }
 
+bool TimelineDock::resizeTransition(int trackIndex, int clipIndex, int delta)
+{
+    emit trimStarted();
+    if (m_model.resizeTransitionValid(trackIndex, clipIndex, delta)) {
+        m_model.trimTransitionIn(trackIndex, clipIndex - 1, -delta);
+        m_model.trimTransitionOut(trackIndex, clipIndex + 1, -delta);
+        m_trimDelta += delta;
+        m_trimCommand.reset(new Timeline::ResizeTransitionCommand(m_model,
+                                                                  trackIndex,
+                                                                  clipIndex,
+                                                                  m_trimDelta,
+                                                                  false));
+        return true;
+    }
+    return false;
+}
+
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
     // Validations
