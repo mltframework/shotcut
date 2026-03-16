@@ -31,7 +31,7 @@ GridLayout {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
-    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty, 'shotcut:fontStyle']
+    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -74,10 +74,15 @@ GridLayout {
 
     function refreshFontButton() {
         var s = filter.get('family');
-        if (filter.getDouble('weight') > Font.Medium)
-            s += ' ' + qsTr('Bold');
-        if (filter.get('style') === 'italic')
-            s += ' ' + qsTr('Italic');
+        const style = filter.get('style');
+        if (style && style !== 'italic' && style !== 'normal') {
+            s += ' ' + style;
+        } else {
+            if (filter.getDouble('weight') > Font.Medium)
+                s += ' ' + qsTr('Bold');
+            if (style === 'italic')
+                s += ' ' + qsTr('Italic');
+        }
         if (parseInt(filter.get(useFontSizeProperty)))
             s += ' ' + getPointSize();
         fontButton.text = s;
@@ -85,7 +90,8 @@ GridLayout {
 
     function setControls() {
         const mltFamily = filter.get('family') || "";
-        const fontStyleName = filter.get('shotcut:fontStyle') || "";
+        const mltStyle = filter.get('style') || "";
+        const fontStyleName = (mltStyle && mltStyle !== 'italic' && mltStyle !== 'normal') ? mltStyle : "";
         fontButton.text = mltFamily;
         outlineSpinner.value = filter.getDouble('outline');
         padSpinner.value = filter.getDouble('pad');
@@ -103,12 +109,11 @@ GridLayout {
             middleRadioButton.checked = true;
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
-        const qtFamily = (fontStyleName && mltFamily.endsWith(' ' + fontStyleName)) ? mltFamily.slice(0, mltFamily.length - fontStyleName.length - 1) : mltFamily;
         fontDialog.selectedFont = Qt.font({
-            "family": qtFamily,
+            "family": mltFamily,
             "styleName": fontStyleName,
             "pointSize": getPointSize(),
-            "italic": filter.get('style') === 'italic',
+            "italic": mltStyle === 'italic',
             "weight": filter.getDouble('weight'),
             "underline": filter.getDouble('underline'),
             "strikeout": filter.getDouble('strikethrough')
@@ -253,13 +258,13 @@ GridLayout {
 
                 onSelectedFontChanged: {
                     const styleName = selectedFont.styleName;
-                    let family = selectedFont.family;
-                    filter.set('shotcut:fontStyle', styleName);
-                    if (styleName && !stdStyles.includes(styleName.toLowerCase()))
-                        family = family + ' ' + styleName;
-                    filter.set('family', family);
+                    if (styleName && !stdStyles.includes(styleName.toLowerCase())) {
+                        filter.set('style', styleName);
+                    } else {
+                        filter.set('style', selectedFont.italic ? 'italic' : 'normal');
+                    }
+                    filter.set('family', selectedFont.family);
                     filter.set('weight', selectedFont.weight);
-                    filter.set('style', selectedFont.italic ? 'italic' : 'normal');
                     filter.set('underline', selectedFont.underline);
                     filter.set('strikethrough', selectedFont.strikeout);
                     if (parseInt(filter.get(useFontSizeProperty))) {
@@ -269,15 +274,12 @@ GridLayout {
                     refreshFontButton();
                 }
                 onAccepted: {
-                    const styleName = selectedFont.styleName;
                     fontFamily = selectedFont.family;
-                    if (styleName && !stdStyles.includes(styleName.toLowerCase()))
-                        fontFamily = fontFamily + ' ' + styleName;
-                    fontStyle = styleName;
+                    fontStyle = filter.get('style');
                 }
                 onRejected: {
                     filter.set('family', fontFamily);
-                    filter.set('shotcut:fontStyle', fontStyle);
+                    filter.set('style', fontStyle);
                     refreshFontButton();
                 }
             }
