@@ -101,8 +101,12 @@ GridLayout {
             middleRadioButton.checked = true;
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
+        const mltFamily = filter.get('family');
+        const fontStyleName = filter.get('shotcut:fontStyle');
+        const qtFamily = (fontStyleName && mltFamily.endsWith(' ' + fontStyleName)) ? mltFamily.slice(0, mltFamily.length - fontStyleName.length - 1) : mltFamily;
         fontDialog.selectedFont = Qt.font({
-            "family": filter.get('family'),
+            "family": qtFamily,
+            "styleName": fontStyleName,
             "pointSize": getPointSize(),
             "italic": filter.get('style') === 'italic',
             "weight": filter.getDouble('weight'),
@@ -246,7 +250,13 @@ GridLayout {
                 property string fontFamily: ''
 
                 onSelectedFontChanged: {
-                    filter.set('family', selectedFont.family);
+                    const stdStyles = ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique'];
+                    const styleName = selectedFont.styleName;
+                    let family = selectedFont.family;
+                    filter.set('shotcut:fontStyle', styleName);
+                    if (styleName && !stdStyles.includes(styleName.toLowerCase()))
+                        family = family + ' ' + styleName;
+                    filter.set('family', family);
                     filter.set('weight', selectedFont.weight);
                     filter.set('style', selectedFont.italic ? 'italic' : 'normal');
                     filter.set('underline', selectedFont.underline);
@@ -257,7 +267,13 @@ GridLayout {
                     }
                     refreshFontButton();
                 }
-                onAccepted: fontFamily = selectedFont.family
+                onAccepted: {
+                    const stdStyles = ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique'];
+                    const styleName = selectedFont.styleName;
+                    fontFamily = selectedFont.family;
+                    if (styleName && !stdStyles.includes(styleName.toLowerCase()))
+                        fontFamily = fontFamily + ' ' + styleName;
+                }
                 onRejected: {
                     filter.set('family', fontFamily);
                     refreshFontButton();

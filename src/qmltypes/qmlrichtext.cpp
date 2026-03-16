@@ -236,6 +236,7 @@ void QmlRichText::setCursorPosition(int position)
 void QmlRichText::reset()
 {
     emit fontFamilyChanged();
+    emit fontStyleNameChanged();
     emit alignmentChanged();
     emit boldChanged();
     emit italicChanged();
@@ -422,4 +423,26 @@ void QmlRichText::setFontFamily(const QString &arg)
     format.setFontFamilies({arg});
     mergeFormatOnWordOrSelection(format);
     emit fontFamilyChanged();
+}
+
+QString QmlRichText::fontStyleName() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return QString();
+    QTextCharFormat format = cursor.charFormat();
+    return format.font().styleName();
+}
+
+void QmlRichText::setFontStyleName(const QString &arg)
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    QTextCharFormat format;
+    QFont font;
+    font.setStyleName(arg);
+    format.setFont(font, QTextCharFormat::FontPropertiesSpecifiedOnly);
+    mergeFormatOnWordOrSelection(format);
+    emit fontStyleNameChanged();
 }
