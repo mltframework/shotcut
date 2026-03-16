@@ -31,7 +31,7 @@ GridLayout {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
-    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
+    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty, 'shotcut:fontStyle']
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -248,6 +248,7 @@ GridLayout {
                 id: fontDialog
 
                 property string fontFamily: ''
+                property string fontStyle: ''
 
                 onSelectedFontChanged: {
                     const stdStyles = ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique'];
@@ -273,9 +274,11 @@ GridLayout {
                     fontFamily = selectedFont.family;
                     if (styleName && !stdStyles.includes(styleName.toLowerCase()))
                         fontFamily = fontFamily + ' ' + styleName;
+                    fontStyle = styleName;
                 }
                 onRejected: {
                     filter.set('family', fontFamily);
+                    filter.set('shotcut:fontStyle', fontStyle);
                     refreshFontButton();
                 }
             }
