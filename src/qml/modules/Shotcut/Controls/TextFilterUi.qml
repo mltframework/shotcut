@@ -84,7 +84,9 @@ GridLayout {
     }
 
     function setControls() {
-        fontButton.text = filter.get('family');
+        const mltFamily = filter.get('family') || "";
+        const fontStyleName = filter.get('shotcut:fontStyle') || "";
+        fontButton.text = mltFamily;
         outlineSpinner.value = filter.getDouble('outline');
         padSpinner.value = filter.getDouble('pad');
         var align = filter.get(halignProperty);
@@ -101,8 +103,6 @@ GridLayout {
             middleRadioButton.checked = true;
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
-        const mltFamily = filter.get('family');
-        const fontStyleName = filter.get('shotcut:fontStyle');
         const qtFamily = (fontStyleName && mltFamily.endsWith(' ' + fontStyleName)) ? mltFamily.slice(0, mltFamily.length - fontStyleName.length - 1) : mltFamily;
         fontDialog.selectedFont = Qt.font({
             "family": qtFamily,
@@ -249,9 +249,9 @@ GridLayout {
 
                 property string fontFamily: ''
                 property string fontStyle: ''
+                readonly property var stdStyles: ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique']
 
                 onSelectedFontChanged: {
-                    const stdStyles = ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique'];
                     const styleName = selectedFont.styleName;
                     let family = selectedFont.family;
                     filter.set('shotcut:fontStyle', styleName);
@@ -269,7 +269,6 @@ GridLayout {
                     refreshFontButton();
                 }
                 onAccepted: {
-                    const stdStyles = ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique'];
                     const styleName = selectedFont.styleName;
                     fontFamily = selectedFont.family;
                     if (styleName && !stdStyles.includes(styleName.toLowerCase()))
