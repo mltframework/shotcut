@@ -56,6 +56,8 @@ class QmlRichText : public QObject
     Q_PROPERTY(int selectionEnd READ selectionEnd WRITE setSelectionEnd NOTIFY selectionEndChanged)
     Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor NOTIFY textColorChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
+    Q_PROPERTY(
+        QString fontStyleName READ fontStyleName WRITE setFontStyleName NOTIFY fontStyleNameChanged)
     Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
     Q_PROPERTY(bool bold READ bold WRITE setBold NOTIFY boldChanged)
     Q_PROPERTY(bool italic READ italic WRITE setItalic NOTIFY italicChanged)
@@ -78,6 +80,7 @@ public:
     int selectionStart() const { return m_selectionStart; }
     int selectionEnd() const { return m_selectionEnd; }
     QString fontFamily() const;
+    QString fontStyleName() const;
     QColor textColor() const;
     Qt::Alignment alignment() const;
     void setAlignment(Qt::Alignment a);
@@ -98,6 +101,7 @@ public slots:
     void setFontSize(int arg);
     void setTextColor(const QColor &arg);
     void setFontFamily(const QString &arg);
+    void setFontStyleName(const QString &arg);
     void setFileUrl(const QUrl &arg);
     void setText(const QString &arg);
     void saveAs(const QUrl &arg, QString fileType = QString());
@@ -113,6 +117,7 @@ signals:
     void selectionStartChanged();
     void selectionEndChanged();
     void fontFamilyChanged();
+    void fontStyleNameChanged();
     void textColorChanged();
     void alignmentChanged();
     void boldChanged();
