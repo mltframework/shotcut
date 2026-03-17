@@ -1913,22 +1913,12 @@ in temporal compression</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="otherTab">
+            <widget class="QWidget" name="metadataTab">
              <attribute name="title">
-              <string>Other</string>
+              <string>Metadata</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="1" column="0">
-               <widget class="QPlainTextEdit" name="advancedTextEdit"/>
-              </item>
+             <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
-               <widget class="QLabel" name="otherTipLabel">
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_26">
                 <item>
                  <widget class="QLabel" name="coverArtLabel">
@@ -1962,10 +1952,40 @@ in temporal compression</string>
                 </item>
                </layout>
               </item>
-              <item row="3" column="0">
+              <item row="1" column="0">
                <widget class="QCheckBox" name="disableSubtitlesCheckbox">
                 <property name="text">
                  <string>Disable subtitles</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <spacer name="metadataVerticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="otherTab">
+             <attribute name="title">
+              <string>Other</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="1" column="0">
+               <widget class="QPlainTextEdit" name="advancedTextEdit"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="otherTipLabel">
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2149,6 +2169,9 @@ in temporal compression</string>
   <tabstop>audioBitrateCombo</tabstop>
   <tabstop>audioQualitySpinner</tabstop>
   <tabstop>disableAudioCheckbox</tabstop>
+  <tabstop>coverArtLineEdit</tabstop>
+  <tabstop>coverArtButton</tabstop>
+  <tabstop>disableSubtitlesCheckbox</tabstop>
   <tabstop>advancedTextEdit</tabstop>
  </tabstops>
  <resources>
