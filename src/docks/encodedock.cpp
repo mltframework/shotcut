@@ -97,6 +97,11 @@ EncodeDock::EncodeDock(QWidget *parent)
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
     on_advancedButton_clicked(ui->advancedButton->isChecked());
+#if LIBMLT_VERSION_INT < ((7 << 16) + (37 << 8))
+    ui->coverArtLabel->setVisible(false);
+    ui->coverArtLineEdit->setVisible(false);
+    ui->coverArtButton->setVisible(false);
+#endif
 #if QT_POINTER_SIZE == 4
     // On 32-bit process, limit multi-threading to mitigate running out of memory.
     ui->parallelCheckbox->setChecked(false);
