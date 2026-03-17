@@ -36,6 +36,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QTimer>
 #include <QtMath>
 #include <QtWidgets>
@@ -46,6 +47,9 @@
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min)))
 static const int kOpenCaptureFileDelayMs = 1500;
 static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
+static const QRegularExpression kIsoDateRegex(
+    QStringLiteral("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"));
+static const QRegularExpression kIso639Regex(QStringLiteral("^[A-Za-z]{3}$"));
 #ifdef Q_OS_WIN
 static const QString kNullTarget = "nul";
 #else
@@ -97,6 +101,10 @@ EncodeDock::EncodeDock(QWidget *parent)
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
     on_advancedButton_clicked(ui->advancedButton->isChecked());
+    ui->metaDateLineEdit->setValidator(
+        new QRegularExpressionValidator(kIsoDateRegex, ui->metaDateLineEdit));
+    ui->metaLanguageLineEdit->setValidator(
+        new QRegularExpressionValidator(kIso639Regex, ui->metaLanguageLineEdit));
 #if LIBMLT_VERSION_INT < ((7 << 16) + (37 << 8))
     ui->coverArtLabel->setVisible(false);
     ui->coverArtLineEdit->setVisible(false);
@@ -193,6 +201,14 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     QString acodec = QString::fromLatin1(preset.get("acodec"));
     QString vcodec = QString::fromLatin1(preset.get("vcodec"));
     ui->coverArtLineEdit->clear();
+    ui->metaTitleLineEdit->clear();
+    ui->metaArtistLineEdit->clear();
+    ui->metaCommentLineEdit->clear();
+    ui->metaCopyrightLineEdit->clear();
+    ui->metaDateLineEdit->clear();
+    ui->metaDescriptionLineEdit->clear();
+    ui->metaGenreLineEdit->clear();
+    ui->metaLanguageLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
         foreach (const QString &hw, Settings.encodeHardware()) {
@@ -394,6 +410,22 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->rangeComboBox->setCurrentIndex(1);
         } else if (name == "attached_pic") {
             ui->coverArtLineEdit->setText(value);
+        } else if (name == "meta.attr.title.markup") {
+            ui->metaTitleLineEdit->setText(value);
+        } else if (name == "meta.attr.artist.markup") {
+            ui->metaArtistLineEdit->setText(value);
+        } else if (name == "meta.attr.comment.markup") {
+            ui->metaCommentLineEdit->setText(value);
+        } else if (name == "meta.attr.copyright.markup") {
+            ui->metaCopyrightLineEdit->setText(value);
+        } else if (name == "meta.attr.date.markup") {
+            ui->metaDateLineEdit->setText(value);
+        } else if (name == "meta.attr.description.markup") {
+            ui->metaDescriptionLineEdit->setText(value);
+        } else if (name == "meta.attr.genre.markup") {
+            ui->metaGenreLineEdit->setText(value);
+        } else if (name == "alang") {
+            ui->metaLanguageLineEdit->setText(value);
         } else {
             if (name != "an" && name != "vn" && name != "threads"
                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
@@ -637,6 +669,38 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             setIfNotSet(p,
                         "attached_pic",
                         ui->coverArtLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaTitleLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.title.markup",
+                        ui->metaTitleLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaArtistLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.artist.markup",
+                        ui->metaArtistLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaCommentLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.comment.markup",
+                        ui->metaCommentLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaCopyrightLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.copyright.markup",
+                        ui->metaCopyrightLineEdit->text().trimmed().toUtf8().constData());
+        if (kIsoDateRegex.match(ui->metaDateLineEdit->text().trimmed()).hasMatch())
+            setIfNotSet(p,
+                        "meta.attr.date.markup",
+                        ui->metaDateLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaDescriptionLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.description.markup",
+                        ui->metaDescriptionLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaGenreLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.genre.markup",
+                        ui->metaGenreLineEdit->text().trimmed().toUtf8().constData());
+        if (kIso639Regex.match(ui->metaLanguageLineEdit->text().trimmed()).hasMatch())
+            setIfNotSet(p,
+                        "alang",
+                        ui->metaLanguageLineEdit->text().trimmed().toLower().toUtf8().constData());
         if (realtime)
             setIfNotSet(p, "real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)

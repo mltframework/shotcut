@@ -1919,14 +1919,17 @@ in temporal compression</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
+               <widget class="QLabel" name="coverArtLabel">
+                <property name="text">
+                 <string>Cover Art</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
                <layout class="QHBoxLayout" name="horizontalLayout_26">
-                <item>
-                 <widget class="QLabel" name="coverArtLabel">
-                  <property name="text">
-                   <string>Cover Art</string>
-                  </property>
-                 </widget>
-                </item>
                 <item>
                  <widget class="QLineEdit" name="coverArtLineEdit"/>
                 </item>
@@ -1953,13 +1956,125 @@ in temporal compression</string>
                </layout>
               </item>
               <item row="1" column="0">
+               <widget class="QLabel" name="metaTitleLabel">
+                <property name="text">
+                 <string>Title</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="metaTitleLineEdit"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="metaArtistLabel">
+                <property name="text">
+                 <string>Artist</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="metaArtistLineEdit"/>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="metaCommentLabel">
+                <property name="text">
+                 <string>Comment</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="metaCommentLineEdit"/>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="metaCopyrightLabel">
+                <property name="text">
+                 <string>Copyright</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="metaCopyrightLineEdit"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="metaDateLabel">
+                <property name="text">
+                 <string>Date</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="metaDateLineEdit">
+                <property name="placeholderText">
+                 <string>YYYY-MM-DD</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="metaDescriptionLabel">
+                <property name="text">
+                 <string>Description</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="metaDescriptionLineEdit"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="metaGenreLabel">
+                <property name="text">
+                 <string>Genre</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="metaGenreLineEdit"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="metaLanguageLabel">
+                <property name="text">
+                 <string>Language</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="metaLanguageLineEdit">
+                <property name="placeholderText">
+                 <string>eng</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
                <widget class="QCheckBox" name="disableSubtitlesCheckbox">
                 <property name="text">
                  <string>Disable subtitles</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="10" column="1">
                <spacer name="metadataVerticalSpacer">
                 <property name="orientation">
                  <enum>Qt::Orientation::Vertical</enum>
@@ -2171,6 +2286,14 @@ in temporal compression</string>
   <tabstop>disableAudioCheckbox</tabstop>
   <tabstop>coverArtLineEdit</tabstop>
   <tabstop>coverArtButton</tabstop>
+  <tabstop>metaTitleLineEdit</tabstop>
+  <tabstop>metaArtistLineEdit</tabstop>
+  <tabstop>metaCommentLineEdit</tabstop>
+  <tabstop>metaCopyrightLineEdit</tabstop>
+  <tabstop>metaDateLineEdit</tabstop>
+  <tabstop>metaDescriptionLineEdit</tabstop>
+  <tabstop>metaGenreLineEdit</tabstop>
+  <tabstop>metaLanguageLineEdit</tabstop>
   <tabstop>disableSubtitlesCheckbox</tabstop>
   <tabstop>advancedTextEdit</tabstop>
  </tabstops>
