@@ -44,7 +44,7 @@ jobs:
             scripts/shotcut-linux-x86_64-*.txz
 
       - name: Upload portable and source archives to S3
-        if: ${{ github.repository_owner == 'mltframework' }}
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: mltframework/s3cmd-action@v0
         with:
           args: >-
@@ -55,6 +55,7 @@ jobs:
             put scripts/*.txz s3://builds.us.meltytech/shotcut/
 
       - name: Package AppImage
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         run: |
           sudo apt update
           sudo apt install desktop-file-utils libfuse2 imagemagick
@@ -68,7 +69,7 @@ jobs:
           mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3
-        if: ${{ github.repository_owner == 'mltframework' }}
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: mltframework/s3cmd-action@v0
         with:
           args: >-
@@ -79,6 +80,7 @@ jobs:
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
       - name: Prepare snap
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         run: |
           VERSION=$(cat VERSION)
           mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
@@ -89,13 +91,13 @@ jobs:
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
       - name: Package snap
-        if: ${{ github.repository_owner == 'mltframework' }}
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: snapcore/action-build@v1
         id: snap
         with:
           path: packaging/linux
       - name: Publish snap
-        if: ${{ github.repository_owner == 'mltframework' }}
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: snapcore/action-publish@v1
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
