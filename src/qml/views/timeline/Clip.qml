@@ -39,6 +39,7 @@ Rectangle {
     property int trackIndex
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
+    readonly property int readonlyClipIndex: index
     property int originalX: x
     property bool selected: false
     property string hash: ''
@@ -332,7 +333,7 @@ Rectangle {
                 property int channels: 2
 
                 trackIndex: clipRoot.trackIndex
-                clipIndex: clipRoot.originalClipIndex
+                clipIndex: clipRoot.readonlyClipIndex
                 width: Math.min(clipRoot.width - 2 * clipRoot.border.width, waveform.maxWidth)
                 height: waveform.height
                 fillColor: clipColor
