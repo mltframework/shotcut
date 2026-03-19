@@ -2198,9 +2198,15 @@ void EncodeDock::on_addPresetButton_clicked()
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             data->parse(line.toUtf8().constData());
 
-        for (int i = 0; i < data->count(); i++)
-            if (strlen(data->get_name(i)) > 0)
-                ls << QStringLiteral("%1=%2").arg(data->get_name(i), data->get(i));
+        for (int i = 0; i < data->count(); i++) {
+            const char *name = data->get_name(i);
+            if (!name || !strlen(name) || !strcmp(name, "attached_pic"))
+                continue;
+
+            const auto key = QString::fromLatin1(name);
+            const auto value = QString::fromLatin1(data->get(i));
+            ls.append(QStringLiteral("%1=%2").arg(key, value));
+        }
     }
 
     dialog.setWindowTitle(tr("Add Export Preset"));
