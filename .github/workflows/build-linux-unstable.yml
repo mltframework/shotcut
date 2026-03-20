@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: qt6
 
@@ -37,7 +37,7 @@ jobs:
           mv src.txz shotcut-src-$FILENAME_VERSION.txz
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: linux-portable
           path: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Upload portable and source archives to S3
         if: ${{ github.repository_owner == 'mltframework' }}
-        uses: mltframework/s3cmd-action@v0
+        uses: mltframework/s3cmd-action@v1
         with:
           args: >-
             --access_key=${{ secrets.AWS_ACCESS_KEY }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload AppImage to S3
         if: ${{ github.repository_owner == 'mltframework' }}
-        uses: mltframework/s3cmd-action@v0
+        uses: mltframework/s3cmd-action@v1
         with:
           args: >-
             --access_key=${{ secrets.AWS_ACCESS_KEY }}
@@ -78,7 +78,7 @@ jobs:
 
       - name: Install Snapcraft
         if: ${{ github.repository_owner == 'mltframework' }}
-        uses: samuelmeuli/action-snapcraft@v1.2.0
+        uses: samuelmeuli/action-snapcraft@v3
         with:
           use_lxd: true
       - name: Package snap

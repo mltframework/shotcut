@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build
         run: |
@@ -37,7 +37,7 @@ jobs:
           mv src.txz shotcut-src-$FILENAME_VERSION.txz
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: linux-portable
           path: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Upload portable and source archives to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
-        uses: mltframework/s3cmd-action@v0
+        uses: mltframework/s3cmd-action@v1
         with:
           args: >-
             --access_key=${{ secrets.AWS_ACCESS_KEY }}
@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload AppImage to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
-        uses: mltframework/s3cmd-action@v0
+        uses: mltframework/s3cmd-action@v1
         with:
           args: >-
             --access_key=${{ secrets.AWS_ACCESS_KEY }}
