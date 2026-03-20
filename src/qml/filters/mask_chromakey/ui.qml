@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Item {
     property var defaultParameters: [colorParam, distanceParam]
 
     width: 350
-    height: 50
+    height: 150
     Component.onCompleted: {
         presetItem.parameters = defaultParameters;
         filter.set('filter', 'frei0r.bluescreen0r');
