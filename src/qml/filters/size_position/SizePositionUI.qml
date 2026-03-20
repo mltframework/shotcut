@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -307,7 +307,7 @@ Item {
     }
 
     width: 425
-    height: 280
+    height: 300
     Component.onCompleted: {
         if (rotationProperty)
             preset.parameters.push(rotationProperty);
