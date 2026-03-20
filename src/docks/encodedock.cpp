@@ -36,6 +36,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QTimer>
 #include <QtMath>
 #include <QtWidgets>
@@ -46,6 +47,9 @@
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min)))
 static const int kOpenCaptureFileDelayMs = 1500;
 static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
+static const QRegularExpression kIsoDateRegex(
+    QStringLiteral("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"));
+static const QRegularExpression kIso639Regex(QStringLiteral("^[A-Za-z]{3}$"));
 #ifdef Q_OS_WIN
 static const QString kNullTarget = "nul";
 #else
@@ -97,6 +101,15 @@ EncodeDock::EncodeDock(QWidget *parent)
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
     on_advancedButton_clicked(ui->advancedButton->isChecked());
+    ui->metaDateLineEdit->setValidator(
+        new QRegularExpressionValidator(kIsoDateRegex, ui->metaDateLineEdit));
+    ui->metaLanguageLineEdit->setValidator(
+        new QRegularExpressionValidator(kIso639Regex, ui->metaLanguageLineEdit));
+#if LIBMLT_VERSION_INT < ((7 << 16) + (37 << 8))
+    ui->coverArtLabel->setVisible(false);
+    ui->coverArtLineEdit->setVisible(false);
+    ui->coverArtButton->setVisible(false);
+#endif
 #if QT_POINTER_SIZE == 4
     // On 32-bit process, limit multi-threading to mitigate running out of memory.
     ui->parallelCheckbox->setChecked(false);
@@ -187,6 +200,15 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     QChar decimalPoint = MLT.decimalPoint();
     QString acodec = QString::fromLatin1(preset.get("acodec"));
     QString vcodec = QString::fromLatin1(preset.get("vcodec"));
+    ui->coverArtLineEdit->clear();
+    ui->metaTitleLineEdit->clear();
+    ui->metaArtistLineEdit->clear();
+    ui->metaCommentLineEdit->clear();
+    ui->metaCopyrightLineEdit->clear();
+    ui->metaDateLineEdit->clear();
+    ui->metaDescriptionLineEdit->clear();
+    ui->metaGenreLineEdit->clear();
+    ui->metaLanguageLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
         foreach (const QString &hw, Settings.encodeHardware()) {
@@ -386,6 +408,24 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->interpolationCombo->setCurrentIndex(3);
         } else if (name == "color_range" && (value == "pc" || value == "jpeg")) {
             ui->rangeComboBox->setCurrentIndex(1);
+        } else if (name == "attached_pic") {
+            ui->coverArtLineEdit->setText(value);
+        } else if (name == "meta.attr.title.markup") {
+            ui->metaTitleLineEdit->setText(value);
+        } else if (name == "meta.attr.artist.markup") {
+            ui->metaArtistLineEdit->setText(value);
+        } else if (name == "meta.attr.comment.markup") {
+            ui->metaCommentLineEdit->setText(value);
+        } else if (name == "meta.attr.copyright.markup") {
+            ui->metaCopyrightLineEdit->setText(value);
+        } else if (name == "meta.attr.date.markup") {
+            ui->metaDateLineEdit->setText(value);
+        } else if (name == "meta.attr.description.markup") {
+            ui->metaDescriptionLineEdit->setText(value);
+        } else if (name == "meta.attr.genre.markup") {
+            ui->metaGenreLineEdit->setText(value);
+        } else if (name == "alang") {
+            ui->metaLanguageLineEdit->setText(value);
         } else {
             if (name != "an" && name != "vn" && name != "threads"
                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
@@ -625,6 +665,42 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
     if (p && p->is_valid()) {
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             p->parse(line.toUtf8().constData());
+        if (!ui->coverArtLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "attached_pic",
+                        ui->coverArtLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaTitleLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.title.markup",
+                        ui->metaTitleLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaArtistLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.artist.markup",
+                        ui->metaArtistLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaCommentLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.comment.markup",
+                        ui->metaCommentLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaCopyrightLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.copyright.markup",
+                        ui->metaCopyrightLineEdit->text().trimmed().toUtf8().constData());
+        if (kIsoDateRegex.match(ui->metaDateLineEdit->text().trimmed()).hasMatch())
+            setIfNotSet(p,
+                        "meta.attr.date.markup",
+                        ui->metaDateLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaDescriptionLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.description.markup",
+                        ui->metaDescriptionLineEdit->text().trimmed().toUtf8().constData());
+        if (!ui->metaGenreLineEdit->text().trimmed().isEmpty())
+            setIfNotSet(p,
+                        "meta.attr.genre.markup",
+                        ui->metaGenreLineEdit->text().trimmed().toUtf8().constData());
+        if (kIso639Regex.match(ui->metaLanguageLineEdit->text().trimmed()).hasMatch())
+            setIfNotSet(p,
+                        "alang",
+                        ui->metaLanguageLineEdit->text().trimmed().toLower().toUtf8().constData());
         if (realtime)
             setIfNotSet(p, "real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
@@ -2122,9 +2198,15 @@ void EncodeDock::on_addPresetButton_clicked()
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             data->parse(line.toUtf8().constData());
 
-        for (int i = 0; i < data->count(); i++)
-            if (strlen(data->get_name(i)) > 0)
-                ls << QStringLiteral("%1=%2").arg(data->get_name(i), data->get(i));
+        for (int i = 0; i < data->count(); i++) {
+            const char *name = data->get_name(i);
+            if (!name || !strlen(name) || !strcmp(name, "attached_pic"))
+                continue;
+
+            const auto key = QString::fromLatin1(name);
+            const auto value = QString::fromLatin1(data->get(i));
+            ls.append(QStringLiteral("%1=%2").arg(key, value));
+        }
     }
 
     dialog.setWindowTitle(tr("Add Export Preset"));
@@ -2952,6 +3034,20 @@ void EncodeDock::on_aspectNumSpinner_valueChanged(int value)
 void EncodeDock::on_aspectDenSpinner_valueChanged(int value)
 {
     on_aspectNumSpinner_valueChanged(value);
+}
+
+void EncodeDock::on_coverArtButton_clicked()
+{
+    auto path = QFileDialog::getOpenFileName(this,
+                                             tr("Open Cover Art"),
+                                             Settings.openPath(),
+                                             tr("Images (*.png *.jpg *.jpeg);;All Files (*)"),
+                                             nullptr,
+                                             Util::getFileDialogOptions());
+    if (!path.isEmpty()) {
+        ui->coverArtLineEdit->setText(path);
+        Settings.setOpenPath(QFileInfo(path).path());
+    }
 }
 
 void EncodeDock::setReframeEnabled(bool enabled)
