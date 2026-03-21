@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2025 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -186,7 +186,7 @@ Shotcut.KeyframableFilter {
     middleValues: [Qt.rgba(0, 0, 0, 0)]
     endValues: [Qt.rgba(0, 0, 0, 0)]
     width: 350
-    height: 250
+    height: 270
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(middleValue, defaultRect);
