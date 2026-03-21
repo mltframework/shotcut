@@ -1737,10 +1737,19 @@ void EncodeDock::resetOptions()
     Mlt::Properties preset;
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
-    preset.set("vcodec", "libx264");
     preset.set("crf", "23");
-    preset.set("preset", "fast");
-    preset.set("acodec", "aac");
+    if (Settings.processingMode() == ShotcutSettings::Native8Cpu) {
+        preset.set("vcodec", "libx264");
+        preset.set("preset", "fast");
+        preset.set("acodec", "aac");
+    } else {
+        preset.set("vcodec", "libx265");
+        preset.set("pix_fmt", "yuv420p10le");
+        preset.set("preset", "medium");
+        preset.set("vprofile", "main10");
+        preset.set("vtag", "hvc1");
+        preset.set("acodec", "aac");
+    }
     preset.set("meta.preset.extension", "mp4");
     loadPresetFromProperties(preset);
 }
