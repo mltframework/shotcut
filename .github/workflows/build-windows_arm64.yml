@@ -29,7 +29,7 @@ jobs:
 
       - name: Set version
         shell: msys2 {0}
-        run: echo "VERSION=$(date +'%y%m%d')" >> "$GITHUB_ENV"
+        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
 
       - name: Download from S3
         shell: bash

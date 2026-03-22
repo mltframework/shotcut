@@ -17,6 +17,8 @@ jobs:
       SM_HOST: ${{ vars.SM_HOST }}
 
     steps:
+      - uses: actions/checkout@v6
+
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -65,15 +67,14 @@ jobs:
             mingw-w64-x86_64-x265
             mingw-w64-x86_64-zimg
 
-      - uses: actions/checkout@v6
+      - name: Set version
+        shell: msys2 {0}
+        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
 
       - name: Install dependencies
         shell: msys2 {0}
         run: |
           pacman --noconfirm -Rdd mingw-w64-x86_64-aom
-          echo Preparing version
-          echo $(date +"%y.%-m.%-d") > VERSION
-          VERSION=$(cat VERSION)
           echo VERSION=$VERSION
           cd "$HOME"
           mkdir Qt
@@ -93,7 +94,6 @@ jobs:
       - name: Build
         shell: msys2 {0}
         run: |
-          VERSION=$(cat VERSION)
           echo INSTALL_DIR=\"$(pwd)/build\"
           echo INSTALL_DIR=\"$(pwd)/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
@@ -127,7 +127,6 @@ jobs:
       - name: Package the portable zip
         shell: msys2 {0}
         run: |
-          VERSION=$(cat VERSION)
           cd build
           zip -gr shotcut-win64-$VERSION.zip Shotcut
 
@@ -157,7 +156,6 @@ jobs:
         if: ${{ github.repository_owner == 'mltframework' }}
         shell: bash
         run: |
-          VERSION=$(cat VERSION)
           cd build
           smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
           mv shotcut-setup.exe shotcut-win64-$VERSION.exe
