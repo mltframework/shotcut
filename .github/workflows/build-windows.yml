@@ -7,14 +7,14 @@ on:
     - cron: '0 8 * * *'
 
 jobs:
-  env:
-    SM_API_KEY: ${{ secrets.SM_API_KEY }}
-    SM_CLIENT_CERT_FILE: D:\\Certificate_pkcs12.p12
-    SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
-    SM_HOST: ${{ vars.SM_HOST }}
   build:
     if: ${{ github.repository_owner == 'mltframework' }}
     runs-on: windows-latest
+    env:
+      SM_API_KEY: ${{ secrets.SM_API_KEY }}
+      SM_CLIENT_CERT_FILE: D:\\Certificate_pkcs12.p12
+      SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+      SM_HOST: ${{ vars.SM_HOST }}
 
     steps:
       - name: Setup MSYS2
