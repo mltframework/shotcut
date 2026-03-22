@@ -68,6 +68,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install dependencies
+        if: false
         shell: msys2 {0}
         run: |
           pacman --noconfirm -Rdd mingw-w64-x86_64-aom
@@ -91,6 +92,7 @@ jobs:
           rm mlt-prebuilt-mingw64-v6.txz
 
       - name: Build
+        if: false
         shell: msys2 {0}
         run: |
           VERSION=$(cat VERSION)
@@ -109,15 +111,17 @@ jobs:
         uses: digicert/code-signing-software-trust-action@v1
         with:
           simple-signing-mode: true
+          input: 'C:\Program Files\Git\bin\bash.EXE'
 
       - name: Sign all the executables
         shell: bash
         run: |
           smctl healthcheck
-          for EXE in build/Shotcut/*.exe; do
-            echo Signing ${EXE}
-            smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
-          done
+          smctl sign --simple --keypair-alias key_1464644718 --input 'C:\Program Files\Git\bin\bash.EXE'
+          #for EXE in build/Shotcut/*.exe; do
+          #  echo Signing ${EXE}
+          #  smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
+          #done
 
       - name: Package the portable zip
         shell: msys2 {0}
