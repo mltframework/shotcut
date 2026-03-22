@@ -18,6 +18,7 @@ jobs:
 
     steps:
       - name: Setup MSYS2
+        if: false
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
@@ -111,12 +112,20 @@ jobs:
         uses: digicert/code-signing-software-trust-action@v1
         with:
           simple-signing-mode: true
+          keypair-alias: key_1464644718
           input: 'C:\Program Files\Git\bin\bash.EXE'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: signed-executable
+          path: 'C:\Program Files\Git\bin\bash.EXE'
 
       - name: Sign all the executables
         shell: bash
         run: |
           smctl healthcheck
+          smctl keypair list
           smctl sign --simple --keypair-alias key_1464644718 --input 'C:\Program Files\Git\bin\bash.EXE'
           #for EXE in build/Shotcut/*.exe; do
           #  echo Signing ${EXE}
