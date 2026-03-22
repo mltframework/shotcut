@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     env:
       SM_API_KEY: ${{ secrets.SM_API_KEY }}
-      SM_CLIENT_CERT_FILE: D:\\Certificate_pkcs12.p12
+      SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
       SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
       SM_HOST: ${{ vars.SM_HOST }}
 
@@ -107,7 +107,7 @@ jobs:
       - name: Setup SM_CLIENT_CERT_FILE
         shell: bash
         run: |
-          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
+          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
       - name: Setup Software Trust Manager
         uses: digicert/code-signing-software-trust-action@v1
         with:
