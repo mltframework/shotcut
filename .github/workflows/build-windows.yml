@@ -112,7 +112,7 @@ jobs:
         uses: digicert/code-signing-software-trust-action@v1
         with:
           simple-signing-mode: true
-          keypair-alias: key_1464644718
+          #keypair-alias: key_1464644718
           input: 'C:\Program Files\Git\bin\bash.EXE'
 
       - name: Upload artifact
