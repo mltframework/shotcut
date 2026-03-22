@@ -107,7 +107,7 @@ jobs:
       - name: Setup SM_CLIENT_CERT_FILE
         shell: bash
         run: |
-          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
+          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
       - name: Setup Software Trust Manager
         uses: digicert/code-signing-software-trust-action@v1
         with:
