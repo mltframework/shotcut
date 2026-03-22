@@ -102,15 +102,19 @@ jobs:
           bash scripts/build-shotcut-msys2.sh
 
       - name: Setup SM_CLIENT_CERT_FILE
+        if: ${{ github.repository_owner == 'mltframework' }}
         shell: bash
         run: |
           printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
+
       - name: Setup Software Trust Manager
+        if: ${{ github.repository_owner == 'mltframework' }}
         uses: digicert/code-signing-software-trust-action@v1
         with:
           simple-signing-mode: true
 
       - name: Sign all the executables
+        if: ${{ github.repository_owner == 'mltframework' }}
         shell: bash
         run: |
           smctl healthcheck
@@ -148,7 +152,9 @@ jobs:
           rm innosetup-opera-1.txz
           echo Running Inno Setup Compiler
           ISCC -Q -O. shotcut.iss
+
       - name: Sign the installer
+        if: ${{ github.repository_owner == 'mltframework' }}
         shell: bash
         run: |
           VERSION=$(cat VERSION)
@@ -160,7 +166,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-x64-installer
-          path: ./build/shotcut-win64-*.exe
+          path: ./build/shotcut-*.exe
 
       - name: Upload packages to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
