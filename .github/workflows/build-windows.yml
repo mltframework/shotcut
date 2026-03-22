@@ -7,6 +7,11 @@ on:
     - cron: '0 8 * * *'
 
 jobs:
+  env:
+    SM_API_KEY: ${{ secrets.SM_API_KEY }}
+    SM_CLIENT_CERT_FILE: D:\\Certificate_pkcs12.p12
+    SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+    SM_HOST: ${{ vars.SM_HOST }}
   build:
     if: ${{ github.repository_owner == 'mltframework' }}
     runs-on: windows-latest
@@ -104,11 +109,6 @@ jobs:
         uses: digicert/code-signing-software-trust-action@v1
         with:
           simple-signing-mode: true
-        env:
-          SM_API_KEY: ${{ secrets.SM_API_KEY }}
-          SM_CLIENT_CERT_FILE: D:\\Certificate_pkcs12.p12
-          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
-          SM_HOST: ${{ vars.SM_HOST }}
 
       - name: Sign all the executables
         shell: bash
@@ -126,10 +126,10 @@ jobs:
           cd build
           zip -gr shotcut-win64-$VERSION.zip Shotcut
 
-      - name: Upload artifact
+      - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
-          name: windows-portable
+          name: windows-x64-portable
           path: ./build/shotcut-win64-*.zip
 
       - name: Package the installer
@@ -154,6 +154,12 @@ jobs:
           cd build
           smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
           mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-x64-installer
+          path: ./build/shotcut-win64-*.exe
 
       - name: Upload packages to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
