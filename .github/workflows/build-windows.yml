@@ -113,20 +113,20 @@ jobs:
         with:
           simple-signing-mode: true
           #keypair-alias: key_1464644718
-          input: 'C:\Program Files\Git\bin\bash.EXE'
+          input: 'C:\Program Files\Git\bin\git.exe'
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: signed-executable
-          path: 'C:\Program Files\Git\bin\bash.EXE'
+          path: 'C:\Program Files\Git\bin\git.exe'
 
       - name: Sign all the executables
         shell: bash
         run: |
           smctl healthcheck
           smctl keypair list
-          smctl sign --simple --keypair-alias key_1464644718 --input 'C:\Program Files\Git\bin\bash.EXE'
+          smctl sign --simple --keypair-alias key_1464644718 --input 'C:\Program Files\Git\bin\git.exe'
           #for EXE in build/Shotcut/*.exe; do
           #  echo Signing ${EXE}
           #  smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
