@@ -10,8 +10,15 @@ jobs:
   build:
     if: ${{ github.repository_owner == 'mltframework' }}
     runs-on: windows-latest
+    env:
+      SM_API_KEY: ${{ secrets.SM_API_KEY }}
+      SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
+      SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+      SM_HOST: ${{ vars.SM_HOST }}
 
     steps:
+      - uses: actions/checkout@v6
+
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -25,7 +32,6 @@ jobs:
             mingw-w64-x86_64-meson
             mingw-w64-x86_64-nasm
             mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-osslsigncode
             mingw-w64-x86_64-yasm
             mingw-w64-x86_64-cairo
             mingw-w64-x86_64-eigen3
@@ -61,18 +67,16 @@ jobs:
             mingw-w64-x86_64-x265
             mingw-w64-x86_64-zimg
 
-      - uses: actions/checkout@v6
+      - name: Set version
+        shell: msys2 {0}
+        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
 
-      - name: Build
+      - name: Install dependencies
         shell: msys2 {0}
         run: |
           pacman --noconfirm -Rdd mingw-w64-x86_64-aom
-          echo Preparing version
-          echo $(date +"%y.%-m.%-d") > VERSION
-          VERSION=$(cat VERSION)
           echo VERSION=$VERSION
-          FILENAME_VERSION=$VERSION
-          pushd "$HOME"
+          cd "$HOME"
           mkdir Qt
           cd Qt
           echo Downloading Qt
@@ -86,57 +90,84 @@ jobs:
           echo Extracting prebuilt dependencies
           tar -xJf mlt-prebuilt-mingw64-v6.txz
           rm mlt-prebuilt-mingw64-v6.txz
-          CHECKOUT_DIR=$(popd)
-          popd
-          echo Running the build script
-          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
-          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
+
+      - name: Build
+        shell: msys2 {0}
+        run: |
+          echo INSTALL_DIR=\"$(pwd)/build\"
+          echo INSTALL_DIR=\"$(pwd)/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           echo SHOTCUT_HEAD=0 >> build-shotcut.conf
           echo SHOTCUT_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
-          pushd build
-          echo Installing awscli
-          pip install awscli
-          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }}
-          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_KEY }}
-          export AWS_DEFAULT_REGION=us-east-1
-          echo Downloading code-signing certificates
-          aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates2023.p12 ./ --no-progress
-          aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates.pass ./ --no-progress
-          for EXE in Shotcut/*.exe; do
+
+      - name: Setup SM_CLIENT_CERT_FILE
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
+
+      - name: Setup Software Trust Manager
+        if: ${{ github.repository_owner == 'mltframework' }}
+        uses: digicert/code-signing-software-trust-action@v1
+        with:
+          simple-signing-mode: true
+
+      - name: Sign all the executables
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          smctl healthcheck
+          #smctl keypair list
+          for EXE in build/Shotcut/*.exe; do
             echo Signing ${EXE}
-            osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in ${EXE} -out ${EXE}-signed
-            mv ${EXE}-signed ${EXE}
+            smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
           done
-          echo Packaging the portable zip
-          zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
-          echo Packaging the installer
+
+      - name: Package the portable zip
+        shell: msys2 {0}
+        run: |
+          cd build
+          zip -gr shotcut-win64-$VERSION.zip Shotcut
+
+      - name: Upload portable artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-x64-portable
+          path: ./build/shotcut-win64-*.zip
+
+      - name: Package the installer
+        shell: msys2 {0}
+        run: |
           PATH="$HOME/bin:$PATH"
-          pushd $HOME/bin
+          pushd "$HOME/bin"
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
           tar -xJf iscc632.txz
           popd
+          cd build
           echo Extracting installer dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
           tar -xJf innosetup-opera-1.txz
           rm innosetup-opera-1.txz
           echo Running Inno Setup Compiler
           ISCC -Q -O. shotcut.iss
-          echo Signing the installer
-          osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
-          mv shotcut-setup-signed.exe shotcut-win64-$FILENAME_VERSION.exe
-          rm shotcut-setup.exe
-          popd
-          echo Done
 
-      - name: Upload artifact
+      - name: Sign the installer
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          cd build
+          smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
+          mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+
+      - name: Upload installer artifact
         uses: actions/upload-artifact@v7
         with:
-          name: windows-portable
-          path: ./build/shotcut-win64-*.zip
+          name: windows-x64-installer
+          path: ./build/shotcut-*.exe
 
       - name: Upload packages to S3
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         shell: msys2 {0}
         run: |
           export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }}

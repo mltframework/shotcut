@@ -2,29 +2,121 @@ name: build-shotcut-windows-arm64
 
 on:
   workflow_dispatch:
-  schedule:
-    # nightly
-    - cron: '0 12 * * *'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: ${{ github.repository_owner == 'mltframework' }}
-    steps:
-      - name: Download from S3
-        run: |
-          VERSION=$(date +"%y%m%d")
-          echo VERSION=$VERSION
-          sudo apt install -yqq s3cmd
-          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut-build-win_arm.txt.xz
-          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut/shotcut-win_ARM-$VERSION.zip
+    env:
+      SM_API_KEY: ${{ secrets.SM_API_KEY }}
+      SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
+      SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+      SM_HOST: ${{ vars.SM_HOST }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
         with:
-          name: portable
-          path: |
-            *.zip
+          msystem: MINGW64
+          update: false
+          install: >-
+            unzip zip xz
+
+      - name: Set version
+        shell: msys2 {0}
+        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
+
+      - name: Download from S3
+        shell: bash
+        run: |
+          aws s3 cp s3://builds.us.meltytech/shotcut-build-win_arm.txt.xz . --no-progress
+          aws s3 cp s3://builds.us.meltytech/shotcut/shotcut-win_ARM-$VERSION.zip . --no-progress
 
       - name: Dump log
+        shell: msys2 {0}
         run: xzcat shotcut-build-win_arm.txt.xz
+
+      - name: Extract zip
+        shell: msys2 {0}
+        run: unzip -q shotcut-win_ARM-$VERSION.zip
+
+      - name: Setup SM_CLIENT_CERT_FILE
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
+
+      - name: Setup Software Trust Manager
+        uses: digicert/code-signing-software-trust-action@v1
+        with:
+          simple-signing-mode: true
+
+      - name: Sign executables
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          smctl healthcheck
+          for EXE in Shotcut/*.exe; do
+            echo Signing ${EXE}
+            smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
+          done
+
+      - name: Re-zip portable
+        shell: msys2 {0}
+        run: |
+          rm shotcut-win_ARM-$VERSION.zip
+          zip -gr shotcut-win_ARM-$VERSION.zip Shotcut
+
+      - name: Upload portable artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-arm64-portable
+          path: ./shotcut-win_ARM-*.zip
+
+      - name: Setup ISCC
+        shell: msys2 {0}
+        run: |
+          mkdir -p "$HOME/bin"
+          pushd "$HOME/bin"
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
+          tar -xJf iscc632.txz
+          popd
+
+      - name: Package installer
+        shell: msys2 {0}
+        run: |
+          PATH="$HOME/bin:$PATH"
+          echo Extracting installer dependencies
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
+          tar -xJf innosetup-opera-1.txz
+          rm innosetup-opera-1.txz
+          cp packaging/windows/shotcut.iss .
+          echo Running Inno Setup Compiler
+          ISCC -Q -O. shotcut.iss
+
+      - name: Sign installer
+        if: ${{ github.repository_owner == 'mltframework' }}
+        shell: bash
+        run: |
+          smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
+          mv shotcut-setup.exe shotcut-win_ARM-$VERSION.exe
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-arm64-installer
+          path: ./shotcut-*.exe
+
+      - name: Upload packages to S3
+        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
+        shell: bash
+        run: |
+          for file in shotcut-*.exe shotcut-*.zip; do
+            echo Uploading "$file" to S3
+            aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
+          done
