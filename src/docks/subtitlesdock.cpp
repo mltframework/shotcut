@@ -1158,6 +1158,14 @@ void SubtitlesDock::burnInOnTimeline()
     filter.set("valign", "bottom");
     filter.set("halign", "center");
     filter.set("feed", track.name.toUtf8().constData());
+    filter.set("typewriter", 0);
+    filter.set("typewriter.step_length", 15);
+    filter.set("typewriter.step_sigma", 2);
+    filter.set("typewriter.random_seed", 0);
+    filter.set("typewriter.macro_type", 2);
+    filter.set("typewriter.cursor", 0);
+    filter.set("typewriter.cursor_blink_rate", 25);
+    filter.set("typewriter.cursor_char", "|");
     emit createOrEditFilterOnOutput(&filter, QStringList() << "feed");
 }
 

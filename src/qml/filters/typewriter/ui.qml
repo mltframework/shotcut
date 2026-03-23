@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ Shotcut.KeyframableFilter {
     middleValues: [Qt.rgba(0, 1, 0, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
     endValues: [Qt.rgba(0, 1, 0, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
     width: 425
-    height: 580
+    height: 600
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
