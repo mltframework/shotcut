@@ -1192,7 +1192,11 @@ void Controller::copyFilters(Producer &fromProducer,
             if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")
                 && !fromLink->get_int("_loader")) {
                 filterCount++;
-                if (filterIndex != -1 && filterIndex != (filterCount - 1)) {
+                if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
+                    continue;
+                }
+                // Today, time filters cannot be disabled, but just in case that changes or other links added
+                if (filterIndex == FILTER_INDEX_ENABLED && fromLink->get_int("disable")) {
                     continue;
                 }
                 Mlt::Link toLink(fromLink->get("mlt_service"));
@@ -1227,9 +1231,9 @@ void Controller::pasteFilters(Mlt::Producer *producer, Producer *fromProducer)
     if (targetProducer) {
         int j = targetProducer->filter_count();
         if (fromProducer && fromProducer->is_valid()) {
-            copyFilters(*fromProducer, *targetProducer, true);
+            copyFilters(*fromProducer, *targetProducer, true, FILTER_INDEX_ALL);
         } else if (hasFiltersOnClipboard()) {
-            copyFilters(*m_filtersClipboard, *targetProducer, true);
+            copyFilters(*m_filtersClipboard, *targetProducer, true, FILTER_INDEX_ALL);
         }
         adjustFilters(*targetProducer, j);
     }

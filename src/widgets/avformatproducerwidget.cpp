@@ -260,7 +260,7 @@ void AvformatProducerWidget::recreateProducer(bool getFrame)
     }
     Util::passProducerProperties(m_producer.data(), p);
     Util::updateCaption(p);
-    Mlt::Controller::copyFilters(*m_producer, *p);
+    Mlt::Controller::copyFilters(*m_producer, *p, false, MLT.FILTER_INDEX_ALL);
     if (m_producer->get(kMultitrackItemProperty)) {
         int length = ui->durationSpinBox->value();
         int in = m_producer->get_in();
@@ -1450,7 +1450,7 @@ void AvformatProducerWidget::on_actionReset_triggered()
     Mlt::Producer *p = newProducer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
-    Mlt::Controller::copyFilters(*m_producer, *p);
+    Mlt::Controller::copyFilters(*m_producer, *p, false, MLT.FILTER_INDEX_ALL);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
