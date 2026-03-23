@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-portable
-          path: ./shotcut-win_ARM-$VERSION.zip
+          path: ./shotcut-win_ARM-${{ env.VERSION }}.zip
 
       - name: Setup ISCC
         shell: msys2 {0}
@@ -110,7 +110,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-installer
-          path: ./shotcut-win_ARM-$VERSION.exe
+          path: ./shotcut-win_ARM-${{ env.VERSION }}.exe
 
       - name: Upload packages to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
