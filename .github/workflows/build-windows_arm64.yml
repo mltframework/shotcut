@@ -8,13 +8,13 @@ jobs:
     runs-on: windows-latest
     if: ${{ github.repository_owner == 'mltframework' }}
     env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
       SM_API_KEY: ${{ secrets.SM_API_KEY }}
       SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
       SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
       SM_HOST: ${{ vars.SM_HOST }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      AWS_DEFAULT_REGION: us-east-1
 
     steps:
       - uses: actions/checkout@v6
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-portable
-          path: ./shotcut-win_ARM-*.zip
+          path: ./shotcut-win_ARM-$VERSION.zip
 
       - name: Setup ISCC
         shell: msys2 {0}
@@ -110,13 +110,13 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-installer
-          path: ./shotcut-*.exe
+          path: ./shotcut-win_ARM-$VERSION.exe
 
       - name: Upload packages to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         shell: bash
         run: |
-          for file in shotcut-*.exe shotcut-*.zip; do
+          for file in shotcut-win_ARM-$VERSION.*; do
             echo Uploading "$file" to S3
             aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
           done
