@@ -374,9 +374,6 @@ audio (0%) or clip B's audio (100%).</string>
          <property name="toolTip">
           <string>Change to resize the transition</string>
          </property>
-         <property name="focusPolicy">
-          <enum>Qt::FocusPolicy::ClickFocus</enum>
-         </property>
          <property name="alignment">
           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
          </property>
