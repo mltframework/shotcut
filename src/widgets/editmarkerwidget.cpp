@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2025 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ void EditMarkerWidget::on_endSpinner_valueChanged(int value)
 void EditMarkerWidget::updateDuration()
 {
     if (MLT.producer()) {
-        int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
+        int duration = m_endSpinner->value() - m_startSpinner->value();
         m_durationLabel->setText(MLT.producer()->frames_to_time(duration, Settings.timeFormat()));
     } else {
         m_durationLabel->setText("--:--:--:--");
