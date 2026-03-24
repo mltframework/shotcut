@@ -80,7 +80,7 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="1" colspan="2">
+     <item row="1" column="1" colspan="2">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QListWidget" name="lumaCombo">
@@ -229,7 +229,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QToolButton" name="favoriteButton">
        <property name="toolTip">
         <string>Save the custom transition as a favorite</string>
@@ -240,7 +240,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
+     <item row="2" column="1" colspan="2">
       <widget class="QLabel" name="customLumaLabel">
        <property name="text">
         <string>TextLabel</string>
@@ -336,7 +336,7 @@ audio (0%) or clip B's audio (100%).</string>
        </property>
       </spacer>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <widget class="QCheckBox" name="invertCheckBox">
@@ -357,7 +357,59 @@ audio (0%) or clip B's audio (100%).</string>
        </item>
       </layout>
      </item>
-     <item row="0" column="0">
+     <item row="8" column="0">
+      <widget class="QLabel" name="durationLabel">
+       <property name="text">
+        <string>Duration</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <layout class="QHBoxLayout" name="durationLayout">
+       <item>
+        <widget class="TimeSpinBox" name="durationSpinBox">
+         <property name="toolTip">
+          <string>Change to resize the transition</string>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::ClickFocus</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+         </property>
+         <property name="accelerated">
+          <bool>true</bool>
+         </property>
+         <property name="keyboardTracking">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="durationSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Policy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Video</string>
@@ -395,19 +447,27 @@ audio (0%) or clip B's audio (100%).</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lumaCombo</tabstop>
-  <tabstop>favoriteButton</tabstop>
-  <tabstop>invertCheckBox</tabstop>
-  <tabstop>previewCheckBox</tabstop>
-  <tabstop>softnessSlider</tabstop>
-  <tabstop>softnessSpinner</tabstop>
-  <tabstop>crossfadeRadioButton</tabstop>
-  <tabstop>mixSlider</tabstop>
-  <tabstop>mixSpinner</tabstop>
- </tabstops>
+   <tabstop>lumaCombo</tabstop>
+   <tabstop>favoriteButton</tabstop>
+   <tabstop>invertCheckBox</tabstop>
+   <tabstop>previewCheckBox</tabstop>
+   <tabstop>softnessSlider</tabstop>
+   <tabstop>softnessSpinner</tabstop>
+   <tabstop>crossfadeRadioButton</tabstop>
+   <tabstop>mixSlider</tabstop>
+   <tabstop>mixSpinner</tabstop>
+   <tabstop>durationSpinBox</tabstop>
+  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>
  </resources>
+ <customwidgets>
+  <customwidget>
+   <class>TimeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>widgets/timespinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <connections>
   <connection>
    <sender>softnessSlider</sender>

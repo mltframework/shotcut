@@ -129,12 +129,6 @@
          </item>
          <item row="1" column="3">
           <widget class="QLineEdit" name="timelineDurationText">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
           </widget>
          </item>
          <item row="0" column="1">
