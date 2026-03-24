@@ -225,6 +225,8 @@ private:
     bool isTransition(int trackIndex, int clipIndex);
     bool isEmptyTrack(Mlt::Playlist &playlist);
     void emitNonSeekableWarning();
+    void emitClipExtendStatus(int cappedOut, int requestedOut, int currentOut);
+    int limitClipOut(Mlt::Playlist &playlist, int clipIndex, int in, int frameCount, int out);
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);
     void setupActions();
     bool isMultitrackValid() { return m_model.tractor() && !m_model.trackList().empty(); }

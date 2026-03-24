@@ -1771,6 +1771,17 @@ void TimelineDock::emitNonSeekableWarning()
     emit showStatusMessage(tr("You cannot add a non-seekable source."));
 }
 
+void TimelineDock::emitClipExtendStatus(int cappedOut, int requestedOut, int currentOut)
+{
+    if (cappedOut < requestedOut) {
+        if (cappedOut <= currentOut) {
+            emit showStatusMessage(tr("Not enough space to extend the clip"));
+        } else {
+            emit showStatusMessage(tr("Not enough space; clip extended as far as possible"));
+        }
+    }
+}
+
 void TimelineDock::addTrackIfNeeded(int trackIndex, Mlt::Producer *srcTrack)
 {
     const auto n = m_model.trackList().size();
@@ -2246,13 +2257,24 @@ bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
     return true;
 }
 
+int TimelineDock::limitClipOut(
+    Mlt::Playlist &playlist, int clipIndex, int in, int frameCount, int out)
+{
+    if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
+        if (playlist.is_blank(clipIndex + 1))
+            out = qMin(out, in + frameCount - 1 + playlist.clip_length(clipIndex + 1));
+        else
+            out = qMin(out, in + frameCount - 1);
+    }
+    return out;
+}
+
 void TimelineDock::onProducerChanged(Mlt::Producer *after)
 {
     int trackIndex = currentTrack();
     if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand || !after || !after->is_valid())
         return;
-    if (!selection().isEmpty())
-        trackIndex = selection().first().y();
+    trackIndex = selection().first().y();
     if (isTrackLocked(trackIndex)) {
         emit warnTrackLocked(trackIndex);
         return;
@@ -2279,15 +2301,9 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                 int length = qRound(info->length * speedRatio);
                 int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
                 int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
-                if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
-                    // limit the out point to what fits before the next clip
-                    if (playlist.is_blank(clipIndex + 1)) {
-                        out = qMin(out,
-                                   in + info->frame_count - 1 + playlist.clip_length(clipIndex + 1));
-                    } else {
-                        out = qMin(out, in + info->frame_count - 1);
-                    }
-                }
+                int uncappedOut = out;
+                out = limitClipOut(playlist, clipIndex, in, info->frame_count, out);
+                emitClipExtendStatus(out, uncappedOut, info->frame_out);
                 after->set_in_and_out(in, out);
                 // Adjust filters.
                 MLT.adjustClipFilters(*after,
@@ -2303,17 +2319,9 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                 int lengthDelta = newLength - oldLength;
                 if (lengthDelta != 0) {
                     int in = after->get_in();
-                    int out = after->get_out();
-                    if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
-                        // limit the out point to what fits before the next clip
-                        if (playlist.is_blank(clipIndex + 1)) {
-                            out = qMin(out,
-                                       in + info->frame_count - 1
-                                           + playlist.clip_length(clipIndex + 1));
-                        } else {
-                            out = qMin(out, in + info->frame_count - 1);
-                        }
-                    }
+                    int requestedOut = after->get_out();
+                    int out = limitClipOut(playlist, clipIndex, in, info->frame_count, requestedOut);
+                    emitClipExtendStatus(out, requestedOut, info->frame_out);
                     after->set_in_and_out(in, out);
                     // Adjust filters.
                     MLT.adjustClipFilters(*after,
@@ -2323,6 +2331,26 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                                           -lengthDelta,
                                           0);
                 }
+            } else if (after->property_exists(kNewFrameOutProperty)) {
+                int requestedNewOut = qMin(after->get_int(kNewFrameOutProperty),
+                                           after->get_length() - 1);
+                int in = info->frame_in;
+                int newOut
+                    = limitClipOut(playlist, clipIndex, in, info->frame_count, requestedNewOut);
+                emitClipExtendStatus(newOut, requestedNewOut, info->frame_out);
+                if (newOut == info->frame_out && requestedNewOut > info->frame_out) {
+                    // No space to extend; skip creating an undo command
+                    return;
+                }
+                // Adjust filters.
+                MLT.adjustClipFilters(*after,
+                                      info->frame_in,
+                                      info->frame_out,
+                                      0,
+                                      info->frame_out - newOut,
+                                      0);
+                after->set_in_and_out(in, newOut);
+                resetRippleAll = false;
             } else {
                 after->set_in_and_out(info->frame_in, info->frame_out);
             }

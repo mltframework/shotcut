@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,12 +109,28 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     ui->getCustomLabel->setText(
         QString::fromLatin1("<a href=\"https://shotcut.org/resources/#transitions\">%1</a>")
             .arg(ui->getCustomLabel->text()));
+    updateDuration();
 }
 
 LumaMixTransition::~LumaMixTransition()
 {
     m_preview->stop();
     delete ui;
+}
+
+void LumaMixTransition::updateDuration()
+{
+    ui->durationSpinBox->setValue(m_producer.get_playtime());
+}
+
+void LumaMixTransition::on_durationSpinBox_editingFinished()
+{
+    int newDuration = ui->durationSpinBox->value();
+    int currentDuration = m_producer.get_playtime();
+    int delta = newDuration - currentDuration;
+    if (delta != 0)
+        emit resizeTransitionRequested(delta);
+    updateDuration();
 }
 
 void LumaMixTransition::onPlaying()

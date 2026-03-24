@@ -688,6 +688,29 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
     recreateProducer();
 }
 
+void AvformatProducerWidget::on_timelineDurationText_editingFinished()
+{
+    if (!m_producer || !m_producer->get(kFilterInProperty))
+        return;
+    int newDuration = m_producer->time_to_frames(
+        ui->timelineDurationText->text().toLatin1().constData());
+    if (newDuration <= 0) {
+        updateDuration();
+        return;
+    }
+    int frameIn = m_producer->get_int(kFilterInProperty);
+    int newFrameOut = qMin(frameIn + newDuration - 1, m_producer->get_length() - 1);
+    int currentFrameOut = m_producer->get_int(kFilterOutProperty);
+    if (newFrameOut == currentFrameOut) {
+        updateDuration();
+        return;
+    }
+    m_producer->set(kNewFrameOutProperty, newFrameOut);
+    emit producerChanged(producer());
+    m_producer->Mlt::Properties::clear(kNewFrameOutProperty);
+    updateDuration();
+}
+
 void AvformatProducerWidget::on_pitchCheckBox_stateChanged(int state)
 {
     if (!m_producer)

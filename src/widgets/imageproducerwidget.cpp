@@ -129,8 +129,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
     ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
     ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
-    ui->durationSpinBox->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
-    ui->defaultDurationButton->setEnabled(ui->durationSpinBox->isEnabled());
+    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
 }
 
@@ -318,7 +317,6 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
                             m_producer->frames_to_time(imageCount * m_producer->get_int("ttl"),
                                                        mlt_time_clock));
             ui->durationSpinBox->setValue(imageCount);
-            ui->durationSpinBox->setEnabled(false);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
             QCoreApplication::processEvents();
         }
@@ -331,9 +329,8 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
                                                           * Mlt::kMaxImageDurationSecs),
                                                    mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
-        ui->durationSpinBox->setEnabled(true);
     }
-    ui->defaultDurationButton->setEnabled(ui->durationSpinBox->isEnabled());
+    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
     recreateProducer();
 }
 

@@ -4140,13 +4140,29 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
     else if (service == "xml-clip")
         w = new MltClipProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
-        w = new LumaMixTransition(producer->parent(), this);
+        auto *lumaMixTransition = new LumaMixTransition(producer->parent(), this);
+        w = lumaMixTransition;
         scrollArea->setWidget(w);
         if (-1 != w->metaObject()->indexOfSignal("modified()")) {
             connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
         }
         if (-1 != w->metaObject()->indexOfSlot("onPlaying()")) {
             connect(MLT.videoWidget(), SIGNAL(playing()), w, SLOT(onPlaying()));
+        }
+        if (!m_timelineDock->selection().isEmpty()) {
+            int trackIndex = m_timelineDock->selection().first().y();
+            int clipIndex = m_timelineDock->selection().first().x();
+            connect(lumaMixTransition,
+                    &LumaMixTransition::resizeTransitionRequested,
+                    this,
+                    [=](int delta) {
+                        m_timelineDock->resizeTransition(trackIndex, clipIndex, -delta / 2);
+                        m_timelineDock->commitTrimCommand();
+                    });
+            connect(undoStack(),
+                    &QUndoStack::indexChanged,
+                    lumaMixTransition,
+                    &LumaMixTransition::updateDuration);
         }
         return w;
     } else if (mlt_service_playlist_type == producer->type()) {

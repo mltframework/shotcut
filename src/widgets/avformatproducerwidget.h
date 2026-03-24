@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +75,8 @@ private slots:
     void on_durationSpinBox_editingFinished();
 
     void on_speedSpinBox_editingFinished();
+
+    void on_timelineDurationText_editingFinished();
 
     void on_pitchCheckBox_stateChanged(int state);
 

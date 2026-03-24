@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,11 @@ public:
 
 public slots:
     void onPlaying();
+    void updateDuration();
 
 signals:
     void modified();
+    void resizeTransitionRequested(int delta);
 
 private slots:
     void on_invertCheckBox_clicked(bool checked);
@@ -59,6 +61,7 @@ private slots:
     void on_previewCheckBox_clicked(bool checked);
 
     void on_favoriteButton_clicked();
+    void on_durationSpinBox_editingFinished();
 
 private:
     Ui::LumaMixTransition *ui;
