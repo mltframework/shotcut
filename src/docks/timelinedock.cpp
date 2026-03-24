@@ -2044,28 +2044,54 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
         return;
 
     if (location == TrimInPoint) {
+        // If the playhead is in a blank, extend the next clip's in-point to the playhead.
+        if (isBlank(trackIndex, clipIndex)) {
+            clipIndex += 1;
+            if (clipIndex >= clipCount(trackIndex) || isBlank(trackIndex, clipIndex))
+                return;
+            if (!selection().contains(QPoint(clipIndex, trackIndex)))
+                return;
+            info = m_model.getClipInfo(trackIndex, clipIndex);
+            if (!info
+                || !m_model.trimClipInValid(trackIndex, clipIndex, m_position - info->start, ripple))
+                return;
+        }
+        auto delta = m_position - info->start;
         MAIN.undoStack()->push(new Timeline::TrimClipInCommand(m_model,
                                                                m_markersModel,
                                                                trackIndex,
                                                                clipIndex,
-                                                               m_position - info->start,
+                                                               delta,
                                                                ripple));
         if (ripple)
             setPosition(info->start);
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
-            m_updateCommand->setPosition(trackIndex,
-                                         clipIndex,
-                                         m_updateCommand->position() + m_position - info->start);
-        emit MAIN.serviceInChanged(m_position - info->start, info->producer);
+            m_updateCommand->setPosition(trackIndex, clipIndex, m_updateCommand->position() + delta);
+        emit MAIN.serviceInChanged(delta, info->producer);
     } else {
-        MAIN.undoStack()->push(
-            new Timeline::TrimClipOutCommand(m_model,
-                                             m_markersModel,
-                                             trackIndex,
+        // If the playhead is in a blank, extend the previous clip's out-point to the playhead.
+        if (isBlank(trackIndex, clipIndex)) {
+            clipIndex -= 1;
+            if (clipIndex < 0 || isBlank(trackIndex, clipIndex))
+                return;
+            if (!selection().contains(QPoint(clipIndex, trackIndex)))
+                return;
+            info = m_model.getClipInfo(trackIndex, clipIndex);
+            if (!info
+                || !m_model.trimClipOutValid(trackIndex,
                                              clipIndex,
                                              info->start + info->frame_count - m_position,
-                                             ripple));
+                                             ripple))
+                return;
+        }
+        auto delta = info->start + info->frame_count - m_position;
+        MAIN.undoStack()->push(new Timeline::TrimClipOutCommand(m_model,
+                                                                m_markersModel,
+                                                                trackIndex,
+                                                                clipIndex,
+                                                                delta,
+                                                                ripple));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
