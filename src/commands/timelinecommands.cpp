@@ -343,12 +343,12 @@ void RemoveCommand::redo()
             QList<Markers::Marker> newMarkers = m_markers;
             for (int i = 0; i < newMarkers.size(); i++) {
                 Markers::Marker &marker = newMarkers[i];
-                if (marker.start >= m_markerRemoveStart && marker.start <= m_markerRemoveEnd) {
+                if (marker.start >= m_markerRemoveStart && marker.start < m_markerRemoveEnd) {
                     // This marker is in the removed segment. Remove it
                     newMarkers.removeAt(i);
                     i--;
                     markersModified = true;
-                } else if (marker.start > m_markerRemoveEnd) {
+                } else if (marker.start >= m_markerRemoveEnd) {
                     // This marker is after the removed segment. Shift it left
                     marker.start -= m_markerRemoveEnd - m_markerRemoveStart;
                     marker.end -= m_markerRemoveEnd - m_markerRemoveStart;
