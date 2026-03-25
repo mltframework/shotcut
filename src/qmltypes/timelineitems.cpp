@@ -140,7 +140,7 @@ public:
         if (!m_isActive)
             return;
 
-        const QVariantList *data = nullptr;
+        const QByteArray *data = nullptr;
         QmlProducer *qmlProducer = nullptr;
         std::unique_ptr<Mlt::ClipInfo> clipInfo;
 
@@ -187,7 +187,9 @@ public:
             if ((idx < 0) || (idx + 1 >= dataSize))
                 break;
             // Convert to real only for values actually used
-            qreal level = qMax(data->at(idx).toReal(), data->at(idx + 1).toReal()) / 256.0;
+            qreal level = qMax(static_cast<quint8>(data->at(idx)),
+                               static_cast<quint8>(data->at(idx + 1)))
+                          / 256.0;
             path.lineTo(i, height() - level * height());
         }
         path.lineTo(i, height());

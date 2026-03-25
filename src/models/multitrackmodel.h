@@ -21,6 +21,7 @@
 #include <MltPlaylist.h>
 #include <MltTractor.h>
 #include <QAbstractItemModel>
+#include <QByteArray>
 #include <QList>
 #include <QString>
 
@@ -101,7 +102,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
-    const QVariantList *getAudioLevels(int trackIndex, int clipIndex) const;
+    const QByteArray *getAudioLevels(int trackIndex, int clipIndex) const;
     bool createIfNeeded();
     void addBackgroundTrack();
     int addAudioTrack();

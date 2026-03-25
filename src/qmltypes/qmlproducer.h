@@ -21,6 +21,7 @@
 #include "shotcut_mlt_properties.h"
 
 #include <MltProducer.h>
+#include <QByteArray>
 #include <QObject>
 #include <QRectF>
 #include <QString>
@@ -62,7 +63,7 @@ public:
         return m_producer.is_valid() ? m_producer.get(kShotcutHashProperty) : QString();
     }
     QString name();
-    const QVariantList *audioLevels();
+    const QByteArray *audioLevels();
     int fadeIn();
     int fadeOut();
     double speed();

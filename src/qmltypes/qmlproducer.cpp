@@ -93,11 +93,11 @@ QString QmlProducer::name()
     return Util::producerTitle(m_producer);
 }
 
-const QVariantList *QmlProducer::audioLevels()
+const QByteArray *QmlProducer::audioLevels()
 {
     if (!m_producer.is_valid())
         return nullptr;
-    return static_cast<const QVariantList *>(m_producer.get_data(kAudioLevelsProperty));
+    return static_cast<const QByteArray *>(m_producer.get_data(kAudioLevelsProperty));
 }
 
 int QmlProducer::fadeIn()

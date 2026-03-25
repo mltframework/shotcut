@@ -156,7 +156,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         info->producer->lock();
                         if (info->producer->get_data(kAudioLevelsProperty)) {
                             result = QVariant::fromValue(
-                                *((QVariantList *) info->producer->get_data(kAudioLevelsProperty)));
+                                *((QByteArray *) info->producer->get_data(kAudioLevelsProperty)));
                         }
                         info->producer->unlock();
                     }
@@ -356,7 +356,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     return roles;
 }
 
-const QVariantList *MultitrackModel::getAudioLevels(int trackIndex, int clipIndex) const
+const QByteArray *MultitrackModel::getAudioLevels(int trackIndex, int clipIndex) const
 {
     if (!m_tractor || trackIndex < 0 || trackIndex >= m_trackList.size())
         return nullptr;
@@ -368,7 +368,7 @@ const QVariantList *MultitrackModel::getAudioLevels(int trackIndex, int clipInde
         if (clipIndex >= 0 && clipIndex < playlist.count()) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
             if (info && info->producer && info->producer->is_valid()) {
-                return static_cast<const QVariantList *>(
+                return static_cast<const QByteArray *>(
                     info->producer->get_data(kAudioLevelsProperty));
             }
         }
