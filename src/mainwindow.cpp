@@ -2288,7 +2288,9 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         Mlt::Properties *props = const_cast<Mlt::Properties *>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
-        m_player->setPauseAfterOpen(!play || !MLT.isClip());
+        bool isNonSequenceImage = MLT.isImageProducer(MLT.producer())
+                                  && !MLT.producer()->get_int(kShotcutSequenceProperty);
+        m_player->setPauseAfterOpen(!play || !MLT.isClip() || isNonSequenceImage);
 
         setAudioChannels(MLT.audioChannels());
         Mlt::Filter filter(MLT.profile(), "color_transform");

@@ -1709,7 +1709,8 @@ void PlaylistDock::onOpenActionTriggered()
         Mlt::Producer *p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
         setPlaylistIndex(p, index.row());
-        emit clipOpened(p, Settings.playlistAutoplay());
+        bool isNonSequenceImage = MLT.isImageProducer(p) && !p->get_int(kShotcutSequenceProperty);
+        emit clipOpened(p, isNonSequenceImage ? false : Settings.playlistAutoplay());
         delete i;
         m_iconsView->resetMultiSelect();
     }
@@ -1746,7 +1747,9 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             p->set_in_and_out(i->frame_in, i->frame_out);
             setPlaylistIndex(p, sourceIndex.row());
             setIndex(index.row());
-            emit clipOpened(p, Settings.playlistAutoplay());
+            bool isNonSequenceImage = MLT.isImageProducer(p)
+                                      && !p->get_int(kShotcutSequenceProperty);
+            emit clipOpened(p, isNonSequenceImage ? false : Settings.playlistAutoplay());
         }
         delete i;
         m_iconsView->resetMultiSelect();
