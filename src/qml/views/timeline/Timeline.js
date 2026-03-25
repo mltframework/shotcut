@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ function onMouseWheel(wheel) {
     if ((wheel.modifiers === Qt.ControlModifier) || (wheel.modifiers === Qt.ShiftModifier)) {
         // Zoom
         if (wheel.modifiers & Qt.ControlModifier) {
-            adjustZoom(wheel.angleDelta.y / 2000, wheel.x)
+            adjustZoom(wheel.angleDelta.y / 2000, tracksFlickable.contentX + wheel.x)
         }
         if (wheel.modifiers & Qt.ShiftModifier) {
             n = (application.OS === 'macOS')? wheel.angleDelta.x : wheel.angleDelta.y

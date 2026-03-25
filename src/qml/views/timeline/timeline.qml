@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,13 @@ Rectangle {
     signal clipRightClicked
 
     function setZoom(value, targetX) {
-        if (!targetX)
-            targetX = tracksFlickable.contentX + tracksFlickable.width / 2;
+        if (!targetX) {
+            let playheadX = timeline.position * multitrack.scaleFactor;
+            if (playheadX >= tracksFlickable.contentX && playheadX <= tracksFlickable.contentX + tracksFlickable.width)
+                targetX = playheadX;
+            else
+                targetX = tracksFlickable.contentX + tracksFlickable.width / 2;
+        }
         let offset = targetX - tracksFlickable.contentX;
         let before = multitrack.scaleFactor;
         if (isNaN(value))
@@ -93,7 +98,7 @@ Rectangle {
 
         interval: 100
         onTriggered: {
-            Logic.scrollIfNeeded(false);
+            Logic.scrollIfNeeded(true);
         }
     }
 
