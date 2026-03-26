@@ -18,6 +18,7 @@
 #include "macos.h"
 #import <AppKit/NSApplication.h>
 #import <AppKit/NSDockTile.h>
+#import <AppKit/NSImageView.h>
 #import <AppKit/NSProgressIndicator.h>
 #import <AppKit/NSView.h>
 #import <AppKit/NSWindow.h>
@@ -39,6 +40,9 @@ static NSProgressIndicator *dockProgressBar()
         NSView *contentView = tile.contentView;
         if (!contentView) {
             contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tile.size.width, tile.size.height)];
+            NSImageView *iconView = [[NSImageView alloc] initWithFrame:contentView.bounds];
+            iconView.image = NSApp.applicationIconImage;
+            [contentView addSubview:iconView];
             tile.contentView = contentView;
         }
         s_pi = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(0, 4, contentView.frame.size.width, 18)];
