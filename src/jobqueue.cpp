@@ -26,6 +26,9 @@
 #ifdef Q_OS_MAC
 #include "macos.h"
 #endif
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#include "linuxtools.h"
+#endif
 
 JobQueue::JobQueue(QObject *parent)
     : QStandardItemModel(0, COLUMN_COUNT, parent)
@@ -119,6 +122,12 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
             else
                 macosSetDockProgress(percent);
 #endif
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+            if (job->paused())
+                linuxPauseLauncherProgress(percent);
+            else
+                linuxSetLauncherProgress(percent);
+#endif
         }
     }
 }
@@ -156,6 +165,9 @@ void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
 #endif
 #ifdef Q_OS_MAC
     macosFinishDockProgress(isSuccess, job->stopped());
+#endif
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    linuxFinishLauncherProgress(isSuccess, job->stopped());
 #endif
 
     startNextJob();
