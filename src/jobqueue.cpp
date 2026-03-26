@@ -23,6 +23,9 @@
 #ifdef Q_OS_WIN
 #include "windowstools.h"
 #endif
+#ifdef Q_OS_MAC
+#include "macos.h"
+#endif
 
 JobQueue::JobQueue(QObject *parent)
     : QStandardItemModel(0, COLUMN_COUNT, parent)
@@ -110,6 +113,12 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
             else
                 WindowsTaskbarButton::getInstance().setProgress(percent);
 #endif
+#ifdef Q_OS_MAC
+            if (job->paused())
+                macosPauseDockProgress(percent);
+            else
+                macosSetDockProgress(percent);
+#endif
         }
     }
 }
@@ -144,6 +153,9 @@ void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
     }
 #ifdef Q_OS_WIN
     WindowsTaskbarButton::getInstance().finishProgress(isSuccess, job->stopped());
+#endif
+#ifdef Q_OS_MAC
+    macosFinishDockProgress(isSuccess, job->stopped());
 #endif
 
     startNextJob();
