@@ -27,7 +27,9 @@ static const QLatin1String kDbusInterface("com.canonical.Unity.LauncherEntry");
 
 static void sendLauncherUpdate(const QVariantMap &props)
 {
-    QDBusMessage msg = QDBusMessage::createSignal(kDbusPath, kDbusInterface, QStringLiteral("Update"));
+    QDBusMessage msg = QDBusMessage::createSignal(kDbusPath,
+                                                  kDbusInterface,
+                                                  QStringLiteral("Update"));
     msg << kDesktopFile << props;
     QDBusConnection::sessionBus().send(msg);
 }
