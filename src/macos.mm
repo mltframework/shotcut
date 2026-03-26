@@ -46,7 +46,7 @@ static NSProgressIndicator *dockProgressBar()
             tile.contentView = contentView;
         }
         s_pi = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(0, 4, contentView.frame.size.width, 18)];
-        s_pi.style = NSProgressIndicatorBarStyle;
+        s_pi.style = NSProgressIndicatorStyleBar;
         s_pi.minValue = 0;
         s_pi.maxValue = 100;
         s_pi.indeterminate = NO;
