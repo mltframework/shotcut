@@ -159,7 +159,9 @@ void MeltJob::start()
 #ifdef Q_OS_MAC
     // Prevent melt from appearing in the Dock by using the offscreen Qt
     // platform instead of Cocoa, which would register it as a foreground app.
-    env.insert("QT_QPA_PLATFORM", "offscreen");
+    // GPU processing requires OpenGL, so skip this when it is enabled.
+    if (!Settings.playerGPU())
+        env.insert("QT_QPA_PLATFORM", "offscreen");
 #endif
     if (!Settings.encodeHardwareDecoder()) {
         env.remove("MLT_AVFORMAT_HWACCEL");
