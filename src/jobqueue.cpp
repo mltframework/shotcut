@@ -110,6 +110,7 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
             standardItem = JOBS.item(standardItem->row(), JobQueue::COLUMN_ICON);
             if (standardItem)
                 standardItem->setIcon(icon);
+            percent = std::clamp(percent, 0, 100);
 #ifdef Q_OS_WIN
             if (job->paused())
                 WindowsTaskbarButton::getInstance().pauseProgress(percent);
