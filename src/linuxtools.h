@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2026 Meltytech, LLC
+ * Copyright (c) 2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,7 @@
 
 #pragma once
 
-void removeMacosTabBar();
-void macosSetDockProgress(int percent);
-void macosPauseDockProgress(int percent);
-void macosResetDockProgress();
-void macosFinishDockProgress(bool isSuccess, bool stopped);
+void linuxSetLauncherProgress(int percent);
+void linuxPauseLauncherProgress(int percent);
+void linuxResetLauncherProgress();
+void linuxFinishLauncherProgress(bool isSuccess, bool stopped);

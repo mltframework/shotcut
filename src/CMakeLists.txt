@@ -285,6 +285,7 @@ target_link_libraries(shotcut
 )
 if(UNIX AND NOT APPLE)
   target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
+  target_sources(shotcut PRIVATE linuxtools.cpp linuxtools.h)
 endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")
