@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QWidget>
-#include <QWinTaskbarButton>
-#include <QWinTaskbarProgress>
+#include <QWindow>
 
 class WindowsTaskbarButton
 {
 public:
     static WindowsTaskbarButton &getInstance();
 
-    void setParentWindow(QWidget *parent);
+    void setParentWindow(QWindow *window);
     void setProgress(int progress);
+    void pauseProgress(int progress);
     void resetProgress();
+    void finishProgress(bool isSuccess, bool stopped);
 
 private:
     WindowsTaskbarButton();
 
-    QWinTaskbarButton *m_taskbarButton;
-    QWinTaskbarProgress *m_taskbarProgress;
+    QWindow *m_window = nullptr;
 };

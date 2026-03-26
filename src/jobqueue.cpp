@@ -20,7 +20,7 @@
 #include "Logger.h"
 
 #include <QtWidgets>
-#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+#ifdef Q_OS_WIN
 #include "windowstools.h"
 #endif
 
@@ -104,11 +104,14 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
             standardItem = JOBS.item(standardItem->row(), JobQueue::COLUMN_ICON);
             if (standardItem)
                 standardItem->setIcon(icon);
+#ifdef Q_OS_WIN
+            if (job->paused())
+                WindowsTaskbarButton::getInstance().pauseProgress(percent);
+            else
+                WindowsTaskbarButton::getInstance().setProgress(percent);
+#endif
         }
     }
-#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    WindowsTaskbarButton::getInstance().setProgress(percent);
-#endif
 }
 
 void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
@@ -139,8 +142,8 @@ void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
         if (item)
             item->setIcon(icon);
     }
-#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    WindowsTaskbarButton::getInstance().resetProgress();
+#ifdef Q_OS_WIN
+    WindowsTaskbarButton::getInstance().finishProgress(isSuccess, job->stopped());
 #endif
 
     startNextJob();

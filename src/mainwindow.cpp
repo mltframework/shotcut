@@ -88,7 +88,7 @@
 #include "widgets/toneproducerwidget.h"
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/video4linuxwidget.h"
-#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+#ifdef Q_OS_WIN
 #include "windowstools.h"
 #endif
 
@@ -3269,8 +3269,8 @@ void MainWindow::showEvent(QShowEvent *event)
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
 #endif
 
-#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    WindowsTaskbarButton::getInstance().setParentWindow(this);
+#ifdef Q_OS_WIN
+    WindowsTaskbarButton::getInstance().setParentWindow(windowHandle());
 #endif
     onAutosaveTimeout();
 
