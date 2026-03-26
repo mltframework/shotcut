@@ -45,11 +45,7 @@ void linuxSetLauncherProgress(int percent)
 
 void linuxPauseLauncherProgress(int percent)
 {
-    QVariantMap props;
-    props[QStringLiteral("progress")] = percent / 100.0;
-    props[QStringLiteral("progress-visible")] = true;
-    props[QStringLiteral("urgent")] = false;
-    sendLauncherUpdate(props);
+    // This protocol does not yet support a paused state
 }
 
 void linuxResetLauncherProgress()
