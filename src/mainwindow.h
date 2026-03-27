@@ -225,7 +225,7 @@ private:
     ScreenCapture *m_screenCapture;
 
 public slots:
-    bool isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileName);
+    bool isCompatibleWithProcessingMode(MltXmlChecker &checker, QString &fileName, bool &converted);
     bool isXmlRepaired(MltXmlChecker &checker, QString &fileName);
     bool open(QString url,
               const Mlt::Properties * = nullptr,

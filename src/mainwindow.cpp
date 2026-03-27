@@ -1717,9 +1717,12 @@ void MainWindow::open(Mlt::Producer *producer, bool play)
     activateWindow();
 }
 
-bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileName)
+bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
+                                                QString &fileName,
+                                                bool &converted)
 {
     bool result = true;
+    converted = false;
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(
@@ -1735,7 +1738,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileNa
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
         if (dialog.exec() == QMessageBox::Yes)
-            result = saveConvertedXmlFile(checker, fileName);
+            converted = result = saveConvertedXmlFile(checker, fileName);
         else
             result = false;
     } else if (checker.needsCPU() && Settings.playerGPU()) {
@@ -1751,9 +1754,8 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileNa
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
-        int r = dialog.exec();
-        if (r == QMessageBox::Yes)
-            result = saveConvertedXmlFile(checker, fileName);
+        if (dialog.exec() == QMessageBox::Yes)
+            converted = result = saveConvertedXmlFile(checker, fileName);
         else
             result = false;
     }
@@ -2151,9 +2153,6 @@ static void autosaveTask(MainWindow *p)
 void MainWindow::onAutosaveTimeout()
 {
     if (isWindowModified()) {
-        // Automatic backup
-        backupPeriodically();
-
         // Auto-save to recovery file
         auto result = QtConcurrent::run(autosaveTask, this);
     }
@@ -2220,8 +2219,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         }
         switch (checker.check(url)) {
         case QXmlStreamReader::NoError:
-            converted = isCompatibleWithGpuMode(checker, url);
-            if (!converted) {
+            if (!isCompatibleWithProcessingMode(checker, url, converted)) {
                 showStatusMessage(tr("Failed to open ").append(url));
                 return true;
             }
@@ -2250,8 +2248,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         modified = checkAutoSave(url);
         if (modified) {
             if (checker.check(url) == QXmlStreamReader::NoError) {
-                converted = isCompatibleWithGpuMode(checker, url);
-                if (!converted)
+                if (!isCompatibleWithProcessingMode(checker, url, converted))
                     return true;
             } else {
                 showStatusMessage(tr("Failed to open ").append(url));
@@ -4953,8 +4950,12 @@ void MainWindow::on_actionOpenXML_triggered()
         QString url = filenames.first();
         MltXmlChecker checker;
         if (checker.check(url) == QXmlStreamReader::NoError) {
-            if (!isCompatibleWithGpuMode(checker, url))
+            bool converted = false;
+            if (!isCompatibleWithProcessingMode(checker, url, converted)) {
+                showStatusMessage(tr("Incompatible processing mode: ") + url);
                 return;
+            } else if (converted)
+                saveXML(url);
             isXmlRepaired(checker, url);
         } else {
             showStatusMessage(tr("Failed to open ").append(url));
