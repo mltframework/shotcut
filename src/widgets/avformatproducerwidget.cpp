@@ -56,6 +56,17 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , m_recalcDuration(true)
 {
     ui->setupUi(this);
+#if LIBMLT_VERSION_INT < ((7 << 16) + (37 << 8))
+    ui->lutLabel->hide();
+    ui->lutValueLabel->hide();
+    ui->lutButton->hide();
+    ui->lutClearButton->hide();
+#else
+    ui->lutButton->setIcon(style()->standardIcon(QStyle::SP_DirOpenIcon));
+    ui->lutButton->setText(QString());
+    ui->lutClearButton->setIcon(style()->standardIcon(QStyle::SP_LineEditClearButton));
+    ui->lutClearButton->setText(QString());
+#endif
     ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
     ui->filenameLabel->setFrame(true);
 #ifndef EXTERNAL_LAUNCHERS
@@ -343,6 +354,9 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->convertButton->setEnabled(exists);
     ui->reverseButton->setEnabled(exists);
     ui->proxyButton->setEnabled(exists);
+    ui->lutValueLabel->setEnabled(exists);
+    ui->lutButton->setEnabled(exists);
+    ui->lutClearButton->setEnabled(exists);
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
@@ -569,6 +583,11 @@ void AvformatProducerWidget::reloadProducerValues()
     else if (m_producer->get("force_full_range"))
         color_range = m_producer->get_int("force_full_range");
     ui->rangeComboBox->setCurrentIndex(color_range);
+
+    const QString lutPath = QString::fromUtf8(m_producer->get("lut"));
+    ui->lutValueLabel->setText(QFileInfo(lutPath).fileName());
+    ui->lutValueLabel->setToolTip(lutPath);
+    ui->lutClearButton->setEnabled(ui->lutClearButton->isEnabled() && !lutPath.isEmpty());
 
     if (populateTrackCombos) {
         for (int i = 0; i < m_producer->count(); i++) {
@@ -1580,6 +1599,51 @@ void AvformatProducerWidget::on_actionExportGPX_triggered()
     args << "-s";
     args << resource;
     JOBS.add(new GoPro2GpxJob(resource, args));
+}
+
+void AvformatProducerWidget::on_lutButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    QString path = Settings.openPath();
+    const QString currentLut = QString::fromUtf8(m_producer->get("lut"));
+    if (!currentLut.isEmpty())
+        path = QFileInfo(currentLut).path();
+
+    QString filePath = QFileDialog::getOpenFileName(this,
+                                                    tr("Open LUT File"),
+                                                    path,
+                                                    tr("3D-LUT Files (*.3dl *.cube *.dat *.m3d);;"
+                                                       "AfterEffects (*.3dl);;"
+                                                       "Iridas (*.cube);;"
+                                                       "DaVinci (*.dat);;"
+                                                       "Pandora (*.m3d);;"
+                                                       "All Files (*)"),
+                                                    nullptr,
+                                                    Util::getFileDialogOptions());
+    if (!filePath.isEmpty() && filePath != currentLut) {
+        m_producer->set("lut", filePath.toUtf8().constData());
+        Settings.setOpenPath(QFileInfo(filePath).path());
+        ui->lutValueLabel->setText(QFileInfo(filePath).fileName());
+        ui->lutValueLabel->setToolTip(filePath);
+        ui->lutClearButton->setEnabled(true);
+        recreateProducer();
+    }
+}
+
+void AvformatProducerWidget::on_lutClearButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    if (!QString::fromUtf8(m_producer->get("lut")).isEmpty()) {
+        m_producer->Mlt::Properties::clear("lut");
+        ui->lutValueLabel->clear();
+        ui->lutValueLabel->setToolTip(QString());
+        ui->lutClearButton->setEnabled(false);
+        recreateProducer();
+    }
 }
 
 void AvformatProducerWidget::on_speedComboBox_textActivated(const QString &arg1)

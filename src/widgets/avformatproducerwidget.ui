@@ -438,19 +438,6 @@
              </item>
             </widget>
            </item>
-           <item row="6" column="0" colspan="3">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="2" column="0">
             <widget class="QLabel" name="aspectRatioLabel">
              <property name="text">
@@ -680,6 +667,66 @@
               </spacer>
              </item>
             </layout>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="lutLabel">
+             <property name="text">
+                <string>LUT File</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+                <widget class="QLineEdit" name="lutValueLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>120</width>
+                 <height>0</height>
+                </size>
+               </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="lutButton">
+               <property name="toolTip">
+                <string>Open LUT file</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+                   <item>
+                     <widget class="QToolButton" name="lutClearButton">
+                      <property name="toolTip">
+                        <string>Clear LUT file</string>
+                      </property>
+                      <property name="text">
+                      <string>x</string>
+                      </property>
+                     </widget>
+                   </item>
+            </layout>
+           </item>
+           <item row="7" column="0" colspan="3">
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -1168,6 +1215,8 @@
   <tabstop>fieldOrderComboBox</tabstop>
   <tabstop>rangeComboBox</tabstop>
   <tabstop>rotationComboBox</tabstop>
+  <tabstop>lutButton</tabstop>
+  <tabstop>lutClearButton</tabstop>
   <tabstop>menuButton</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>audioTrackComboBox</tabstop>

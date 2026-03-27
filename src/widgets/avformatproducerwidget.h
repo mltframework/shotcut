@@ -130,6 +130,10 @@ private slots:
 
     void on_actionExportGPX_triggered();
 
+    void on_lutButton_clicked();
+
+    void on_lutClearButton_clicked();
+
     void on_speedComboBox_textActivated(const QString &arg1);
 
 private:
