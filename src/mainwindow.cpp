@@ -182,10 +182,10 @@ MainWindow::MainWindow()
     setDockNestingEnabled(true);
     const auto highlight = palette().highlight().color();
     setStyleSheet(QString("QMainWindow::separator {"
-                          "  width: 10px;"
+                          "  width: 5px;"
                           "}"
                           "QMainWindow::separator:hover {"
-                          "  background-color: rgba(%1, %2, %3, 51);"
+                          "  background-color: rgba(%1, %2, %3, 127);"
                           "}")
                       .arg(highlight.red())
                       .arg(highlight.green())
