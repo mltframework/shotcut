@@ -621,16 +621,18 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible())
             return;
-        if (selection().isEmpty())
+        if (selection().isEmpty()) {
             selectClipUnderPlayhead();
+            return;
+        }
         int newClipIndex = -1;
         int trackIndex = currentTrack() - 1;
-        if (!selection().isEmpty() && trackIndex > -1 && !selection().isEmpty()) {
+        if (trackIndex > -1) {
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
-        incrementCurrentTrack(-1);
         if (newClipIndex >= 0) {
+            incrementCurrentTrack(-1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -642,16 +644,18 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible())
             return;
-        if (selection().isEmpty())
+        if (selection().isEmpty()) {
             selectClipUnderPlayhead();
+            return;
+        }
         int newClipIndex = -1;
         int trackIndex = currentTrack() + 1;
-        if (trackIndex < model()->trackList().count() && !selection().isEmpty()) {
+        if (trackIndex < model()->trackList().count()) {
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
-        incrementCurrentTrack(1);
         if (newClipIndex >= 0) {
+            incrementCurrentTrack(1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -659,21 +663,25 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectClipBelowAction", action);
 
     action = new QAction(tr("Set Current Track Above"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::Key_Up));
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible())
             return;
         incrementCurrentTrack(-1);
     });
+    m_quickView.addAction(action);
     Actions.add("timelineCurrentTrackAboveAction", action);
 
     action = new QAction(tr("Set Current Track Below"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::Key_Down));
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible())
             return;
         incrementCurrentTrack(1);
     });
+    m_quickView.addAction(action);
     Actions.add("timelineCurrentTrackBelowAction", action);
 
     action = new QAction(tr("Select Clip Under Playhead"), this);
