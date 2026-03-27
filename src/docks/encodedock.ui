@@ -1921,7 +1921,7 @@ in temporal compression</string>
               <item row="0" column="0">
                <widget class="QLabel" name="coverArtLabel">
                 <property name="text">
-                 <string>Cover Art</string>
+                 <string>Cover art</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
