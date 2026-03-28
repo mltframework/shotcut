@@ -705,7 +705,7 @@ void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
     dst->pass_list(*src,
                    "audio_index, video_index, astream, vstream, force_aspect_ratio,"
                    "video_delay, force_progressive, force_tff, force_full_range, color_range, "
-                   "warp_pitch, rotate," kAspectRatioNumerator "," kAspectRatioDenominator
+                   "warp_pitch, rotate, lut," kAspectRatioNumerator "," kAspectRatioDenominator
                    "," kShotcutHashProperty "," kPlaylistIndexProperty
                    "," kShotcutSkipConvertProperty "," kCommentProperty
                    "," kDefaultAudioIndexProperty "," kShotcutCaptionProperty

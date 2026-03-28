@@ -56,6 +56,21 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , m_recalcDuration(true)
 {
     ui->setupUi(this);
+#if LIBMLT_VERSION_INT < ((7 << 16) + (37 << 8))
+    ui->lutLabel->hide();
+    ui->lutValueLabel->hide();
+    ui->lutButton->hide();
+    ui->lutPasteButton->hide();
+    ui->lutCopyButton->hide();
+    ui->lutClearButton->hide();
+#else
+    ui->lutButton->setIcon(style()->standardIcon(QStyle::SP_DirOpenIcon));
+    ui->lutButton->setText(QString());
+    ui->lutPasteButton->setIcon(QIcon::fromTheme("edit-paste"));
+    ui->lutCopyButton->setIcon(QIcon::fromTheme("edit-copy"));
+    ui->lutClearButton->setIcon(style()->standardIcon(QStyle::SP_LineEditClearButton));
+    ui->lutClearButton->setText(QString());
+#endif
     ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
     ui->filenameLabel->setFrame(true);
 #ifndef EXTERNAL_LAUNCHERS
@@ -343,6 +358,10 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->convertButton->setEnabled(exists);
     ui->reverseButton->setEnabled(exists);
     ui->proxyButton->setEnabled(exists);
+    ui->lutValueLabel->setEnabled(exists);
+    ui->lutButton->setEnabled(exists);
+    ui->lutPasteButton->setEnabled(exists);
+    ui->lutClearButton->setEnabled(exists);
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
@@ -569,6 +588,17 @@ void AvformatProducerWidget::reloadProducerValues()
     else if (m_producer->get("force_full_range"))
         color_range = m_producer->get_int("force_full_range");
     ui->rangeComboBox->setCurrentIndex(color_range);
+
+    const QString lutPath = QString::fromUtf8(m_producer->get("lut"));
+    if (lutPath.isEmpty()) {
+        ui->lutValueLabel->setText(QString());
+        ui->lutValueLabel->setToolTip(QString());
+    } else {
+        const QString fileName = QFileInfo(lutPath).fileName();
+        ui->lutValueLabel->setText(fileName);
+        ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(lutPath));
+    }
+    ui->lutClearButton->setEnabled(ui->lutClearButton->isEnabled() && !lutPath.isEmpty());
 
     if (populateTrackCombos) {
         for (int i = 0; i < m_producer->count(); i++) {
@@ -1580,6 +1610,91 @@ void AvformatProducerWidget::on_actionExportGPX_triggered()
     args << "-s";
     args << resource;
     JOBS.add(new GoPro2GpxJob(resource, args));
+}
+
+void AvformatProducerWidget::on_lutButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    QString path = Settings.openPath();
+    const QString currentLut = QString::fromUtf8(m_producer->get("lut"));
+    if (!currentLut.isEmpty())
+        path = QFileInfo(currentLut).path();
+
+    QString filePath = QFileDialog::getOpenFileName(this,
+                                                    tr("Open LUT File"),
+                                                    path,
+                                                    tr("3D-LUT Files (*.3dl *.cube *.dat *.m3d);;"
+                                                       "AfterEffects (*.3dl);;"
+                                                       "Iridas (*.cube);;"
+                                                       "DaVinci (*.dat);;"
+                                                       "Pandora (*.m3d);;"
+                                                       "All Files (*)"),
+                                                    nullptr,
+                                                    Util::getFileDialogOptions());
+    if (!filePath.isEmpty() && filePath != currentLut) {
+        m_producer->set("lut", filePath.toUtf8().constData());
+        const QString fileName = QFileInfo(filePath).fileName();
+        ui->lutValueLabel->setText(fileName);
+        ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(filePath));
+        ui->lutClearButton->setEnabled(true);
+        recreateProducer();
+    }
+}
+
+void AvformatProducerWidget::on_lutPasteButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    const QString clipboardText = qApp->clipboard()->text().trimmed();
+    const QString clipboardPath = QDir::fromNativeSeparators(clipboardText);
+    QFileInfo fileInfo(clipboardPath);
+
+    if (clipboardPath.isEmpty() || !fileInfo.exists() || !fileInfo.isFile()) {
+        QMessageBox::warning(this,
+                             qApp->applicationName(),
+                             tr("The clipboard does not contain a valid LUT file path:\n\n%1")
+                                 .arg(clipboardText));
+        return;
+    }
+
+    const QString normalizedPath = fileInfo.absoluteFilePath();
+    const QString currentLut = QString::fromUtf8(m_producer->get("lut"));
+    if (normalizedPath != currentLut) {
+        m_producer->set("lut", normalizedPath.toUtf8().constData());
+        recreateProducer();
+    }
+    const QString fileName = QFileInfo(normalizedPath).fileName();
+    ui->lutValueLabel->setText(fileName);
+    ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(normalizedPath));
+    ui->lutClearButton->setEnabled(true);
+}
+
+void AvformatProducerWidget::on_lutCopyButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    const QString lutPath = QString::fromUtf8(m_producer->get("lut"));
+    if (!lutPath.isEmpty()) {
+        qApp->clipboard()->setText(QDir::toNativeSeparators(lutPath));
+    }
+}
+
+void AvformatProducerWidget::on_lutClearButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    if (!QString::fromUtf8(m_producer->get("lut")).isEmpty()) {
+        m_producer->Mlt::Properties::clear("lut");
+        ui->lutValueLabel->clear();
+        ui->lutValueLabel->setToolTip(QString());
+        ui->lutClearButton->setEnabled(false);
+        recreateProducer();
+    }
 }
 
 void AvformatProducerWidget::on_speedComboBox_textActivated(const QString &arg1)
