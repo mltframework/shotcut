@@ -688,8 +688,8 @@
                  <height>0</height>
                 </size>
                </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -703,16 +703,36 @@
                </property>
               </widget>
              </item>
-                   <item>
-                     <widget class="QToolButton" name="lutClearButton">
-                      <property name="toolTip">
-                        <string>Clear LUT file</string>
-                      </property>
-                      <property name="text">
-                      <string>x</string>
-                      </property>
-                     </widget>
-                   </item>
+             <item>
+              <widget class="QToolButton" name="lutClearButton">
+               <property name="toolTip">
+                <string>Clear LUT file</string>
+               </property>
+               <property name="text">
+                <string>x</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="lutCopyButton">
+               <property name="toolTip">
+                <string>Copy LUT file path</string>
+               </property>
+               <property name="text">
+                <string>Copy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="lutPasteButton">
+               <property name="toolTip">
+                <string>Paste LUT file from clipboard</string>
+               </property>
+               <property name="text">
+                <string>Paste</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item row="7" column="0" colspan="3">
@@ -1217,6 +1237,8 @@
   <tabstop>rotationComboBox</tabstop>
   <tabstop>lutButton</tabstop>
   <tabstop>lutClearButton</tabstop>
+  <tabstop>lutCopyButton</tabstop>
+  <tabstop>lutPasteButton</tabstop>
   <tabstop>menuButton</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>audioTrackComboBox</tabstop>

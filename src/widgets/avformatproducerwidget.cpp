@@ -60,10 +60,14 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->lutLabel->hide();
     ui->lutValueLabel->hide();
     ui->lutButton->hide();
+    ui->lutPasteButton->hide();
+    ui->lutCopyButton->hide();
     ui->lutClearButton->hide();
 #else
     ui->lutButton->setIcon(style()->standardIcon(QStyle::SP_DirOpenIcon));
     ui->lutButton->setText(QString());
+    ui->lutPasteButton->setIcon(QIcon::fromTheme("edit-paste"));
+    ui->lutCopyButton->setIcon(QIcon::fromTheme("edit-copy"));
     ui->lutClearButton->setIcon(style()->standardIcon(QStyle::SP_LineEditClearButton));
     ui->lutClearButton->setText(QString());
 #endif
@@ -356,6 +360,7 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->proxyButton->setEnabled(exists);
     ui->lutValueLabel->setEnabled(exists);
     ui->lutButton->setEnabled(exists);
+    ui->lutPasteButton->setEnabled(exists);
     ui->lutClearButton->setEnabled(exists);
 
     // populate the track combos
@@ -585,8 +590,14 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->rangeComboBox->setCurrentIndex(color_range);
 
     const QString lutPath = QString::fromUtf8(m_producer->get("lut"));
-    ui->lutValueLabel->setText(QFileInfo(lutPath).fileName());
-    ui->lutValueLabel->setToolTip(lutPath);
+    if (lutPath.isEmpty()) {
+        ui->lutValueLabel->setText(QString());
+        ui->lutValueLabel->setToolTip(QString());
+    } else {
+        const QString fileName = QFileInfo(lutPath).fileName();
+        ui->lutValueLabel->setText(fileName);
+        ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(lutPath));
+    }
     ui->lutClearButton->setEnabled(ui->lutClearButton->isEnabled() && !lutPath.isEmpty());
 
     if (populateTrackCombos) {
@@ -1625,10 +1636,52 @@ void AvformatProducerWidget::on_lutButton_clicked()
     if (!filePath.isEmpty() && filePath != currentLut) {
         m_producer->set("lut", filePath.toUtf8().constData());
         Settings.setOpenPath(QFileInfo(filePath).path());
-        ui->lutValueLabel->setText(QFileInfo(filePath).fileName());
-        ui->lutValueLabel->setToolTip(filePath);
+        const QString fileName = QFileInfo(filePath).fileName();
+        ui->lutValueLabel->setText(fileName);
+        ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(filePath));
         ui->lutClearButton->setEnabled(true);
         recreateProducer();
+    }
+}
+
+void AvformatProducerWidget::on_lutPasteButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    const QString clipboardText = qApp->clipboard()->text().trimmed();
+    const QString clipboardPath = QDir::fromNativeSeparators(clipboardText);
+    QFileInfo fileInfo(clipboardPath);
+
+    if (clipboardPath.isEmpty() || !fileInfo.exists() || !fileInfo.isFile()) {
+        QMessageBox::warning(this,
+                             qApp->applicationName(),
+                             tr("The clipboard does not contain a valid LUT file path:\n\n%1")
+                                 .arg(clipboardText));
+        return;
+    }
+
+    const QString normalizedPath = fileInfo.absoluteFilePath();
+    const QString currentLut = QString::fromUtf8(m_producer->get("lut"));
+    if (normalizedPath != currentLut) {
+        m_producer->set("lut", normalizedPath.toUtf8().constData());
+        Settings.setOpenPath(fileInfo.path());
+        recreateProducer();
+    }
+    const QString fileName = QFileInfo(normalizedPath).fileName();
+    ui->lutValueLabel->setText(fileName);
+    ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(normalizedPath));
+    ui->lutClearButton->setEnabled(true);
+}
+
+void AvformatProducerWidget::on_lutCopyButton_clicked()
+{
+    if (!m_producer)
+        return;
+
+    const QString lutPath = QString::fromUtf8(m_producer->get("lut"));
+    if (!lutPath.isEmpty()) {
+        qApp->clipboard()->setText(QDir::toNativeSeparators(lutPath));
     }
 }
 
