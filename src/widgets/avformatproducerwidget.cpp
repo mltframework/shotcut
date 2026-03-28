@@ -1635,7 +1635,6 @@ void AvformatProducerWidget::on_lutButton_clicked()
                                                     Util::getFileDialogOptions());
     if (!filePath.isEmpty() && filePath != currentLut) {
         m_producer->set("lut", filePath.toUtf8().constData());
-        Settings.setOpenPath(QFileInfo(filePath).path());
         const QString fileName = QFileInfo(filePath).fileName();
         ui->lutValueLabel->setText(fileName);
         ui->lutValueLabel->setToolTip(QDir::toNativeSeparators(filePath));
@@ -1665,7 +1664,6 @@ void AvformatProducerWidget::on_lutPasteButton_clicked()
     const QString currentLut = QString::fromUtf8(m_producer->get("lut"));
     if (normalizedPath != currentLut) {
         m_producer->set("lut", normalizedPath.toUtf8().constData());
-        Settings.setOpenPath(fileInfo.path());
         recreateProducer();
     }
     const QString fileName = QFileInfo(normalizedPath).fileName();
