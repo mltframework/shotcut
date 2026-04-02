@@ -1,0 +1,35 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "cc-debug",
+            "displayName": "default system compiler (debug)",
+            "description": "Use C/C++ compilers in the $PATH with Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "generator": "Ninja",
+            "environment": {
+                "QT_VERSION": "6.8.3",
+                "PKG_CONFIG_PATH": "$env{HOME}/.local/lib/pkgconfig:$env{HOME}/.local/lib64/pkgconfig:$env{HOME}/opt/lib/pkgconfig:$env{HOME}/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/lib64/pkgconfig:$penv{PKG_CONFIG_PATH}",
+                "PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos/bin:$env{HOME}/opt/bin:/usr/local/bin:/opt/local/bin:$penv{PATH}"
+            },
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
+                "CLANG_FORMAT": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "format-build",
+            "description": "Run clang-format and then build",
+            "displayName": "clang-format and build",
+            "configurePreset": "cc-debug",
+            "targets": [
+                "clang-format",
+                "all"
+            ]
+        }
+    ]
+}
