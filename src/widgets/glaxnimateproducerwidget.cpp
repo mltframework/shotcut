@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 Meltytech, LLC
+ * Copyright (c) 2022-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -680,13 +680,87 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer,
     childProcess.setArguments(args);
     if (!childProcess.startDetached()) {
         LOG_DEBUG() << "failed to launch Glaxnimate with" << Settings.glaxnimatePath();
-        QMessageBox dialog(QMessageBox::Information,
-                           qApp->applicationName(),
-                           tr("The Glaxnimate program was not found.\n\n"
-                              "Click OK to open a file dialog to choose its location.\n"
-                              "Click Cancel if you do not have Glaxnimate."),
-                           QMessageBox::Ok | QMessageBox::Cancel,
-                           MAIN.window());
+#ifdef Q_OS_WIN
+        // Before prompting the user, try the Microsoft Store version of Glaxnimate.
+        {
+            const QString storedPath = Settings.glaxnimatePath();
+            // A path starting with "shell:" is a previously saved Store App ID.
+            // A path with a drive letter is a user-specified executable — skip Store check.
+            const bool isAppIdPath = storedPath.startsWith(QStringLiteral("shell:"));
+            const bool isExePath = storedPath.length() >= 2 && storedPath[1] == u':';
+            QString storeId;
+            if (isAppIdPath) {
+                storeId = storedPath;
+            } else {
+                // Refresh the App ID by searching for Glaxnimate by name in Get-StartApps.
+                QProcess checkProcess;
+                checkProcess.setProgram("powershell.exe");
+                checkProcess.setArguments(
+                    {"-NoProfile",
+                     "-NonInteractive",
+                     "-Command",
+                     QStringLiteral(
+                         "Get-StartApps | Where-Object { $_.Name -like \'*Glaxnimate*\' }"
+                         " | Select-Object -First 1 -ExpandProperty AppID")});
+                checkProcess.start();
+                checkProcess.waitForFinished(10000);
+                const QString foundAppId = QString::fromLocal8Bit(
+                    checkProcess.readAllStandardOutput().trimmed());
+                if (!foundAppId.isEmpty()) {
+                    storeId = QStringLiteral("shell:AppsFolder\\") + foundAppId;
+                    if (storeId != storedPath) {
+                        Settings.setGlaxnimatePath(storeId);
+                        LOG_INFO() << "updated Glaxnimate Store AppID to" << storeId;
+                    }
+                }
+            }
+            if (!storeId.isEmpty()) {
+                m_server.reset(new QLocalServer);
+                connect(m_server.get(),
+                        &QLocalServer::newConnection,
+                        this,
+                        &GlaxnimateIpcServer::onConnect);
+                QStringList storeArgs;
+                if (m_server->listen(name)) {
+                    storeArgs << "--ipc" << name << filename;
+                    m_sharedMemory.reset(new QSharedMemory(name));
+                } else {
+                    m_server.reset();
+                    storeArgs << filename;
+                }
+                QProcess storeProcess;
+                storeProcess.setProgram("cmd.exe");
+                storeProcess.setArguments(QStringList{"/c", "start", "", storeId} + storeArgs);
+                storeProcess.start();
+                storeProcess.waitForFinished(5000);
+                if (storeProcess.exitCode() == 0) {
+                    if (!isAppIdPath) {
+                        // Save the newly found Store path for faster launch next time.
+                        Settings.setGlaxnimatePath(storeId);
+                        LOG_INFO() << "saved Glaxnimate Store path:" << storeId;
+                    }
+                    LOG_DEBUG() << "Launched Glaxnimate from Microsoft Store:" << storeId;
+                    return;
+                }
+                LOG_DEBUG() << "failed to launch Glaxnimate from Microsoft Store:" << storeId;
+                if (isAppIdPath) {
+                    // Clear the stale Store path so the dialog is shown on the next attempt.
+                    Settings.resetGlaxnimatePath();
+                }
+                m_server.reset();
+                m_sharedMemory.reset();
+            }
+        }
+#endif
+        QMessageBox
+            dialog(QMessageBox::Information,
+                   qApp->applicationName(),
+                   tr("The <b><a href=\"https://glaxnimate.org\">Glaxnimate</a></b> program "
+                      "was not found.\n\n"
+                      "Click OK to open a file dialog to choose its location.\n"
+                      "Click Cancel if you do not have Glaxnimate."),
+                   QMessageBox::Ok | QMessageBox::Cancel,
+                   MAIN.window());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.setEscapeButton(QMessageBox::Cancel);
         dialog.setWindowModality(QmlApplication::dialogModality());

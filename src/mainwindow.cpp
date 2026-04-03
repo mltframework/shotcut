@@ -2892,7 +2892,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
             "<li><a href=\"https://opus-codec.org/\">Opus</a> audio codec</li>"
             "<li><a href=\"https://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
             "<li><a href=\"https://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
-            "<li><a href=\"https://glaxnimate.mattbas.org/\">Glaxnimate</a> vector animation "
+            "<li><a href=\"https://glaxnimate.org/\">Glaxnimate</a> vector drawing &amp; animation "
             "program</li>"
             "</ul></p>"
             "<p>The source code used to build this program can be downloaded from "

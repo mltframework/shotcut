@@ -1416,6 +1416,11 @@ void ShotcutSettings::setGlaxnimatePath(const QString &path)
     settings.setValue("glaxnimatePath", path);
 }
 
+void ShotcutSettings::resetGlaxnimatePath()
+{
+    settings.remove("glaxnimatePath");
+}
+
 bool ShotcutSettings::exportRangeMarkers() const
 {
     return settings.value("exportRangeMarkers", true).toBool();
