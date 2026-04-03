@@ -185,3 +185,4 @@ No `CMakeLists.txt`, `resources.qrc`, or `qmldir` changes are needed — the ent
 - Connections blocks: `function onSignal()` style with `target:` placed last.
 - Add the standard GPL copyright header to every `.qml` file (see `qml.instructions.md`).
 - `meta.qml` files do **not** get a copyright header.
+- Checkboxes that are not for a group should always be in the second column with the checkbox preceding its text.
