@@ -50,7 +50,7 @@ AOM_REVISION="v3.13.1"
 ENABLE_VMAF=1
 VMAF_HEAD=0
 VMAF_REVISION="v3.0.0"
-ENABLE_GLAXNIMATE=1
+ENABLE_GLAXNIMATE=0
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
@@ -1243,26 +1243,21 @@ function deploy
     cmd cp -p "$QTDIR"/bin/Qt6{Charts,Concurrent,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WebSockets,Widgets,Xml}.dll .
   fi
 
-  for lib in *.dll; do
-    bundle_dlls "$lib"
-  done
-  for lib in lib/{frei0r-1,ladspa,mlt}/*.dll; do
-    bundle_dlls "$lib"
-  done
-  bundle_dlls glaxnimate.exe
-  # for good measure
+  if [ "$ENABLE_GLAXNIMATE" = "1" ]; then
+    bundle_dlls glaxnimate.exe
+    log Copying some DLLs and python libraries for Glaxnimate
+    cmd cp -p /${TARGET_ARCH}/bin/libpython${PYTHON_VERSION}.dll python${PYTHON_VERSION_DLL}.dll
+    cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
+    cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
+    cmd cp -r /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/*.py \
+              /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/lib-dynload/* \
+              /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/{json,collections,encodings,logging,urllib} \
+        share/glaxnimate/glaxnimate/pythonhome/lib/python
+  fi
+
   for lib in $(find -name '*.dll' -or -name '*.exe'); do
     bundle_dlls "$lib"
   done
-
-  log Copying some DLLs and python libraries for Glaxnimate
-  cmd cp -p /${TARGET_ARCH}/bin/libpython${PYTHON_VERSION}.dll python${PYTHON_VERSION_DLL}.dll
-  cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
-  cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
-  cmd cp -r /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/*.py \
-            /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/lib-dynload/* \
-            /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/{json,collections,encodings,logging,urllib} \
-      share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   log Copying some libs from mlt-prebuilt
   cmd cp -p "$HOME"/bin/*.dll .

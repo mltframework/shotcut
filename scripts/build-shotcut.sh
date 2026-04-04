@@ -88,7 +88,7 @@ SVTAV1_HEAD=0
 SVTAV1_REVISION="v3.1.0"
 VMAF_HEAD=0
 VMAF_REVISION="v3.0.0"
-ENABLE_GLAXNIMATE=1
+ENABLE_GLAXNIMATE=0
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
@@ -1979,10 +1979,12 @@ function deploy_mac
   cmd cp -a "$FINAL_INSTALL_DIR"/share/vmaf Resources
 
   # Glaxnimate data
-  log Copying Glaxnimate data
-  cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
-  cmd install -d lib
-  cmd cp -pLR /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
+  if [ "$ENABLE_GLAXNIMATE" = "1" ]; then
+    log Copying Glaxnimate data
+    cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
+    cmd install -d lib
+    cmd cp -pLR /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
+  fi
 
   # Whisper.cpp models
   log Copying Whisper.cpp models
@@ -2062,7 +2064,9 @@ function create_startup_script {
     return
   fi
 
-  cmd cp -pLR /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
+  if [ "$ENABLE_GLAXNIMATE" = "1" ]; then
+    cmd cp -pLR /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
+  fi
   cmd cp -p /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 "$FINAL_INSTALL_DIR"/lib
   cmd cp -p /usr/lib/x86_64-linux-gnu/libssl.so.1.1 "$FINAL_INSTALL_DIR"/lib/libssl.so
 
