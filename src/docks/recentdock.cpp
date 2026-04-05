@@ -26,8 +26,34 @@
 #include <QDir>
 #include <QKeyEvent>
 #include <QMenu>
+#include <QMimeData>
+#include <QUrl>
 
 static const int MaxItems = 200;
+
+class RecentModel : public QStandardItemModel
+{
+public:
+    explicit RecentModel(QObject *parent = nullptr)
+        : QStandardItemModel(parent)
+    {}
+
+    QMimeData *mimeData(const QModelIndexList &indexes) const override
+    {
+        auto *mime = QStandardItemModel::mimeData(indexes);
+        if (!mime)
+            return mime;
+        QList<QUrl> urls;
+        for (const auto &index : indexes) {
+            const auto filePath = index.data(Qt::ToolTipRole).toString();
+            if (!filePath.isEmpty())
+                urls << QUrl::fromLocalFile(filePath);
+        }
+        if (!urls.isEmpty())
+            mime->setUrls(urls);
+        return mime;
+    }
+};
 
 RecentDock::RecentDock(QWidget *parent)
     : QDockWidget(parent)
@@ -38,6 +64,7 @@ RecentDock::RecentDock(QWidget *parent)
     QIcon icon = QIcon::fromTheme("document-open-recent",
                                   QIcon(":/icons/oxygen/32x32/actions/document-open-recent.png"));
     toggleViewAction()->setIcon(icon);
+    m_model = new RecentModel(this);
     m_recent = Settings.recent();
 
 #ifdef Q_OS_WIN
@@ -63,9 +90,9 @@ RecentDock::RecentDock(QWidget *parent)
     foreach (QString s, m_recent) {
         QStandardItem *item = new QStandardItem(Util::baseName(s));
         item->setToolTip(QDir::toNativeSeparators(s));
-        m_model.appendRow(item);
+        m_model->appendRow(item);
     }
-    m_proxyModel.setSourceModel(&m_model);
+    m_proxyModel.setSourceModel(m_model);
     m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->listWidget->setModel(&m_proxyModel);
     LOG_DEBUG() << "end";
@@ -88,7 +115,7 @@ void RecentDock::add(const QString &s)
     QString name = remove(s);
     QStandardItem *item = new QStandardItem(name);
     item->setToolTip(QDir::toNativeSeparators(s));
-    m_model.insertRow(0, item);
+    m_model->insertRow(0, item);
     m_recent.prepend(filePath);
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
@@ -114,9 +141,9 @@ QString RecentDock::remove(const QString &s)
     Settings.setRecent(m_recent);
 
     QString name = Util::baseName(filePath);
-    QList<QStandardItem *> items = m_model.findItems(name);
+    QList<QStandardItem *> items = m_model->findItems(name);
     if (items.count() > 0)
-        m_model.removeRow(items.first()->row());
+        m_model->removeRow(items.first()->row());
     return name;
 }
 
@@ -147,7 +174,7 @@ void RecentDock::on_actionDelete_triggered()
         auto url = m_recent[row];
         m_recent.removeAt(row);
         Settings.setRecent(m_recent);
-        m_model.removeRow(row);
+        m_model->removeRow(row);
         if (url.endsWith(".mlt")) {
             auto ls = Settings.projects();
             if (ls.removeAll(url) > 0)

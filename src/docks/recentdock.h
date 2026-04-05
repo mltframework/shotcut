@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ protected:
 private:
     Ui::RecentDock *ui;
     QStringList m_recent;
-    QStandardItemModel m_model;
+    QStandardItemModel *m_model;
     QSortFilterProxyModel m_proxyModel;
 
 private slots:
