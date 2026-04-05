@@ -50,13 +50,21 @@ Rectangle {
         let before = multitrack.scaleFactor;
         if (isNaN(value))
             value = 0;
+        let playheadVisualX = timeline.position * before - tracksFlickable.contentX;
+        let playheadWasVisible = playheadVisualX >= 0 && playheadVisualX <= tracksFlickable.width;
         multitrack.scaleFactor = Math.pow(Math.max(value, 0), 3) + 0.01;
-        if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead && !settings.timelineScrollZoom)
-            tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
+        if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead) {
+            if (settings.timelineScrollZoom) {
+                if (playheadWasVisible)
+                    tracksFlickable.contentX = Math.max(timeline.position * multitrack.scaleFactor - playheadVisualX, 0);
+                else
+                    scrollZoomTimer.restart();
+            } else {
+                tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
+            }
+        }
         for (let i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false);
-        if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
-            scrollZoomTimer.restart();
     }
 
     function adjustZoom(by, targetX) {
@@ -98,7 +106,9 @@ Rectangle {
 
         interval: 100
         onTriggered: {
-            Logic.scrollIfNeeded(true);
+            let playheadX = timeline.position * multitrack.scaleFactor;
+            if (playheadX < tracksFlickable.contentX || playheadX > tracksFlickable.contentX + tracksFlickable.width)
+                Logic.scrollIfNeeded(true);
         }
     }
 

@@ -52,10 +52,19 @@ Rectangle {
         var before = timeScale;
         if (isNaN(value))
             value = 0;
+        var playheadVisualX = producer.position * before - tracksFlickable.contentX;
+        var playheadWasVisible = playheadVisualX >= 0 && playheadVisualX <= tracksFlickable.width;
         keyframes.timeScale = Math.pow(value, 3) + 0.01;
-        tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
-        if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
-            scrollZoomTimer.restart();
+        if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead) {
+            if (settings.timelineScrollZoom) {
+                if (playheadWasVisible)
+                    tracksFlickable.contentX = Logic.clamp(producer.position * timeScale - playheadVisualX, 0, Logic.scrollMax().x);
+                else
+                    scrollZoomTimer.restart();
+            } else {
+                tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
+            }
+        }
     }
 
     function adjustZoom(by, targetX) {
@@ -88,7 +97,9 @@ Rectangle {
 
         interval: 100
         onTriggered: {
-            Logic.scrollIfNeeded(false);
+            let playheadX = producer.position * timeScale;
+            if (playheadX < tracksFlickable.contentX || playheadX > tracksFlickable.contentX + tracksFlickable.width)
+                Logic.scrollIfNeeded(false);
         }
     }
 

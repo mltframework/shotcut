@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function scrollIfNeeded(center, continouous) {
+function scrollIfNeeded(center, continuous) {
     let x = timeline.position * multitrack.scaleFactor;
     if (!tracksFlickable) return;
     if (center) {
@@ -26,7 +26,7 @@ function scrollIfNeeded(center, continouous) {
         else if (x < tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
     } else if (tracksContainer.width > tracksFlickable.width) {
-        if (continouous) {
+        if (continuous) {
             if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
                 tracksFlickable.contentX = x - tracksFlickable.width + 50;
             else if (x < 50)
