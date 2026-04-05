@@ -64,7 +64,8 @@ Controller::Controller()
     , m_blockRefresh(false)
 {
     LOG_DEBUG() << "begin";
-    ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
+    if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY"))
+        ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
     resetLocale();
