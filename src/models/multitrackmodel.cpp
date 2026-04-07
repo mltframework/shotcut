@@ -67,12 +67,10 @@ int MultitrackModel::rowCount(const QModelIndex &parent) const
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
-            int n = playlist.count();
-            //            LOG_DEBUG() << __FUNCTION__ << parent << i << n;
-            return n;
-        } else {
-            return 0;
+            if (playlist.is_valid())
+                return playlist.count();
         }
+        return 0;
     }
     return m_trackList.count();
 }
@@ -2641,7 +2639,8 @@ void MultitrackModel::consolidateBlanksAllTracks()
         std::unique_ptr<Mlt::Producer> track(m_tractor->track(t.mlt_index));
         if (track && track->is_valid()) {
             Mlt::Playlist playlist(*track);
-            consolidateBlanks(playlist, i);
+            if (playlist.is_valid())
+                consolidateBlanks(playlist, i);
         }
         ++i;
     }
@@ -2692,16 +2691,18 @@ void MultitrackModel::adjustBackgroundDuration()
     std::unique_ptr<Mlt::Producer> track(m_tractor->track(0));
     if (track && track->is_valid()) {
         Mlt::Playlist playlist(*track);
-        std::unique_ptr<Mlt::Producer> clip(playlist.get_clip(0));
-        if (clip && clip->is_valid()) {
-            if (duration != clip->parent().get_length()) {
-                clip->parent().set("length",
-                                   clip->parent().frames_to_time(duration, mlt_time_clock));
-                clip->parent().set_in_and_out(0, duration - 1);
-                clip->set("length", clip->parent().frames_to_time(duration, mlt_time_clock));
-                clip->set_in_and_out(0, duration - 1);
-                playlist.resize_clip(0, 0, duration - 1);
-                emit durationChanged();
+        if (playlist.is_valid()) {
+            std::unique_ptr<Mlt::Producer> clip(playlist.get_clip(0));
+            if (clip && clip->is_valid()) {
+                if (duration != clip->parent().get_length()) {
+                    clip->parent().set("length",
+                                       clip->parent().frames_to_time(duration, mlt_time_clock));
+                    clip->parent().set_in_and_out(0, duration - 1);
+                    clip->set("length", clip->parent().frames_to_time(duration, mlt_time_clock));
+                    clip->set_in_and_out(0, duration - 1);
+                    playlist.resize_clip(0, 0, duration - 1);
+                    emit durationChanged();
+                }
             }
         }
     }
@@ -3815,11 +3816,14 @@ void MultitrackModel::getAudioLevels()
         int i = m_trackList.at(trackIx).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Mlt::Playlist playlist(*track);
-        for (int clipIx = 0; clipIx < playlist.count(); clipIx++) {
-            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIx));
-            if (clip && clip->is_valid() && !clip->is_blank() && clip->get_int("audio_index") > -1) {
-                QModelIndex index = createIndex(clipIx, 0, trackIx);
-                AudioLevelsTask::start(clip->parent(), this, index);
+        if (playlist.is_valid()) {
+            for (int clipIx = 0; clipIx < playlist.count(); clipIx++) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIx));
+                if (clip && clip->is_valid() && !clip->is_blank()
+                    && clip->get_int("audio_index") > -1) {
+                    QModelIndex index = createIndex(clipIx, 0, trackIx);
+                    AudioLevelsTask::start(clip->parent(), this, index);
+                }
             }
         }
     }
@@ -3893,9 +3897,11 @@ void MultitrackModel::convertOldDoc()
     QScopedPointer<Mlt::Producer> track(m_tractor->track(0));
     if (track) {
         Mlt::Playlist playlist(*track);
-        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(0));
-        if (info && info->producer->is_valid() && QString(info->producer->get("id")) == "black")
-            info->producer->set("set.test_audio", 0);
+        if (playlist.is_valid()) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(0));
+            if (info && info->producer->is_valid() && QString(info->producer->get("id")) == "black")
+                info->producer->set("set.test_audio", 0);
+        }
     }
 }
 

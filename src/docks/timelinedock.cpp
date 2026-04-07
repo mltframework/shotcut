@@ -1858,7 +1858,8 @@ int TimelineDock::clipCount(int trackIndex) const
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
-            return playlist.count();
+            if (playlist.is_valid())
+                return playlist.count();
         }
     }
     return 0;
