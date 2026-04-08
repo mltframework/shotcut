@@ -541,7 +541,7 @@ MuteTrackCommand::MuteTrackCommand(MultitrackModel &model, int trackIndex, QUndo
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsMuteRole).toBool())
 {
-    setText(QObject::tr("Toggle track mute"));
+    setText(m_oldValue ? QObject::tr("Unmute track") : QObject::tr("Mute track"));
 }
 
 void MuteTrackCommand::redo()
@@ -562,7 +562,7 @@ HideTrackCommand::HideTrackCommand(MultitrackModel &model, int trackIndex, QUndo
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsHiddenRole).toBool())
 {
-    setText(QObject::tr("Toggle track hidden"));
+    setText(m_oldValue ? QObject::tr("Show track") : QObject::tr("Hide track"));
 }
 
 void HideTrackCommand::redo()
@@ -612,7 +612,7 @@ LockTrackCommand::LockTrackCommand(MultitrackModel &model,
     , m_value(value)
     , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsLockedRole).toBool())
 {
-    setText(QObject::tr("Lock track"));
+    setText(value ? QObject::tr("Lock track") : QObject::tr("Unlock track"));
 }
 
 void LockTrackCommand::redo()
