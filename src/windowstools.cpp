@@ -93,15 +93,14 @@ void WindowsTaskbarButton::finishProgress(bool isSuccess, bool stopped)
         return;
     HWND hwnd = reinterpret_cast<HWND>(m_window->winId());
     if (isSuccess) {
-        tb->SetProgressValue(hwnd, 100, 100);
-        tb->SetProgressState(hwnd, TBPF_NORMAL);
-        FLASHWINFO fi{};
-        fi.cbSize = sizeof(fi);
-        fi.hwnd = hwnd;
-        fi.dwFlags = FLASHW_TRAY;
-        fi.uCount = 3;
-        fi.dwTimeout = 500;
-        FlashWindowEx(&fi);
+        tb->SetProgressState(hwnd, TBPF_NOPROGRESS);
+        // FLASHWINFO fi{};
+        // fi.cbSize = sizeof(fi);
+        // fi.hwnd = hwnd;
+        // fi.dwFlags = FLASHW_TRAY;
+        // fi.uCount = 1;
+        // fi.dwTimeout = 0;
+        // FlashWindowEx(&fi);
     } else if (stopped) {
         tb->SetProgressState(hwnd, TBPF_PAUSED);
     } else {
