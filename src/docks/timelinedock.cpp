@@ -2049,10 +2049,20 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
 void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 {
     int trackIndex = currentTrack(), clipIndex = -1;
-    chooseClipAtPosition(m_position, trackIndex, clipIndex);
-    if (trackIndex < 0 || clipIndex < 0)
-        return;
-    setCurrentTrack(trackIndex);
+    if (selection().isEmpty()) {
+        chooseClipAtPosition(m_position, trackIndex, clipIndex);
+        if (trackIndex < 0 || clipIndex < 0)
+            return;
+        setCurrentTrack(trackIndex);
+    } else {
+        auto &selected = selection().first();
+        trackIndex = selected.y();
+        clipIndex = selected.x();
+        if (trackIndex < 0)
+            trackIndex = currentTrack();
+        if (clipIndex < 0)
+            clipIndex = clipIndexAtPlayhead(trackIndex);
+    }
 
     int i = m_model.trackList().at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
