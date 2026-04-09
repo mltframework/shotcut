@@ -10,6 +10,8 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   commands/subtitlecommands.cpp commands/subtitlecommands.h
   commands/timelinecommands.cpp commands/timelinecommands.h
   commands/undohelper.cpp commands/undohelper.h
+  controllers/addonmetadataparser.cpp controllers/addonmetadataparser.h
+  controllers/addonqmlgenerator.cpp controllers/addonqmlgenerator.h
   controllers/filtercontroller.cpp controllers/filtercontroller.h
   controllers/scopecontroller.cpp controllers/scopecontroller.h
   database.cpp database.h
@@ -18,6 +20,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/addencodepresetdialog.ui
   dialogs/alignaudiodialog.cpp dialogs/alignaudiodialog.h
   dialogs/alignmentarray.cpp dialogs/alignmentarray.h
+  dialogs/addonfiltersdialog.cpp dialogs/addonfiltersdialog.h
   dialogs/bitratedialog.h dialogs/bitratedialog.cpp
   dialogs/customprofiledialog.cpp dialogs/customprofiledialog.h
   dialogs/customprofiledialog.ui
@@ -85,6 +88,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   mltcontroller.cpp mltcontroller.h
   mltxmlchecker.cpp mltxmlchecker.h
   models/actionsmodel.cpp models/actionsmodel.h
+  models/addonservicemodel.cpp models/addonservicemodel.h
   models/alignclipsmodel.cpp models/alignclipsmodel.h
   models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
   models/audiolevelstask.cpp models/audiolevelstask.h
@@ -114,6 +118,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/qmlextension.cpp qmltypes/qmlextension.h
   qmltypes/qmlfile.cpp qmltypes/qmlfile.h
   qmltypes/qmlfilter.cpp qmltypes/qmlfilter.h
+  qmltypes/qmlfiltermenu.cpp qmltypes/qmlfiltermenu.h
   qmltypes/qmlmarkermenu.cpp qmltypes/qmlmarkermenu.h
   qmltypes/qmlmetadata.cpp qmltypes/qmlmetadata.h
   qmltypes/qmlproducer.cpp qmltypes/qmlproducer.h

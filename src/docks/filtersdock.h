@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,17 @@
 
 #include <QDockWidget>
 #include <QObject>
+#include <QPointer>
 #include <QQuickWidget>
 
 class QmlFilter;
 class QmlMetadata;
 class MetadataModel;
+class AddOnServiceModel;
 class AttachedFiltersModel;
 class MotionTrackerModel;
 class SubtitlesModel;
+class QDialog;
 
 class FiltersDock : public QDockWidget
 {
@@ -38,6 +41,7 @@ class FiltersDock : public QDockWidget
 
 public:
     explicit FiltersDock(MetadataModel *metadataModel,
+                         AddOnServiceModel *addOnServiceModel,
                          AttachedFiltersModel *attachedModel,
                          MotionTrackerModel *motionTrackerModel,
                          SubtitlesModel *subtitlesModel,
@@ -58,6 +62,7 @@ public slots:
     void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
     void showCopyFilterMenu();
+    void showAddOnMetadataHelp(const QString &title, const QString &text);
     void onServiceInChanged(int delta, Mlt::Service *service);
     void load();
 
@@ -67,8 +72,10 @@ protected:
 
 private:
     void setupActions();
+    void closeAddOnMetadataHelp();
     QQuickWidget m_qview;
     QmlProducer m_producer;
+    QPointer<QDialog> m_addOnMetadataDialog;
     unsigned loadTries{0};
 };
 
