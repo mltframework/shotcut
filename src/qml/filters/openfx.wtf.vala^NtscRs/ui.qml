@@ -42,19 +42,19 @@ Shotcut.KeyframableFilter {
 
         // General
         randomSeedSlider.value = filter.getDouble('36', position);
-        useFieldCombo.currentIndex = Math.max(0, useFieldCombo.model.indexOf(filter.get('30')));
-        lowpassTypeCombo.currentIndex = Math.max(0, lowpassTypeCombo.model.indexOf(filter.get('46')));
-        inputLumaCombo.currentIndex = Math.max(0, inputLumaCombo.model.indexOf(filter.get('38')));
-        chromaLowPassInCombo.currentIndex = Math.max(0, chromaLowPassInCombo.model.indexOf(filter.get('0')));
+        useFieldCombo.currentIndex = Math.max(0, useFieldCombo.indexOfValue(filter.get('30')));
+        lowpassTypeCombo.currentIndex = Math.max(0, lowpassTypeCombo.indexOfValue(filter.get('46')));
+        inputLumaCombo.currentIndex = Math.max(0, inputLumaCombo.indexOfValue(filter.get('38')));
+        chromaLowPassInCombo.currentIndex = Math.max(0, chromaLowPassInCombo.indexOfValue(filter.get('0')));
         sharpeningSlider.value = filter.getDouble(sharpeningParam, position);
         snowSlider.value = filter.getDouble(snowParam, position);
         snowAnisotropySlider.value = filter.getDouble('34', position);
-        scanlinePhaseShiftCombo.currentIndex = Math.max(0, scanlinePhaseShiftCombo.model.indexOf(filter.get('2')));
+        scanlinePhaseShiftCombo.currentIndex = Math.max(0, scanlinePhaseShiftCombo.indexOfValue(filter.get('2')));
         scanlinePhaseOffsetSlider.value = filter.getDouble('3', position);
-        chromaDemodCombo.currentIndex = Math.max(0, chromaDemodCombo.model.indexOf(filter.get('33')));
+        chromaDemodCombo.currentIndex = Math.max(0, chromaDemodCombo.indexOfValue(filter.get('33')));
         lumaSmearSlider.value = filter.getDouble('45', position);
         vertBlendChromaCheck.checked = filter.get('25') === '1';
-        chromaLowPassOutCombo.currentIndex = Math.max(0, chromaLowPassOutCombo.model.indexOf(filter.get('10')));
+        chromaLowPassOutCombo.currentIndex = Math.max(0, chromaLowPassOutCombo.indexOfValue(filter.get('10')));
         chromaPhaseErrorSlider.value = filter.getDouble('37', position);
         chromaPhaseNoiseSlider.value = filter.getDouble('7', position);
         chromaDelayHSlider.value = filter.getDouble('8', position);
@@ -112,7 +112,7 @@ Shotcut.KeyframableFilter {
 
         // VHS emulation
         vhsEnabledCheck.checked = filter.get('23') === '1';
-        vhsTapeSpeedCombo.currentIndex = Math.max(0, vhsTapeSpeedCombo.model.indexOf(filter.get('24')));
+        vhsTapeSpeedCombo.currentIndex = Math.max(0, vhsTapeSpeedCombo.indexOfValue(filter.get('24')));
         vhsChromaLossSlider.value = filter.getDouble('26', position);
         vhsSharpenEnabledCheck.checked = filter.get('47') === '1';
         vhsSharpenIntSlider.value = filter.getDouble('27', position);
@@ -162,10 +162,10 @@ Shotcut.KeyframableFilter {
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set('36', 0);
-            filter.set('30', useFieldCombo.model[3]);
-            filter.set('46', lowpassTypeCombo.model[1]);
-            filter.set('38', inputLumaCombo.model[0]);
-            filter.set('0', chromaLowPassInCombo.model[0]);
+            filter.set('30', 'Interleaved (upper first)');
+            filter.set('46', 'Butterworth (sharper)');
+            filter.set('38', 'Notch');
+            filter.set('0', 'Full');
             filter.set(sharpeningParam, sharpeningDefault);
             filter.set('52', 1);
             filter.set(compNoiseIntParam, compNoiseIntDefault);
@@ -173,9 +173,9 @@ Shotcut.KeyframableFilter {
             filter.set('54', 1);
             filter.set(snowParam, snowDefault);
             filter.set('34', 0.5);
-            filter.set('2', scanlinePhaseShiftCombo.model[2]);
+            filter.set('2', '180 degrees');
             filter.set('3', 0);
-            filter.set('33', chromaDemodCombo.model[1]);
+            filter.set('33', 'Notch');
             filter.set('45', 0.5);
             filter.set('11', 1);
             filter.set('12', 8);
@@ -207,7 +207,7 @@ Shotcut.KeyframableFilter {
             filter.set('8', 0.0);
             filter.set('9', 0);
             filter.set('23', 1);
-            filter.set('24', vhsTapeSpeedCombo.model[1]);
+            filter.set('24', 'LP (Long Play)');
             filter.set('26', 2.5e-05);
             filter.set('47', 1);
             filter.set('27', 0.25);
@@ -218,7 +218,7 @@ Shotcut.KeyframableFilter {
             filter.set('40', 0.05);
             filter.set('41', 2);
             filter.set('25', 1);
-            filter.set('10', chromaLowPassOutCombo.model[0]);
+            filter.set('10', 'Full');
             filter.set('61', 1);
             filter.set('32', 1.0);
             filter.set('59', 1.0);
@@ -304,17 +304,26 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: useFieldCombo
             implicitWidth: 200
-            model: ['Alternating', 'Upper only', 'Lower only', 'Interleaved (upper first)', 'Interleaved (lower first)', 'Both']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Alternating', text: qsTr('Alternating')},
+                {value: 'Upper only', text: qsTr('Upper only')},
+                {value: 'Lower only', text: qsTr('Lower only')},
+                {value: 'Interleaved (upper first)', text: qsTr('Interleaved (upper first)')},
+                {value: 'Interleaved (lower first)', text: qsTr('Interleaved (lower first)')},
+                {value: 'Both', text: qsTr('Both')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('30', model[currentIndex]);
+                filter.set('30', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                useFieldCombo.currentIndex = 3;
-                filter.set('30', useFieldCombo.model[3]);
+                useFieldCombo.currentIndex = useFieldCombo.indexOfValue('Interleaved (upper first)');
+                filter.set('30', useFieldCombo.currentValue);
             }
         }
         Item {}
@@ -326,17 +335,22 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: lowpassTypeCombo
             implicitWidth: 200
-            model: ['Constant K (blurry)', 'Butterworth (sharper)']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Constant K (blurry)', text: qsTr('Constant K (blurry)')},
+                {value: 'Butterworth (sharper)', text: qsTr('Butterworth (sharper)')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('46', model[currentIndex]);
+                filter.set('46', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                lowpassTypeCombo.currentIndex = 1;
-                filter.set('46', lowpassTypeCombo.model[1]);
+                lowpassTypeCombo.currentIndex = lowpassTypeCombo.indexOfValue('Butterworth (sharper)');
+                filter.set('46', lowpassTypeCombo.currentValue);
             }
         }
         Item {}
@@ -348,17 +362,23 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: inputLumaCombo
             implicitWidth: 200
-            model: ['Notch', 'Box', 'None']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Notch', text: qsTr('Notch')},
+                {value: 'Box', text: qsTr('Box')},
+                {value: 'None', text: qsTr('None')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('38', model[currentIndex]);
+                filter.set('38', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                inputLumaCombo.currentIndex = 0;
-                filter.set('38', inputLumaCombo.model[0]);
+                inputLumaCombo.currentIndex = inputLumaCombo.indexOfValue('Notch');
+                filter.set('38', inputLumaCombo.currentValue);
             }
         }
         Item {}
@@ -370,17 +390,23 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaLowPassInCombo
             implicitWidth: 200
-            model: ['Full', 'Light', 'None']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Full', text: qsTr('Full')},
+                {value: 'Light', text: qsTr('Light')},
+                {value: 'None', text: qsTr('None')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('0', model[currentIndex]);
+                filter.set('0', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                chromaLowPassInCombo.currentIndex = 0;
-                filter.set('0', chromaLowPassInCombo.model[0]);
+                chromaLowPassInCombo.currentIndex = chromaLowPassInCombo.indexOfValue('Full');
+                filter.set('0', chromaLowPassInCombo.currentValue);
             }
         }
         Item {}
@@ -459,17 +485,24 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: scanlinePhaseShiftCombo
             implicitWidth: 200
-            model: ['0 degrees', '90 degrees', '180 degrees', '270 degrees']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: '0 degrees', text: qsTr('0 degrees')},
+                {value: '90 degrees', text: qsTr('90 degrees')},
+                {value: '180 degrees', text: qsTr('180 degrees')},
+                {value: '270 degrees', text: qsTr('270 degrees')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('2', model[currentIndex]);
+                filter.set('2', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                scanlinePhaseShiftCombo.currentIndex = 2;
-                filter.set('2', scanlinePhaseShiftCombo.model[2]);
+                scanlinePhaseShiftCombo.currentIndex = scanlinePhaseShiftCombo.indexOfValue('180 degrees');
+                filter.set('2', scanlinePhaseShiftCombo.currentValue);
             }
         }
         Item {}
@@ -502,17 +535,24 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaDemodCombo
             implicitWidth: 200
-            model: ['Box', 'Notch', '1-line comb', '2-line comb']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Box', text: qsTr('Box')},
+                {value: 'Notch', text: qsTr('Notch')},
+                {value: '1-line comb', text: qsTr('1-line comb')},
+                {value: '2-line comb', text: qsTr('2-line comb')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('33', model[currentIndex]);
+                filter.set('33', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                chromaDemodCombo.currentIndex = 1;
-                filter.set('33', chromaDemodCombo.model[1]);
+                chromaDemodCombo.currentIndex = chromaDemodCombo.indexOfValue('Notch');
+                filter.set('33', chromaDemodCombo.currentValue);
             }
         }
         Item {}
@@ -545,17 +585,23 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaLowPassOutCombo
             implicitWidth: 200
-            model: ['Full', 'Light', 'None']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'Full', text: qsTr('Full')},
+                {value: 'Light', text: qsTr('Light')},
+                {value: 'None', text: qsTr('None')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('10', model[currentIndex]);
+                filter.set('10', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                chromaLowPassOutCombo.currentIndex = 0;
-                filter.set('10', chromaLowPassOutCombo.model[0]);
+                chromaLowPassOutCombo.currentIndex = chromaLowPassOutCombo.indexOfValue('Full');
+                filter.set('10', chromaLowPassOutCombo.currentValue);
             }
         }
         Item {}
@@ -1322,17 +1368,24 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: vhsTapeSpeedCombo
             implicitWidth: 200
-            model: ['SP (Standard Play)', 'LP (Long Play)', 'EP (Extended Play)', 'None']
+            textRole: 'text'
+            valueRole: 'value'
+            model: [
+                {value: 'SP (Standard Play)', text: qsTr('SP (Standard Play)')},
+                {value: 'LP (Long Play)', text: qsTr('LP (Long Play)')},
+                {value: 'EP (Extended Play)', text: qsTr('EP (Extended Play)')},
+                {value: 'None', text: qsTr('None')}
+            ]
             onActivated: {
                 if (blockUpdate)
                     return;
-                filter.set('24', model[currentIndex]);
+                filter.set('24', currentValue);
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                vhsTapeSpeedCombo.currentIndex = 1;
-                filter.set('24', vhsTapeSpeedCombo.model[1]);
+                vhsTapeSpeedCombo.currentIndex = vhsTapeSpeedCombo.indexOfValue('LP (Long Play)');
+                filter.set('24', vhsTapeSpeedCombo.currentValue);
             }
         }
         Item {}
