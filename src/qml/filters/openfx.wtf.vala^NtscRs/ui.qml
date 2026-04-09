@@ -304,7 +304,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: useFieldCombo
             implicitWidth: 200
-            model: [qsTr('Alternating'), qsTr('Upper only'), qsTr('Lower only'), qsTr('Interleaved (upper first)'), qsTr('Interleaved (lower first)'), qsTr('Both')]
+            model: ['Alternating', 'Upper only', 'Lower only', 'Interleaved (upper first)', 'Interleaved (lower first)', 'Both']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -326,7 +326,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: lowpassTypeCombo
             implicitWidth: 200
-            model: [qsTr('Constant K (blurry)'), qsTr('Butterworth (sharper)')]
+            model: ['Constant K (blurry)', 'Butterworth (sharper)']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -348,7 +348,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: inputLumaCombo
             implicitWidth: 200
-            model: [qsTr('Notch'), qsTr('Box'), qsTr('None')]
+            model: ['Notch', 'Box', 'None']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -370,7 +370,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaLowPassInCombo
             implicitWidth: 200
-            model: [qsTr('Full'), qsTr('Light'), qsTr('None')]
+            model: ['Full', 'Light', 'None']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -459,7 +459,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: scanlinePhaseShiftCombo
             implicitWidth: 200
-            model: [qsTr('0 degrees'), qsTr('90 degrees'), qsTr('180 degrees'), qsTr('270 degrees')]
+            model: ['0 degrees', '90 degrees', '180 degrees', '270 degrees']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -502,7 +502,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaDemodCombo
             implicitWidth: 200
-            model: [qsTr('Box'), qsTr('Notch'), qsTr('1-line comb'), qsTr('2-line comb')]
+            model: ['Box', 'Notch', '1-line comb', '2-line comb']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -545,7 +545,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: chromaLowPassOutCombo
             implicitWidth: 200
-            model: [qsTr('Full'), qsTr('Light'), qsTr('None')]
+            model: ['Full', 'Light', 'None']
             onActivated: {
                 if (blockUpdate)
                     return;
@@ -1322,7 +1322,7 @@ Shotcut.KeyframableFilter {
         Shotcut.ComboBox {
             id: vhsTapeSpeedCombo
             implicitWidth: 200
-            model: [qsTr('SP (Standard Play)'), qsTr('LP (Long Play)'), qsTr('EP (Extended Play)'), qsTr('None')]
+            model: ['SP (Standard Play)', 'LP (Long Play)', 'EP (Extended Play)', 'None']
             onActivated: {
                 if (blockUpdate)
                     return;

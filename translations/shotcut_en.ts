@@ -17128,7 +17128,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/gradient/ui.qml" line="313"/>
         <location filename="../src/qml/filters/gradientmap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="827"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="869"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
         <location filename="../src/qml/filters/reframe/ui.qml" line="222"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="314"/>
@@ -17342,10 +17342,6 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="340"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="513"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1284"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17876,8 +17872,8 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="119"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="741"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="891"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="783"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="933"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18112,8 +18108,8 @@ Like used in GoPro&apos;s superview</source>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="673"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="707"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1723"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1062"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1487"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1104"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1535"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="187"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
@@ -18371,305 +18367,206 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Alternating</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Upper only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Lower only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Interleaved (upper first)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Interleaved (lower first)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="308"/>
-        <source>Both</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="323"/>
         <source>Lowpass filter type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="324"/>
-        <source>Constant K (blurry)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="324"/>
-        <source>Butterworth (sharper)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="333"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="345"/>
         <source>Input luma filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="340"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="476"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="256"/>
         <source>Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="340"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="476"/>
-        <source>Notch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="349"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="367"/>
         <source>Chroma low-pass in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="513"/>
-        <source>Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="365"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="389"/>
         <source>Signal sharpening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="412"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="411"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="956"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="435"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="998"/>
         <source>Snow anisotropy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="432"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="456"/>
         <source>Scanline phase shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="439"/>
-        <source>0 degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="439"/>
-        <source>90 degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="439"/>
-        <source>180 degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="439"/>
-        <source>270 degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="448"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="478"/>
         <source>Phase shift offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="469"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="499"/>
         <source>Chroma demod filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="476"/>
-        <source>1-line comb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="476"/>
-        <source>2-line comb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="485"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="521"/>
         <source>Luma smear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="506"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="542"/>
         <source>Chroma low-pass out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="522"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="564"/>
         <source>Chroma phase error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="543"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="585"/>
         <source>Chroma phase noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="564"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="606"/>
         <source>Chroma delay (H)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="585"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="627"/>
         <source>Chroma delay (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="608"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="650"/>
         <source>Vertically blend chroma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="621"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="663"/>
         <source>Apply sRGB gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="637"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="679"/>
         <source>Composite Signal Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="698"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1149"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1234"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1461"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="740"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1191"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1276"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1509"/>
         <source>Detail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="724"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="766"/>
         <source>Head Switching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="783"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="825"/>
         <source>Horizontal shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="811"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="853"/>
         <source>Start mid-line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="848"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="890"/>
         <source>Jitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="874"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="916"/>
         <source>Tracking Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="912"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="954"/>
         <source>Wave intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="935"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="977"/>
         <source>Snow intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="977"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1019"/>
         <source>Noise intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1003"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1045"/>
         <source>Ringing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1041"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1083"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1090"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1132"/>
         <source>Luma Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1175"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1217"/>
         <source>Chroma Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1260"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1302"/>
         <source>VHS Emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1277"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1319"/>
         <source>Tape speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1284"/>
-        <source>SP (Standard Play)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1284"/>
-        <source>LP (Long Play)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1284"/>
-        <source>EP (Extended Play)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1293"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1341"/>
         <source>Chroma loss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1319"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1367"/>
         <source>Sharpen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1382"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1430"/>
         <source>Edge Wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1504"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1552"/>
         <source>Horizontal scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1525"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1573"/>
         <source>Vertical scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1548"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1596"/>
         <source>Scale with video size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18977,12 +18874,12 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="493"/>
         <location filename="../src/qml/filters/distort/ui.qml" line="125"/>
         <location filename="../src/qml/filters/glitch/ui.qml" line="101"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="677"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1020"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1128"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1213"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1356"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1440"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="719"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1062"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1170"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1255"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1404"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1488"/>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19153,7 +19050,7 @@ Change top/side distortion bias</source>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1419"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1467"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="338"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="89"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="78"/>
@@ -19447,7 +19344,7 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="500"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="258"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="762"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="804"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="313"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
@@ -19843,8 +19740,6 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="513"/>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="69"/>
         <source>Light</source>
         <translation type="unfinished"></translation>
@@ -20853,11 +20748,11 @@ Set to 0 to only print real points (no interpolation).</source>
     </message>
     <message>
         <location filename="../src/qml/filters/histeq/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="654"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1107"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1192"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1335"/>
-        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1398"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="696"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1149"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1234"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1383"/>
+        <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1446"/>
         <location filename="../src/qml/filters/vibrance/ui.qml" line="98"/>
         <source>Intensity</source>
         <translation type="unfinished"></translation>
