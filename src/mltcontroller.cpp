@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,8 +64,13 @@ Controller::Controller()
     , m_blockRefresh(false)
 {
     LOG_DEBUG() << "begin";
-    if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY"))
-        ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
+    if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY")) {
+        const bool experimental = qApp && qApp->property("experimental").toBool();
+        if (experimental)
+            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
+        else
+            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
+    }
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
     resetLocale();

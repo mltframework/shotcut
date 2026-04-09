@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -165,6 +165,13 @@ public:
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
+#ifdef QT_DEBUG
+        QCommandLineOption experimentalOption(
+            "experimental",
+            QCoreApplication::translate(
+                "main", "Enable experimental features (OpenFX and add-on filter menu)."));
+        parser.addOption(experimentalOption);
+#endif
         QCommandLineOption clearRecentOption("clear-recent",
                                              QCoreApplication::translate("main",
                                                                          "Clear Recent on Exit"));
@@ -232,6 +239,11 @@ public:
 #endif
         setProperty("noupgrade", parser.isSet(noupgradeOption));
         setProperty("clearRecent", parser.isSet(clearRecentOption));
+#ifdef QT_DEBUG
+        setProperty("experimental", parser.isSet(experimentalOption));
+#else
+        setProperty("experimental", false);
+#endif
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
             ShotcutSettings::setAppDataForSession(appDirArg);

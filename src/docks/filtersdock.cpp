@@ -32,16 +32,21 @@
 #include "qmltypes/qmlview.h"
 
 #include <QAction>
+#include <QApplication>
+#include <QDialog>
 #include <QDir>
 #include <QIcon>
 #include <QMenu>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
+#include <QTextBrowser>
 #include <QUrl>
+#include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
 
 FiltersDock::FiltersDock(MetadataModel *metadataModel,
+                         AddOnServiceModel *addOnServiceModel,
                          AttachedFiltersModel *attachedModel,
                          MotionTrackerModel *motionTrackerModel,
                          SubtitlesModel *subtitlesModel,
@@ -68,6 +73,8 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
+    m_qview.rootContext()->setContextProperty("enableAddOns",
+                                              qApp && qApp->property("experimental").toBool());
     m_qview.rootContext()->setContextProperty("motionTrackerModel", motionTrackerModel);
     m_qview.rootContext()->setContextProperty("subtitlesModel", subtitlesModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
@@ -88,6 +95,8 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
 
 void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index)
 {
+    closeAddOnMetadataHelp();
+
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
         if (mlt_service_playlist_type != filter->producer().type() && MLT.producer()
@@ -205,6 +214,39 @@ void FiltersDock::load()
     QObject::connect(m_qview.rootObject(),
                      SIGNAL(copyFilterRequested()),
                      SLOT(showCopyFilterMenu()));
+    QObject::connect(m_qview.rootObject(),
+                     SIGNAL(addonFilterMetadataHelpRequested(QString, QString)),
+                     SLOT(showAddOnMetadataHelp(QString, QString)));
+}
+
+void FiltersDock::showAddOnMetadataHelp(const QString &title, const QString &text)
+{
+    closeAddOnMetadataHelp();
+
+    auto *dialog = new QDialog(this, Qt::Window);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->setModal(false);
+    dialog->setWindowTitle(title.isEmpty() ? tr("Add-on Metadata") : title);
+    dialog->resize(560, 420);
+
+    auto *layout = new QVBoxLayout(dialog);
+    auto *view = new QTextBrowser(dialog);
+    view->setReadOnly(true);
+    view->setOpenExternalLinks(true);
+    view->setHtml(text);
+    layout->addWidget(view);
+
+    m_addOnMetadataDialog = dialog;
+    connect(dialog, &QObject::destroyed, this, [this]() { m_addOnMetadataDialog = nullptr; });
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
+}
+
+void FiltersDock::closeAddOnMetadataHelp()
+{
+    if (m_addOnMetadataDialog)
+        m_addOnMetadataDialog->close();
 }
 
 void FiltersDock::setupActions()

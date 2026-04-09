@@ -78,6 +78,26 @@ Rectangle {
 
             Layout.fillWidth: true
 
+            Shotcut.Button {
+                id: addOnMenuButton
+
+                visible: enableAddOns
+                padding: 2
+                implicitWidth: 20
+                implicitHeight: 20
+                icon.name: 'show-menu'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
+                onClicked: addOnMenu.popup()
+
+                Shotcut.HoverTip {
+                    text: qsTr('Add-on filter options')
+                }
+
+                Shotcut.AddOnFilterMenu {
+                    id: addOnMenu
+                }
+            }
+
             TextField {
                 id: searchField
 
@@ -484,4 +504,5 @@ Rectangle {
             }
         }
     }
+
 }

@@ -240,6 +240,8 @@ public:
     // filter
     QString filterFavorite(const QString &filterName);
     void setFilterFavorite(const QString &filterName, const QString &value);
+    QStringList addOnFilterServices() const;
+    void setAddOnFilterServices(const QStringList &services);
     double audioInDuration() const;
     void setAudioInDuration(double);
     double audioOutDuration() const;
