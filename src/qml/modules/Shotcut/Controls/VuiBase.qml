@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2026 Meltytech, LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import QtQuick
 
 DropArea {
@@ -68,6 +85,15 @@ DropArea {
                         const frameX = rectX + (rectW - frameW) / 2;
                         const frameY = rectY + (rectH - frameH) / 2;
                         ctx.rect(frameX + 2, frameY + 2, frameW - 1, frameH - 1);
+                        if (video.grid === 20916) {
+                            // Mobile safe guides: 420px from bottom, 50px from right (1080x1920)
+                            const hLineY = frameY + frameH * (1500 / 1920) + 2;
+                            const vLineX = frameX + frameW * (1030 / 1080) + 2;
+                            ctx.moveTo(frameX + 2, hLineY);
+                            ctx.lineTo(frameX + frameW - 1, hLineY);
+                            ctx.moveTo(vLineX, frameY + 2);
+                            ctx.lineTo(vLineX, frameY + frameH - 1);
+                        }
                     } else {
                         // vertical grid lines
                         for (var x = 0; x * gridSizeX < parent.width + gridSizeX; x++) {
@@ -130,6 +156,15 @@ DropArea {
                     const frameX = rectX + (rectW - frameW) / 2;
                     const frameY = rectY + (rectH - frameH) / 2;
                     ctx.rect(frameX + 1, frameY + 1, frameW - 2, frameH - 2);
+                    if (video.grid === 20916) {
+                        // Mobile safe guides: 420px from bottom, 50px from right (1080x1920)
+                        const hLineY = frameY + frameH * (1500 / 1920) + 1;
+                        const vLineX = frameX + frameW * (1030 / 1080) + 1;
+                        ctx.moveTo(frameX + 1, hLineY);
+                        ctx.lineTo(frameX + frameW - 2, hLineY);
+                        ctx.moveTo(vLineX, frameY + 1);
+                        ctx.lineTo(vLineX, frameY + frameH - 2);
+                    }
                 } else {
                     // vertical grid lines
                     for (var x = 0; x * gridSizeX < parent.width + gridSizeX; x++) {
