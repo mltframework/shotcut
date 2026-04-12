@@ -1101,9 +1101,12 @@ function set_globals {
   #####
   # opencv
   CONFIG[26]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON -D WITH_LAPACK=OFF $CMAKE_DEBUG_FLAG"
-  [ "$TARGET_OS" = "Darwin" ] && CONFIG[26]="${CONFIG[26]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64' -DWITH_KLEIDICV=OFF -DOpenMP_C_FLAGS=-I/opt/local/include/libomp -DOpenMP_CXX_FLAGS=-I/opt/local/include/libomp -DOpenMP_C_LIB_NAMES=libomp -DOpenMP_CXX_LIB_NAMES=libomp -DOpenMP_libomp_LIBRARY=omp"
   CFLAGS_[26]="$CFLAGS"
   LDFLAGS_[26]="$LDFLAGS"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[26]="${CONFIG[26]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64' -DWITH_KLEIDICV=OFF -DOpenMP_C_FLAGS=-I/opt/local/include/libomp -DOpenMP_CXX_FLAGS=-I/opt/local/include/libomp -DOpenMP_C_LIB_NAMES=libomp -DOpenMP_CXX_LIB_NAMES=libomp -DOpenMP_libomp_LIBRARY=omp"
+    LDFLAGS_[26]="${LDFLAGS_[26]} -L/opt/local/lib/libomp"
+  fi
   BUILD[26]="ninja -C build -j $MAKEJ"
   INSTALL[26]="ninja -C build install"
 
