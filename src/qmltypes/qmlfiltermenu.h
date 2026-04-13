@@ -25,7 +25,7 @@ class QmlFilterMenu : public QObject
     Q_OBJECT
 
 public:
-    explicit QmlFilterMenu(QObject *parent = 0);
+    explicit QmlFilterMenu(QObject *parent = nullptr);
 
 public slots:
     void popup();

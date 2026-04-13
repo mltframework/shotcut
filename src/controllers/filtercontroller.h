@@ -39,6 +39,7 @@ class FilterController : public QObject
 
 public:
     explicit FilterController(QObject *parent = 0);
+    ~FilterController();
     MetadataModel *metadataModel();
     AddOnServiceModel *addOnServiceModel() { return &m_addOnServiceModel; }
     MotionTrackerModel *motionTrackerModel() { return &m_motionTrackerModel; }
@@ -96,7 +97,7 @@ private:
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
     Mlt::Service m_mltService;
-    QTemporaryDir m_addOnTempDir;
+    QTemporaryDir *m_addOnTempDir = nullptr;
     QHash<QString, AddOnFilterDescriptor> m_addOnDescriptors;
     AddOnQmlGenerator m_addOnQmlGenerator;
     MetadataModel m_metadataModel;

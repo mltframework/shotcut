@@ -23,15 +23,58 @@
 #include <QStringList>
 #include <QTextStream>
 
-QString quotedJsString(const QString &value)
+static QString quotedJsString(const QString &value)
 {
-    QString s = value;
-    s.replace('\\', "\\\\");
-    s.replace('\'', "\\'");
-    return QStringLiteral("'%1'").arg(s);
+    QString escaped;
+    escaped.reserve(value.size());
+
+    for (const QChar &ch : value) {
+        const ushort codepoint = ch.unicode();
+        switch (codepoint) {
+        case '\\':
+            escaped += QStringLiteral("\\\\");
+            break;
+        case '\'':
+            escaped += QStringLiteral("\\'");
+            break;
+        case '\n':
+            escaped += QStringLiteral("\\n");
+            break;
+        case '\r':
+            escaped += QStringLiteral("\\r");
+            break;
+        case '\t':
+            escaped += QStringLiteral("\\t");
+            break;
+        case '\b':
+            escaped += QStringLiteral("\\b");
+            break;
+        case '\f':
+            escaped += QStringLiteral("\\f");
+            break;
+        case 0x2028:
+            escaped += QStringLiteral("\\u2028");
+            break;
+        case 0x2029:
+            escaped += QStringLiteral("\\u2029");
+            break;
+        default:
+            if (codepoint < 0x20) {
+                escaped += QStringLiteral("\\u%1").arg(static_cast<int>(codepoint),
+                                                       4,
+                                                       16,
+                                                       QLatin1Char('0'));
+            } else {
+                escaped += ch;
+            }
+            break;
+        }
+    }
+
+    return QStringLiteral("'%1'").arg(escaped);
 }
 
-bool isGroupHeadingParameter(const AddOnParameterDescriptor &parameter)
+static bool isGroupHeadingParameter(const AddOnParameterDescriptor &parameter)
 {
     const QString parameterType = parameter.type.trimmed().toLower();
     const QString parameterName = parameter.name.trimmed().toLower();

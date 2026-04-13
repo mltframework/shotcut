@@ -35,12 +35,12 @@
 #include <QQmlEngine>
 #include <QTimerEvent>
 
-bool isExperimentalEnabled()
+static bool isExperimentalEnabled()
 {
     return qApp && qApp->property("experimental").toBool();
 }
 
-QString addOnServiceFromObjectName(const QString &objectName)
+static QString addOnServiceFromObjectName(const QString &objectName)
 {
     static const QString kPrefix = QStringLiteral("addOn.");
     if (!objectName.startsWith(kPrefix))
@@ -51,7 +51,6 @@ QString addOnServiceFromObjectName(const QString &objectName)
 
 FilterController::FilterController(QObject *parent)
     : QObject(parent)
-    , m_addOnTempDir(QString())
     , m_metadataModel(this)
     , m_attachedModel(this)
     , m_currentFilterIndex(QmlFilter::NoCurrentFilter)
@@ -82,6 +81,11 @@ FilterController::FilterController(QObject *parent)
             SIGNAL(duplicateAddFailed(int)),
             this,
             SLOT(handleAttachDuplicateFailed(int)));
+}
+
+FilterController::~FilterController()
+{
+    delete m_addOnTempDir;
 }
 
 void FilterController::handleAddOnServicesChanged()
@@ -256,10 +260,10 @@ void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
 
 bool FilterController::ensureAddOnTempDir()
 {
-    if (!m_addOnTempDir.isValid()) {
-        m_addOnTempDir = QTemporaryDir(QDir::tempPath() + "/shotcut-addon-XXXXXX");
+    if (!m_addOnTempDir) {
+        m_addOnTempDir = new QTemporaryDir(QDir::tempPath() + "/shotcut-addon-XXXXXX");
     }
-    if (!m_addOnTempDir.isValid()) {
+    if (!m_addOnTempDir || !m_addOnTempDir->isValid()) {
         LOG_WARNING() << "Add-on temporary directory is invalid";
         return false;
     }
@@ -278,7 +282,7 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
     if (!ensureAddOnTempDir())
         return false;
 
-    const QDir tempDir(m_addOnTempDir.path());
+    const QDir tempDir(m_addOnTempDir->path());
     const QString cachedFileName = service + QStringLiteral("_ui.qml");
     if (QFileInfo::exists(tempDir.filePath(cachedFileName))) {
         meta->setPath(tempDir);

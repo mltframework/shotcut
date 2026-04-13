@@ -17,9 +17,7 @@
 
 #include "addonmetadataparser.h"
 
-#include <QSet>
-
-bool parseYesNoBool(const char *value)
+static bool parseYesNoBool(const char *value)
 {
     if (!value)
         return false;

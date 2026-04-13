@@ -94,6 +94,7 @@ void AddOnFiltersDialog::populate()
 
     const auto enabledServices = m_model->enabledServices();
     m_listWidget->blockSignals(true);
+    m_listWidget->setSortingEnabled(false);
     m_listWidget->clear();
 
     for (int row = 0; row < m_model->rowCount(); ++row) {
@@ -117,6 +118,8 @@ void AddOnFiltersDialog::populate()
         }
     }
 
+    m_listWidget->setSortingEnabled(true);
+    m_listWidget->sortItems(0, Qt::AscendingOrder);
     m_listWidget->blockSignals(false);
     adjustColumnWidths();
     updateSelectedCount();
