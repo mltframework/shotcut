@@ -29,11 +29,10 @@
 class QmlFilter;
 class QmlMetadata;
 class MetadataModel;
-class AddOnServiceModel;
 class AttachedFiltersModel;
 class MotionTrackerModel;
 class SubtitlesModel;
-class QDialog;
+class AddOnMetadataHelpDialog;
 
 class FiltersDock : public QDockWidget
 {
@@ -61,7 +60,7 @@ public slots:
     void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
     void showCopyFilterMenu();
-    void showAddOnMetadataHelp(const QString &title, const QString &text);
+    void showAddOnMetadataHelp(const QString &serviceName);
     void onServiceInChanged(int delta, Mlt::Service *service);
     void load();
 
@@ -74,7 +73,7 @@ private:
     void closeAddOnMetadataHelp();
     QQuickWidget m_qview;
     QmlProducer m_producer;
-    QPointer<QDialog> m_addOnMetadataDialog;
+    QPointer<AddOnMetadataHelpDialog> m_addOnMetadataDialog;
     unsigned loadTries{0};
 };
 

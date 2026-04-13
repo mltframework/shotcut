@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "actions.h"
 #include "controllers/filtercontroller.h"
+#include "dialogs/addonmetadatahelpdialog.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/attachedfiltersmodel.h"
@@ -33,16 +34,13 @@
 
 #include <QAction>
 #include <QApplication>
-#include <QDialog>
 #include <QDir>
 #include <QIcon>
 #include <QMenu>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
-#include <QTextBrowser>
 #include <QUrl>
-#include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
 
 FiltersDock::FiltersDock(MetadataModel *metadataModel,
@@ -214,32 +212,24 @@ void FiltersDock::load()
                      SIGNAL(copyFilterRequested()),
                      SLOT(showCopyFilterMenu()));
     QObject::connect(m_qview.rootObject(),
-                     SIGNAL(addonFilterMetadataHelpRequested(QString, QString)),
-                     SLOT(showAddOnMetadataHelp(QString, QString)));
+                     SIGNAL(addonFilterMetadataHelpRequested(QString)),
+                     SLOT(showAddOnMetadataHelp(QString)));
 }
 
-void FiltersDock::showAddOnMetadataHelp(const QString &title, const QString &text)
+void FiltersDock::showAddOnMetadataHelp(const QString &serviceName)
 {
     closeAddOnMetadataHelp();
 
-    auto *dialog = new QDialog(this, Qt::Window);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->setModal(false);
-    dialog->setWindowTitle(title.isEmpty() ? tr("Add-on Metadata") : title);
-    dialog->resize(560, 420);
+    m_addOnMetadataDialog = AddOnMetadataHelpDialog::create(serviceName, this);
+    if (!m_addOnMetadataDialog)
+        return;
 
-    auto *layout = new QVBoxLayout(dialog);
-    auto *view = new QTextBrowser(dialog);
-    view->setReadOnly(true);
-    view->setOpenExternalLinks(true);
-    view->setHtml(text);
-    layout->addWidget(view);
-
-    m_addOnMetadataDialog = dialog;
-    connect(dialog, &QObject::destroyed, this, [this]() { m_addOnMetadataDialog = nullptr; });
-    dialog->show();
-    dialog->raise();
-    dialog->activateWindow();
+    connect(m_addOnMetadataDialog, &QObject::destroyed, this, [this]() {
+        m_addOnMetadataDialog = nullptr;
+    });
+    m_addOnMetadataDialog->show();
+    m_addOnMetadataDialog->raise();
+    m_addOnMetadataDialog->activateWindow();
 }
 
 void FiltersDock::closeAddOnMetadataHelp()
