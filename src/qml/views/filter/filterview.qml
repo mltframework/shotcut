@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Rectangle {
 
     signal currentFilterRequested(int attachedIndex)
     signal copyFilterRequested
-    signal addonFilterMetadataHelpRequested(string title, string text)
+    signal addonFilterMetadataHelpRequested(string service)
 
     function clearCurrentFilter() {
         if (filterConfig.item) {
@@ -403,12 +403,13 @@ Rectangle {
     }
 
     Connections {
-        target: filterConfig.item
         ignoreUnknownSignals: true
 
-        function onMetadataHelpRequested(title, text) {
-            root.addonFilterMetadataHelpRequested(title, text)
+        function onMetadataHelpRequested(service) {
+            root.addonFilterMetadataHelpRequested(service)
         }
+
+        target: filterConfig.item
     }
 
     Connections {
