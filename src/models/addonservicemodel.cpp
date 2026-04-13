@@ -103,14 +103,11 @@ void AddOnServiceModel::reload()
 
         Item item;
         item.service = service;
-        item.title = metadata->get("Title") ? QString::fromUtf8(metadata->get("Title"))
-                                            : QString::fromUtf8(metadata->get("title"));
+        item.title = QString::fromUtf8(metadata->get("title"));
         if (item.title.isEmpty())
             item.title = service;
 
-        item.description = metadata->get("Description")
-                               ? QString::fromUtf8(metadata->get("Description"))
-                               : QString::fromUtf8(metadata->get("description"));
+        item.description = QString::fromUtf8(metadata->get("description"));
 
         Mlt::Properties tags(metadata->get_data("tags"));
         if (tags.is_valid()) {

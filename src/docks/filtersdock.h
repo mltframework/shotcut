@@ -41,7 +41,6 @@ class FiltersDock : public QDockWidget
 
 public:
     explicit FiltersDock(MetadataModel *metadataModel,
-                         AddOnServiceModel *addOnServiceModel,
                          AttachedFiltersModel *attachedModel,
                          MotionTrackerModel *motionTrackerModel,
                          SubtitlesModel *subtitlesModel,

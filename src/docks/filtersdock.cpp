@@ -46,7 +46,6 @@
 #include <QtWidgets/QScrollArea>
 
 FiltersDock::FiltersDock(MetadataModel *metadataModel,
-                         AddOnServiceModel *addOnServiceModel,
                          AttachedFiltersModel *attachedModel,
                          MotionTrackerModel *motionTrackerModel,
                          SubtitlesModel *subtitlesModel,
