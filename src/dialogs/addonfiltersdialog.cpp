@@ -18,20 +18,19 @@
 #include "addonfiltersdialog.h"
 
 #include "models/addonservicemodel.h"
+#include "widgets/lineeditclear.h"
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
 AddOnFiltersDialog::AddOnFiltersDialog(AddOnServiceModel *model, QWidget *parent)
     : QDialog(parent)
     , m_model(model)
-    , m_searchField(new QLineEdit(this))
+    , m_searchField(new LineEditClear(this))
     , m_listWidget(new QTreeWidget(this))
     , m_selectedCountLabel(new QLabel(this))
 {
@@ -47,8 +46,6 @@ AddOnFiltersDialog::AddOnFiltersDialog(AddOnServiceModel *model, QWidget *parent
     auto *searchLayout = new QHBoxLayout();
     m_searchField->setPlaceholderText(tr("Search service or title"));
     searchLayout->addWidget(m_searchField);
-    auto *clearButton = new QPushButton(tr("Clear"), this);
-    searchLayout->addWidget(clearButton);
     layout->addLayout(searchLayout);
 
     m_listWidget->setAlternatingRowColors(true);
@@ -74,7 +71,6 @@ AddOnFiltersDialog::AddOnFiltersDialog(AddOnServiceModel *model, QWidget *parent
     layout->addLayout(bottomLayout);
 
     connect(m_searchField, &QLineEdit::textChanged, this, &AddOnFiltersDialog::onSearchTextChanged);
-    connect(clearButton, &QPushButton::clicked, this, [this]() { m_searchField->clear(); });
     connect(m_listWidget, &QTreeWidget::itemChanged, this, &AddOnFiltersDialog::onItemChanged);
     connect(buttonBox, &QDialogButtonBox::accepted, this, [this]() {
         onApply();

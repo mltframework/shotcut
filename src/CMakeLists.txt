@@ -119,7 +119,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/qmlextension.cpp qmltypes/qmlextension.h
   qmltypes/qmlfile.cpp qmltypes/qmlfile.h
   qmltypes/qmlfilter.cpp qmltypes/qmlfilter.h
-  qmltypes/qmlfiltermenu.cpp qmltypes/qmlfiltermenu.h
   qmltypes/qmlmarkermenu.cpp qmltypes/qmlmarkermenu.h
   qmltypes/qmlmetadata.cpp qmltypes/qmlmetadata.h
   qmltypes/qmlproducer.cpp qmltypes/qmlproducer.h
