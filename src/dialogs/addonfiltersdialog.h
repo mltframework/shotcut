@@ -22,7 +22,7 @@
 
 class AddOnServiceModel;
 class QLabel;
-class QLineEdit;
+class LineEditClear;
 class QTreeWidget;
 class QTreeWidgetItem;
 
@@ -44,7 +44,7 @@ private:
     void adjustColumnWidths();
 
     AddOnServiceModel *m_model;
-    QLineEdit *m_searchField;
+    LineEditClear *m_searchField;
     QTreeWidget *m_listWidget;
     QLabel *m_selectedCountLabel;
 };

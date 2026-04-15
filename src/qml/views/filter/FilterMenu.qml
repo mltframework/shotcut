@@ -78,26 +78,6 @@ Rectangle {
 
             Layout.fillWidth: true
 
-            Shotcut.Button {
-                id: addOnMenuButton
-
-                visible: enableAddOns
-                padding: 2
-                implicitWidth: 20
-                implicitHeight: 20
-                icon.name: 'show-menu'
-                icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
-                onClicked: addOnMenu.popup()
-
-                Shotcut.HoverTip {
-                    text: qsTr('Add-on filter options')
-                }
-
-                Shotcut.AddOnFilterMenu {
-                    id: addOnMenu
-                }
-            }
-
             TextField {
                 id: searchField
 
@@ -181,6 +161,21 @@ Rectangle {
 
             ButtonGroup {
                 id: typeGroup
+            }
+
+            Shotcut.Button {
+                id: manageAddOnFiltersButton
+
+                visible: enableAddOns
+                implicitWidth: 24
+                implicitHeight: 24
+                icon.name: 'run-build'
+                icon.source: 'qrc:///icons/oxygen/32x32/run-build.png'
+                onClicked: application.showAddOnFiltersDialog()
+
+                Shotcut.HoverTip {
+                    text: qsTr('Manage Add-on Filters')
+                }
             }
 
             Shotcut.ToggleButton {
