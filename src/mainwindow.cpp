@@ -2979,8 +2979,6 @@ void MainWindow::buildVideoModeMenu(QMenu *topMenu,
                                     QAction *removeAction)
 {
     QMenu *menu = topMenu;
-    menu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
-    menu->addAction(addProfile(group, "HD 720p 59.94 fps", "atsc_720p_5994"));
     menu->addAction(addProfile(group, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
     menu->addAction(addProfile(group, "HD 1080p 24 fps", "atsc_1080p_24"));
     menu->addAction(addProfile(group, "HD 1080p 25 fps", "atsc_1080p_25"));
@@ -3008,6 +3006,8 @@ void MainWindow::buildVideoModeMenu(QMenu *topMenu,
     menu->addAction(addProfile(group, "HD 720p 25 fps", "atsc_720p_25"));
     menu->addAction(addProfile(group, "HD 720p 29.97 fps", "atsc_720p_2997"));
     menu->addAction(addProfile(group, "HD 720p 30 fps", "atsc_720p_30"));
+    menu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
+    menu->addAction(addProfile(group, "HD 720p 59.94 fps", "atsc_720p_5994"));
     menu->addAction(addProfile(group, "HD 720p 60 fps", "atsc_720p_60"));
     menu->addAction(addProfile(group, "HD 1080p 30 fps", "atsc_1080p_30"));
     menu->addAction(addProfile(group, "HD 1080p 60 fps", "atsc_1080p_60"));
