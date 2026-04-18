@@ -163,6 +163,21 @@ Rectangle {
                 id: typeGroup
             }
 
+            Shotcut.Button {
+                id: manageAddOnFiltersButton
+
+                visible: enableAddOns
+                implicitWidth: 24
+                implicitHeight: 24
+                icon.name: 'run-build'
+                icon.source: 'qrc:///icons/oxygen/32x32/run-build.png'
+                onClicked: application.showAddOnFiltersDialog()
+
+                Shotcut.HoverTip {
+                    text: qsTr('Manage Add-on Filters')
+                }
+            }
+
             Shotcut.ToggleButton {
                 id: favButton
 
@@ -484,4 +499,5 @@ Rectangle {
             }
         }
     }
+
 }

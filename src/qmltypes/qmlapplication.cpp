@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "qmlapplication.h"
 
 #include "controllers/filtercontroller.h"
+#include "dialogs/addonfiltersdialog.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/attachedfiltersmodel.h"
@@ -195,6 +196,17 @@ qreal QmlApplication::devicePixelRatio()
 void QmlApplication::showStatusMessage(const QString &message, int timeoutSeconds)
 {
     MAIN.showStatusMessage(message, timeoutSeconds);
+}
+
+void QmlApplication::showAddOnFiltersDialog()
+{
+    auto *controller = MAIN.filterController();
+    if (!controller)
+        return;
+
+    AddOnFiltersDialog dialog(controller->addOnServiceModel(), &MAIN);
+    dialog.setWindowModality(dialogModality());
+    dialog.exec();
 }
 
 int QmlApplication::maxTextureSize()

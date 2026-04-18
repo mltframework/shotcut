@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ Rectangle {
 
     signal currentFilterRequested(int attachedIndex)
     signal copyFilterRequested
+    signal addonFilterMetadataHelpRequested(string service)
 
     function clearCurrentFilter() {
         if (filterConfig.item) {
@@ -399,6 +400,16 @@ Rectangle {
 
     CopyFiltersDialog {
         id: copyFiltersDialog
+    }
+
+    Connections {
+        ignoreUnknownSignals: true
+
+        function onMetadataHelpRequested(service) {
+            root.addonFilterMetadataHelpRequested(service)
+        }
+
+        target: filterConfig.item
     }
 
     Connections {

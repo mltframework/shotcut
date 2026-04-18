@@ -1069,9 +1069,20 @@ QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
 }
+
 void ShotcutSettings::setFilterFavorite(const QString &filterName, const QString &value)
 {
     settings.setValue("filter/favorite/" + filterName, value);
+}
+
+QStringList ShotcutSettings::addOnFilterServices() const
+{
+    return settings.value("filter/addOnServices").toStringList();
+}
+
+void ShotcutSettings::setAddOnFilterServices(const QStringList &services)
+{
+    settings.setValue("filter/addOnServices", services);
 }
 
 double ShotcutSettings::audioInDuration() const

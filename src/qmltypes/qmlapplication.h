@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ public:
     Q_INVOKABLE static bool isProjectFolder();
     static qreal devicePixelRatio();
     Q_INVOKABLE void showStatusMessage(const QString &message, int timeoutSeconds = 15);
+    Q_INVOKABLE void showAddOnFiltersDialog();
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();

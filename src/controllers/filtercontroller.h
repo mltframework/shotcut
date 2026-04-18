@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #ifndef FILTERCONTROLLER_H
 #define FILTERCONTROLLER_H
 
+#include "addonqmlgenerator.h"
+#include "models/addonservicemodel.h"
 #include "models/attachedfiltersmodel.h"
 #include "models/metadatamodel.h"
 #include "models/motiontrackermodel.h"
@@ -27,6 +29,7 @@
 #include <QFuture>
 #include <QObject>
 #include <QScopedPointer>
+#include <QTemporaryDir>
 
 class QTimerEvent;
 
@@ -36,7 +39,9 @@ class FilterController : public QObject
 
 public:
     explicit FilterController(QObject *parent = 0);
+    ~FilterController();
     MetadataModel *metadataModel();
+    AddOnServiceModel *addOnServiceModel() { return &m_addOnServiceModel; }
     MotionTrackerModel *motionTrackerModel() { return &m_motionTrackerModel; }
     AttachedFiltersModel *attachedModel();
 
@@ -72,6 +77,7 @@ public slots:
     void resumeUndoTracking();
 
 private slots:
+    void handleAddOnServicesChanged();
     void handleAttachedModelChange();
     void handleAttachedModelAboutToReset();
     void addMetadata(QmlMetadata *);
@@ -82,13 +88,20 @@ private slots:
     void onQmlFilterChanged(const QString &name);
 
 private:
+    bool ensureAddOnTempDir();
+    bool ensureAddOnFilterQml(QmlMetadata *meta);
+    void loadAddOnFilterMetadata(Mlt::Properties *mltFilters);
     void loadFilterSets();
     void loadFilterMetadata();
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
     Mlt::Service m_mltService;
+    QTemporaryDir *m_addOnTempDir = nullptr;
+    QHash<QString, AddOnFilterDescriptor> m_addOnDescriptors;
+    AddOnQmlGenerator m_addOnQmlGenerator;
     MetadataModel m_metadataModel;
+    AddOnServiceModel m_addOnServiceModel;
     MotionTrackerModel m_motionTrackerModel;
     AttachedFiltersModel m_attachedModel;
     int m_currentFilterIndex;

@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "actions.h"
 #include "controllers/filtercontroller.h"
+#include "dialogs/addonmetadatahelpdialog.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/attachedfiltersmodel.h"
@@ -32,6 +33,7 @@
 #include "qmltypes/qmlview.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QDir>
 #include <QIcon>
 #include <QMenu>
@@ -68,6 +70,8 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
+    m_qview.rootContext()->setContextProperty("enableAddOns",
+                                              qApp && qApp->property("experimental").toBool());
     m_qview.rootContext()->setContextProperty("motionTrackerModel", motionTrackerModel);
     m_qview.rootContext()->setContextProperty("subtitlesModel", subtitlesModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
@@ -88,6 +92,8 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
 
 void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index)
 {
+    closeAddOnMetadataHelp();
+
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
         if (mlt_service_playlist_type != filter->producer().type() && MLT.producer()
@@ -205,6 +211,31 @@ void FiltersDock::load()
     QObject::connect(m_qview.rootObject(),
                      SIGNAL(copyFilterRequested()),
                      SLOT(showCopyFilterMenu()));
+    QObject::connect(m_qview.rootObject(),
+                     SIGNAL(addonFilterMetadataHelpRequested(QString)),
+                     SLOT(showAddOnMetadataHelp(QString)));
+}
+
+void FiltersDock::showAddOnMetadataHelp(const QString &serviceName)
+{
+    closeAddOnMetadataHelp();
+
+    m_addOnMetadataDialog = AddOnMetadataHelpDialog::create(serviceName, this);
+    if (!m_addOnMetadataDialog)
+        return;
+
+    connect(m_addOnMetadataDialog, &QObject::destroyed, this, [this]() {
+        m_addOnMetadataDialog = nullptr;
+    });
+    m_addOnMetadataDialog->show();
+    m_addOnMetadataDialog->raise();
+    m_addOnMetadataDialog->activateWindow();
+}
+
+void FiltersDock::closeAddOnMetadataHelp()
+{
+    if (m_addOnMetadataDialog)
+        m_addOnMetadataDialog->close();
 }
 
 void FiltersDock::setupActions()
