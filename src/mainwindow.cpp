@@ -2979,18 +2979,16 @@ void MainWindow::buildVideoModeMenu(QMenu *topMenu,
                                     QAction *removeAction)
 {
     QMenu *menu = topMenu;
-    menu->addAction(addProfile(group, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
     menu->addAction(addProfile(group, "HD 1080p 24 fps", "atsc_1080p_24"));
     menu->addAction(addProfile(group, "HD 1080p 25 fps", "atsc_1080p_25"));
-    menu->addAction(addProfile(group, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
+    menu->addAction(addProfile(group, "HD 1080p 30 fps (29.97)", "atsc_1080p_2997"));
     menu->addAction(addProfile(group, "HD 1080p 50 fps", "atsc_1080p_50"));
-    menu->addAction(addProfile(group, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
-    menu->addAction(addProfile(group, "4K UHD 2160p 23.98 fps", "uhd_2160p_2398"));
+    menu->addAction(addProfile(group, "HD 1080p 60 fps (59.94)", "atsc_1080p_5994"));
     menu->addAction(addProfile(group, "4K UHD 2160p 24 fps", "uhd_2160p_24"));
     menu->addAction(addProfile(group, "4K UHD 2160p 25 fps", "uhd_2160p_25"));
-    menu->addAction(addProfile(group, "4K UHD 2160p 29.97 fps", "uhd_2160p_2997"));
+    menu->addAction(addProfile(group, "4K UHD 2160p 30 fps (29.97)", "uhd_2160p_2997"));
     menu->addAction(addProfile(group, "4K UHD 2160p 50 fps", "uhd_2160p_50"));
-    menu->addAction(addProfile(group, "4K UHD 2160p 59.94 fps", "uhd_2160p_5994"));
+    menu->addAction(addProfile(group, "4K UHD 2160p 60 fps (59.94)", "uhd_2160p_5994"));
     menu = topMenu->addMenu(tr("Social Media"));
     menu->addAction(addProfile(group, tr("Square 1080p 30 fps"), "square_1080p_30"));
     menu->addAction(addProfile(group, tr("Square 1080p 60 fps"), "square_1080p_60"));
@@ -3009,8 +3007,10 @@ void MainWindow::buildVideoModeMenu(QMenu *topMenu,
     menu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
     menu->addAction(addProfile(group, "HD 720p 59.94 fps", "atsc_720p_5994"));
     menu->addAction(addProfile(group, "HD 720p 60 fps", "atsc_720p_60"));
+    menu->addAction(addProfile(group, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
     menu->addAction(addProfile(group, "HD 1080p 30 fps", "atsc_1080p_30"));
     menu->addAction(addProfile(group, "HD 1080p 60 fps", "atsc_1080p_60"));
+    menu->addAction(addProfile(group, "4K UHD 2160p 23.98 fps", "uhd_2160p_2398"));
     menu->addAction(addProfile(group, "4K UHD 2160p 30 fps", "uhd_2160p_30"));
     menu->addAction(addProfile(group, "4K UHD 2160p 60 fps", "uhd_2160p_60"));
     menu = topMenu->addMenu(tr("Legacy"));
