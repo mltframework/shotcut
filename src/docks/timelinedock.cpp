@@ -4583,12 +4583,12 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
 void TimelineDock::recordAudio()
 {
     // Get the file name.
-    auto filename = QmlApplication::getNextProjectFile("voiceover-.opus");
+    auto filename = QmlApplication::getNextProjectFile("voiceover-.flac");
     if (filename.isEmpty()) {
         QString path = Settings.savePath();
-        path.append("/%1.opus");
+        path.append("/%1.flac");
         path = path.arg(tr("voiceover"));
-        auto nameFilter = tr("Opus (*.opus);;All Files (*)");
+        auto nameFilter = tr("Opus (*.flac);;All Files (*)");
         filename = QFileDialog::getSaveFileName(this,
                                                 tr("Record Audio"),
                                                 path,
@@ -4599,8 +4599,8 @@ void TimelineDock::recordAudio()
     if (filename.isEmpty()) {
         return;
     }
-    if (!filename.endsWith(".opus")) {
-        filename += ".opus";
+    if (!filename.endsWith(".flac")) {
+        filename += ".flac";
     }
     auto info = QFileInfo(filename);
     Settings.setSavePath(info.path());
