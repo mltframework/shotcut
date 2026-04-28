@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,9 +92,11 @@ SpeechDialog::SpeechDialog(QWidget *parent)
         Mlt::Producer p(MLT.profile(), filename.toLocal8Bit().constData());
         if (m_consumer && m_consumer->is_valid())
             m_consumer->stop();
-        m_consumer.reset(new Mlt::Consumer(MLT.profile(), "sdl2_audio"));
-        if (!m_consumer || !m_consumer->is_valid())
+        m_consumer.reset(new Mlt::Consumer(MLT.profile(), "rtaudio"));
+        if (!m_consumer || !m_consumer->is_valid()) {
+            m_consumer.reset();
             return;
+        }
         m_consumer->connect(p);
         m_consumer->set("terminate_on_pause", 1);
         m_consumer->set("video_off", 1);
