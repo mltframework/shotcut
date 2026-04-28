@@ -5835,32 +5835,32 @@ Or save and restart Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3004"/>
+        <location filename="../src/mainwindow.cpp" line="3000"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3005"/>
+        <location filename="../src/mainwindow.cpp" line="3001"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2997"/>
+        <location filename="../src/mainwindow.cpp" line="2993"/>
         <source>Square 1080p 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2998"/>
+        <location filename="../src/mainwindow.cpp" line="2994"/>
         <source>Square 1080p 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2999"/>
+        <location filename="../src/mainwindow.cpp" line="2995"/>
         <source>Vertical HD 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3000"/>
+        <location filename="../src/mainwindow.cpp" line="2996"/>
         <source>Vertical HD 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6126,12 +6126,12 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2996"/>
+        <location filename="../src/mainwindow.cpp" line="2992"/>
         <source>Social Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3001"/>
+        <location filename="../src/mainwindow.cpp" line="2997"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14053,6 +14053,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="35"/>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="36"/>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="20"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="53"/>
         <source>Amount</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15249,6 +15250,62 @@ IRE: %2</source>
         <source>Ringing Scale</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="6"/>
+        <source>GodRaysOFX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="8"/>
+        <source>crepuscular rays god rays directional blur light</source>
+        <comment>search keywords for the GodRaysOFX video filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="18"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="25"/>
+        <source>Scale X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="32"/>
+        <source>Scale Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="39"/>
+        <source>Skew X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="46"/>
+        <source>Skew Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="60"/>
+        <source>Center X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="67"/>
+        <source>Center Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="74"/>
+        <source>Steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/meta.qml" line="81"/>
+        <source>Mix</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -15918,6 +15975,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/nervous/ui.qml" line="55"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="60"/>
         <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="355"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="63"/>
         <source>Amount</source>
         <translation type="unfinished"></translation>
@@ -15926,6 +15984,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="164"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="171"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="445"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="604"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="405"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="124"/>
         <source>Invert</source>
@@ -16123,6 +16182,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/nosync/ui.qml" line="71"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="59"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="168"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="243"/>
         <location filename="../src/qml/filters/outline/ui.qml" line="73"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="129"/>
@@ -16294,6 +16354,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="35"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="117"/>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="382"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17682,6 +17743,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="557"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="562"/>
         <source>Bilinear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17860,6 +17922,7 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="444"/>
         <source>Colors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18421,12 +18484,164 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="190"/>
+        <source>Transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="202"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="225"/>
+        <source>Scale X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="252"/>
+        <source>Scale Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="277"/>
+        <source>Uniform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="293"/>
+        <source>Skew X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="316"/>
+        <source>Skew Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="339"/>
+        <source>Skew Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="346"/>
+        <source>XY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="346"/>
+        <source>YX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="394"/>
+        <source>Center X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="417"/>
+        <source>Center Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="456"/>
+        <source>From Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="471"/>
+        <source>To Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="505"/>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="517"/>
+        <source>Steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="542"/>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="555"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="562"/>
+        <source>Impulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="562"/>
+        <source>Cubic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="562"/>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="563"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="368"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="542"/>
         <source>Notch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="563"/>
+        <source>Simon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="563"/>
+        <source>Rifman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="563"/>
+        <source>Mitchell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="563"/>
+        <source>Parzen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="574"/>
+        <source>Clamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="589"/>
+        <source>Black Outside</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="619"/>
+        <source>Interactive Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="634"/>
+        <source>Invert Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="647"/>
+        <source>Mix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="562"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="369"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="541"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="256"/>
@@ -18810,6 +19025,7 @@ Change top/side distortion bias</source>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="275"/>
+        <location filename="../src/qml/filters/openfx.net.sf.openfx.GodRays/ui.qml" line="486"/>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
