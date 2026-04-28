@@ -6326,11 +6326,11 @@ void MainWindow::on_actionExportChapters_triggered()
     std::sort(uniqueColors.begin(), uniqueColors.end(), [=](const QColor &a, const QColor &b) {
         if (a.hue() == b.hue()) {
             if (a.saturation() == b.saturation()) {
-                return a.value() <= b.value();
+                return a.value() < b.value();
             }
-            return a.saturation() <= b.saturation();
+            return a.saturation() < b.saturation();
         }
-        return a.hue() <= b.hue();
+        return a.hue() < b.hue();
     });
     QStringList colors;
     for (auto &color : uniqueColors) {
