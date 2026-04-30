@@ -4552,7 +4552,7 @@ void TimelineDock::recordAudio()
         QString path = Settings.savePath();
         path.append("/%1.flac");
         path = path.arg(tr("voiceover"));
-        auto nameFilter = tr("Opus (*.flac);;All Files (*)");
+        auto nameFilter = QStringLiteral("FLAC (*.flac);;") + tr("All Files (*)");
         filename = QFileDialog::getSaveFileName(this,
                                                 tr("Record Audio"),
                                                 path,
