@@ -2111,7 +2111,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper-cli; do
+  for exe in melt ffmpeg ffplay ffprobe whisper-cli; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment

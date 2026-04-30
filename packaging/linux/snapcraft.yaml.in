@@ -22,8 +22,6 @@ apps:
     command: ./ffprobe
   melt:
     command: ./melt
-  glaxnimate:
-    command: ./glaxnimate
 
 parts:
   shotcut:
