@@ -36,15 +36,22 @@ jobs:
           mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
           mv src.txz shotcut-src-$FILENAME_VERSION.txz
 
-      - name: Upload artifact
+      - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
           name: linux-portable
           path: |
             scripts/shotcut-linux-x86_64-*.txz
 
+      - name: Upload version file
+        uses: actions/upload-artifact@v7
+        with:
+          name: version
+          path: |
+            VERSION
+
       - name: Upload portable and source archives to S3
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
+        if: ${{ github.repository_owner == 'mltframework' }}
         uses: mltframework/s3cmd-action@v1
         with:
           args: >-
@@ -54,13 +61,32 @@ jobs:
             --stop-on-error
             put scripts/*.txz s3://builds.us.meltytech/shotcut/
 
+  appimage:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.repository_owner == 'mltframework' }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download portable artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: linux-portable
+          path: scripts
+
+      - name: Download version file
+        uses: actions/download-artifact@v6
+        with:
+          name: version
+          path: dist/version
+
       - name: Package AppImage
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         run: |
           sudo apt update
           sudo apt install desktop-file-utils libfuse2 imagemagick
           mkdir packaging/linux/Shotcut
-          cp VERSION packaging/linux/Shotcut/
+          cp dist/version/VERSION packaging/linux/Shotcut/VERSION
           cd packaging/linux
           export PKG2AICOMMIT=1eceb306077e51b991e987690b364e11971b44b3
           wget https://raw.githubusercontent.com/probonopd/AppImages/${PKG2AICOMMIT}/pkg2appimage
@@ -69,7 +95,6 @@ jobs:
           mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: mltframework/s3cmd-action@v1
         with:
           args: >-
@@ -79,25 +104,43 @@ jobs:
             --stop-on-error
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
+  snap:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.repository_owner == 'mltframework' }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download portable artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: linux-portable
+          path: packaging/linux
+
+      - name: Download version file
+        uses: actions/download-artifact@v6
+        with:
+          name: version
+          path: dist/version
+
       - name: Prepare snap
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         run: |
-          VERSION=$(cat VERSION)
-          mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
+          VERSION=$(cat dist/version/VERSION)
           cd packaging/linux
           mkdir -p snap/gui
           cp ../../icons/shotcut-logo-64.png snap/gui
           sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
+
       - name: Package snap
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: snapcore/action-build@v1
         id: snap
         with:
           path: packaging/linux
+
       - name: Publish snap
-        if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         uses: snapcore/action-publish@v1
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
