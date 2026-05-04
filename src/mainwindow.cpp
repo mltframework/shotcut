@@ -2927,6 +2927,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 m_player->nextFrame();
             else
                 m_player->fastForward(false);
+        } else {
+            handled = false;
         }
         break;
     case Qt::Key_F12:

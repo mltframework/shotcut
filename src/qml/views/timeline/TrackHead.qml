@@ -180,7 +180,7 @@ Rectangle {
                 transformOrigin: Item.Center
 
                 Shotcut.HoverTip {
-                    text: isLocked ? qsTr('Unlock track') : qsTr('Lock track')
+                    text: (isLocked ? qsTr('Unlock track') : qsTr('Lock track')) + " (" + (application.OS === 'macOS' ? '⌘' : 'Ctrl') + "L)"
                 }
 
                 SequentialAnimation {
@@ -226,7 +226,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks')
+                    text: qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + " (" + (application.OS === 'macOS' ? '^' : 'Ctrl') + "M)"
                 }
             }
 
@@ -253,7 +253,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks')
+                    text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + " (" + (application.OS === 'macOS' ? '\u21e7' : 'Ctrl') + "H)"
                 }
             }
 
