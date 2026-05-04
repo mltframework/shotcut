@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2023 Meltytech, LLC
+ * Copyright (c) 2017-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
+                    text: ((delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt') + '[)'
                 }
             }
 
@@ -168,7 +168,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: qsTr('Add a keyframe at play head')
+                    text: qsTr('Add a keyframe at play head') + ' (;)'
                 }
             }
 
@@ -225,7 +225,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')
+                    text: ((delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt') + '])'
                 }
             }
 
