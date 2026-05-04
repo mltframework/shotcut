@@ -292,21 +292,23 @@ void MainWindow::setupAndConnectUndoStack()
         QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
     redoAction->setIcon(
         QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
+    undoAction->setIconText(tr("Undo"));
+    redoAction->setIconText(tr("Redo"));
     undoAction->setShortcut(QString::fromLatin1("Ctrl+Z"));
 #ifdef Q_OS_WIN
     redoAction->setShortcut(QString::fromLatin1("Ctrl+Y"));
 #else
     redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
 #endif
+    undoAction->setWhatsThis(
+        QString::fromLatin1("https://forum.shotcut.org/t/undo-and-redo/12979/1"));
+    redoAction->setWhatsThis(
+        QString::fromLatin1("https://forum.shotcut.org/t/undo-and-redo/12979/1"));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->menuEdit->addSeparator();
-    ui->actionUndo->setIcon(undoAction->icon());
-    ui->actionRedo->setIcon(redoAction->icon());
-    ui->actionUndo->setToolTip(undoAction->toolTip());
-    ui->actionRedo->setToolTip(redoAction->toolTip());
-    connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
-    connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+    ui->mainToolBar->insertAction(ui->undoEndSeparator, undoAction);
+    ui->mainToolBar->insertAction(ui->undoEndSeparator, redoAction);
 }
 
 void MainWindow::setupAndConnectPlayerWidget()
@@ -760,8 +762,6 @@ void MainWindow::setupAndConnectDocks()
     undoView->setAlternatingRowColors(true);
     undoView->setSpacing(2);
     m_historyDock->setWidget(undoView);
-    ui->actionUndo->setDisabled(true);
-    ui->actionRedo->setDisabled(true);
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
@@ -3868,16 +3868,6 @@ void MainWindow::updateThumbnails()
 {
     if (Settings.playlistThumbnails() != "hidden")
         m_playlistDock->model()->refreshThumbnails();
-}
-
-void MainWindow::on_actionUndo_triggered()
-{
-    m_undoStack->undo();
-}
-
-void MainWindow::on_actionRedo_triggered()
-{
-    m_undoStack->redo();
 }
 
 void MainWindow::on_actionFAQ_triggered()
