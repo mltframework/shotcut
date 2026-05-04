@@ -289,8 +289,6 @@ private slots:
     void onFilterModelChanged();
     void updateMarkers();
     void updateThumbnails();
-    void on_actionUndo_triggered();
-    void on_actionRedo_triggered();
     void on_actionFAQ_triggered();
     void on_actionForum_triggered();
     void on_actionEnterFullScreen_triggered();
