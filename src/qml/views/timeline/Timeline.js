@@ -39,6 +39,8 @@ function scrollIfNeeded(center, continuous) {
             let pageCount = Math.floor((x - leftLimit)/(tracksFlickable.width - 100))
             tracksFlickable.contentX = Math.max(tracksFlickable.contentX + pageCount*(tracksFlickable.width - 100), 0);
         }
+    } else {
+        tracksFlickable.contentX = 0;
     }
 }
 
