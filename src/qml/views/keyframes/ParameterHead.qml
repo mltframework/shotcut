@@ -148,7 +148,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: ((delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt') + '[)'
+                    text: ((delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt+') + '[)'
                 }
             }
 
@@ -225,7 +225,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: ((delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt') + '])'
+                    text: ((delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt+') + '])'
                 }
             }
 
