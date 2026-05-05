@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,9 @@ public:
     QList<QString> keys();
     void overrideShortcuts(const QString &key, QList<QKeySequence> shortcuts);
     void initializeShortcuts();
+
+signals:
+    void shortcutsChanged(QAction *action);
 
 private:
     void addShortcutToToolTip(QAction *action);

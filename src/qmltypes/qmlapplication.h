@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,11 @@
 
 #include <QColor>
 #include <QDir>
+#include <QKeySequence>
 #include <QObject>
 #include <QPoint>
 #include <QRect>
+#include <QString>
 
 namespace Mlt {
 class Producer;
@@ -68,6 +70,7 @@ public:
     static QStringList wipes();
     Q_INVOKABLE static bool addWipe(const QString &filePath);
     Q_INVOKABLE static bool intersects(const QRectF &a, const QRectF &b);
+    Q_INVOKABLE static QString actionFirstShortcut(const QString &actionName);
 
 signals:
     void paletteChanged();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,6 +138,7 @@ void ShotcutActions::overrideShortcuts(const QString &key, QList<QKeySequence> s
 
     action->setShortcuts(shortcuts);
     addShortcutToToolTip(action);
+    emit shortcutsChanged(action);
 }
 
 void ShotcutActions::initializeShortcuts()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include "qmlapplication.h"
 
+#include "actions.h"
 #include "controllers/filtercontroller.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
@@ -280,4 +281,12 @@ bool QmlApplication::addWipe(const QString &filePath)
 bool QmlApplication::intersects(const QRectF &a, const QRectF &b)
 {
     return a.intersects(b);
+}
+
+QString QmlApplication::actionFirstShortcut(const QString &actionName)
+{
+    const auto a = Actions[actionName];
+    return (a && !a->shortcut().isEmpty())
+               ? QStringLiteral(" (%1)").arg(a->shortcut().toString(QKeySequence::NativeText))
+               : QString();
 }

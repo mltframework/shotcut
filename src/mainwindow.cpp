@@ -701,6 +701,14 @@ void MainWindow::setupAndConnectDocks()
             &TimelineDock::trimEnded,
             m_filterController,
             &FilterController::resumeUndoTracking);
+    connect(&Actions, &ShotcutActions::shortcutsChanged, this, [this](const QAction *action) {
+        static const QStringList
+            actionsNeedingReload{QStringLiteral("timelineToggleTrackLockedAction"),
+                                 QStringLiteral("timelineToggleTrackMuteAction"),
+                                 QStringLiteral("timelineToggleTrackHiddenAction")};
+        if (action && actionsNeedingReload.contains(action->objectName()))
+            m_timelineDock->model()->reload();
+    });
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();
