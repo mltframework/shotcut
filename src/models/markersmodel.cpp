@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,11 +50,13 @@ static void propertiesToMarker(Mlt::Properties *properties,
                                Markers::Marker &marker,
                                Mlt::Producer *producer)
 {
-    marker.text = QString::fromUtf8(properties->get("text"));
-    marker.start = producer->time_to_frames(properties->get("start"));
-    marker.end = producer->time_to_frames(properties->get("end"));
-    mlt_color color = properties->get_color("color");
-    marker.color = QColor::fromRgb(color.r, color.g, color.b, 0xFF);
+    if (properties && properties->is_valid()) {
+        marker.text = QString::fromUtf8(properties->get("text"));
+        marker.start = producer->time_to_frames(properties->get("start"));
+        marker.end = producer->time_to_frames(properties->get("end"));
+        mlt_color color = properties->get_color("color");
+        marker.color = QColor::fromRgb(color.r, color.g, color.b, 0xFF);
+    }
 }
 
 MarkersModel::MarkersModel(QObject *parent)
@@ -69,7 +71,7 @@ void MarkersModel::load(Mlt::Producer *producer)
     beginResetModel();
     m_producer = producer;
     m_keys.clear();
-    if (m_producer) {
+    if (m_producer && m_producer->is_valid()) {
         Mlt::Properties *markerList = m_producer->get_props(kShotcutMarkersProperty);
         if (markerList && markerList->is_valid()) {
             int count = markerList->count();
@@ -121,7 +123,7 @@ void MarkersModel::remove(int markerIndex)
 
 void MarkersModel::doRemove(int markerIndex)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -154,7 +156,7 @@ void MarkersModel::doRemove(int markerIndex)
 
 void MarkersModel::doInsert(int markerIndex, const Markers::Marker &marker)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -195,7 +197,7 @@ void MarkersModel::doInsert(int markerIndex, const Markers::Marker &marker)
 
 void MarkersModel::append(const Markers::Marker &marker)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -205,7 +207,7 @@ void MarkersModel::append(const Markers::Marker &marker)
 
 void MarkersModel::doAppend(const Markers::Marker &marker)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -286,7 +288,7 @@ void MarkersModel::doUpdate(int markerIndex, const Markers::Marker &marker)
 
 void MarkersModel::doClear()
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -301,7 +303,7 @@ void MarkersModel::doClear()
 
 void MarkersModel::doReplace(QList<Markers::Marker> &markers)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -326,7 +328,7 @@ void MarkersModel::doReplace(QList<Markers::Marker> &markers)
 
 void MarkersModel::doShift(int shiftPosition, int shiftAmount)
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -404,7 +406,7 @@ void MarkersModel::setColor(int markerIndex, const QColor &color)
 
 void MarkersModel::clear()
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return;
     }
@@ -433,7 +435,7 @@ void MarkersModel::clear()
 
 int MarkersModel::markerCount() const
 {
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         return 0;
     }
     return m_keys.count();
@@ -462,6 +464,11 @@ int MarkersModel::uniqueKey() const
 
 int MarkersModel::markerIndexForPosition(int position)
 {
+    if (!m_producer || !m_producer->is_valid()) {
+        LOG_ERROR() << "No producer";
+        return -1;
+    }
+
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList && markerList->is_valid()) {
         for (const auto i : std::as_const(m_keys)) {
@@ -479,6 +486,11 @@ int MarkersModel::markerIndexForPosition(int position)
 
 int MarkersModel::markerIndexForRange(int start, int end)
 {
+    if (!m_producer || !m_producer->is_valid()) {
+        LOG_ERROR() << "No producer";
+        return -1;
+    }
+
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList && markerList->is_valid()) {
         for (const auto i : std::as_const(m_keys)) {
@@ -496,6 +508,11 @@ int MarkersModel::markerIndexForRange(int start, int end)
 
 int MarkersModel::rangeMarkerIndexForPosition(int position)
 {
+    if (!m_producer || !m_producer->is_valid()) {
+        LOG_ERROR() << "No producer";
+        return -1;
+    }
+
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList && markerList->is_valid()) {
         for (const auto i : std::as_const(m_keys)) {
@@ -515,7 +532,7 @@ int MarkersModel::rangeMarkerIndexForPosition(int position)
 int MarkersModel::nextMarkerPosition(int position)
 {
     int nextPosition = -1;
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return nextPosition;
     }
@@ -544,7 +561,7 @@ int MarkersModel::nextMarkerPosition(int position)
 int MarkersModel::prevMarkerPosition(int position)
 {
     int prevPosition = -1;
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return prevPosition;
     }
@@ -578,6 +595,8 @@ QModelIndex MarkersModel::modelIndexForRow(int row)
 QMap<int, QString> MarkersModel::ranges()
 {
     QMap<int, QString> result;
+    if (!m_producer || !m_producer->is_valid())
+        return result;
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList && markerList->is_valid()) {
         for (const auto i : std::as_const(m_keys)) {
@@ -634,7 +653,7 @@ QList<QColor> MarkersModel::allColors() const
 Mlt::Properties *MarkersModel::getMarkerProperties(int markerIndex)
 {
     Mlt::Properties *markerProperties = nullptr;
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_ERROR() << "No producer";
         return markerProperties;
     }
@@ -693,7 +712,7 @@ QVariant MarkersModel::data(const QModelIndex &index, int role) const
         return result;
     }
 
-    if (!m_producer) {
+    if (!m_producer || !m_producer->is_valid()) {
         LOG_DEBUG() << "No Producer: " << index.row() << index.column() << role;
         return result;
     }
