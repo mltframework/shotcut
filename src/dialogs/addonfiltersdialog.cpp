@@ -25,6 +25,7 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QVBoxLayout>
 
 AddOnFiltersDialog::AddOnFiltersDialog(AddOnServiceModel *model, QWidget *parent)
@@ -52,12 +53,16 @@ AddOnFiltersDialog::AddOnFiltersDialog(AddOnServiceModel *model, QWidget *parent
     m_listWidget->setRootIsDecorated(false);
     m_listWidget->setUniformRowHeights(true);
     m_listWidget->setSortingEnabled(true);
-    m_listWidget->setColumnCount(3);
-    m_listWidget->setHeaderLabels({tr("Title"), tr("Service"), tr("Type")});
+    m_listWidget->setColumnCount(6);
+    m_listWidget->setHeaderLabels(
+        {tr("Title"), tr("Service"), tr("Type"), tr("RGBA"), tr("YUV"), tr("10-bit")});
     m_listWidget->header()->setStretchLastSection(true);
     m_listWidget->header()->setSectionResizeMode(0, QHeaderView::Interactive);
     m_listWidget->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    m_listWidget->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+    m_listWidget->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    m_listWidget->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    m_listWidget->header()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+    m_listWidget->header()->setSectionResizeMode(5, QHeaderView::Stretch);
     m_listWidget->header()->setSortIndicatorShown(true);
     m_listWidget->sortItems(0, Qt::AscendingOrder);
     layout->addWidget(m_listWidget, 1);
@@ -99,11 +104,23 @@ void AddOnFiltersDialog::populate()
         const QString service = index.data(AddOnServiceModel::ServiceRole).toString();
         const QString description = index.data(AddOnServiceModel::DescriptionRole).toString();
         const bool isAudio = index.data(AddOnServiceModel::IsAudioRole).toBool();
+        const bool supportsRgba = index.data(AddOnServiceModel::SupportsRgbaRole).toBool();
+        const bool supportsYuv = index.data(AddOnServiceModel::SupportsYuvRole).toBool();
+        const bool supportsTenBit = index.data(AddOnServiceModel::SupportsTenBitRole).toBool();
 
         auto *item = new QTreeWidgetItem(m_listWidget);
         item->setText(0, title);
         item->setText(1, service);
         item->setText(2, isAudio ? tr("Audio") : tr("Video"));
+        item->setText(3, supportsRgba ? QString(QChar(0x2713)) : QString());
+        item->setText(4, supportsYuv ? QString(QChar(0x2713)) : QString());
+        item->setText(5, supportsTenBit ? QString(QChar(0x2713)) : QString());
+        item->setTextAlignment(3, Qt::AlignCenter);
+        item->setTextAlignment(4, Qt::AlignCenter);
+        item->setTextAlignment(5, Qt::AlignCenter);
+        item->setData(3, Qt::UserRole, supportsRgba ? 1 : 0);
+        item->setData(4, Qt::UserRole, supportsYuv ? 1 : 0);
+        item->setData(5, Qt::UserRole, supportsTenBit ? 1 : 0);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setCheckState(0, enabledServices.contains(service) ? Qt::Checked : Qt::Unchecked);
         item->setData(0, Qt::UserRole, service);
@@ -111,6 +128,9 @@ void AddOnFiltersDialog::populate()
             item->setToolTip(0, description);
             item->setToolTip(1, description);
             item->setToolTip(2, description);
+            item->setToolTip(3, description);
+            item->setToolTip(4, description);
+            item->setToolTip(5, description);
         }
     }
 
@@ -182,12 +202,17 @@ void AddOnFiltersDialog::adjustColumnWidths()
     m_listWidget->setColumnWidth(0, titleWidth);
 
     m_listWidget->resizeColumnToContents(1);
+    m_listWidget->resizeColumnToContents(2);
+    m_listWidget->resizeColumnToContents(3);
+    m_listWidget->resizeColumnToContents(4);
+    m_listWidget->resizeColumnToContents(5);
 
-    // Ensure dialog is wide enough for title+service columns; type column stretches.
+    // Ensure dialog is wide enough for all columns.
     const int treeMargins = 24;
     const int dialogMargins = 48;
-    const int typeMin = m_listWidget->fontMetrics().horizontalAdvance(tr("Video")) + 32;
-    const int requiredWidth = m_listWidget->columnWidth(0) + m_listWidget->columnWidth(1) + typeMin
+    const int requiredWidth = m_listWidget->columnWidth(0) + m_listWidget->columnWidth(1)
+                              + m_listWidget->columnWidth(2) + m_listWidget->columnWidth(3)
+                              + m_listWidget->columnWidth(4) + m_listWidget->columnWidth(5)
                               + treeMargins + dialogMargins;
     if (width() < requiredWidth)
         resize(requiredWidth, height());

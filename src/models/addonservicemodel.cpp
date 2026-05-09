@@ -55,6 +55,12 @@ QVariant AddOnServiceModel::data(const QModelIndex &index, int role) const
         return item.description;
     case IsAudioRole:
         return item.isAudio;
+    case SupportsRgbaRole:
+        return item.supportsRgba;
+    case SupportsYuvRole:
+        return item.supportsYuv;
+    case SupportsTenBitRole:
+        return item.supportsTenBit;
     case EnabledRole:
         return m_enabledServices.contains(item.service);
     default:
@@ -71,6 +77,9 @@ QHash<int, QByteArray> AddOnServiceModel::roleNames() const
     roles[TitleRole] = "title";
     roles[DescriptionRole] = "description";
     roles[IsAudioRole] = "isAudio";
+    roles[SupportsRgbaRole] = "supportsRgba";
+    roles[SupportsYuvRole] = "supportsYuv";
+    roles[SupportsTenBitRole] = "supportsTenBit";
     roles[EnabledRole] = "enabled";
     return roles;
 }
@@ -115,6 +124,27 @@ void AddOnServiceModel::reload()
                 if (!qstricmp(tags.get(t), "Audio")) {
                     item.isAudio = true;
                     break;
+                }
+            }
+        }
+
+        Mlt::Properties imageFormats(metadata->get_data("image_formats"));
+        if (imageFormats.is_valid()) {
+            for (int f = 0; f < imageFormats.count(); ++f) {
+                const QString format = QString::fromUtf8(imageFormats.get(f));
+                if (format == QStringLiteral("rgba"))
+                    item.supportsRgba = true;
+                else if (format == QStringLiteral("rgba64")) {
+                    item.supportsRgba = true;
+                    item.supportsTenBit = true;
+                } else if (format == QStringLiteral("yuv422")
+                           || format == QStringLiteral("yuv420p")) {
+                    item.supportsYuv = true;
+                } else if (format == QStringLiteral("yuv422p16")
+                           || format == QStringLiteral("yuv420p10")
+                           || format == QStringLiteral("yuv444p10")) {
+                    item.supportsYuv = true;
+                    item.supportsTenBit = true;
                 }
             }
         }

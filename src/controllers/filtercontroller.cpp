@@ -49,6 +49,33 @@ static QString addOnServiceFromObjectName(const QString &objectName)
     return objectName.mid(kPrefix.size());
 }
 
+static QString addOnKeywords(const AddOnFilterDescriptor &descriptor)
+{
+    QStringList keywords;
+    keywords << descriptor.service << QStringLiteral("#addon");
+
+    const bool supportsRgba = descriptor.imageFormats.contains(QStringLiteral("rgba"))
+                              || descriptor.imageFormats.contains(QStringLiteral("rgba64"));
+    const bool supportsYuv = descriptor.imageFormats.contains(QStringLiteral("yuv422"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+    const bool supportsTenBit = descriptor.imageFormats.contains(QStringLiteral("rgba64"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+
+    if (supportsRgba)
+        keywords << QStringLiteral("#rgba");
+    if (supportsYuv)
+        keywords << QStringLiteral("#yuv");
+    if (supportsTenBit)
+        keywords << QStringLiteral("#10bit");
+
+    return keywords.join(QLatin1Char(' '));
+}
+
 FilterController::FilterController(QObject *parent)
     : QObject(parent)
     , m_metadataModel(this)
@@ -207,7 +234,7 @@ void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
         meta->setObjectName(QStringLiteral("addOn.%1").arg(service));
         meta->set_mlt_service(service);
         meta->setName(descriptor.title);
-        meta->setProperty("keywords", service + QStringLiteral(" #addon"));
+        meta->setProperty("keywords", addOnKeywords(descriptor));
         meta->loadSettings();
         meta->setIsAudio(descriptor.isAudio);
 

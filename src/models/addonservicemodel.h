@@ -31,6 +31,9 @@ public:
         TitleRole,
         DescriptionRole,
         IsAudioRole,
+        SupportsRgbaRole,
+        SupportsYuvRole,
+        SupportsTenBitRole,
         EnabledRole,
     };
 
@@ -56,6 +59,9 @@ private:
         QString title;
         QString description;
         bool isAudio{false};
+        bool supportsRgba{false};
+        bool supportsYuv{false};
+        bool supportsTenBit{false};
     };
 
     QList<Item> m_items;

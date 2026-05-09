@@ -42,6 +42,12 @@ AddOnFilterDescriptor AddOnMetadataParser::parse(const QString &service,
 
     descriptor.description = QString::fromUtf8(mltMetadata->get("description"));
 
+    Mlt::Properties imageFormats(mltMetadata->get_data("image_formats"));
+    if (imageFormats.is_valid()) {
+        for (int i = 0; i < imageFormats.count(); ++i)
+            descriptor.imageFormats << QString::fromUtf8(imageFormats.get(i));
+    }
+
     Mlt::Properties tags(mltMetadata->get_data("tags"));
     if (tags.is_valid()) {
         for (int i = 0; i < tags.count(); ++i) {

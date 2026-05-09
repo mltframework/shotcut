@@ -21,6 +21,7 @@
 #include <MltProperties.h>
 #include <QList>
 #include <QString>
+#include <QStringList>
 
 struct AddOnParameterDescriptor
 {
@@ -43,6 +44,7 @@ struct AddOnFilterDescriptor
     QString title;
     QString description;
     bool isAudio = false;
+    QStringList imageFormats;
     QList<AddOnParameterDescriptor> parameters;
 };
 
