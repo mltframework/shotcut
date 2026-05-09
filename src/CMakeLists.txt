@@ -1,6 +1,6 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-add_executable(shotcut WIN32 MACOSX_BUNDLE
+add_library(shotcut_objects OBJECT
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
   autosavefile.cpp autosavefile.h
@@ -79,7 +79,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/screencapturejob.cpp jobs/screencapturejob.h
   jobs/videoqualityjob.cpp jobs/videoqualityjob.h
   jobs/whisperjob.cpp jobs/whisperjob.h
-  main.cpp
   mainwindow.cpp mainwindow.h
   mainwindow.ui
   mltcontroller.cpp mltcontroller.h
@@ -233,6 +232,9 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   ../icons/resources.qrc
 )
 
+add_executable(shotcut WIN32 MACOSX_BUNDLE main.cpp)
+target_link_libraries(shotcut PRIVATE shotcut_objects)
+
 add_custom_target(OTHER_FILES
   SOURCES
   ../.github/ISSUE_TEMPLATE.md
@@ -266,8 +268,8 @@ add_custom_target(OTHER_FILES
   ../scripts/staple.sh
 )
 
-target_link_libraries(shotcut
-  PRIVATE
+target_link_libraries(shotcut_objects
+  PUBLIC
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
@@ -284,22 +286,22 @@ target_link_libraries(shotcut
   Qt6::Xml
 )
 if(UNIX AND NOT APPLE)
-  target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
-  target_sources(shotcut PRIVATE linuxtools.cpp linuxtools.h)
+  target_link_libraries(shotcut_objects PUBLIC Qt6::DBus X11::X11)
+  target_sources(shotcut_objects PRIVATE linuxtools.cpp linuxtools.h)
 endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")
-target_sources(shotcut PRIVATE ${QML_SRC})
+target_sources(shotcut_objects PRIVATE ${QML_SRC})
 
-target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
-target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
+target_include_directories(shotcut_objects PUBLIC ${CMAKE_SOURCE_DIR}/CuteLogger/include)
+target_compile_definitions(shotcut_objects PUBLIC SHOTCUT_VERSION="${SHOTCUT_VERSION}")
 
 # Add compile definitions when certain custom cache variables are ON
 if(EXTERNAL_LAUNCHERS)
-  target_compile_definitions(shotcut PRIVATE EXTERNAL_LAUNCHERS)
+  target_compile_definitions(shotcut_objects PUBLIC EXTERNAL_LAUNCHERS)
 endif()
 if(USE_VULKAN)
-  target_compile_definitions(shotcut PRIVATE USE_VULKAN)
+  target_compile_definitions(shotcut_objects PUBLIC USE_VULKAN)
 endif()
 
 if(WIN32)
@@ -309,22 +311,22 @@ if(WIN32)
   target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
 
   # Windows integration features
-  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
-  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
-  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler ole32)
+  target_sources(shotcut_objects PRIVATE windowstools.cpp windowstools.h)
+  target_sources(shotcut_objects PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_sources(shotcut_objects PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+  target_link_libraries(shotcut_objects PUBLIC d3d11 d3dcompiler ole32)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-    target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
-    target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
+    target_include_directories(shotcut_objects PUBLIC ${CMAKE_SOURCE_DIR}/drmingw/include)
+    target_link_directories(shotcut_objects PUBLIC ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
     target_link_libraries(shotcut PRIVATE debug exchndl)
   endif()
 
   if(WINDOWS_DEPLOY)
     install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
   else()
-    target_compile_definitions(shotcut PRIVATE NODEPLOY)
+    target_compile_definitions(shotcut_objects PUBLIC NODEPLOY)
     install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   endif()
 
@@ -332,18 +334,18 @@ if(WIN32)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
 else()
-    target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+    target_sources(shotcut_objects PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h
+  target_sources(shotcut_objects PRIVATE macos.mm macos.h
     widgets/metalvideowidget.h widgets/metalvideowidget.mm)
   set_target_properties(shotcut PROPERTIES
     OUTPUT_NAME "Shotcut"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)
   find_library(FOUNDATION Foundation)
   find_library(COCOA Cocoa)
-  target_link_libraries(shotcut PRIVATE ${FOUNDATION} ${COCOA})
+  target_link_libraries(shotcut_objects PUBLIC ${FOUNDATION} ${COCOA})
   set(APP_ICON ${CMAKE_SOURCE_DIR}/packaging/macos/shotcut.icns)
   target_sources(shotcut PRIVATE ${APP_ICON})
   set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
