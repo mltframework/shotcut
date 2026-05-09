@@ -24,6 +24,7 @@
 
 #include <QFileInfo>
 #include <QSignalSpy>
+#include <QStandardPaths>
 #include <QTest>
 #include <QUndoStack>
 
@@ -33,6 +34,8 @@ class TestMainWindow : public QObject
 private slots:
     void initTestCase()
     {
+        QStandardPaths::setTestModeEnabled(true);
+
         // Mirror the setup done by Application in main.cpp
         QCoreApplication::setOrganizationName("Meltytech");
         QCoreApplication::setOrganizationDomain("shotcut.org");
