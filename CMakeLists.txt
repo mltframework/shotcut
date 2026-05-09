@@ -66,8 +66,10 @@ endif()
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)
-enable_testing()
-add_subdirectory(tests)
+include(CTest)
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

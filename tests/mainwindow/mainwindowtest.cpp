@@ -162,7 +162,7 @@ private slots:
 
     void test_windowTitleContainsApplicationName()
     {
-        QVERIFY(MAIN.windowTitle().contains("Shotcut"));
+        QVERIFY(MAIN.windowTitle().contains(QCoreApplication::applicationName()));
     }
 
     // ── File path helpers ─────────────────────────────────────────────────────
@@ -366,7 +366,7 @@ private slots:
         QSignalSpy spy(&MAIN, &MainWindow::profileChanged);
         MAIN.setProfile("dv_pal");
         QCOMPARE(spy.count(), 1);
-        MAIN.setProfile("automatic"); // restore to automatic
+        MAIN.setProfile(""); // restore to automatic
     }
 };
 
