@@ -977,16 +977,6 @@ void MainWindow::connectVideoWidgetSignals()
             &Mlt::VideoWidget::initialize,
             Qt::DirectConnection);
     connect(videoWidget->quickWindow(),
-            &QQuickWindow::beforeRendering,
-            videoWidget,
-            &Mlt::VideoWidget::beforeRendering,
-            Qt::DirectConnection);
-    connect(videoWidget->quickWindow(),
-            &QQuickWindow::beforeRenderPassRecording,
-            videoWidget,
-            &Mlt::VideoWidget::renderVideo,
-            Qt::DirectConnection);
-    connect(videoWidget->quickWindow(),
             &QQuickWindow::sceneGraphInitialized,
             this,
             &MainWindow::onSceneGraphInitialized,

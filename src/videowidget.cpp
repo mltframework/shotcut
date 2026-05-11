@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@ VideoWidget::VideoWidget(QObject *parent)
     , m_grid(0)
     , m_initSem(0)
     , m_isInitialized(false)
-    , m_frameRenderer(nullptr)
+    , m_frameSemaphore(3)
+    , m_imageRequested(false)
     , m_zoom(0.0f)
     , m_offset(QPoint(0, 0))
     , m_snapToGrid(true)
@@ -80,35 +81,16 @@ VideoWidget::~VideoWidget()
 {
     LOG_DEBUG() << "begin";
     stop();
-    if (m_frameRenderer && m_frameRenderer->isRunning()) {
-        m_frameRenderer->quit();
-        m_frameRenderer->wait();
-        m_frameRenderer->deleteLater();
-    }
     LOG_DEBUG() << "end";
 }
 
 void VideoWidget::initialize()
 {
     LOG_DEBUG() << "begin";
-    m_frameRenderer = new FrameRenderer();
-    connect(m_frameRenderer,
-            &FrameRenderer::frameDisplayed,
-            this,
-            &VideoWidget::onFrameDisplayed,
-            Qt::QueuedConnection);
-    connect(m_frameRenderer,
-            &FrameRenderer::frameDisplayed,
-            this,
-            &VideoWidget::frameDisplayed,
-            Qt::QueuedConnection);
-    connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
     m_initSem.release();
     m_isInitialized = true;
     LOG_DEBUG() << "end";
 }
-
-void VideoWidget::renderVideo() {}
 
 void VideoWidget::setBlankScene()
 {
@@ -213,8 +195,8 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     mimeData->setData(Mlt::XmlMimeType, MLT.XML().toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
-    if (m_frameRenderer && m_frameRenderer->getDisplayFrame().is_valid()) {
-        Mlt::Frame displayFrame(m_frameRenderer->getDisplayFrame().clone(false, true));
+    if (m_sharedFrame.is_valid()) {
+        Mlt::Frame displayFrame(m_sharedFrame.clone(false, true));
         QImage displayImage
             = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
         drag->setPixmap(QPixmap::fromImage(displayImage));
@@ -261,8 +243,8 @@ void VideoWidget::keyPressEvent(QKeyEvent *event)
 bool VideoWidget::event(QEvent *event)
 {
     bool result = QQuickWidget::event(event);
-    if (event->type() == QEvent::PaletteChange && m_sharedFrame.is_valid())
-        onFrameDisplayed(m_sharedFrame);
+    if (event->type() == QEvent::PaletteChange)
+        setClearColor(palette().window().color());
     return result;
 }
 
@@ -520,12 +502,11 @@ QPoint VideoWidget::offset() const
 
 QImage VideoWidget::image() const
 {
-    SharedFrame frame = m_frameRenderer->getDisplayFrame();
-    if (frame.is_valid()) {
-        const uint8_t *image = frame.get_image(mlt_image_rgba);
+    if (m_sharedFrame.is_valid()) {
+        const uint8_t *image = m_sharedFrame.get_image(mlt_image_rgba);
         if (image) {
-            int width = frame.get_image_width();
-            int height = frame.get_image_height();
+            int width = m_sharedFrame.get_image_width();
+            int height = m_sharedFrame.get_image_height();
             QImage temp(image, width, height, QImage::Format_RGBA8888);
             return temp.copy();
         }
@@ -536,7 +517,7 @@ QImage VideoWidget::image() const
 bool VideoWidget::imageIsProxy() const
 {
     bool isProxy = false;
-    SharedFrame frame = m_frameRenderer->getDisplayFrame();
+    SharedFrame frame = m_sharedFrame;
     if (frame.is_valid()) {
         Mlt::Producer *frameProducer = frame.get_original_producer();
         if (frameProducer && frameProducer->is_valid() && frameProducer->get_int(kIsProxyProperty)) {
@@ -547,9 +528,9 @@ bool VideoWidget::imageIsProxy() const
     return isProxy;
 }
 
-void VideoWidget::requestImage() const
+void VideoWidget::requestImage()
 {
-    m_frameRenderer->requestImage();
+    m_imageRequested = true;
 }
 
 void VideoWidget::toggleVuiDisplay()
@@ -558,19 +539,102 @@ void VideoWidget::toggleVuiDisplay()
     refreshConsumer();
 }
 
-void VideoWidget::onFrameDisplayed(const SharedFrame &frame)
+void VideoWidget::setVideoSink(QVideoSink *sink)
+{
+    m_videoSink = sink;
+    if (m_videoSink && m_sharedFrame.is_valid())
+        pushFrameToSink(m_sharedFrame);
+}
+
+void VideoWidget::pushFrameToSink(const SharedFrame &frame)
+{
+    if (!m_videoSink)
+        return;
+    int width = frame.get_image_width();
+    int height = frame.get_image_height();
+    if (width < 1 || height < 1)
+        return;
+    const uint8_t *image = frame.get_image(mlt_image_yuv420p);
+    if (!image)
+        return;
+
+    QVideoFrameFormat fmt(QSize(width, height), QVideoFrameFormat::Format_YUV420P);
+    switch (profile().colorspace()) {
+    case 601:
+    case 170:
+        fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT601);
+        break;
+    case 2020:
+        fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
+        break;
+    default:
+        fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT709);
+        break;
+    }
+
+    // Zero-copy buffer: SharedFrame is ref-counted, so the captured copy keeps
+    // the underlying MLT frame (and its image data) alive until QVideoFrame is
+    // destroyed.
+    class SharedFrameVideoBuffer : public QAbstractVideoBuffer
+    {
+    public:
+        SharedFrameVideoBuffer(const SharedFrame &sf, const QVideoFrameFormat &f)
+            : m_sharedFrame(sf)
+            , m_format(f)
+        {
+        }
+        QVideoFrameFormat format() const override { return m_format; }
+        MapData map(QVideoFrame::MapMode) override
+        {
+            int w = m_sharedFrame.get_image_width();
+            int h = m_sharedFrame.get_image_height();
+            auto *p = const_cast<uint8_t *>(m_sharedFrame.get_image(mlt_image_yuv420p));
+            MapData md;
+            md.planeCount = 3;
+            // Y plane
+            md.bytesPerLine[0] = w;
+            md.data[0] = p;
+            md.dataSize[0] = w * h;
+            // U plane
+            md.bytesPerLine[1] = w / 2;
+            md.data[1] = p + w * h;
+            md.dataSize[1] = (w / 2) * (h / 2);
+            // V plane
+            md.bytesPerLine[2] = w / 2;
+            md.data[2] = p + w * h + md.dataSize[1];
+            md.dataSize[2] = md.dataSize[1];
+            return md;
+        }
+
+    private:
+        SharedFrame m_sharedFrame;
+        QVideoFrameFormat m_format;
+    };
+
+    auto buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
+    QVideoFrame videoFrame(std::move(buffer));
+    m_videoSink->setVideoFrame(videoFrame);
+}
+
+void VideoWidget::showFrame(Mlt::Frame frame)
 {
     m_mutex.lock();
-    m_sharedFrame = frame;
+    m_sharedFrame = SharedFrame(frame);
     m_mutex.unlock();
-    bool isVui = frame.get_int(kShotcutVuiMetaProperty) && !m_hideVui;
+    bool isVui = m_sharedFrame.get_int(kShotcutVuiMetaProperty) && !m_hideVui;
     if (!isVui && source() != QmlUtilities::blankVui()) {
         m_savedQmlSource = source();
         setSource(QmlUtilities::blankVui());
     } else if (isVui && !m_savedQmlSource.isEmpty() && source() != m_savedQmlSource) {
         setSource(m_savedQmlSource);
     }
-    quickWindow()->update();
+    pushFrameToSink(m_sharedFrame);
+    emit frameDisplayed(m_sharedFrame);
+    if (m_imageRequested) {
+        m_imageRequested = false;
+        emit imageReady();
+    }
+    m_frameSemaphore.release();
 }
 
 void VideoWidget::setGrid(int grid)
@@ -629,9 +693,8 @@ void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_dat
     auto frame = Mlt::EventData(data).to_frame();
     if (frame.is_valid() && frame.get_int("rendered")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
-        if (widget->m_frameRenderer
-            && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
-            QMetaObject::invokeMethod(widget->m_frameRenderer,
+        if (widget->m_frameSemaphore.tryAcquire(1, timeout)) {
+            QMetaObject::invokeMethod(widget,
                                       "showFrame",
                                       Qt::QueuedConnection,
                                       Q_ARG(Mlt::Frame, frame));
@@ -672,39 +735,4 @@ void RenderThread::run()
     m_context->makeCurrent(m_surface.get());
     m_function(m_data);
     m_context->doneCurrent();
-}
-
-FrameRenderer::FrameRenderer()
-    : QThread(nullptr)
-    , m_semaphore(3)
-    , m_imageRequested(false)
-{
-    setObjectName("FrameRenderer");
-    moveToThread(this);
-    start();
-}
-
-FrameRenderer::~FrameRenderer() {}
-
-void FrameRenderer::showFrame(Mlt::Frame frame)
-{
-    m_displayFrame = SharedFrame(frame);
-    emit frameDisplayed(m_displayFrame);
-
-    if (m_imageRequested) {
-        m_imageRequested = false;
-        emit imageReady();
-    }
-
-    m_semaphore.release();
-}
-
-void FrameRenderer::requestImage()
-{
-    m_imageRequested = true;
-}
-
-SharedFrame FrameRenderer::getDisplayFrame()
-{
-    return m_displayFrame;
 }

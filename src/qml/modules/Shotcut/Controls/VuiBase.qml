@@ -16,8 +16,25 @@
  */
 
 import QtQuick
+import QtMultimedia
 
 DropArea {
+    clip: true
+
+    property real _zoom: (video.zoom > 0) ? video.zoom : 1
+
+    Component.onCompleted: video.setVideoSink(videoOutput.videoSink)
+
+    VideoOutput {
+        id: videoOutput
+
+        width: video.rect.width * _zoom
+        height: video.rect.height * _zoom
+        x: video.rect.x + (video.rect.width - width) / 2 - video.offset.x
+        y: video.rect.y + (video.rect.height - height) / 2 - video.offset.y
+        fillMode: VideoOutput.Stretch
+    }
+
     Canvas {
         id: grid
 
