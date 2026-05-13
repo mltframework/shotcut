@@ -135,20 +135,26 @@ void HdrPreviewWindow::updateHdrGain()
         return;
 
     auto info = sc->hdrInfo();
-    float headroom = 1.0f;
+    float maxNits = 100.0f;
     if (info.limitsType == QRhiSwapChainHdrInfo::ColorComponentValue)
-        headroom = info.limits.colorComponentValue.maxColorComponentValue;
+        maxNits = 100.0f * info.limits.colorComponentValue.maxColorComponentValue;
+    else if (info.limitsType == QRhiSwapChainHdrInfo::LuminanceInNits)
+        maxNits = info.limits.luminanceInNits.maxLuminance;
 
-    if (headroom <= 1.0f)
+    float displayMaxLinear = maxNits / 100.0f;
+    if (displayMaxLinear <= 1.0f)
         return;
 
-    // Qt's HLG shader has a bug: maxLum is HLG-encoded but used as a linear
-    // multiplier in the OOTF.  Compensate by multiplying the rendered output
-    // by the ratio of the correct linear value to the HLG-encoded one.
-    float newGain = headroom / hlgOetf(headroom);
+    // Qt's HLG shader has a bug: maxLum is HLG-encoded (via hlgOetf) but used
+    // as a linear multiplier in the OOTF.  The shader uniform is set as:
+    //   maxLum = hlgOetf(maxNits / 100)
+    // but it should be the linear value (maxNits / 100).  Compensate by
+    // multiplying the rendered output by the ratio of the correct linear
+    // value to the HLG-encoded one.
+    float newGain = displayMaxLinear / hlgOetf(displayMaxLinear);
     if (!qFuzzyCompare(newGain, m_hdrGain)) {
         m_hdrGain = newGain;
-        qDebug() << "HDR Preview: gain =" << m_hdrGain << "(headroom =" << headroom << ")";
+        qDebug() << "HDR Preview: gain =" << m_hdrGain << "(maxNits =" << maxNits << ")";
         emit hdrGainChanged();
     }
 }

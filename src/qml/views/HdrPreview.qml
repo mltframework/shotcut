@@ -29,6 +29,7 @@ Rectangle {
         anchors.fill: parent
         fillMode: VideoOutput.PreserveAspectFit
         layer.enabled: true
+        layer.format: ShaderEffectSource.RGBA16F
         layer.effect: ShaderEffect {
             property real gain: hdrWindow.hdrGain
             fragmentShader: "hdr_gain.frag.qsb"
