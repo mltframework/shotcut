@@ -47,6 +47,7 @@
 #include "docks/recentdock.h"
 #include "docks/subtitlesdock.h"
 #include "docks/timelinedock.h"
+#include "hdrpreviewwindow.h"
 #include "jobqueue.h"
 #include "jobs/screencapturejob.h"
 #include "models/audiolevelstask.h"
@@ -116,6 +117,7 @@
 #include <algorithm>
 
 #define SHOTCUT_THEME
+#define USE_SCREENS_FOR_EXTERNAL_MONITORING
 
 static bool eventDebugCallback(void **data)
 {
@@ -1271,6 +1273,59 @@ void MainWindow::setupSettingsMenu()
         action->setData(i);
         m_externalGroup->addAction(action);
     }
+
+    auto hdrAction = m_externalGroup->addAction(tr("HDR Preview Window"));
+    hdrAction->setCheckable(true);
+    Actions.add("hdrPreviewAction", hdrAction, tr("Player"));
+    connect(hdrAction, &QAction::toggled, this, [this, hdrAction](bool checked) {
+        if (checked) {
+            if (!m_hdrPreviewWindow) {
+                m_hdrPreviewWindow = new HdrPreviewWindow();
+                auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
+                connect(videoWidget,
+                        &Mlt::VideoWidget::videoFrameReady,
+                        m_hdrPreviewWindow,
+                        &HdrPreviewWindow::pushFrame);
+                connect(videoWidget,
+                        &Mlt::VideoWidget::hlgActiveChanged,
+                        m_hdrPreviewWindow,
+                        &HdrPreviewWindow::setHlg);
+                connect(m_hdrPreviewWindow,
+                        &QWindow::visibleChanged,
+                        this,
+                        [this, hdrAction](bool visible) {
+                            if (!visible) {
+                                Settings.setPlayerHdrPreviewFullScreen(
+                                    m_hdrPreviewWindow->windowStates() & Qt::WindowFullScreen);
+                                Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+                                hdrAction->setChecked(false);
+                            }
+                        });
+                auto savedGeometry = Settings.playerHdrPreviewGeometry();
+                if (savedGeometry.isValid())
+                    m_hdrPreviewWindow->setGeometry(savedGeometry);
+            }
+            m_hdrPreviewWindow->show();
+            if (Settings.playerHdrPreviewFullScreen())
+                m_hdrPreviewWindow->showFullScreen();
+        } else {
+            if (m_hdrPreviewWindow) {
+                Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                                       & Qt::WindowFullScreen);
+                Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+                delete m_hdrPreviewWindow;
+                m_hdrPreviewWindow = nullptr;
+            }
+        }
+        Settings.setPlayerHdrPreview(checked);
+    });
+    connect(hdrAction, &QAction::triggered, this, [this, hdrAction]() {
+        if (hdrAction->isChecked() && m_hdrPreviewWindow) {
+            m_hdrPreviewWindow->show();
+            m_hdrPreviewWindow->raise();
+            m_hdrPreviewWindow->requestActivate();
+        }
+    });
 #endif
 
     Mlt::Profile profile;
@@ -2573,6 +2628,12 @@ void MainWindow::readPlayerSettings()
         }
     }
 
+    if (Settings.playerHdrPreview()) {
+        auto hdr = Actions["hdrPreviewAction"];
+        if (hdr)
+            hdr->setChecked(true);
+    }
+
     QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
     if (isExternalPeripheral && profile.isEmpty())
@@ -2852,6 +2913,12 @@ void MainWindow::writeSettings()
 #endif
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
+    if (m_hdrPreviewWindow) {
+        Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                               & Qt::WindowFullScreen);
+        if (!(m_hdrPreviewWindow->windowStates() & Qt::WindowFullScreen))
+            Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+    }
     Settings.sync();
 }
 

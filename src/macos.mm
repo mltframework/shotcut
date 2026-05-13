@@ -20,8 +20,12 @@
 #import <AppKit/NSDockTile.h>
 #import <AppKit/NSImageView.h>
 #import <AppKit/NSProgressIndicator.h>
+#import <AppKit/NSScreen.h>
 #import <AppKit/NSView.h>
 #import <AppKit/NSWindow.h>
+#import <objc/runtime.h>
+
+#include <atomic>
 
 void removeMacosTabBar()
 {
@@ -95,4 +99,70 @@ void macosFinishDockProgress(bool isSuccess, bool stopped)
         [NSApp.dockTile display];
         [NSApp requestUserAttention:NSCriticalRequest];
     }
+}
+
+// ---------------------------------------------------------------------------
+// EDR headroom override via method swizzle on NSScreen
+// ---------------------------------------------------------------------------
+static std::atomic<bool> s_edrOverrideEnabled{false};
+static bool s_swizzled = false;
+
+// Category that holds the swizzled implementation.
+@interface NSScreen (ShotcutEdrOverride)
+- (CGFloat)shotcut_maximumExtendedDynamicRangeColorComponentValue;
+@end
+
+@implementation NSScreen (ShotcutEdrOverride)
+- (CGFloat)shotcut_maximumExtendedDynamicRangeColorComponentValue
+{
+    // After swizzling, calling the swizzled selector invokes the ORIGINAL impl.
+    CGFloat real = [self shotcut_maximumExtendedDynamicRangeColorComponentValue];
+    if (s_edrOverrideEnabled.load(std::memory_order_relaxed) && real < 2.0) {
+        return self.maximumPotentialExtendedDynamicRangeColorComponentValue;
+    }
+    return real;
+}
+@end
+
+void macosOverrideEdrHeadroom(bool enable)
+{
+    if (!s_swizzled) {
+        s_swizzled = true;
+        Method original = class_getInstanceMethod(
+            [NSScreen class],
+            @selector(maximumExtendedDynamicRangeColorComponentValue));
+        Method swizzled = class_getInstanceMethod(
+            [NSScreen class],
+            @selector(shotcut_maximumExtendedDynamicRangeColorComponentValue));
+        method_exchangeImplementations(original, swizzled);
+        NSLog(@"macosOverrideEdrHeadroom: swizzled NSScreen.maximumExtendedDynamicRangeColorComponentValue");
+    }
+    s_edrOverrideEnabled.store(enable, std::memory_order_relaxed);
+    NSLog(@"macosOverrideEdrHeadroom: %s", enable ? "enabled" : "disabled");
+}
+
+float macosCurrentEdrHeadroom(uintptr_t windowId)
+{
+    NSView *view = reinterpret_cast<NSView *>(windowId);
+    if (!view || !view.window || !view.window.screen)
+        return 1.0f;
+    return static_cast<float>(view.window.screen.maximumExtendedDynamicRangeColorComponentValue);
+}
+
+float macosPotentialEdrHeadroom(uintptr_t windowId)
+{
+    NSView *view = reinterpret_cast<NSView *>(windowId);
+    if (!view || !view.window || !view.window.screen)
+        return 1.0f;
+    return static_cast<float>(view.window.screen.maximumPotentialExtendedDynamicRangeColorComponentValue);
+}
+
+float macosReferenceEdrHeadroom(uintptr_t windowId)
+{
+    NSView *view = reinterpret_cast<NSView *>(windowId);
+    if (!view || !view.window || !view.window.screen)
+        return 1.0f;
+    if (@available(macOS 12.0, *))
+        return static_cast<float>(view.window.screen.maximumReferenceExtendedDynamicRangeColorComponentValue);
+    return 1.0f;
 }

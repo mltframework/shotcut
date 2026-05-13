@@ -55,6 +55,7 @@ class MarkersDock;
 class NotesDock;
 class SubtitlesDock;
 class ScreenCapture;
+class HdrPreviewWindow;
 
 class MainWindow : public QMainWindow
 {
@@ -224,6 +225,7 @@ private:
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
     ScreenCapture *m_screenCapture;
+    HdrPreviewWindow *m_hdrPreviewWindow{nullptr};
 
 public slots:
     bool isCompatibleWithProcessingMode(MltXmlChecker &checker, QString &fileName, bool &converted);

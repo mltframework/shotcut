@@ -32,6 +32,10 @@
 #include <QtQml>
 #include <QtWidgets>
 
+#ifdef __ARM_NEON
+#include <arm_neon.h>
+#endif
+
 using namespace Mlt;
 
 VideoWidget::VideoWidget(QObject *parent)
@@ -380,13 +384,19 @@ int VideoWidget::reconfigure(bool isMulti)
         const int processingMode = property("processing_mode").toInt();
         const bool isDeckLinkHLG = serviceName.startsWith("decklink")
                                    && property("decklinkGamma").toInt() == 1;
+        const bool hdrPreview = Settings.playerHdrPreview();
         switch (processingMode) {
         case ShotcutSettings::Native10Cpu:
+            m_consumer->set("mlt_image_format", hdrPreview ? "yuv420p10" : "rgba64");
+            break;
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
             break;
         case ShotcutSettings::Linear10GpuCpu:
-            m_consumer->set("mlt_image_format", isDeckLinkHLG ? "yuv444p10" : "rgba64");
+            m_consumer->set("mlt_image_format",
+                            isDeckLinkHLG ? "yuv444p10"
+                            : hdrPreview  ? "yuv420p10"
+                                          : "rgba64");
             break;
         default: // Native8Cpu
             m_consumer->set("mlt_image_format",
@@ -411,7 +421,7 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("color_trc", "bt470bg");
             break;
         case 2020:
-            if (isDeckLinkHLG) {
+            if (isDeckLinkHLG || hdrPreview) {
                 m_consumer->set("color_trc", "arib-std-b67");
             } else {
                 m_consumer->clear("color_trc");
@@ -421,9 +431,10 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("color_trc", "bt709");
             break;
         }
+        emit hlgActiveChanged(!qstrcmp(m_consumer->get("color_trc"), "arib-std-b67"));
         if (processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Linear10GpuCpu
-                && property("decklinkGamma").toInt() != 1)) {
+            || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHLG
+                && !hdrPreview)) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");
@@ -554,66 +565,157 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
     int height = frame.get_image_height();
     if (width < 1 || height < 1)
         return;
-    const uint8_t *image = frame.get_image(mlt_image_yuv420p);
+
+    bool is10bit = !qstrcmp(m_consumer->get("mlt_image_format"), "yuv420p10");
+    mlt_image_format mltFormat = is10bit ? mlt_image_yuv420p10 : mlt_image_yuv420p;
+    const uint8_t *image = frame.get_image(mltFormat);
     if (!image)
         return;
 
-    QVideoFrameFormat fmt(QSize(width, height), QVideoFrameFormat::Format_YUV420P);
+    auto pixFmt = is10bit ? QVideoFrameFormat::Format_P016 : QVideoFrameFormat::Format_YUV420P;
+    QVideoFrameFormat fmt(QSize(width, height), pixFmt);
+    fmt.setColorRange(QVideoFrameFormat::ColorRange_Video);
     switch (profile().colorspace()) {
     case 601:
     case 170:
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT601);
+        fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT601);
         break;
     case 2020:
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
+        if (!qstrcmp(m_consumer->get("color_trc"), "arib-std-b67")) {
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_STD_B67);
+            fmt.setMaxLuminance(1000.0f);
+        } else {
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
+        }
         break;
     default:
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT709);
+        fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
         break;
     }
 
-    // Zero-copy buffer: SharedFrame is ref-counted, so the captured copy keeps
-    // the underlying MLT frame (and its image data) alive until QVideoFrame is
-    // destroyed.
+    // For BT.2020/HLG, convert MLT's planar yuv420p10 (3 planes: Y, U, V with
+    // 16-bit samples, 10 significant bits in LSBs) to semi-planar P016 (2 planes:
+    // Y, interleaved UV with full 16-bit range) so that Qt selects the
+    // nv12_bt2020_hlg fragment shader for proper HLG tone mapping.
+    QByteArray p016Buffer;
+    if (is10bit) {
+        int uvW = width / 2;
+        int uvH = height / 2;
+        int ySamples = width * height;
+        int yPlaneSize = ySamples * 2;         // 16-bit per sample
+        int uvPlaneSize = uvW * uvH * 2;       // per U or V plane in source
+        int interleavedUvSize = uvW * uvH * 4; // interleaved UV in dest
+        p016Buffer.resize(yPlaneSize + interleavedUvSize);
+
+        // Copy Y plane, shifting 10-bit values (LSBs) to full 16-bit range
+        const uint16_t *srcY = reinterpret_cast<const uint16_t *>(image);
+        uint16_t *dstY = reinterpret_cast<uint16_t *>(p016Buffer.data());
+#ifdef __ARM_NEON
+        int i = 0;
+        for (; i + 8 <= ySamples; i += 8) {
+            uint16x8_t y = vld1q_u16(srcY + i);
+            vst1q_u16(dstY + i, vshlq_n_u16(y, 6));
+        }
+        for (; i < ySamples; ++i)
+            dstY[i] = srcY[i] << 6;
+#else
+        for (int i = 0; i < ySamples; ++i) {
+            dstY[i] = srcY[i] << 6;
+        }
+#endif
+
+        // Interleave U and V planes, also shifting to full 16-bit range
+        const uint16_t *srcU = reinterpret_cast<const uint16_t *>(image + yPlaneSize);
+        const uint16_t *srcV = reinterpret_cast<const uint16_t *>(image + yPlaneSize + uvPlaneSize);
+        uint16_t *dstUV = reinterpret_cast<uint16_t *>(p016Buffer.data() + yPlaneSize);
+        int uvSamples = uvW * uvH;
+#ifdef __ARM_NEON
+        int j = 0;
+        for (; j + 8 <= uvSamples; j += 8) {
+            uint16x8_t u = vshlq_n_u16(vld1q_u16(srcU + j), 6);
+            uint16x8_t v = vshlq_n_u16(vld1q_u16(srcV + j), 6);
+            uint16x8x2_t uv = {u, v};
+            vst2q_u16(dstUV + j * 2, uv);
+        }
+        for (; j < uvSamples; ++j) {
+            dstUV[2 * j] = srcU[j] << 6;
+            dstUV[2 * j + 1] = srcV[j] << 6;
+        }
+#else
+        for (int i = 0; i < uvSamples; ++i) {
+            dstUV[2 * i] = srcU[i] << 6;
+            dstUV[2 * i + 1] = srcV[i] << 6;
+        }
+#endif
+    }
+
+    // Zero-copy buffer for 8-bit, or P016 converted buffer for 10-bit.
     class SharedFrameVideoBuffer : public QAbstractVideoBuffer
     {
     public:
         SharedFrameVideoBuffer(const SharedFrame &sf, const QVideoFrameFormat &f)
             : m_sharedFrame(sf)
             , m_format(f)
-        {
-        }
+        {}
+        SharedFrameVideoBuffer(QByteArray p016, const QVideoFrameFormat &f)
+            : m_p016(std::move(p016))
+            , m_format(f)
+        {}
         QVideoFrameFormat format() const override { return m_format; }
         MapData map(QVideoFrame::MapMode) override
         {
             int w = m_sharedFrame.get_image_width();
             int h = m_sharedFrame.get_image_height();
-            auto *p = const_cast<uint8_t *>(m_sharedFrame.get_image(mlt_image_yuv420p));
             MapData md;
-            md.planeCount = 3;
-            // Y plane
-            md.bytesPerLine[0] = w;
-            md.data[0] = p;
-            md.dataSize[0] = w * h;
-            // U plane
-            md.bytesPerLine[1] = w / 2;
-            md.data[1] = p + w * h;
-            md.dataSize[1] = (w / 2) * (h / 2);
-            // V plane
-            md.bytesPerLine[2] = w / 2;
-            md.data[2] = p + w * h + md.dataSize[1];
-            md.dataSize[2] = md.dataSize[1];
+            if (!m_p016.isEmpty()) {
+                // P016: semi-planar 16-bit, 2 planes
+                w = m_format.frameWidth();
+                h = m_format.frameHeight();
+                auto *p = reinterpret_cast<uint8_t *>(m_p016.data());
+                md.planeCount = 2;
+                // Y plane (16-bit per sample)
+                md.bytesPerLine[0] = w * 2;
+                md.data[0] = p;
+                md.dataSize[0] = w * h * 2;
+                // Interleaved UV plane (2 × 16-bit per sample pair)
+                md.bytesPerLine[1] = (w / 2) * 4;
+                md.data[1] = p + md.dataSize[0];
+                md.dataSize[1] = (w / 2) * (h / 2) * 4;
+            } else {
+                // YUV420P: planar 8-bit, 3 planes
+                auto *p = const_cast<uint8_t *>(m_sharedFrame.get_image(mlt_image_yuv420p));
+                md.planeCount = 3;
+                md.bytesPerLine[0] = w;
+                md.data[0] = p;
+                md.dataSize[0] = w * h;
+                md.bytesPerLine[1] = w / 2;
+                md.data[1] = p + md.dataSize[0];
+                md.dataSize[1] = (w / 2) * (h / 2);
+                md.bytesPerLine[2] = w / 2;
+                md.data[2] = md.data[1] + md.dataSize[1];
+                md.dataSize[2] = md.dataSize[1];
+            }
             return md;
         }
 
     private:
         SharedFrame m_sharedFrame;
+        QByteArray m_p016;
         QVideoFrameFormat m_format;
     };
 
-    auto buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
+    std::unique_ptr<SharedFrameVideoBuffer> buffer;
+    if (is10bit) {
+        buffer = std::make_unique<SharedFrameVideoBuffer>(std::move(p016Buffer), fmt);
+    } else {
+        buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
+    }
     QVideoFrame videoFrame(std::move(buffer));
     m_videoSink->setVideoFrame(videoFrame);
+    emit videoFrameReady(videoFrame);
 }
 
 void VideoWidget::showFrame(Mlt::Frame frame)

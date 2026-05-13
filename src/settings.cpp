@@ -845,6 +845,36 @@ void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
     settings.setValue("player/pauseAfterSeek", b);
 }
 
+bool ShotcutSettings::playerHdrPreview() const
+{
+    return settings.value("player/hdrPreview", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreview(bool b)
+{
+    settings.setValue("player/hdrPreview", b);
+}
+
+QRect ShotcutSettings::playerHdrPreviewGeometry() const
+{
+    return settings.value("player/hdrPreviewGeometry").toRect();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewGeometry(const QRect &r)
+{
+    settings.setValue("player/hdrPreviewGeometry", r);
+}
+
+bool ShotcutSettings::playerHdrPreviewFullScreen() const
+{
+    return settings.value("player/hdrPreviewFullScreen", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewFullScreen(bool b)
+{
+    settings.setValue("player/hdrPreviewFullScreen", b);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

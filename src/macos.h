@@ -17,8 +17,32 @@
 
 #pragma once
 
+#include <cstdint>
+
 void removeMacosTabBar();
 void macosSetDockProgress(int percent);
 void macosPauseDockProgress(int percent);
 void macosResetDockProgress();
 void macosFinishDockProgress(bool isSuccess, bool stopped);
+
+/// Override NSScreen.maximumExtendedDynamicRangeColorComponentValue to return
+/// the *potential* headroom.  This breaks the chicken-and-egg where Qt's shader
+/// won't output > 1.0 because headroom=1, and macOS won't allocate headroom
+/// because no content > 1.0 is being rendered.  Once the shader outputs HDR
+/// values, macOS allocates real headroom and the override becomes a no-op.
+/// Safe: only affects the HDR preview window's video shader (main window uses
+/// SDR swapchain format, so Qt's video node ignores hdrInfo for it).
+void macosOverrideEdrHeadroom(bool enable);
+
+/// Query the current EDR headroom for the screen hosting the given window.
+/// Returns NSScreen.maximumExtendedDynamicRangeColorComponentValue.
+/// @param windowId  QWindow::winId()
+float macosCurrentEdrHeadroom(uintptr_t windowId);
+
+/// Query the potential (maximum) EDR headroom.
+/// Returns NSScreen.maximumPotentialExtendedDynamicRangeColorComponentValue.
+float macosPotentialEdrHeadroom(uintptr_t windowId);
+
+/// Query the reference EDR headroom.
+/// Returns NSScreen.maximumReferenceExtendedDynamicRangeColorComponentValue.
+float macosReferenceEdrHeadroom(uintptr_t windowId);

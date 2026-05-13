@@ -146,6 +146,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   transportcontrol.h
   util.cpp util.h
   videowidget.cpp videowidget.h
+  hdrpreviewwindow.cpp hdrpreviewwindow.h
   widgets/alsawidget.cpp widgets/alsawidget.h
   widgets/alsawidget.ui
   widgets/audiometerwidget.cpp widgets/audiometerwidget.h
@@ -266,12 +267,29 @@ add_custom_target(OTHER_FILES
   ../scripts/staple.sh
 )
 
+# Compile HDR gain shader (used by HdrPreview.qml ShaderEffect)
+find_program(QSB_EXECUTABLE qsb HINTS
+  "${Qt6_DIR}/../../../bin" "${Qt6Core_DIR}/../../../bin")
+if(QSB_EXECUTABLE)
+  set(HDR_GAIN_FRAG ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag)
+  set(HDR_GAIN_QSB ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag.qsb)
+  add_custom_command(
+    OUTPUT ${HDR_GAIN_QSB}
+    COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${HDR_GAIN_QSB} ${HDR_GAIN_FRAG}
+    DEPENDS ${HDR_GAIN_FRAG}
+    COMMENT "Compiling HDR gain shader"
+  )
+  add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB})
+  add_dependencies(shotcut hdr_shaders)
+endif()
+
 target_link_libraries(shotcut
   PRIVATE
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
   Qt6::Charts
+  Qt6::GuiPrivate
   Qt6::Multimedia
   Qt6::Network
   Qt6::OpenGL

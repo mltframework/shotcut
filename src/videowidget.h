@@ -22,6 +22,7 @@
 #include "settings.h"
 #include "sharedframe.h"
 
+#include <QAbstractVideoBuffer>
 #include <QMutex>
 #include <QPointer>
 #include <QQuickWidget>
@@ -29,7 +30,6 @@
 #include <QSemaphore>
 #include <QThread>
 #include <QTimer>
-#include <QAbstractVideoBuffer>
 #include <QVideoFrame>
 #include <QVideoFrameFormat>
 #include <QVideoSink>
@@ -128,6 +128,8 @@ signals:
     void snapToGridChanged();
     void toggleZoom(bool);
     void stepZoom(float, float);
+    void videoFrameReady(const QVideoFrame &frame);
+    void hlgActiveChanged(bool isHlg);
 
 private:
     QRectF m_rect;
