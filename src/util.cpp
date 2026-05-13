@@ -59,6 +59,10 @@
 #include <windows.h>
 #endif
 
+#if defined(__x86_64__) || defined(_M_AMD64)
+#include <immintrin.h>
+#endif
+
 #ifdef Q_OS_MAC
 static constexpr unsigned int kLowMemoryThresholdPercent = 10U;
 #else
@@ -1259,4 +1263,31 @@ bool Util::openUrl(const QUrl &url)
         success = startDetached("xdg-open", {url.toString()});
 #endif
     return success;
+}
+
+bool Util::cpuHasAVX2()
+{
+    static const bool result = []() -> bool {
+#if defined(__GNUC__) || defined(__clang__)
+        return __builtin_cpu_supports("avx2");
+#elif defined(_MSC_VER)
+        int info[4];
+        __cpuid(info, 1);
+        // Check OSXSAVE and AVX bits in ECX
+        if (!((info[2] >> 27) & 1) || !((info[2] >> 28) & 1))
+            return false;
+        // Check OS saves/restores YMM registers (XCR0[2:1] == 0b11)
+        if ((_xgetbv(0) & 0x6) != 0x6)
+            return false;
+        // Check AVX2 via structured extended feature leaf 7, EBX bit 5
+        __cpuid(info, 0);
+        if (info[0] < 7)
+            return false;
+        __cpuidex(info, 7, 0);
+        return (info[1] >> 5) & 1;
+#else
+        return false;
+#endif
+    }();
+    return result;
 }

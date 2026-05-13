@@ -23,6 +23,7 @@
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "settings.h"
+#include "util.h"
 
 #include <Mlt.h>
 #include <QOffscreenSurface>
@@ -34,6 +35,10 @@
 
 #ifdef __ARM_NEON
 #include <arm_neon.h>
+#endif
+
+#if defined(__x86_64__) || defined(_M_AMD64)
+#include <immintrin.h>
 #endif
 
 using namespace Mlt;
@@ -557,6 +562,79 @@ void VideoWidget::setVideoSink(QVideoSink *sink)
         pushFrameToSink(m_sharedFrame);
 }
 
+#if defined(__x86_64__) || defined(_M_AMD64)
+#if defined(__GNUC__) || defined(__clang__)
+__attribute__((target("avx2")))
+#endif
+static void
+shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
+{
+    int i = 0;
+    for (; i + 16 <= n; i += 16) {
+        __m256i y = _mm256_loadu_si256(reinterpret_cast<const __m256i *>(src + i));
+        _mm256_storeu_si256(reinterpret_cast<__m256i *>(dst + i), _mm256_slli_epi16(y, 6));
+    }
+    for (; i < n; ++i)
+        dst[i] = src[i] << 6;
+}
+
+#if defined(__GNUC__) || defined(__clang__)
+__attribute__((target("avx2")))
+#endif
+static void
+interleaveUVPlanes_AVX2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
+{
+    // AVX2 unpack operates within 128-bit lanes; permute to restore linear order.
+    // unpacklo(u,v): lane0 = u0v0u1v1u2v2u3v3, lane1 = u8v8...u11v11
+    // unpackhi(u,v): lane0 = u4v4...u7v7,      lane1 = u12v12...u15v15
+    // permute2x128 0x20 → [lo.lane0 | hi.lane0] = u0v0..u7v7
+    // permute2x128 0x31 → [lo.lane1 | hi.lane1] = u8v8..u15v15
+    int j = 0;
+    for (; j + 16 <= n; j += 16) {
+        __m256i u
+            = _mm256_slli_epi16(_mm256_loadu_si256(reinterpret_cast<const __m256i *>(srcU + j)), 6);
+        __m256i v
+            = _mm256_slli_epi16(_mm256_loadu_si256(reinterpret_cast<const __m256i *>(srcV + j)), 6);
+        __m256i lo = _mm256_unpacklo_epi16(u, v);
+        __m256i hi = _mm256_unpackhi_epi16(u, v);
+        _mm256_storeu_si256(reinterpret_cast<__m256i *>(dst + j * 2),
+                            _mm256_permute2x128_si256(lo, hi, 0x20));
+        _mm256_storeu_si256(reinterpret_cast<__m256i *>(dst + j * 2 + 16),
+                            _mm256_permute2x128_si256(lo, hi, 0x31));
+    }
+    for (; j < n; ++j) {
+        dst[2 * j] = srcU[j] << 6;
+        dst[2 * j + 1] = srcV[j] << 6;
+    }
+}
+
+static void shiftYPlane_SSE2(const uint16_t *src, uint16_t *dst, int n)
+{
+    int i = 0;
+    for (; i + 8 <= n; i += 8) {
+        __m128i y = _mm_loadu_si128(reinterpret_cast<const __m128i *>(src + i));
+        _mm_storeu_si128(reinterpret_cast<__m128i *>(dst + i), _mm_slli_epi16(y, 6));
+    }
+    for (; i < n; ++i)
+        dst[i] = src[i] << 6;
+}
+
+static void interleaveUVPlanes_SSE2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
+{
+    int j = 0;
+    for (; j + 8 <= n; j += 8) {
+        __m128i u = _mm_slli_epi16(_mm_loadu_si128(reinterpret_cast<const __m128i *>(srcU + j)), 6);
+        __m128i v = _mm_slli_epi16(_mm_loadu_si128(reinterpret_cast<const __m128i *>(srcV + j)), 6);
+        _mm_storeu_si128(reinterpret_cast<__m128i *>(dst + j * 2), _mm_unpacklo_epi16(u, v));
+        _mm_storeu_si128(reinterpret_cast<__m128i *>(dst + j * 2 + 8), _mm_unpackhi_epi16(u, v));
+    }
+    for (; j < n; ++j) {
+        dst[2 * j] = srcU[j] << 6;
+        dst[2 * j + 1] = srcV[j] << 6;
+    }
+}
+#endif // defined(__x86_64__) || defined(_M_AMD64)
+
 void VideoWidget::pushFrameToSink(const SharedFrame &frame)
 {
     if (!m_videoSink)
@@ -621,6 +699,11 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         }
         for (; i < ySamples; ++i)
             dstY[i] = srcY[i] << 6;
+#elif defined(__x86_64__) || defined(_M_AMD64)
+        if (Util::cpuHasAVX2())
+            shiftYPlane_AVX2(srcY, dstY, ySamples);
+        else
+            shiftYPlane_SSE2(srcY, dstY, ySamples);
 #else
         for (int i = 0; i < ySamples; ++i) {
             dstY[i] = srcY[i] << 6;
@@ -644,6 +727,11 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
             dstUV[2 * j] = srcU[j] << 6;
             dstUV[2 * j + 1] = srcV[j] << 6;
         }
+#elif defined(__x86_64__) || defined(_M_AMD64)
+        if (Util::cpuHasAVX2())
+            interleaveUVPlanes_AVX2(srcU, srcV, dstUV, uvSamples);
+        else
+            interleaveUVPlanes_SSE2(srcU, srcV, dstUV, uvSamples);
 #else
         for (int i = 0; i < uvSamples; ++i) {
             dstUV[2 * i] = srcU[i] << 6;
