@@ -17,6 +17,8 @@
 
 #include "hdrpreviewwindow.h"
 
+#include "actions.h"
+#include "mainwindow.h"
 #include "qmltypes/qmlutilities.h"
 
 #include <private/qrhi_p.h>
@@ -112,6 +114,38 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
         updateHdrGain();
         m_videoSink->setVideoFrame(frame);
     }
+}
+
+void HdrPreviewWindow::keyPressEvent(QKeyEvent *event)
+{
+    // Forward to MainWindow for J/K/L transport handling
+    event->setAccepted(false);
+    MAIN.keyPressEvent(event);
+    if (event->isAccepted())
+        return;
+
+    // Match QAction shortcuts since this window is outside MainWindow's hierarchy
+    QKeySequence keySeq(event->keyCombination());
+    for (const auto &key : Actions.keys()) {
+        QAction *action = Actions[key];
+        if (action && action->isEnabled()) {
+            for (const auto &shortcut : action->shortcuts()) {
+                if (shortcut.matches(keySeq) == QKeySequence::ExactMatch) {
+                    action->trigger();
+                    event->accept();
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void HdrPreviewWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    event->setAccepted(false);
+    MAIN.keyReleaseEvent(event);
+    if (!event->isAccepted())
+        QQuickView::keyReleaseEvent(event);
 }
 
 void HdrPreviewWindow::setHlg(bool isHlg)

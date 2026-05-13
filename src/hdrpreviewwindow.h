@@ -18,6 +18,7 @@
 #ifndef HDRPREVIEWWINDOW_H
 #define HDRPREVIEWWINDOW_H
 
+#include <QKeyEvent>
 #include <QPointer>
 #include <QQuickView>
 #include <QTimer>
@@ -42,6 +43,10 @@ public slots:
 
 signals:
     void hdrGainChanged();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
     void checkEdrHeadroom();
