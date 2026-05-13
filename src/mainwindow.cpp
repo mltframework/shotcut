@@ -1290,6 +1290,10 @@ void MainWindow::setupSettingsMenu()
                         &Mlt::VideoWidget::hlgActiveChanged,
                         m_hdrPreviewWindow,
                         &HdrPreviewWindow::setHlg);
+                auto *win = m_hdrPreviewWindow;
+                connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
+                connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
+                connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
                 connect(m_hdrPreviewWindow,
                         &QWindow::visibleChanged,
                         this,

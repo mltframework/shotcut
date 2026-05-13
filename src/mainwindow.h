@@ -86,6 +86,7 @@ public:
     QString fileName() const { return m_currentFile; }
     bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
+    Player *player() const { return m_player; }
 
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);

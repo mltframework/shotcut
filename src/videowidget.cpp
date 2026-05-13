@@ -714,6 +714,10 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
     }
     QVideoFrame videoFrame(std::move(buffer));
+    // Set PTS so downstream consumers (e.g. HdrPreviewWindow) can track position.
+    const double fps = profile().fps();
+    if (fps > 0.0)
+        videoFrame.setStartTime(qRound64(frame.get_position() / fps * 1000000.0));
     m_videoSink->setVideoFrame(videoFrame);
     emit videoFrameReady(videoFrame);
 }

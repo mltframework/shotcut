@@ -19,7 +19,13 @@
 
 #include "actions.h"
 #include "mainwindow.h"
+#include "mltcontroller.h"
+#include "player.h"
 #include "qmltypes/qmlutilities.h"
+
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 #include <private/qrhi_p.h>
 #include <QDebug>
@@ -44,6 +50,19 @@ static float hlgOetf(float linear)
     return a * logf(12.0f * linear - b) + c;
 }
 
+static QString formatTimecode(int frames, double fps)
+{
+    if (frames < 0 || fps <= 0.0)
+        return QStringLiteral("00:00");
+    const int totalSec = static_cast<int>(frames / fps);
+    const int h = totalSec / 3600;
+    const int m = (totalSec % 3600) / 60;
+    const int s = totalSec % 60;
+    if (h > 0)
+        return QString("%1:%2:%3").arg(h).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+    return QString("%1:%2").arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+}
+
 HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     : QQuickView(QmlUtilities::sharedEngine(), parent)
 {
@@ -63,6 +82,8 @@ HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     setSource(QUrl::fromLocalFile(qmlDir.filePath("views/HdrPreview.qml")));
 
     resize(960, 540);
+
+    connect(this, &QWindow::windowStateChanged, this, [this]() { emit fullScreenChanged(); });
 
 #ifdef Q_OS_MACOS
     // Override NSScreen.maximumExtendedDynamicRangeColorComponentValue so that
@@ -113,7 +134,158 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
         }
         updateHdrGain();
         m_videoSink->setVideoFrame(frame);
+
+        // Track playback position from frame timestamp
+        const qint64 pts = frame.startTime(); // microseconds
+        const double fps = MLT.profile().fps();
+        if (pts >= 0 && fps > 0.0) {
+            const int frameNum = qRound(pts * fps / 1000000.0);
+            if (m_videoPosition != frameNum) {
+                m_videoPosition = frameNum;
+                emit videoPositionChanged();
+            }
+        }
+        // Track duration from the active producer
+        if (auto *prod = MLT.producer()) {
+            const int len = qMax(0, prod->get_length() - 1);
+            if (m_videoDuration != len) {
+                m_videoDuration = len;
+                emit videoDurationChanged();
+            }
+        }
     }
+}
+
+void HdrPreviewWindow::triggerPlayPause()
+{
+    Actions["playerPlayPauseAction"]->trigger();
+}
+
+void HdrPreviewWindow::triggerRewind()
+{
+    Actions["playerRewindAction"]->trigger();
+}
+
+void HdrPreviewWindow::triggerFastForward()
+{
+    Actions["playerFastForwardAction"]->trigger();
+}
+
+void HdrPreviewWindow::toggleFullScreen()
+{
+    if (windowStates() & Qt::WindowFullScreen) {
+        setWindowStates(Qt::WindowNoState);
+        if (m_normalGeometry.isValid())
+            setGeometry(m_normalGeometry);
+    } else {
+        m_normalGeometry = geometry();
+        showFullScreen();
+    }
+}
+
+QString HdrPreviewWindow::positionText() const
+{
+    return formatTimecode(m_videoPosition, MLT.profile().fps());
+}
+
+QString HdrPreviewWindow::durationText() const
+{
+    return formatTimecode(m_videoDuration, MLT.profile().fps());
+}
+
+void HdrPreviewWindow::seekToFrame(int frame)
+{
+    MAIN.player()->seek(frame);
+}
+
+void HdrPreviewWindow::setPlaying(bool playing)
+{
+    if (m_isPlaying != playing) {
+        m_isPlaying = playing;
+        emit playingChanged();
+    }
+}
+
+bool HdrPreviewWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
+{
+#ifdef Q_OS_WIN
+    if (eventType == "windows_generic_MSG") {
+        MSG *msg = static_cast<MSG *>(message);
+        if (msg->message == WM_SIZING && !(windowStates() & Qt::WindowFullScreen)) {
+            const int darNum = MLT.profile().display_aspect_num();
+            const int darDen = MLT.profile().display_aspect_den();
+            if (darNum > 0 && darDen > 0) {
+                RECT *r = reinterpret_cast<RECT *>(msg->lParam);
+                // Measure the actual frame overhead from the live window state.
+                // AdjustWindowRectEx under-reports the DWM extended frame on
+                // Windows 10/11, leading to a wrong client-area AR calculation.
+                RECT curWin, curClient;
+                GetWindowRect(msg->hwnd, &curWin);
+                GetClientRect(msg->hwnd, &curClient);
+                const int fw = (curWin.right - curWin.left) - (curClient.right - curClient.left);
+                const int fh = (curWin.bottom - curWin.top) - (curClient.bottom - curClient.top);
+                const int clientW = (r->right - r->left) - fw;
+                const int clientH = (r->bottom - r->top) - fh;
+                const bool heightPrimary = (msg->wParam == WMSZ_TOP || msg->wParam == WMSZ_BOTTOM);
+                if (heightPrimary) {
+                    // Height drives: adjust width from the right
+                    r->right = r->left + qRound((double) clientH * darNum / darDen) + fw;
+                } else {
+                    // Width drives: adjust height
+                    const int newH = qRound((double) clientW * darDen / darNum) + fh;
+                    const bool fromTop = (msg->wParam == WMSZ_TOPLEFT
+                                          || msg->wParam == WMSZ_TOPRIGHT);
+                    if (fromTop)
+                        r->top = r->bottom - newH;
+                    else
+                        r->bottom = r->top + newH;
+                }
+                *result = TRUE;
+                return true;
+            }
+        }
+    }
+#endif
+    return QQuickView::nativeEvent(eventType, message, result);
+}
+
+void HdrPreviewWindow::resizeEvent(QResizeEvent *event)
+{
+    QQuickView::resizeEvent(event);
+#ifndef Q_OS_WIN
+    // On Windows, WM_SIZING handles AR constraining smoothly.
+    // On other platforms, snap to the correct AR after each resize.
+    if (windowStates() & Qt::WindowFullScreen)
+        return;
+    const QSize newSize = event->size();
+    const QSize oldSize = event->oldSize();
+    if (!oldSize.isValid())
+        return;
+    const int darNum = MLT.profile().display_aspect_num();
+    const int darDen = MLT.profile().display_aspect_den();
+    if (darNum <= 0 || darDen <= 0)
+        return;
+    // Infer which axis the user is dragging by which changed proportionally more
+    const double wChange = qAbs((double) (newSize.width() - oldSize.width())
+                                / qMax(oldSize.width(), 1));
+    const double hChange = qAbs((double) (newSize.height() - oldSize.height())
+                                / qMax(oldSize.height(), 1));
+    int targetW, targetH;
+    if (wChange >= hChange) {
+        targetW = newSize.width();
+        targetH = qRound((double) targetW * darDen / darNum);
+    } else {
+        targetH = newSize.height();
+        targetW = qRound((double) targetH * darNum / darDen);
+    }
+    if (targetW != newSize.width() || targetH != newSize.height()) {
+        // Defer to avoid recursion
+        QTimer::singleShot(0, this, [this, targetW, targetH]() {
+            if (!(windowStates() & Qt::WindowFullScreen))
+                resize(targetW, targetH);
+        });
+    }
+#endif
 }
 
 void HdrPreviewWindow::keyPressEvent(QKeyEvent *event)
