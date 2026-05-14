@@ -20,7 +20,7 @@ import QtQuick.Shapes
 import QtMultimedia
 
 Rectangle {
-    color: palette.window
+    color: "black"
 
     component ControlButton: Rectangle {
         id: _btn
