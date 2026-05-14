@@ -1293,7 +1293,7 @@ function deploy
     done
   done
   cmd mkdir -p lib/qml
-  cmd cp -pr "$QT_SHARE_DIR"/qml/{Qt,QtCore,QtQml,QtQuick} lib/qml
+  cmd cp -pr "$QT_SHARE_DIR"/qml/{Qt,QtCore,QtMultimedia,QtQml,QtQuick} lib/qml
   cmd cp -pr "$QT_SHARE_DIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QT_SHARE_DIR"/translations/qtbase_*.qm share/translations
 

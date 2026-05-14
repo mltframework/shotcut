@@ -1208,7 +1208,7 @@ function install_shotcut_linux {
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
   cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
-  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtMultimedia,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
   cmd cp -p MinimalMediaBackend/libminimalmediaplugin.so "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
 }
@@ -1954,7 +1954,7 @@ function deploy_mac
   # Qt QML modules
   log Copying Qt QML modules
   cmd mkdir -p Resources/qml 2>/dev/null
-  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} Resources/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtMultimedia,QtQml,QtQuick} Resources/qml
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
