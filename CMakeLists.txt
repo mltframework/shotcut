@@ -65,6 +65,7 @@ if(NOT FFTW_FOUND)
 endif()
 
 add_subdirectory(CuteLogger)
+add_subdirectory(MinimalMediaBackend)
 add_subdirectory(src)
 add_subdirectory(translations)
 

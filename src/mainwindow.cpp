@@ -1263,8 +1263,9 @@ void MainWindow::setupSettingsMenu()
     int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
         QAction *action
-            = new QAction(tr("Screen %1 (%2 x %3 @ %4 Hz)")
+            = new QAction(tr("Screen %1 %2 (%3x%4 @ %5Hz)")
                               .arg(i)
+                              .arg(screens[i]->name())
                               .arg(screens[i]->size().width() * screens[i]->devicePixelRatio())
                               .arg(screens[i]->size().height() * screens[i]->devicePixelRatio())
                               .arg(screens[i]->refreshRate()),

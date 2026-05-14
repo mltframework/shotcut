@@ -371,7 +371,7 @@ int main(int argc, char **argv)
     if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
         qputenv("QT_QPA_PLATFORM", "windows:altgr");
 #else
-        ;
+        qputenv("QT_MEDIA_BACKEND", "minimal");
 #endif
 
 #ifdef Q_OS_MAC
