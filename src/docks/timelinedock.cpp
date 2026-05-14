@@ -48,6 +48,8 @@
 #include "widgets/textproducerwidget.h"
 #include "widgets/toneproducerwidget.h"
 
+#include <algorithm>
+
 #include <QAction>
 #include <QActionGroup>
 #include <QClipboard>
@@ -2671,10 +2673,14 @@ void TimelineDock::removeSelection(bool withCopy)
         else
             MAIN.undoStack()->beginMacro(tr("Remove %1 from timeline").arg(n));
     }
-    int trackIndex, clipIndex;
-    for (const auto &uuid : selectionUuids()) {
-        m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        remove(trackIndex, clipIndex, n > 1);
+    auto clips = selection();
+    std::sort(clips.begin(), clips.end(), [](const QPoint &a, const QPoint &b) {
+        if (a.y() != b.y())
+            return a.y() > b.y();
+        return a.x() > b.x();
+    });
+    for (const auto &clip : clips) {
+        remove(clip.y(), clip.x(), n > 1);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
@@ -2693,10 +2699,14 @@ void TimelineDock::liftSelection()
     int n = selection().size();
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Lift %1 from timeline").arg(n));
-    int trackIndex, clipIndex;
-    for (const auto &uuid : selectionUuids()) {
-        m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        lift(trackIndex, clipIndex, n > 1);
+    auto clips = selection();
+    std::sort(clips.begin(), clips.end(), [](const QPoint &a, const QPoint &b) {
+        if (a.y() != b.y())
+            return a.y() > b.y();
+        return a.x() > b.x();
+    });
+    for (const auto &clip : clips) {
+        lift(clip.y(), clip.x(), n > 1);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
