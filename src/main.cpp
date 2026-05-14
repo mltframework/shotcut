@@ -394,15 +394,11 @@ int main(int argc, char **argv)
     removeMacosTabBar();
 #endif
 
-#if defined(Q_OS_WIN)
-    // Windows can use Direct3D or OpenGL
-#elif defined(Q_OS_MAC)
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::Metal);
+#if defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-#else
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
-    QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-    QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+#elif !defined(Q_OS_WIN)
+    if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan"))
+        QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
 
     Application a(argc, argv);
@@ -425,6 +421,26 @@ int main(int argc, char **argv)
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" << a.applicationDirPath();
+        switch (QQuickWindow::graphicsApi()) {
+        case QSGRendererInterface::Direct3D11:
+            LOG_INFO() << "graphics backend = Direct3D 11";
+            break;
+        case QSGRendererInterface::Direct3D12:
+            LOG_INFO() << "graphics backend = Direct3D 12";
+            break;
+        case QSGRendererInterface::Metal:
+            LOG_INFO() << "graphics backend = Metal";
+            break;
+        case QSGRendererInterface::OpenGL:
+            LOG_INFO() << "graphics backend = OpenGL";
+            break;
+        case QSGRendererInterface::Vulkan:
+            LOG_INFO() << "graphics backend = Vulkan";
+            break;
+        default:
+            LOG_INFO() << "graphics backend = " << QQuickWindow::graphicsApi();
+            break;
+        }
         Settings.log();
 
         // Expire old items from the qmlcache
@@ -462,9 +478,7 @@ int main(int argc, char **argv)
         a.mainWindow = &MAIN;
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         a.mainWindow->setProperty("windowOpacity", 0.0);
-#endif
         a.mainWindow->show();
         a.processEvents();
         a.mainWindow->setFullScreen(a.isFullScreen);

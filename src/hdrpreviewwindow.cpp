@@ -337,8 +337,18 @@ void HdrPreviewWindow::updateHdrGain()
         return;
 
     auto *sc = swapChain();
-    if (!sc || sc->format() != QRhiSwapChain::HDRExtendedSrgbLinear)
+    if (!sc || sc->format() != QRhiSwapChain::HDRExtendedSrgbLinear) {
+        if (!m_loggedGainSkip) {
+            m_loggedGainSkip = true;
+            if (!sc)
+                qDebug() << "HDR Preview: gain skipped — no swapChain";
+            else
+                qDebug() << "HDR Preview: gain skipped — swapChain format" << sc->format()
+                         << "is not HDRExtendedSrgbLinear (1)."
+                         << "Try QSG_RHI_BACKEND=vulkan on Linux.";
+        }
         return;
+    }
 
     auto info = sc->hdrInfo();
     float maxNits = 100.0f;

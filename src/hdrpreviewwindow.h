@@ -85,6 +85,7 @@ private:
     QPointer<QVideoSink> m_videoSink;
     QTimer m_edrTimer;
     bool m_loggedSwapChain{false};
+    bool m_loggedGainSkip{false};
     bool m_isHlg{false};
     bool m_isPlaying{false};
     float m_lastLoggedHeadroom{0.0f};
