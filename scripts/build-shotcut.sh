@@ -1209,6 +1209,8 @@ function install_shotcut_linux {
   cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
   cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
+  cmd cp -p MinimalMediaBackend/libminimalmediaplugin.so "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
 }
 
 function build_vmaf_darwin {

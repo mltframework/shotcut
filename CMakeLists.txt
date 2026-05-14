@@ -65,9 +65,11 @@ if(NOT FFTW_FOUND)
 endif()
 
 add_subdirectory(CuteLogger)
-add_subdirectory(MinimalMediaBackend)
 add_subdirectory(src)
 add_subdirectory(translations)
+if(UNIX AND NOT APPLE)
+  add_subdirectory(MinimalMediaBackend)
+endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

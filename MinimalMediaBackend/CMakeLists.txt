@@ -17,7 +17,3 @@ target_link_libraries(minimalmediaplugin PRIVATE
   Qt6::Multimedia
   Qt6::MultimediaPrivate
 )
-
-install(TARGETS minimalmediaplugin
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt6/plugins/multimedia
-)
