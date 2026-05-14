@@ -59,6 +59,10 @@
 #include <windows.h>
 #endif
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+
 #if defined(__x86_64__) || defined(_M_AMD64)
 #include <immintrin.h>
 #endif
@@ -1268,9 +1272,9 @@ bool Util::openUrl(const QUrl &url)
 bool Util::cpuHasAVX2()
 {
     static const bool result = []() -> bool {
-#if defined(__GNUC__) || defined(__clang__)
+#if (defined(__GNUC__) || defined(__clang__)) && (defined(__x86_64__) || defined(_M_AMD64))
         return __builtin_cpu_supports("avx2");
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && (defined(_M_X64) || defined(_M_AMD64))
         int info[4];
         __cpuid(info, 1);
         // Check OSXSAVE and AVX bits in ECX

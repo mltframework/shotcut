@@ -39,7 +39,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt6 6.4 REQUIRED
   COMPONENTS
   Charts
-  GuiPrivate
   Multimedia
   Network
   OpenGL
@@ -51,6 +50,9 @@ find_package(Qt6 6.4 REQUIRED
   Widgets
   Xml
 )
+if(NOT APPLE)
+  find_package(Qt6 6.4 REQUIRED GuiPrivate)
+endif()
 if(UNIX AND NOT APPLE)
   find_package(Qt6 6.4 REQUIRED COMPONENTS DBus)
   # X11 for WindowPicker (Linux/X11)
