@@ -33,6 +33,11 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
+#include <QScreen>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#include <QVulkanFunctions>
+#include <QVulkanInstance>
+#endif
 
 #ifdef Q_OS_MACOS
 #include "macos.h"
@@ -71,10 +76,18 @@ HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     setColor(Qt::black);
 
     // Request HDR swapchain via the internal Qt scene graph property.
-    // Qt's video fragment shaders only select the linear HDR output path
-    // (nv12_bt2020_hlg_linear.frag) for HDRExtendedSrgbLinear, not for
-    // HDRExtendedDisplayP3Linear. So we must use "scrgb" on all platforms.
+    // On macOS/Windows the NVIDIA driver exposes R16G16B16A16_SFLOAT paired
+    // with EXTENDED_SRGB_LINEAR_EXT, so "scrgb" works and Qt's video shaders
+    // select the linear HDR output path (nv12_bt2020_hlg_linear.frag).
+    // On Linux/Wayland the NVIDIA driver (as of 580.x) only offers
+    // R16G16B16A16_UNORM (not SFLOAT) for that color space, making scRGB
+    // impossible. Fall back to HDR10 there since A2B10G10R10_UNORM_PACK32 +
+    // HDR10_ST2084_EXT IS available.
+#if defined(Q_OS_LINUX)
+    setProperty("_qt_sg_hdr_format", QByteArrayLiteral("hdr10"));
+#else
     setProperty("_qt_sg_hdr_format", QByteArrayLiteral("scrgb"));
+#endif
 
     rootContext()->setContextProperty("hdrWindow", this);
 
@@ -117,13 +130,59 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
             auto *sc = swapChain();
             if (sc) {
                 qDebug() << "HDR Preview: swapChain format =" << sc->format()
-                         << "hdrInfo =" << sc->hdrInfo();
+                         << "hdrInfo =" << sc->hdrInfo() << "scRGB supported ="
+                         << sc->isFormatSupported(QRhiSwapChain::HDRExtendedSrgbLinear)
+                         << "HDR10 supported =" << sc->isFormatSupported(QRhiSwapChain::HDR10)
+                         << "P3 supported ="
+                         << sc->isFormatSupported(QRhiSwapChain::HDRExtendedDisplayP3Linear);
             } else {
                 qDebug() << "HDR Preview: swapChain() returned nullptr!";
             }
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+            // Log Vulkan surface formats to diagnose HDR format availability
+            if (auto *vi = vulkanInstance()) {
+                VkSurfaceKHR surf = QVulkanInstance::surfaceForWindow(this);
+                if (surf) {
+                    auto *f = vi->functions();
+                    VkPhysicalDevice physDev = VK_NULL_HANDLE;
+                    uint32_t pdCount = 0;
+                    f->vkEnumeratePhysicalDevices(vi->vkInstance(), &pdCount, nullptr);
+                    if (pdCount > 0) {
+                        QVarLengthArray<VkPhysicalDevice, 4> devs(pdCount);
+                        f->vkEnumeratePhysicalDevices(vi->vkInstance(), &pdCount, devs.data());
+                        physDev = devs[0];
+                    }
+                    if (physDev) {
+                        auto vkGetPhysicalDeviceSurfaceFormatsKHR
+                            = reinterpret_cast<PFN_vkGetPhysicalDeviceSurfaceFormatsKHR>(
+                                vi->getInstanceProcAddr("vkGetPhysicalDeviceSurfaceFormatsKHR"));
+                        if (vkGetPhysicalDeviceSurfaceFormatsKHR) {
+                            uint32_t fmtCount = 0;
+                            vkGetPhysicalDeviceSurfaceFormatsKHR(physDev, surf, &fmtCount, nullptr);
+                            QVarLengthArray<VkSurfaceFormatKHR, 16> fmts(fmtCount);
+                            vkGetPhysicalDeviceSurfaceFormatsKHR(physDev,
+                                                                 surf,
+                                                                 &fmtCount,
+                                                                 fmts.data());
+                            qDebug() << "HDR Preview: Vulkan surface has" << fmtCount << "formats:";
+                            for (uint32_t i = 0; i < fmtCount; ++i) {
+                                qDebug() << "  format" << fmts[i].format << "colorSpace"
+                                         << fmts[i].colorSpace;
+                            }
+                        }
+                    }
+                } else {
+                    qDebug() << "HDR Preview: VkSurfaceKHR is null — surface not yet created";
+                }
+            }
+#endif
             qDebug() << "HDR Preview frame: pixelFormat =" << frame.surfaceFormat().pixelFormat()
                      << "colorTransfer =" << frame.surfaceFormat().colorTransfer()
                      << "maxLuminance =" << frame.surfaceFormat().maxLuminance();
+            if (auto *scr = screen()) {
+                qDebug() << "HDR Preview: screen =" << scr->name() << "size =" << scr->size()
+                         << "dpr =" << scr->devicePixelRatio();
+            }
 #ifdef Q_OS_MACOS
             auto wid = winId();
             qDebug() << "HDR Preview EDR:"
@@ -337,15 +396,16 @@ void HdrPreviewWindow::updateHdrGain()
         return;
 
     auto *sc = swapChain();
-    if (!sc || sc->format() != QRhiSwapChain::HDRExtendedSrgbLinear) {
+    if (!sc
+        || (sc->format() != QRhiSwapChain::HDRExtendedSrgbLinear
+            && sc->format() != QRhiSwapChain::HDR10)) {
         if (!m_loggedGainSkip) {
             m_loggedGainSkip = true;
             if (!sc)
                 qDebug() << "HDR Preview: gain skipped — no swapChain";
             else
                 qDebug() << "HDR Preview: gain skipped — swapChain format" << sc->format()
-                         << "is not HDRExtendedSrgbLinear (1)."
-                         << "Try QSG_RHI_BACKEND=vulkan on Linux.";
+                         << "is not HDR. Try QSG_RHI_BACKEND=vulkan on Linux.";
         }
         return;
     }
@@ -361,13 +421,22 @@ void HdrPreviewWindow::updateHdrGain()
     if (displayMaxLinear <= 1.0f)
         return;
 
-    // Qt's HLG shader has a bug: maxLum is HLG-encoded (via hlgOetf) but used
-    // as a linear multiplier in the OOTF.  The shader uniform is set as:
-    //   maxLum = hlgOetf(maxNits / 100)
-    // but it should be the linear value (maxNits / 100).  Compensate by
-    // multiplying the rendered output by the ratio of the correct linear
-    // value to the HLG-encoded one.
-    float newGain = displayMaxLinear / hlgOetf(displayMaxLinear);
+    float newGain;
+    if (sc->format() == QRhiSwapChain::HDR10) {
+        // HDR10 uses PQ (ST.2084) — Qt applies the PQ EOTF in its shader.
+        // No additional gain correction needed beyond what Qt already does,
+        // but we still expose the gain property for the QML overlay.
+        newGain = 1.0f;
+    } else {
+        // scRGB (HDRExtendedSrgbLinear) path.
+        // Qt's HLG shader has a bug: maxLum is HLG-encoded (via hlgOetf) but used
+        // as a linear multiplier in the OOTF.  The shader uniform is set as:
+        //   maxLum = hlgOetf(maxNits / 100)
+        // but it should be the linear value (maxNits / 100).  Compensate by
+        // multiplying the rendered output by the ratio of the correct linear
+        // value to the HLG-encoded one.
+        newGain = displayMaxLinear / hlgOetf(displayMaxLinear);
+    }
     if (!qFuzzyCompare(newGain, m_hdrGain)) {
         m_hdrGain = newGain;
         qDebug() << "HDR Preview: gain =" << m_hdrGain << "(maxNits =" << maxNits << ")";

@@ -1580,33 +1580,24 @@ void MainWindow::setupSettingsMenu()
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Setup the display method actions.
-    if (!Settings.playerGPU()) {
-        group = new QActionGroup(this);
-        delete ui->actionDrawingAutomatic;
-        delete ui->actionDrawingDirectX;
-        ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
-        group->addAction(ui->actionDrawingOpenGL);
-        ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
-        group->addAction(ui->actionDrawingSoftware);
-        connect(group,
-                SIGNAL(triggered(QAction *)),
-                this,
-                SLOT(onDrawingMethodTriggered(QAction *)));
-        switch (Settings.drawMethod()) {
-        case Qt::AA_UseDesktopOpenGL:
-            ui->actionDrawingOpenGL->setChecked(true);
-            break;
-        case Qt::AA_UseSoftwareOpenGL:
-            ui->actionDrawingSoftware->setChecked(true);
-            break;
-        default:
-            ui->actionDrawingOpenGL->setChecked(true);
-            break;
-        }
-    } else {
-        // GPU mode only works with OpenGL.
-        delete ui->menuDrawingMethod;
-        ui->menuDrawingMethod = 0;
+    group = new QActionGroup(this);
+    delete ui->actionDrawingAutomatic;
+    delete ui->actionDrawingDirectX;
+    ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
+    group->addAction(ui->actionDrawingOpenGL);
+    ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
+    group->addAction(ui->actionDrawingVulkan);
+    connect(group, SIGNAL(triggered(QAction *)), this, SLOT(onDrawingMethodTriggered(QAction *)));
+    switch (Settings.drawMethod()) {
+    case Qt::AA_UseDesktopOpenGL:
+        ui->actionDrawingOpenGL->setChecked(true);
+        break;
+    case QSGRendererInterface::Vulkan:
+        ui->actionDrawingVulkan->setChecked(true);
+        break;
+    default:
+        ui->actionDrawingOpenGL->setChecked(true);
+        break;
     }
 #else
     delete ui->menuDrawingMethod;

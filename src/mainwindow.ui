@@ -186,7 +186,7 @@
      <addaction name="actionDrawingAutomatic"/>
      <addaction name="actionDrawingOpenGL"/>
      <addaction name="actionDrawingDirectX"/>
-     <addaction name="actionDrawingSoftware"/>
+     <addaction name="actionDrawingVulkan"/>
     </widget>
     <widget class="QMenu" name="menuJobPriority">
      <property name="title">
@@ -355,8 +355,8 @@
    <addaction name="actionOpen"/>
    <addaction name="actionOpenOther2"/>
    <addaction name="actionSave"/>
-  <addaction name="undoStartSeparator"/>
-  <addaction name="undoEndSeparator"/>
+   <addaction name="undoStartSeparator"/>
+   <addaction name="undoEndSeparator"/>
    <addaction name="actionAudioMeter"/>
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
@@ -903,14 +903,6 @@
    </property>
    <property name="text">
     <string notr="true">DirectX (ANGLE)</string>
-   </property>
-  </action>
-  <action name="actionDrawingSoftware">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string extracomment="Do not translate &quot;Mesa&quot;">Software (Mesa)</string>
    </property>
   </action>
   <action name="actionJobPriorityLow">
@@ -1558,6 +1550,20 @@
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F1</string>
+   </property>
+  </action>
+  <action name="actionDrawingVulkan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string notr="true">Vulkan</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Vulkan</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Vulkan</string>
    </property>
   </action>
  </widget>

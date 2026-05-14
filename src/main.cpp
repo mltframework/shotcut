@@ -271,10 +271,6 @@ public:
 
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
-#elif !defined(Q_OS_MAC)
-        if (Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()) {
-            ::qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
-        }
 #endif
         // Load translations
         QString locale = Settings.language();
@@ -392,13 +388,7 @@ int main(int argc, char **argv)
         }
     }
     removeMacosTabBar();
-#endif
-
-#if defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-#elif !defined(Q_OS_WIN)
-    if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan"))
-        QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
 
     Application a(argc, argv);
@@ -415,8 +405,11 @@ int main(int argc, char **argv)
 #elif defined(Q_OS_MAC)
     LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
+    if (Settings.drawMethod() == QSGRendererInterface::Vulkan)
+        QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
+    else if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan"))
+        QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     LOG_INFO() << "Linux version" << QSysInfo::productVersion();
-    ;
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
@@ -498,12 +491,6 @@ int main(int argc, char **argv)
         if (EXIT_RESTART == result || EXIT_RESET == result) {
             LOG_DEBUG() << "restarting app";
             ::qunsetenv("QT_QUICK_CONTROLS_CONF"); // See MainWindow::changeTheme()
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-            ::qputenv("LIBGL_ALWAYS_SOFTWARE",
-                      Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
-                          ? "1"
-                          : "0");
-#endif
             QProcess *restart = new QProcess;
             QStringList args = a.arguments();
             if (!args.isEmpty())
