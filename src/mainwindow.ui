@@ -121,6 +121,14 @@
     <property name="title">
      <string>&amp;Player</string>
     </property>
+    <widget class="QMenu" name="menuExternal">
+     <property name="title">
+      <string>External Monitor</string>
+     </property>
+     <addaction name="actionExternalNone"/>
+    </widget>
+    <addaction name="menuExternal"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -273,12 +281,6 @@
       <addaction name="actionBicubic"/>
       <addaction name="actionHyper"/>
      </widget>
-     <widget class="QMenu" name="menuExternal">
-      <property name="title">
-       <string>External Monitor</string>
-      </property>
-      <addaction name="actionExternalNone"/>
-     </widget>
      <addaction name="actionPauseAfterSeek"/>
      <addaction name="actionScrubAudio"/>
      <addaction name="actionJack"/>
@@ -286,7 +288,6 @@
      <addaction name="actionProgressive"/>
      <addaction name="menuDeinterlacer"/>
      <addaction name="menuInterpolation"/>
-     <addaction name="menuExternal"/>
      <addaction name="actionSync"/>
     </widget>
     <widget class="QMenu" name="menuBackup">

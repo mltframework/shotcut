@@ -1275,8 +1275,13 @@ void MainWindow::setupSettingsMenu()
         m_externalGroup->addAction(action);
     }
 
-    auto hdrAction = m_externalGroup->addAction(tr("HDR Preview Window"));
+    auto hdrAction = m_externalGroup->addAction(tr("Preview Window (HDR)"));
     hdrAction->setCheckable(true);
+#ifdef Q_OS_MAC
+    hdrAction->setShortcut(QKeySequence(Qt::META | Qt::Key_QuoteLeft));
+#else
+    hdrAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_QuoteLeft));
+#endif
     Actions.add("hdrPreviewAction", hdrAction, tr("Player"));
     connect(hdrAction, &QAction::toggled, this, [this, hdrAction](bool checked) {
         if (checked) {
