@@ -120,6 +120,14 @@ HdrPreviewWindow::~HdrPreviewWindow()
 void HdrPreviewWindow::setVideoSink(QVideoSink *sink)
 {
     m_videoSink = sink;
+    if (m_videoSink) {
+        // Force the VideoOutput's layer FBO (RGBA16F) to be cleared to a known
+        // state before the first real video frame arrives. Without this, the
+        // Metal/Vulkan texture backing the ShaderEffectSource may contain
+        // undefined (garbage) GPU memory on its first use, producing a single
+        // distorted frame on session open.
+        m_videoSink->setVideoFrame(QVideoFrame());
+    }
 }
 
 void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
