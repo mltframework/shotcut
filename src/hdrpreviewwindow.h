@@ -34,8 +34,10 @@ class HdrPreviewWindow : public QQuickView
     Q_OBJECT
     Q_PROPERTY(float hdrGain READ hdrGain NOTIFY hdrGainChanged)
     Q_PROPERTY(int hdrTransferMode READ hdrTransferMode NOTIFY hdrTransferModeChanged)
-    Q_PROPERTY(int displayPeakNits READ displayPeakNits WRITE setDisplayPeakNits NOTIFY displayPeakNitsChanged)
-    Q_PROPERTY(int contentPeakNits READ contentPeakNits WRITE setContentPeakNits NOTIFY contentPeakNitsChanged)
+    Q_PROPERTY(int displayPeakNits READ displayPeakNits WRITE setDisplayPeakNits NOTIFY
+                   displayPeakNitsChanged)
+    Q_PROPERTY(int contentPeakNits READ contentPeakNits WRITE setContentPeakNits NOTIFY
+                   contentPeakNitsChanged)
     Q_PROPERTY(bool toneMapping READ toneMapping WRITE setToneMapping NOTIFY toneMappingChanged)
     Q_PROPERTY(bool playing READ isPlaying NOTIFY playingChanged)
     Q_PROPERTY(bool fullScreen READ isFullScreen NOTIFY fullScreenChanged)

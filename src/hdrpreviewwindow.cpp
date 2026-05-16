@@ -527,9 +527,8 @@ void HdrPreviewWindow::updateHdrGain()
         actualMaxNits = info.limits.luminanceInNits.maxLuminance;
 
     // User-overridden display peak, or actual.
-    float effectiveMaxNits = (m_displayPeakNits > 0)
-                                 ? static_cast<float>(m_displayPeakNits)
-                                 : actualMaxNits;
+    float effectiveMaxNits = (m_displayPeakNits > 0) ? static_cast<float>(m_displayPeakNits)
+                                                     : actualMaxNits;
     float displayMaxLinear = effectiveMaxNits / 100.0f;
     if (displayMaxLinear <= 1.0f)
         return;
@@ -547,9 +546,8 @@ void HdrPreviewWindow::updateHdrGain()
         // enabled, apply a linear scale so that the declared content
         // peak maps to the effective display peak.
         if (sc->format() != QRhiSwapChain::HDR10 && m_toneMapping) {
-            float contentPeak = (m_contentPeakNits > 0)
-                                    ? static_cast<float>(m_contentPeakNits)
-                                    : 1000.0f;
+            float contentPeak = (m_contentPeakNits > 0) ? static_cast<float>(m_contentPeakNits)
+                                                        : 1000.0f;
             if (contentPeak > effectiveMaxNits) {
                 newGain *= effectiveMaxNits / contentPeak;
             }
@@ -566,8 +564,7 @@ void HdrPreviewWindow::updateHdrGain()
     }
     if (!qFuzzyCompare(newGain, m_hdrGain)) {
         m_hdrGain = newGain;
-        qDebug() << "HDR Preview: gain =" << m_hdrGain
-                 << "(effectiveMaxNits =" << effectiveMaxNits
+        qDebug() << "HDR Preview: gain =" << m_hdrGain << "(effectiveMaxNits =" << effectiveMaxNits
                  << "actualMaxNits =" << actualMaxNits << ")";
         emit hdrGainChanged();
     }

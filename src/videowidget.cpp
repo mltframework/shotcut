@@ -671,7 +671,7 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
     // automatic video mode and the frame is incorrectly stamped BT.709.
     const char *activeTrc = m_consumer->get("color_trc");
     const bool isHlg = !qstrcmp(activeTrc, "arib-std-b67");
-    const bool isPq  = !qstrcmp(activeTrc, "smpte2084");
+    const bool isPq = !qstrcmp(activeTrc, "smpte2084");
 
     if (isHlg || isPq) {
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
@@ -707,8 +707,7 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
             s_lastTrc = activeTrc;
             s_lastMaxLum = stamped;
             qDebug() << "HDR pushFrameToSink: colorspace =" << profile().colorspace()
-                     << "color_trc =" << activeTrc
-                     << "maxLuminance =" << stamped
+                     << "color_trc =" << activeTrc << "maxLuminance =" << stamped
                      << "toneMapping =" << Settings.playerHdrToneMapping()
                      << "contentPeakNits =" << Settings.playerHdrContentPeakNits()
                      << "displayPeakNits =" << Settings.playerHdrDisplayPeakNits();

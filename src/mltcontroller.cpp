@@ -658,10 +658,10 @@ QString Controller::colorTrc() const
                     QString trcKey = QStringLiteral("meta.media.%1.codec.color_trc").arg(i);
                     const int trc = m_producer->get_int(trcKey.toLatin1().constData());
                     if (trc == 16)
-                        return QStringLiteral("smpte2084");  // PQ
+                        return QStringLiteral("smpte2084"); // PQ
                     if (trc == 18)
                         return QStringLiteral("arib-std-b67"); // HLG
-                    return QString(); // SDR or unsupported TRC
+                    return QString();                          // SDR or unsupported TRC
                 }
                 ++videoCount;
             }
