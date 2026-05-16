@@ -1304,7 +1304,7 @@ void MainWindow::setupSettingsMenu()
                         &QWindow::visibleChanged,
                         this,
                         [this, hdrAction](bool visible) {
-                            if (!visible) {
+                            if (!visible && m_hdrPreviewWindow) {
                                 Settings.setPlayerHdrPreviewFullScreen(
                                     m_hdrPreviewWindow->windowStates() & Qt::WindowFullScreen);
                                 Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
@@ -1328,6 +1328,12 @@ void MainWindow::setupSettingsMenu()
             }
         }
         Settings.setPlayerHdrPreview(checked);
+        if (checked && Settings.playerGPU() && MLT.producer()) {
+            if (confirmRestartExternalMonitor()) {
+                m_exitCode = EXIT_RESTART;
+                QApplication::closeAllWindows();
+            }
+        }
     });
     connect(hdrAction, &QAction::triggered, this, [this, hdrAction]() {
         if (hdrAction->isChecked() && m_hdrPreviewWindow) {
