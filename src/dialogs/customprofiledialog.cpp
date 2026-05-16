@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,18 @@ CustomProfileDialog::CustomProfileDialog(QWidget *parent)
         ui->colorspaceCombo->setCurrentIndex(1);
         break;
     }
+    // Initialize Dynamic range: enabled only for BT.2020, default from profile/producer
+    if (MLT.profile().colorspace() != 2020) {
+        ui->dynamicRangeCombo->setEnabled(false);
+    } else {
+        const QString trc = MLT.colorTrc();
+        if (trc == QLatin1String("arib-std-b67"))
+            ui->dynamicRangeCombo->setCurrentIndex(1);
+        else if (trc == QLatin1String("smpte2084"))
+            ui->dynamicRangeCombo->setCurrentIndex(2);
+        else
+            ui->dynamicRangeCombo->setCurrentIndex(0);
+    }
 }
 
 CustomProfileDialog::~CustomProfileDialog()
@@ -92,6 +104,18 @@ void CustomProfileDialog::on_buttonBox_accepted()
     }
     MLT.updatePreviewProfile();
     MLT.setPreviewScale(Settings.playerPreviewScale());
+    // Set color_trc based on dynamic range selection
+    switch (ui->dynamicRangeCombo->currentIndex()) {
+    case 1: // HLG HDR
+        MLT.setColorTrc(QStringLiteral("arib-std-b67"));
+        break;
+    case 2: // PQ HDR
+        MLT.setColorTrc(QStringLiteral("smpte2084"));
+        break;
+    default: // SDR
+        MLT.setColorTrc(QString());
+        break;
+    }
 
     // Save it to a file
     if (!ui->nameEdit->text().isEmpty()) {
@@ -114,6 +138,8 @@ void CustomProfileDialog::on_buttonBox_accepted()
         p.set("colorspace", MLT.profile().colorspace());
         p.set("frame_rate_num", MLT.profile().frame_rate_num());
         p.set("frame_rate_den", MLT.profile().frame_rate_den());
+        if (!MLT.colorTrc().isEmpty())
+            p.set("color_trc", MLT.colorTrc().toLatin1().constData());
         p.save(dir.filePath(profileName()).toUtf8().constData());
     }
 }
@@ -168,4 +194,12 @@ void CustomProfileDialog::on_aspectRatioComboBox_textActivated(const QString &ar
     auto parts = arg1.split(' ')[0].split(':');
     ui->aspectNumSpinner->setValue(parts[0].toInt());
     ui->aspectDenSpinner->setValue(parts[1].toInt());
+}
+
+void CustomProfileDialog::on_colorspaceCombo_currentIndexChanged(int index)
+{
+    const bool isBt2020 = (index == 2);
+    ui->dynamicRangeCombo->setEnabled(isBt2020);
+    if (!isBt2020)
+        ui->dynamicRangeCombo->setCurrentIndex(0); // reset to SDR
 }

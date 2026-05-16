@@ -387,11 +387,11 @@ void HdrPreviewWindow::keyReleaseEvent(QKeyEvent *event)
         QQuickView::keyReleaseEvent(event);
 }
 
-void HdrPreviewWindow::setHlg(bool isHlg)
+void HdrPreviewWindow::setHdrTransfer(HdrTransfer transfer)
 {
-    if (m_isHlg != isHlg) {
-        m_isHlg = isHlg;
-        if (!m_isHlg && !qFuzzyCompare(m_hdrGain, 1.0f)) {
+    if (m_hdrTransfer != transfer) {
+        m_hdrTransfer = transfer;
+        if (m_hdrTransfer == HdrTransfer::SDR && !qFuzzyCompare(m_hdrGain, 1.0f)) {
             m_hdrGain = 1.0f;
             emit hdrGainChanged();
         }
@@ -400,7 +400,7 @@ void HdrPreviewWindow::setHlg(bool isHlg)
 
 void HdrPreviewWindow::updateHdrGain()
 {
-    if (!m_isHlg)
+    if (m_hdrTransfer == HdrTransfer::SDR)
         return;
 
     auto *sc = swapChain();
@@ -430,13 +430,13 @@ void HdrPreviewWindow::updateHdrGain()
         return;
 
     float newGain;
-    if (sc->format() == QRhiSwapChain::HDR10) {
-        // HDR10 uses PQ (ST.2084) — Qt applies the PQ EOTF in its shader.
-        // No additional gain correction needed beyond what Qt already does,
-        // but we still expose the gain property for the QML overlay.
+    if (sc->format() == QRhiSwapChain::HDR10 || m_hdrTransfer == HdrTransfer::PQ) {
+        // PQ (ST.2084) — Qt applies the PQ EOTF correctly in its shader,
+        // both for HDR10 swapchains and for scRGB with ColorTransfer_ST2084.
+        // No additional gain correction is needed.
         newGain = 1.0f;
     } else {
-        // scRGB (HDRExtendedSrgbLinear) path.
+        // scRGB (HDRExtendedSrgbLinear) path with HLG content.
         // Qt's HLG shader has a bug: maxLum is HLG-encoded (via hlgOetf) but used
         // as a linear multiplier in the OOTF.  The shader uniform is set as:
         //   maxLum = hlgOetf(maxNits / 100)

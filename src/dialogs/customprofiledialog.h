@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ private slots:
     void on_resolutionComboBox_textActivated(const QString &arg1);
 
     void on_aspectRatioComboBox_textActivated(const QString &arg1);
+
+    void on_colorspaceCombo_currentIndexChanged(int index);
 
 private:
     Ui::CustomProfileDialog *ui;

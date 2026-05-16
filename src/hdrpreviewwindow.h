@@ -18,6 +18,7 @@
 #ifndef HDRPREVIEWWINDOW_H
 #define HDRPREVIEWWINDOW_H
 
+#include "videowidget.h"
 #include <QKeyEvent>
 #include <QPointer>
 #include <QQuickView>
@@ -60,7 +61,7 @@ public:
 
 public slots:
     void pushFrame(const QVideoFrame &frame);
-    void setHlg(bool isHlg);
+    void setHdrTransfer(HdrTransfer transfer);
     void setPlaying(bool playing);
 
 signals:
@@ -86,7 +87,7 @@ private:
     QTimer m_edrTimer;
     bool m_loggedSwapChain{false};
     bool m_loggedGainSkip{false};
-    bool m_isHlg{false};
+    HdrTransfer m_hdrTransfer{HdrTransfer::SDR};
     bool m_isPlaying{false};
     float m_lastLoggedHeadroom{0.0f};
     int m_edrCheckCount{0};

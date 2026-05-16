@@ -1225,15 +1225,19 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
             || processingMode == ShotcutSettings::Linear10Cpu
             || processingMode == ShotcutSettings::Linear10GpuCpu) {
             if (!p->property_exists("mlt_image_format")) {
-                if (::qstrcmp(p->get("color_trc"), "arib-std-b67"))
-                    node.setAttribute("mlt_image_format", "rgba64");
+                const char *trc = p->get("color_trc");
+                const bool isHlg = !::qstrcmp(trc, "arib-std-b67");
+                const bool isPq = !::qstrcmp(trc, "smpte2084");
+                if (isHlg || isPq)
+                    node.setAttribute("mlt_image_format", "yuv420p10");
                 else
-                    node.setAttribute("mlt_image_format", "yuv444p10");
+                    node.setAttribute("mlt_image_format", "rgba64");
             }
         }
         if ((processingMode == ShotcutSettings::Linear10Cpu
              || processingMode == ShotcutSettings::Linear10GpuCpu)
-            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")) {
+            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")
+            && ::qstrcmp(p->get("color_trc"), "smpte2084")) {
             if (!p->property_exists("mlt_color_trc"))
                 node.setAttribute("mlt_color_trc", "linear");
 

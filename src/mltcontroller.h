@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,6 +155,8 @@ public:
 
     int audioChannels() const { return m_audioChannels; }
     ShotcutSettings::ProcessingMode processingMode() const { return m_processingMode; }
+    QString colorTrc() const;
+    void setColorTrc(const QString &trc);
     Mlt::Repository *repository() const { return m_repo; }
     Mlt::Profile &profile() { return m_profile; }
     Mlt::Profile &previewProfile() { return m_previewProfile; }
@@ -199,6 +201,7 @@ private:
     Mlt::Profile m_previewProfile;
     int m_audioChannels{2};
     ShotcutSettings::ProcessingMode m_processingMode{ShotcutSettings::Native8Cpu};
+    QString m_colorTrc;
     QScopedPointer<Mlt::Filter> m_jackFilter;
     QString m_url;
     double m_volume{1.0};

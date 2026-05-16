@@ -22,6 +22,8 @@
 #include "settings.h"
 #include "sharedframe.h"
 
+enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
+
 #include <QAbstractVideoBuffer>
 #include <QMutex>
 #include <QPointer>
@@ -129,7 +131,7 @@ signals:
     void toggleZoom(bool);
     void stepZoom(float, float);
     void videoFrameReady(const QVideoFrame &frame);
-    void hlgActiveChanged(bool isHlg);
+    void hdrTransferChanged(HdrTransfer transfer);
 
 private:
     QRectF m_rect;

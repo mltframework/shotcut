@@ -390,9 +390,12 @@ int VideoWidget::reconfigure(bool isMulti)
         const bool isDeckLinkHLG = serviceName.startsWith("decklink")
                                    && property("decklinkGamma").toInt() == 1;
         const bool hdrPreview = Settings.playerHdrPreview();
+        // Effective HDR transfer from the profile (or auto-detected from producer)
+        const QString profileTrc = MLT.colorTrc();
+        const bool isHdrActive = !profileTrc.isEmpty() || isDeckLinkHLG;
         switch (processingMode) {
         case ShotcutSettings::Native10Cpu:
-            m_consumer->set("mlt_image_format", hdrPreview ? "yuv420p10" : "rgba64");
+            m_consumer->set("mlt_image_format", isHdrActive ? "yuv420p10" : "rgba64");
             break;
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
@@ -414,32 +417,39 @@ int VideoWidget::reconfigure(bool isMulti)
         } else {
             m_consumer->set("channel_layout", "auto");
         }
-        switch (MLT.profile().colorspace()) {
-        case 601:
-        case 170:
-            m_consumer->set("color_trc", "smpte170m");
-            break;
-        case 240:
-            m_consumer->set("color_trc", "smpte240m");
-            break;
-        case 470:
-            m_consumer->set("color_trc", "bt470bg");
-            break;
-        case 2020:
-            if (isDeckLinkHLG || hdrPreview) {
-                m_consumer->set("color_trc", "arib-std-b67");
-            } else {
-                m_consumer->clear("color_trc");
+        // Set color_trc on the consumer. profileTrc (from MLT.colorTrc()) takes precedence;
+        // DeckLink HLG is next; otherwise fall back to colorspace-based SDR defaults.
+        if (!profileTrc.isEmpty()) {
+            m_consumer->set("color_trc", profileTrc.toLatin1().constData());
+        } else if (isDeckLinkHLG) {
+            m_consumer->set("color_trc", "arib-std-b67");
+        } else {
+            switch (MLT.profile().colorspace()) {
+            case 601:
+            case 170:
+                m_consumer->set("color_trc", "smpte170m");
+                break;
+            case 240:
+                m_consumer->set("color_trc", "smpte240m");
+                break;
+            case 470:
+                m_consumer->set("color_trc", "bt470bg");
+                break;
+            default:
+                m_consumer->set("color_trc", "bt709");
+                break;
             }
-            break;
-        default:
-            m_consumer->set("color_trc", "bt709");
-            break;
         }
-        emit hlgActiveChanged(!qstrcmp(m_consumer->get("color_trc"), "arib-std-b67"));
+        const char *activeTrc = m_consumer->get("color_trc");
+        HdrTransfer hdrTransfer = HdrTransfer::SDR;
+        if (!qstrcmp(activeTrc, "arib-std-b67"))
+            hdrTransfer = HdrTransfer::HLG;
+        else if (!qstrcmp(activeTrc, "smpte2084"))
+            hdrTransfer = HdrTransfer::PQ;
+        emit hdrTransferChanged(hdrTransfer);
         if (processingMode == ShotcutSettings::Linear10Cpu
             || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHLG
-                && !hdrPreview)) {
+                && !isHdrActive)) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");
@@ -663,6 +673,9 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
         if (!qstrcmp(m_consumer->get("color_trc"), "arib-std-b67")) {
             fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_STD_B67);
+            fmt.setMaxLuminance(1000.0f);
+        } else if (!qstrcmp(m_consumer->get("color_trc"), "smpte2084")) {
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_ST2084);
             fmt.setMaxLuminance(1000.0f);
         } else {
             fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);

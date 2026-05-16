@@ -1293,9 +1293,9 @@ void MainWindow::setupSettingsMenu()
                         m_hdrPreviewWindow,
                         &HdrPreviewWindow::pushFrame);
                 connect(videoWidget,
-                        &Mlt::VideoWidget::hlgActiveChanged,
+                        &Mlt::VideoWidget::hdrTransferChanged,
                         m_hdrPreviewWindow,
-                        &HdrPreviewWindow::setHlg);
+                        &HdrPreviewWindow::setHdrTransfer);
                 auto *win = m_hdrPreviewWindow;
                 connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
                 connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
