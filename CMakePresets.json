@@ -16,7 +16,8 @@
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
-                "CLANG_FORMAT": "ON"
+                "CLANG_FORMAT": "ON",
+                "BUILD_MINIMAL_MEDIA_BACKEND": "ON"
             }
         }
     ],
