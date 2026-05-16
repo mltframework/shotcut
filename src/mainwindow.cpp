@@ -1313,7 +1313,7 @@ void MainWindow::setupSettingsMenu()
                         });
                 auto savedGeometry = Settings.playerHdrPreviewGeometry();
                 if (savedGeometry.isValid())
-                    m_hdrPreviewWindow->setGeometry(savedGeometry);
+                    m_hdrPreviewWindow->restoreGeometry(savedGeometry);
             }
             m_hdrPreviewWindow->show();
             if (Settings.playerHdrPreviewFullScreen())

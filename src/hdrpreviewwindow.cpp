@@ -238,6 +238,18 @@ void HdrPreviewWindow::triggerFastForward()
     Actions["playerFastForwardAction"]->trigger();
 }
 
+void HdrPreviewWindow::restoreGeometry(const QRect &r)
+{
+    // Suppress the DAR-snap in resizeEvent so that programmatically restoring
+    // the saved window geometry does not trigger a floating-point-rounded
+    // resize that would make the window grow by 1-2 px on every launch.
+    m_skipDarSnap = true;
+    setGeometry(r);
+    // On macOS the resizeEvent may fire during show() rather than during
+    // setGeometry(), so keep the guard active for a short while.
+    QTimer::singleShot(300, this, [this]() { m_skipDarSnap = false; });
+}
+
 void HdrPreviewWindow::toggleFullScreen()
 {
     if (windowStates() & Qt::WindowFullScreen) {
@@ -323,6 +335,8 @@ void HdrPreviewWindow::resizeEvent(QResizeEvent *event)
     // On Windows, WM_SIZING handles AR constraining smoothly.
     // On other platforms, snap to the correct AR after each resize.
     if (windowStates() & Qt::WindowFullScreen)
+        return;
+    if (m_skipDarSnap)
         return;
     const QSize newSize = event->size();
     const QSize oldSize = event->oldSize();

@@ -47,6 +47,9 @@ public:
     Q_INVOKABLE void setVideoSink(QVideoSink *sink);
     float hdrGain() const { return m_hdrGain; }
     bool isPlaying() const { return m_isPlaying; }
+    /// Restore a previously saved window geometry without triggering the
+    /// DAR-snap in resizeEvent (which would grow the window on each launch).
+    void restoreGeometry(const QRect &r);
     bool isFullScreen() const { return windowStates() & Qt::WindowFullScreen; }
     int videoPosition() const { return m_videoPosition; }
     int videoDuration() const { return m_videoDuration; }
