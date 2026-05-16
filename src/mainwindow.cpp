@@ -1323,7 +1323,7 @@ void MainWindow::setupSettingsMenu()
                 Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
                                                        & Qt::WindowFullScreen);
                 Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
-                delete m_hdrPreviewWindow;
+                m_hdrPreviewWindow->deleteLater();
                 m_hdrPreviewWindow = nullptr;
             }
         }
@@ -4634,6 +4634,16 @@ void MainWindow::on_actionJack_triggered(bool checked)
 void MainWindow::onExternalTriggered(QAction *action)
 {
     LOG_DEBUG() << action->data().toString();
+    // The HDR preview action lives in m_externalGroup so that it appears in
+    // the External menu and participates in the mutual-exclusion toggle, but
+    // it has its own toggled handler — skip the normal external-monitor path.
+    // Also skip when switching from HDR preview back to None since the HDR
+    // preview doesn't use an external MLT consumer.
+    if (action == Actions["hdrPreviewAction"]
+        || (action->data().toString().isEmpty() && Settings.playerExternal().isEmpty())) {
+        Settings.setPlayerExternal(action->data().toString());
+        return;
+    }
     bool isExternal = !action->data().toString().isEmpty();
     QString profile = Settings.playerProfile();
     if (Settings.playerGPU() && MLT.producer() && Settings.playerExternal() != action->data()) {
