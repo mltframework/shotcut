@@ -875,6 +875,36 @@ void ShotcutSettings::setPlayerHdrPreviewFullScreen(bool b)
     settings.setValue("player/hdrPreviewFullScreen", b);
 }
 
+int ShotcutSettings::playerHdrDisplayPeakNits() const
+{
+    return settings.value("player/hdrDisplayPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrDisplayPeakNits(int nits)
+{
+    settings.setValue("player/hdrDisplayPeakNits", nits);
+}
+
+int ShotcutSettings::playerHdrContentPeakNits() const
+{
+    return settings.value("player/hdrContentPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrContentPeakNits(int nits)
+{
+    settings.setValue("player/hdrContentPeakNits", nits);
+}
+
+bool ShotcutSettings::playerHdrToneMapping() const
+{
+    return settings.value("player/hdrToneMapping", true).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrToneMapping(bool b)
+{
+    settings.setValue("player/hdrToneMapping", b);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

@@ -22,6 +22,7 @@
 #include "mltcontroller.h"
 #include "player.h"
 #include "qmltypes/qmlutilities.h"
+#include "settings.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -91,6 +92,11 @@ HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
 
     rootContext()->setContextProperty("hdrWindow", this);
 
+    // Load persisted HDR display settings
+    m_displayPeakNits = Settings.playerHdrDisplayPeakNits();
+    m_contentPeakNits = Settings.playerHdrContentPeakNits();
+    m_toneMapping = Settings.playerHdrToneMapping();
+
     QDir qmlDir = QmlUtilities::qmlDir();
     setSource(QUrl::fromLocalFile(qmlDir.filePath("views/HdrPreview.qml")));
 
@@ -133,6 +139,23 @@ void HdrPreviewWindow::setVideoSink(QVideoSink *sink)
 void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
 {
     if (m_videoSink && isVisible()) {
+        // Qt 6 caches the video format in QSGVideoMaterialRhiShader and
+        // never updates masteringWhite when maxLuminance changes.  To
+        // work around this, invalidateVideoNode() pushes an empty frame
+        // (triggering node deletion), and we skip the very next valid
+        // frame so the render thread has time to process the deletion.
+        // The frame after the skip creates a fresh node whose shader
+        // picks up the new maxLuminance.
+        if (m_skipNextFrame) {
+            m_skipNextFrame = false;
+            // Request another frame so the node is recreated even when
+            // playback is paused.  Use a short delay to ensure the render
+            // thread has time to process the empty frame and delete the
+            // old QSGVideoNode before the new frame arrives.
+            QTimer::singleShot(100, this, []() { MLT.refreshConsumer(); });
+            return;
+        }
+
         if (!m_loggedSwapChain) {
             m_loggedSwapChain = true;
             auto *sc = swapChain();
@@ -200,6 +223,16 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
 #endif
         }
         updateHdrGain();
+        // Log when the frame's stamped maxLuminance changes — confirms the
+        // modified QVideoFrame is reaching Qt's video-sink render path.
+        static float s_lastPushMaxLum = -1.0f;
+        const float pushMaxLum = frame.surfaceFormat().maxLuminance();
+        if (!qFuzzyCompare(s_lastPushMaxLum, pushMaxLum)) {
+            s_lastPushMaxLum = pushMaxLum;
+            qDebug() << "HDR pushFrame → videoSink: maxLuminance =" << pushMaxLum
+                     << "pixelFormat =" << frame.surfaceFormat().pixelFormat()
+                     << "colorTransfer =" << frame.surfaceFormat().colorTransfer();
+        }
         m_videoSink->setVideoFrame(frame);
 
         // Track playback position from frame timestamp
@@ -405,10 +438,63 @@ void HdrPreviewWindow::setHdrTransfer(HdrTransfer transfer)
 {
     if (m_hdrTransfer != transfer) {
         m_hdrTransfer = transfer;
+        emit hdrTransferModeChanged();
         if (m_hdrTransfer == HdrTransfer::SDR && !qFuzzyCompare(m_hdrGain, 1.0f)) {
             m_hdrGain = 1.0f;
             emit hdrGainChanged();
         }
+    }
+}
+
+void HdrPreviewWindow::setDisplayPeakNits(int nits)
+{
+    qDebug() << "HDR Settings: setDisplayPeakNits" << nits;
+    if (m_displayPeakNits != nits) {
+        m_displayPeakNits = nits;
+        Settings.setPlayerHdrDisplayPeakNits(nits);
+        emit displayPeakNitsChanged();
+        updateHdrGain();
+        if (m_hdrTransfer != HdrTransfer::SDR)
+            invalidateVideoNode();
+    }
+}
+
+void HdrPreviewWindow::setContentPeakNits(int nits)
+{
+    qDebug() << "HDR Settings: setContentPeakNits" << nits;
+    if (m_contentPeakNits != nits) {
+        m_contentPeakNits = nits;
+        Settings.setPlayerHdrContentPeakNits(nits);
+        emit contentPeakNitsChanged();
+        updateHdrGain();
+        if (m_hdrTransfer != HdrTransfer::SDR)
+            invalidateVideoNode();
+    }
+}
+
+void HdrPreviewWindow::setToneMapping(bool enabled)
+{
+    qDebug() << "HDR Settings: setToneMapping" << enabled;
+    if (m_toneMapping != enabled) {
+        m_toneMapping = enabled;
+        Settings.setPlayerHdrToneMapping(enabled);
+        emit toneMappingChanged();
+        updateHdrGain();
+        if (m_hdrTransfer != HdrTransfer::SDR)
+            invalidateVideoNode();
+    }
+}
+
+void HdrPreviewWindow::invalidateVideoNode()
+{
+    // Push an invalid frame so QQuickVideoOutput::updatePaintNode()
+    // deletes the existing QSGVideoNode.  The next valid frame will
+    // then create a fresh node whose shader picks up the updated
+    // maxLuminance for the BT.2390 EETF.
+    if (m_videoSink) {
+        m_videoSink->setVideoFrame(QVideoFrame());
+        m_skipNextFrame = true;
+        MLT.refreshConsumer();
     }
 }
 
@@ -433,22 +519,41 @@ void HdrPreviewWindow::updateHdrGain()
     }
 
     auto info = sc->hdrInfo();
-    float maxNits = 100.0f;
+    // Determine actual display peak from swap chain hdrInfo.
+    float actualMaxNits = 100.0f;
     if (info.limitsType == QRhiSwapChainHdrInfo::ColorComponentValue)
-        maxNits = 100.0f * info.limits.colorComponentValue.maxColorComponentValue;
+        actualMaxNits = 100.0f * info.limits.colorComponentValue.maxColorComponentValue;
     else if (info.limitsType == QRhiSwapChainHdrInfo::LuminanceInNits)
-        maxNits = info.limits.luminanceInNits.maxLuminance;
+        actualMaxNits = info.limits.luminanceInNits.maxLuminance;
 
-    float displayMaxLinear = maxNits / 100.0f;
+    // User-overridden display peak, or actual.
+    float effectiveMaxNits = (m_displayPeakNits > 0)
+                                 ? static_cast<float>(m_displayPeakNits)
+                                 : actualMaxNits;
+    float displayMaxLinear = effectiveMaxNits / 100.0f;
     if (displayMaxLinear <= 1.0f)
         return;
 
     float newGain;
     if (sc->format() == QRhiSwapChain::HDR10 || m_hdrTransfer == HdrTransfer::PQ) {
-        // PQ (ST.2084) — Qt applies the PQ EOTF correctly in its shader,
-        // both for HDR10 swapchains and for scRGB with ColorTransfer_ST2084.
-        // No additional gain correction is needed.
-        newGain = 1.0f;
+        // PQ (ST.2084) — Qt's EETF maps content to the actual display
+        // range.  When the user overrides the display peak, scale the
+        // linear output proportionally so the image appears as it would
+        // on a display with that peak brightness.
+        newGain = effectiveMaxNits / actualMaxNits;
+        // On scRGB, Qt's PQ shader decodes to linear without applying
+        // the BT.2390 EETF, so content peak and tone mapping have no
+        // effect through maxLuminance alone.  When tone mapping is
+        // enabled, apply a linear scale so that the declared content
+        // peak maps to the effective display peak.
+        if (sc->format() != QRhiSwapChain::HDR10 && m_toneMapping) {
+            float contentPeak = (m_contentPeakNits > 0)
+                                    ? static_cast<float>(m_contentPeakNits)
+                                    : 1000.0f;
+            if (contentPeak > effectiveMaxNits) {
+                newGain *= effectiveMaxNits / contentPeak;
+            }
+        }
     } else {
         // scRGB (HDRExtendedSrgbLinear) path with HLG content.
         // Qt's HLG shader has a bug: maxLum is HLG-encoded (via hlgOetf) but used
@@ -461,7 +566,9 @@ void HdrPreviewWindow::updateHdrGain()
     }
     if (!qFuzzyCompare(newGain, m_hdrGain)) {
         m_hdrGain = newGain;
-        qDebug() << "HDR Preview: gain =" << m_hdrGain << "(maxNits =" << maxNits << ")";
+        qDebug() << "HDR Preview: gain =" << m_hdrGain
+                 << "(effectiveMaxNits =" << effectiveMaxNits
+                 << "actualMaxNits =" << actualMaxNits << ")";
         emit hdrGainChanged();
     }
 }

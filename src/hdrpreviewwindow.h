@@ -33,6 +33,10 @@ class HdrPreviewWindow : public QQuickView
 {
     Q_OBJECT
     Q_PROPERTY(float hdrGain READ hdrGain NOTIFY hdrGainChanged)
+    Q_PROPERTY(int hdrTransferMode READ hdrTransferMode NOTIFY hdrTransferModeChanged)
+    Q_PROPERTY(int displayPeakNits READ displayPeakNits WRITE setDisplayPeakNits NOTIFY displayPeakNitsChanged)
+    Q_PROPERTY(int contentPeakNits READ contentPeakNits WRITE setContentPeakNits NOTIFY contentPeakNitsChanged)
+    Q_PROPERTY(bool toneMapping READ toneMapping WRITE setToneMapping NOTIFY toneMappingChanged)
     Q_PROPERTY(bool playing READ isPlaying NOTIFY playingChanged)
     Q_PROPERTY(bool fullScreen READ isFullScreen NOTIFY fullScreenChanged)
     Q_PROPERTY(int videoPosition READ videoPosition NOTIFY videoPositionChanged)
@@ -46,6 +50,13 @@ public:
 
     Q_INVOKABLE void setVideoSink(QVideoSink *sink);
     float hdrGain() const { return m_hdrGain; }
+    int hdrTransferMode() const { return static_cast<int>(m_hdrTransfer); }
+    int displayPeakNits() const { return m_displayPeakNits; }
+    void setDisplayPeakNits(int nits);
+    int contentPeakNits() const { return m_contentPeakNits; }
+    void setContentPeakNits(int nits);
+    bool toneMapping() const { return m_toneMapping; }
+    void setToneMapping(bool enabled);
     bool isPlaying() const { return m_isPlaying; }
     /// Restore a previously saved window geometry without triggering the
     /// DAR-snap in resizeEvent (which would grow the window on each launch).
@@ -69,6 +80,10 @@ public slots:
 
 signals:
     void hdrGainChanged();
+    void hdrTransferModeChanged();
+    void displayPeakNitsChanged();
+    void contentPeakNitsChanged();
+    void toneMappingChanged();
     void playingChanged();
     void fullScreenChanged();
     void videoPositionChanged();
@@ -85,16 +100,22 @@ private slots:
 
 private:
     void updateHdrGain();
+    void invalidateVideoNode();
 
     QPointer<QVideoSink> m_videoSink;
     QTimer m_edrTimer;
     bool m_loggedSwapChain{false};
     bool m_loggedGainSkip{false};
+    bool m_skipNextFrame{false};
     HdrTransfer m_hdrTransfer{HdrTransfer::SDR};
     bool m_isPlaying{false};
     float m_lastLoggedHeadroom{0.0f};
     int m_edrCheckCount{0};
     float m_hdrGain{1.0f};
+    int m_displayPeakNits{0};
+    int m_contentPeakNits{0};
+    bool m_toneMapping{true};
+    bool m_skipDarSnap{false};
     QRect m_normalGeometry;
     int m_videoPosition{0};
     int m_videoDuration{0};

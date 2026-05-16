@@ -663,28 +663,72 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
     auto pixFmt = is10bit ? QVideoFrameFormat::Format_P016 : QVideoFrameFormat::Format_YUV420P;
     QVideoFrameFormat fmt(QSize(width, height), pixFmt);
     fmt.setColorRange(QVideoFrameFormat::ColorRange_Video);
-    switch (profile().colorspace()) {
-    case 601:
-    case 170:
-        fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT601);
-        fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT601);
-        break;
-    case 2020:
+
+    // Determine the HDR transfer from the consumer's color_trc property, which
+    // reconfigure() sets correctly regardless of whether the profile colorspace
+    // is 2020 (MLT convention) or 9 (FFmpeg AVCOL_SPC_BT2020_NCL).  Checking
+    // color_trc first avoids the bug where case 2020: is never reached in
+    // automatic video mode and the frame is incorrectly stamped BT.709.
+    const char *activeTrc = m_consumer->get("color_trc");
+    const bool isHlg = !qstrcmp(activeTrc, "arib-std-b67");
+    const bool isPq  = !qstrcmp(activeTrc, "smpte2084");
+
+    if (isHlg || isPq) {
         fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
-        if (!qstrcmp(m_consumer->get("color_trc"), "arib-std-b67")) {
+        if (isHlg) {
             fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_STD_B67);
-            fmt.setMaxLuminance(1000.0f);
-        } else if (!qstrcmp(m_consumer->get("color_trc"), "smpte2084")) {
-            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_ST2084);
-            fmt.setMaxLuminance(1000.0f);
+            // Use user-overridden content peak, or default to 1000 nits.
+            const float hlgMaxNits = Settings.playerHdrContentPeakNits() > 0
+                                         ? static_cast<float>(Settings.playerHdrContentPeakNits())
+                                         : 1000.0f;
+            fmt.setMaxLuminance(hlgMaxNits);
         } else {
-            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_ST2084);
+            // For PQ, maxLuminance drives Qt's BT.2390 tone-mapping EETF.
+            // When tone mapping is disabled, clamp at the display peak so Qt
+            // applies no compression. Otherwise use the user's content-peak
+            // setting (0 = auto → 1000 nits as a sensible default).
+            float pqMaxNits;
+            if (!Settings.playerHdrToneMapping()) {
+                const int displayPeak = Settings.playerHdrDisplayPeakNits();
+                pqMaxNits = displayPeak > 0 ? static_cast<float>(displayPeak) : 1000.0f;
+            } else if (Settings.playerHdrContentPeakNits() > 0) {
+                pqMaxNits = static_cast<float>(Settings.playerHdrContentPeakNits());
+            } else {
+                pqMaxNits = 1000.0f;
+            }
+            fmt.setMaxLuminance(pqMaxNits);
         }
-        break;
-    default:
-        fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT709);
-        fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
-        break;
+        // Log whenever the stamped TRC or maxLuminance changes.
+        static QByteArray s_lastTrc;
+        static float s_lastMaxLum = -1.0f;
+        const float stamped = fmt.maxLuminance();
+        if (s_lastTrc != activeTrc || !qFuzzyCompare(s_lastMaxLum, stamped)) {
+            s_lastTrc = activeTrc;
+            s_lastMaxLum = stamped;
+            qDebug() << "HDR pushFrameToSink: colorspace =" << profile().colorspace()
+                     << "color_trc =" << activeTrc
+                     << "maxLuminance =" << stamped
+                     << "toneMapping =" << Settings.playerHdrToneMapping()
+                     << "contentPeakNits =" << Settings.playerHdrContentPeakNits()
+                     << "displayPeakNits =" << Settings.playerHdrDisplayPeakNits();
+        }
+    } else {
+        switch (profile().colorspace()) {
+        case 601:
+        case 170:
+            fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT601);
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT601);
+            break;
+        case 2020:
+            fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT2020);
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
+            break;
+        default:
+            fmt.setColorSpace(QVideoFrameFormat::ColorSpace_BT709);
+            fmt.setColorTransfer(QVideoFrameFormat::ColorTransfer_BT709);
+            break;
+        }
     }
 
     // For BT.2020/HLG, convert MLT's planar yuv420p10 (3 planes: Y, U, V with

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2026 Meltytech, LLC
- *
+*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -298,6 +298,28 @@ Rectangle {
                         }
                     }
                 }
+
+                // Settings gear
+                ControlButton {
+                    id: settingsButton
+
+                    visible: hdrWindow.hdrTransferMode !== 0
+                    active: settingsDialog.visible
+                    onClicked: settingsDialog.visible = !settingsDialog.visible
+
+                    onVisibleChanged: {
+                        if (!visible)
+                            settingsDialog.visible = false;
+                    }
+
+                    // ⚙ gear glyph (U+2699) — present in every desktop font
+                    Text {
+                        anchors.centerIn: parent
+                        text: "\u2699"
+                        color: "white"
+                        font.pixelSize: 20
+                    }
+                }
             }
 
             // Scrub bar row
@@ -394,6 +416,249 @@ Rectangle {
                                 seek(mouseX);
                         }
                     }
+                }
+            }
+        }
+
+        // HDR Display Settings dialog — centered in the window
+        Rectangle {
+            id: settingsDialog
+
+            anchors.centerIn: parent
+            width: 300
+            height: settingsColumn.implicitHeight + 28
+            radius: 12
+            color: Qt.rgba(0, 0, 0, 0.88)
+            border.color: Qt.rgba(1, 1, 1, 0.12)
+            border.width: 1
+            visible: false
+            z: 10
+
+            // Absorb mouse events and restart the hide timer so the overlay
+            // doesn't vanish while the user is interacting with the dialog.
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onPositionChanged: {
+                    overlay._visible = true;
+                    hideTimer.restart();
+                }
+            }
+
+            Column {
+                id: settingsColumn
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    topMargin: 14
+                    leftMargin: 14
+                    rightMargin: 14
+                }
+                spacing: 10
+
+                // ── Header ──────────────────────────────────────────────
+                Item {
+                    width: parent.width
+                    height: 20
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("HDR Display Settings")
+                        color: "white"
+                        font.pixelSize: 13
+                        font.bold: true
+                    }
+
+                    ControlButton {
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                        }
+                        width: 20
+                        height: 20
+                        radius: 10
+                        onClicked: settingsDialog.visible = false
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\u00D7"
+                            color: Qt.rgba(1, 1, 1, 0.7)
+                            font.pixelSize: 14
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: Qt.rgba(1, 1, 1, 0.08)
+                }
+
+                // ── Display brightness ──────────────────────────────────
+                Column {
+                    width: parent.width
+                    spacing: 6
+
+                    Text {
+                        text: qsTr("Display brightness")
+                        color: Qt.rgba(1, 1, 1, 0.6)
+                        font.pixelSize: 11
+                    }
+
+                    Row {
+                        spacing: 4
+
+                        Repeater {
+                            model: [{label: qsTr("Auto"), nits: 0}, {label: "400", nits: 400}, {label: "600", nits: 600}, {label: "1000", nits: 1000}, {label: "1600", nits: 1600}]
+
+                            delegate: Rectangle {
+                                readonly property bool _sel: hdrWindow.displayPeakNits === modelData.nits
+
+                                width: _lbl.implicitWidth + 14
+                                height: 24
+                                radius: 4
+                                color: _sel ? Qt.rgba(1, 1, 1, 0.28) : Qt.rgba(1, 1, 1, 0.1)
+                                border.color: _sel ? Qt.rgba(1, 1, 1, 0.55) : Qt.rgba(1, 1, 1, 0.15)
+                                border.width: 1
+
+                                Text {
+                                    id: _lbl
+
+                                    anchors.centerIn: parent
+                                    text: modelData.label
+                                    color: "white"
+                                    font.pixelSize: 11
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: hdrWindow.displayPeakNits = modelData.nits
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // ── Content brightness (PQ only) ────────────────────────
+                Column {
+                    width: parent.width
+                    spacing: 6
+                    visible: hdrWindow.hdrTransferMode === 2
+
+                    Text {
+                        text: qsTr("Content brightness")
+                        color: Qt.rgba(1, 1, 1, 0.6)
+                        font.pixelSize: 11
+                    }
+
+                    Row {
+                        spacing: 4
+
+                        Repeater {
+                            model: [{label: qsTr("Auto"), nits: 0}, {label: "400", nits: 400}, {label: "1000", nits: 1000}, {label: "4000", nits: 4000}, {label: "10000", nits: 10000}]
+
+                            delegate: Rectangle {
+                                readonly property bool _sel: hdrWindow.contentPeakNits === modelData.nits
+
+                                width: _lbl2.implicitWidth + 14
+                                height: 24
+                                radius: 4
+                                color: _sel ? Qt.rgba(1, 1, 1, 0.28) : Qt.rgba(1, 1, 1, 0.1)
+                                border.color: _sel ? Qt.rgba(1, 1, 1, 0.55) : Qt.rgba(1, 1, 1, 0.15)
+                                border.width: 1
+
+                                Text {
+                                    id: _lbl2
+
+                                    anchors.centerIn: parent
+                                    text: modelData.label
+                                    color: "white"
+                                    font.pixelSize: 11
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: hdrWindow.contentPeakNits = modelData.nits
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // ── Tone mapping (PQ only) ──────────────────────────────
+                Item {
+                    width: parent.width
+                    height: 24
+                    visible: hdrWindow.hdrTransferMode === 2
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Tone mapping")
+                        color: Qt.rgba(1, 1, 1, 0.6)
+                        font.pixelSize: 11
+                    }
+
+                    Row {
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                        }
+                        spacing: 4
+
+                        Rectangle {
+                            width: _onLbl.implicitWidth + 14
+                            height: 24
+                            radius: 4
+                            color: hdrWindow.toneMapping ? Qt.rgba(1, 1, 1, 0.28) : Qt.rgba(1, 1, 1, 0.1)
+                            border.color: hdrWindow.toneMapping ? Qt.rgba(1, 1, 1, 0.55) : Qt.rgba(1, 1, 1, 0.15)
+                            border.width: 1
+
+                            Text {
+                                id: _onLbl
+
+                                anchors.centerIn: parent
+                                text: qsTr("On")
+                                color: "white"
+                                font.pixelSize: 11
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: hdrWindow.toneMapping = true
+                            }
+                        }
+
+                        Rectangle {
+                            width: _offLbl.implicitWidth + 14
+                            height: 24
+                            radius: 4
+                            color: !hdrWindow.toneMapping ? Qt.rgba(1, 1, 1, 0.28) : Qt.rgba(1, 1, 1, 0.1)
+                            border.color: !hdrWindow.toneMapping ? Qt.rgba(1, 1, 1, 0.55) : Qt.rgba(1, 1, 1, 0.15)
+                            border.width: 1
+
+                            Text {
+                                id: _offLbl
+
+                                anchors.centerIn: parent
+                                text: qsTr("Off")
+                                color: "white"
+                                font.pixelSize: 11
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: hdrWindow.toneMapping = false
+                            }
+                        }
+                    }
+                }
+
+                // Bottom padding
+                Item {
+                    width: 1
+                    height: 2
                 }
             }
         }
