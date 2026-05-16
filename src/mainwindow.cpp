@@ -1283,58 +1283,7 @@ void MainWindow::setupSettingsMenu()
     hdrAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_QuoteLeft));
 #endif
     Actions.add("hdrPreviewAction", hdrAction, tr("Player"));
-    connect(hdrAction, &QAction::toggled, this, [this, hdrAction](bool checked) {
-        if (checked) {
-            if (!m_hdrPreviewWindow) {
-                m_hdrPreviewWindow = new HdrPreviewWindow();
-                auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
-                connect(videoWidget,
-                        &Mlt::VideoWidget::videoFrameReady,
-                        m_hdrPreviewWindow,
-                        &HdrPreviewWindow::pushFrame);
-                connect(videoWidget,
-                        &Mlt::VideoWidget::hdrTransferChanged,
-                        m_hdrPreviewWindow,
-                        &HdrPreviewWindow::setHdrTransfer);
-                auto *win = m_hdrPreviewWindow;
-                connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
-                connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
-                connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
-                connect(m_hdrPreviewWindow,
-                        &QWindow::visibleChanged,
-                        this,
-                        [this, hdrAction](bool visible) {
-                            if (!visible && m_hdrPreviewWindow) {
-                                Settings.setPlayerHdrPreviewFullScreen(
-                                    m_hdrPreviewWindow->windowStates() & Qt::WindowFullScreen);
-                                Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
-                                hdrAction->setChecked(false);
-                            }
-                        });
-                auto savedGeometry = Settings.playerHdrPreviewGeometry();
-                if (savedGeometry.isValid())
-                    m_hdrPreviewWindow->restoreGeometry(savedGeometry);
-            }
-            m_hdrPreviewWindow->show();
-            if (Settings.playerHdrPreviewFullScreen())
-                m_hdrPreviewWindow->showFullScreen();
-        } else {
-            if (m_hdrPreviewWindow) {
-                Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
-                                                       & Qt::WindowFullScreen);
-                Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
-                m_hdrPreviewWindow->deleteLater();
-                m_hdrPreviewWindow = nullptr;
-            }
-        }
-        Settings.setPlayerHdrPreview(checked);
-        if (checked && Settings.playerGPU() && MLT.producer()) {
-            if (confirmRestartExternalMonitor()) {
-                m_exitCode = EXIT_RESTART;
-                QApplication::closeAllWindows();
-            }
-        }
-    });
+    connect(hdrAction, &QAction::toggled, this, &MainWindow::onHdrPreviewToggled);
     connect(hdrAction, &QAction::triggered, this, [this, hdrAction]() {
         if (hdrAction->isChecked() && m_hdrPreviewWindow) {
             m_hdrPreviewWindow->show();
@@ -4634,6 +4583,57 @@ void MainWindow::on_actionJack_triggered(bool checked)
             this,
             qApp->applicationName(),
             tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
+    }
+}
+
+void MainWindow::onHdrPreviewToggled(bool checked)
+{
+    if (checked) {
+        if (!m_hdrPreviewWindow) {
+            m_hdrPreviewWindow = new HdrPreviewWindow();
+            auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::videoFrameReady,
+                    m_hdrPreviewWindow,
+                    &HdrPreviewWindow::pushFrame);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::hdrTransferChanged,
+                    m_hdrPreviewWindow,
+                    &HdrPreviewWindow::setHdrTransfer);
+            auto *win = m_hdrPreviewWindow;
+            connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
+            connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
+            connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
+            connect(m_hdrPreviewWindow, &QWindow::visibleChanged, this, [this](bool visible) {
+                if (!visible && m_hdrPreviewWindow) {
+                    Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                                           & Qt::WindowFullScreen);
+                    Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+                    Actions["hdrPreviewAction"]->setChecked(false);
+                }
+            });
+            auto savedGeometry = Settings.playerHdrPreviewGeometry();
+            if (savedGeometry.isValid())
+                m_hdrPreviewWindow->restoreGeometry(savedGeometry);
+        }
+        m_hdrPreviewWindow->show();
+        if (Settings.playerHdrPreviewFullScreen())
+            m_hdrPreviewWindow->showFullScreen();
+    } else {
+        if (m_hdrPreviewWindow) {
+            Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                                   & Qt::WindowFullScreen);
+            Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+            m_hdrPreviewWindow->deleteLater();
+            m_hdrPreviewWindow = nullptr;
+        }
+    }
+    Settings.setPlayerHdrPreview(checked);
+    if (checked && Settings.playerGPU() && MLT.producer()) {
+        if (confirmRestartExternalMonitor()) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
     }
 }
 
