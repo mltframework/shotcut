@@ -3162,6 +3162,7 @@ void EncodeDock::on_hdrMetaButton_clicked()
     dialog.setWindowTitle(tr("HDR Metadata"));
 
     auto *form = new QFormLayout;
+    form->setLabelAlignment(Qt::AlignRight);
 
     auto *maxCllSpin = new QSpinBox;
     maxCllSpin->setRange(0, 10000);

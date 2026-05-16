@@ -967,11 +967,20 @@ with parallel processing enabled.</string>
               </item>
               <item row="3" column="1">
                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <property name="spacing">
+                <number>4</number>
+                </property>
                 <item>
                  <widget class="QComboBox" name="videoCodecCombo"/>
                 </item>
                 <item>
                  <widget class="QPushButton" name="hdrMetaButton">
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="visible">
                    <bool>false</bool>
                   </property>
