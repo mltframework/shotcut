@@ -8,7 +8,7 @@
             "binaryDir": "${sourceDir}/build/${presetName}",
             "generator": "Ninja",
             "environment": {
-                "QT_VERSION": "6.8.3",
+                "QT_VERSION": "6.10.3",
                 "PKG_CONFIG_PATH": "$env{HOME}/.local/lib/pkgconfig:$env{HOME}/.local/lib64/pkgconfig:$env{HOME}/opt/lib/pkgconfig:$env{HOME}/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/lib64/pkgconfig:$penv{PKG_CONFIG_PATH}",
                 "PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos/bin:$env{HOME}/opt/bin:/usr/local/bin:/opt/local/bin:$penv{PATH}"
             },
