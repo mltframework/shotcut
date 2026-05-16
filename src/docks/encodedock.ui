@@ -971,6 +971,19 @@ with parallel processing enabled.</string>
                  <widget class="QComboBox" name="videoCodecCombo"/>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="hdrMetaButton">
+                  <property name="visible">
+                   <bool>false</bool>
+                  </property>
+                  <property name="toolTip">
+                   <string>Set HDR mastering display and content light level metadata</string>
+                  </property>
+                  <property name="text">
+                   <string>HDR...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <spacer name="horizontalSpacer_11">
                   <property name="orientation">
                    <enum>Qt::Orientation::Horizontal</enum>
