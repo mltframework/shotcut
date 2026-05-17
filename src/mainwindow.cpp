@@ -4615,6 +4615,11 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                     Actions["hdrPreviewAction"]->setChecked(false);
                 }
             });
+            win->setPlaying(!MLT.isPaused());
+            if (MLT.isPaused()) {
+                // Ensure the last frame is shown in the preview when paused.
+                MLT.refreshConsumer();
+            }
             auto savedGeometry = Settings.playerHdrPreviewGeometry();
             if (savedGeometry.isValid())
                 m_hdrPreviewWindow->restoreGeometry(savedGeometry);

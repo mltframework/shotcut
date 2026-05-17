@@ -72,7 +72,7 @@ endif()
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)
-if(BUILD_MINIMAL_MEDIA_BACKEND)
+if(UNIX AND NOT APPLE AND BUILD_MINIMAL_MEDIA_BACKEND)
   add_subdirectory(MinimalMediaBackend)
 endif()
 
