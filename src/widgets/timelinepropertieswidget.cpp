@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2025 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,13 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
             ui->colorspaceLabel->setText("ITU-R BT.2020");
         else
             ui->colorspaceLabel->setText("");
+        const QString trc = MLT.colorTrc();
+        if (trc == QLatin1String("arib-std-b67"))
+            ui->dynamicRangeValueLabel->setText("HLG HDR");
+        else if (trc == QLatin1String("smpte2084"))
+            ui->dynamicRangeValueLabel->setText("PQ HDR");
+        else
+            ui->dynamicRangeValueLabel->setText("SDR");
     }
 }
 

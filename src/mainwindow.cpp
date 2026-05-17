@@ -1308,10 +1308,10 @@ void MainWindow::setupSettingsMenu()
 
                 if (!m_decklinkGammaGroup) {
                     m_decklinkGammaGroup = new QActionGroup(this);
-                    action = new QAction(tr("SDR"), m_decklinkGammaGroup);
+                    action = new QAction("SDR", m_decklinkGammaGroup);
                     action->setData(QVariant(0));
                     action->setCheckable(true);
-                    action = new QAction(tr("HLG HDR"), m_decklinkGammaGroup);
+                    action = new QAction("HLG HDR", m_decklinkGammaGroup);
                     action->setData(QVariant(1));
                     action->setCheckable(true);
                 }
