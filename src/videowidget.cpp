@@ -26,13 +26,13 @@
 #include "util.h"
 
 #include <Mlt.h>
+#include <functional>
 #include <QOffscreenSurface>
 #include <QOpenGLContext>
 #include <QQuickItem>
 #include <QUrl>
 #include <QtQml>
 #include <QtWidgets>
-#include <functional>
 
 #ifdef __ARM_NEON
 #include <arm_neon.h>
@@ -866,14 +866,17 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffe
 
     std::unique_ptr<SharedFrameVideoBuffer> buffer;
     if (is10bit) {
-        buffer = std::make_unique<SharedFrameVideoBuffer>(std::move(p016Buffer), fmt,
-            [pool = std::weak_ptr<P016Pool>(m_p016Pool)](QByteArray buf) {
-                if (auto p = pool.lock()) {
-                    QMutexLocker lock(&p->mutex);
-                    if (p->buffers.size() < 3)
-                        p->buffers.append(std::move(buf));
-                }
-            });
+        buffer = std::make_unique<SharedFrameVideoBuffer>(std::move(p016Buffer),
+                                                          fmt,
+                                                          [pool = std::weak_ptr<P016Pool>(
+                                                               m_p016Pool)](QByteArray buf) {
+                                                              if (auto p = pool.lock()) {
+                                                                  QMutexLocker lock(&p->mutex);
+                                                                  if (p->buffers.size() < 3)
+                                                                      p->buffers.append(
+                                                                          std::move(buf));
+                                                              }
+                                                          });
     } else {
         buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
     }
@@ -982,11 +985,12 @@ void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_dat
                     convertToP016(image, width, height, p016Buffer);
                 }
             }
-            QMetaObject::invokeMethod(widget,
-                                      [widget, frame, buf = std::move(p016Buffer)]() mutable {
-                                          widget->showFrame(frame, std::move(buf));
-                                      },
-                                      Qt::QueuedConnection);
+            QMetaObject::invokeMethod(
+                widget,
+                [widget, frame, buf = std::move(p016Buffer)]() mutable {
+                    widget->showFrame(frame, std::move(buf));
+                },
+                Qt::QueuedConnection);
         } else if (!Settings.playerRealtime()) {
             LOG_WARNING() << "VideoWidget dropped frame" << frame.get_position();
         }

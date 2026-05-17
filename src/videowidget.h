@@ -24,6 +24,7 @@
 
 enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
 
+#include <memory>
 #include <QAbstractVideoBuffer>
 #include <QMutex>
 #include <QPointer>
@@ -35,7 +36,6 @@ enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
 #include <QVideoFrame>
 #include <QVideoFrameFormat>
 #include <QVideoSink>
-#include <memory>
 
 class QmlFilter;
 class QmlMetadata;
@@ -160,7 +160,8 @@ private:
 
     static void on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data);
     void pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffer = {});
-    struct P016Pool {
+    struct P016Pool
+    {
         QMutex mutex;
         QList<QByteArray> buffers;
     };
