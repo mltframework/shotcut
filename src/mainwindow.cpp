@@ -4600,12 +4600,12 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                     &Mlt::VideoWidget::hdrTransferChanged,
                     m_hdrPreviewWindow,
                     &HdrPreviewWindow::setHdrTransfer);
-            m_hdrPreviewWindow->setHdrTransfer(videoWidget->hdrTransfer());
+            m_hdrPreviewWindow->setHdrTransfer(hdrTransferFromTrc(MLT.colorTrc()));
             auto *win = m_hdrPreviewWindow;
             connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
             connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
             connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
-            win->setPlaying(m_player->isPlaying());
+            win->setPlaying(!MLT.isPaused());
             connect(m_hdrPreviewWindow, &QWindow::visibleChanged, this, [this](bool visible) {
                 if (!visible && m_hdrPreviewWindow) {
                     Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()

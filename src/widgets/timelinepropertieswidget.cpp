@@ -20,6 +20,7 @@
 
 #include "mltcontroller.h"
 #include "util.h"
+#include "videowidget.h"
 
 TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidget *parent)
     : QWidget(parent)
@@ -49,13 +50,17 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
             ui->colorspaceLabel->setText("ITU-R BT.2020");
         else
             ui->colorspaceLabel->setText("");
-        const QString trc = MLT.colorTrc();
-        if (trc == QLatin1String("arib-std-b67"))
+        switch (hdrTransferFromTrc(MLT.colorTrc())) {
+        case HdrTransfer::HLG:
             ui->dynamicRangeValueLabel->setText("HLG HDR");
-        else if (trc == QLatin1String("smpte2084"))
+            break;
+        case HdrTransfer::PQ:
             ui->dynamicRangeValueLabel->setText("PQ HDR");
-        else
+            break;
+        default:
             ui->dynamicRangeValueLabel->setText("SDR");
+            break;
+        }
     }
 }
 

@@ -24,6 +24,15 @@
 
 enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
 
+inline HdrTransfer hdrTransferFromTrc(const QString &trc)
+{
+    if (trc == QLatin1String("arib-std-b67"))
+        return HdrTransfer::HLG;
+    if (trc == QLatin1String("smpte2084"))
+        return HdrTransfer::PQ;
+    return HdrTransfer::SDR;
+}
+
 #include <memory>
 #include <QAbstractVideoBuffer>
 #include <QMutex>

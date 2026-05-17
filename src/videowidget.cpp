@@ -443,11 +443,7 @@ int VideoWidget::reconfigure(bool isMulti)
             }
         }
         const char *activeTrc = m_consumer->get("color_trc");
-        HdrTransfer hdrTransfer = HdrTransfer::SDR;
-        if (!qstrcmp(activeTrc, "arib-std-b67"))
-            hdrTransfer = HdrTransfer::HLG;
-        else if (!qstrcmp(activeTrc, "smpte2084"))
-            hdrTransfer = HdrTransfer::PQ;
+        HdrTransfer hdrTransfer = hdrTransferFromTrc(QLatin1String(activeTrc));
         emit hdrTransferChanged(hdrTransfer);
         if (processingMode == ShotcutSettings::Linear10Cpu
             || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHLG
