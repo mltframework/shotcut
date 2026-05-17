@@ -836,16 +836,17 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
-                // Inject HDR10 mastering metadata when the source is PQ.
-                if ((m_hdrMaxCll > 0 || m_hdrMaxFall > 0)
-                    && MLT.colorTrc() == QLatin1String("smpte2084")) {
-                    if (!x265params.contains(QLatin1String("max-cll="))) {
+                // Inject HDR10 metadata when the source is PQ.
+                if (MLT.colorTrc() == QLatin1String("smpte2084")) {
+                    if ((m_hdrMaxCll > 0 || m_hdrMaxFall > 0)
+                        && !x265params.contains(QLatin1String("max-cll="))) {
                         x265params = QStringLiteral("max-cll=%1,%2:%3")
                                          .arg(m_hdrMaxCll)
                                          .arg(m_hdrMaxFall)
                                          .arg(x265params);
                     }
-                    if (!x265params.contains(QLatin1String("master-display="))) {
+                    if ((m_hdrMaxLuminance > 0.0 || m_hdrMinLuminance > 0.0)
+                        && !x265params.contains(QLatin1String("master-display="))) {
                         const QString primaries
                             = (m_hdrMasterPreset == 1)
                                   // Display P3 (D65)
