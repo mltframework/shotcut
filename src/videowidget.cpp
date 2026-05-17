@@ -32,6 +32,7 @@
 #include <QUrl>
 #include <QtQml>
 #include <QtWidgets>
+#include <functional>
 
 #ifdef __ARM_NEON
 #include <arm_neon.h>
@@ -57,6 +58,7 @@ VideoWidget::VideoWidget(QObject *parent)
     , m_scrubAudio(false)
     , m_maxTextureSize(4096)
     , m_hideVui(false)
+    , m_p016Pool(std::make_shared<P016Pool>())
 {
     LOG_DEBUG() << "begin";
     setAttribute(Qt::WA_AcceptTouchEvents);
@@ -645,7 +647,67 @@ static void interleaveUVPlanes_SSE2(const uint16_t *srcU, const uint16_t *srcV, 
 }
 #endif // defined(__x86_64__) || defined(_M_AMD64)
 
-void VideoWidget::pushFrameToSink(const SharedFrame &frame)
+// Convert MLT planar yuv420p10 (Y, U, V planes; 10-bit in LSBs of uint16_t) to
+// semi-planar P016 (Y plane + interleaved UV plane; 10-bit shifted to full 16-bit range).
+// `buffer` is resized as needed; passing a pre-allocated buffer avoids heap allocation.
+static void convertToP016(const uint8_t *image, int width, int height, QByteArray &buffer)
+{
+    const int uvW = width / 2;
+    const int uvH = height / 2;
+    const int ySamples = width * height;
+    const int yPlaneSize = ySamples * 2;
+    const int uvPlaneSize = uvW * uvH * 2;
+    const int interleavedUvSize = uvW * uvH * 4;
+    buffer.resize(yPlaneSize + interleavedUvSize);
+    const uint16_t *srcY = reinterpret_cast<const uint16_t *>(image);
+    uint16_t *dstY = reinterpret_cast<uint16_t *>(buffer.data());
+#ifdef __ARM_NEON
+    int i = 0;
+    for (; i + 8 <= ySamples; i += 8) {
+        uint16x8_t y = vld1q_u16(srcY + i);
+        vst1q_u16(dstY + i, vshlq_n_u16(y, 6));
+    }
+    for (; i < ySamples; ++i)
+        dstY[i] = srcY[i] << 6;
+#elif defined(__x86_64__) || defined(_M_AMD64)
+    if (Util::cpuHasAVX2())
+        shiftYPlane_AVX2(srcY, dstY, ySamples);
+    else
+        shiftYPlane_SSE2(srcY, dstY, ySamples);
+#else
+    for (int i = 0; i < ySamples; ++i)
+        dstY[i] = srcY[i] << 6;
+#endif
+    const uint16_t *srcU = reinterpret_cast<const uint16_t *>(image + yPlaneSize);
+    const uint16_t *srcV = reinterpret_cast<const uint16_t *>(image + yPlaneSize + uvPlaneSize);
+    uint16_t *dstUV = reinterpret_cast<uint16_t *>(buffer.data() + yPlaneSize);
+    const int uvSamples = uvW * uvH;
+#ifdef __ARM_NEON
+    int j = 0;
+    for (; j + 8 <= uvSamples; j += 8) {
+        uint16x8_t u = vshlq_n_u16(vld1q_u16(srcU + j), 6);
+        uint16x8_t v = vshlq_n_u16(vld1q_u16(srcV + j), 6);
+        uint16x8x2_t uv = {u, v};
+        vst2q_u16(dstUV + j * 2, uv);
+    }
+    for (; j < uvSamples; ++j) {
+        dstUV[2 * j] = srcU[j] << 6;
+        dstUV[2 * j + 1] = srcV[j] << 6;
+    }
+#elif defined(__x86_64__) || defined(_M_AMD64)
+    if (Util::cpuHasAVX2())
+        interleaveUVPlanes_AVX2(srcU, srcV, dstUV, uvSamples);
+    else
+        interleaveUVPlanes_SSE2(srcU, srcV, dstUV, uvSamples);
+#else
+    for (int i = 0; i < uvSamples; ++i) {
+        dstUV[2 * i] = srcU[i] << 6;
+        dstUV[2 * i + 1] = srcV[i] << 6;
+    }
+#endif
+}
+
+void VideoWidget::pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffer)
 {
     if (!m_videoSink)
         return;
@@ -655,10 +717,18 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         return;
 
     bool is10bit = !qstrcmp(m_consumer->get("mlt_image_format"), "yuv420p10");
-    mlt_image_format mltFormat = is10bit ? mlt_image_yuv420p10 : mlt_image_yuv420p;
-    const uint8_t *image = frame.get_image(mltFormat);
-    if (!image)
-        return;
+    if (!is10bit) {
+        // Validate 8-bit image is available (caches it for later use in map()).
+        if (!frame.get_image(mlt_image_yuv420p))
+            return;
+    } else if (p016Buffer.isEmpty()) {
+        // Fallback conversion on the calling thread — only reached from setVideoSink(),
+        // not the normal playback path where on_frame_show() pre-converts on the MLT thread.
+        const uint8_t *image = frame.get_image(mlt_image_yuv420p10);
+        if (!image)
+            return;
+        convertToP016(image, width, height, p016Buffer);
+    }
 
     auto pixFmt = is10bit ? QVideoFrameFormat::Format_P016 : QVideoFrameFormat::Format_YUV420P;
     QVideoFrameFormat fmt(QSize(width, height), pixFmt);
@@ -730,73 +800,7 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         }
     }
 
-    // For BT.2020/HLG, convert MLT's planar yuv420p10 (3 planes: Y, U, V with
-    // 16-bit samples, 10 significant bits in LSBs) to semi-planar P016 (2 planes:
-    // Y, interleaved UV with full 16-bit range) so that Qt selects the
-    // nv12_bt2020_hlg fragment shader for proper HLG tone mapping.
-    QByteArray p016Buffer;
-    if (is10bit) {
-        int uvW = width / 2;
-        int uvH = height / 2;
-        int ySamples = width * height;
-        int yPlaneSize = ySamples * 2;         // 16-bit per sample
-        int uvPlaneSize = uvW * uvH * 2;       // per U or V plane in source
-        int interleavedUvSize = uvW * uvH * 4; // interleaved UV in dest
-        p016Buffer.resize(yPlaneSize + interleavedUvSize);
-
-        // Copy Y plane, shifting 10-bit values (LSBs) to full 16-bit range
-        const uint16_t *srcY = reinterpret_cast<const uint16_t *>(image);
-        uint16_t *dstY = reinterpret_cast<uint16_t *>(p016Buffer.data());
-#ifdef __ARM_NEON
-        int i = 0;
-        for (; i + 8 <= ySamples; i += 8) {
-            uint16x8_t y = vld1q_u16(srcY + i);
-            vst1q_u16(dstY + i, vshlq_n_u16(y, 6));
-        }
-        for (; i < ySamples; ++i)
-            dstY[i] = srcY[i] << 6;
-#elif defined(__x86_64__) || defined(_M_AMD64)
-        if (Util::cpuHasAVX2())
-            shiftYPlane_AVX2(srcY, dstY, ySamples);
-        else
-            shiftYPlane_SSE2(srcY, dstY, ySamples);
-#else
-        for (int i = 0; i < ySamples; ++i) {
-            dstY[i] = srcY[i] << 6;
-        }
-#endif
-
-        // Interleave U and V planes, also shifting to full 16-bit range
-        const uint16_t *srcU = reinterpret_cast<const uint16_t *>(image + yPlaneSize);
-        const uint16_t *srcV = reinterpret_cast<const uint16_t *>(image + yPlaneSize + uvPlaneSize);
-        uint16_t *dstUV = reinterpret_cast<uint16_t *>(p016Buffer.data() + yPlaneSize);
-        int uvSamples = uvW * uvH;
-#ifdef __ARM_NEON
-        int j = 0;
-        for (; j + 8 <= uvSamples; j += 8) {
-            uint16x8_t u = vshlq_n_u16(vld1q_u16(srcU + j), 6);
-            uint16x8_t v = vshlq_n_u16(vld1q_u16(srcV + j), 6);
-            uint16x8x2_t uv = {u, v};
-            vst2q_u16(dstUV + j * 2, uv);
-        }
-        for (; j < uvSamples; ++j) {
-            dstUV[2 * j] = srcU[j] << 6;
-            dstUV[2 * j + 1] = srcV[j] << 6;
-        }
-#elif defined(__x86_64__) || defined(_M_AMD64)
-        if (Util::cpuHasAVX2())
-            interleaveUVPlanes_AVX2(srcU, srcV, dstUV, uvSamples);
-        else
-            interleaveUVPlanes_SSE2(srcU, srcV, dstUV, uvSamples);
-#else
-        for (int i = 0; i < uvSamples; ++i) {
-            dstUV[2 * i] = srcU[i] << 6;
-            dstUV[2 * i + 1] = srcV[i] << 6;
-        }
-#endif
-    }
-
-    // Zero-copy buffer for 8-bit, or P016 converted buffer for 10-bit.
+    // Zero-copy buffer for 8-bit, or P016 pre-converted buffer for 10-bit.
     class SharedFrameVideoBuffer : public QAbstractVideoBuffer
     {
     public:
@@ -804,10 +808,18 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
             : m_sharedFrame(sf)
             , m_format(f)
         {}
-        SharedFrameVideoBuffer(QByteArray p016, const QVideoFrameFormat &f)
+        SharedFrameVideoBuffer(QByteArray p016,
+                               const QVideoFrameFormat &f,
+                               std::function<void(QByteArray)> onFree)
             : m_p016(std::move(p016))
             , m_format(f)
+            , m_onFree(std::move(onFree))
         {}
+        ~SharedFrameVideoBuffer()
+        {
+            if (m_onFree && !m_p016.isEmpty())
+                m_onFree(std::move(m_p016));
+        }
         QVideoFrameFormat format() const override { return m_format; }
         MapData map(QVideoFrame::MapMode) override
         {
@@ -849,11 +861,19 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
         SharedFrame m_sharedFrame;
         QByteArray m_p016;
         QVideoFrameFormat m_format;
+        std::function<void(QByteArray)> m_onFree;
     };
 
     std::unique_ptr<SharedFrameVideoBuffer> buffer;
     if (is10bit) {
-        buffer = std::make_unique<SharedFrameVideoBuffer>(std::move(p016Buffer), fmt);
+        buffer = std::make_unique<SharedFrameVideoBuffer>(std::move(p016Buffer), fmt,
+            [pool = std::weak_ptr<P016Pool>(m_p016Pool)](QByteArray buf) {
+                if (auto p = pool.lock()) {
+                    QMutexLocker lock(&p->mutex);
+                    if (p->buffers.size() < 3)
+                        p->buffers.append(std::move(buf));
+                }
+            });
     } else {
         buffer = std::make_unique<SharedFrameVideoBuffer>(frame, fmt);
     }
@@ -866,7 +886,7 @@ void VideoWidget::pushFrameToSink(const SharedFrame &frame)
     emit videoFrameReady(videoFrame);
 }
 
-void VideoWidget::showFrame(Mlt::Frame frame)
+void VideoWidget::showFrame(Mlt::Frame frame, QByteArray p016Buffer)
 {
     m_mutex.lock();
     m_sharedFrame = SharedFrame(frame);
@@ -878,7 +898,7 @@ void VideoWidget::showFrame(Mlt::Frame frame)
     } else if (isVui && !m_savedQmlSource.isEmpty() && source() != m_savedQmlSource) {
         setSource(m_savedQmlSource);
     }
-    pushFrameToSink(m_sharedFrame);
+    pushFrameToSink(m_sharedFrame, std::move(p016Buffer));
     emit frameDisplayed(m_sharedFrame);
     if (m_imageRequested) {
         m_imageRequested = false;
@@ -937,17 +957,36 @@ void VideoWidget::setSnapToGrid(bool snap)
     emit snapToGridChanged();
 }
 
-// MLT consumer-frame-show event handler
+// MLT consumer-frame-show event handler — runs on the MLT consumer thread.
+// P016 conversion for 10-bit frames is done here so the GUI thread is not burdened.
 void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data data)
 {
     auto frame = Mlt::EventData(data).to_frame();
     if (frame.is_valid() && frame.get_int("rendered")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
         if (widget->m_frameSemaphore.tryAcquire(1, timeout)) {
+            QByteArray p016Buffer;
+            if (!qstrcmp(widget->consumer()->get("mlt_image_format"), "yuv420p10")) {
+                mlt_image_format mltFmt = mlt_image_yuv420p10;
+                int width = 0, height = 0;
+                const uint8_t *image = frame.get_image(mltFmt, width, height);
+                if (image && width > 0 && height > 0) {
+                    // Grab a reusable buffer from the pool to avoid per-frame allocation.
+                    {
+                        QMutexLocker lock(&widget->m_p016Pool->mutex);
+                        if (!widget->m_p016Pool->buffers.isEmpty()) {
+                            p016Buffer = std::move(widget->m_p016Pool->buffers.last());
+                            widget->m_p016Pool->buffers.removeLast();
+                        }
+                    }
+                    convertToP016(image, width, height, p016Buffer);
+                }
+            }
             QMetaObject::invokeMethod(widget,
-                                      "showFrame",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(Mlt::Frame, frame));
+                                      [widget, frame, buf = std::move(p016Buffer)]() mutable {
+                                          widget->showFrame(frame, std::move(buf));
+                                      },
+                                      Qt::QueuedConnection);
         } else if (!Settings.playerRealtime()) {
             LOG_WARNING() << "VideoWidget dropped frame" << frame.get_position();
         }

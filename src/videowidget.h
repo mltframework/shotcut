@@ -35,6 +35,7 @@ enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
 #include <QVideoFrame>
 #include <QVideoFrameFormat>
 #include <QVideoSink>
+#include <memory>
 
 class QmlFilter;
 class QmlMetadata;
@@ -112,7 +113,7 @@ public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
     virtual void initialize();
-    Q_INVOKABLE void showFrame(Mlt::Frame frame);
+    void showFrame(Mlt::Frame frame, QByteArray p016Buffer = {});
 
 signals:
     void frameDisplayed(const SharedFrame &frame);
@@ -158,7 +159,12 @@ private:
     QPointer<QVideoSink> m_videoSink;
 
     static void on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data);
-    void pushFrameToSink(const SharedFrame &frame);
+    void pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffer = {});
+    struct P016Pool {
+        QMutex mutex;
+        QList<QByteArray> buffers;
+    };
+    std::shared_ptr<P016Pool> m_p016Pool;
 
 private slots:
     void resizeVideo(int width, int height);
