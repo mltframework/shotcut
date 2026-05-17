@@ -319,6 +319,9 @@ endif()
 if(USE_VULKAN)
   target_compile_definitions(shotcut PRIVATE USE_VULKAN)
 endif()
+if(BUILD_MINIMAL_MEDIA_BACKEND)
+  target_compile_definitions(shotcut PRIVATE BUILD_MINIMAL_MEDIA_BACKEND)
+endif()
 
 if(WIN32)
   # Windows resource
