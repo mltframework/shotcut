@@ -2213,7 +2213,7 @@ void EncodeDock::on_addPresetButton_clicked()
                 continue;
 
             const auto key = QString::fromLatin1(name);
-            const auto value = QString::fromLatin1(data->get(i));
+            const auto value = QString::fromUtf8(data->get(i));
             ls.append(QStringLiteral("%1=%2").arg(key, value));
         }
     }
