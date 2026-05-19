@@ -1222,6 +1222,16 @@ void ShotcutSettings::setDrawMethod(int i)
     settings.setValue("opengl", i);
 }
 
+bool ShotcutSettings::safeMode() const
+{
+    return settings.value("safeMode", false).toBool();
+}
+
+void ShotcutSettings::setSafeMode(bool value)
+{
+    settings.setValue("safeMode", value);
+}
+
 bool ShotcutSettings::noUpgrade() const
 {
     return settings.value("noupgrade", false).toBool();

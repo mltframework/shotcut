@@ -273,6 +273,8 @@ public:
     // general continued
     int drawMethod() const;
     void setDrawMethod(int);
+    bool safeMode() const;
+    void setSafeMode(bool value);
     bool noUpgrade() const;
     void setNoUpgrade(bool value);
     bool checkUpgradeAutomatic();

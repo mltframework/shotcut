@@ -957,6 +957,7 @@ void MainWindow::setupMenuFile()
 
 void MainWindow::setupMenuView()
 {
+    ui->actionLeaveSafeMode->setVisible(Settings.safeMode());
     ui->menuView->addSeparator();
     ui->menuView->addAction(ui->actionResources);
     ui->menuView->addAction(ui->actionApplicationLog);
@@ -6570,4 +6571,25 @@ void MainWindow::showSettingsMenu() const
     point = ui->menuBar->mapToGlobal(point);
 #endif
     ui->menuSettings->popup(point, ui->menuSettings->defaultAction());
+}
+
+void MainWindow::on_actionLeaveSafeMode_triggered()
+{
+    QMessageBox dialog(QMessageBox::Question,
+                       qApp->applicationName(),
+                       tr("Safe mode was enabled because Shotcut crashed during startup.\n"
+                          "Safe mode disables external plugins.\n"
+                          "\n"
+                          "Do you want to turn off safe mode and restart now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        Settings.setSafeMode(false);
+        Settings.sync();
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
+    }
 }

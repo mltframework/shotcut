@@ -66,10 +66,12 @@ Controller::Controller()
     LOG_DEBUG() << "begin";
     if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY")) {
         const bool experimental = qApp && qApp->property("experimental").toBool();
-        if (experimental)
-            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
-        else
+        if (Settings.safeMode()) {
             ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
+            ::qputenv("VST_PATH", "C:/__shotcut_safe_mode_no_vst__");
+        } else {
+            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
+        }
     }
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
