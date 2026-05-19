@@ -1566,6 +1566,7 @@
    </property>
    <property name="toolTip">
     <string notr="true">Vulkan</string>
+   </property>
   </action>
   <action name="actionLeaveSafeMode">
    <property name="text">
