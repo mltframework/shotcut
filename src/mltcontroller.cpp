@@ -57,8 +57,15 @@ Controller::Controller()
     , m_blockRefresh(false)
 {
     LOG_DEBUG() << "begin";
-    if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY"))
-        ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
+    if (!qEnvironmentVariableIsSet("MLT_REPOSITORY_DENY")) {
+        const bool experimental = qApp && qApp->property("experimental").toBool();
+        if (Settings.safeMode()) {
+            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
+            ::qputenv("VST_PATH", "C:/__shotcut_safe_mode_no_vst__");
+        } else {
+            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
+        }
+    }
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
     resetLocale();

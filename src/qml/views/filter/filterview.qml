@@ -27,6 +27,7 @@ Rectangle {
 
     signal currentFilterRequested(int attachedIndex)
     signal copyFilterRequested
+    signal addonFilterMetadataHelpRequested(string service)
 
     function clearCurrentFilter() {
         if (filterConfig.item) {
@@ -399,6 +400,16 @@ Rectangle {
 
     CopyFiltersDialog {
         id: copyFiltersDialog
+    }
+
+    Connections {
+        ignoreUnknownSignals: true
+
+        function onMetadataHelpRequested(service) {
+            root.addonFilterMetadataHelpRequested(service)
+        }
+
+        target: filterConfig.item
     }
 
     Connections {

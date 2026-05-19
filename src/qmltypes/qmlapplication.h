@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE static bool isProjectFolder();
     static qreal devicePixelRatio();
     Q_INVOKABLE void showStatusMessage(const QString &message, int timeoutSeconds = 15);
+    Q_INVOKABLE void showAddOnFiltersDialog();
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();

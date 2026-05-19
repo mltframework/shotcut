@@ -410,6 +410,7 @@ private slots:
     void on_actionBackupSave_triggered();
     void on_actionPauseAfterSeek_triggered(bool checked);
     void on_actionWhatsThis_triggered();
+    void on_actionLeaveSafeMode_triggered();
 };
 
 #define MAIN MainWindow::singleton()

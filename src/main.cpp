@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 #include <framework/mlt_log.h>
 #include <QCommandLineParser>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QProcess>
 #include <QQuickStyle>
@@ -48,6 +49,8 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 #endif
 
 static constexpr int kMaxCacheCount = 5000;
+constexpr const auto kWatchdogTimeoutMs = 30000;
+constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
@@ -165,6 +168,13 @@ public:
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
+#ifdef QT_DEBUG
+        QCommandLineOption experimentalOption(
+            "experimental",
+            QCoreApplication::translate("main",
+                                        "Enable experimental features (add-on filters menu)."));
+        parser.addOption(experimentalOption);
+#endif
         QCommandLineOption clearRecentOption("clear-recent",
                                              QCoreApplication::translate("main",
                                                                          "Clear Recent on Exit"));
@@ -232,6 +242,11 @@ public:
 #endif
         setProperty("noupgrade", parser.isSet(noupgradeOption));
         setProperty("clearRecent", parser.isSet(clearRecentOption));
+#ifdef QT_DEBUG
+        setProperty("experimental", parser.isSet(experimentalOption));
+#else
+        setProperty("experimental", false);
+#endif
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
             ShotcutSettings::setAppDataForSession(appDirArg);
@@ -395,9 +410,7 @@ int main(int argc, char **argv)
 
     Application a(argc, argv);
     int result = EXIT_SUCCESS;
-#ifdef Q_OS_WIN
-    if (::qEnvironmentVariableIsSet("QSG_RHI_BACKEND")) {
-#endif
+    if (::qEnvironmentVariableIsSet(kWatchdogEnvVar)) {
         QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
 
         // Log some basic info.
@@ -405,7 +418,7 @@ int main(int argc, char **argv)
 #if defined(Q_OS_WIN)
         LOG_INFO() << "Windows version" << QSysInfo::productVersion();
 #elif defined(Q_OS_MAC)
-    LOG_INFO() << "macOS version" << QSysInfo::productVersion();
+        LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
     if (Settings.drawMethod() == QSGRendererInterface::Vulkan)
         QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
@@ -501,23 +514,56 @@ int main(int argc, char **argv)
             result = EXIT_SUCCESS;
         }
 
-#ifdef Q_OS_WIN
-    } else { // if (::qEnvironmentVariableIsSet("QSG_RHI_BACKEND"))
+    } else {
         // Run as a parent process to check if the child crashes on startup
-        QProcess *child = new QProcess;
+        QProcess child;
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
-        ::qputenv("QSG_RHI_BACKEND", "d3d11");
-        child->start(a.applicationFilePath(), args, QIODevice::NotOpen);
-        child->waitForFinished();
-        if (QProcess::CrashExit == child->exitStatus() || child->exitCode()) {
+        ::qputenv(kWatchdogEnvVar, "1");
+        child.setProcessChannelMode(QProcess::MergedChannels);
+        QObject::connect(&child, &QProcess::readyRead, [&child]() {
+            const QByteArray output = child.readAll();
+            if (!output.isEmpty()) {
+                ::fputs(output.constData(), stdout);
+                ::fflush(stdout);
+            }
+        });
+
+        auto runChildAndWait = [&](const char *backend) {
+#ifdef Q_OS_WIN
+            ::qputenv("QSG_RHI_BACKEND", backend);
+#else
+            Q_UNUSED(backend);
+#endif
+            QElapsedTimer timer;
+            timer.start();
+            child.start(a.applicationFilePath(), args, QIODevice::ReadOnly);
+            if (!child.waitForStarted()) {
+                LOG_WARNING() << "child process failed to start";
+                return timer.elapsed();
+            }
+            QEventLoop loop;
+            QObject::connect(&child, &QProcess::finished, &loop, &QEventLoop::quit);
+            loop.exec();
+            // Flush any output not yet delivered via readyRead.
+            const QByteArray remaining = child.readAll();
+            if (!remaining.isEmpty()) {
+                ::fputs(remaining.constData(), stdout);
+                ::fflush(stdout);
+            }
+            return timer.elapsed();
+        };
+
+        const qint64 firstRunElapsedMs = runChildAndWait("d3d11");
+        const bool firstRunFailed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
+        if (firstRunFailed && firstRunElapsedMs <= kWatchdogTimeoutMs) {
             LOG_WARNING() << "child process failed, restarting in OpenGL mode";
-            ::qputenv("QSG_RHI_BACKEND", "opengl");
-            child->start(a.applicationFilePath(), args, QIODevice::NotOpen);
+            Settings.setSafeMode(true);
+            Settings.sync();
+            runChildAndWait("opengl");
         }
     }
-#endif
 
     return result;
 }

@@ -1129,9 +1129,20 @@ QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
 }
+
 void ShotcutSettings::setFilterFavorite(const QString &filterName, const QString &value)
 {
     settings.setValue("filter/favorite/" + filterName, value);
+}
+
+QStringList ShotcutSettings::addOnFilterServices() const
+{
+    return settings.value("filter/addOnServices").toStringList();
+}
+
+void ShotcutSettings::setAddOnFilterServices(const QStringList &services)
+{
+    settings.setValue("filter/addOnServices", services);
 }
 
 double ShotcutSettings::audioInDuration() const
@@ -1269,6 +1280,16 @@ int ShotcutSettings::drawMethod() const
 void ShotcutSettings::setDrawMethod(int i)
 {
     settings.setValue("opengl", i);
+}
+
+bool ShotcutSettings::safeMode() const
+{
+    return settings.value("safeMode", false).toBool();
+}
+
+void ShotcutSettings::setSafeMode(bool value)
+{
+    settings.setValue("safeMode", value);
 }
 
 bool ShotcutSettings::noUpgrade() const

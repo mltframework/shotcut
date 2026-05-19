@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "filtercontroller.h"
 
 #include "Logger.h"
+#include "addonmetadataparser.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlfilter.h"
@@ -27,10 +28,53 @@
 #include "shotcut_mlt_properties.h"
 
 #include <MltLink.h>
+#include <QApplication>
 #include <QDir>
+#include <QFileInfo>
 #include <QQmlComponent>
 #include <QQmlEngine>
 #include <QTimerEvent>
+
+static bool isExperimentalEnabled()
+{
+    return qApp && qApp->property("experimental").toBool();
+}
+
+static QString addOnServiceFromObjectName(const QString &objectName)
+{
+    static const QString kPrefix = QStringLiteral("addOn.");
+    if (!objectName.startsWith(kPrefix))
+        return QString();
+
+    return objectName.mid(kPrefix.size());
+}
+
+static QString addOnKeywords(const AddOnFilterDescriptor &descriptor)
+{
+    QStringList keywords;
+    keywords << descriptor.service << QStringLiteral("#addon");
+
+    const bool supportsRgba = descriptor.imageFormats.contains(QStringLiteral("rgba"))
+                              || descriptor.imageFormats.contains(QStringLiteral("rgba64"));
+    const bool supportsYuv = descriptor.imageFormats.contains(QStringLiteral("yuv422"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+    const bool supportsTenBit = descriptor.imageFormats.contains(QStringLiteral("rgba64"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+
+    if (supportsRgba)
+        keywords << QStringLiteral("#rgba");
+    if (supportsYuv)
+        keywords << QStringLiteral("#yuv");
+    if (supportsTenBit)
+        keywords << QStringLiteral("#10bit");
+
+    return keywords.join(QLatin1Char(' '));
+}
 
 FilterController::FilterController(QObject *parent)
     : QObject(parent)
@@ -39,6 +83,10 @@ FilterController::FilterController(QObject *parent)
     , m_currentFilterIndex(QmlFilter::NoCurrentFilter)
 {
     startTimer(0);
+    QObject::connect(&m_addOnServiceModel,
+                     &AddOnServiceModel::enabledServicesChanged,
+                     this,
+                     &FilterController::handleAddOnServicesChanged);
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel,
             SIGNAL(modelAboutToBeReset()),
@@ -60,6 +108,33 @@ FilterController::FilterController(QObject *parent)
             SIGNAL(duplicateAddFailed(int)),
             this,
             SLOT(handleAttachDuplicateFailed(int)));
+}
+
+FilterController::~FilterController()
+{
+    delete m_addOnTempDir;
+}
+
+void FilterController::handleAddOnServicesChanged()
+{
+    auto *source = static_cast<InternalMetadataModel *>(m_metadataModel.sourceModel());
+    if (!source)
+        return;
+
+    // Remove previously generated add-on metadata entries.
+    for (int i = source->list().size() - 1; i >= 0; --i) {
+        QmlMetadata *meta = source->get(i);
+        if (meta && meta->objectName().startsWith(QStringLiteral("addOn."))) {
+            source->remove(i);
+        }
+    }
+
+    if (!isExperimentalEnabled())
+        return;
+
+    // Rebuild from current enabled service list.
+    QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+    loadAddOnFilterMetadata(mltFilters.data());
 }
 
 void FilterController::loadFilterMetadata()
@@ -122,6 +197,154 @@ void FilterController::loadFilterMetadata()
             }
         }
     };
+
+    if (isExperimentalEnabled())
+        loadAddOnFilterMetadata(mltFilters.data());
+}
+
+void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
+{
+    if (!mltFilters || !mltFilters->is_valid())
+        return;
+
+    m_addOnDescriptors.clear();
+
+    const QStringList services = m_addOnServiceModel.enabledServices();
+    for (const auto &service : services) {
+        if (!mltFilters->get_data(service.toLatin1().constData())) {
+            LOG_WARNING() << "Add-on service unavailable" << service;
+            continue;
+        }
+
+        QScopedPointer<Mlt::Properties> mltMetadata(
+            MLT.repository()->metadata(mlt_service_filter_type, service.toLatin1().constData()));
+        if (!mltMetadata || !mltMetadata->is_valid()) {
+            LOG_WARNING() << "Failed to query metadata for add-on service" << service;
+            continue;
+        }
+
+        const AddOnFilterDescriptor descriptor = AddOnMetadataParser::parse(service,
+                                                                            mltMetadata.data());
+        LOG_DEBUG() << "add-on metadata" << service << "propertyCount"
+                    << descriptor.parameters.size();
+        m_addOnDescriptors[service] = descriptor;
+
+        auto meta = new QmlMetadata;
+        meta->setType(QmlMetadata::Filter);
+        meta->setObjectName(QStringLiteral("addOn.%1").arg(service));
+        meta->set_mlt_service(service);
+        meta->setName(descriptor.title);
+        meta->setProperty("keywords", addOnKeywords(descriptor));
+        meta->loadSettings();
+        meta->setIsAudio(descriptor.isAudio);
+
+        QStringList keyframeableProperties;
+        for (const auto &parameter : descriptor.parameters) {
+            if (!parameter.supportsKeyframes)
+                continue;
+
+            auto *keyParam = new QmlKeyframesParameter(meta->keyframes());
+            const QString paramType = parameter.type.trimmed().toLower();
+            const QString displayName = parameter.title.isEmpty() ? parameter.name
+                                                                  : parameter.title;
+            keyParam->setProperty("name", displayName);
+            keyParam->setProperty("property", parameter.name);
+
+            const bool isNumericType = paramType == QStringLiteral("integer")
+                                       || paramType == QStringLiteral("float");
+            const bool isColorType = paramType == QStringLiteral("color");
+
+            keyParam->setProperty("isCurve", isNumericType);
+            keyParam->setProperty("isColor", isColorType);
+            if (!parameter.unit.isEmpty())
+                keyParam->setProperty("units", parameter.unit);
+
+            if (isNumericType) {
+                bool okMin = false;
+                bool okMax = false;
+                const double minValue = parameter.minimum.toDouble(&okMin);
+                const double maxValue = parameter.maximum.toDouble(&okMax);
+                keyParam->setProperty("minimum", okMin ? minValue : 0.0);
+                keyParam->setProperty("maximum", okMax ? maxValue : 100.0);
+            }
+
+            auto parameterList = meta->keyframes()->parameters();
+            if (parameterList.append)
+                parameterList.append(&parameterList, keyParam);
+
+            keyframeableProperties << parameter.name;
+        }
+
+        if (!keyframeableProperties.isEmpty()) {
+            meta->keyframes()->setProperty("allowAnimateIn", true);
+            meta->keyframes()->setProperty("allowAnimateOut", true);
+            meta->keyframes()->setProperty("simpleProperties", keyframeableProperties);
+        }
+
+        addMetadata(meta);
+    }
+}
+
+bool FilterController::ensureAddOnTempDir()
+{
+    if (!m_addOnTempDir) {
+        m_addOnTempDir = new QTemporaryDir(QDir::tempPath() + "/shotcut-addon-XXXXXX");
+    }
+    if (!m_addOnTempDir || !m_addOnTempDir->isValid()) {
+        LOG_WARNING() << "Add-on temporary directory is invalid";
+        return false;
+    }
+    return true;
+}
+
+bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
+{
+    if (!meta)
+        return false;
+
+    const QString service = addOnServiceFromObjectName(meta->objectName());
+    if (service.isEmpty())
+        return true;
+
+    if (!ensureAddOnTempDir())
+        return false;
+
+    const QDir tempDir(m_addOnTempDir->path());
+    const QString cachedFileName = service + QStringLiteral("_ui.qml");
+    if (QFileInfo::exists(tempDir.filePath(cachedFileName))) {
+        meta->setPath(tempDir);
+        meta->setQmlFileName(cachedFileName);
+        return true;
+    }
+
+    AddOnFilterDescriptor descriptor;
+    const auto it = m_addOnDescriptors.constFind(service);
+    if (it != m_addOnDescriptors.constEnd()) {
+        descriptor = it.value();
+    } else {
+        LOG_WARNING() << "No cached descriptor for add-on service" << service
+                      << "- reloading metadata";
+
+        QScopedPointer<Mlt::Properties> mltMetadata(
+            MLT.repository()->metadata(mlt_service_filter_type, service.toLatin1().constData()));
+        if (!mltMetadata || !mltMetadata->is_valid()) {
+            LOG_WARNING() << "Failed to query metadata for add-on service" << service;
+            return false;
+        }
+
+        descriptor = AddOnMetadataParser::parse(service, mltMetadata.data());
+        m_addOnDescriptors.insert(service, descriptor);
+    }
+
+    QString generationError;
+    if (!m_addOnQmlGenerator.generate(descriptor, tempDir, cachedFileName, &generationError)) {
+        LOG_WARNING() << "Failed to generate add-on UI QML for" << service << generationError;
+        return false;
+    }
+
+    meta->setPath(tempDir);
+    meta->setQmlFileName(cachedFileName);
+    return true;
 }
 
 QmlMetadata *FilterController::metadata(const QString &id)
@@ -256,6 +479,12 @@ void FilterController::setCurrentFilter(int attachedIndex)
     QmlMetadata *meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter *filter = nullptr;
     if (meta) {
+        if (meta->objectName().startsWith(QStringLiteral("addOn.")) && !ensureAddOnFilterQml(meta)) {
+            emit statusChanged(tr("Failed to prepare add-on filter user interface."));
+            emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
+            m_currentFilter.reset();
+            return;
+        }
         emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
         std::unique_ptr<Mlt::Service> service(m_attachedModel.getService(m_currentFilterIndex));
         if (!service || !service->is_valid())

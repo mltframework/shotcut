@@ -61,7 +61,7 @@ OPENCV_CONTRIB_HEAD=0
 OPENCV_CONTRIB_REVISION="4.12.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=0
-LIBSPATIALAUDIO_REVISION="0.4.0"
+LIBSPATIALAUDIO_REVISION="origin/shotcut"
 ENABLE_LADSPA=1
 LADSPA_HEAD=0
 LADSPA_REVISION="origin/shotcut"
@@ -453,7 +453,7 @@ function set_globals {
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
   REPOLOCS[15]="https://github.com/opencv/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
-  REPOLOCS[17]="https://github.com/videolabs/libspatialaudio.git"
+  REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"

@@ -319,6 +319,7 @@
     <addaction name="actionAudioVideoDevice"/>
     <addaction name="actionClearRecentOnExit"/>
     <addaction name="separator"/>
+    <addaction name="actionLeaveSafeMode"/>
     <addaction name="actionReset"/>
    </widget>
    <addaction name="menuFile"/>
@@ -1565,6 +1566,10 @@
    </property>
    <property name="toolTip">
     <string notr="true">Vulkan</string>
+  </action>
+  <action name="actionLeaveSafeMode">
+   <property name="text">
+    <string>Leave Safe Mode</string>
    </property>
   </action>
  </widget>

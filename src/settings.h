@@ -253,6 +253,8 @@ public:
     // filter
     QString filterFavorite(const QString &filterName);
     void setFilterFavorite(const QString &filterName, const QString &value);
+    QStringList addOnFilterServices() const;
+    void setAddOnFilterServices(const QStringList &services);
     double audioInDuration() const;
     void setAudioInDuration(double);
     double audioOutDuration() const;
@@ -284,6 +286,8 @@ public:
     // general continued
     int drawMethod() const;
     void setDrawMethod(int);
+    bool safeMode() const;
+    void setSafeMode(bool value);
     bool noUpgrade() const;
     void setNoUpgrade(bool value);
     bool checkUpgradeAutomatic();

@@ -50,10 +50,11 @@ ScrubBar::ScrubBar(QWidget *parent)
 void ScrubBar::setScale(int maximum)
 {
     if (!m_timecodeWidth) {
-        const int fontSize = font().pointSize()
-                             - (font().pointSize() > 10 ? 2 : (font().pointSize() > 8 ? 1 : 0));
-        setFont(QFont(font().family(), fontSize * devicePixelRatioF()));
-        m_timecodeWidth = fontMetrics().horizontalAdvance("00:00:00:00") / devicePixelRatioF();
+        auto font = QWidget::font();
+        const int fontSize = font.pointSize()
+                             - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
+        font.setPointSizeF(devicePixelRatioF() * fontSize);
+        m_timecodeWidth = QFontMetrics(font).horizontalAdvance("00:00:00:00") / devicePixelRatioF();
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
@@ -283,8 +284,10 @@ void ScrubBar::updatePixmap()
     m_pixmap = QPixmap(l_width, l_height);
     m_pixmap.fill(palette().window().color());
     QPainter p(&m_pixmap);
-    p.setFont(font());
-    const int markerHeight = fontMetrics().ascent() + 2 * ratio;
+    QFont font(QWidget::font());
+    font.setPointSizeF(font.pointSizeF() * ratio);
+    p.setFont(font);
+    const int markerHeight = QFontMetrics(font).ascent() + 2;
     QPen pen;
 
     if (!isEnabled()) {
