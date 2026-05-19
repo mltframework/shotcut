@@ -518,8 +518,24 @@ int main(int argc, char **argv)
         if (!args.isEmpty())
             args.removeFirst();
         ::qputenv("QSG_RHI_BACKEND", "d3d11");
-        child->start(a.applicationFilePath(), args, QIODevice::NotOpen);
-        child->waitForFinished();
+        child->setProcessChannelMode(QProcess::MergedChannels);
+        child->start(a.applicationFilePath(), args, QIODevice::ReadOnly);
+        QObject::connect(child, &QProcess::readyRead, [child]() {
+            const QByteArray output = child->readAll();
+            if (!output.isEmpty()) {
+                ::fputs(output.constData(), stdout);
+                ::fflush(stdout);
+            }
+        });
+        QEventLoop loop;
+        QObject::connect(child, &QProcess::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+        // Flush any output not yet delivered via readyRead
+        const QByteArray remaining = child->readAll();
+        if (!remaining.isEmpty()) {
+            ::fputs(remaining.constData(), stdout);
+            ::fflush(stdout);
+        }
         if (QProcess::CrashExit == child->exitStatus() || child->exitCode()) {
             LOG_WARNING() << "child process failed, restarting in OpenGL mode";
             ::qputenv("QSG_RHI_BACKEND", "opengl");
