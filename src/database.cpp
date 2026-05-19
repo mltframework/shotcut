@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,18 @@ QImage Database::getThumbnail(const QString &hash)
 {
     QString filePath = thumbnailsDir().filePath(toFileName(hash));
     ::utime(filePath.toUtf8().constData(), nullptr);
-    return QImage(filePath);
+    // Read data and close the file explicitly before constructing QImage.
+    // On Windows, QImage(filePath) may memory-map the file (MapViewOfFile),
+    // keeping a handle open. If putThumbnail() later tries to overwrite the
+    // same file, Windows will reject it while any mapping is still active.
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly))
+        return QImage();
+    const QByteArray data = file.readAll();
+    file.close();
+    QImage image;
+    image.loadFromData(data);
+    return image;
 }
 
 void Database::deleteOldThumbnails()
