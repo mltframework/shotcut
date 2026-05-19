@@ -845,6 +845,66 @@ void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
     settings.setValue("player/pauseAfterSeek", b);
 }
 
+bool ShotcutSettings::playerHdrPreview() const
+{
+    return settings.value("player/hdrPreview", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreview(bool b)
+{
+    settings.setValue("player/hdrPreview", b);
+}
+
+QRect ShotcutSettings::playerHdrPreviewGeometry() const
+{
+    return settings.value("player/hdrPreviewGeometry").toRect();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewGeometry(const QRect &r)
+{
+    settings.setValue("player/hdrPreviewGeometry", r);
+}
+
+bool ShotcutSettings::playerHdrPreviewFullScreen() const
+{
+    return settings.value("player/hdrPreviewFullScreen", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewFullScreen(bool b)
+{
+    settings.setValue("player/hdrPreviewFullScreen", b);
+}
+
+int ShotcutSettings::playerHdrDisplayPeakNits() const
+{
+    return settings.value("player/hdrDisplayPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrDisplayPeakNits(int nits)
+{
+    settings.setValue("player/hdrDisplayPeakNits", nits);
+}
+
+int ShotcutSettings::playerHdrContentPeakNits() const
+{
+    return settings.value("player/hdrContentPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrContentPeakNits(int nits)
+{
+    settings.setValue("player/hdrContentPeakNits", nits);
+}
+
+bool ShotcutSettings::playerHdrToneMapping() const
+{
+    return settings.value("player/hdrToneMapping", true).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrToneMapping(bool b)
+{
+    settings.setValue("player/hdrToneMapping", b);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

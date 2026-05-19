@@ -240,7 +240,48 @@
         </property>
        </widget>
       </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="dynamicRangeLabel">
+        <property name="text">
+         <string>Dynamic range</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>:</string>
+        </property>
+       </widget>
+      </item>
       <item row="5" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_dr">
+        <item>
+         <widget class="QLabel" name="dynamicRangeValueLabel">
+          <property name="text">
+           <string notr="true">SDR</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_dr">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="3">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="editButton">

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -735,6 +735,8 @@ void PlaylistModel::load()
     }
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
+    if (m_playlist->property_exists(kShotcutColorTransfer))
+        MLT.setColorTrc(QString::fromLatin1(m_playlist->get(kShotcutColorTransfer)));
     if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
         refreshThumbnails();
     emit loaded();
@@ -871,6 +873,7 @@ void PlaylistModel::createIfNeeded()
         m_playlist = new Mlt::Playlist(MLT.profile());
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
+        m_playlist->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
         emit created();
     }
 }
@@ -924,6 +927,7 @@ void PlaylistModel::setPlaylist(Mlt::Playlist &playlist)
         }
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
+        m_playlist->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
         if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
             refreshThumbnails();
         emit loaded();

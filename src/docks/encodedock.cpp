@@ -544,6 +544,7 @@ void EncodeDock::onProducerOpened()
     }
     ui->otherTipLabel->setText(tr("You must enter numeric values using '%1' as the decimal point.")
                                    .arg(MLT.decimalPoint()));
+    updateHdrMetaButton();
 }
 
 void EncodeDock::loadPresets()
@@ -835,6 +836,32 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
+                // Inject HDR10 metadata when the source is PQ.
+                if (MLT.colorTrc() == QLatin1String("smpte2084")) {
+                    if ((m_hdrMaxCll > 0 || m_hdrMaxFall > 0)
+                        && !x265params.contains(QLatin1String("max-cll="))) {
+                        x265params = QStringLiteral("max-cll=%1,%2:%3")
+                                         .arg(m_hdrMaxCll)
+                                         .arg(m_hdrMaxFall)
+                                         .arg(x265params);
+                    }
+                    if ((m_hdrMaxLuminance > 0.0 || m_hdrMinLuminance > 0.0)
+                        && !x265params.contains(QLatin1String("master-display="))) {
+                        const QString primaries
+                            = (m_hdrMasterPreset == 1)
+                                  // Display P3 (D65)
+                                  ? QStringLiteral(
+                                      "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)")
+                                  // BT.2020 (default)
+                                  : QStringLiteral(
+                                      "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)");
+                        x265params = QStringLiteral("master-display=%1L(%2,%3):%4")
+                                         .arg(primaries)
+                                         .arg(qRound(m_hdrMaxLuminance * 10000.0))
+                                         .arg(qRound(m_hdrMinLuminance * 10000.0))
+                                         .arg(x265params);
+                    }
+                }
                 p->set("x265-params", x265params.toUtf8().constData());
             } else if (vcodec == "libsvtav1") {
                 QString bitrate_text = ui->videoBitrateCombo->currentText();
@@ -900,6 +927,31 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 QString origParams = QString::fromUtf8(p->get("svtav1-params"));
                 if (!origParams.isEmpty())
                     encParams << origParams;
+                // Inject HDR10 mastering metadata into svtav1-params when the source is PQ.
+                if ((m_hdrMaxCll > 0 || m_hdrMaxFall > 0)
+                    && MLT.colorTrc() == QLatin1String("smpte2084")) {
+                    const bool hasCll = encParams.filter(QLatin1String("max-cll=")).isEmpty()
+                                        && !origParams.contains(QLatin1String("max-cll="));
+                    if (hasCll)
+                        encParams << QStringLiteral("max-cll=%1,%2")
+                                         .arg(m_hdrMaxCll)
+                                         .arg(m_hdrMaxFall);
+                    const bool hasMd
+                        = encParams.filter(QLatin1String("mastering-display=")).isEmpty()
+                          && !origParams.contains(QLatin1String("mastering-display="));
+                    if (hasMd) {
+                        const QString primaries
+                            = (m_hdrMasterPreset == 1)
+                                  ? QStringLiteral(
+                                      "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)")
+                                  : QStringLiteral(
+                                      "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)");
+                        encParams << QStringLiteral("mastering-display=%1L(%2,%3)")
+                                         .arg(primaries)
+                                         .arg(qRound(m_hdrMaxLuminance * 10000.0))
+                                         .arg(qRound(m_hdrMinLuminance * 10000.0));
+                    }
+                }
 
                 p->set("svtav1-params", encParams.join(':').toUtf8().constData());
             } else if (vcodec.contains("nvenc")) {
@@ -943,6 +995,32 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
+                // Inject HDR10 mastering metadata for hevc_nvenc when the source is PQ.
+                if (vcodec == "hevc_nvenc" && (m_hdrMaxCll > 0 || m_hdrMaxFall > 0)
+                    && MLT.colorTrc() == QLatin1String("smpte2084")) {
+                    if (!p->get("max_cll"))
+                        p->set("max_cll",
+                               QStringLiteral("%1,%2")
+                                   .arg(m_hdrMaxCll)
+                                   .arg(m_hdrMaxFall)
+                                   .toUtf8()
+                                   .constData());
+                    if (!p->get("master_display")) {
+                        const QString primaries
+                            = (m_hdrMasterPreset == 1)
+                                  ? QStringLiteral(
+                                      "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)")
+                                  : QStringLiteral(
+                                      "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)");
+                        p->set("master_display",
+                               QStringLiteral("%1L(%2,%3)")
+                                   .arg(primaries)
+                                   .arg(qRound(m_hdrMaxLuminance * 10000.0))
+                                   .arg(qRound(m_hdrMinLuminance * 10000.0))
+                                   .toUtf8()
+                                   .constData());
+                    }
+                }
             } else if (vcodec.endsWith("_amf")) {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
@@ -1185,6 +1263,11 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             if (ui->rangeComboBox->currentIndex()) {
                 setIfNotSet(p, "color_range", "pc");
             }
+            // Propagate HDR transfer characteristics to the encoder when the
+            // source (or profile) carries them.
+            const QString &sourceTrc = MLT.colorTrc();
+            if (!sourceTrc.isEmpty())
+                setIfNotSet(p, "color_trc", sourceTrc.toLatin1().constData());
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
@@ -1225,15 +1308,19 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
             || processingMode == ShotcutSettings::Linear10Cpu
             || processingMode == ShotcutSettings::Linear10GpuCpu) {
             if (!p->property_exists("mlt_image_format")) {
-                if (::qstrcmp(p->get("color_trc"), "arib-std-b67"))
-                    node.setAttribute("mlt_image_format", "rgba64");
+                const char *trc = p->get("color_trc");
+                const bool isHlg = !::qstrcmp(trc, "arib-std-b67");
+                const bool isPq = !::qstrcmp(trc, "smpte2084");
+                if (isHlg || isPq)
+                    node.setAttribute("mlt_image_format", "yuv420p10");
                 else
-                    node.setAttribute("mlt_image_format", "yuv444p10");
+                    node.setAttribute("mlt_image_format", "rgba64");
             }
         }
         if ((processingMode == ShotcutSettings::Linear10Cpu
              || processingMode == ShotcutSettings::Linear10GpuCpu)
-            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")) {
+            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")
+            && ::qstrcmp(p->get("color_trc"), "smpte2084")) {
             if (!p->property_exists("mlt_color_trc"))
                 node.setAttribute("mlt_color_trc", "linear");
 
@@ -1872,6 +1959,17 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool res
         ui->dualPassCheckbox->setEnabled(true);
     }
     on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+    updateHdrMetaButton();
+}
+
+void EncodeDock::updateHdrMetaButton()
+{
+    const QString &vcodec = ui->videoCodecCombo->currentText();
+    const bool codecSupportsHdrMeta = (vcodec == QLatin1String("libx265")
+                                       || vcodec == QLatin1String("libsvtav1")
+                                       || vcodec == QLatin1String("hevc_nvenc"));
+    const bool sourceIsPq = (MLT.colorTrc() == QLatin1String("smpte2084"));
+    ui->hdrMetaButton->setVisible(codecSupportsHdrMeta && sourceIsPq);
 }
 
 static double getBufferSize(Mlt::Properties &preset, const char *property)
@@ -3056,6 +3154,72 @@ void EncodeDock::on_coverArtButton_clicked()
     if (!path.isEmpty()) {
         ui->coverArtLineEdit->setText(path);
         Settings.setOpenPath(QFileInfo(path).path());
+    }
+}
+
+void EncodeDock::on_hdrMetaButton_clicked()
+{
+    QDialog dialog(this);
+    dialog.setWindowTitle(tr("HDR Metadata"));
+
+    auto *form = new QFormLayout;
+    form->setLabelAlignment(Qt::AlignRight);
+
+    auto *maxCllSpin = new QSpinBox;
+    maxCllSpin->setRange(0, 10000);
+    maxCllSpin->setValue(m_hdrMaxCll);
+    maxCllSpin->setSpecialValueText(tr("Not set"));
+    maxCllSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxCllSpin->setToolTip(
+        tr("Maximum Content Light Level (MaxCLL): the brightest single pixel in the entire clip"));
+    form->addRow(tr("MaxCLL"), maxCllSpin);
+
+    auto *maxFallSpin = new QSpinBox;
+    maxFallSpin->setRange(0, 10000);
+    maxFallSpin->setValue(m_hdrMaxFall);
+    maxFallSpin->setSpecialValueText(tr("Not set"));
+    maxFallSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxFallSpin->setToolTip(tr("Maximum Frame-Average Light Level (MaxFALL): the highest average "
+                               "brightness of any single frame"));
+    form->addRow(tr("MaxFALL"), maxFallSpin);
+
+    auto *primaryCombo = new QComboBox;
+    primaryCombo->addItem(tr("BT.2020 / Rec.2020"));
+    primaryCombo->addItem(tr("Display P3 (D65)"));
+    primaryCombo->setCurrentIndex(m_hdrMasterPreset);
+    form->addRow(tr("Color primaries"), primaryCombo);
+
+    auto *maxLumSpin = new QSpinBox;
+    maxLumSpin->setRange(1, 10000);
+    maxLumSpin->setValue(m_hdrMaxLuminance);
+    maxLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxLumSpin->setToolTip(tr("Display mastering maximum luminance"));
+    form->addRow(tr("Display max luminance"), maxLumSpin);
+
+    auto *minLumSpin = new QDoubleSpinBox;
+    minLumSpin->setRange(0.0, 10.0);
+    minLumSpin->setDecimals(4);
+    minLumSpin->setSingleStep(0.001);
+    minLumSpin->setValue(m_hdrMinLuminance);
+    minLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    minLumSpin->setToolTip(tr("Display mastering minimum luminance"));
+    form->addRow(tr("Display min luminance"), minLumSpin);
+
+    auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    auto *vbox = new QVBoxLayout;
+    vbox->addLayout(form);
+    vbox->addWidget(buttons);
+    dialog.setLayout(vbox);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        m_hdrMaxCll = maxCllSpin->value();
+        m_hdrMaxFall = maxFallSpin->value();
+        m_hdrMasterPreset = primaryCombo->currentIndex();
+        m_hdrMaxLuminance = maxLumSpin->value();
+        m_hdrMinLuminance = minLumSpin->value();
     }
 }
 

@@ -109,6 +109,7 @@ public:
     static bool isChromiumAvailable();
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool openUrl(const QUrl &url);
+    static bool cpuHasAVX2();
 };
 
 #endif // UTIL_H

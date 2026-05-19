@@ -55,6 +55,7 @@ class MarkersDock;
 class NotesDock;
 class SubtitlesDock;
 class ScreenCapture;
+class HdrPreviewWindow;
 
 class MainWindow : public QMainWindow
 {
@@ -85,6 +86,7 @@ public:
     QString fileName() const { return m_currentFile; }
     bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
+    Player *player() const { return m_player; }
 
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
@@ -224,6 +226,7 @@ private:
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
     ScreenCapture *m_screenCapture;
+    HdrPreviewWindow *m_hdrPreviewWindow{nullptr};
 
 public slots:
     bool isCompatibleWithProcessingMode(MltXmlChecker &checker, QString &fileName, bool &converted);
@@ -308,6 +311,7 @@ private slots:
     void on_actionBicubic_triggered(bool checked);
     void on_actionHyper_triggered(bool checked);
     void on_actionJack_triggered(bool checked);
+    void onHdrPreviewToggled(bool checked);
     void onExternalTriggered(QAction *);
     void onDecklinkGammaTriggered(QAction *);
     void onKeyerTriggered(QAction *);

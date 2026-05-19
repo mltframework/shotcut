@@ -22,6 +22,7 @@
 #include <QByteArray>
 #include <QKeySequence>
 #include <QObject>
+#include <QRect>
 #include <QSettings>
 #include <QStringList>
 #include <QThread>
@@ -192,6 +193,18 @@ public:
     void setPlayerAudioDriver(const QString &s);
     bool playerPauseAfterSeek() const;
     void setPlayerPauseAfterSeek(bool);
+    bool playerHdrPreview() const;
+    void setPlayerHdrPreview(bool);
+    QRect playerHdrPreviewGeometry() const;
+    void setPlayerHdrPreviewGeometry(const QRect &);
+    bool playerHdrPreviewFullScreen() const;
+    void setPlayerHdrPreviewFullScreen(bool);
+    int playerHdrDisplayPeakNits() const;
+    void setPlayerHdrDisplayPeakNits(int);
+    int playerHdrContentPeakNits() const;
+    void setPlayerHdrContentPeakNits(int);
+    bool playerHdrToneMapping() const;
+    void setPlayerHdrToneMapping(bool);
 
     // playlist
     QString playlistThumbnails() const;

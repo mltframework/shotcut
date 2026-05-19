@@ -286,10 +286,6 @@ public:
 
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
-#elif !defined(Q_OS_MAC)
-        if (Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()) {
-            ::qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
-        }
 #endif
         // Load translations
         QString locale = Settings.language();
@@ -385,6 +381,8 @@ int main(int argc, char **argv)
         qputenv("QT_MEDIA_BACKEND", "windows");
     if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
         qputenv("QT_QPA_PLATFORM", "windows:altgr");
+#elif defined(BUILD_MINIMAL_MEDIA_BACKEND)
+        qputenv("QT_MEDIA_BACKEND", "minimal");
 #else
         ;
 #endif
@@ -407,17 +405,7 @@ int main(int argc, char **argv)
         }
     }
     removeMacosTabBar();
-#endif
-
-#if defined(Q_OS_WIN)
-    // Windows can use Direct3D or OpenGL
-#elif defined(Q_OS_MAC)
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::Metal);
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-#else
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
-    QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-    QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
 
     Application a(argc, argv);
@@ -432,12 +420,35 @@ int main(int argc, char **argv)
 #elif defined(Q_OS_MAC)
         LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
+        if (Settings.drawMethod() == QSGRendererInterface::Vulkan)
+            QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
+        else if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan"))
+            QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         LOG_INFO() << "Linux version" << QSysInfo::productVersion();
-        ;
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" << a.applicationDirPath();
+        switch (QQuickWindow::graphicsApi()) {
+        case QSGRendererInterface::Direct3D11:
+            LOG_INFO() << "graphics backend = Direct3D 11";
+            break;
+        case QSGRendererInterface::Direct3D12:
+            LOG_INFO() << "graphics backend = Direct3D 12";
+            break;
+        case QSGRendererInterface::Metal:
+            LOG_INFO() << "graphics backend = Metal";
+            break;
+        case QSGRendererInterface::OpenGL:
+            LOG_INFO() << "graphics backend = OpenGL";
+            break;
+        case QSGRendererInterface::Vulkan:
+            LOG_INFO() << "graphics backend = Vulkan";
+            break;
+        default:
+            LOG_INFO() << "graphics backend = " << QQuickWindow::graphicsApi();
+            break;
+        }
         Settings.log();
 
         // Expire old items from the qmlcache
@@ -475,9 +486,7 @@ int main(int argc, char **argv)
         a.mainWindow = &MAIN;
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         a.mainWindow->setProperty("windowOpacity", 0.0);
-#endif
         a.mainWindow->show();
         a.processEvents();
         a.mainWindow->setFullScreen(a.isFullScreen);
@@ -497,12 +506,6 @@ int main(int argc, char **argv)
         if (EXIT_RESTART == result || EXIT_RESET == result) {
             LOG_DEBUG() << "restarting app";
             ::qunsetenv("QT_QUICK_CONTROLS_CONF"); // See MainWindow::changeTheme()
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-            ::qputenv("LIBGL_ALWAYS_SOFTWARE",
-                      Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
-                          ? "1"
-                          : "0");
-#endif
             QProcess *restart = new QProcess;
             QStringList args = a.arguments();
             if (!args.isEmpty())

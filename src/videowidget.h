@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,29 @@
 #include "settings.h"
 #include "sharedframe.h"
 
+enum class HdrTransfer { SDR = 0, HLG = 1, PQ = 2 };
+
+inline HdrTransfer hdrTransferFromTrc(const QString &trc)
+{
+    if (trc == QLatin1String("arib-std-b67"))
+        return HdrTransfer::HLG;
+    if (trc == QLatin1String("smpte2084"))
+        return HdrTransfer::PQ;
+    return HdrTransfer::SDR;
+}
+
+#include <memory>
+#include <QAbstractVideoBuffer>
 #include <QMutex>
+#include <QPointer>
 #include <QQuickWidget>
 #include <QRectF>
 #include <QSemaphore>
 #include <QThread>
 #include <QTimer>
+#include <QVideoFrame>
+#include <QVideoFrameFormat>
+#include <QVideoSink>
 
 class QmlFilter;
 class QmlMetadata;
@@ -38,7 +55,6 @@ namespace Mlt {
 
 class Filter;
 class RenderThread;
-class FrameRenderer;
 
 typedef void *(*thread_function_t)(void *);
 
@@ -91,10 +107,11 @@ public:
     QPoint offset() const;
     QImage image() const;
     bool imageIsProxy() const;
-    void requestImage() const;
+    void requestImage();
     bool snapToGrid() const { return m_snapToGrid; }
     int maxTextureSize() const { return m_maxTextureSize; }
     void toggleVuiDisplay();
+    Q_INVOKABLE void setVideoSink(QVideoSink *sink);
 
 public slots:
     void setGrid(int grid);
@@ -105,9 +122,7 @@ public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
     virtual void initialize();
-    virtual void beforeRendering(){};
-    virtual void renderVideo();
-    virtual void onFrameDisplayed(const SharedFrame &frame);
+    void showFrame(Mlt::Frame frame, QByteArray p016Buffer = {});
 
 signals:
     void frameDisplayed(const SharedFrame &frame);
@@ -125,6 +140,8 @@ signals:
     void snapToGridChanged();
     void toggleZoom(bool);
     void stepZoom(float, float);
+    void videoFrameReady(const QVideoFrame &frame);
+    void hdrTransferChanged(HdrTransfer transfer);
 
 private:
     QRectF m_rect;
@@ -137,7 +154,8 @@ private:
     std::unique_ptr<Event> m_threadStopEvent;
     std::unique_ptr<Event> m_threadCreateEvent;
     std::unique_ptr<Event> m_threadJoinEvent;
-    FrameRenderer *m_frameRenderer;
+    QSemaphore m_frameSemaphore;
+    bool m_imageRequested;
     float m_zoom;
     QPoint m_offset;
     QUrl m_savedQmlSource;
@@ -147,8 +165,16 @@ private:
     bool m_scrubAudio;
     QPoint m_mousePosition;
     std::unique_ptr<RenderThread> m_renderThread;
+    QPointer<QVideoSink> m_videoSink;
 
     static void on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data);
+    void pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffer = {});
+    struct P016Pool
+    {
+        QMutex mutex;
+        QList<QByteArray> buffers;
+    };
+    std::shared_ptr<P016Pool> m_p016Pool;
 
 private slots:
     void resizeVideo(int width, int height);
@@ -161,7 +187,6 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     bool event(QEvent *event) override;
-    void createShader();
 
     int m_maxTextureSize;
     SharedFrame m_sharedFrame;
@@ -183,29 +208,6 @@ private:
     void *m_data;
     std::unique_ptr<QOpenGLContext> m_context;
     std::unique_ptr<QOffscreenSurface> m_surface;
-};
-
-class FrameRenderer : public QThread
-{
-    Q_OBJECT
-public:
-    FrameRenderer();
-    ~FrameRenderer();
-    QSemaphore *semaphore() { return &m_semaphore; }
-    SharedFrame getDisplayFrame();
-    Q_INVOKABLE void showFrame(Mlt::Frame frame);
-    void requestImage();
-    QImage image() const { return m_image; }
-
-signals:
-    void frameDisplayed(const SharedFrame &frame);
-    void imageReady();
-
-private:
-    QSemaphore m_semaphore;
-    SharedFrame m_displayFrame;
-    bool m_imageRequested;
-    QImage m_image;
 };
 
 } // namespace Mlt
