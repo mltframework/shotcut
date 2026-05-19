@@ -606,7 +606,7 @@ void Controller::setProfile(const QString &profile_name)
         // color_trc will remain empty, which is correct for SDR built-in profiles.
         Mlt::Properties profileProps;
         profileProps.load(profile_name.toUtf8().constData());
-        const char *trc = profileProps.get("color_trc");
+        const char *trc = profileProps.get(kShotcutColorTransfer);
         m_colorTrc = (trc && *trc) ? QString::fromLatin1(trc) : QString();
     } else {
         m_colorTrc.clear();
@@ -655,22 +655,26 @@ QString Controller::colorTrc() const
     // Numeric values are FFmpeg's AVColorTransferCharacteristic enum (same as H.273):
     //   16 = SMPTE ST2084 (PQ), 18 = ARIB B67 (HLG).
     if (m_producer && m_producer->is_valid()) {
-        const int n = m_producer->get_int("meta.media.nb_streams");
-        const int videoStreamIndex = m_producer->get_int(kVideoIndexProperty);
-        int videoCount = 0;
-        for (int i = 0; i < n; ++i) {
-            QString typeKey = QStringLiteral("meta.media.%1.stream.type").arg(i);
-            if (!::qstrcmp(m_producer->get(typeKey.toLatin1().constData()), "video")) {
-                if (videoCount == videoStreamIndex) {
-                    QString trcKey = QStringLiteral("meta.media.%1.codec.color_trc").arg(i);
-                    const int trc = m_producer->get_int(trcKey.toLatin1().constData());
-                    if (trc == 16)
-                        return QStringLiteral("smpte2084"); // PQ
-                    if (trc == 18)
-                        return QStringLiteral("arib-std-b67"); // HLG
-                    return QString();                          // SDR or unsupported TRC
+        if (m_producer->property_exists(kShotcutColorTransfer)) {
+            return QString::fromLatin1(m_producer->get(kShotcutColorTransfer));
+        } else {
+            const int n = m_producer->get_int("meta.media.nb_streams");
+            const int videoStreamIndex = m_producer->get_int(kVideoIndexProperty);
+            int videoCount = 0;
+            for (int i = 0; i < n; ++i) {
+                QString typeKey = QStringLiteral("meta.media.%1.stream.type").arg(i);
+                if (!::qstrcmp(m_producer->get(typeKey.toLatin1().constData()), "video")) {
+                    if (videoCount == videoStreamIndex) {
+                        QString trcKey = QStringLiteral("meta.media.%1.codec.color_trc").arg(i);
+                        const int trc = m_producer->get_int(trcKey.toLatin1().constData());
+                        if (trc == 16)
+                            return QStringLiteral("smpte2084"); // PQ
+                        if (trc == 18)
+                            return QStringLiteral("arib-std-b67"); // HLG
+                        return QString();                          // SDR or unsupported TRC
+                    }
+                    ++videoCount;
                 }
-                ++videoCount;
             }
         }
     }
@@ -680,6 +684,8 @@ QString Controller::colorTrc() const
 void Controller::setColorTrc(const QString &trc)
 {
     m_colorTrc = trc;
+    if (m_producer && m_producer->is_valid())
+        m_producer->set(kShotcutColorTransfer, trc.toLatin1().constData());
 }
 
 QString Controller::resource() const

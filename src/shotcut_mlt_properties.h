@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@
 #define kShotcutProjectFolder "shotcut:projectFolder"
 #define kShotcutProjectNote "shotcut:projectNote"
 #define kShotcutProjectProcessingMode "shotcut:processingMode"
+#define kShotcutColorTransfer "shotcut:colorTransfer"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */

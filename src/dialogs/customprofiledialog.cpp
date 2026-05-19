@@ -20,6 +20,7 @@
 
 #include "mltcontroller.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
 #include <QDesktopServices>
@@ -139,7 +140,7 @@ void CustomProfileDialog::on_buttonBox_accepted()
         p.set("frame_rate_num", MLT.profile().frame_rate_num());
         p.set("frame_rate_den", MLT.profile().frame_rate_den());
         if (!MLT.colorTrc().isEmpty())
-            p.set("color_trc", MLT.colorTrc().toLatin1().constData());
+            p.set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
         p.save(dir.filePath(profileName()).toUtf8().constData());
     }
 }
