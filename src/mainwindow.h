@@ -180,6 +180,7 @@ private:
     bool confirmProfileChange();
     bool confirmRestartExternalMonitor();
     void resetFilterMenuIfNeeded();
+    void updateDecklinkActions();
 
     Ui::MainWindow *ui;
     Player *m_player;
@@ -195,7 +196,6 @@ private:
     QDockWidget *m_historyDock;
     QActionGroup *m_profileGroup;
     QActionGroup *m_externalGroup;
-    QActionGroup *m_decklinkGammaGroup{nullptr};
     QActionGroup *m_keyerGroup;
     QActionGroup *m_layoutGroup;
     QActionGroup *m_previewScaleGroup;
@@ -203,7 +203,7 @@ private:
     FilterController *m_filterController;
     ScopeController *m_scopeController;
     QMenu *m_customProfileMenu;
-    QMenu *m_decklinkGammaMenu{nullptr};
+    QAction *m_decklinkHdrAction{nullptr};
     QMenu *m_keyerMenu;
     QStringList m_multipleFiles;
     bool m_multipleFilesLoading;
@@ -313,7 +313,7 @@ private slots:
     void on_actionJack_triggered(bool checked);
     void onHdrPreviewToggled(bool checked);
     void onExternalTriggered(QAction *);
-    void onDecklinkGammaTriggered(QAction *);
+    void onDecklinkHdrMetadataTriggered();
     void onKeyerTriggered(QAction *);
     void onProfileTriggered(QAction *);
     void onProfileChanged();

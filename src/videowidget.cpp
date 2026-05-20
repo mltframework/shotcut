@@ -44,6 +44,29 @@
 
 using namespace Mlt;
 
+namespace {
+
+struct DecklinkHdrPrimaries
+{
+    double redX;
+    double redY;
+    double greenX;
+    double greenY;
+    double blueX;
+    double blueY;
+    double whiteX;
+    double whiteY;
+};
+
+DecklinkHdrPrimaries decklinkHdrPrimaries(int preset)
+{
+    if (preset == 1)
+        return {0.6800, 0.3200, 0.2650, 0.6900, 0.1500, 0.0600, 0.3127, 0.3290};
+    return {0.7080, 0.2920, 0.1700, 0.7970, 0.1310, 0.0460, 0.3127, 0.3290};
+}
+
+} // namespace
+
 VideoWidget::VideoWidget(QObject *parent)
     : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget *) parent)
     , Controller()
@@ -389,12 +412,12 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->set("real_time", MLT.realTime());
         m_consumer->set("scale", double(Settings.playerPreviewScale()) / MLT.profile().height());
         const int processingMode = property("processing_mode").toInt();
-        const bool isDeckLinkHLG = serviceName.startsWith("decklink")
-                                   && property("decklinkGamma").toInt() == 1;
-        const bool hdrPreview = Settings.playerHdrPreview();
-        // Effective HDR transfer from the profile (or auto-detected from producer)
         const QString profileTrc = MLT.colorTrc();
-        const bool isHdrActive = !profileTrc.isEmpty() || isDeckLinkHLG;
+        const HdrTransfer videoModeTransfer = hdrTransferFromTrc(profileTrc);
+        const bool isDeckLinkHdr = serviceName.startsWith("decklink")
+                                   && videoModeTransfer != HdrTransfer::SDR;
+        const bool hdrPreview = Settings.playerHdrPreview();
+        const bool isHdrActive = videoModeTransfer != HdrTransfer::SDR;
         switch (processingMode) {
         case ShotcutSettings::Native10Cpu:
             m_consumer->set("mlt_image_format", isHdrActive ? "yuv420p10" : "rgba64");
@@ -404,7 +427,7 @@ int VideoWidget::reconfigure(bool isMulti)
             break;
         case ShotcutSettings::Linear10GpuCpu:
             m_consumer->set("mlt_image_format",
-                            isDeckLinkHLG ? "yuv444p10"
+                            isDeckLinkHdr ? "yuv444p10"
                             : hdrPreview  ? "yuv420p10"
                                           : "rgba64");
             break;
@@ -419,12 +442,10 @@ int VideoWidget::reconfigure(bool isMulti)
         } else {
             m_consumer->set("channel_layout", "auto");
         }
-        // Set color_trc on the consumer. profileTrc (from MLT.colorTrc()) takes precedence;
-        // DeckLink HLG is next; otherwise fall back to colorspace-based SDR defaults.
+        // Follow the active video mode transfer when it is explicit; otherwise,
+        // fall back to colorspace-based SDR defaults.
         if (!profileTrc.isEmpty()) {
             m_consumer->set("color_trc", profileTrc.toLatin1().constData());
-        } else if (isDeckLinkHLG) {
-            m_consumer->set("color_trc", "arib-std-b67");
         } else {
             switch (MLT.profile().colorspace()) {
             case 601:
@@ -446,11 +467,39 @@ int VideoWidget::reconfigure(bool isMulti)
         HdrTransfer hdrTransfer = hdrTransferFromTrc(QLatin1String(activeTrc));
         emit hdrTransferChanged(hdrTransfer);
         if (processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHLG
+            || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHdr
                 && !isHdrActive)) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");
+        }
+
+        if (serviceName.startsWith("decklink")) {
+            const QString prefix = isMulti ? QStringLiteral("0.") : QString();
+            const DecklinkHdrPrimaries primaries = decklinkHdrPrimaries(
+                property("decklinkHdrMasterPreset").toInt());
+            const auto setConsumerInt = [&](const QString &name, int value) {
+                m_consumer->set(name.toLatin1().constData(), value);
+            };
+            const auto setConsumerDouble = [&](const QString &name, double value) {
+                m_consumer->set(name.toLatin1().constData(), value);
+            };
+            setConsumerDouble(prefix + QStringLiteral("hdr_red_x"), primaries.redX);
+            setConsumerDouble(prefix + QStringLiteral("hdr_red_y"), primaries.redY);
+            setConsumerDouble(prefix + QStringLiteral("hdr_green_x"), primaries.greenX);
+            setConsumerDouble(prefix + QStringLiteral("hdr_green_y"), primaries.greenY);
+            setConsumerDouble(prefix + QStringLiteral("hdr_blue_x"), primaries.blueX);
+            setConsumerDouble(prefix + QStringLiteral("hdr_blue_y"), primaries.blueY);
+            setConsumerDouble(prefix + QStringLiteral("hdr_white_x"), primaries.whiteX);
+            setConsumerDouble(prefix + QStringLiteral("hdr_white_y"), primaries.whiteY);
+            setConsumerInt(prefix + QStringLiteral("hdr_max_cll"),
+                           property("decklinkHdrMaxCll").toInt());
+            setConsumerInt(prefix + QStringLiteral("hdr_max_fall"),
+                           property("decklinkHdrMaxFall").toInt());
+            setConsumerInt(prefix + QStringLiteral("hdr_max_luminance"),
+                           property("decklinkHdrMaxLuminance").toInt());
+            setConsumerDouble(prefix + QStringLiteral("hdr_min_luminance"),
+                              property("decklinkHdrMinLuminance").toDouble());
         }
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);

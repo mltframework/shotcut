@@ -681,14 +681,54 @@ void ShotcutSettings::setPlayerJACK(bool b)
     settings.setValue("player/jack", b);
 }
 
-int ShotcutSettings::playerDecklinkGamma() const
+int ShotcutSettings::playerDecklinkHdrMaxCll() const
 {
-    return settings.value("player/decklinkGamma", 0).toInt();
+    return settings.value("player/decklinkHdrMaxCll", 1000).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkGamma(int i)
+void ShotcutSettings::setPlayerDecklinkHdrMaxCll(int nits)
 {
-    settings.setValue("player/decklinkGamma", i);
+    settings.setValue("player/decklinkHdrMaxCll", nits);
+}
+
+int ShotcutSettings::playerDecklinkHdrMaxFall() const
+{
+    return settings.value("player/decklinkHdrMaxFall", 400).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMaxFall(int nits)
+{
+    settings.setValue("player/decklinkHdrMaxFall", nits);
+}
+
+int ShotcutSettings::playerDecklinkHdrMasterPreset() const
+{
+    return settings.value("player/decklinkHdrMasterPreset", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMasterPreset(int preset)
+{
+    settings.setValue("player/decklinkHdrMasterPreset", preset);
+}
+
+int ShotcutSettings::playerDecklinkHdrMaxLuminance() const
+{
+    return settings.value("player/decklinkHdrMaxLuminance", 1000).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMaxLuminance(int nits)
+{
+    settings.setValue("player/decklinkHdrMaxLuminance", nits);
+}
+
+double ShotcutSettings::playerDecklinkHdrMinLuminance() const
+{
+    return settings.value("player/decklinkHdrMinLuminance", 0.01).toDouble();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMinLuminance(double nits)
+{
+    settings.setValue("player/decklinkHdrMinLuminance", nits);
 }
 
 int ShotcutSettings::playerKeyerMode() const

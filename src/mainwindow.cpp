@@ -1307,15 +1307,8 @@ void MainWindow::setupSettingsMenu()
                 action->setData(QStringLiteral("decklink:%1").arg(i));
                 m_externalGroup->addAction(action);
 
-                if (!m_decklinkGammaGroup) {
-                    m_decklinkGammaGroup = new QActionGroup(this);
-                    action = new QAction("SDR", m_decklinkGammaGroup);
-                    action->setData(QVariant(0));
-                    action->setCheckable(true);
-                    action = new QAction("HLG HDR", m_decklinkGammaGroup);
-                    action->setData(QVariant(1));
-                    action->setCheckable(true);
-                }
+                if (!m_decklinkHdrAction)
+                    m_decklinkHdrAction = new QAction(tr("DeckLink PQ HDR Metadata..."), this);
                 if (!m_keyerGroup) {
                     m_keyerGroup = new QActionGroup(this);
                     action = new QAction(tr("Off"), m_keyerGroup);
@@ -1337,26 +1330,26 @@ void MainWindow::setupSettingsMenu()
         delete ui->menuExternal;
         ui->menuExternal = 0;
     }
-    if (m_decklinkGammaGroup) {
-        m_decklinkGammaMenu = ui->menuExternal->addMenu(tr("DeckLink Gamma"));
-        m_decklinkGammaMenu->addActions(m_decklinkGammaGroup->actions());
-        m_decklinkGammaMenu->setDisabled(true);
-        connect(m_decklinkGammaGroup,
-                &QActionGroup::triggered,
-                this,
-                &MainWindow::onDecklinkGammaTriggered);
-    }
     if (m_keyerGroup) {
         m_keyerMenu = ui->menuExternal->addMenu(tr("DeckLink Keyer"));
         m_keyerMenu->addActions(m_keyerGroup->actions());
         m_keyerMenu->setDisabled(true);
         connect(m_keyerGroup, &QActionGroup::triggered, this, &MainWindow::onKeyerTriggered);
     }
+    if (m_decklinkHdrAction) {
+        ui->menuExternal->addAction(m_decklinkHdrAction);
+        m_decklinkHdrAction->setDisabled(true);
+        connect(m_decklinkHdrAction,
+                &QAction::triggered,
+                this,
+                &MainWindow::onDecklinkHdrMetadataTriggered);
+    }
     connect(m_externalGroup,
             SIGNAL(triggered(QAction *)),
             this,
             SLOT(onExternalTriggered(QAction *)));
     connect(m_profileGroup, SIGNAL(triggered(QAction *)), this, SLOT(onProfileTriggered(QAction *)));
+    updateDecklinkActions();
 
     // Setup the language menu actions
     m_languagesGroup = new QActionGroup(this);
@@ -2556,24 +2549,8 @@ void MainWindow::readPlayerSettings()
 #endif
             if (a->data() == external) {
                 a->setChecked(true);
-                if (a->data().toString().startsWith("decklink")) {
-                    if (m_decklinkGammaMenu)
-                        m_decklinkGammaMenu->setEnabled(true);
-                    if (m_keyerMenu)
-                        m_keyerMenu->setEnabled(true);
-                }
                 break;
             }
-    }
-
-    if (m_decklinkGammaGroup) {
-        auto gamma = Settings.playerDecklinkGamma();
-        for (auto a : m_decklinkGammaGroup->actions()) {
-            if (a->data() == gamma) {
-                a->setChecked(true);
-                break;
-            }
-        }
     }
     if (m_keyerGroup) {
         auto keyer = Settings.playerKeyerMode();
@@ -2584,6 +2561,7 @@ void MainWindow::readPlayerSettings()
             }
         }
     }
+    updateDecklinkActions();
 
     if (Settings.playerHdrPreview()) {
         auto hdr = Actions["hdrPreviewAction"];
@@ -2919,11 +2897,17 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
-    if (m_decklinkGammaGroup && m_decklinkGammaGroup->isEnabled())
-        MLT.videoWidget()->setProperty("decklinkGamma",
-                                       m_decklinkGammaGroup->checkedAction()->data());
     if (m_keyerGroup)
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxCll", Settings.playerDecklinkHdrMaxCll());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxFall", Settings.playerDecklinkHdrMaxFall());
+    MLT.videoWidget()->setProperty("decklinkHdrMasterPreset",
+                                   Settings.playerDecklinkHdrMasterPreset());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxLuminance",
+                                   Settings.playerDecklinkHdrMaxLuminance());
+    MLT.videoWidget()->setProperty("decklinkHdrMinLuminance",
+                                   Settings.playerDecklinkHdrMinLuminance());
+    updateDecklinkActions();
     LOG_DEBUG() << "end";
 }
 
@@ -4668,15 +4652,10 @@ void MainWindow::onExternalTriggered(QAction *action)
             for (auto a : m_externalGroup->actions()) {
                 if (a->data() == Settings.playerExternal()) {
                     a->setChecked(true);
-                    if (a->data().toString().startsWith("decklink")) {
-                        if (m_decklinkGammaMenu)
-                            m_decklinkGammaMenu->setEnabled(true);
-                        if (m_keyerMenu)
-                            m_keyerMenu->setEnabled(true);
-                    }
                     break;
                 }
             }
+            updateDecklinkActions();
         }
         return;
     }
@@ -4721,12 +4700,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.consumer()->set("progressive", isProgressive);
         MLT.consumerChanged();
     }
-    if (action->data().toString().startsWith("decklink")) {
-        if (m_decklinkGammaMenu)
-            m_decklinkGammaMenu->setEnabled(true);
-        if (m_keyerMenu)
-            m_keyerMenu->setEnabled(true);
-    }
+    updateDecklinkActions();
 
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
@@ -4739,28 +4713,95 @@ void MainWindow::onExternalTriggered(QAction *action)
     setPreviewScale(Settings.playerPreviewScale());
 }
 
-void MainWindow::onDecklinkGammaTriggered(QAction *action)
+void MainWindow::onDecklinkHdrMetadataTriggered()
 {
-    LOG_DEBUG() << action->data().toString();
-    MLT.videoWidget()->setProperty("decklinkGamma", action->data());
+    QDialog dialog(this);
+    dialog.setWindowTitle(tr("DeckLink HDR Metadata"));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+
+    auto *form = new QFormLayout;
+    form->setLabelAlignment(Qt::AlignRight);
+
+    auto *maxCllSpin = new QSpinBox;
+    maxCllSpin->setRange(1, 65535);
+    maxCllSpin->setValue(Settings.playerDecklinkHdrMaxCll());
+    maxCllSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxCllSpin->setToolTip(
+        tr("Maximum Content Light Level (MaxCLL): the brightest single pixel in the signal"));
+    form->addRow(tr("MaxCLL"), maxCllSpin);
+
+    auto *maxFallSpin = new QSpinBox;
+    maxFallSpin->setRange(1, 65535);
+    maxFallSpin->setValue(Settings.playerDecklinkHdrMaxFall());
+    maxFallSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxFallSpin->setToolTip(
+        tr("Maximum Frame-Average Light Level (MaxFALL): the brightest average frame"));
+    form->addRow(tr("MaxFALL"), maxFallSpin);
+
+    auto *primaryCombo = new QComboBox;
+    primaryCombo->addItem(tr("BT.2020 / Rec.2020"));
+    primaryCombo->addItem(tr("Display P3 (D65)"));
+    primaryCombo->setCurrentIndex(Settings.playerDecklinkHdrMasterPreset());
+    form->addRow(tr("Color primaries"), primaryCombo);
+
+    auto *maxLumSpin = new QSpinBox;
+    maxLumSpin->setRange(1, 65535);
+    maxLumSpin->setValue(Settings.playerDecklinkHdrMaxLuminance());
+    maxLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxLumSpin->setToolTip(tr("Display mastering maximum luminance"));
+    form->addRow(tr("Display max luminance"), maxLumSpin);
+
+    auto *minLumSpin = new QDoubleSpinBox;
+    minLumSpin->setRange(0.0001, 6.5535);
+    minLumSpin->setDecimals(4);
+    minLumSpin->setSingleStep(0.0001);
+    minLumSpin->setValue(Settings.playerDecklinkHdrMinLuminance());
+    minLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    minLumSpin->setToolTip(tr("Display mastering minimum luminance"));
+    form->addRow(tr("Display min luminance"), minLumSpin);
+
+    auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    auto *vbox = new QVBoxLayout;
+    vbox->addLayout(form);
+    vbox->addWidget(buttons);
+    dialog.setLayout(vbox);
+
+    if (dialog.exec() != QDialog::Accepted)
+        return;
+
+    const int maxCll = maxCllSpin->value();
+    const int maxFall = maxFallSpin->value();
+    const int masterPreset = primaryCombo->currentIndex();
+    const int maxLuminance = maxLumSpin->value();
+    const double minLuminance = minLumSpin->value();
+
     if (Settings.playerGPU() && MLT.producer()) {
-        if (confirmRestartExternalMonitor()) {
-            Settings.setPlayerDecklinkGamma(action->data().toInt());
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        } else {
-            auto gamma = Settings.playerDecklinkGamma();
-            for (auto a : m_decklinkGammaGroup->actions()) {
-                if (a->data() == gamma) {
-                    a->setChecked(true);
-                    break;
-                }
-            }
-        }
+        if (!confirmRestartExternalMonitor())
+            return;
+        Settings.setPlayerDecklinkHdrMaxCll(maxCll);
+        Settings.setPlayerDecklinkHdrMaxFall(maxFall);
+        Settings.setPlayerDecklinkHdrMasterPreset(masterPreset);
+        Settings.setPlayerDecklinkHdrMaxLuminance(maxLuminance);
+        Settings.setPlayerDecklinkHdrMinLuminance(minLuminance);
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
         return;
     }
+
+    Settings.setPlayerDecklinkHdrMaxCll(maxCll);
+    Settings.setPlayerDecklinkHdrMaxFall(maxFall);
+    Settings.setPlayerDecklinkHdrMasterPreset(masterPreset);
+    Settings.setPlayerDecklinkHdrMaxLuminance(maxLuminance);
+    Settings.setPlayerDecklinkHdrMinLuminance(minLuminance);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxCll", maxCll);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxFall", maxFall);
+    MLT.videoWidget()->setProperty("decklinkHdrMasterPreset", masterPreset);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxLuminance", maxLuminance);
+    MLT.videoWidget()->setProperty("decklinkHdrMinLuminance", minLuminance);
     MLT.consumerChanged();
-    Settings.setPlayerDecklinkGamma(action->data().toInt());
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)
@@ -4822,6 +4863,7 @@ void MainWindow::onProfileChanged()
         && (m_timelineDock->selection().isEmpty() || m_timelineDock->currentTrack() == -1)) {
         emit m_timelineDock->selected(multitrack());
     }
+    updateDecklinkActions();
     updateWindowTitle();
 }
 
@@ -4939,6 +4981,17 @@ bool MainWindow::confirmRestartExternalMonitor()
     return dialog.exec() == QMessageBox::Yes;
 }
 
+void MainWindow::updateDecklinkActions()
+{
+    const QAction *checkedExternal = m_externalGroup ? m_externalGroup->checkedAction() : nullptr;
+    const bool isDecklink = checkedExternal
+                            && checkedExternal->data().toString().startsWith("decklink");
+    if (m_keyerMenu)
+        m_keyerMenu->setEnabled(isDecklink);
+    if (m_decklinkHdrAction)
+        m_decklinkHdrAction->setEnabled(isDecklink && MLT.colorTrc() == QLatin1String("smpte2084"));
+}
+
 void MainWindow::resetFilterMenuIfNeeded()
 {
     // Reset to Favorites if currently set to Color or Audio
@@ -5051,6 +5104,7 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 
 void MainWindow::on_menuExternal_aboutToShow()
 {
+    updateDecklinkActions();
 #ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;

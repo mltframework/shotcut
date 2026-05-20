@@ -162,8 +162,16 @@ public:
     void setPlayerInterpolation(const QString &);
     bool playerJACK() const;
     void setPlayerJACK(bool);
-    int playerDecklinkGamma() const;
-    void setPlayerDecklinkGamma(int);
+    int playerDecklinkHdrMaxCll() const;
+    void setPlayerDecklinkHdrMaxCll(int);
+    int playerDecklinkHdrMaxFall() const;
+    void setPlayerDecklinkHdrMaxFall(int);
+    int playerDecklinkHdrMasterPreset() const;
+    void setPlayerDecklinkHdrMasterPreset(int);
+    int playerDecklinkHdrMaxLuminance() const;
+    void setPlayerDecklinkHdrMaxLuminance(int);
+    double playerDecklinkHdrMinLuminance() const;
+    void setPlayerDecklinkHdrMinLuminance(double);
     int playerKeyerMode() const;
     void setPlayerKeyerMode(int);
     bool playerMuted() const;
