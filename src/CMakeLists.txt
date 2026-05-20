@@ -278,12 +278,14 @@ find_program(QSB_EXECUTABLE qsb HINTS
 if(QSB_EXECUTABLE)
   set(HDR_GAIN_FRAG ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag)
   set(HDR_GAIN_QSB ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag.qsb)
-  add_custom_command(
-    OUTPUT ${HDR_GAIN_QSB}
-    COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${HDR_GAIN_QSB} ${HDR_GAIN_FRAG}
-    DEPENDS ${HDR_GAIN_FRAG}
-    COMMENT "Compiling HDR gain shader"
-  )
+  if(NOT EXISTS ${HDR_GAIN_QSB})
+    add_custom_command(
+      OUTPUT ${HDR_GAIN_QSB}
+      COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${HDR_GAIN_QSB} ${HDR_GAIN_FRAG}
+      DEPENDS ${HDR_GAIN_FRAG}
+      COMMENT "Compiling HDR gain shader"
+    )
+  endif()
   add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB})
   add_dependencies(shotcut hdr_shaders)
 endif()

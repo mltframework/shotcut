@@ -2,22 +2,71 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "cc-debug",
-            "displayName": "default system compiler (debug)",
-            "description": "Use C/C++ compilers in the $PATH with Ninja",
+            "name": "_cc-debug-base",
+            "hidden": true,
             "binaryDir": "${sourceDir}/build/${presetName}",
             "generator": "Ninja",
             "environment": {
-                "QT_VERSION": "6.10.3",
-                "PKG_CONFIG_PATH": "$env{HOME}/.local/lib/pkgconfig:$env{HOME}/.local/lib64/pkgconfig:$env{HOME}/opt/lib/pkgconfig:$env{HOME}/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/lib64/pkgconfig:$penv{PKG_CONFIG_PATH}",
-                "PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos/bin:$env{HOME}/opt/bin:/usr/local/bin:/opt/local/bin:$penv{PATH}"
+                "QT_VERSION": "6.10.3"
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
                 "CLANG_FORMAT": "ON",
                 "BUILD_MINIMAL_MEDIA_BACKEND": "ON"
+            }
+        },
+        {
+            "name": "cc-debug-linux",
+            "displayName": "default system compiler (debug)",
+            "description": "Use C/C++ compilers in the $PATH with Ninja",
+            "inherits": "_cc-debug-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "environment": {
+                "PKG_CONFIG_PATH": "$env{HOME}/.local/lib/pkgconfig:$env{HOME}/.local/lib64/pkgconfig:$env{HOME}/opt/lib/pkgconfig:$env{HOME}/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/lib64/pkgconfig:$penv{PKG_CONFIG_PATH}",
+                "PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos/bin:$env{HOME}/opt/bin:/usr/local/bin:/opt/local/bin:$penv{PATH}"
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
+                "CMAKE_C_FLAGS": "-I/usr/local/include"
+            }
+        },
+        {
+            "name": "cc-debug-macos",
+            "displayName": "default system compiler (debug)",
+            "description": "Use C/C++ compilers in the $PATH with Ninja",
+            "inherits": "_cc-debug-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local"
+            }
+        },
+        {
+            "name": "msys2-debug",
+            "displayName": "msys2 (debug)",
+            "description": "Use MinGW compilers in MSYS2 with Ninja",
+            "inherits": "_cc-debug-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "environment": {
+                "PKG_CONFIG_PATH": "C:/Projects/Shotcut/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
+                "Path": "C:/msys64/usr/local/bin;C:/msys64/usr/bin;C:/msys64/mingw64/bin;$penv{Path}"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "C:/Qt/$env{QT_VERSION}/mingw_64;C:/msys64/mingw64",
+                "CMAKE_INSTALL_PREFIX": "C:/Projects/Shotcut"
             }
         }
     ],
@@ -26,10 +75,30 @@
             "name": "format-build",
             "description": "Run clang-format and then build",
             "displayName": "clang-format and build",
-            "configurePreset": "cc-debug",
+            "configurePreset": "cc-debug-linux",
             "targets": [
                 "clang-format",
                 "all"
+            ]
+        },
+        {
+            "name": "format-build-macos",
+            "description": "Run clang-format and then build",
+            "displayName": "clang-format and build (macOS)",
+            "configurePreset": "cc-debug-macos",
+            "targets": [
+                "clang-format",
+                "all"
+            ]
+        },
+        {
+            "name": "format-build-windows",
+            "description": "Run clang-format and then build",
+            "displayName": "clang-format and build (Windows)",
+            "configurePreset": "msys2-debug",
+            "targets": [
+                "clang-format",
+                "install"
             ]
         }
     ]
