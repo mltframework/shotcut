@@ -4591,6 +4591,22 @@ void MainWindow::onHdrPreviewToggled(bool checked)
             connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
             connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
             win->setPlaying(!MLT.isPaused());
+            connect(m_hdrPreviewWindow, &HdrPreviewWindow::hdrModeRestartRequested, this, [this]() {
+                QMessageBox dialog(
+                    QMessageBox::Question,
+                    qApp->applicationName(),
+                    tr("Moving the preview window from an SDR to HDR screen requires a restart.\n"
+                       "Do you want to restart now?"),
+                    QMessageBox::No | QMessageBox::Yes,
+                    this);
+                dialog.setDefaultButton(QMessageBox::No);
+                dialog.setEscapeButton(QMessageBox::No);
+                dialog.setWindowModality(QmlApplication::dialogModality());
+                if (dialog.exec() == QMessageBox::Yes) {
+                    m_exitCode = EXIT_RESTART;
+                    QApplication::closeAllWindows();
+                }
+            });
             connect(m_hdrPreviewWindow, &QWindow::visibleChanged, this, [this](bool visible) {
                 if (!visible && m_hdrPreviewWindow) {
                     Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()

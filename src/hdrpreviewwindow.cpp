@@ -31,10 +31,12 @@
 #include <private/qrhi_p.h>
 #include <QDebug>
 #include <QDir>
+#include <QGuiApplication>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
 #include <QScreen>
+#include <QTimer>
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <QVulkanFunctions>
 #include <QVulkanInstance>
@@ -43,6 +45,8 @@
 #ifdef Q_OS_MACOS
 #include "macos.h"
 #endif
+
+static constexpr int kScreenChangeDelayMs = 500;
 
 // HLG OETF: scene-referred linear to HLG electrical signal.
 // See ITU-R BT.2100-2.
@@ -103,6 +107,18 @@ HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     resize(960, 540);
 
     connect(this, &QWindow::windowStateChanged, this, [this]() { emit fullScreenChanged(); });
+    connect(this, &QWindow::screenChanged, this, &HdrPreviewWindow::onScreenChanged);
+    m_screenChangeTimer.setSingleShot(true);
+    connect(&m_screenChangeTimer,
+            &QTimer::timeout,
+            this,
+            &HdrPreviewWindow::processPendingScreenChange);
+    auto restartScreenChangeTimer = [this]() {
+        if (m_screenChangeTimer.isActive())
+            m_screenChangeTimer.start(kScreenChangeDelayMs);
+    };
+    connect(this, &QWindow::xChanged, this, restartScreenChangeTimer);
+    connect(this, &QWindow::yChanged, this, restartScreenChangeTimer);
 
 #ifdef Q_OS_MACOS
     // Override NSScreen.maximumExtendedDynamicRangeColorComponentValue so that
@@ -139,6 +155,9 @@ void HdrPreviewWindow::setVideoSink(QVideoSink *sink)
 void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
 {
     if (m_videoSink && isVisible()) {
+        if (!m_lastScreen && screen())
+            m_lastScreen = screen();
+
         // Qt 6 caches the video format in QSGVideoMaterialRhiShader and
         // never updates masteringWhite when maxLuminance changes.  To
         // work around this, invalidateVideoNode() pushes an empty frame
@@ -223,6 +242,7 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
 #endif
         }
         updateHdrGain();
+        m_lastKnownHdrMode = isHdrMode();
         // Log when the frame's stamped maxLuminance changes — confirms the
         // modified QVideoFrame is reaching Qt's video-sink render path.
         static float s_lastPushMaxLum = -1.0f;
@@ -273,11 +293,32 @@ void HdrPreviewWindow::triggerFastForward()
 
 void HdrPreviewWindow::restoreGeometry(const QRect &r)
 {
+    QRect geometry = r;
+    bool isVisibleOnCurrentScreen = false;
+    for (auto *availableScreen : QGuiApplication::screens()) {
+        if (availableScreen->availableGeometry().intersects(geometry)) {
+            isVisibleOnCurrentScreen = true;
+            break;
+        }
+    }
+
+    if (!isVisibleOnCurrentScreen) {
+        auto *fallbackScreen = screen() ? screen() : QGuiApplication::primaryScreen();
+        if (fallbackScreen) {
+            const QRect availableGeometry = fallbackScreen->availableGeometry();
+            geometry.setSize(geometry.size().boundedTo(availableGeometry.size()));
+            const int maxX = availableGeometry.right() - geometry.width() + 1;
+            const int maxY = availableGeometry.bottom() - geometry.height() + 1;
+            geometry.moveTopLeft(QPoint(qBound(availableGeometry.left(), geometry.x(), maxX),
+                                        qBound(availableGeometry.top(), geometry.y(), maxY)));
+        }
+    }
+
     // Suppress the DAR-snap in resizeEvent so that programmatically restoring
     // the saved window geometry does not trigger a floating-point-rounded
     // resize that would make the window grow by 1-2 px on every launch.
     m_skipDarSnap = true;
-    setGeometry(r);
+    setGeometry(geometry);
     // On macOS the resizeEvent may fire during show() rather than during
     // setGeometry(), so keep the guard active for a short while.
     QTimer::singleShot(300, this, [this]() { m_skipDarSnap = false; });
@@ -496,6 +537,45 @@ void HdrPreviewWindow::invalidateVideoNode()
         m_skipNextFrame = true;
         MLT.refreshConsumer();
     }
+}
+
+void HdrPreviewWindow::onScreenChanged(QScreen *screen)
+{
+    const bool movedToAnotherScreen = m_lastScreen && screen && m_lastScreen != screen;
+    m_pendingWasHdrMode = m_lastKnownHdrMode;
+    m_lastScreen = screen;
+    if (!movedToAnotherScreen || m_warnedAboutScreenChange)
+        return;
+
+    m_pendingScreen = screen;
+    m_screenChangeTimer.start(kScreenChangeDelayMs);
+}
+
+void HdrPreviewWindow::processPendingScreenChange()
+{
+    if (m_warnedAboutScreenChange || m_pendingWasHdrMode) {
+        m_pendingScreen = nullptr;
+        return;
+    }
+
+    auto *producer = MLT.producer();
+    if (!m_pendingScreen || !producer || !producer->is_valid()
+        || m_hdrTransfer == HdrTransfer::SDR) {
+        m_pendingScreen = nullptr;
+        return;
+    }
+
+    m_warnedAboutScreenChange = true;
+    m_pendingScreen = nullptr;
+    emit hdrModeRestartRequested();
+}
+
+bool HdrPreviewWindow::isHdrMode() const
+{
+    auto *sc = swapChain();
+    return sc
+           && (sc->format() == QRhiSwapChain::HDRExtendedSrgbLinear
+               || sc->format() == QRhiSwapChain::HDR10);
 }
 
 void HdrPreviewWindow::updateHdrGain()

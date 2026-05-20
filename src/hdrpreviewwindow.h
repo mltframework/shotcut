@@ -83,6 +83,7 @@ public slots:
 signals:
     void hdrGainChanged();
     void hdrTransferModeChanged();
+    void hdrModeRestartRequested();
     void displayPeakNitsChanged();
     void contentPeakNitsChanged();
     void toneMappingChanged();
@@ -99,15 +100,24 @@ protected:
 
 private slots:
     void checkEdrHeadroom();
+    void onScreenChanged(QScreen *screen);
+    void processPendingScreenChange();
 
 private:
+    bool isHdrMode() const;
     void updateHdrGain();
     void invalidateVideoNode();
 
     QPointer<QVideoSink> m_videoSink;
+    QPointer<QScreen> m_lastScreen;
+    QPointer<QScreen> m_pendingScreen;
     QTimer m_edrTimer;
+    QTimer m_screenChangeTimer;
     bool m_loggedSwapChain{false};
     bool m_loggedGainSkip{false};
+    bool m_lastKnownHdrMode{false};
+    bool m_pendingWasHdrMode{false};
+    bool m_warnedAboutScreenChange{false};
     bool m_skipNextFrame{false};
     HdrTransfer m_hdrTransfer{HdrTransfer::SDR};
     bool m_isPlaying{false};
