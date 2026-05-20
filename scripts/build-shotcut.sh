@@ -106,6 +106,9 @@ LIBSPATIALAUDIO_REVISION="origin/shotcut"
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.8.3"
+ENABLE_RNNOISE=1
+RNNOISE_HEAD=0
+RNNOISE_REVISION="v0.2"
 NV_CODEC_REVISION="sdk/12.0"
 MFX_DISPATCH_REVISION="1.25"
 
@@ -281,6 +284,9 @@ function to_key {
     ;;
     whisper.cpp)
       echo 30
+    ;;
+    rnnoise)
+      echo 31
     ;;
     *)
       echo UNKNOWN
@@ -532,6 +538,9 @@ function set_globals {
         SUBDIRS="whisper.cpp $SUBDIRS"
         [ "$TARGET_OS" != "Darwin" ] && SUBDIRS="OpenBLAS $SUBDIRS"
     fi
+    if test "$ENABLE_RNNOISE" = 1 ; then
+        SUBDIRS="rnnoise $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -586,6 +595,7 @@ function set_globals {
   REPOLOCS[28]="https://github.com/webmproject/libwebp.git"
   REPOLOCS[29]="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
   REPOLOCS[30]="https://github.com/ggerganov/whisper.cpp.git"
+  REPOLOCS[31]="https://github.com/xiph/rnnoise.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -617,6 +627,7 @@ function set_globals {
   REPOTYPES[28]="git"
   REPOTYPES[29]="git"
   REPOTYPES[30]="git"
+  REPOTYPES[31]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -717,6 +728,10 @@ function set_globals {
   REVISIONS[30]=""
   if test 0 = "$WHISPERCPP_HEAD" -a "$WHISPERCPP_REVISION" ; then
     REVISIONS[30]="$WHISPERCPP_REVISION"
+  fi
+  REVISIONS[31]=""
+  if test 0 = "$RNNOISE_HEAD" -a "$RNNOISE_REVISION" ; then
+    REVISIONS[31]="$RNNOISE_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -1143,6 +1158,15 @@ function set_globals {
   fi
   BUILD[30]="ninja -C build -j $MAKEJ"
   INSTALL[30]="install_whispercpp"
+
+  #####
+  # rnnoise
+  [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[31]="./autogen.sh"
+  CONFIG[31]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
+  CFLAGS_[31]=$CFLAGS
+  LDFLAGS_[31]=$LDFLAGS
+  BUILD[31]="make -j$MAKEJ"
+  INSTALL[31]="make install"
 }
 
 function build_ffmpeg_darwin {

@@ -69,6 +69,9 @@ MLT_DISABLE_SOX=0
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.8.3"
+ENABLE_RNNOISE=1
+RNNOISE_HEAD=0
+RNNOISE_REVISION="v0.2"
 NV_CODEC_REVISION="sdk/12.0"
 
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
@@ -197,6 +200,9 @@ function to_key {
     ;;
     libspatialaudio)
       echo 17
+    ;;
+    rnnoise)
+      echo 18
     ;;
     *)
       echo UNKNOWN
@@ -411,6 +417,9 @@ function set_globals {
     if test "$ENABLE_WHISPERCPP" = 1  && test "$WHISPERCPP_HEAD" = 1 -o "$WHISPERCPP_REVISION" != ""; then
         SUBDIRS="whisper.cpp $SUBDIRS"
     fi
+    if test "$ENABLE_RNNOISE" = 1 ; then
+      SUBDIRS="rnnoise $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -454,6 +463,7 @@ function set_globals {
   REPOLOCS[15]="https://github.com/opencv/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
   REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
+  REPOLOCS[18]="https://github.com/xiph/rnnoise.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -474,6 +484,7 @@ function set_globals {
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
+  REPOTYPES[18]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -538,6 +549,10 @@ function set_globals {
   REVISIONS[17]=""
   if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
     REVISIONS[17]="$LIBSPATIALAUDIO_REVISION"
+  fi
+  REVISIONS[18]=""
+  if test 0 = "$RNNOISE_HEAD" -a "$RNNOISE_REVISION" ; then
+    REVISIONS[18]="$RNNOISE_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -735,6 +750,14 @@ function set_globals {
   LDFLAGS_[17]="$LDFLAGS"
   BUILD[17]="ninja -C build -j $MAKEJ"
   INSTALL[17]="install_spatialaudio"
+
+  #####
+  # rnnoise
+  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
+  CFLAGS_[18]="$CFLAGS"
+  LDFLAGS_[18]="$LDFLAGS"
+  BUILD[18]="make -j$MAKEJ"
+  INSTALL[18]="make install"
 }
 
 function build_dav1d {
