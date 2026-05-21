@@ -477,11 +477,6 @@ QColorDialog::ColorDialogOptions Util::getColorDialogOptions()
 
 QFileDialog::Options Util::getFileDialogOptions()
 {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (qEnvironmentVariableIsSet("SNAP")) {
-        return QFileDialog::DontUseNativeDialog;
-    }
-#endif
     return QFileDialog::Options();
 }
 
