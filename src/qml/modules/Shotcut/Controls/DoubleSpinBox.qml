@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,13 @@ Item {
         inputMethodHints: Qt.ImhFormattedNumbersOnly
         wheelEnabled: true
         anchors.fill: parent
+        onActiveFocusChanged: {
+            if (activeFocus) {
+                textInput.forceActiveFocus(focusReason);
+                if (focusReason === Qt.TabFocusReason || focusReason === Qt.BacktabFocusReason)
+                    textInput.selectAll();
+            }
+        }
         onValueChanged: {
             _blockSpinUpdate = true;
             root.value = value * 1 / _factor;
