@@ -7,21 +7,21 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 Item {
-    property string mixProperty: 'mix'
-    property bool blockUpdate: true
+    property string _mixProperty: 'mix'
+    property bool _blockUpdate: true
 
     width: 350
     height: 100
 
     function setControls() {
-        blockUpdate = true;
-        sliderMix.value = filter.getDouble(mixProperty) * sliderMix.maximumValue;
-        blockUpdate = false;
+        _blockUpdate = true;
+        sliderMix.value = filter.getDouble(_mixProperty) * sliderMix.maximumValue;
+        _blockUpdate = false;
     }
 
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(mixProperty, 1.0);
+            filter.set(_mixProperty, 1.0);
             filter.savePreset(preset.parameters);
         }
         setControls();
@@ -45,7 +45,7 @@ Item {
         Shotcut.Preset {
             id: preset
 
-            parameters: [mixProperty]
+            parameters: [_mixProperty]
             Layout.columnSpan: 2
             onPresetSelected: setControls()
         }
@@ -66,11 +66,10 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            value: filter.getDouble(mixProperty) * maximumValue
             onValueChanged: {
-                if (blockUpdate)
+                if (_blockUpdate)
                     return;
-                filter.set(mixProperty, value / maximumValue);
+                filter.set(_mixProperty, value / maximumValue);
             }
         }
 
