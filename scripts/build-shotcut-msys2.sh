@@ -753,6 +753,7 @@ function set_globals {
 
   #####
   # rnnoise
+  [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[18]="./autogen.sh"
   CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
   CFLAGS_[18]="$CFLAGS"
   LDFLAGS_[18]="$LDFLAGS"
