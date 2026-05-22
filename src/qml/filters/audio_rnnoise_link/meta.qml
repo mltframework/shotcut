@@ -3,10 +3,9 @@ import org.shotcut.qml
 
 Metadata {
     type: Metadata.Link
-    name: qsTr("Noise Reduction (RNNoise)")
+    name: qsTr("Reduce Noise: Audio (RNNoise)")
     mlt_service: 'rnnoise'
-    keywords: qsTr('noise reduction denoise background wind speech clean rnnoise', 'search keywords for the Noise Reduction audio filter') + ' noise reduction denoise rnnoise'
+    keywords: qsTr('reduce noise denoise background wind speech clean', 'search keywords for the Reduce Noise: Audio filter') + ' reduce noise: audio rnnoise'
     objectName: 'audioRnnoiseLink'
     qml: 'ui.qml'
-    hidden: true
 }
