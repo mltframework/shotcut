@@ -1165,7 +1165,11 @@ function set_globals {
   CONFIG[31]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
   CFLAGS_[31]=$CFLAGS
   LDFLAGS_[31]=$LDFLAGS
-  BUILD[31]="make -j$MAKEJ"
+  if [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ]; then
+    BUILD[31]="build_rnnoise_darwin"
+  else
+    BUILD[31]="make -j$MAKEJ"
+  fi
   INSTALL[31]="make install"
 }
 
@@ -1280,6 +1284,10 @@ function install_whispercpp {
   cmd ninja -C build install
   cmd mkdir -p $FINAL_INSTALL_DIR/bin
   cmd install -p -c build/bin/whisper-cli $FINAL_INSTALL_DIR/bin
+}
+
+function build_rnnoise_darwin {
+  cmd make -j $MAKEJ CC="clang -arch arm64 -arch x86_64"
 }
 
 ######################################################################
