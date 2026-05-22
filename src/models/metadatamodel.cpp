@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -232,7 +232,7 @@ bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePar
                 return false;
             break;
         case LinkFilter:
-            if (meta->type() != QmlMetadata::Link)
+            if (meta->type() != QmlMetadata::Link || meta->isAudio())
                 return false;
             break;
         case FilterSetFilter:
