@@ -18,6 +18,7 @@
 #pragma once
 
 void removeMacosTabBar();
+void macosHideFromDock();
 void macosSetDockProgress(int percent);
 void macosPauseDockProgress(int percent);
 void macosResetDockProgress();

@@ -55,6 +55,11 @@ static NSProgressIndicator *dockProgressBar()
     return s_pi;
 }
 
+void macosHideFromDock()
+{
+    [NSApp setActivationPolicy:NSApplicationActivationPolicyProhibited];
+}
+
 void macosSetDockProgress(int percent)
 {
     NSProgressIndicator *pi = dockProgressBar();

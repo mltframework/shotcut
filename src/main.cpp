@@ -513,6 +513,9 @@ int main(int argc, char **argv)
 
     } else {
         // Run as a parent process to check if the child crashes on startup
+#ifdef Q_OS_MAC
+        macosHideFromDock();
+#endif
         QProcess child;
         QStringList args = a.arguments();
         if (!args.isEmpty())
