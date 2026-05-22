@@ -10,6 +10,8 @@ jobs:
   build:
     if: ${{ github.repository_owner == 'mltframework' }}
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
     env:
       SM_API_KEY: ${{ secrets.SM_API_KEY }}
       SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
@@ -68,8 +70,13 @@ jobs:
             mingw-w64-x86_64-zimg
 
       - name: Set version
+        id: set_version
         shell: msys2 {0}
-        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
+        run: |
+          VERSION="$(date +"%y.%-m.%-d")"
+          echo VERSION=$VERSION
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
         shell: msys2 {0}
@@ -136,12 +143,6 @@ jobs:
           name: windows-x64-portable
           path: ./build/shotcut-win64-${{ env.VERSION }}.zip
 
-      - name: Upload version file
-        uses: actions/upload-artifact@v7
-        with:
-          name: version
-          path: |
-            VERSION
 
   installer:
     if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
@@ -170,16 +171,10 @@ jobs:
           name: windows-x64-portable
           path: dist
 
-      - name: Download version file
-        uses: actions/download-artifact@v6
-        with:
-          name: version
-          path: dist/version
-
       - name: Set version
         shell: msys2 {0}
         run: |
-          VERSION=$(cat dist/version/VERSION)
+          VERSION="${{ needs.build.outputs.version }}"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "PORTABLE_ZIP=dist/shotcut-win64-$VERSION.zip" >> "$GITHUB_ENV"
 
@@ -255,16 +250,10 @@ jobs:
           name: windows-x64-installer
           path: dist
 
-      - name: Download version file
-        uses: actions/download-artifact@v6
-        with:
-          name: version
-          path: dist/version
-
       - name: Upload packages to S3
         shell: bash
         run: |
-          VERSION=$(cat dist/version/VERSION)
+          VERSION="${{ needs.build.outputs.version }}"
           for file in dist/shotcut-win64-$VERSION.zip dist/shotcut-win64-$VERSION.exe; do
             echo Uploading "$file" to S3
             aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
