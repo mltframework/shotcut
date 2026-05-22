@@ -3,7 +3,7 @@ import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr('Valhalla Super Massive')
+    name: 'Valhalla Supermassive'
     mlt_service: 'vst2.1934451059'
     keywords: qsTr('reverb delay modulation', 'search keywords for filter') + ' valhalla supermassive vst2.1934451059'
     qml: 'ui.qml'
