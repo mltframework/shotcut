@@ -4621,8 +4621,29 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                 MLT.refreshConsumer();
             }
             auto savedGeometry = Settings.playerHdrPreviewGeometry();
-            if (savedGeometry.isValid())
-                m_hdrPreviewWindow->restoreGeometry(savedGeometry);
+            if (savedGeometry.isValid()) {
+                if (Settings.playerHdrPreviewFullScreen()) {
+                    // Find the saved screen and position the window there so
+                    // Qt's initialScreen() picks the right monitor for showFullScreen().
+                    QScreen *targetScreen = nullptr;
+                    for (auto *scr : QGuiApplication::screens()) {
+                        if (scr->geometry().contains(savedGeometry.center())) {
+                            targetScreen = scr;
+                            break;
+                        }
+                    }
+                    if (targetScreen) {
+                        m_hdrPreviewWindow->setGeometry(
+                            QRect(targetScreen->geometry().topLeft(), QSize(960, 540)));
+                        m_hdrPreviewWindow->setScreen(targetScreen);
+                        QRect normalGeom(0, 0, 960, 540);
+                        normalGeom.moveCenter(targetScreen->availableGeometry().center());
+                        m_hdrPreviewWindow->setNormalGeometry(normalGeom);
+                    }
+                } else {
+                    m_hdrPreviewWindow->restoreGeometry(savedGeometry);
+                }
+            }
         }
         m_hdrPreviewWindow->show();
         if (Settings.playerHdrPreviewFullScreen())

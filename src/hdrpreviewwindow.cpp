@@ -324,6 +324,11 @@ void HdrPreviewWindow::restoreGeometry(const QRect &r)
     QTimer::singleShot(300, this, [this]() { m_skipDarSnap = false; });
 }
 
+void HdrPreviewWindow::setNormalGeometry(const QRect &r)
+{
+    m_normalGeometry = r;
+}
+
 void HdrPreviewWindow::toggleFullScreen()
 {
     if (windowStates() & Qt::WindowFullScreen) {
