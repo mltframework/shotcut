@@ -232,10 +232,10 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
     case TypeDisplayRole: {
         QVariant result;
         const QmlMetadata *meta = m_metaList[index.row()];
-        if (meta && meta->isAudio()) {
+        if (meta && meta->type() == QmlMetadata::Link) {
+            result = tr("Preprocess");
+        } else if (meta && meta->isAudio()) {
             result = tr("Audio");
-        } else if (meta && meta->type() == QmlMetadata::Link) {
-            result = tr("Time");
         } else if (meta && meta->needsGPU()) {
             result = tr("GPU");
         } else {
