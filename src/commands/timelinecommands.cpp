@@ -806,6 +806,8 @@ void MoveClipCommand::redo()
     redoMarkers();
     selection = m_timeline.uuidsToSelection(uuids);
     m_timeline.setSelection(selection);
+    if (m_trackDelta && !selection.isEmpty())
+        m_timeline.setCurrentTrack(selection.first().y());
 }
 
 void MoveClipCommand::undo()
@@ -821,6 +823,8 @@ void MoveClipCommand::undo()
         selection << QPoint(clip.clipIndex, clip.trackIndex);
     }
     m_timeline.setSelection(selection);
+    if (m_trackDelta && !selection.isEmpty())
+        m_timeline.setCurrentTrack(selection.first().y());
 }
 
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)

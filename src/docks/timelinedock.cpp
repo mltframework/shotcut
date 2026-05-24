@@ -2072,13 +2072,15 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
                                          m_updateCommand->position() + m_position - info->start);
         emit MAIN.serviceInChanged(m_position - info->start, info->producer);
     } else {
-        MAIN.undoStack()->push(
-            new Timeline::TrimClipOutCommand(m_model,
-                                             m_markersModel,
-                                             trackIndex,
-                                             clipIndex,
-                                             info->start + info->frame_count - m_position,
-                                             ripple));
+        int delta = info->start + info->frame_count - m_position;
+        if (!m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple))
+            return;
+        MAIN.undoStack()->push(new Timeline::TrimClipOutCommand(m_model,
+                                                                m_markersModel,
+                                                                trackIndex,
+                                                                clipIndex,
+                                                                delta,
+                                                                ripple));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
