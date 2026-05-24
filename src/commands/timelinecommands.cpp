@@ -705,7 +705,8 @@ void MoveClipCommand::redo()
                                      newStart,
                                      m_ripple,
                                      m_rippleAllTracks);
-                } else if (m_model.isTransition(playlist, clipIndex + 1)) {
+                } else if (targetIndex >= clipIndex
+                           && m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
                     m_model.trimClipOut(trackIndex, clipIndex - 1, -m_positionDelta, true, false);
