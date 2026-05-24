@@ -47,6 +47,7 @@
 #include "docks/recentdock.h"
 #include "docks/subtitlesdock.h"
 #include "docks/timelinedock.h"
+#include "hdrpreviewwindow.h"
 #include "jobqueue.h"
 #include "jobs/screencapturejob.h"
 #include "models/audiolevelstask.h"
@@ -116,6 +117,7 @@
 #include <algorithm>
 
 #define SHOTCUT_THEME
+#define USE_SCREENS_FOR_EXTERNAL_MONITORING
 
 static bool eventDebugCallback(void **data)
 {
@@ -978,16 +980,6 @@ void MainWindow::connectVideoWidgetSignals()
             &Mlt::VideoWidget::initialize,
             Qt::DirectConnection);
     connect(videoWidget->quickWindow(),
-            &QQuickWindow::beforeRendering,
-            videoWidget,
-            &Mlt::VideoWidget::beforeRendering,
-            Qt::DirectConnection);
-    connect(videoWidget->quickWindow(),
-            &QQuickWindow::beforeRenderPassRecording,
-            videoWidget,
-            &Mlt::VideoWidget::renderVideo,
-            Qt::DirectConnection);
-    connect(videoWidget->quickWindow(),
             &QQuickWindow::sceneGraphInitialized,
             this,
             &MainWindow::onSceneGraphInitialized,
@@ -1272,8 +1264,9 @@ void MainWindow::setupSettingsMenu()
     int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
         QAction *action
-            = new QAction(tr("Screen %1 (%2 x %3 @ %4 Hz)")
+            = new QAction(tr("Screen %1 %2 (%3x%4 @ %5Hz)")
                               .arg(i)
+                              .arg(screens[i]->name())
                               .arg(screens[i]->size().width() * screens[i]->devicePixelRatio())
                               .arg(screens[i]->size().height() * screens[i]->devicePixelRatio())
                               .arg(screens[i]->refreshRate()),
@@ -1282,6 +1275,23 @@ void MainWindow::setupSettingsMenu()
         action->setData(i);
         m_externalGroup->addAction(action);
     }
+
+    auto hdrAction = m_externalGroup->addAction(tr("Preview Window (HDR)"));
+    hdrAction->setCheckable(true);
+#ifdef Q_OS_MAC
+    hdrAction->setShortcut(QKeySequence(Qt::META | Qt::Key_QuoteLeft));
+#else
+    hdrAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_QuoteLeft));
+#endif
+    Actions.add("hdrPreviewAction", hdrAction, tr("Player"));
+    connect(hdrAction, &QAction::toggled, this, &MainWindow::onHdrPreviewToggled);
+    connect(hdrAction, &QAction::triggered, this, [this, hdrAction]() {
+        if (hdrAction->isChecked() && m_hdrPreviewWindow) {
+            m_hdrPreviewWindow->show();
+            m_hdrPreviewWindow->raise();
+            m_hdrPreviewWindow->requestActivate();
+        }
+    });
 #endif
 
     Mlt::Profile profile;
@@ -1297,15 +1307,8 @@ void MainWindow::setupSettingsMenu()
                 action->setData(QStringLiteral("decklink:%1").arg(i));
                 m_externalGroup->addAction(action);
 
-                if (!m_decklinkGammaGroup) {
-                    m_decklinkGammaGroup = new QActionGroup(this);
-                    action = new QAction(tr("SDR"), m_decklinkGammaGroup);
-                    action->setData(QVariant(0));
-                    action->setCheckable(true);
-                    action = new QAction(tr("HLG HDR"), m_decklinkGammaGroup);
-                    action->setData(QVariant(1));
-                    action->setCheckable(true);
-                }
+                if (!m_decklinkHdrAction)
+                    m_decklinkHdrAction = new QAction(tr("DeckLink PQ HDR Metadata..."), this);
                 if (!m_keyerGroup) {
                     m_keyerGroup = new QActionGroup(this);
                     action = new QAction(tr("Off"), m_keyerGroup);
@@ -1327,26 +1330,26 @@ void MainWindow::setupSettingsMenu()
         delete ui->menuExternal;
         ui->menuExternal = 0;
     }
-    if (m_decklinkGammaGroup) {
-        m_decklinkGammaMenu = ui->menuExternal->addMenu(tr("DeckLink Gamma"));
-        m_decklinkGammaMenu->addActions(m_decklinkGammaGroup->actions());
-        m_decklinkGammaMenu->setDisabled(true);
-        connect(m_decklinkGammaGroup,
-                &QActionGroup::triggered,
-                this,
-                &MainWindow::onDecklinkGammaTriggered);
-    }
     if (m_keyerGroup) {
         m_keyerMenu = ui->menuExternal->addMenu(tr("DeckLink Keyer"));
         m_keyerMenu->addActions(m_keyerGroup->actions());
         m_keyerMenu->setDisabled(true);
         connect(m_keyerGroup, &QActionGroup::triggered, this, &MainWindow::onKeyerTriggered);
     }
+    if (m_decklinkHdrAction) {
+        ui->menuExternal->addAction(m_decklinkHdrAction);
+        m_decklinkHdrAction->setDisabled(true);
+        connect(m_decklinkHdrAction,
+                &QAction::triggered,
+                this,
+                &MainWindow::onDecklinkHdrMetadataTriggered);
+    }
     connect(m_externalGroup,
             SIGNAL(triggered(QAction *)),
             this,
             SLOT(onExternalTriggered(QAction *)));
     connect(m_profileGroup, SIGNAL(triggered(QAction *)), this, SLOT(onProfileTriggered(QAction *)));
+    updateDecklinkActions();
 
     // Setup the language menu actions
     m_languagesGroup = new QActionGroup(this);
@@ -1531,33 +1534,24 @@ void MainWindow::setupSettingsMenu()
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Setup the display method actions.
-    if (!Settings.playerGPU()) {
-        group = new QActionGroup(this);
-        delete ui->actionDrawingAutomatic;
-        delete ui->actionDrawingDirectX;
-        ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
-        group->addAction(ui->actionDrawingOpenGL);
-        ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
-        group->addAction(ui->actionDrawingSoftware);
-        connect(group,
-                SIGNAL(triggered(QAction *)),
-                this,
-                SLOT(onDrawingMethodTriggered(QAction *)));
-        switch (Settings.drawMethod()) {
-        case Qt::AA_UseDesktopOpenGL:
-            ui->actionDrawingOpenGL->setChecked(true);
-            break;
-        case Qt::AA_UseSoftwareOpenGL:
-            ui->actionDrawingSoftware->setChecked(true);
-            break;
-        default:
-            ui->actionDrawingOpenGL->setChecked(true);
-            break;
-        }
-    } else {
-        // GPU mode only works with OpenGL.
-        delete ui->menuDrawingMethod;
-        ui->menuDrawingMethod = 0;
+    group = new QActionGroup(this);
+    delete ui->actionDrawingAutomatic;
+    delete ui->actionDrawingDirectX;
+    ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
+    group->addAction(ui->actionDrawingOpenGL);
+    ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
+    group->addAction(ui->actionDrawingVulkan);
+    connect(group, SIGNAL(triggered(QAction *)), this, SLOT(onDrawingMethodTriggered(QAction *)));
+    switch (Settings.drawMethod()) {
+    case Qt::AA_UseDesktopOpenGL:
+        ui->actionDrawingOpenGL->setChecked(true);
+        break;
+    case QSGRendererInterface::Vulkan:
+        ui->actionDrawingVulkan->setChecked(true);
+        break;
+    default:
+        ui->actionDrawingOpenGL->setChecked(true);
+        break;
     }
 #else
     delete ui->menuDrawingMethod;
@@ -2555,24 +2549,8 @@ void MainWindow::readPlayerSettings()
 #endif
             if (a->data() == external) {
                 a->setChecked(true);
-                if (a->data().toString().startsWith("decklink")) {
-                    if (m_decklinkGammaMenu)
-                        m_decklinkGammaMenu->setEnabled(true);
-                    if (m_keyerMenu)
-                        m_keyerMenu->setEnabled(true);
-                }
                 break;
             }
-    }
-
-    if (m_decklinkGammaGroup) {
-        auto gamma = Settings.playerDecklinkGamma();
-        for (auto a : m_decklinkGammaGroup->actions()) {
-            if (a->data() == gamma) {
-                a->setChecked(true);
-                break;
-            }
-        }
     }
     if (m_keyerGroup) {
         auto keyer = Settings.playerKeyerMode();
@@ -2582,6 +2560,13 @@ void MainWindow::readPlayerSettings()
                 break;
             }
         }
+    }
+    updateDecklinkActions();
+
+    if (Settings.playerHdrPreview()) {
+        auto hdr = Actions["hdrPreviewAction"];
+        if (hdr)
+            hdr->setChecked(true);
     }
 
     QString profile = Settings.playerProfile();
@@ -2863,6 +2848,12 @@ void MainWindow::writeSettings()
 #endif
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
+    if (m_hdrPreviewWindow) {
+        Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                               & Qt::WindowFullScreen);
+        if (!(m_hdrPreviewWindow->windowStates() & Qt::WindowFullScreen))
+            Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+    }
     Settings.sync();
 }
 
@@ -2906,11 +2897,17 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
-    if (m_decklinkGammaGroup && m_decklinkGammaGroup->isEnabled())
-        MLT.videoWidget()->setProperty("decklinkGamma",
-                                       m_decklinkGammaGroup->checkedAction()->data());
     if (m_keyerGroup)
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxCll", Settings.playerDecklinkHdrMaxCll());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxFall", Settings.playerDecklinkHdrMaxFall());
+    MLT.videoWidget()->setProperty("decklinkHdrMasterPreset",
+                                   Settings.playerDecklinkHdrMasterPreset());
+    MLT.videoWidget()->setProperty("decklinkHdrMaxLuminance",
+                                   Settings.playerDecklinkHdrMaxLuminance());
+    MLT.videoWidget()->setProperty("decklinkHdrMinLuminance",
+                                   Settings.playerDecklinkHdrMinLuminance());
+    updateDecklinkActions();
     LOG_DEBUG() << "end";
 }
 
@@ -4574,9 +4571,114 @@ void MainWindow::on_actionJack_triggered(bool checked)
     }
 }
 
+void MainWindow::onHdrPreviewToggled(bool checked)
+{
+    if (checked) {
+        if (!m_hdrPreviewWindow) {
+            m_hdrPreviewWindow = new HdrPreviewWindow();
+            auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::videoFrameReady,
+                    m_hdrPreviewWindow,
+                    &HdrPreviewWindow::pushFrame);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::hdrTransferChanged,
+                    m_hdrPreviewWindow,
+                    &HdrPreviewWindow::setHdrTransfer);
+            m_hdrPreviewWindow->setHdrTransfer(hdrTransferFromTrc(MLT.colorTrc()));
+            auto *win = m_hdrPreviewWindow;
+            connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
+            connect(m_player, &Player::paused, win, [win](int) { win->setPlaying(false); });
+            connect(m_player, &Player::stopped, win, [win]() { win->setPlaying(false); });
+            win->setPlaying(!MLT.isPaused());
+            connect(m_hdrPreviewWindow, &HdrPreviewWindow::hdrModeRestartRequested, this, [this]() {
+                QMessageBox dialog(
+                    QMessageBox::Question,
+                    qApp->applicationName(),
+                    tr("Moving the preview window from an SDR to HDR screen requires a restart.\n"
+                       "Do you want to restart now?"),
+                    QMessageBox::No | QMessageBox::Yes,
+                    this);
+                dialog.setDefaultButton(QMessageBox::No);
+                dialog.setEscapeButton(QMessageBox::No);
+                dialog.setWindowModality(QmlApplication::dialogModality());
+                if (dialog.exec() == QMessageBox::Yes) {
+                    m_exitCode = EXIT_RESTART;
+                    QApplication::closeAllWindows();
+                }
+            });
+            connect(m_hdrPreviewWindow, &QWindow::visibleChanged, this, [this](bool visible) {
+                if (!visible && m_hdrPreviewWindow) {
+                    Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                                           & Qt::WindowFullScreen);
+                    Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+                    Actions["hdrPreviewAction"]->setChecked(false);
+                }
+            });
+            win->setPlaying(!MLT.isPaused());
+            if (MLT.isPaused()) {
+                // Ensure the last frame is shown in the preview when paused.
+                MLT.refreshConsumer();
+            }
+            auto savedGeometry = Settings.playerHdrPreviewGeometry();
+            if (savedGeometry.isValid()) {
+                if (Settings.playerHdrPreviewFullScreen()) {
+                    // Find the saved screen and position the window there so
+                    // Qt's initialScreen() picks the right monitor for showFullScreen().
+                    QScreen *targetScreen = nullptr;
+                    for (auto *scr : QGuiApplication::screens()) {
+                        if (scr->geometry().contains(savedGeometry.center())) {
+                            targetScreen = scr;
+                            break;
+                        }
+                    }
+                    if (targetScreen) {
+                        m_hdrPreviewWindow->setGeometry(
+                            QRect(targetScreen->geometry().topLeft(), QSize(960, 540)));
+                        m_hdrPreviewWindow->setScreen(targetScreen);
+                        QRect normalGeom(0, 0, 960, 540);
+                        normalGeom.moveCenter(targetScreen->availableGeometry().center());
+                        m_hdrPreviewWindow->setNormalGeometry(normalGeom);
+                    }
+                } else {
+                    m_hdrPreviewWindow->restoreGeometry(savedGeometry);
+                }
+            }
+        }
+        m_hdrPreviewWindow->show();
+        if (Settings.playerHdrPreviewFullScreen())
+            m_hdrPreviewWindow->showFullScreen();
+    } else {
+        if (m_hdrPreviewWindow) {
+            Settings.setPlayerHdrPreviewFullScreen(m_hdrPreviewWindow->windowStates()
+                                                   & Qt::WindowFullScreen);
+            Settings.setPlayerHdrPreviewGeometry(m_hdrPreviewWindow->geometry());
+            m_hdrPreviewWindow->deleteLater();
+            m_hdrPreviewWindow = nullptr;
+        }
+    }
+    Settings.setPlayerHdrPreview(checked);
+    if (checked && Settings.playerGPU() && MLT.producer()) {
+        if (confirmRestartExternalMonitor()) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+    }
+}
+
 void MainWindow::onExternalTriggered(QAction *action)
 {
     LOG_DEBUG() << action->data().toString();
+    // The HDR preview action lives in m_externalGroup so that it appears in
+    // the External menu and participates in the mutual-exclusion toggle, but
+    // it has its own toggled handler — skip the normal external-monitor path.
+    // Also skip when switching from HDR preview back to None since the HDR
+    // preview doesn't use an external MLT consumer.
+    if (action == Actions["hdrPreviewAction"]
+        || (action->data().toString().isEmpty() && Settings.playerExternal().isEmpty())) {
+        Settings.setPlayerExternal(action->data().toString());
+        return;
+    }
     bool isExternal = !action->data().toString().isEmpty();
     QString profile = Settings.playerProfile();
     if (Settings.playerGPU() && MLT.producer() && Settings.playerExternal() != action->data()) {
@@ -4592,15 +4694,10 @@ void MainWindow::onExternalTriggered(QAction *action)
             for (auto a : m_externalGroup->actions()) {
                 if (a->data() == Settings.playerExternal()) {
                     a->setChecked(true);
-                    if (a->data().toString().startsWith("decklink")) {
-                        if (m_decklinkGammaMenu)
-                            m_decklinkGammaMenu->setEnabled(true);
-                        if (m_keyerMenu)
-                            m_keyerMenu->setEnabled(true);
-                    }
                     break;
                 }
             }
+            updateDecklinkActions();
         }
         return;
     }
@@ -4645,12 +4742,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.consumer()->set("progressive", isProgressive);
         MLT.consumerChanged();
     }
-    if (action->data().toString().startsWith("decklink")) {
-        if (m_decklinkGammaMenu)
-            m_decklinkGammaMenu->setEnabled(true);
-        if (m_keyerMenu)
-            m_keyerMenu->setEnabled(true);
-    }
+    updateDecklinkActions();
 
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
@@ -4663,28 +4755,95 @@ void MainWindow::onExternalTriggered(QAction *action)
     setPreviewScale(Settings.playerPreviewScale());
 }
 
-void MainWindow::onDecklinkGammaTriggered(QAction *action)
+void MainWindow::onDecklinkHdrMetadataTriggered()
 {
-    LOG_DEBUG() << action->data().toString();
-    MLT.videoWidget()->setProperty("decklinkGamma", action->data());
+    QDialog dialog(this);
+    dialog.setWindowTitle(tr("DeckLink HDR Metadata"));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+
+    auto *form = new QFormLayout;
+    form->setLabelAlignment(Qt::AlignRight);
+
+    auto *maxCllSpin = new QSpinBox;
+    maxCllSpin->setRange(1, 65535);
+    maxCllSpin->setValue(Settings.playerDecklinkHdrMaxCll());
+    maxCllSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxCllSpin->setToolTip(
+        tr("Maximum Content Light Level (MaxCLL): the brightest single pixel in the signal"));
+    form->addRow(tr("MaxCLL"), maxCllSpin);
+
+    auto *maxFallSpin = new QSpinBox;
+    maxFallSpin->setRange(1, 65535);
+    maxFallSpin->setValue(Settings.playerDecklinkHdrMaxFall());
+    maxFallSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxFallSpin->setToolTip(
+        tr("Maximum Frame-Average Light Level (MaxFALL): the brightest average frame"));
+    form->addRow(tr("MaxFALL"), maxFallSpin);
+
+    auto *primaryCombo = new QComboBox;
+    primaryCombo->addItem(tr("BT.2020 / Rec.2020"));
+    primaryCombo->addItem(tr("Display P3 (D65)"));
+    primaryCombo->setCurrentIndex(Settings.playerDecklinkHdrMasterPreset());
+    form->addRow(tr("Color primaries"), primaryCombo);
+
+    auto *maxLumSpin = new QSpinBox;
+    maxLumSpin->setRange(1, 65535);
+    maxLumSpin->setValue(Settings.playerDecklinkHdrMaxLuminance());
+    maxLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    maxLumSpin->setToolTip(tr("Display mastering maximum luminance"));
+    form->addRow(tr("Display max luminance"), maxLumSpin);
+
+    auto *minLumSpin = new QDoubleSpinBox;
+    minLumSpin->setRange(0.0001, 6.5535);
+    minLumSpin->setDecimals(4);
+    minLumSpin->setSingleStep(0.0001);
+    minLumSpin->setValue(Settings.playerDecklinkHdrMinLuminance());
+    minLumSpin->setSuffix(tr(" nits", "a measure of brightness"));
+    minLumSpin->setToolTip(tr("Display mastering minimum luminance"));
+    form->addRow(tr("Display min luminance"), minLumSpin);
+
+    auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    auto *vbox = new QVBoxLayout;
+    vbox->addLayout(form);
+    vbox->addWidget(buttons);
+    dialog.setLayout(vbox);
+
+    if (dialog.exec() != QDialog::Accepted)
+        return;
+
+    const int maxCll = maxCllSpin->value();
+    const int maxFall = maxFallSpin->value();
+    const int masterPreset = primaryCombo->currentIndex();
+    const int maxLuminance = maxLumSpin->value();
+    const double minLuminance = minLumSpin->value();
+
     if (Settings.playerGPU() && MLT.producer()) {
-        if (confirmRestartExternalMonitor()) {
-            Settings.setPlayerDecklinkGamma(action->data().toInt());
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        } else {
-            auto gamma = Settings.playerDecklinkGamma();
-            for (auto a : m_decklinkGammaGroup->actions()) {
-                if (a->data() == gamma) {
-                    a->setChecked(true);
-                    break;
-                }
-            }
-        }
+        if (!confirmRestartExternalMonitor())
+            return;
+        Settings.setPlayerDecklinkHdrMaxCll(maxCll);
+        Settings.setPlayerDecklinkHdrMaxFall(maxFall);
+        Settings.setPlayerDecklinkHdrMasterPreset(masterPreset);
+        Settings.setPlayerDecklinkHdrMaxLuminance(maxLuminance);
+        Settings.setPlayerDecklinkHdrMinLuminance(minLuminance);
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
         return;
     }
+
+    Settings.setPlayerDecklinkHdrMaxCll(maxCll);
+    Settings.setPlayerDecklinkHdrMaxFall(maxFall);
+    Settings.setPlayerDecklinkHdrMasterPreset(masterPreset);
+    Settings.setPlayerDecklinkHdrMaxLuminance(maxLuminance);
+    Settings.setPlayerDecklinkHdrMinLuminance(minLuminance);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxCll", maxCll);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxFall", maxFall);
+    MLT.videoWidget()->setProperty("decklinkHdrMasterPreset", masterPreset);
+    MLT.videoWidget()->setProperty("decklinkHdrMaxLuminance", maxLuminance);
+    MLT.videoWidget()->setProperty("decklinkHdrMinLuminance", minLuminance);
     MLT.consumerChanged();
-    Settings.setPlayerDecklinkGamma(action->data().toInt());
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)
@@ -4746,6 +4905,7 @@ void MainWindow::onProfileChanged()
         && (m_timelineDock->selection().isEmpty() || m_timelineDock->currentTrack() == -1)) {
         emit m_timelineDock->selected(multitrack());
     }
+    updateDecklinkActions();
     updateWindowTitle();
 }
 
@@ -4863,6 +5023,17 @@ bool MainWindow::confirmRestartExternalMonitor()
     return dialog.exec() == QMessageBox::Yes;
 }
 
+void MainWindow::updateDecklinkActions()
+{
+    const QAction *checkedExternal = m_externalGroup ? m_externalGroup->checkedAction() : nullptr;
+    const bool isDecklink = checkedExternal
+                            && checkedExternal->data().toString().startsWith("decklink");
+    if (m_keyerMenu)
+        m_keyerMenu->setEnabled(isDecklink);
+    if (m_decklinkHdrAction)
+        m_decklinkHdrAction->setEnabled(isDecklink && MLT.colorTrc() == QLatin1String("smpte2084"));
+}
+
 void MainWindow::resetFilterMenuIfNeeded()
 {
     // Reset to Favorites if currently set to Color or Audio
@@ -4975,6 +5146,7 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 
 void MainWindow::on_menuExternal_aboutToShow()
 {
+    updateDecklinkActions();
 #ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;

@@ -18,7 +18,7 @@ cmake --build build/cc-debug
 build/cc-debug/src/shotcut
 ```
 
-The default preset `cc-debug` (defined in `CMakePresets.json`) uses Ninja, gcc or clang from `$PATH` and Qt 6.8.3 from `~/Qt/6.8.3`, and produces a Debug build.
+The default preset `cc-debug` (defined in `CMakePresets.json`) uses Ninja, gcc or clang from `$PATH` and Qt 6.10.3 from `~/Qt/6.10.3`, and produces a Debug build.
 
 To properly debug on Windows you must set the environment variable `QSG_RHI_BACKEND=d3d11` to prevent running as a child process detached from the debugger.
 

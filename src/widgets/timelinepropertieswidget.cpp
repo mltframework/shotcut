@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2025 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include "mltcontroller.h"
 #include "util.h"
+#include "videowidget.h"
 
 TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidget *parent)
     : QWidget(parent)
@@ -49,6 +50,17 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
             ui->colorspaceLabel->setText("ITU-R BT.2020");
         else
             ui->colorspaceLabel->setText("");
+        switch (hdrTransferFromTrc(MLT.colorTrc())) {
+        case HdrTransfer::HLG:
+            ui->dynamicRangeValueLabel->setText("HLG HDR");
+            break;
+        case HdrTransfer::PQ:
+            ui->dynamicRangeValueLabel->setText("PQ HDR");
+            break;
+        default:
+            ui->dynamicRangeValueLabel->setText("SDR");
+            break;
+        }
     }
 }
 

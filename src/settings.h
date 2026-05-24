@@ -22,6 +22,7 @@
 #include <QByteArray>
 #include <QKeySequence>
 #include <QObject>
+#include <QRect>
 #include <QSettings>
 #include <QStringList>
 #include <QThread>
@@ -161,8 +162,16 @@ public:
     void setPlayerInterpolation(const QString &);
     bool playerJACK() const;
     void setPlayerJACK(bool);
-    int playerDecklinkGamma() const;
-    void setPlayerDecklinkGamma(int);
+    int playerDecklinkHdrMaxCll() const;
+    void setPlayerDecklinkHdrMaxCll(int);
+    int playerDecklinkHdrMaxFall() const;
+    void setPlayerDecklinkHdrMaxFall(int);
+    int playerDecklinkHdrMasterPreset() const;
+    void setPlayerDecklinkHdrMasterPreset(int);
+    int playerDecklinkHdrMaxLuminance() const;
+    void setPlayerDecklinkHdrMaxLuminance(int);
+    double playerDecklinkHdrMinLuminance() const;
+    void setPlayerDecklinkHdrMinLuminance(double);
     int playerKeyerMode() const;
     void setPlayerKeyerMode(int);
     bool playerMuted() const;
@@ -192,6 +201,18 @@ public:
     void setPlayerAudioDriver(const QString &s);
     bool playerPauseAfterSeek() const;
     void setPlayerPauseAfterSeek(bool);
+    bool playerHdrPreview() const;
+    void setPlayerHdrPreview(bool);
+    QRect playerHdrPreviewGeometry() const;
+    void setPlayerHdrPreviewGeometry(const QRect &);
+    bool playerHdrPreviewFullScreen() const;
+    void setPlayerHdrPreviewFullScreen(bool);
+    int playerHdrDisplayPeakNits() const;
+    void setPlayerHdrDisplayPeakNits(int);
+    int playerHdrContentPeakNits() const;
+    void setPlayerHdrContentPeakNits(int);
+    bool playerHdrToneMapping() const;
+    void setPlayerHdrToneMapping(bool);
 
     // playlist
     QString playlistThumbnails() const;

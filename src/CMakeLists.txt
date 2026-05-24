@@ -151,6 +151,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   transportcontrol.h
   util.cpp util.h
   videowidget.cpp videowidget.h
+  hdrpreviewwindow.cpp hdrpreviewwindow.h
   widgets/alsawidget.cpp widgets/alsawidget.h
   widgets/alsawidget.ui
   widgets/audiometerwidget.cpp widgets/audiometerwidget.h
@@ -271,12 +272,31 @@ add_custom_target(OTHER_FILES
   ../scripts/staple.sh
 )
 
+# Compile HDR gain shader (used by HdrPreview.qml ShaderEffect)
+find_program(QSB_EXECUTABLE qsb HINTS
+  "${Qt6_DIR}/../../../bin" "${Qt6Core_DIR}/../../../bin")
+if(QSB_EXECUTABLE)
+  set(HDR_GAIN_FRAG ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag)
+  set(HDR_GAIN_QSB ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/hdr_gain.frag.qsb)
+  if(NOT EXISTS ${HDR_GAIN_QSB})
+    add_custom_command(
+      OUTPUT ${HDR_GAIN_QSB}
+      COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${HDR_GAIN_QSB} ${HDR_GAIN_FRAG}
+      DEPENDS ${HDR_GAIN_FRAG}
+      COMMENT "Compiling HDR gain shader"
+    )
+  endif()
+  add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB})
+  add_dependencies(shotcut hdr_shaders)
+endif()
+
 target_link_libraries(shotcut
   PRIVATE
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
   Qt6::Charts
+  Qt6::GuiPrivate
   Qt6::Multimedia
   Qt6::Network
   Qt6::OpenGL
@@ -306,6 +326,9 @@ endif()
 if(USE_VULKAN)
   target_compile_definitions(shotcut PRIVATE USE_VULKAN)
 endif()
+if(BUILD_MINIMAL_MEDIA_BACKEND)
+  target_compile_definitions(shotcut PRIVATE BUILD_MINIMAL_MEDIA_BACKEND)
+endif()
 
 if(WIN32)
   # Windows resource
@@ -315,9 +338,7 @@ if(WIN32)
 
   # Windows integration features
   target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
-  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
-  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler ole32)
+  target_link_libraries(shotcut PRIVATE ole32)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
@@ -336,13 +357,10 @@ if(WIN32)
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
-else()
-    target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h
-    widgets/metalvideowidget.h widgets/metalvideowidget.mm)
+  target_sources(shotcut PRIVATE macos.mm macos.h)
   set_target_properties(shotcut PROPERTIES
     OUTPUT_NAME "Shotcut"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)

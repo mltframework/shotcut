@@ -681,14 +681,54 @@ void ShotcutSettings::setPlayerJACK(bool b)
     settings.setValue("player/jack", b);
 }
 
-int ShotcutSettings::playerDecklinkGamma() const
+int ShotcutSettings::playerDecklinkHdrMaxCll() const
 {
-    return settings.value("player/decklinkGamma", 0).toInt();
+    return settings.value("player/decklinkHdrMaxCll", 1000).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkGamma(int i)
+void ShotcutSettings::setPlayerDecklinkHdrMaxCll(int nits)
 {
-    settings.setValue("player/decklinkGamma", i);
+    settings.setValue("player/decklinkHdrMaxCll", nits);
+}
+
+int ShotcutSettings::playerDecklinkHdrMaxFall() const
+{
+    return settings.value("player/decklinkHdrMaxFall", 400).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMaxFall(int nits)
+{
+    settings.setValue("player/decklinkHdrMaxFall", nits);
+}
+
+int ShotcutSettings::playerDecklinkHdrMasterPreset() const
+{
+    return settings.value("player/decklinkHdrMasterPreset", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMasterPreset(int preset)
+{
+    settings.setValue("player/decklinkHdrMasterPreset", preset);
+}
+
+int ShotcutSettings::playerDecklinkHdrMaxLuminance() const
+{
+    return settings.value("player/decklinkHdrMaxLuminance", 1000).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMaxLuminance(int nits)
+{
+    settings.setValue("player/decklinkHdrMaxLuminance", nits);
+}
+
+double ShotcutSettings::playerDecklinkHdrMinLuminance() const
+{
+    return settings.value("player/decklinkHdrMinLuminance", 0.01).toDouble();
+}
+
+void ShotcutSettings::setPlayerDecklinkHdrMinLuminance(double nits)
+{
+    settings.setValue("player/decklinkHdrMinLuminance", nits);
 }
 
 int ShotcutSettings::playerKeyerMode() const
@@ -843,6 +883,66 @@ bool ShotcutSettings::playerPauseAfterSeek() const
 void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
 {
     settings.setValue("player/pauseAfterSeek", b);
+}
+
+bool ShotcutSettings::playerHdrPreview() const
+{
+    return settings.value("player/hdrPreview", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreview(bool b)
+{
+    settings.setValue("player/hdrPreview", b);
+}
+
+QRect ShotcutSettings::playerHdrPreviewGeometry() const
+{
+    return settings.value("player/hdrPreviewGeometry").toRect();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewGeometry(const QRect &r)
+{
+    settings.setValue("player/hdrPreviewGeometry", r);
+}
+
+bool ShotcutSettings::playerHdrPreviewFullScreen() const
+{
+    return settings.value("player/hdrPreviewFullScreen", false).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrPreviewFullScreen(bool b)
+{
+    settings.setValue("player/hdrPreviewFullScreen", b);
+}
+
+int ShotcutSettings::playerHdrDisplayPeakNits() const
+{
+    return settings.value("player/hdrDisplayPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrDisplayPeakNits(int nits)
+{
+    settings.setValue("player/hdrDisplayPeakNits", nits);
+}
+
+int ShotcutSettings::playerHdrContentPeakNits() const
+{
+    return settings.value("player/hdrContentPeakNits", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerHdrContentPeakNits(int nits)
+{
+    settings.setValue("player/hdrContentPeakNits", nits);
+}
+
+bool ShotcutSettings::playerHdrToneMapping() const
+{
+    return settings.value("player/hdrToneMapping", true).toBool();
+}
+
+void ShotcutSettings::setPlayerHdrToneMapping(bool b)
+{
+    settings.setValue("player/hdrToneMapping", b);
 }
 
 QString ShotcutSettings::playlistThumbnails() const

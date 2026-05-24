@@ -143,6 +143,8 @@ private slots:
 
     void on_coverArtButton_clicked();
 
+    void on_hdrMetaButton_clicked();
+
 private:
     enum {
         RateControlAverage = 0,
@@ -168,6 +170,11 @@ private:
     QStringList m_intraOnlyCodecs;
     QStringList m_losslessVideoCodecs;
     QStringList m_losslessAudioCodecs;
+    int m_hdrMaxCll{1000};
+    int m_hdrMaxFall{400};
+    int m_hdrMasterPreset{0}; // 0=BT.2020, 1=P3-D65
+    int m_hdrMaxLuminance{1000};
+    double m_hdrMinLuminance{0.01};
 
     void loadPresets();
     Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
@@ -194,6 +201,7 @@ private:
     Mlt::Producer *fromProducer(bool usePlaylistBin = false) const;
     static void filterCodecParams(const QString &vcodec, QStringList &other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false, bool resetBframes = true);
+    void updateHdrMetaButton();
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
     void initSpecialCodecLists();

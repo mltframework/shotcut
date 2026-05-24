@@ -2658,6 +2658,7 @@ bool MultitrackModel::createIfNeeded()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
+        m_tractor->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
         m_tractor->set(kShotcutXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
@@ -2929,6 +2930,7 @@ int MultitrackModel::addAudioTrack()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
+        m_tractor->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
         m_tractor->set(kShotcutXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
@@ -3597,6 +3599,8 @@ void MultitrackModel::load()
     MLT.producer()->set("resource", "<tractor>");
     MLT.profile().set_explicit(true);
     m_tractor = new Mlt::Tractor(*MLT.producer());
+    if (m_tractor->property_exists(kShotcutColorTransfer))
+        MLT.setColorTrc(QString::fromLatin1(m_tractor->get(kShotcutColorTransfer)));
     if (!m_tractor->is_valid()) {
         delete m_tractor;
         m_tractor = 0;

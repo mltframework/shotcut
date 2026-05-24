@@ -938,7 +938,7 @@ function set_globals {
     CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=."
     CONFIG[7]="${CONFIG[7]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   else
-    CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR"
+    CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_MINIMAL_MEDIA_BACKEND=ON"
   fi
   CFLAGS_[7]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[7]="$ASAN_LDFLAGS $LDFLAGS"
@@ -1230,13 +1230,15 @@ function install_shotcut_linux {
   cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
   cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
   cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Concurrent,Core,Core5Compat,DBus,Gui,LabsFolderListModel,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
+  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Concurrent,Core,Core5Compat,DBus,Gui,LabsFolderListModel,Multimedia,MultimediaQuick,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
   cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
   cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
-  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtMultimedia,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
+  cmd cp -p MinimalMediaBackend/libminimalmediaplugin.so "$FINAL_INSTALL_DIR"/lib/qt6/multimedia
 }
 
 function build_vmaf_darwin {
@@ -1984,7 +1986,7 @@ function deploy_mac
   # Qt QML modules
   log Copying Qt QML modules
   cmd mkdir -p Resources/qml 2>/dev/null
-  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} Resources/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtMultimedia,QtQml,QtQuick} Resources/qml
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done

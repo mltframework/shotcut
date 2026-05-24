@@ -23,6 +23,9 @@ endif()
 option(CLANG_FORMAT "Enable Clang Format" ON)
 option(EXTERNAL_LAUNCHERS "Whether include features to launch external programs; for example, this should be off for Flatpak due to sandbox." ON)
 option(USE_VULKAN "Whether to use Vulkan for hardware video decoding" OFF)
+if (UNIX AND NOT APPLE)
+  option(BUILD_MINIMAL_MEDIA_BACKEND "Whether to build the `minimal` Qt media backend for Linux/BSD" OFF)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -50,6 +53,9 @@ find_package(Qt6 6.4 REQUIRED
   Widgets
   Xml
 )
+if(Qt6_VERSION VERSION_GREATER_EQUAL "6.9.0")
+  find_package(Qt6 6.4 REQUIRED GuiPrivate)
+endif()
 if(UNIX AND NOT APPLE)
   find_package(Qt6 6.4 REQUIRED COMPONENTS DBus)
   # X11 for WindowPicker (Linux/X11)
@@ -66,6 +72,9 @@ endif()
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)
+if(UNIX AND NOT APPLE AND BUILD_MINIMAL_MEDIA_BACKEND)
+  add_subdirectory(MinimalMediaBackend)
+endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -81,7 +90,7 @@ if(CLANG_FORMAT)
   # Test new versions before changing the allowed version here to avoid
   # accidental broad changes to formatting.
   find_package(ClangFormat 14 EXACT)
-  if(CLANGFORMAT_FOUND)
+  if(ClangFormat_FOUND)
     file(GLOB_RECURSE FORMAT_FILES "src/*.h" "src/*.c" "src/*.cpp")
     # exclude 3rd party & generated source from format checking
     list(FILTER FORMAT_FILES EXCLUDE REGEX "/.*/spatialmedia/")

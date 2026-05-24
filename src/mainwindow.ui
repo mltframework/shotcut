@@ -121,6 +121,14 @@
     <property name="title">
      <string>&amp;Player</string>
     </property>
+    <widget class="QMenu" name="menuExternal">
+     <property name="title">
+      <string>External Monitor</string>
+     </property>
+     <addaction name="actionExternalNone"/>
+    </widget>
+    <addaction name="menuExternal"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -186,7 +194,7 @@
      <addaction name="actionDrawingAutomatic"/>
      <addaction name="actionDrawingOpenGL"/>
      <addaction name="actionDrawingDirectX"/>
-     <addaction name="actionDrawingSoftware"/>
+     <addaction name="actionDrawingVulkan"/>
     </widget>
     <widget class="QMenu" name="menuJobPriority">
      <property name="title">
@@ -273,12 +281,6 @@
       <addaction name="actionBicubic"/>
       <addaction name="actionHyper"/>
      </widget>
-     <widget class="QMenu" name="menuExternal">
-      <property name="title">
-       <string>External Monitor</string>
-      </property>
-      <addaction name="actionExternalNone"/>
-     </widget>
      <addaction name="actionPauseAfterSeek"/>
      <addaction name="actionScrubAudio"/>
      <addaction name="actionJack"/>
@@ -286,7 +288,6 @@
      <addaction name="actionProgressive"/>
      <addaction name="menuDeinterlacer"/>
      <addaction name="menuInterpolation"/>
-     <addaction name="menuExternal"/>
      <addaction name="actionSync"/>
     </widget>
     <widget class="QMenu" name="menuBackup">
@@ -904,14 +905,6 @@
    </property>
    <property name="text">
     <string notr="true">DirectX (ANGLE)</string>
-   </property>
-  </action>
-  <action name="actionDrawingSoftware">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string extracomment="Do not translate &quot;Mesa&quot;">Software (Mesa)</string>
    </property>
   </action>
   <action name="actionJobPriorityLow">
@@ -1559,6 +1552,20 @@
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F1</string>
+   </property>
+  </action>
+  <action name="actionDrawingVulkan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string notr="true">Vulkan</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Vulkan</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Vulkan</string>
    </property>
   </action>
   <action name="actionLeaveSafeMode">
