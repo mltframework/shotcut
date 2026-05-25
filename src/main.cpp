@@ -25,6 +25,8 @@
 #include <QCommandLineParser>
 #include <QElapsedTimer>
 #include <QFile>
+#include <QLocalServer>
+#include <QLocalSocket>
 #include <QProcess>
 #include <QQuickStyle>
 #include <QQuickWindow>
@@ -332,10 +334,23 @@ protected:
     {
         if (event->type() == QEvent::FileOpen) {
             QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
-            resourceArg << openEvent->file();
+            if (mainWindow) {
+                mainWindow->openMultiple(QStringList() << openEvent->file());
+            } else {
+                // Running as the watchdog parent — forward to the child via IPC.
+                QLocalSocket socket;
+                socket.connectToServer("shotcut-file-open");
+                if (socket.waitForConnected(500)) {
+                    socket.write(openEvent->file().toUtf8());
+                    socket.waitForBytesWritten(500);
+                    socket.disconnectFromServer();
+                } else {
+                    resourceArg << openEvent->file();
+                }
+            }
             return true;
-        } else
-            return QApplication::event(event);
+        }
+        return QApplication::event(event);
     }
 };
 
@@ -491,6 +506,22 @@ int main(int argc, char **argv)
         a.processEvents();
         a.mainWindow->setFullScreen(a.isFullScreen);
         splash.finish(a.mainWindow);
+
+        // Set up a local IPC server so the watchdog parent can forward
+        // QFileOpenEvent file paths (e.g. files opened from Finder on macOS)
+        // to this child process which holds the actual main window.
+        QLocalServer fileOpenServer;
+        QLocalServer::removeServer("shotcut-file-open");
+        fileOpenServer.listen("shotcut-file-open");
+        QObject::connect(&fileOpenServer, &QLocalServer::newConnection, [&]() {
+            QLocalSocket *socket = fileOpenServer.nextPendingConnection();
+            QObject::connect(socket, &QLocalSocket::readyRead, [socket, &a]() {
+                QString filePath = QString::fromUtf8(socket->readAll());
+                if (!filePath.isEmpty() && a.mainWindow)
+                    a.mainWindow->openMultiple(QStringList() << filePath);
+                socket->deleteLater();
+            });
+        });
 
         if (!a.resourceArg.isEmpty()) {
             QStringList ls;
