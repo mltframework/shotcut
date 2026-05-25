@@ -39,8 +39,8 @@
 #include <algorithm>
 #include <limits>
 
-#include "shotcut_mlt_properties.h"
 #include "models/keyframestask.h"
+#include "shotcut_mlt_properties.h"
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
@@ -982,7 +982,8 @@ void Player::seek(int position)
             emit positionRequested(clampedPos);
             // Two-phase seek: immediately seek to the preceding keyframe K for quick visual
             // feedback. Then debounce seeking to the precise position until scrubbing settles.
-            if (qAbs(position - m_position) > SEEK_KEYFRAME_THRESHOLD_SECONDS * qRound(MLT.profile().fps())) {
+            if (qAbs(position - m_position)
+                > SEEK_KEYFRAME_THRESHOLD_SECONDS * qRound(MLT.profile().fps())) {
                 const int K = precedingKeyframeForProducer(MLT.producer(), clampedPos);
                 if (K != clampedPos) {
                     emit seeked(K);

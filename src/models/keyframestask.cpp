@@ -28,9 +28,9 @@
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QImage>
+#include <QMap>
 #include <QMutex>
 #include <QProcess>
-#include <QMap>
 #include <QRgb>
 #include <QThreadPool>
 
@@ -283,7 +283,8 @@ void KeyframesTask::run()
             if (s.mightBeIntraOnly && s.packetCount >= INTRA_ONLY_CHECK) {
                 // Stream confirmed intra-only; tag it and stop collecting keyframes for it.
                 s.keyframes = {kIntraOnlySentinel};
-            } else if (isKeyframe && (s.keyframes.isEmpty() || s.keyframes.last() != kIntraOnlySentinel)) {
+            } else if (isKeyframe
+                       && (s.keyframes.isEmpty() || s.keyframes.last() != kIntraOnlySentinel)) {
                 const int frameNum = qRound((ptsTime - s.firstPtsTime) * fps);
                 s.keyframes.append(frameNum);
             }
@@ -372,6 +373,6 @@ void KeyframesTask::run()
     int total = 0;
     for (const auto &kf : kfMap)
         total += kf.size();
-    LOG_DEBUG() << "KeyframesTask: stored" << total << "keyframes for" << resource
-                << "across" << kfMap.size() << "video stream(s)";
+    LOG_DEBUG() << "KeyframesTask: stored" << total << "keyframes for" << resource << "across"
+                << kfMap.size() << "video stream(s)";
 }

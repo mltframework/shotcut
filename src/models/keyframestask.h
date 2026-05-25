@@ -19,11 +19,11 @@
 #define KEYFRAMESTASK_H
 
 #include <MltProducer.h>
+#include <climits>
 #include <QList>
 #include <QMap>
 #include <QRunnable>
 #include <QVector>
-#include <climits>
 
 // Stored in a stream's keyframe vector to mean "this stream is intra-only;
 // every frame is a keyframe, so two-phase seek can be skipped."
