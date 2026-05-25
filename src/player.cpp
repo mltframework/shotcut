@@ -30,13 +30,23 @@
 #include "widgets/statuslabelwidget.h"
 #include "widgets/timespinbox.h"
 
+#include <MltChain.h>
+#include <MltPlaylist.h>
+#include <MltTractor.h>
+#include <QMap>
 #include <QtWidgets>
 
+#include <algorithm>
 #include <limits>
+
+#include "shotcut_mlt_properties.h"
+#include "models/keyframestask.h"
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
+static constexpr const int SEEK_DEBOUNCE_INTERVAL_MS = 100;
+static constexpr const int SEEK_KEYFRAME_THRESHOLD_SECONDS = 2;
 
 class NoWheelTabBar : public QTabBar
 {
@@ -73,6 +83,8 @@ Player::Player(QWidget *parent)
     , m_currentTransport(nullptr)
     , m_loopStart(-1)
     , m_loopEnd(-1)
+    , m_seekTargetPosition(SEEK_INACTIVE)
+    , m_seekDebounceTimer(nullptr)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
@@ -448,6 +460,11 @@ Player::Player(QWidget *parent)
     });
 
     setFocusPolicy(Qt::StrongFocus);
+
+    m_seekDebounceTimer = new QTimer(this);
+    m_seekDebounceTimer->setSingleShot(true);
+    m_seekDebounceTimer->setInterval(SEEK_DEBOUNCE_INTERVAL_MS);
+    connect(m_seekDebounceTimer, &QTimer::timeout, this, &Player::onSeekDebounceTimerFired);
 }
 
 void Player::connectTransport(const TransportControllable *receiver)
@@ -884,17 +901,134 @@ void Player::stop()
     Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
 }
 
+static int precedingKeyframe(const QVector<int> &kf, int position)
+{
+    // kf is sorted ascending; return the largest value <= position
+    auto it = std::lower_bound(kf.constBegin(), kf.constEnd(), position);
+    if (it != kf.constEnd() && *it == position) {
+        return position;
+    }
+    if (it == kf.constBegin()) {
+        return 0;
+    }
+    --it;
+    return *it;
+}
+
+// Returns the preceding keyframe position in the same coordinate system as
+// `position`.  For a tractor (timeline) producer the topmost video track is
+// searched; for a single clip the clip's own keyframe list is used.  Returns
+// `position` when no usable keyframe data is found (treat as direct seek).
+static int precedingKeyframeForProducer(Mlt::Producer *producer, int position)
+{
+    if (!producer || !producer->is_valid())
+        return position;
+    if (producer->type() == mlt_service_tractor_type) {
+        Mlt::Tractor tractor(*producer);
+        // Iterate from the topmost track downward to find the first video clip
+        // with keyframe data at this position.
+        for (int i = tractor.count() - 1; i >= 0; i--) {
+            QScopedPointer<Mlt::Producer> track(tractor.track(i));
+            if (!track || !track->is_valid() || track->type() != mlt_service_playlist_type)
+                continue;
+            if (track->get_int("hide") == 1) // audio-only track
+                continue;
+            Mlt::Playlist playlist(*track);
+            int clipIndex = playlist.get_clip_index_at(position);
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            if (!info || !info->producer || !info->producer->is_valid())
+                continue;
+            if (!qstrcmp(info->producer->get("mlt_service"), "blank"))
+                continue;
+            auto *kfMap = static_cast<QMap<int, QVector<int>> *>(
+                info->producer->get_data(kKeyframesProperty));
+            if (!kfMap || kfMap->isEmpty())
+                continue; // no keyframe data for this clip; try next track
+            // Select the keyframe list for the clip's active video stream.
+            int vi = info->producer->get_int("video_index");
+            auto kfIt = kfMap->find(vi);
+            if (kfIt == kfMap->end())
+                kfIt = kfMap->begin();
+            if (kfIt->isEmpty() || kfIt->first() == kIntraOnlySentinel)
+                continue; // intra-only or no data; try next track
+            // Convert tractor position → producer position → K → tractor position
+            const int producerPos = position - info->start + info->frame_in;
+            const int K_producer = precedingKeyframe(*kfIt, producerPos);
+            if (K_producer == producerPos)
+                return position; // already at a keyframe
+            return qMax(K_producer - info->frame_in + info->start, info->start);
+        }
+        return position;
+    }
+    // Single clip (source tab)
+    auto *kfMap = static_cast<QMap<int, QVector<int>> *>(producer->get_data(kKeyframesProperty));
+    if (!kfMap || kfMap->isEmpty())
+        return position;
+    // Select the keyframe list for the producer's active video stream.
+    int vi = producer->get_int("video_index");
+    auto kfIt = kfMap->find(vi);
+    if (kfIt == kfMap->end())
+        kfIt = kfMap->begin();
+    if (kfIt->isEmpty() || kfIt->first() == kIntraOnlySentinel)
+        return position;
+    return precedingKeyframe(*kfIt, position);
+}
+
 void Player::seek(int position)
 {
     if (m_isSeekable) {
-        if (position >= 0) {
-            emit seeked(qMin(position, MLT.isMultitrack() ? m_duration : m_duration - 1));
+        if (position >= 0 && MLT.producer() && MLT.producer()->is_valid()) {
+            auto clampedPos = qMin(position, MLT.isMultitrack() ? m_duration : m_duration - 1);
+            emit positionRequested(clampedPos);
+            // Two-phase seek: immediately seek to the preceding keyframe K for quick visual
+            // feedback. Then debounce seeking to the precise position until scrubbing settles.
+            if (qAbs(position - m_position) > SEEK_KEYFRAME_THRESHOLD_SECONDS * qRound(MLT.profile().fps())) {
+                const int K = precedingKeyframeForProducer(MLT.producer(), clampedPos);
+                if (K != clampedPos) {
+                    emit seeked(K);
+                    // Debounce seeking to the precise position until scrubbing settles.
+                    m_seekTargetPosition = clampedPos;
+                    m_seekDebounceTimer->start();
+                    if (Settings.playerPauseAfterSeek()) {
+                        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+                        m_playPosition = std::numeric_limits<int>::max();
+                    }
+                    return;
+                }
+            }
+            // Intra-only or already at a keyframe, so seek directly without debouncing.
+            m_seekDebounceTimer->stop();
+            m_seekTargetPosition = SEEK_INACTIVE;
+            emit seeked(clampedPos);
         }
     }
     if (Settings.playerPauseAfterSeek()) {
         Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
         m_playPosition = std::numeric_limits<int>::max();
     }
+}
+
+void Player::onSeekDebounceTimerFired()
+{
+    LOG_DEBUG() << "debounced seek to target position" << m_seekTargetPosition;
+    if (m_seekTargetPosition == SEEK_INACTIVE)
+        return;
+    if (!MLT.producer() || !MLT.producer()->is_valid()) {
+        m_seekTargetPosition = SEEK_INACTIVE;
+        return;
+    }
+    // Re-seek to the preceding keyframe K so that onFrameDisplayed can chain
+    // to the precise target P once K is actually on screen.
+    const int K = precedingKeyframeForProducer(MLT.producer(), m_seekTargetPosition);
+    if (K != m_seekTargetPosition) {
+        emit seeked(K); // m_seekTargetPosition stays = P
+        return;
+    }
+    // P is already a keyframe (or no keyframe data): seek directly.
+    const int target = m_seekTargetPosition;
+    m_seekTargetPosition = SEEK_INACTIVE;
+    LOG_DEBUG() << "seeking to target frame" << target;
+    emit seeked(target);
 }
 
 void Player::reset()
@@ -1016,6 +1150,14 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
         onProducerOpened(false);
     }
     int position = frame.get_position();
+    // Phase 2 of two-phase seek: K is now on screen and the debounce timer has
+    // expired (user stopped scrubbing), so chain to the precise target P.
+    if (m_seekTargetPosition != SEEK_INACTIVE && !m_seekDebounceTimer->isActive()
+        && position == precedingKeyframeForProducer(MLT.producer(), m_seekTargetPosition)) {
+        const int P = m_seekTargetPosition;
+        m_seekTargetPosition = SEEK_INACTIVE;
+        emit seeked(P);
+    }
     bool loop = position >= (m_loopEnd - 1) && Actions["playerLoopAction"]->isChecked();
     if (position > MLT.producer()->get_length()) {
         position = MLT.producer()->get_length();
@@ -1023,8 +1165,12 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
     if (position <= m_duration) {
         m_position = position;
         m_requestedPosition = position;
+        // While a precise seek is pending show the target so the spinner does not
+        // jump to the keyframe position.
+        const int displayPos = (m_seekTargetPosition != SEEK_INACTIVE) ? m_seekTargetPosition
+                                                                       : position;
         m_positionSpinner->blockSignals(true);
-        m_positionSpinner->setValue(position);
+        m_positionSpinner->setValue(displayPos);
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
         if (m_playPosition < m_previousOut && m_position >= m_previousOut && !loop) {

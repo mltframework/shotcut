@@ -88,6 +88,7 @@
 /* Internal only */
 
 #define kAudioLevelsProperty "_shotcut:audio-levels"
+#define kKeyframesProperty "_shotcut:keyframes"
 #define kBackgroundCaptureProperty "_shotcut:bgcapture"
 #define kPlaylistIndexProperty "_shotcut:playlistIndex"
 #define kPlaylistStartProperty "_shotcut:playlistStart"

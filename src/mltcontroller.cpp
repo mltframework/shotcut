@@ -193,6 +193,7 @@ bool Controller::openXML(const QString &filename)
 
 void Controller::close()
 {
+    m_lastSeekedPosition = -1;
     if (m_profile.is_explicit()) {
         pause();
     } else if (m_consumer && !m_consumer->is_stopped()) {
@@ -214,6 +215,7 @@ void Controller::closeConsumer()
 
 void Controller::play(double speed)
 {
+    m_lastSeekedPosition = -1;
     if (m_jackFilter) {
         if (speed == 1.0)
             m_jackFilter->fire_event("jack-start");
@@ -443,11 +445,16 @@ void Controller::seek(int position)
             if (m_consumer->is_stopped()) {
                 m_consumer->start();
             } else {
-                m_consumer->purge();
-                Controller::refreshConsumer(Settings.playerScrubAudio());
+                bool scrubAudio = false;
+                if (position != m_lastSeekedPosition) {
+                    m_consumer->purge();
+                    scrubAudio = Settings.playerScrubAudio();
+                }
+                Controller::refreshConsumer(scrubAudio);
             }
         }
     }
+    m_lastSeekedPosition = position;
     if (m_jackFilter) {
         if (Settings.playerPauseAfterSeek())
             stopJack();
