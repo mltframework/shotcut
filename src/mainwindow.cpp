@@ -3556,6 +3556,7 @@ void MainWindow::cropSource(const QRectF &rect)
         auto xml = MLT.XML();
         emit profileChanged();
         MLT.reload(xml);
+        m_undoStack->clear();
     }
     emit producerOpened(false);
 }
@@ -4892,6 +4893,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         QString xml = MLT.XML(producer);
         setProfile(action->data().toString());
         MLT.reload(xml);
+        m_undoStack->clear();
         emit producerOpened(false);
     } else {
         Settings.setPlayerProfile(action->data().toString());
@@ -4932,6 +4934,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         emit profileChanged();
         if (!xml.isEmpty()) {
             MLT.reload(xml);
+            m_undoStack->clear();
             emit producerOpened(false);
         }
     }
