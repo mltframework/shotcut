@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -113,6 +113,17 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, QColor &color)
 
 void ColorPickerItem::grabColorDBus()
 {
+    // Remove any stale response connection before opening a new portal request.
+    if (!m_requestPath.isEmpty()) {
+        QDBusConnection::sessionBus().disconnect(QString(),
+                                                 m_requestPath,
+                                                 QLatin1String("org.freedesktop.portal.Request"),
+                                                 QLatin1String("Response"),
+                                                 this,
+                                                 SLOT(gotColorResponse(uint, QVariantMap)));
+        m_requestPath.clear();
+    }
+
     QDBusMessage message
         = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.portal.Desktop"),
                                          QLatin1String("/org/freedesktop/portal/desktop"),
@@ -126,18 +137,30 @@ void ColorPickerItem::grabColorDBus()
         if (reply.isError()) {
             LOG_WARNING() << "Unable to get DBus reply: " << reply.error().message();
         } else {
+            m_requestPath = reply.value().path();
             QDBusConnection::sessionBus().connect(QString(),
-                                                  reply.value().path(),
+                                                  m_requestPath,
                                                   QLatin1String("org.freedesktop.portal.Request"),
                                                   QLatin1String("Response"),
                                                   this,
                                                   SLOT(gotColorResponse(uint, QVariantMap)));
         }
+        watcher->deleteLater();
     });
 }
 
 void ColorPickerItem::gotColorResponse(uint response, const QVariantMap &results)
 {
+    if (!m_requestPath.isEmpty()) {
+        QDBusConnection::sessionBus().disconnect(QString(),
+                                                 m_requestPath,
+                                                 QLatin1String("org.freedesktop.portal.Request"),
+                                                 QLatin1String("Response"),
+                                                 this,
+                                                 SLOT(gotColorResponse(uint, QVariantMap)));
+        m_requestPath.clear();
+    }
+
     if (!response) {
         if (results.contains(QLatin1String("color"))) {
             const QColor color = qdbus_cast<QColor>(results.value(QLatin1String("color")));

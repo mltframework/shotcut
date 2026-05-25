@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <QColor>
 #include <QObject>
+#include <QString>
 
 class ColorPickerItem : public QObject
 {
@@ -45,6 +46,9 @@ private slots:
 private:
     ScreenSelector m_selector;
     QRect m_selectedRect;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    QString m_requestPath;
+#endif
 };
 
 #endif // COLORPICKERITEM_H
