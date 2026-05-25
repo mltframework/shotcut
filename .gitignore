@@ -43,3 +43,5 @@ translations/.lupdate
 .DS_Store
 scripts/build-shotcut.conf
 *~
+.vscode
+MinimalMediaBackend/
