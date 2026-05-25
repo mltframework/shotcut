@@ -568,8 +568,10 @@ QPoint VideoWidget::offset() const
     if (m_zoom == 0.0) {
         return QPoint(0, 0);
     } else {
-        return QPoint(m_offset.x() - (MLT.profile().width() * m_zoom - width()) / 2,
-                      m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
+        double displayW = MLT.profile().height() * MLT.profile().dar();
+        double displayH = MLT.profile().height();
+        return QPoint(m_offset.x() - (displayW * m_zoom - width()) / 2,
+                      m_offset.y() - (displayH * m_zoom - height()) / 2);
     }
 }
 

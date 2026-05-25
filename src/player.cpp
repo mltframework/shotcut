@@ -1158,36 +1158,46 @@ void Player::onStatusFinished()
 
 void Player::onOffsetChanged(const QPoint &offset)
 {
-    if (!offset.isNull() && m_horizontalScroll->isVisible()) {
-        m_horizontalScroll->setValue(offset.x());
-        m_verticalScroll->setValue(offset.y());
+    if (!offset.isNull() && (m_horizontalScroll->isVisible() || m_verticalScroll->isVisible())) {
+        if (m_horizontalScroll->isVisible())
+            m_horizontalScroll->setValue(offset.x());
+        if (m_verticalScroll->isVisible())
+            m_verticalScroll->setValue(offset.y());
     }
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
 {
-    if (MLT.profile().width() * m_zoomToggleFactor > m_videoWidget->width()) {
-        m_horizontalScroll->setPageStep(m_videoWidget->width());
-        m_horizontalScroll->setMaximum(MLT.profile().width() * m_zoomToggleFactor
+    // Use display dimensions that account for non-square pixels (anamorphic profiles).
+    // The display width at zoom=1 is profile.height * dar; display height is profile.height.
+    // For square-pixel profiles this equals profile.width and profile.height respectively.
+    double displayW = MLT.profile().height() * MLT.profile().dar();
+    double displayH = MLT.profile().height();
+    int widgetW = m_videoWidget->width();
+    int widgetH = m_videoWidget->height();
+
+    if (displayW * m_zoomToggleFactor > widgetW) {
+        m_horizontalScroll->setPageStep(widgetW);
+        m_horizontalScroll->setMaximum(qRound(displayW * m_zoomToggleFactor)
                                        - m_horizontalScroll->pageStep());
         m_horizontalScroll->setValue(qRound(horizontal * m_horizontalScroll->maximum()));
         emit m_horizontalScroll->valueChanged(m_horizontalScroll->value());
         m_horizontalScroll->show();
     } else {
-        int max = MLT.profile().width() * m_zoomToggleFactor - m_videoWidget->width();
+        int max = qRound(displayW * m_zoomToggleFactor) - widgetW;
         emit m_horizontalScroll->valueChanged(qRound(0.5 * max));
         m_horizontalScroll->hide();
     }
 
-    if (MLT.profile().height() * m_zoomToggleFactor > m_videoWidget->height()) {
-        m_verticalScroll->setPageStep(m_videoWidget->height());
-        m_verticalScroll->setMaximum(MLT.profile().height() * m_zoomToggleFactor
+    if (displayH * m_zoomToggleFactor > widgetH) {
+        m_verticalScroll->setPageStep(widgetH);
+        m_verticalScroll->setMaximum(qRound(displayH * m_zoomToggleFactor)
                                      - m_verticalScroll->pageStep());
         m_verticalScroll->setValue(qRound(vertical * m_verticalScroll->maximum()));
         emit m_verticalScroll->valueChanged(m_verticalScroll->value());
         m_verticalScroll->show();
     } else {
-        int max = MLT.profile().height() * m_zoomToggleFactor - m_videoWidget->height();
+        int max = qRound(displayH * m_zoomToggleFactor) - widgetH;
         emit m_verticalScroll->valueChanged(qRound(0.5 * max));
         m_verticalScroll->hide();
     }

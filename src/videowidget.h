@@ -103,7 +103,10 @@ public:
     QObject *videoWidget() override { return this; }
     QRectF rect() const { return m_rect; }
     int grid() const { return m_grid; }
-    float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
+    float zoom() const
+    {
+        return m_zoom * MLT.profile().height() * MLT.profile().dar() / m_rect.width();
+    }
     QPoint offset() const;
     QImage image() const;
     bool imageIsProxy() const;
