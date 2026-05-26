@@ -585,6 +585,7 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addSeparator();
     ui->menuTimeline->addAction(Actions["timelineAdjustGainAction"]);
     ui->menuTimeline->addAction(Actions["timelineAutoAddTracksAction"]);
+    ui->menuTimeline->addAction(Actions["timelineAllowTransitionsAction"]);
     ui->menuTimeline->addAction(Actions["timelineRectangleSelectAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);

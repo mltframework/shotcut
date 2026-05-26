@@ -1175,6 +1175,19 @@ void ShotcutSettings::setTimelineAdjustGain(bool b)
     emit timelineAdjustGainChanged();
 }
 
+bool ShotcutSettings::timelineAllowTransitions() const
+{
+    return settings.value("timeline/allowTransitions", true).toBool();
+}
+
+void ShotcutSettings::setTimelineAllowTransitions(bool b)
+{
+    if (b != timelineAllowTransitions()) {
+        settings.setValue("timeline/allowTransitions", b);
+        emit timelineAllowTransitionsChanged();
+    }
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

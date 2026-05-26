@@ -1122,6 +1122,17 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineAutoAddTracksAction", action);
 
+    action = new QAction(tr("Create Transitions on Overlap"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineAllowTransitions());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineAllowTransitions(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineAllowTransitionsChanged, action, [=]() {
+        action->setChecked(Settings.timelineAllowTransitions());
+    });
+    Actions.add("timelineAllowTransitionsAction", action);
+
     action = new QAction(tr("Snap"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
     icon = QIcon::fromTheme("snap", QIcon(":/icons/oxygen/32x32/actions/snap.png"));
@@ -3498,9 +3509,20 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
                                         playlist.get_clip_index_at(position + length - 1))) {
                 return false;
             }
+            if (!ripple && !Settings.timelineAllowTransitions()) {
+                int startIdx = playlist.get_clip_index_at(position);
+                int endIdx = playlist.get_clip_index_at(position + length - 1);
+                for (int idx = startIdx; idx <= endIdx; idx++) {
+                    if (idx >= 0 && idx < playlist.count() && !playlist.is_blank(idx)) {
+                        if (fromTrack == toTrack && idx == clipIndex)
+                            continue;
+                        return false;
+                    }
+                }
+            }
         }
     }
-    if (selection().size() <= 1
+    if (selection().size() <= 1 && Settings.timelineAllowTransitions()
         && m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position, ripple)) {
         emit transitionAdded(fromTrack, clipIndex, position, ripple);
         if (m_updateCommand)
@@ -3579,6 +3601,8 @@ bool TimelineDock::trimClipIn(
         }
     }
     if (!ripple && !roll && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
+        if (!Settings.timelineAllowTransitions())
+            return false;
         clipIndex = m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
         m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(*this,
@@ -3683,6 +3707,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         }
     }
     if (!ripple && !roll && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
+        if (!Settings.timelineAllowTransitions())
+            return false;
         m_model.addTransitionByTrimOut(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
         m_trimCommand.reset(new Timeline::AddTransitionByTrimOutCommand(m_model,
