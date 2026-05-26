@@ -28,6 +28,7 @@ struct AddOnParameterDescriptor
     QString name;
     QString title;
     QString type;
+    QString widget;
     bool isReadOnly = false;
     bool supportsKeyframes = false;
     QStringList values;

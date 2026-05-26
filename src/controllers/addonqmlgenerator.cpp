@@ -105,6 +105,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
     QStringList quotedTitles;
     QStringList quotedDefaults;
     QStringList quotedTypes;
+    QStringList quotedWidgets;
     QStringList quotedUnits;
     QStringList quotedMinimums;
     QStringList quotedMaximums;
@@ -130,6 +131,10 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         if (!parameter.type.isEmpty()) {
             quotedTypes << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
                                                         quotedJsString(parameter.type));
+        }
+        if (!parameter.widget.isEmpty()) {
+            quotedWidgets << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
+                                                          quotedJsString(parameter.widget));
         }
         if (!parameter.unit.isEmpty()) {
             quotedUnits << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
@@ -158,6 +163,10 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         }
 
         const QString parameterType = parameter.type.trimmed().toLower();
+        const QString parameterWidget = parameter.widget.trimmed().toLower();
+        const bool useTextForNumericEditor = (parameterType == QStringLiteral("integer")
+                                              || parameterType == QStringLiteral("float"))
+                                             && parameterWidget == QStringLiteral("text");
         const bool supportsGeneratedKeyframes = !parameter.isReadOnly && parameter.supportsKeyframes
                                                 && (parameterType == QStringLiteral("integer")
                                                     || parameterType == QStringLiteral("float")
@@ -191,8 +200,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         } else if (parameterType == QStringLiteral("boolean")) {
             setControlsLines << QStringLiteral("        %1.checked = root.booleanValue(%2);")
                                     .arg(editorId, nameLiteral);
-        } else if (parameterType == QStringLiteral("integer")
-                   || parameterType == QStringLiteral("float")) {
+        } else if ((parameterType == QStringLiteral("integer")
+                    || parameterType == QStringLiteral("float"))
+                   && !useTextForNumericEditor) {
             setControlsLines
                 << QStringLiteral(
                        "        %1.value = root.numericValue(%2, root.propertyType(%2));")
@@ -230,6 +240,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         << "}\n\n"
            "    property var propertyTypes: {"
         << quotedTypes.join(QStringLiteral(", "))
+        << "}\n\n"
+           "    property var propertyWidgets: {"
+        << quotedWidgets.join(QStringLiteral(", "))
         << "}\n\n"
            "    property var propertyUnits: {"
         << quotedUnits.join(QStringLiteral(", "))
@@ -273,6 +286,13 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "    }\n\n"
            "    function isNumericType(type) {\n"
            "        return type === 'integer' || type === 'float';\n"
+           "    }\n\n"
+           "    function propertyWidget(name) {\n"
+           "        if (!root.propertyWidgets)\n"
+           "            return '';\n"
+           "        var widget = root.propertyWidgets[name];\n"
+           "        return (widget !== undefined && widget !== null) ? "
+           "String(widget).toLowerCase() : '';\n"
            "    }\n\n"
            "    function isIntegerType(type) {\n"
            "        return type === 'integer';\n"
@@ -397,9 +417,11 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "                var p = propertyNames[i];\n"
            "                var d = root.propertyDefaults[p];\n"
            "                var type = propertyType(p);\n"
+           "                var widget = propertyWidget(p);\n"
            "                if (d !== undefined && d !== null && d !== '')\n"
            "                    filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : '0') "
-           ": (isNumericType(type) ? Number(d) : d));\n"
+           ": ((isNumericType(type) && widget === 'text') ? String(d) : (isNumericType(type) ? "
+           "Number(d) : d)));\n"
            "            }\n"
            "            filter.savePreset(propertyNames);\n"
            "        }\n"
@@ -485,6 +507,10 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         }
 
         const QString parameterType = parameter.type.trimmed().toLower();
+        const QString parameterWidget = parameter.widget.trimmed().toLower();
+        const bool useTextForNumericEditor = (parameterType == QStringLiteral("integer")
+                                              || parameterType == QStringLiteral("float"))
+                                             && parameterWidget == QStringLiteral("text");
         const bool supportsGeneratedKeyframes = !parameter.isReadOnly && parameter.supportsKeyframes
                                                 && (parameterType == QStringLiteral("integer")
                                                     || parameterType == QStringLiteral("float")
@@ -637,8 +663,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    "                }\n"
                    "            }\n"
                    "        }\n";
-        } else if (parameterType == QStringLiteral("integer")
-                   || parameterType == QStringLiteral("float")) {
+        } else if ((parameterType == QStringLiteral("integer")
+                    || parameterType == QStringLiteral("float"))
+                   && !useTextForNumericEditor) {
             stream << "        Shotcut.SliderSpinner {\n"
                       "            id: "
                    << editorId
@@ -684,25 +711,62 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << nameLiteral
                    << "\n"
                       "            readonly property string typeName: "
-                      "root.propertyType(propertyName)\n"
-                      "            text: {\n"
+                      "root.propertyType(propertyName)\n";
+
+            stream << "            text: {\n"
                       "                var value = filter.get(propertyName);\n"
                       "                if (value !== undefined && value !== null && value !== '')\n"
                       "                    return value;\n"
                       "                var d = root.propertyDefaults[propertyName];\n"
                       "                return (d !== undefined && d !== null) ? d : '';\n"
                       "            }\n"
-                      "            onEditingFinished: {\n"
-                      "                if (root.isKeyframableProperty(propertyName)) {\n"
-                      "                    root.updateFilter(propertyName, text, "
-                   << keyframesId
-                   << ", root.getPosition());\n"
-                      "                } else {\n"
-                      "                    var current = filter.get(propertyName);\n"
-                      "                    if (String(current) !== text)\n"
-                      "                        filter.set(propertyName, text);\n"
-                      "                }\n"
-                      "            }\n"
+                      "            onEditingFinished: {\n";
+
+            if (useTextForNumericEditor) {
+                stream << "                var nextValue = text.trim();\n"
+                          "                if (nextValue === '') {\n"
+                          "                    root.setControls();\n"
+                          "                    return;\n"
+                          "                }\n"
+                          "                if (typeName === 'integer') {\n"
+                          "                    var integerOrHex = "
+                          "/^[-+]?(?:\\d+|0[xX][0-9A-Fa-f]+)$/;\n"
+                          "                    if (!integerOrHex.test(nextValue)) {\n"
+                          "                        root.setControls();\n"
+                          "                        return;\n"
+                          "                    }\n"
+                          "                } else if (typeName === 'float') {\n"
+                          "                    var parsedFloat = Number(nextValue);\n"
+                          "                    if (isNaN(parsedFloat)) {\n"
+                          "                        root.setControls();\n"
+                          "                        return;\n"
+                          "                    }\n"
+                          "                    nextValue = String(parsedFloat);\n"
+                          "                }\n"
+                          "                if (root.isKeyframableProperty(propertyName)) {\n"
+                          "                    var numericValue = Number(nextValue);\n"
+                          "                    if (!isNaN(numericValue))\n"
+                          "                        root.updateFilter(propertyName, numericValue, "
+                       << keyframesId
+                       << ", root.getPosition());\n"
+                          "                } else {\n"
+                          "                    var current = String(filter.get(propertyName));\n"
+                          "                    if (current !== nextValue)\n"
+                          "                        filter.set(propertyName, nextValue);\n"
+                          "                }\n";
+            } else {
+                stream << "                if (root.isKeyframableProperty(propertyName)) {\n"
+                          "                    root.updateFilter(propertyName, text, "
+                       << keyframesId
+                       << ", root.getPosition());\n"
+                          "                } else {\n"
+                          "                    var current = filter.get(propertyName);\n"
+                          "                    if (String(current) !== text)\n"
+                          "                        filter.set(propertyName, text);\n"
+                          "                }\n";
+            }
+
+            stream << "            }\n"
                       "        }\n";
         }
 
@@ -744,16 +808,29 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                        "                root.setControls();\n";
             } else if (parameterType == QStringLiteral("integer")
                        || parameterType == QStringLiteral("float")) {
-                stream
-                    << "                var defaultValue = root.defaultNumericValue(propertyName, "
-                       "typeName);\n"
-                       "                if (root.isKeyframableProperty(propertyName))\n"
-                       "                    root.updateFilter(propertyName, defaultValue, "
-                    << keyframesId
-                    << ", root.getPosition());\n"
-                       "                else\n"
-                       "                    filter.set(propertyName, defaultValue);\n"
-                       "                root.setControls();\n";
+                if (useTextForNumericEditor) {
+                    stream << "                var defaultValue = "
+                              "root.defaultTextValue(propertyName);\n"
+                              "                if (root.isKeyframableProperty(propertyName))\n"
+                              "                    root.updateFilter(propertyName, "
+                              "Number(defaultValue), "
+                           << keyframesId
+                           << ", root.getPosition());\n"
+                              "                else\n"
+                              "                    filter.set(propertyName, defaultValue);\n"
+                              "                root.setControls();\n";
+                } else {
+                    stream << "                var defaultValue = "
+                              "root.defaultNumericValue(propertyName, "
+                              "typeName);\n"
+                              "                if (root.isKeyframableProperty(propertyName))\n"
+                              "                    root.updateFilter(propertyName, defaultValue, "
+                           << keyframesId
+                           << ", root.getPosition());\n"
+                              "                else\n"
+                              "                    filter.set(propertyName, defaultValue);\n"
+                              "                root.setControls();\n";
+                }
             } else {
                 stream
                     << "                var defaultValue = root.defaultTextValue(propertyName);\n"
@@ -791,8 +868,16 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                            << editorId << ".checked ? 1 : 0);\n";
                 } else if (parameterType == QStringLiteral("integer")
                            || parameterType == QStringLiteral("float")) {
-                    stream << "                root.toggleKeyframes(checked, propertyName, "
-                           << editorId << ".value);\n";
+                    if (useTextForNumericEditor) {
+                        stream << "                var numericValue = Number(" << editorId
+                               << ".text);\n"
+                                  "                if (!isNaN(numericValue))\n"
+                                  "                    root.toggleKeyframes(checked, propertyName, "
+                                  "numericValue);\n";
+                    } else {
+                        stream << "                root.toggleKeyframes(checked, propertyName, "
+                               << editorId << ".value);\n";
+                    }
                 } else {
                     stream << "                root.toggleKeyframes(checked, propertyName, "
                            << editorId << ".text);\n";

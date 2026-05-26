@@ -71,6 +71,7 @@ AddOnFilterDescriptor AddOnMetadataParser::parse(const QString &service,
             out.title = QString::fromUtf8(parameter.get("title"));
             out.defaultValue = QString::fromUtf8(parameter.get("default"));
             out.type = QString::fromUtf8(parameter.get("type"));
+            out.widget = QString::fromUtf8(parameter.get("widget"));
             out.isReadOnly = parseYesNoBool(parameter.get("readonly"));
             out.supportsKeyframes = parseYesNoBool(parameter.get("animation"));
             out.unit = QString::fromUtf8(parameter.get("unit"));
@@ -78,6 +79,14 @@ AddOnFilterDescriptor AddOnMetadataParser::parse(const QString &service,
             out.maximum = QString::fromUtf8(parameter.get("maximum"));
             out.description = QString::fromUtf8(parameter.get("description"));
             out.name = QString::fromUtf8(parameter.get("identifier"));
+
+            const QString parameterType = out.type.trimmed().toLower();
+            if (out.widget.isEmpty()
+                && (parameterType == QStringLiteral("integer")
+                    || parameterType == QStringLiteral("float"))
+                && (out.minimum.isEmpty() || out.maximum.isEmpty())) {
+                out.widget = QStringLiteral("text");
+            }
 
             Mlt::Properties values(parameter.get_data("values"));
             if (values.is_valid()) {
