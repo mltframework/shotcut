@@ -146,6 +146,8 @@ public:
     void setEncodeAdvanced(bool);
     bool showConvertClipDialog() const;
     void setShowConvertClipDialog(bool);
+    bool showHdrPlayerWarning() const;
+    void setShowHdrPlayerWarning(bool);
     bool encodeParallelProcessing() const;
     void setEncodeParallelProcessing(bool);
 

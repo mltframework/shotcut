@@ -877,6 +877,30 @@ void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, 
     Transcoder transcoder;
     transcoder.addProducer(producer);
     transcoder.convert(dialog);
+
+    const bool isHdr = !MLT.colorTrc().isEmpty();
+    if (dialog.result() == QDialog::Accepted) {
+        // Switch to SDR if converting.
+        if (isHdr && MLT.profile().is_explicit()) {
+            MLT.setColorTrc(QString());
+            MLT.consumerChanged();
+        }
+    } else if (isHdr && Settings.showHdrPlayerWarning()) {
+        QMessageBox warning(QMessageBox::Warning,
+                            QApplication::applicationName(),
+                            QObject::tr(
+                                "<p>The embedded player does not accurately display HDR.</p>"
+                                "<p>Use <b>Player > External Monitor > Preview Window (HDR)</b> "
+                                "or DeckLink on an HDR screen.</p>"),
+                            QMessageBox::Ok,
+                            parent);
+        warning.setWindowModality(QmlApplication::dialogModality());
+        auto *cb = new QCheckBox(QObject::tr("Do not show this anymore."));
+        warning.setCheckBox(cb);
+        warning.exec();
+        if (cb->isChecked())
+            Settings.setShowHdrPlayerWarning(false);
+    }
 }
 
 double Util::getAndroidFrameRate(Mlt::Producer *producer)

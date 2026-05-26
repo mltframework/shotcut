@@ -596,6 +596,16 @@ void ShotcutSettings::setShowConvertClipDialog(bool b)
     settings.setValue("showConvertClipDialog", b);
 }
 
+bool ShotcutSettings::showHdrPlayerWarning() const
+{
+    return settings.value("showHdrPlayerWarning", true).toBool();
+}
+
+void ShotcutSettings::setShowHdrPlayerWarning(bool b)
+{
+    settings.setValue("showHdrPlayerWarning", b);
+}
+
 bool ShotcutSettings::encodeParallelProcessing() const
 {
     return settings.value("encode/parallelProcessing", false).toBool();
