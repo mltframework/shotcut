@@ -61,6 +61,7 @@ FFMPEG_SUPPORT_AOM=1
 FFMPEG_SUPPORT_WEBP=1
 FFMPEG_SUPPORT_SVTAV1=1
 FFMPEG_SUPPORT_VMAF=1
+FFMPEG_SUPPORT_VULKAN=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -830,6 +831,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_JACK" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libjack"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_VULKAN" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-vulkan --enable-libglslang"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
