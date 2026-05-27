@@ -832,7 +832,7 @@ function set_globals {
   if test 1 = "$FFMPEG_SUPPORT_JACK" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libjack"
   fi
-  if test 1 = "$FFMPEG_SUPPORT_VULKAN" ; then
+  if test 1 = "$FFMPEG_SUPPORT_VULKAN" && test "$TARGET_OS" != "Darwin" ; then
     CONFIG[0]="${CONFIG[0]} --enable-vulkan --enable-libglslang"
   fi
   # Add optional parameters
