@@ -996,7 +996,8 @@ void MainWindow::connectVideoWidgetSignals()
     connect(m_filterController,
             &FilterController::currentFilterChanged,
             videoWidget,
-            &Mlt::VideoWidget::setCurrentFilter);
+            &Mlt::VideoWidget::setCurrentFilter,
+            Qt::QueuedConnection);
     connect(m_player, &Player::toggleVuiRequested, videoWidget, &Mlt::VideoWidget::toggleVuiDisplay);
 }
 
