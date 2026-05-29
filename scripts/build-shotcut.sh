@@ -1166,12 +1166,13 @@ function set_globals {
   #####
   # rnnoise
   [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[31]="./autogen.sh"
-  CONFIG[31]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static --enable-x86-rtcd"
+  CONFIG[31]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
   CFLAGS_[31]=$CFLAGS
   LDFLAGS_[31]=$LDFLAGS
   if [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ]; then
     BUILD[31]="build_rnnoise_darwin"
   else
+    CONFIG[31]="${CONFIG[31]} --enable-x86-rtcd"
     BUILD[31]="make -j$MAKEJ"
   fi
   INSTALL[31]="make install"

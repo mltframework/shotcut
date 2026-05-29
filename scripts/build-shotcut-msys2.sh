@@ -754,7 +754,8 @@ function set_globals {
   #####
   # rnnoise
   [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[18]="./autogen.sh"
-  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static --enable-x86-rtcd"
+  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
+  [ "$TARGET_ARCH" = "mingw64" ] && CONFIG[18]="${CONFIG[18]}  --enable-x86-rtcd"
   CFLAGS_[18]="$CFLAGS"
   LDFLAGS_[18]="$LDFLAGS"
   BUILD[18]="make -j$MAKEJ"
