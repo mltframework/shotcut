@@ -170,13 +170,11 @@ public:
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
-#ifdef QT_DEBUG
         QCommandLineOption experimentalOption(
             "experimental",
             QCoreApplication::translate("main",
                                         "Enable experimental features (add-on filters menu)."));
         parser.addOption(experimentalOption);
-#endif
         QCommandLineOption clearRecentOption("clear-recent",
                                              QCoreApplication::translate("main",
                                                                          "Clear Recent on Exit"));
@@ -245,9 +243,9 @@ public:
         setProperty("noupgrade", parser.isSet(noupgradeOption));
         setProperty("clearRecent", parser.isSet(clearRecentOption));
 #ifdef QT_DEBUG
-        setProperty("experimental", parser.isSet(experimentalOption));
+        setProperty("experimental", true);
 #else
-        setProperty("experimental", false);
+        setProperty("experimental", parser.isSet(experimentalOption));
 #endif
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
@@ -425,6 +423,9 @@ int main(int argc, char **argv)
 
     Application a(argc, argv);
     int result = EXIT_SUCCESS;
+#ifdef QT_DEBUG
+    ::qputenv(kWatchdogEnvVar, "1");
+#endif
     if (::qEnvironmentVariableIsSet(kWatchdogEnvVar)) {
         QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
 

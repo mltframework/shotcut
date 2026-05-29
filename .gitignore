@@ -45,3 +45,4 @@ scripts/build-shotcut.conf
 *~
 .vscode
 MinimalMediaBackend/
+CuteLogger/libCuteLogger.dll
