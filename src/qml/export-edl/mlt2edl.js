@@ -138,7 +138,7 @@ MltXmlParser.prototype.getPlaylists = function() {
                                     eventList.push({
                                         'producer': track.attr.producer,
                                         'inTime': track.attr.in,
-                                        'outTime': track.attr.in,
+                                        'outTime': track.attr.out,
                                         'transition': 'C'
                                     });
                                 } else {
@@ -223,7 +223,7 @@ MltXmlParser.prototype.createEdl = function() {
         var EdlEventCount = 1;
         var progIn = self.Timecode(0); //showtime tally
         var progOut = self.Timecode(0);
-        var srcChannel = 'C'; // default channel/track assignment
+        var dissolveProgIn = self.Timecode(0); // progIn at start of dissolve zone
         EDLfile += "\n === " + playlist.id + " === \n\n";
         playlist.events.forEach(function(event) {
             var srcIn = self.Timecode(event.inTime);
@@ -232,12 +232,17 @@ MltXmlParser.prototype.createEdl = function() {
             var srcLen = self.Timecode(event.outTime);
             srcLen.add(self.Timecode(1));
             srcLen.subtract(srcIn);
-            // increment program tally
-            progOut.add(srcLen);
+            var isDissolve = event.transition && event.transition[0] === 'D';
+            if (!isDissolve) {
+                dissolveProgIn = self.Timecode(progIn.frame_count);
+                // increment program tally
+                progOut.add(srcLen);
+            }
+
             if (event.producer !== 'black' && sourceLinks[event.producer]) {
                 var reelName = sourceLinks[event.producer].reel_name;
                 reelName = (reelName + '         ').substring(0, 8);
-                if (event.transition[0] === 'D') {
+                if (isDissolve) {
                     EdlEventCount -= 1;
                 }
                 EDLfile += self.prepadString(EdlEventCount, 3, '0') + '  '; // edit counter
@@ -250,7 +255,8 @@ MltXmlParser.prototype.createEdl = function() {
                     EDLfile += '    ';
                 }
                 EDLfile += srcIn.toString() + ' ' + srcOut.toString() + ' ';
-                EDLfile += progIn.toString() + ' ' + progOut.toString() + "\n";
+                var writeProgIn = isDissolve ? dissolveProgIn : progIn;
+                EDLfile += writeProgIn.toString() + ' ' + progOut.toString() + "\n";
                 if ('resource' in sourceLinks[event.producer]) {
                     var fileName = sourceLinks[event.producer].resource;
                     if (self.useBaseNameForClipComment)
@@ -260,7 +266,9 @@ MltXmlParser.prototype.createEdl = function() {
 
                 EdlEventCount += 1;
             }
-            progIn.add(srcLen);
+            if (!isDissolve) {
+                progIn.add(srcLen);
+            }
         });
     });
     return EDLfile;

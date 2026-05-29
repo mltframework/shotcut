@@ -11,7 +11,7 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "timecode": "0.0.3",
+    "timecode": "^0.0.3",
     "xmldoc": "^0.5.1"
   }
 }
