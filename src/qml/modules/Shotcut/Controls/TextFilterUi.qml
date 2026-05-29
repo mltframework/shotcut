@@ -32,6 +32,7 @@ GridLayout {
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
     property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'underline', 'strikethrough', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
+    property bool settingControls: false
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -109,6 +110,7 @@ GridLayout {
             middleRadioButton.checked = true;
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
+        settingControls = true;
         fontDialog.selectedFont = Qt.font({
             "family": mltFamily,
             "styleName": fontStyleName,
@@ -118,6 +120,7 @@ GridLayout {
             "underline": filter.getDouble('underline'),
             "strikeout": filter.getDouble('strikethrough')
         });
+        settingControls = false;
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
         setKeyframedControls();
@@ -257,6 +260,8 @@ GridLayout {
                 readonly property var stdStyles: ['', 'regular', 'bold', 'italic', 'bold italic', 'oblique', 'bold oblique']
 
                 onSelectedFontChanged: {
+                    if (settingControls)
+                        return;
                     const styleName = selectedFont.styleName;
                     if (styleName && !stdStyles.includes(styleName.toLowerCase())) {
                         filter.set('style', styleName);
