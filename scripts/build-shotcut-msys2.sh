@@ -77,7 +77,7 @@ NV_CODEC_REVISION="sdk/12.0"
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.10.3"
+QT_VERSION_X64="6.8.3"
 
 ################################################################################
 # Location of config file - if not overridden on command line
@@ -796,6 +796,7 @@ function install_vmaf {
 function install_spatialaudio {
   cmd ninja -C build install || die "Unable to install $1"
   cmd sed -i "s,-I/${TARGET_ARCH}/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
+  cmd install -p -c build/libspatialaudio.dll $FINAL_INSTALL_DIR
 }
 
 function install_whispercpp {
