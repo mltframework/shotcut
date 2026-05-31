@@ -257,6 +257,8 @@ void OpenGLVideoWidget::renderVideo()
     float width = this->width() * devicePixelRatioF();
     float height = this->height() * devicePixelRatioF();
 
+    quickWindow()->beginExternalCommands();
+
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
@@ -267,6 +269,7 @@ void OpenGLVideoWidget::renderVideo()
         m_mutex.lock();
         if (!m_sharedFrame.is_valid()) {
             m_mutex.unlock();
+            quickWindow()->endExternalCommands();
             return;
         }
         uploadTextures(context, m_sharedFrame, m_displayTexture);
@@ -274,10 +277,9 @@ void OpenGLVideoWidget::renderVideo()
     }
 
     if (!m_displayTexture[0]) {
+        quickWindow()->endExternalCommands();
         return;
     }
-
-    quickWindow()->beginExternalCommands();
 
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
