@@ -84,6 +84,11 @@ static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path,
         return items;
     }
 
+    static const QRegularExpression htmlTagPattern(
+        QStringLiteral("</?[A-Za-z][A-Za-z0-9:-]*(?:\\s+[^<>]*)?/?>"));
+    static const QRegularExpression htmlEntityPattern(
+        QStringLiteral("&(?:[A-Za-z][A-Za-z0-9]+|#[0-9]+|#x[0-9A-Fa-f]+);"));
+
     // Convert the items to the return list
     Subtitles::SubtitleItem item;
     for (int i = 0; i < srtItems.size(); i++) {
@@ -91,13 +96,18 @@ static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path,
         QStringList lines = QString::fromStdString(srtItems[i].text).split('\n');
         QString text;
         for (int i = 0; i < lines.size(); i++) {
+            QString line = lines[i];
             // Remove HTML
-            QString line = QTextDocumentFragment::fromHtml(lines[i]).toPlainText();
+            bool hasHtmlSyntax = Qt::mightBeRichText(line) || htmlTagPattern.match(line).hasMatch()
+                                 || htmlEntityPattern.match(line).hasMatch();
+            if (hasHtmlSyntax) {
+                line = QTextDocumentFragment::fromHtml(line).toPlainText();
+            }
             // Remove unnecessary space
-            line = line.simplified();
+            line = line.trimmed();
             // Remove leading "-"
             if (line.startsWith("-")) {
-                line = line.remove(0, 1).simplified();
+                line = line.remove(0, 1).trimmed();
             }
             // Remove unspoken sounds if requested
             if (!includeNonspoken
