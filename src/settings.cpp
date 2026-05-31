@@ -895,6 +895,21 @@ void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
     settings.setValue("player/pauseAfterSeek", b);
 }
 
+bool ShotcutSettings::playerOldVideoOutput() const
+{
+#if defined(Q_OS_WIN)
+    bool defaultValue = QSysInfo::currentCpuArchitecture() == QLatin1String("arm64");
+#else
+    bool defaultValue = false;
+#endif
+    return settings.value("player/oldVideoOutput", defaultValue).toBool();
+}
+
+void ShotcutSettings::setPlayerOldVideoOutput(bool b)
+{
+    settings.setValue("player/oldVideoOutput", b);
+}
+
 bool ShotcutSettings::playerHdrPreview() const
 {
     return settings.value("player/hdrPreview", false).toBool();

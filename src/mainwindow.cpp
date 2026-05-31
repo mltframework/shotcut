@@ -117,7 +117,6 @@
 #include <algorithm>
 
 #define SHOTCUT_THEME
-#define USE_SCREENS_FOR_EXTERNAL_MONITORING
 
 static bool eventDebugCallback(void **data)
 {
@@ -980,6 +979,18 @@ void MainWindow::connectVideoWidgetSignals()
             videoWidget,
             &Mlt::VideoWidget::initialize,
             Qt::DirectConnection);
+    if (Settings.playerOldVideoOutput()) {
+        connect(videoWidget->quickWindow(),
+                &QQuickWindow::beforeRendering,
+                videoWidget,
+                &Mlt::VideoWidget::beforeRendering,
+                Qt::DirectConnection);
+        connect(videoWidget->quickWindow(),
+                &QQuickWindow::beforeRenderPassRecording,
+                videoWidget,
+                &Mlt::VideoWidget::renderVideo,
+                Qt::DirectConnection);
+    }
     connect(videoWidget->quickWindow(),
             &QQuickWindow::sceneGraphInitialized,
             this,
@@ -1261,7 +1272,6 @@ void MainWindow::setupSettingsMenu()
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
 
-#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     QList<QScreen *> screens = QGuiApplication::screens();
     int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
@@ -1294,7 +1304,6 @@ void MainWindow::setupSettingsMenu()
             m_hdrPreviewWindow->requestActivate();
         }
     });
-#endif
 
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
@@ -1352,6 +1361,42 @@ void MainWindow::setupSettingsMenu()
             SLOT(onExternalTriggered(QAction *)));
     connect(m_profileGroup, SIGNAL(triggered(QAction *)), this, SLOT(onProfileTriggered(QAction *)));
     updateDecklinkActions();
+
+    // Use Old Video Output
+    auto *oldVideoOutputAction = new QAction(tr("Use Old Video Output"), this);
+    oldVideoOutputAction->setCheckable(true);
+    oldVideoOutputAction->setChecked(Settings.playerOldVideoOutput());
+    ui->menuPlayerSettings->insertAction(ui->menuDeinterlacer->menuAction(), oldVideoOutputAction);
+    connect(oldVideoOutputAction, &QAction::triggered, this, [this, oldVideoOutputAction]() {
+        const bool checked = oldVideoOutputAction->isChecked();
+        if (checked == Settings.playerOldVideoOutput())
+            return;
+        Settings.setPlayerOldVideoOutput(checked);
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("Shotcut must restart to change the video output.\n"
+                              "Restart now?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+    });
+    if (Settings.playerOldVideoOutput()) {
+        // Disable screen-based monitoring and HDR preview when using old video output.
+        for (auto *action : m_externalGroup->actions()) {
+            bool isDeckLink = action->data().toString().startsWith(QLatin1String("decklink"));
+            bool isNone = action->data().toString().isEmpty();
+            if (!isDeckLink && !isNone)
+                action->setVisible(false);
+        }
+        if (auto *hdrAction = Actions["hdrPreviewAction"])
+            hdrAction->setVisible(false);
+    }
 
     // Setup the language menu actions
     m_languagesGroup = new QActionGroup(this);
@@ -1535,25 +1580,34 @@ void MainWindow::setupSettingsMenu()
     }
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // Setup the display method actions.
-    group = new QActionGroup(this);
-    delete ui->actionDrawingAutomatic;
-    delete ui->actionDrawingDirectX;
-    ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
-    group->addAction(ui->actionDrawingOpenGL);
-    ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
-    group->addAction(ui->actionDrawingVulkan);
-    connect(group, SIGNAL(triggered(QAction *)), this, SLOT(onDrawingMethodTriggered(QAction *)));
-    switch (Settings.drawMethod()) {
-    case Qt::AA_UseDesktopOpenGL:
-        ui->actionDrawingOpenGL->setChecked(true);
-        break;
-    case QSGRendererInterface::Vulkan:
-        ui->actionDrawingVulkan->setChecked(true);
-        break;
-    default:
-        ui->actionDrawingOpenGL->setChecked(true);
-        break;
+    if (Settings.playerOldVideoOutput()) {
+        // Old video output requires OpenGL; hide the display method menu.
+        delete ui->menuDrawingMethod;
+        ui->menuDrawingMethod = nullptr;
+    } else {
+        // Setup the display method actions.
+        group = new QActionGroup(this);
+        delete ui->actionDrawingAutomatic;
+        delete ui->actionDrawingDirectX;
+        ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
+        group->addAction(ui->actionDrawingOpenGL);
+        ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
+        group->addAction(ui->actionDrawingVulkan);
+        connect(group,
+                SIGNAL(triggered(QAction *)),
+                this,
+                SLOT(onDrawingMethodTriggered(QAction *)));
+        switch (Settings.drawMethod()) {
+        case Qt::AA_UseDesktopOpenGL:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+        case QSGRendererInterface::Vulkan:
+            ui->actionDrawingVulkan->setChecked(true);
+            break;
+        default:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+        }
     }
 #else
     delete ui->menuDrawingMethod;
@@ -2508,6 +2562,11 @@ void MainWindow::readPlayerSettings()
     QString external = Settings.playerExternal();
     bool ok = false;
     external.toInt(&ok);
+    if (Settings.playerOldVideoOutput() && ok) {
+        external.clear();
+        Settings.setPlayerExternal(external);
+        ok = false;
+    }
     auto isExternalPeripheral = !external.isEmpty() && !ok;
 
     setAudioChannels(Settings.playerAudioChannels());
@@ -2546,13 +2605,10 @@ void MainWindow::readPlayerSettings()
         ui->actionHyper->setChecked(true);
 
     foreach (QAction *a, m_externalGroup->actions()) {
-#ifndef USE_SCREENS_FOR_EXTERNAL_MONITORING
-        if (isExternalPeripheral)
-#endif
-            if (a->data() == external) {
-                a->setChecked(true);
-                break;
-            }
+        if (a->data() == external) {
+            a->setChecked(true);
+            break;
+        }
     }
     if (m_keyerGroup) {
         auto keyer = Settings.playerKeyerMode();
@@ -2565,7 +2621,7 @@ void MainWindow::readPlayerSettings()
     }
     updateDecklinkActions();
 
-    if (Settings.playerHdrPreview()) {
+    if (Settings.playerHdrPreview() && !Settings.playerOldVideoOutput()) {
         auto hdr = Actions["hdrPreviewAction"];
         if (hdr)
             hdr->setChecked(true);
@@ -5152,7 +5208,6 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 void MainWindow::on_menuExternal_aboutToShow()
 {
     updateDecklinkActions();
-#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;
         int i = action->data().toInt(&ok);
@@ -5168,7 +5223,6 @@ void MainWindow::on_menuExternal_aboutToShow()
             }
         }
     }
-#endif
 }
 
 void MainWindow::on_actionUpgrade_triggered()
