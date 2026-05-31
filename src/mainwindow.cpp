@@ -1580,25 +1580,34 @@ void MainWindow::setupSettingsMenu()
     }
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // Setup the display method actions.
-    group = new QActionGroup(this);
-    delete ui->actionDrawingAutomatic;
-    delete ui->actionDrawingDirectX;
-    ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
-    group->addAction(ui->actionDrawingOpenGL);
-    ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
-    group->addAction(ui->actionDrawingVulkan);
-    connect(group, SIGNAL(triggered(QAction *)), this, SLOT(onDrawingMethodTriggered(QAction *)));
-    switch (Settings.drawMethod()) {
-    case Qt::AA_UseDesktopOpenGL:
-        ui->actionDrawingOpenGL->setChecked(true);
-        break;
-    case QSGRendererInterface::Vulkan:
-        ui->actionDrawingVulkan->setChecked(true);
-        break;
-    default:
-        ui->actionDrawingOpenGL->setChecked(true);
-        break;
+    if (Settings.playerOldVideoOutput()) {
+        // Old video output requires OpenGL; hide the display method menu.
+        delete ui->menuDrawingMethod;
+        ui->menuDrawingMethod = nullptr;
+    } else {
+        // Setup the display method actions.
+        group = new QActionGroup(this);
+        delete ui->actionDrawingAutomatic;
+        delete ui->actionDrawingDirectX;
+        ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
+        group->addAction(ui->actionDrawingOpenGL);
+        ui->actionDrawingVulkan->setData(QSGRendererInterface::Vulkan);
+        group->addAction(ui->actionDrawingVulkan);
+        connect(group,
+                SIGNAL(triggered(QAction *)),
+                this,
+                SLOT(onDrawingMethodTriggered(QAction *)));
+        switch (Settings.drawMethod()) {
+        case Qt::AA_UseDesktopOpenGL:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+        case QSGRendererInterface::Vulkan:
+            ui->actionDrawingVulkan->setChecked(true);
+            break;
+        default:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+        }
     }
 #else
     delete ui->menuDrawingMethod;

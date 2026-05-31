@@ -436,10 +436,15 @@ int main(int argc, char **argv)
 #elif defined(Q_OS_MAC)
         LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
-        if (Settings.drawMethod() == QSGRendererInterface::Vulkan)
-            QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
-        else if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan"))
+        if (Settings.playerOldVideoOutput()) {
+            QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+            QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
             QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+        } else if (Settings.drawMethod() == QSGRendererInterface::Vulkan) {
+            QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
+        } else if (::qgetenv("QSG_RHI_BACKEND").toLower() != QByteArrayLiteral("vulkan")) {
+            QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+        }
         LOG_INFO() << "Linux version" << QSysInfo::productVersion();
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
