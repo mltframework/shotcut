@@ -952,7 +952,7 @@ function get_subproject {
           if test -f "$PATCH_FILE" ; then
               feedback_status "Applying FFmpeg patch"
               cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
-              cmd patch -p0 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
+              cmd patch -p1 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
               feedback_status "Done applying patch for $1"
           fi
       fi
