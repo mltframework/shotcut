@@ -140,7 +140,7 @@ void VideoWidget::initialize()
                 this,
                 &VideoWidget::frameDisplayed,
                 Qt::QueuedConnection);
-        connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
+        connect(m_frameRenderer, &FrameRenderer::imageReady, this, &VideoWidget::imageReady);
     }
     m_initSem.release();
     m_isInitialized = true;
