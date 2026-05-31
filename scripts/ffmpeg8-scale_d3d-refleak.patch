@@ -1,6 +1,8 @@
---- libavfilter/vf_scale_d3d11.c.orig	2025-12-11 20:55:58.868401500 -0800
-+++ libavfilter/vf_scale_d3d11.c	2025-12-11 21:28:08.890852000 -0800
-@@ -340,13 +340,6 @@
+diff --git a/libavfilter/vf_scale_d3d11.c b/libavfilter/vf_scale_d3d11.c
+index c301f4a0c9..603baac9f5 100644
+--- a/libavfilter/vf_scale_d3d11.c
++++ b/libavfilter/vf_scale_d3d11.c
+@@ -340,13 +340,6 @@ static int scale_d3d11_config_props(AVFilterLink *outlink)
          return AVERROR(EINVAL);
      }
  
@@ -14,7 +16,16 @@
      ///< Initialize filter's hardware device context
      if (!s->hw_device_ctx) {
          AVHWFramesContext *in_frames_ctx = (AVHWFramesContext *)inl->hw_frames_ctx->data;
-@@ -394,6 +387,7 @@
+@@ -386,7 +379,7 @@ static int scale_d3d11_config_props(AVFilterLink *outlink)
+ 
+     AVD3D11VAFramesContext *frames_hwctx = frames_ctx->hwctx;
+     frames_hwctx->MiscFlags = 0;
+-    frames_hwctx->BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_VIDEO_ENCODER;
++    frames_hwctx->BindFlags = D3D11_BIND_RENDER_TARGET;
+ 
+     ret = av_hwframe_ctx_init(s->hw_frames_ctx_out);
+     if (ret < 0) {
+@@ -394,6 +387,7 @@ static int scale_d3d11_config_props(AVFilterLink *outlink)
          return ret;
      }
  
