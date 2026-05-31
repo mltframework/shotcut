@@ -33,3 +33,18 @@ index c301f4a0c9..603baac9f5 100644
      outl->hw_frames_ctx = av_buffer_ref(s->hw_frames_ctx_out);
      if (!outl->hw_frames_ctx)
          return AVERROR(ENOMEM);
+diff --git a/libavutil/hwcontext_d3d11va.c b/libavutil/hwcontext_d3d11va.c
+index 418fe9dfda..b3ad9f0797 100644
+--- a/libavutil/hwcontext_d3d11va.c
++++ b/libavutil/hwcontext_d3d11va.c
+@@ -324,8 +324,8 @@ static int d3d11va_frames_init(AVHWFramesContext *ctx)
+     } else if (texDesc.ArraySize > 0) {
+         hr = ID3D11Device_CreateTexture2D(device_hwctx->device, &texDesc, NULL, &hwctx->texture);
+         if (FAILED(hr)) {
+-            av_log(ctx, AV_LOG_ERROR, "Could not create the texture (%lx)\n", (long)hr);
+-            return AVERROR_UNKNOWN;
++            av_log(ctx, AV_LOG_WARNING, "Could not create the array texture (%lx), "
++                   "using single texture allocation\n", (long)hr);
+         }
+     }
+ 
