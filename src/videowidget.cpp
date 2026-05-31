@@ -1162,23 +1162,30 @@ FrameRenderer::~FrameRenderer() {}
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
-    m_displayFrame = SharedFrame(frame);
-    emit frameDisplayed(m_displayFrame);
-
-    if (m_imageRequested) {
-        m_imageRequested = false;
-        emit imageReady();
+    SharedFrame newFrame(frame);
+    bool emitImage = false;
+    {
+        QMutexLocker locker(&m_mutex);
+        m_displayFrame = newFrame;
+        if (m_imageRequested) {
+            m_imageRequested = false;
+            emitImage = true;
+        }
     }
-
+    emit frameDisplayed(newFrame);
+    if (emitImage)
+        emit imageReady();
     m_semaphore.release();
 }
 
 void FrameRenderer::requestImage()
 {
+    QMutexLocker locker(&m_mutex);
     m_imageRequested = true;
 }
 
 SharedFrame FrameRenderer::getDisplayFrame()
 {
+    QMutexLocker locker(&m_mutex);
     return m_displayFrame;
 }

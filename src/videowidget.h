@@ -240,6 +240,7 @@ signals:
 
 private:
     QSemaphore m_semaphore;
+    mutable QMutex m_mutex;
     SharedFrame m_displayFrame;
     bool m_imageRequested;
     QImage m_image;
