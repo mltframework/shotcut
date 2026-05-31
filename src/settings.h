@@ -205,6 +205,8 @@ public:
     void setPlayerAudioDriver(const QString &s);
     bool playerPauseAfterSeek() const;
     void setPlayerPauseAfterSeek(bool);
+    bool playerOldVideoOutput() const;
+    void setPlayerOldVideoOutput(bool);
     bool playerHdrPreview() const;
     void setPlayerHdrPreview(bool);
     QRect playerHdrPreviewGeometry() const;

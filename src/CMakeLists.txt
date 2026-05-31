@@ -338,7 +338,9 @@ if(WIN32)
 
   # Windows integration features
   target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_link_libraries(shotcut PRIVATE ole32)
+  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler ole32)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
@@ -357,10 +359,13 @@ if(WIN32)
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+else()
+  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h)
+  target_sources(shotcut PRIVATE macos.mm macos.h
+    widgets/metalvideowidget.h widgets/metalvideowidget.mm)
   set_target_properties(shotcut PROPERTIES
     OUTPUT_NAME "Shotcut"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)

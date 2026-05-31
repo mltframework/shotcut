@@ -26,6 +26,14 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
+#if defined(Q_OS_WIN)
+#include "widgets/d3dvideowidget.h"
+#include "widgets/openglvideowidget.h"
+#elif defined(Q_OS_MAC)
+#include "widgets/metalvideowidget.h"
+#else
+#include "widgets/openglvideowidget.h"
+#endif
 
 #include <Mlt.h>
 #include <QApplication>
@@ -79,7 +87,20 @@ Controller &Controller::singleton(QObject *parent)
     if (!instance) {
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
-        instance = new VideoWidget(parent);
+        if (Settings.playerOldVideoOutput()) {
+#if defined(Q_OS_WIN)
+            if (QSGRendererInterface::Direct3D11 == QQuickWindow::graphicsApi())
+                instance = new D3DVideoWidget(parent);
+            else
+                instance = new OpenGLVideoWidget(parent);
+#elif defined(Q_OS_MAC)
+            instance = new MetalVideoWidget(parent);
+#else
+            instance = new OpenGLVideoWidget(parent);
+#endif
+        } else {
+            instance = new VideoWidget(parent);
+        }
     }
     return *instance;
 }

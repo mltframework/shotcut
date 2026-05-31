@@ -55,6 +55,7 @@ namespace Mlt {
 
 class Filter;
 class RenderThread;
+class FrameRenderer;
 
 typedef void *(*thread_function_t)(void *);
 
@@ -66,6 +67,7 @@ class VideoWidget : public QQuickWidget, public Controller
     Q_PROPERTY(bool snapToGrid READ snapToGrid NOTIFY snapToGridChanged)
     Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
     Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
+    Q_PROPERTY(bool oldVideoOutput READ oldVideoOutput CONSTANT)
 
 public:
     VideoWidget(QObject *parent = 0);
@@ -113,6 +115,7 @@ public:
     void requestImage();
     bool snapToGrid() const { return m_snapToGrid; }
     int maxTextureSize() const { return m_maxTextureSize; }
+    bool oldVideoOutput() const;
     void toggleVuiDisplay();
     Q_INVOKABLE void setVideoSink(QVideoSink *sink);
 
@@ -125,6 +128,9 @@ public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
     virtual void initialize();
+    virtual void beforeRendering() {}
+    virtual void renderVideo();
+    virtual void onFrameDisplayed(const SharedFrame &frame);
     void showFrame(Mlt::Frame frame, QByteArray p016Buffer = {});
 
 signals:
@@ -159,6 +165,7 @@ private:
     std::unique_ptr<Event> m_threadJoinEvent;
     QSemaphore m_frameSemaphore;
     bool m_imageRequested;
+    const bool m_oldVideoOutput;
     float m_zoom;
     QPoint m_offset;
     QUrl m_savedQmlSource;
@@ -169,6 +176,7 @@ private:
     QPoint m_mousePosition;
     std::unique_ptr<RenderThread> m_renderThread;
     QPointer<QVideoSink> m_videoSink;
+    FrameRenderer *m_frameRenderer;
 
     static void on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data);
     void pushFrameToSink(const SharedFrame &frame, QByteArray p016Buffer = {});
@@ -190,6 +198,7 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     bool event(QEvent *event) override;
+    virtual void createShader() {}
 
     int m_maxTextureSize;
     SharedFrame m_sharedFrame;
@@ -211,6 +220,29 @@ private:
     void *m_data;
     std::unique_ptr<QOpenGLContext> m_context;
     std::unique_ptr<QOffscreenSurface> m_surface;
+};
+
+class FrameRenderer : public QThread
+{
+    Q_OBJECT
+public:
+    FrameRenderer();
+    ~FrameRenderer();
+    QSemaphore *semaphore() { return &m_semaphore; }
+    SharedFrame getDisplayFrame();
+    Q_INVOKABLE void showFrame(Mlt::Frame frame);
+    void requestImage();
+    QImage image() const { return m_image; }
+
+signals:
+    void frameDisplayed(const SharedFrame &frame);
+    void imageReady();
+
+private:
+    QSemaphore m_semaphore;
+    SharedFrame m_displayFrame;
+    bool m_imageRequested;
+    QImage m_image;
 };
 
 } // namespace Mlt

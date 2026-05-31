@@ -23,10 +23,14 @@ DropArea {
 
     property real _zoom: (video.zoom > 0) ? video.zoom : 1
 
-    Component.onCompleted: video.setVideoSink(videoOutput.videoSink)
+    Component.onCompleted: {
+        if (!video.oldVideoOutput)
+            video.setVideoSink(videoOutput.videoSink)
+    }
 
     VideoOutput {
         id: videoOutput
+        visible: !video.oldVideoOutput
 
         width: video.rect.width * _zoom
         height: video.rect.height * _zoom
