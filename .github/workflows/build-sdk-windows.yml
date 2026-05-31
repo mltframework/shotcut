@@ -46,12 +46,23 @@ jobs:
             mingw-w64-x86_64-opus
             mingw-w64-x86_64-potrace
             mingw-w64-x86_64-python-pip
+            mingw-w64-x86_64-qt6-base
+            mingw-w64-x86_64-qt6-charts
+            mingw-w64-x86_64-qt6-declarative
+            mingw-w64-x86_64-qt6-imageformats
+            mingw-w64-x86_64-qt6-multimedia
+            mingw-w64-x86_64-qt6-multimedia-wmf
+            mingw-w64-x86_64-qt6-svg
+            mingw-w64-x86_64-qt6-tools
+            mingw-w64-x86_64-qt6-translations
+            mingw-w64-x86_64-qt6-websockets
             mingw-w64-x86_64-rubberband
             mingw-w64-x86_64-sox
             mingw-w64-x86_64-svt-av1
             mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-vulkan-headers
-            mingw-w64-x86_64-vulkan-loader            mingw-w64-x86_64-x264
+            mingw-w64-x86_64-vulkan-loader
+            mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
             mingw-w64-x86_64-zimg
 
@@ -67,14 +78,6 @@ jobs:
           echo VERSION=$VERSION
           FILENAME_VERSION=$VERSION
           pushd "$HOME"
-          echo Downloading Qt
-          mkdir Qt
-          cd Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.8.3-x64-mingw.txz
-          echo Extracting Qt
-          tar -xJf qt-6.8.3-x64-mingw.txz
-          rm qt-6.8.3-x64-mingw.txz
-          cd ..
           echo Downloading a few prebuilt dependencies
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
           echo Extracting prebuilt dependencies
@@ -86,7 +89,6 @@ jobs:
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
-          echo ENABLE_GLAXNIMATE=0 >> build-shotcut.conf
           echo DEBUG_BUILD=1 >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh -s
           mv build/shotcut-sdk.txz build/shotcut-win64-sdk-$FILENAME_VERSION.txz

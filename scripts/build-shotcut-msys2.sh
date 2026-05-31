@@ -77,8 +77,6 @@ NV_CODEC_REVISION="sdk/12.0"
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.8.3"
-
 ################################################################################
 # Location of config file - if not overridden on command line
 CONFIGFILE=build-shotcut.conf
@@ -350,17 +348,10 @@ function set_globals {
 
   # Set Qt installation variables.
   test "$TARGET_ARCH" = "" && TARGET_ARCH=${MSYSTEM,,}
-  if [ "$TARGET_ARCH" = "clangarm64" ]; then
-    export QTDIR="$(pkg-config --variable=prefix Qt6Core)"
-    QT_INCLUDE_DIR="$QTDIR/qt6/include"
-    QT_LIB_DIR="$QTDIR/lib"
-    QT_SHARE_DIR="$QTDIR/share/qt6"
-  else
-    export QTDIR="$HOME/Qt/$QT_VERSION_X64/mingw_64"
-    QT_INCLUDE_DIR="$QTDIR/include"
-    QT_LIB_DIR="$QTDIR/lib"
-    QT_SHARE_DIR="$QTDIR"
-  fi
+  export QTDIR="$(pkg-config --variable=prefix Qt6Core)"
+  QT_INCLUDE_DIR="$QTDIR/qt6/include"
+  QT_LIB_DIR="$QTDIR/lib"
+  QT_SHARE_DIR="$QTDIR/share/qt6"
 
   # Set convenience variables.
   if test 1 = "$ACTION_GET" ; then
@@ -712,11 +703,7 @@ function set_globals {
   #####
   # glaxnimate
   CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
-  if [ "$TARGET_ARCH" = "clangarm64" ]; then
-    CONFIG[13]="${CONFIG[13]} -D CMAKE_CXX_FLAGS=-DPYBIND11_EXPORT_EXCEPTION= -D CMAKE_PREFIX_PATH=$FINAL_INSTALL_DIR"
-  else
-    CONFIG[13]="${CONFIG[13]} -D CMAKE_PREFIX_PATH=$QTDIR"
-  fi
+  CONFIG[13]="${CONFIG[13]} -D CMAKE_CXX_FLAGS=-DPYBIND11_EXPORT_EXCEPTION= -D CMAKE_PREFIX_PATH=$FINAL_INSTALL_DIR"
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[13]="${CONFIG[13]} -D CMAKE_BUILD_TYPE=RelWithDebInfo"
   else
@@ -1266,7 +1253,7 @@ function deploy
 
   log Copying some libs from Qt
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Concurrent,Core,Core5Compat,Gui,Multimedia,MultimediaQuick,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WebSockets,Widgets,Xml}.dll .
+    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Concurrent,Core,Gui,Multimedia,MultimediaQuick,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WebSockets,Widgets,Xml}.dll .
   fi
 
   if [ "$ENABLE_GLAXNIMATE" = "1" ]; then
@@ -1287,11 +1274,11 @@ function deploy
 
   log Copying some libs from mlt-prebuilt
   cmd cp -p "$HOME"/bin/*.dll .
-  cmd cp -p "$QTDIR"/bin/d3dcompiler_47.dll .
 
   if [ "$TARGET_ARCH" = "clangarm64" ]; then
     log Copying some libs from msys2
     cmd cp -p /${TARGET_ARCH}/bin/{libcrypto-3-arm64.dll,libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-16.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libexpat-1.dll,liblz4.dll,libfftw3f-3.dll} .
+    # possibly needed on mingw64: libcrypto-3-x64.dll,liblz4.dll,libunwind.dll
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     [ "$TARGET_ARCH" != "clangarm64" ] && cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
