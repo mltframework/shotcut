@@ -4646,6 +4646,20 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                     &Mlt::VideoWidget::hdrTransferChanged,
                     m_hdrPreviewWindow,
                     &HdrPreviewWindow::setHdrTransfer);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::hdrTransferChanged,
+                    m_hdrPreviewWindow,
+                    [this](HdrTransfer transfer) {
+                        auto *videoWidget = MLT.videoWidget();
+                        if (!videoWidget)
+                            return;
+                        const bool hdrPreview = transfer != HdrTransfer::SDR;
+                        if (videoWidget->property("hdr_preview").toBool() == hdrPreview)
+                            return;
+                        videoWidget->setProperty("hdr_preview", hdrPreview);
+                        if (MLT.consumer())
+                            MLT.consumerChanged();
+                    });
             m_hdrPreviewWindow->setHdrTransfer(hdrTransferFromTrc(MLT.colorTrc()));
             auto *win = m_hdrPreviewWindow;
             connect(m_player, &Player::played, win, [win](double) { win->setPlaying(true); });
