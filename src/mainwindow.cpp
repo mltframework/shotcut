@@ -4654,11 +4654,11 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                         auto *videoWidget = MLT.videoWidget();
                         if (!videoWidget)
                             return;
-                        const bool hdrPreview = transfer != HdrTransfer::SDR;
+                        const bool hdrPreview = transfer != HdrTransfer::SDR
+                                                && m_hdrPreviewWindow->isHdrAvailable();
                         if (videoWidget->property("hdr_preview").toBool() == hdrPreview)
                             return;
-                        videoWidget->setProperty("hdr_preview",
-                                                 hdrPreview && m_hdrPreviewWindow->isHdrAvailable());
+                        videoWidget->setProperty("hdr_preview", hdrPreview);
                         if (MLT.consumer())
                             MLT.consumerChanged();
                     });
