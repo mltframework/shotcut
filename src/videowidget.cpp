@@ -464,12 +464,10 @@ int VideoWidget::reconfigure(bool isMulti)
         const bool hdrPreview = MLT.isHDR() && property("hdr_preview").toBool();
         const bool isDeckLinkHdr = serviceName.startsWith("decklink") && MLT.isHDR();
         switch (processingMode) {
-        case ShotcutSettings::Native10Cpu:
-            m_consumer->set("mlt_image_format", hdrPreview ? "yuv420p10" : "rgba64");
-            break;
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
             break;
+        case ShotcutSettings::Native10Cpu:
         case ShotcutSettings::Linear10GpuCpu:
             m_consumer->set("mlt_image_format",
                             isDeckLinkHdr ? "yuv444p10"
