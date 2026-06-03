@@ -627,8 +627,7 @@ void Controller::setProfile(const QString &profile_name)
         // color_trc will remain empty, which is correct for SDR built-in profiles.
         Mlt::Properties profileProps;
         profileProps.load(profile_name.toUtf8().constData());
-        const char *trc = profileProps.get(kShotcutColorTransfer);
-        m_colorTrc = (trc && *trc) ? QString::fromLatin1(trc) : QString();
+        setColorTrc(profileProps.get(kShotcutColorTransfer));
     } else {
         m_colorTrc.clear();
         m_profile.set_explicit(false);
@@ -704,9 +703,15 @@ QString Controller::colorTrc() const
 
 void Controller::setColorTrc(const QString &trc)
 {
-    m_colorTrc = trc;
+    m_colorTrc = trc.isEmpty() ? QStringLiteral("sdr") : trc;
     if (m_producer && m_producer->is_valid())
-        m_producer->set(kShotcutColorTransfer, trc.toLatin1().constData());
+        m_producer->set(kShotcutColorTransfer, m_colorTrc.toLatin1().constData());
+}
+
+bool Controller::isHDR() const
+{
+    const auto trc = colorTrc();
+    return !trc.isEmpty() && trc != QStringLiteral("sdr");
 }
 
 QString Controller::resource() const

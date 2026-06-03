@@ -2931,6 +2931,8 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
         ui->actionProgressive->setEnabled(false);
     }
+    MLT.videoWidget()->setProperty("hdr_preview",
+                                   m_hdrPreviewWindow && m_hdrPreviewWindow->hdrTransferMode());
     if (ui->actionChannels1->isChecked())
         setAudioChannels(1);
     else if (ui->actionChannels2->isChecked())

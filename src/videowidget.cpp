@@ -18,7 +18,6 @@
 #include "videowidget.h"
 
 #include "Logger.h"
-#include "dialogs/durationdialog.h"
 #include "mainwindow.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
@@ -462,14 +461,11 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->set("scale", double(Settings.playerPreviewScale()) / MLT.profile().height());
         const int processingMode = property("processing_mode").toInt();
         const QString profileTrc = MLT.colorTrc();
-        const HdrTransfer videoModeTransfer = hdrTransferFromTrc(profileTrc);
-        const bool isDeckLinkHdr = serviceName.startsWith("decklink")
-                                   && videoModeTransfer != HdrTransfer::SDR;
-        const bool hdrPreview = Settings.playerHdrPreview();
-        const bool isHdrActive = videoModeTransfer != HdrTransfer::SDR;
+        const bool hdrPreview = MLT.isHDR() && property("hdr_preview").toBool();
+        const bool isDeckLinkHdr = serviceName.startsWith("decklink") && MLT.isHDR();
         switch (processingMode) {
         case ShotcutSettings::Native10Cpu:
-            m_consumer->set("mlt_image_format", isHdrActive ? "yuv420p10" : "rgba64");
+            m_consumer->set("mlt_image_format", hdrPreview ? "yuv420p10" : "rgba64");
             break;
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
@@ -493,7 +489,7 @@ int VideoWidget::reconfigure(bool isMulti)
         }
         // Follow the active video mode transfer when it is explicit; otherwise,
         // fall back to colorspace-based SDR defaults.
-        if (!profileTrc.isEmpty()) {
+        if (MLT.isHDR()) {
             m_consumer->set("color_trc", profileTrc.toLatin1().constData());
         } else {
             switch (MLT.profile().colorspace()) {
@@ -516,12 +512,14 @@ int VideoWidget::reconfigure(bool isMulti)
         HdrTransfer hdrTransfer = hdrTransferFromTrc(QLatin1String(activeTrc));
         emit hdrTransferChanged(hdrTransfer);
         if (processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Linear10GpuCpu && !isDeckLinkHdr
-                && !isHdrActive)) {
+            || (processingMode == ShotcutSettings::Linear10GpuCpu && !MLT.isHDR())) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");
         }
+        LOG_DEBUG() << "mlt_image_format" << m_consumer->get("mlt_image_format") << "mlt_color_trc"
+                    << m_consumer->get("mlt_color_trc") << "color_trc"
+                    << m_consumer->get("color_trc");
 
         if (serviceName.startsWith("decklink")) {
             const QString prefix = isMulti ? QStringLiteral("0.") : QString();

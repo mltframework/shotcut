@@ -157,6 +157,7 @@ public:
     ShotcutSettings::ProcessingMode processingMode() const { return m_processingMode; }
     QString colorTrc() const;
     void setColorTrc(const QString &trc);
+    bool isHDR() const;
     Mlt::Repository *repository() const { return m_repo; }
     Mlt::Profile &profile() { return m_profile; }
     Mlt::Profile &previewProfile() { return m_previewProfile; }

@@ -878,14 +878,13 @@ void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, 
     transcoder.addProducer(producer);
     transcoder.convert(dialog);
 
-    const bool isHdr = !MLT.colorTrc().isEmpty();
     if (dialog.result() == QDialog::Accepted) {
         // Switch to SDR if converting.
-        if (isHdr && MLT.profile().is_explicit()) {
+        if (MLT.isHDR() && MLT.profile().is_explicit()) {
             MLT.setColorTrc(QString());
             MLT.consumerChanged();
         }
-    } else if (isHdr && Settings.showHdrPlayerWarning()) {
+    } else if (MLT.isHDR() && Settings.showHdrPlayerWarning()) {
         QMessageBox warning(QMessageBox::Warning,
                             QApplication::applicationName(),
                             QObject::tr(

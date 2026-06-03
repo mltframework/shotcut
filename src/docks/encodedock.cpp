@@ -1265,9 +1265,8 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             }
             // Propagate HDR transfer characteristics to the encoder when the
             // source (or profile) carries them.
-            const QString &sourceTrc = MLT.colorTrc();
-            if (!sourceTrc.isEmpty())
-                setIfNotSet(p, "color_trc", sourceTrc.toLatin1().constData());
+            if (MLT.isHDR())
+                setIfNotSet(p, "color_trc", MLT.colorTrc().toLatin1().constData());
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
