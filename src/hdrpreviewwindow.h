@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE void setVideoSink(QVideoSink *sink);
     float hdrGain() const { return m_hdrGain; }
     int hdrTransferMode() const { return static_cast<int>(m_hdrTransfer); }
+    bool isHdrAvailable() const;
     int displayPeakNits() const { return m_displayPeakNits; }
     void setDisplayPeakNits(int nits);
     int contentPeakNits() const { return m_contentPeakNits; }

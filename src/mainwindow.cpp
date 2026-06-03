@@ -2932,7 +2932,8 @@ void MainWindow::configureVideoWidget()
         ui->actionProgressive->setEnabled(false);
     }
     MLT.videoWidget()->setProperty("hdr_preview",
-                                   m_hdrPreviewWindow && m_hdrPreviewWindow->hdrTransferMode());
+                                   m_hdrPreviewWindow && m_hdrPreviewWindow->hdrTransferMode()
+                                       && m_hdrPreviewWindow->isHdrAvailable());
     if (ui->actionChannels1->isChecked())
         setAudioChannels(1);
     else if (ui->actionChannels2->isChecked())
@@ -4656,7 +4657,8 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                         const bool hdrPreview = transfer != HdrTransfer::SDR;
                         if (videoWidget->property("hdr_preview").toBool() == hdrPreview)
                             return;
-                        videoWidget->setProperty("hdr_preview", hdrPreview);
+                        videoWidget->setProperty("hdr_preview",
+                                                 hdrPreview && m_hdrPreviewWindow->isHdrAvailable());
                         if (MLT.consumer())
                             MLT.consumerChanged();
                     });

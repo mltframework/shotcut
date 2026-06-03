@@ -583,6 +583,26 @@ bool HdrPreviewWindow::isHdrMode() const
                || sc->format() == QRhiSwapChain::HDR10);
 }
 
+bool HdrPreviewWindow::isHdrAvailable() const
+{
+    auto *sc = swapChain();
+    if (!sc)
+        return false;
+
+    if (!isHdrMode())
+        return false;
+
+    const auto info = sc->hdrInfo();
+    if (info.limitsType == QRhiSwapChainHdrInfo::ColorComponentValue) {
+        return info.limits.colorComponentValue.maxColorComponentValue > 1.0f;
+    }
+    if (info.limitsType == QRhiSwapChainHdrInfo::LuminanceInNits)
+        return info.limits.luminanceInNits.maxLuminance > 100.0f;
+
+    // Unknown limits type: be conservative and treat as not HDR-available.
+    return false;
+}
+
 void HdrPreviewWindow::updateHdrGain()
 {
     if (m_hdrTransfer == HdrTransfer::SDR)
