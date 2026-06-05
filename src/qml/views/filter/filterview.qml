@@ -279,7 +279,12 @@ Rectangle {
             opacity: enabled ? 1 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-            onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
+            onClicked: {
+                const newIndex = selectedIndex - 1;
+                attachedfiltersmodel.move(selectedIndex, newIndex);
+                selectedIndex = newIndex;
+                root.currentFilterRequested(newIndex);
+            }
 
             Shotcut.HoverTip {
                 text: qsTr('Move filter up')
@@ -294,7 +299,12 @@ Rectangle {
             opacity: enabled ? 1 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-            onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
+            onClicked: {
+                const newIndex = selectedIndex + 1;
+                attachedfiltersmodel.move(selectedIndex, newIndex);
+                selectedIndex = newIndex;
+                root.currentFilterRequested(newIndex);
+            }
 
             Shotcut.HoverTip {
                 text: qsTr('Move filter down')

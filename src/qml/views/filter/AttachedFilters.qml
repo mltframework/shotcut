@@ -263,9 +263,14 @@ Rectangle {
                         beginDrag();
                 }
                 onReleased: mouse => {
-                    if (oldIndex !== -1 && attachedFiltersView.dragTarget !== -1 && oldIndex !== attachedFiltersView.dragTarget)
-                        attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget);
-                    endDrag();
+                    if (oldIndex !== -1 && attachedFiltersView.dragTarget !== -1 && oldIndex !== attachedFiltersView.dragTarget) {
+                        const newIndex = attachedFiltersView.dragTarget;
+                        attachedfiltersmodel.move(oldIndex, newIndex);
+                        endDrag();
+                        filterClicked(newIndex);
+                    } else {
+                        endDrag();
+                    }
                     mouse.accepted = true;
                 }
                 onPositionChanged: {
