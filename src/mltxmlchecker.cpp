@@ -56,6 +56,49 @@ static bool isNumericProperty(const QString &name)
     return name == "length" || name == "geometry" || name == "rect" || name == "warp_speed";
 }
 
+static int cairoBlendModeToCompositing(QString mode, bool *isExact = nullptr)
+{
+    mode = mode.trimmed().toLower();
+    if (isExact)
+        *isExact = true;
+
+    if (mode == "normal")
+        return 0; // source over
+    if (mode == "add")
+        return 12; // plus
+    if (mode == "saturate") {
+        if (isExact)
+            *isExact = false;
+        return 12; // closest available
+    }
+    if (mode == "multiply")
+        return 13;
+    if (mode == "screen")
+        return 14;
+    if (mode == "overlay")
+        return 15;
+    if (mode == "darken")
+        return 16;
+    if (mode == "lighten")
+        return 17;
+    if (mode == "colordodge")
+        return 18;
+    if (mode == "colorburn")
+        return 19;
+    if (mode == "hardlight")
+        return 20;
+    if (mode == "softlight")
+        return 21;
+    if (mode == "difference")
+        return 22;
+    if (mode == "exclusion")
+        return 23;
+
+    if (isExact)
+        *isExact = false;
+    return 0;
+}
+
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_needsCPU(false)
@@ -236,6 +279,9 @@ void MltXmlChecker::processProperties()
             m_resource.isProxy = true;
         } else if (p.first == kShotcutProjectProcessingMode) {
             m_processingMode = p.second;
+            if (!m_processingMode.isEmpty()
+                && Settings.processingModeId(m_processingMode) == Settings.processingMode())
+                m_needsCPU = false;
             // Exclude it & rewrite at the end of the last tractor
             continue;
         } else if (p.first == kShotcutTransitionProperty) {
@@ -459,8 +505,19 @@ void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 
 void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
-    if (mlt_service.startsWith("qtblend") || mlt_service.startsWith("frei0r.cairoblend")
-        || mlt_service.startsWith("choppy"))
+    const bool isCpuOnlyService = mlt_service.startsWith("qtblend")
+                                  || mlt_service.startsWith("frei0r.cairoblend")
+                                  || mlt_service.startsWith("choppy");
+    if (!isCpuOnlyService)
+        return;
+
+    // If the project explicitly targets the current processing mode, do not
+    // force conversion prompts based on CPU-only service detection.
+    if (!m_processingMode.isEmpty()
+        && Settings.processingModeId(m_processingMode) == Settings.processingMode())
+        return;
+
+    if (isCpuOnlyService)
         m_needsCPU = true;
 }
 
@@ -602,6 +659,20 @@ void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProper
             new_mlt_service = "movit.luma_mix";
         } else if (mlt_service == "qtblend") {
             new_mlt_service = "movit.overlay";
+        } else if (mlt_service == "frei0r.cairoblend") {
+            new_mlt_service = "movit.overlay";
+            for (auto &p : properties) {
+                if (p.first == "1") {
+                    bool isExact = false;
+                    const int compositing = cairoBlendModeToCompositing(p.second, &isExact);
+                    if (!isExact) {
+                        LOG_WARNING() << "Approximating frei0r.cairoblend blend mode" << p.second
+                                      << "to movit.overlay compositing" << compositing;
+                    }
+                    p.first = "compositing";
+                    p.second = QString::number(compositing);
+                }
+            }
         }
     } else {
         if (mlt_service == "movit.blur") {
