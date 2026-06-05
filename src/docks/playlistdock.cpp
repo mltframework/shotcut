@@ -1201,7 +1201,7 @@ void PlaylistDock::setupActions()
     });
 
     action = new QAction(tr("Log Event"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_E));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_D));
     action->setToolTip(tr("Add an item at the current playback position"));
     connect(action, &QAction::triggered, this, &PlaylistDock::onLogEventActionTriggered);
     Actions.add("playlistLogEventAction", action);
