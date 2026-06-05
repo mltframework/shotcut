@@ -72,6 +72,18 @@ static mlt_position msToPosition(int64_t ms)
     return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
 }
 
+static QModelIndexList selectedRowsOrCurrentItem(QItemSelectionModel *selectionModel)
+{
+    QModelIndexList rows = selectionModel->selectedRows();
+    if (rows.isEmpty()) {
+        QModelIndex currentIndex = selectionModel->currentIndex();
+        if (currentIndex.isValid() && currentIndex.parent().isValid()) {
+            rows << currentIndex;
+        }
+    }
+    return rows;
+}
+
 static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path,
                                                   int64_t timeOffset,
                                                   bool includeNonspoken)
@@ -787,7 +799,7 @@ void SubtitlesDock::onRemoveRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_selectionModel->selectedRows();
+    QModelIndexList selectedRows = selectedRowsOrCurrentItem(m_selectionModel);
     if (selectedRows.size() > 0) {
         int firstItemIndex = selectedRows[0].row();
         int lastItemIndex = selectedRows[selectedRows.size() - 1].row();
@@ -799,7 +811,7 @@ void SubtitlesDock::onSetStartRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_selectionModel->selectedRows();
+    QModelIndexList selectedRows = selectedRowsOrCurrentItem(m_selectionModel);
     if (selectedRows.size() > 0) {
         int itemIndex = selectedRows[0].row();
         int64_t msTime = positionToMs(m_pos);
@@ -823,7 +835,7 @@ void SubtitlesDock::onSetEndRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_selectionModel->selectedRows();
+    QModelIndexList selectedRows = selectedRowsOrCurrentItem(m_selectionModel);
     if (selectedRows.size() > 0) {
         int itemIndex = selectedRows[0].row();
         int64_t msTime = positionToMs(m_pos);
@@ -846,7 +858,7 @@ void SubtitlesDock::onSetEndRequested()
 
 void SubtitlesDock::onMoveRequested()
 {
-    QModelIndexList selectedRows = m_selectionModel->selectedRows();
+    QModelIndexList selectedRows = selectedRowsOrCurrentItem(m_selectionModel);
     if (selectedRows.size() <= 0) {
         return;
     }
@@ -1065,14 +1077,15 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleBurnInAction"]->setEnabled(true);
             Actions["subtitleGenerateTextAction"]->setEnabled(true);
 
-            if (m_selectionModel->selectedRows().size() == 1) {
+            QModelIndexList selectedRows = selectedRowsOrCurrentItem(m_selectionModel);
+            if (selectedRows.size() == 1) {
                 Actions["subtitleSetStartAction"]->setEnabled(true);
                 Actions["subtitleSetEndAction"]->setEnabled(true);
             } else {
                 Actions["subtitleSetStartAction"]->setEnabled(false);
                 Actions["subtitleSetEndAction"]->setEnabled(false);
             }
-            if (m_selectionModel->selectedRows().size() > 0) {
+            if (selectedRows.size() > 0) {
                 Actions["subtitleRemoveItemAction"]->setEnabled(true);
                 Actions["subtitleMoveAction"]->setEnabled(true);
             } else {
