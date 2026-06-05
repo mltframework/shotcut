@@ -82,6 +82,12 @@ Item {
         onValueModified: {
             root.valueModified();
         }
+        function increaseValue() {
+            value = Math.min(value + stepSize, to);
+        }
+        function decreaseValue() {
+            value = Math.max(value - stepSize, from);
+        }
         textFromValue: function (value, locale) {
             var realValue = value * 1 / _factor;
             return Number(realValue).toLocaleString(locale, 'f', decimals);
@@ -184,11 +190,11 @@ Item {
                     _blockTextUpdate = false;
                 }
                 Keys.onUpPressed: {
-                    spinbox.increase();
+                    spinbox.increaseValue();
                     root.valueModified();
                 }
                 Keys.onDownPressed: {
-                    spinbox.decrease();
+                    spinbox.decreaseValue();
                     root.valueModified();
                 }
 
@@ -199,9 +205,9 @@ Item {
                     onWheel: wheel => {
                         spinbox.stepSize = root.stepSize * _factor * (wheel.modifiers & Qt.ControlModifier ? 10 : 1);
                         if (wheel.angleDelta.y > 0)
-                            spinbox.increase();
+                            spinbox.increaseValue();
                         else
-                            spinbox.decrease();
+                            spinbox.decreaseValue();
                         root.valueModified();
                         spinbox.stepSize = root.stepSize * _factor;
                     }
