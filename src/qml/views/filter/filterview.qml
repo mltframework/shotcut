@@ -353,7 +353,7 @@ Rectangle {
         }
 
         clip: true
-        interactive: false
+        interactive: true
         anchors.bottomMargin: 16
         anchors.rightMargin: 16
         contentWidth: filterConfig.item ? filterConfig.item.width + 16 : 0
