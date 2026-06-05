@@ -61,6 +61,21 @@ Rectangle {
     signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
 
+    function updateSkim(mouseArea, mouse) {
+        if (mouse.buttons === Qt.NoButton && mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier)) {
+            const point = mouseArea.mapToItem(clipRoot, mouse.x, mouse.y);
+            timeline.position = (clipRoot.x + point.x) / multitrack.scaleFactor;
+            scrubMouseArea.skim = true;
+            bubbleHelp.hide();
+            return true;
+        }
+        return false;
+    }
+
+    function clearSkim() {
+        scrubMouseArea.skim = false;
+    }
+
     function reparent(track) {
         parent = track;
         isAudio = track.isAudio;
@@ -157,10 +172,16 @@ Rectangle {
             nameHoverTimer.start();
         }
         onPositionChanged: {
+            if (clipRoot.updateSkim(clipNameHover, mouse)) {
+                nameHoverTimer.stop();
+                return;
+            }
+            clipRoot.clearSkim();
             bubbleHelp.hide();
             nameHoverTimer.restart();
         }
         onExited: {
+            clipRoot.clearSkim();
             nameHoverTimer.stop();
             bubbleHelp.hide();
         }
@@ -372,6 +393,9 @@ Rectangle {
             drag.minimumY: clipRoot.height - waveform.height
             drag.maximumY: clipRoot.height
             onPositionChanged: {
+                if (clipRoot.updateSkim(audioPeakMouseArea, mouse))
+                    return;
+                clipRoot.clearSkim();
                 let y = parent.y - (clipRoot.height - waveform.height);
                 let value = (waveform.height - Math.max(0, Math.min(y, waveform.height))) / waveform.height;
                 let gain = -80 /* dB */ * (1 - value) + 10;
@@ -381,6 +405,7 @@ Rectangle {
                     parent.yOffset = 0;
                 }
             }
+            onExited: clipRoot.clearSkim()
             onDoubleClicked: timeline.changeGain(trackIndex, index, 0)
         }
     }
@@ -520,7 +545,10 @@ Rectangle {
             drag.minimumX: 0
             drag.maximumX: clipRoot.width
             onEntered: parent.opacity = 0.7
-            onExited: parent.opacity = 0
+            onExited: {
+                clipRoot.clearSkim();
+                parent.opacity = 0;
+            }
             onPressed: {
                 root.stopScrolling = true;
                 startX = parent.x;
@@ -534,6 +562,9 @@ Rectangle {
                 bubbleHelp.hide();
             }
             onPositionChanged: mouse => {
+                if (clipRoot.updateSkim(fadeInMouseArea, mouse))
+                    return;
+                clipRoot.clearSkim();
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
@@ -614,7 +645,10 @@ Rectangle {
             drag.minimumX: -width - 1
             drag.maximumX: clipRoot.width
             onEntered: parent.opacity = 0.7
-            onExited: parent.opacity = 0
+            onExited: {
+                clipRoot.clearSkim();
+                parent.opacity = 0;
+            }
             onPressed: {
                 root.stopScrolling = true;
                 startX = parent.x;
@@ -628,6 +662,9 @@ Rectangle {
                 bubbleHelp.hide();
             }
             onPositionChanged: mouse => {
+                if (clipRoot.updateSkim(fadeOutMouseArea, mouse))
+                    return;
+                clipRoot.clearSkim();
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
@@ -697,6 +734,9 @@ Rectangle {
                 parent.opacity = 0;
             }
             onPositionChanged: mouse => {
+                if (clipRoot.updateSkim(trimInMouseArea, mouse))
+                    return;
+                clipRoot.clearSkim();
                 if (mouse.buttons === Qt.LeftButton) {
                     var newX = mapToItem(null, x, y).x;
                     var delta = Math.round((newX - startX) / timeScale);
@@ -708,7 +748,10 @@ Rectangle {
                 }
             }
             onEntered: parent.opacity = 0.5
-            onExited: parent.opacity = 0
+            onExited: {
+                clipRoot.clearSkim();
+                parent.opacity = 0;
+            }
         }
     }
 
@@ -747,6 +790,9 @@ Rectangle {
                 clipRoot.trimmedOut(clipRoot);
             }
             onPositionChanged: mouse => {
+                if (clipRoot.updateSkim(trimOutMouseArea, mouse))
+                    return;
+                clipRoot.clearSkim();
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale);
                     var delta = duration - newDuration;
@@ -758,7 +804,10 @@ Rectangle {
                 }
             }
             onEntered: parent.opacity = 0.5
-            onExited: parent.opacity = 0
+            onExited: {
+                clipRoot.clearSkim();
+                parent.opacity = 0;
+            }
         }
     }
 
