@@ -211,8 +211,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     ui->metaLanguageLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
-        foreach (const QString &hw, Settings.encodeHardware()) {
-            if ((vcodec == "libx264" && hw.startsWith("h264"))
+        for (const QString &hw : Settings.encodeHardware()) {
+            auto is8bit = ShotcutSettings::Native8Cpu == Settings.processingMode()
+                          || ShotcutSettings::Linear8Cpu == Settings.processingMode();
+            if ((vcodec == "libx264" && hw.startsWith("h264") && is8bit)
                 || (vcodec == "libx265" && hw.startsWith("hevc"))
                 || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
                 || (vcodec == "libsvtav1" && hw.startsWith("av1"))) {
