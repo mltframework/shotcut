@@ -211,8 +211,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     ui->metaLanguageLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
-        foreach (const QString &hw, Settings.encodeHardware()) {
-            if ((vcodec == "libx264" && hw.startsWith("h264"))
+        const bool is10bit = QString::fromLatin1(preset.get("pix_fmt")).contains("p10le");
+        for (const QString &hw : Settings.encodeHardware()) {
+            if ((vcodec == "libx264" && hw.startsWith("h264") && !is10bit)
                 || (vcodec == "libx265" && hw.startsWith("hevc"))
                 || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
                 || (vcodec == "libsvtav1" && hw.startsWith("av1"))) {
