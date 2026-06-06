@@ -23,6 +23,7 @@
 #include "dialogs/listselectiondialog.h"
 #include "dialogs/multifileexportdialog.h"
 #include "findanalysisfilterparser.h"
+#include "gpuinfo.h"
 #include "jobqueue.h"
 #include "jobs/encodejob.h"
 #include "mainwindow.h"
@@ -211,16 +212,18 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     ui->metaLanguageLineEdit->clear();
 
     if (ui->hwencodeCheckBox->isChecked()) {
+        // Prefer the hardware encoder family that matches the user-selected GPU vendor
+        // (NVIDIA -> *_nvenc, AMD -> *_amf, Intel -> *_qsv) so that selecting the
+        // discrete NVIDIA GPU drives export through NVENC even when an AMD (AMF) encoder
+        // also passed detection and happens to come first. 10-bit video skips H.264
+        // hardware encoders, which do not support it. See gpuinfo.cpp.
         const bool is10bit = QString::fromLatin1(preset.get("pix_fmt")).contains("p10le");
-        for (const QString &hw : Settings.encodeHardware()) {
-            if ((vcodec == "libx264" && hw.startsWith("h264") && !is10bit)
-                || (vcodec == "libx265" && hw.startsWith("hevc"))
-                || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
-                || (vcodec == "libsvtav1" && hw.startsWith("av1"))) {
-                vcodec = hw;
-                break;
-            }
-        }
+        const QString chosen = preferredHardwareVcodec(Settings.encodeHardware(),
+                                                       vcodec,
+                                                       Settings.gpuAdapterVendorId(),
+                                                       is10bit);
+        if (!chosen.isEmpty())
+            vcodec = chosen;
     }
 
     ui->disableAudioCheckbox->setChecked(preset.get_int("an"));

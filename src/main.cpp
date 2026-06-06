@@ -18,6 +18,7 @@
 #include "ConsoleAppender.h"
 #include "FileAppender.h"
 #include "Logger.h"
+#include "gpuinfo.h"
 #include "mainwindow.h"
 #include "settings.h"
 
@@ -423,6 +424,30 @@ int main(int argc, char **argv)
 
     Application a(argc, argv);
     int result = EXIT_SUCCESS;
+#ifdef Q_OS_WIN
+    // Direct the user-selected physical GPU to be used by the Qt RHI (Direct3D)
+    // preview/UI via QT_D3D_ADAPTER_INDEX and by the FFmpeg hardware decoder via
+    // MLT_AVFORMAT_HWACCEL_DEVICE. These must be set before the RHI is initialized (the
+    // adapter index is read lazily when the first scene-graph window is created). In
+    // release builds the watchdog child process, and the melt export subprocess, inherit
+    // this environment. Values already set by the user take precedence. The adapter index
+    // is resolved live from the GPU's stable vendor+device identity because some drivers
+    // enumerate adapters in an unstable order across runs. See gpuinfo.cpp and Settings.
+    {
+        const uint gpuVendorId = Settings.gpuAdapterVendorId();
+        if (gpuVendorId != 0) {
+            const int gpuAdapterIndex = gpuAdapterIndexFor(gpuVendorId,
+                                                           Settings.gpuAdapterDeviceId());
+            if (gpuAdapterIndex >= 0) {
+                const QByteArray index = QByteArray::number(gpuAdapterIndex);
+                if (!qEnvironmentVariableIsSet("QT_D3D_ADAPTER_INDEX"))
+                    ::qputenv("QT_D3D_ADAPTER_INDEX", index);
+                if (!qEnvironmentVariableIsSet("MLT_AVFORMAT_HWACCEL_DEVICE"))
+                    ::qputenv("MLT_AVFORMAT_HWACCEL_DEVICE", index);
+            }
+        }
+    }
+#endif
 #ifdef QT_DEBUG
     ::qputenv(kWatchdogEnvVar, "1");
 #endif

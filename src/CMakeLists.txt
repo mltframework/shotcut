@@ -66,6 +66,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/subtitlesdock.cpp docks/subtitlesdock.h
   docks/timelinedock.cpp docks/timelinedock.h
   FlatpakWrapperGenerator.cpp FlatpakWrapperGenerator.h
+  gpuinfo.cpp gpuinfo.h
   htmlgenerator.h htmlgenerator.cpp
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
@@ -340,7 +341,7 @@ if(WIN32)
   target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
   target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
   target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
-  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler ole32)
+  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler dxgi dxguid ole32)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
