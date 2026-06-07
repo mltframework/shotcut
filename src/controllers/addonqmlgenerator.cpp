@@ -88,6 +88,13 @@ static bool hasDividerLayoutHint(const AddOnParameterDescriptor &parameter)
     return parameter.layoutHint.trimmed().toLower() == QStringLiteral("divider");
 }
 
+static bool isLadspaChannelMaskParameter(const AddOnFilterDescriptor &descriptor,
+                                         const AddOnParameterDescriptor &parameter)
+{
+    return descriptor.service.startsWith(QStringLiteral("ladspa"), Qt::CaseInsensitive)
+           && parameter.name.trimmed().toLower() == QStringLiteral("channel_mask");
+}
+
 bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                                  const QDir &outputDir,
                                  const QString &qmlFileName,
@@ -180,11 +187,14 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString editorId = parameterId + QStringLiteral("_editor");
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
         const QString nameLiteral = quotedJsString(parameter.name);
+        const bool useLadspaChannelMask = isLadspaChannelMaskParameter(descriptor, parameter);
         if (supportsGeneratedKeyframes) {
             quotedKeyframeProperties << nameLiteral;
             quotedKeyframeMapEntries << QStringLiteral("%1: true").arg(nameLiteral);
         }
-        if (parameter.isReadOnly) {
+        if (useLadspaChannelMask) {
+            setControlsLines << QStringLiteral("        %1.setChannelsControls();").arg(editorId);
+        } else if (parameter.isReadOnly) {
             setControlsLines << QStringLiteral("        %1.text = root.textValue(%2);")
                                     .arg(editorId, nameLiteral);
         } else if (parameterType == QStringLiteral("string") && !parameter.values.isEmpty()) {
@@ -550,6 +560,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
 
         const QString nameLiteral = quotedJsString(parameter.name);
+        const bool useLadspaChannelMask = isLadspaChannelMaskParameter(descriptor, parameter);
 
         if (parameter.hideLabel) {
         } else if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
@@ -590,7 +601,21 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n\n";
         }
 
-        if (parameter.isReadOnly && parameter.hideLabel) {
+        if (useLadspaChannelMask) {
+            stream << "        Shotcut.ChannelMask {\n"
+                      "            id: "
+                   << editorId
+                   << "\n"
+                      ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "3" : "2")
+                   << "\n"
+                      "            readonly property string propertyName: "
+                   << nameLiteral
+                   << "\n"
+                      "            channelMaskProperty: propertyName\n"
+                      "        }\n";
+        } else if (parameter.isReadOnly && parameter.hideLabel) {
             stream << "        TextEdit {\n"
                       "            id: "
                    << editorId
@@ -840,7 +865,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n";
         }
 
-        if (!parameter.isReadOnly) {
+        if (!parameter.isReadOnly && !useLadspaChannelMask) {
             stream << "\n"
                       "        Shotcut.UndoButton {\n"
                       "            readonly property string propertyName: "
