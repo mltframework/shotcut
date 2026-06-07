@@ -354,6 +354,7 @@ Rectangle {
 
         clip: true
         interactive: true
+        boundsBehavior: Flickable.StopAtBounds
         anchors.bottomMargin: 16
         anchors.rightMargin: 16
         contentWidth: filterConfig.item ? filterConfig.item.width + 16 : 0
