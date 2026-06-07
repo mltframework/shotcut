@@ -83,6 +83,11 @@ static bool isGroupHeadingParameter(const AddOnParameterDescriptor &parameter)
                && parameterType == QStringLiteral("string"));
 }
 
+static bool hasDividerLayoutHint(const AddOnParameterDescriptor &parameter)
+{
+    return parameter.layoutHint.trimmed().toLower() == QStringLiteral("divider");
+}
+
 bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                                  const QDir &outputDir,
                                  const QString &qmlFileName,
@@ -438,12 +443,34 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "        columns: 4\n"
            "        columnSpacing: 8\n"
            "        rowSpacing: 6\n\n"
-           "        Label {\n"
+           "        Flickable {\n"
+           "            id: descriptionFlick\n"
            "            Layout.columnSpan: 3\n"
            "            Layout.fillWidth: true\n"
-           "            text: root.filterDescription.length > 0 ? qsTr('Add-on Filter: "
+           "            Layout.preferredHeight: Math.min(descriptionText.implicitHeight, "
+           "fontMetrics.height * 4)\n"
+           "            Layout.maximumHeight: fontMetrics.height * 4\n"
+           "            Layout.minimumHeight: fontMetrics.height\n"
+           "            contentWidth: width\n"
+           "            contentHeight: descriptionText.implicitHeight\n"
+           "            boundsBehavior: Flickable.StopAtBounds\n"
+           "            flickableDirection: Flickable.VerticalFlick\n"
+           "            clip: true\n"
+           "\n"
+           "            Text {\n"
+           "                id: descriptionText\n"
+           "                width: descriptionFlick.width\n"
+           "                text: root.filterDescription.length > 0 ? qsTr('Add-on Filter: "
            "%1').arg(root.filterDescription) : qsTr('Add-on Filter')\n"
-           "            wrapMode: Text.Wrap\n"
+           "                textFormat: Text.PlainText\n"
+           "                wrapMode: Text.Wrap\n"
+           "                color: activePalette.windowText\n"
+           "            }\n"
+           "\n"
+           "            FontMetrics {\n"
+           "                id: fontMetrics\n"
+           "                font: descriptionText.font\n"
+           "            }\n"
            "        }\n\n"
            "        ToolButton {\n"
            "            icon.name: 'help-contextual'\n"
@@ -457,6 +484,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "        }\n\n"
            "        Label {\n"
            "            text: qsTr('Preset')\n"
+           "            textFormat: Text.PlainText\n"
            "            horizontalAlignment: Text.AlignRight\n"
            "            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter\n"
            "        }\n"
@@ -499,6 +527,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "            Layout.fillWidth: true\n"
                       "            horizontalAlignment: Text.AlignHCenter\n"
                       "            font.bold: true\n"
+                      "            textFormat: Text.PlainText\n"
                       "            text: "
                    << quotedJsString(sectionTitle)
                    << "\n"
@@ -522,14 +551,16 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
 
         const QString nameLiteral = quotedJsString(parameter.name);
 
-        if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
-            stream << "        Item { }\n\n";
+        if (parameter.hideLabel) {
+        } else if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
+            stream << "        Item {}\n\n";
         } else {
             stream << "        Label {\n"
                       "            text: (root.propertyTitles && root.propertyTitles["
                    << nameLiteral << "]) ? root.propertyTitles[" << nameLiteral
                    << "] : " << nameLiteral
                    << "\n"
+                      "            textFormat: Text.PlainText\n"
                       "            horizontalAlignment: Text.AlignRight\n"
                       "            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter\n"
                       "            elide: Text.ElideRight\n"
@@ -559,21 +590,45 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n\n";
         }
 
-        if (parameter.isReadOnly) {
-            stream << "        TextField {\n"
+        if (parameter.isReadOnly && parameter.hideLabel) {
+            stream << "        TextEdit {\n"
+                      "            id: "
+                   << editorId
+                   << "\n"
+                      ""
+                      "            Layout.columnSpan: 4\n"
+                      "            Layout.fillWidth: true\n"
+                      "            Layout.preferredHeight: contentHeight\n"
+                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignTop\n"
+                      "            readonly property string propertyName: "
+                   << nameLiteral
+                   << "\n"
+                      "            textFormat: TextEdit.PlainText\n"
+                      "            text: ''\n"
+                      "            wrapMode: TextEdit.Wrap\n"
+                      "            readOnly: true\n"
+                      "            selectByMouse: true\n"
+                      "            color: activePalette.windowText\n"
+                      "        }\n";
+        } else if (parameter.isReadOnly) {
+            stream << "        TextEdit {\n"
                       "            id: "
                    << editorId
                    << "\n"
                       ""
                       "            Layout.columnSpan: 3\n"
                       "            Layout.fillWidth: true\n"
-                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
+                      "            Layout.preferredHeight: contentHeight\n"
+                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignTop\n"
                       "            readonly property string propertyName: "
                    << nameLiteral
                    << "\n"
-                      "            text: root.textValue(propertyName)\n"
-                      "            selectByMouse: true\n"
+                      "            textFormat: TextEdit.PlainText\n"
+                      "            text: ''\n"
+                      "            wrapMode: TextEdit.Wrap\n"
                       "            readOnly: true\n"
+                      "            selectByMouse: true\n"
+                      "            color: activePalette.windowText\n"
                       "        }\n";
         } else if (parameterType == QStringLiteral("string") && !parameter.values.isEmpty()) {
             stream << "        ComboBox {\n"
@@ -581,6 +636,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            readonly property string propertyName: "
@@ -600,6 +658,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            readonly property string propertyName: "
@@ -632,6 +693,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                 << editorId
                 << "\n"
                    ""
+                   "            Layout.columnSpan: "
+                << (parameter.hideLabel ? "2" : "1")
+                << "\n"
                    "            Layout.fillWidth: false\n"
                    "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                    "            readonly property string propertyName: "
@@ -671,6 +735,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            Layout.minimumWidth: 180\n"
@@ -704,6 +771,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            selectByMouse: true\n"
@@ -889,12 +959,31 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                 stream << "\n";
             }
         }
+
+        if (hasDividerLayoutHint(parameter)) {
+            stream << "\n"
+                      "        Item {\n"
+                      "            Layout.columnSpan: 4\n"
+                      "            Layout.fillWidth: true\n"
+                      "            Layout.preferredHeight: 8\n"
+                      "\n"
+                      "            Rectangle {\n"
+                      "                anchors.left: parent.left\n"
+                      "                anchors.right: parent.right\n"
+                      "                anchors.verticalCenter: parent.verticalCenter\n"
+                      "                height: 1\n"
+                      "                color: '#808080'\n"
+                      "                opacity: 0.45\n"
+                      "            }\n"
+                      "        }\n";
+        }
     }
 
     stream << "        Label {\n"
               "            Layout.columnSpan: 4\n"
               "            Layout.fillWidth: true\n"
               "            visible: propertyNames.length === 0\n"
+              "            textFormat: Text.PlainText\n"
               "            text: qsTr('No properties were discovered for this filter service.')\n"
               "            wrapMode: Text.Wrap\n"
               "        }\n"
