@@ -147,7 +147,7 @@ void FilterController::loadFilterMetadata()
     if (dir.cd("filters"))
         dirs.append(dir);
     dir = QDir(Settings.appDataLocation());
-    if (dir.cd("extensions") &&dir.cd("filters"))
+    if (dir.cd("extensions") && dir.cd("filters"))
         dirs.append(dir);
     for (auto dir : dirs) {
         for (const auto &dirName :
