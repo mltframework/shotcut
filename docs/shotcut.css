@@ -1,0 +1,224 @@
+/* ── Shotcut QML API docs — minimal readability stylesheet ───────────────── */
+
+/* Base layout */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+    margin: 0;
+    padding: 2rem 2.5rem 4rem;
+    max-width: 960px;
+}
+
+/* Center the main content */
+.main-content,
+div.main,
+#main-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+}
+
+/* ── Navigation sidebar ───────────────────────────────────────────────────── */
+.sidebar,
+div.sidebar,
+#sidebar {
+    background: #f4f4f6;
+    border-right: 1px solid #d8d8de;
+    font-size: 13px;
+    padding: 1.2rem 0;
+}
+
+.sidebar a,
+div.sidebar a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 1.2rem;
+}
+
+.sidebar a:hover,
+div.sidebar a:hover {
+    background: #e8e8ef;
+    color: #000;
+}
+
+.sidebar .active,
+div.sidebar .active {
+    font-weight: 600;
+    background: #dde1f0;
+    border-left: 3px solid #0066cc;
+    padding-left: calc(1.2rem - 3px);
+}
+
+/* ── Headings ─────────────────────────────────────────────────────────────── */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    border-bottom: 2px solid #d0d0d8;
+    padding-bottom: 0.4rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e8;
+    padding-bottom: 0.25rem;
+    margin-top: 2rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.6rem;
+    color: #222;
+}
+
+/* ── Code ─────────────────────────────────────────────────────────────────── */
+code,
+tt,
+kbd {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.88em;
+    background: #f2f3f5;
+    border: 1px solid #dde;
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+}
+
+pre {
+    background: #f5f6f8;
+    border: 1px solid #d8dae0;
+    border-radius: 5px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-size: 0.86em;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1em;
+}
+
+/* ── Tables ───────────────────────────────────────────────────────────────── */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.2rem 0;
+    font-size: 0.93em;
+}
+
+th {
+    background: #eeeef4;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d0d0da;
+    font-weight: 600;
+}
+
+td {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #d8d8e2;
+    vertical-align: top;
+}
+
+tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+/* ── Links ────────────────────────────────────────────────────────────────── */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #004499;
+}
+
+/* ── Member docs (qdoc renders these as dl/dt/dd in some themes) ──────────── */
+dl.member-list dt {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.9em;
+    font-weight: 600;
+    background: #f0f1f5;
+    border-left: 4px solid #0066cc;
+    padding: 0.4rem 0.75rem;
+    margin-top: 1.2rem;
+    border-radius: 0 3px 3px 0;
+}
+
+dl.member-list dd {
+    margin: 0.3rem 0 1rem 1rem;
+}
+
+/* ── QDoc "since" / "note" / "warning" notices ───────────────────────────── */
+.since,
+p.since {
+    color: #555;
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+div.note,
+p.note {
+    background: #eff7ff;
+    border-left: 4px solid #3399ff;
+    padding: 0.6rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+div.warning,
+p.warning {
+    background: #fff8e1;
+    border-left: 4px solid #f5a623;
+    padding: 0.6rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+/* ── Module index cards ───────────────────────────────────────────────────── */
+.tiles .tile,
+.module-box {
+    border: 1px solid #d0d0da;
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    background: #fafbff;
+    transition: box-shadow 0.15s;
+}
+
+.tiles .tile:hover,
+.module-box:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Top nav bar (qdoc default theme) ────────────────────────────────────── */
+.header,
+#header {
+    background: #2a2a3a;
+    color: #e8e8f0;
+    padding: 0.75rem 2rem;
+    font-size: 0.9em;
+}
+
+.header a,
+#header a {
+    color: #aabde0;
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+.header a:hover,
+#header a:hover {
+    color: #fff;
+}

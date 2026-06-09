@@ -1,0 +1,18 @@
+/*!
+    \qmlmodule org.shotcut.qml
+    \title org.shotcut.qml QML Module
+    \ingroup qmlmodules
+    \brief Types for filter scripting, metadata, and file access in Shotcut.
+
+    \code
+    import org.shotcut.qml
+    \endcode
+
+    This module contains the core types used when writing Shotcut filter UI panels
+    and VUI overlays. The most important type is \l Filter, which gives read/write
+    access to an MLT filter's properties and keyframes.
+
+    \section1 Types
+
+    \annotatedlist qmltypes
+*/

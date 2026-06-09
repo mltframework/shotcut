@@ -46,3 +46,5 @@ scripts/build-shotcut.conf
 .vscode
 MinimalMediaBackend/
 CuteLogger/libCuteLogger.dll
+docs/qml-api/
+shotcut.code-workspace

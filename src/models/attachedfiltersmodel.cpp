@@ -122,6 +122,26 @@ static int mltLinkIndex(Mlt::Producer *producer, int row)
     return -1;
 }
 
+/*!
+    \qmltype AttachedFiltersModel
+    \inqmlmodule org.shotcut.qml
+    \brief A list model of filters attached to the currently selected clip or track.
+
+    \c AttachedFiltersModel is available as the \c attachedfiltersmodel context property
+    in the Filters dock. Each row represents one attached filter service.
+*/
+
+/*!
+    \qmlsignal AttachedFiltersModel::changed()
+    \brief Emitted when any filter in the list is added, removed, reordered, or toggled.
+*/
+
+/*!
+    \qmlsignal AttachedFiltersModel::duplicateAddFailed(int index)
+    \brief Emitted when adding a filter would create a duplicate that is not allowed.
+    \a index is the row of the conflicting filter.
+*/
+
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dropRow(-1)
@@ -160,6 +180,11 @@ void AttachedFiltersModel::setProducer(Mlt::Producer *producer)
     }
 }
 
+/*!
+    \qmlproperty string AttachedFiltersModel::producerTitle
+    \brief The display name of the producer (clip or track) the filters are attached to.
+*/
+
 QString AttachedFiltersModel::producerTitle() const
 {
     if (m_producer)
@@ -168,11 +193,21 @@ QString AttachedFiltersModel::producerTitle() const
         return QString();
 }
 
+/*!
+    \qmlproperty bool AttachedFiltersModel::isProducerSelected
+    \brief \c true when a producer is currently selected and filters can be inspected.
+*/
+
 bool AttachedFiltersModel::isProducerSelected() const
 {
     return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank()
            && MLT.isSeekable(m_producer.get());
 }
+
+/*!
+    \qmlproperty bool AttachedFiltersModel::supportsLinks
+    \brief \c true when the current producer supports \b Time filters (i.e. MLT link chains).
+*/
 
 bool AttachedFiltersModel::supportsLinks() const
 {
@@ -440,6 +475,12 @@ void AttachedFiltersModel::doMoveService(Mlt::Producer &producer, int fromRow, i
     }
 }
 
+/*!
+    \qmlmethod int AttachedFiltersModel::add(Metadata meta)
+    \brief Adds the filter described by \a meta to the attached filters list.
+    Returns the row index of the newly added filter.
+*/
+
 int AttachedFiltersModel::add(QmlMetadata *meta)
 {
     int insertRow = -1;
@@ -667,6 +708,11 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
     emit addedOrRemoved(&producer);
 }
 
+/*!
+    \qmlmethod void AttachedFiltersModel::remove(int row)
+    \brief Removes the filter at \a row from the attached filters list.
+*/
+
 void AttachedFiltersModel::remove(int row)
 {
     LOG_DEBUG() << row;
@@ -730,6 +776,12 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
     emit addedOrRemoved(&producer);
 }
 
+/*!
+    \qmlmethod bool AttachedFiltersModel::move(int fromRow, int toRow)
+    \brief Moves the filter from \a fromRow to \a toRow.
+    Returns \c true on success.
+*/
+
 bool AttachedFiltersModel::move(int fromRow, int toRow)
 {
     QModelIndex parent = QModelIndex();
@@ -738,6 +790,11 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
     }
     return moveRows(parent, fromRow, 1, parent, toRow);
 }
+
+/*!
+    \qmlmethod void AttachedFiltersModel::pasteFilters()
+    \brief Pastes any filters stored on the clipboard onto the current producer.
+*/
 
 void AttachedFiltersModel::pasteFilters()
 {

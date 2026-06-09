@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,29 @@
 
 #include <QWidget>
 
+/*!
+    \qmltype QmlView
+    \inqmlmodule org.shotcut.qml
+    \brief Provides access to the host widget geometry, available via the \c view context property.
+
+    \c view is injected as a context property into every dock's QML view.
+    Use it when you need the screen coordinates of the host widget
+    (e.g. to position pop-up elements absolutely on screen).
+
+    \code
+    var widgetPos = view.pos()
+    \endcode
+*/
+
 QmlView::QmlView(QWidget *qview)
     : QObject(qview)
     , m_qview(qview)
 {}
+
+/*!
+    \qmlmethod point QmlView::pos()
+    \brief Returns the top-left position of the host QWidget in screen coordinates.
+*/
 
 QPoint QmlView::pos()
 {

@@ -39,6 +39,89 @@
 static const quintptr NO_PARENT_ID = quintptr(-1);
 static const char *kShotcutDefaultTransition = "lumaMix";
 
+/*!
+    \qmltype MultitrackModel
+    \inqmlmodule org.shotcut.qml
+    \brief A two-level item model representing the timeline: tracks at the top level, clips within each track.
+
+    \c MultitrackModel is available as the \c multitrack context property in the Timeline dock.
+    The top level rows are tracks (video or audio); each track's children are the clips on that track.
+
+    \section2 Track/Clip Roles (partial)
+
+    \table
+    \header \li Role name \li Applies to \li Description
+    \row \li \c name \li track, clip \li Display name
+    \row \li \c comment \li clip \li Clip comment
+    \row \li \c resource \li clip \li Source file path
+    \row \li \c isBlank \li clip \li Whether this is a blank (gap)
+    \row \li \c start \li clip \li Start position in frames on the timeline
+    \row \li \c duration \li track, clip \li Duration in frames
+    \row \li \c inPoint \li clip \li In-point of the source media
+    \row \li \c outPoint \li clip \li Out-point of the source media
+    \row \li \c isMute \li track \li Whether the track is muted
+    \row \li \c isHidden \li track \li Whether the track is hidden
+    \row \li \c isAudio \li track, clip \li Whether this is an audio track/clip
+    \row \li \c isLocked \li track \li Whether the track is locked
+    \row \li \c fadeIn \li clip \li Fade-in duration in frames
+    \row \li \c fadeOut \li clip \li Fade-out duration in frames
+    \row \li \c isTransition \li clip \li Whether this clip is a transition
+    \row \li \c isFiltered \li track, clip \li Whether filters are attached
+    \row \li \c speed \li clip \li Playback speed multiplier
+    \row \li \c group \li clip \li Clip group identifier
+    \endtable
+*/
+
+/*!
+    \qmlsignal MultitrackModel::created()
+    \brief Emitted when a new tractor (timeline) is created.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::aboutToClose()
+    \brief Emitted just before the timeline is closed/cleared.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::closed()
+    \brief Emitted after the timeline has been closed.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::modified()
+    \brief Emitted whenever timeline content changes.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::seeked(int position)
+    \brief Emitted when the playhead is moved to \time \a position.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::trackHeightChanged()
+    \brief Emitted when \l trackHeight changes.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::scaleFactorChanged()
+    \brief Emitted when \l scaleFactor changes.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::durationChanged()
+    \brief Emitted when the total timeline duration changes.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::filteredChanged()
+    \brief Emitted when the \l filtered state changes.
+*/
+
+/*!
+    \qmlsignal MultitrackModel::showStatusMessage(string message)
+    \brief Emitted to display a \a message in the status bar.
+*/
+
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(0)
@@ -374,6 +457,11 @@ const QByteArray *MultitrackModel::getAudioLevels(int trackIndex, int clipIndex)
     return nullptr;
 }
 
+/*!
+    \qmlmethod void MultitrackModel::setTrackName(int row, string value)
+    \brief Renames the track at \a row to \a value.
+*/
+
 void MultitrackModel::setTrackName(int row, const QString &value)
 {
     if (row < m_trackList.size()) {
@@ -390,6 +478,11 @@ void MultitrackModel::setTrackName(int row, const QString &value)
         }
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::setTrackMute(int row, bool mute)
+    \brief Sets the mute state of the track at \a row to \a mute.
+*/
 
 void MultitrackModel::setTrackMute(int row, bool mute)
 {
@@ -412,6 +505,11 @@ void MultitrackModel::setTrackMute(int row, bool mute)
         }
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::setTrackHidden(int row, bool hidden)
+    \brief Sets the hidden state of the video track at \a row to \a hidden.
+*/
 
 void MultitrackModel::setTrackHidden(int row, bool hidden)
 {
@@ -436,6 +534,11 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
     }
 }
 
+/*!
+    \qmlmethod void MultitrackModel::setTrackComposite(int row, bool composite)
+    \brief Sets whether the video track at \a row composites over lower tracks (\a composite).
+*/
+
 void MultitrackModel::setTrackComposite(int row, bool composite)
 {
     if (row < m_trackList.size()) {
@@ -453,6 +556,11 @@ void MultitrackModel::setTrackComposite(int row, bool composite)
         emit modified();
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::setTrackLock(int row, bool lock)
+    \brief Locks (\a lock = \c true) or unlocks the track at \a row.
+*/
 
 void MultitrackModel::setTrackLock(int row, bool lock)
 {
@@ -489,6 +597,14 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, 
     }
     return result;
 }
+
+/*!
+    \qmlmethod int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks)
+    \brief Trims the in-point of the clip at (\a trackIndex, \a clipIndex) by \a delta frames.
+    If \a ripple is \c true, clips on \a trackIndex shift to fill the gap.
+    If \a rippleAllTracks is \c true, all tracks ripple.
+    Returns the number of frames actually trimmed.
+*/
 
 int MultitrackModel::trimClipIn(
     int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks)
@@ -640,6 +756,11 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
     return result;
 }
 
+/*!
+    \qmlproperty int MultitrackModel::trackHeight
+    \brief The display height of each track row in pixels. Settable.
+*/
+
 int MultitrackModel::trackHeight() const
 {
     int result = m_tractor ? m_tractor->get_int(kTrackHeightProperty)
@@ -657,6 +778,11 @@ void MultitrackModel::setTrackHeight(int height)
     }
 }
 
+/*!
+    \qmlproperty int MultitrackModel::trackHeaderWidth
+    \brief The width of the track header column in pixels. Settable.
+*/
+
 int MultitrackModel::trackHeaderWidth() const
 {
     return (m_tractor && m_tractor->property_exists(kTrackHeaderWidthProperty))
@@ -673,6 +799,11 @@ void MultitrackModel::setTrackHeaderWidth(int width)
     }
 }
 
+/*!
+    \qmlproperty double MultitrackModel::scaleFactor
+    \brief The horizontal zoom/scale factor of the timeline. Settable.
+*/
+
 double MultitrackModel::scaleFactor() const
 {
     double result = m_tractor ? m_tractor->get_double(kTimelineScaleProperty) : 0;
@@ -686,6 +817,14 @@ void MultitrackModel::setScaleFactor(double scale)
         emit scaleFactorChanged();
     }
 }
+
+/*!
+    \qmlmethod int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks)
+    \brief Trims the out-point of the clip at (\a trackIndex, \a clipIndex) by \a delta frames.
+    If \a ripple is \c true, downstream clips shift.
+    If \a rippleAllTracks is \c true, all tracks ripple.
+    Returns the number of frames actually trimmed.
+*/
 
 int MultitrackModel::trimClipOut(
     int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks)
@@ -802,6 +941,14 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
     }
     m_isMakingTransition = false;
 }
+
+/*!
+    \qmlmethod bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks)
+    \brief Moves the clip at (\a fromTrack, \a clipIndex) to time \a position on \a toTrack.
+    If \a ripple is \c true, clips on \a toTrack shift to close the gap.
+    If \a rippleAllTracks is \c true, all tracks ripple.
+    Returns \c true on success.
+*/
 
 bool MultitrackModel::moveClip(
     int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks)
@@ -1244,6 +1391,12 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip, bool seek, 
     return -1;
 }
 
+/*!
+    \qmlmethod void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTracks)
+    \brief Removes the clip at (\a trackIndex, \a clipIndex). If \a rippleAllTracks is \c true,
+    all tracks shift to close the gap.
+*/
+
 void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTracks)
 {
     if (trackIndex >= m_trackList.size()) {
@@ -1295,6 +1448,11 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
     }
 }
 
+/*!
+    \qmlmethod void MultitrackModel::liftClip(int trackIndex, int clipIndex)
+    \brief Lifts (clears) the clip at (\a trackIndex, \a clipIndex), leaving a blank.
+*/
+
 void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 {
     if (trackIndex >= m_trackList.size()) {
@@ -1327,6 +1485,11 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
         }
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
+    \brief Splits the clip at (\a trackIndex, \a clipIndex) at time \a position (frames from timeline start).
+*/
 
 void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 {
@@ -1414,6 +1577,11 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
     }
 }
 
+/*!
+    \qmlmethod void MultitrackModel::joinClips(int trackIndex, int clipIndex)
+    \brief Joins the clip at \a clipIndex with the following clip on \a trackIndex into one clip.
+*/
+
 void MultitrackModel::joinClips(int trackIndex, int clipIndex)
 {
     if (clipIndex < 0)
@@ -1462,6 +1630,11 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         emit modified();
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::changeGain(int trackIndex, int clipIndex, double gain)
+    \brief Sets the audio \a gain of the clip at (\a trackIndex, \a clipIndex).
+*/
 
 void MultitrackModel::changeGain(int trackIndex, int clipIndex, double gain)
 {
@@ -1517,6 +1690,11 @@ static void moveBeforeFirstAudioFilter(Mlt::Producer *producer)
     }
     producer->move_filter(n - 1, index);
 }
+
+/*!
+    \qmlmethod void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
+    \brief Sets the fade-in \a duration (frames) of the clip at (\a trackIndex, \a clipIndex).
+*/
 
 void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 {
@@ -1639,6 +1817,11 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
         }
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
+    \brief Sets the fade-out \a duration (frames) of the clip at (\a trackIndex, \a clipIndex).
+*/
 
 void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
 {
@@ -1766,6 +1949,13 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
     }
 }
 
+/*!
+    \qmlmethod bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
+    \brief Returns \c true if adding a transition at time \a position between \a clipIndex and its
+    neighbor on \a fromTrack / \a toTrack would be valid. \a ripple indicates whether
+    ripple mode is active.
+*/
+
 bool MultitrackModel::addTransitionValid(
     int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
@@ -1798,6 +1988,13 @@ bool MultitrackModel::addTransitionValid(
     }
     return result;
 }
+
+/*!
+    \qmlmethod int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks)
+    \brief Adds a transition between the clip at (\a trackIndex, \a clipIndex) and its
+    neighbor at time \a position. \a ripple and \a rippleAllTracks control whether downstream
+    clips shift. Returns the clip index of the resulting transition.
+*/
 
 int MultitrackModel::addTransition(
     int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks)
@@ -1900,6 +2097,11 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
         }
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
+    \brief Removes the transition at (\a trackIndex, \a clipIndex).
+*/
 
 void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
 {
@@ -2645,6 +2847,12 @@ void MultitrackModel::consolidateBlanksAllTracks()
         ++i;
     }
 }
+
+/*!
+    \qmlmethod void MultitrackModel::audioLevelsReady(var index)
+    \brief Called by the audio waveform worker when waveform data for \a index is ready.
+    Triggers a data refresh for the corresponding clip.
+*/
 
 void MultitrackModel::audioLevelsReady(const QPersistentModelIndex &index)
 {
@@ -3550,6 +3758,11 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     return true;
 }
 
+/*!
+    \qmlproperty bool MultitrackModel::filtered
+    \brief \c true when timeline clips are being filtered/searched. Read-only.
+*/
+
 bool MultitrackModel::isFiltered(Mlt::Producer *producer) const
 {
     if (!producer)
@@ -3625,6 +3838,12 @@ void MultitrackModel::load()
     emit scaleFactorChanged();
     emit trackHeaderWidthChanged();
 }
+
+/*!
+    \qmlmethod void MultitrackModel::reload(bool asynchronous)
+    \brief Reloads all track and clip data. If \a asynchronous is \c true, audio levels
+    are recalculated in the background.
+*/
 
 void MultitrackModel::reload(bool asynchronous)
 {

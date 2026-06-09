@@ -32,7 +32,8 @@
             },
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
-                "CMAKE_C_FLAGS": "-I/usr/local/include"
+                "CMAKE_C_FLAGS": "-I/usr/local/include",
+                "BUILD_DOCS": "ON"
             }
         },
         {

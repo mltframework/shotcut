@@ -21,6 +21,7 @@ if(WIN32)
   option(WINDOWS_DEPLOY "Install exes/libs directly to prefix (no subdir /bin)" ON)
 endif()
 option(CLANG_FORMAT "Enable Clang Format" ON)
+option(BUILD_DOCS "Build QDoc API documentation" OFF)
 option(EXTERNAL_LAUNCHERS "Whether include features to launch external programs; for example, this should be off for Flatpak due to sandbox." ON)
 option(USE_VULKAN "Whether to use Vulkan for hardware video decoding" OFF)
 if (UNIX AND NOT APPLE)
@@ -111,3 +112,22 @@ file(GLOB_RECURSE QML_SRC "src/qml/*.qml")
 add_custom_target(qmlformat COMMAND
   ${CMAKE_PREFIX_PATH}/bin/qmlformat -i ${QML_SRC}
 )
+
+if(BUILD_DOCS)
+  find_program(QDOC_EXECUTABLE qdoc
+    HINTS
+      "${Qt6_DIR}/../../../bin"
+      "$ENV{HOME}/Qt/6.10.3/gcc_64/bin"
+      "${CMAKE_PREFIX_PATH}/bin"
+  )
+  if(NOT QDOC_EXECUTABLE)
+    message(FATAL_ERROR "qdoc not found. Install Qt documentation tools or set Qt6_DIR correctly.")
+  endif()
+  add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_SOURCE_DIR}/docs/qml-api
+    COMMAND ${QDOC_EXECUTABLE} ${CMAKE_SOURCE_DIR}/docs/qml-api.qdocconf
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Generating QDoc API documentation"
+    VERBATIM
+  )
+endif()

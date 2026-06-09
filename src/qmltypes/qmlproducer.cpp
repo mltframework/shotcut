@@ -30,12 +30,93 @@ static const char *kHeightProperty = "meta.media.height";
 static const char *kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char *kAspectDenProperty = "meta.media.sample_aspect_den";
 
+/*!
+    \qmltype Producer
+    \inqmlmodule org.shotcut.qml
+    \brief Represents the clip currently loaded in the \b Filters panel, accessed via the \c producer context property.
+
+    \c producer describes the clip that the currently displayed filter is attached to.
+    It is available in the Filters panel as the \c producer context property.
+
+    \code
+    var startFrame = producer.in
+    var endFrame   = producer.out
+    var fps        = profile.fps
+    \endcode
+*/
+
+/*!
+    \qmlsignal Producer::producerChanged()
+    \brief Emitted when the underlying producer or its properties change.
+*/
+
+/*!
+    \qmlsignal Producer::positionChanged(int position)
+    \brief Emitted when the playhead \a position within the clip changes.
+*/
+
+/*!
+    \qmlsignal Producer::seeked(int position)
+    \brief Emitted when the clip is seeked to time \a position.
+*/
+
+/*!
+    \qmlsignal Producer::inChanged(int delta)
+    \brief Emitted when the clip's in-point changes. \a delta is the frame offset.
+*/
+
+/*!
+    \qmlsignal Producer::outChanged(int delta)
+    \brief Emitted when the clip's out-point changes. \a delta is the frame offset.
+*/
+
+/*!
+    \qmlsignal Producer::durationChanged()
+    \brief Emitted when the clip's duration changes.
+*/
+
+/*!
+    \qmlsignal Producer::lengthChanged()
+    \brief Emitted when the source media length changes.
+*/
+
+/*!
+    \qmlproperty int Producer::duration
+    \brief The duration of the clip in frames (\c out - \c in + 1).
+*/
+
+/*!
+    \qmlproperty int Producer::length
+    \brief The total length of the underlying source media in frames.
+*/
+
+/*!
+    \qmlproperty string Producer::mlt_service
+    \brief The MLT service name of the producer (e.g. \c "avformat", \c "color").
+*/
+
+/*!
+    \qmlproperty string Producer::hash
+    \brief A content-based hash of the producer's media, used for caching.
+*/
+
+/*!
+    \qmlproperty int Producer::position
+    \brief The current playhead position within the clip, in frames relative to \l in.
+    Setting this seeks the preview to that position.
+*/
+
 QmlProducer::QmlProducer(QObject *parent)
     : QObject(parent)
 {
     connect(this, SIGNAL(inChanged(int)), this, SIGNAL(durationChanged()));
     connect(this, SIGNAL(outChanged(int)), this, SIGNAL(durationChanged()));
 }
+
+/*!
+    \qmlproperty int Producer::in
+    \brief The in-point of the clip in frames (absolute timeline position).
+*/
 
 int QmlProducer::in()
 {
@@ -50,6 +131,11 @@ int QmlProducer::in()
         return m_producer.get_in();
 }
 
+/*!
+    \qmlproperty int Producer::out
+    \brief The out-point of the clip in frames (absolute timeline position).
+*/
+
 int QmlProducer::out()
 {
     if (!m_producer.is_valid())
@@ -62,6 +148,11 @@ int QmlProducer::out()
     else
         return m_producer.get_out();
 }
+
+/*!
+    \qmlproperty int Producer::aspectRatio
+    \brief The pixel aspect ratio of the producer's media.
+*/
 
 double QmlProducer::aspectRatio()
 {
@@ -78,6 +169,11 @@ double QmlProducer::aspectRatio()
     return MLT.profile().dar();
 }
 
+/*!
+    \qmlproperty string Producer::resource
+    \brief The file path or resource string of the underlying media.
+*/
+
 QString QmlProducer::resource()
 {
     if (!m_producer.is_valid())
@@ -87,6 +183,11 @@ QString QmlProducer::resource()
         result = QString::fromUtf8(m_producer.get("mlt_service"));
     return result;
 }
+
+/*!
+    \qmlproperty string Producer::name
+    \brief The display name of the clip as shown in the timeline.
+*/
 
 QString QmlProducer::name()
 {
@@ -100,6 +201,11 @@ const QByteArray *QmlProducer::audioLevels()
     return static_cast<const QByteArray *>(m_producer.get_data(kAudioLevelsProperty));
 }
 
+/*!
+    \qmlproperty int Producer::fadeIn
+    \brief Duration in frames of the clip's fade-in, or 0 if none.
+*/
+
 int QmlProducer::fadeIn()
 {
     if (!m_producer.is_valid())
@@ -112,6 +218,11 @@ int QmlProducer::fadeIn()
     return (filter && filter->is_valid()) ? filter->get_length() : 0;
 }
 
+/*!
+    \qmlproperty int Producer::fadeOut
+    \brief Duration in frames of the clip's fade-out, or 0 if none.
+*/
+
 int QmlProducer::fadeOut()
 {
     if (!m_producer.is_valid())
@@ -123,6 +234,11 @@ int QmlProducer::fadeOut()
         filter.reset(MLT.getFilter("fadeOutMovit", &m_producer));
     return (filter && filter->is_valid()) ? filter->get_length() : 0;
 }
+
+/*!
+    \qmlproperty real Producer::speed
+    \brief The playback speed multiplier of the clip (1.0 = normal speed).
+*/
 
 double QmlProducer::speed()
 {
@@ -160,6 +276,12 @@ void QmlProducer::seek(int position)
     }
 }
 
+/*!
+    \qmlmethod bool Producer::outOfBounds()
+    \brief Returns \c true if the clip's in/out points fall outside the media's
+    available length.
+*/
+
 Q_INVOKABLE bool QmlProducer::outOfBounds()
 {
     return m_position < 0 || m_position > duration();
@@ -188,6 +310,11 @@ void QmlProducer::remakeAudioLevels(bool isKeyframesVisible)
         AudioLevelsTask::start(m_producer, this, QModelIndex());
 }
 
+/*!
+    \qmlproperty real Producer::displayAspectRatio
+    \brief The display aspect ratio (DAR) of the producer's media.
+*/
+
 double QmlProducer::displayAspectRatio()
 {
     if (m_producer.is_valid() && m_producer.get(kHeightProperty)) {
@@ -200,6 +327,12 @@ double QmlProducer::displayAspectRatio()
     }
     return MLT.profile().dar();
 }
+
+/*!
+    \qmlmethod string Producer::get(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a string.
+    If time \a position is \c -1, returns the current value.
+*/
 
 QString QmlProducer::get(QString name, int position)
 {
@@ -214,6 +347,12 @@ QString QmlProducer::get(QString name, int position)
     }
 }
 
+/*!
+    \qmlmethod real Producer::getDouble(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a floating-point number.
+    If time \a position is \c -1, returns the current value.
+*/
+
 double QmlProducer::getDouble(QString name, int position)
 {
     if (m_producer.is_valid()) {
@@ -225,6 +364,12 @@ double QmlProducer::getDouble(QString name, int position)
         return 0.0;
     }
 }
+
+/*!
+    \qmlmethod rect Producer::getRect(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a \c rect.
+    If time \a position is \c -1, returns the current value.
+*/
 
 QRectF QmlProducer::getRect(QString name, int position)
 {

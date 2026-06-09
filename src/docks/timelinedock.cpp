@@ -69,6 +69,92 @@ static const char *kFileUrlProtocol = "file://";
 static const char *kFilesUrlDelimiter = ",file://";
 static const int kRecordingTimerIntervalMs = 1000;
 
+/*!
+    \qmltype TimelineDock
+    \inqmlmodule org.shotcut.qml
+    \brief The timeline dock controller, available as the \c timeline context property.
+
+    \c timeline is injected into the Timeline QML view and exposes properties and
+    methods for querying and controlling clip selection, the playhead position,
+    the current track, and audio recording.
+*/
+
+/*!
+    \qmlsignal TimelineDock::currentTrackChanged()
+    \brief Emitted when \l currentTrack changes.
+*/
+
+/*!
+    \qmlsignal TimelineDock::selectionChanged()
+    \brief Emitted when the clip \l selection changes.
+*/
+
+/*!
+    \qmlsignal TimelineDock::positionChanged(int position)
+    \brief Emitted when the playhead time \a position changes.
+*/
+
+/*!
+    \qmlsignal TimelineDock::loopChanged()
+    \brief Emitted when the loop region start or end time changes.
+*/
+
+/*!
+    \qmlsignal TimelineDock::clipOpened(var producer)
+    \brief Emitted when a clip is opened for source preview. \a producer is the opened clip's producer.
+*/
+
+/*!
+    \qmlsignal TimelineDock::showStatusMessage(string message)
+    \brief Emitted to request a \a message be shown in the status bar.
+*/
+
+/*!
+    \qmlsignal TimelineDock::durationChanged()
+    \brief Emitted when the total timeline duration changes.
+*/
+
+/*!
+    \qmlsignal TimelineDock::isRecordingChanged(bool recording)
+    \brief Emitted when recording starts or stops. \a recording is \c true when recording begins.
+*/
+
+/*!
+    \qmlproperty int TimelineDock::position
+    \brief The current playhead position in frames. Settable — setting this seeks the player.
+*/
+
+/*!
+    \qmlproperty bool TimelineDock::isRecording
+    \brief \c true when audio recording is in progress. Read-only.
+*/
+
+/*!
+    \qmlproperty int TimelineDock::loopStart
+    \brief The start frame of the current loop region, or \c -1 if no loop is set. Read-only.
+*/
+
+/*!
+    \qmlproperty int TimelineDock::loopEnd
+    \brief The end frame of the current loop region, or \c -1 if no loop is set. Read-only.
+*/
+
+/*!
+    \qmlmethod bool TimelineDock::isMultitrackSelected()
+    \brief Returns \c true if the timeline output is currently selected.
+*/
+
+/*!
+    \qmlmethod int TimelineDock::selectedTrack()
+    \brief Returns the index of the selected track when a single track is selected,
+    or \c -1 otherwise.
+*/
+
+/*!
+    \qmlmethod bool TimelineDock::isFloating()
+    \brief Returns \c true if the timeline dock is currently floating (undocked).
+*/
+
 TimelineDock::TimelineDock(QWidget *parent)
     : QDockWidget(parent)
     , m_quickView(QmlUtilities::sharedEngine(), this)
@@ -1877,6 +1963,11 @@ void TimelineDock::setCurrentTrack(int currentTrack)
     }
 }
 
+/*!
+    \qmlproperty int TimelineDock::currentTrack
+    \brief The zero-based index of the currently focused timeline track. Settable.
+*/
+
 int TimelineDock::currentTrack() const
 {
     return qBound(0,
@@ -1907,6 +1998,12 @@ void TimelineDock::setSelection(QList<QPoint> newSelection, int trackIndex, bool
         m_selectionSignalTimer.start();
     }
 }
+
+/*!
+    \qmlproperty list<var> TimelineDock::selection
+    \brief The current clip selection as a list of \c {point} values where \c x is the
+    track index and \c y is the clip index. Settable.
+*/
 
 QVariantList TimelineDock::selectionForJS() const
 {
@@ -1976,11 +2073,22 @@ void TimelineDock::saveAndClearSelection()
     emit selectionChanged();
 }
 
+/*!
+    \qmlmethod void TimelineDock::restoreSelection()
+    \brief Restores the previously saved clip selection.
+*/
+
 void TimelineDock::restoreSelection()
 {
     QList<QPoint> restoredSelection = uuidsToSelection(m_savedSelectionUuids);
     setSelection(restoredSelection, m_savedSelectedTrack, m_savedIsMultitrackSelected);
 }
+
+/*!
+    \qmlmethod list<var> TimelineDock::getGroupForClip(int trackIndex, int clipIndex)
+    \brief Returns the list of all clip coordinates (\c {point} values) in the same group
+    as the clip at (\a trackIndex, \a clipIndex).
+*/
 
 QVariantList TimelineDock::getGroupForClip(int trackIndex, int clipIndex)
 {
@@ -2098,6 +2206,11 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::openProperties()
+    \brief Opens the Properties panel for the currently selected clip. Static method.
+*/
+
 void TimelineDock::openProperties()
 {
     MAIN.onPropertiesDockTriggered(true);
@@ -2124,12 +2237,22 @@ void TimelineDock::clearSelectionIfInvalid()
     setSelection(newSelection);
 }
 
+/*!
+    \qmlmethod void TimelineDock::insertTrack()
+    \brief Inserts a new track of the same type as the current track above it.
+*/
+
 void TimelineDock::insertTrack()
 {
     if (m_selection.selectedTrack != -1)
         setSelection();
     MAIN.undoStack()->push(new Timeline::InsertTrackCommand(m_model, currentTrack()));
 }
+
+/*!
+    \qmlmethod void TimelineDock::insertAudioTrack()
+    \brief Inserts a new audio track above the current track.
+*/
 
 void TimelineDock::insertAudioTrack()
 {
@@ -2139,6 +2262,11 @@ void TimelineDock::insertAudioTrack()
         new Timeline::InsertTrackCommand(m_model, currentTrack(), AudioTrackType));
 }
 
+/*!
+    \qmlmethod void TimelineDock::insertVideoTrack()
+    \brief Inserts a new video track above the current track.
+*/
+
 void TimelineDock::insertVideoTrack()
 {
     if (m_selection.selectedTrack != -1)
@@ -2146,6 +2274,11 @@ void TimelineDock::insertVideoTrack()
     MAIN.undoStack()->push(
         new Timeline::InsertTrackCommand(m_model, currentTrack(), VideoTrackType));
 }
+
+/*!
+    \qmlmethod void TimelineDock::removeTrack()
+    \brief Removes the current track (and all its clips) from the timeline.
+*/
 
 void TimelineDock::removeTrack()
 {
@@ -2156,6 +2289,11 @@ void TimelineDock::removeTrack()
             setCurrentTrack(m_model.trackList().count() - 1);
     }
 }
+
+/*!
+    \qmlmethod void TimelineDock::moveTrack(int fromTrackIndex, int toTrackIndex)
+    \brief Moves the track at \a fromTrackIndex to \a toTrackIndex.
+*/
 
 void TimelineDock::moveTrack(int fromTrackIndex, int toTrackIndex)
 {
@@ -2175,6 +2313,11 @@ void TimelineDock::moveTrack(int fromTrackIndex, int toTrackIndex)
     MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, fromTrackIndex, toTrackIndex));
     setCurrentTrack(toTrackIndex);
 }
+
+/*!
+    \qmlmethod void TimelineDock::moveTrackUp()
+    \brief Moves the current track one position upward.
+*/
 
 void TimelineDock::moveTrackUp()
 {
@@ -2206,6 +2349,11 @@ void TimelineDock::moveTrackUp()
     setCurrentTrack(trackIndex - 1);
 }
 
+/*!
+    \qmlmethod void TimelineDock::moveTrackDown()
+    \brief Moves the current track one position downward.
+*/
+
 void TimelineDock::moveTrackDown()
 {
     int trackIndex = currentTrack();
@@ -2235,6 +2383,12 @@ void TimelineDock::moveTrackDown()
     MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, trackIndex, trackIndex + 1));
     setCurrentTrack(trackIndex + 1);
 }
+
+/*!
+    \qmlmethod bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
+    \brief Merges the clip at \a clipIndex with the following clip on \a trackIndex.
+    If \a dryrun is \c true the merge is validated but not applied; returns \c true when valid.
+*/
 
 bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
 {
@@ -2353,6 +2507,11 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     MAIN.undoStack()->push(m_updateCommand.release());
 }
 
+/*!
+    \qmlmethod int TimelineDock::addAudioTrack()
+    \brief Appends a new audio track and returns its track index.
+*/
+
 int TimelineDock::addAudioTrack()
 {
     if (m_selection.selectedTrack != -1)
@@ -2361,6 +2520,11 @@ int TimelineDock::addAudioTrack()
     return m_model.trackList().size() - 1;
 }
 
+/*!
+    \qmlmethod int TimelineDock::addVideoTrack()
+    \brief Appends a new video track and returns its track index.
+*/
+
 int TimelineDock::addVideoTrack()
 {
     if (m_selection.selectedTrack != -1)
@@ -2368,6 +2532,11 @@ int TimelineDock::addVideoTrack()
     MAIN.undoStack()->push(new Timeline::AddTrackCommand(m_model, true));
     return 0;
 }
+
+/*!
+    \qmlmethod void TimelineDock::alignSelectedClips()
+    \brief Aligns selected clips to a common track using audio analysis.
+*/
 
 void TimelineDock::alignSelectedClips()
 {
@@ -2420,6 +2589,11 @@ static bool isSystemClipboardValid(const QString &xml)
 {
     return MLT.isMltXml(xml) && MAIN.isClipboardNewer() && !xml.contains(kShotcutFiltersClipboard);
 }
+
+/*!
+    \qmlmethod void TimelineDock::append(int trackIndex)
+    \brief Appends the current source clip to the track at \a trackIndex.
+*/
 
 void TimelineDock::append(int trackIndex)
 {
@@ -2544,6 +2718,12 @@ void TimelineDock::append(int trackIndex)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
+    \brief Removes the clip at (\a trackIndex, \a clipIndex), replacing it with a blank.
+    If \a ignoreTransition is \c true, adjacent transitions are not affected.
+*/
+
 void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
 {
     if (!m_model.trackList().count())
@@ -2592,6 +2772,13 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
         }
     }
 }
+
+/*!
+    \qmlmethod void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
+    \brief Lifts (removes content from) the clip at (\a trackIndex, \a clipIndex),
+    leaving a blank of the same duration. If \a ignoreTransition is \c true, adjacent
+    transitions are not affected.
+*/
 
 void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
 {
@@ -2655,6 +2842,12 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::removeSelection(bool withCopy)
+    \brief Removes all selected clips. If \a withCopy is \c true, the clips are
+    copied to the clipboard before removal (cut).
+*/
+
 void TimelineDock::removeSelection(bool withCopy)
 {
     if (isTrackLocked(currentTrack())) {
@@ -2693,6 +2886,11 @@ void TimelineDock::removeSelection(bool withCopy)
         MAIN.undoStack()->endMacro();
 }
 
+/*!
+    \qmlmethod void TimelineDock::liftSelection()
+    \brief Removes all selected clips, replacing them with blanks.
+*/
+
 void TimelineDock::liftSelection()
 {
     if (isTrackLocked(currentTrack())) {
@@ -2715,6 +2913,11 @@ void TimelineDock::liftSelection()
         MAIN.undoStack()->endMacro();
 }
 
+/*!
+    \qmlmethod void TimelineDock::incrementCurrentTrack(int by)
+    \brief Moves the current track focus up or down by \a by tracks.
+*/
+
 void TimelineDock::incrementCurrentTrack(int by)
 {
     int newTrack = currentTrack();
@@ -2725,12 +2928,22 @@ void TimelineDock::incrementCurrentTrack(int by)
     setCurrentTrack(newTrack);
 }
 
+/*!
+    \qmlmethod void TimelineDock::selectTrackHead(int trackIndex)
+    \brief Selects the track and its header of the track at \a trackIndex.
+*/
+
 void TimelineDock::selectTrackHead(int trackIndex)
 {
     if (trackIndex >= 0) {
         setSelection(QList<QPoint>(), trackIndex);
     }
 }
+
+/*!
+    \qmlmethod void TimelineDock::selectMultitrack()
+    \brief Selects the timeline output, deselecting any clips.
+*/
 
 void TimelineDock::selectMultitrack()
 {
@@ -2742,6 +2955,11 @@ static void insertSorted(std::vector<T> &vec, T const &item)
 {
     vec.insert(std::upper_bound(vec.begin(), vec.end(), item), item);
 }
+
+/*!
+    \qmlmethod void TimelineDock::copy(int trackIndex, int clipIndex)
+    \brief Copies the clip at (\a trackIndex, \a clipIndex) to the clipboard.
+*/
 
 void TimelineDock::copy(int trackIndex, int clipIndex)
 {
@@ -3019,6 +3237,11 @@ void TimelineDock::onRowsMoved(
     model()->reload(true);
 }
 
+/*!
+    \qmlmethod void TimelineDock::detachAudio(int trackIndex, int clipIndex)
+    \brief Detaches the audio of the clip at (\a trackIndex, \a clipIndex) to an audio track.
+*/
+
 void TimelineDock::detachAudio(int trackIndex, int clipIndex)
 {
     if (!m_model.trackList().count())
@@ -3042,6 +3265,11 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::selectAll()
+    \brief Selects all clips on all tracks.
+*/
+
 void TimelineDock::selectAll()
 {
     QList<QPoint> selection;
@@ -3053,6 +3281,11 @@ void TimelineDock::selectAll()
     }
     setSelection(selection);
 }
+
+/*!
+    \qmlmethod void TimelineDock::selectAllOnCurrentTrack()
+    \brief Selects all clips on the current track.
+*/
 
 void TimelineDock::selectAllOnCurrentTrack()
 {
@@ -3072,6 +3305,12 @@ void TimelineDock::onProducerModified()
     // The clip name may have changed.
     emitSelectedChanged(QVector<int>() << MultitrackModel::NameRole << MultitrackModel::CommentRole);
 }
+
+/*!
+    \qmlmethod void TimelineDock::replace(int trackIndex, int clipIndex, string xml)
+    \brief Replaces the clip at (\a trackIndex, \a clipIndex) with the producer described by \a xml.
+    If \a xml is empty, uses the current source clip.
+*/
 
 void TimelineDock::replace(int trackIndex, int clipIndex, const QString &xml)
 {
@@ -3105,6 +3344,11 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString &xml)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::createOrEditMarker()
+    \brief Creates a new marker at the playhead, or opens the edit dialog if one already exists there.
+*/
+
 void TimelineDock::createOrEditMarker()
 {
     if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
@@ -3116,6 +3360,11 @@ void TimelineDock::createOrEditMarker()
     }
     createMarker();
 }
+
+/*!
+    \qmlmethod void TimelineDock::createOrEditSelectionMarker()
+    \brief Creates a range marker spanning the current clip selection, or edits the existing one.
+*/
 
 void TimelineDock::createOrEditSelectionMarker()
 {
@@ -3148,6 +3397,11 @@ void TimelineDock::createOrEditSelectionMarker()
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::createMarker()
+    \brief Creates a new marker at the current playhead position.
+*/
+
 void TimelineDock::createMarker()
 {
     if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
@@ -3165,6 +3419,11 @@ void TimelineDock::createMarker()
     emit showStatusMessage(tr("Added marker: \"%1\". Hold %2 and drag to create a range")
                                .arg(marker.text, QmlApplication::OS() == "macOS" ? "⌘" : "Ctrl"));
 }
+
+/*!
+    \qmlmethod void TimelineDock::editMarker(int markerIndex)
+    \brief Opens the edit dialog for the marker at \a markerIndex.
+*/
 
 void TimelineDock::editMarker(int markerIndex)
 {
@@ -3185,6 +3444,11 @@ void TimelineDock::editMarker(int markerIndex)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::deleteMarker(int markerIndex)
+    \brief Deletes the marker at \a markerIndex, or the marker at the playhead if \a markerIndex is \c -1.
+*/
+
 void TimelineDock::deleteMarker(int markerIndex)
 {
     if (markerIndex < 0) {
@@ -3195,6 +3459,11 @@ void TimelineDock::deleteMarker(int markerIndex)
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::seekNextMarker()
+    \brief Seeks the playhead to the next marker after the current position.
+*/
+
 void TimelineDock::seekNextMarker()
 {
     int nextPos = m_markersModel.nextMarkerPosition(m_position);
@@ -3203,6 +3472,11 @@ void TimelineDock::seekNextMarker()
         emit markerSeeked(m_markersModel.markerIndexForPosition(nextPos));
     }
 }
+
+/*!
+    \qmlmethod void TimelineDock::seekPrevMarker()
+    \brief Seeks the playhead to the previous marker before the current position.
+*/
 
 void TimelineDock::seekPrevMarker()
 {
@@ -3220,10 +3494,22 @@ void TimelineDock::onFilterModelChanged()
     }
 }
 
+/*!
+    \qmlmethod void TimelineDock::trimClipIn(bool ripple)
+    \brief Trims the in-point of the clip under the playhead to the current time position.
+    If \a ripple is \c true, downstream clips shift accordingly.
+*/
+
 void TimelineDock::trimClipIn(bool ripple)
 {
     trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
 }
+
+/*!
+    \qmlmethod void TimelineDock::trimClipOut(bool ripple)
+    \brief Trims the out-point of the clip under the playhead to the current time position.
+    If \a ripple is \c true, downstream clips shift accordingly.
+*/
 
 void TimelineDock::trimClipOut(bool ripple)
 {
@@ -3435,15 +3721,30 @@ void TimelineDock::onLoopChanged(int start, int end)
     emit loopChanged();
 }
 
+/*!
+    \qmlmethod void TimelineDock::setTrackName(int trackIndex, string value)
+    \brief Renames the track at \a trackIndex to \a value.
+*/
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(new Timeline::NameTrackCommand(m_model, trackIndex, value));
 }
 
+/*!
+    \qmlmethod void TimelineDock::toggleTrackMute(int trackIndex)
+    \brief Toggles mute on the track at \a trackIndex.
+*/
+
 void TimelineDock::toggleTrackMute(int trackIndex)
 {
     MAIN.undoStack()->push(new Timeline::MuteTrackCommand(m_model, trackIndex));
 }
+
+/*!
+    \qmlmethod void TimelineDock::toggleOtherTracksMute(int trackIndex)
+    \brief Mutes all tracks except \a trackIndex (solo), or unmutes all if already soloed.
+*/
 
 void TimelineDock::toggleOtherTracksMute(int trackIndex)
 {
@@ -3460,10 +3761,20 @@ void TimelineDock::toggleOtherTracksMute(int trackIndex)
     MAIN.undoStack()->endMacro();
 }
 
+/*!
+    \qmlmethod void TimelineDock::toggleTrackHidden(int trackIndex)
+    \brief Toggles visibility of the video track at \a trackIndex.
+*/
+
 void TimelineDock::toggleTrackHidden(int trackIndex)
 {
     MAIN.undoStack()->push(new Timeline::HideTrackCommand(m_model, trackIndex));
 }
+
+/*!
+    \qmlmethod void TimelineDock::toggleOtherTracksHidden(int trackIndex)
+    \brief Hides all video tracks except \a trackIndex, or shows all if already in that state.
+*/
 
 void TimelineDock::toggleOtherTracksHidden(int trackIndex)
 {
@@ -3480,15 +3791,31 @@ void TimelineDock::toggleOtherTracksHidden(int trackIndex)
     MAIN.undoStack()->endMacro();
 }
 
+/*!
+    \qmlmethod void TimelineDock::setTrackComposite(int trackIndex, bool composite)
+    \brief Sets whether the video track at \a trackIndex composites (\a composite) over lower tracks.
+*/
+
 void TimelineDock::setTrackComposite(int trackIndex, bool composite)
 {
     MAIN.undoStack()->push(new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
 }
 
+/*!
+    \qmlmethod void TimelineDock::setTrackLock(int trackIndex, bool lock)
+    \brief Locks (\a lock = \c true) or unlocks the track at \a trackIndex.
+*/
+
 void TimelineDock::setTrackLock(int trackIndex, bool lock)
 {
     MAIN.undoStack()->push(new Timeline::LockTrackCommand(m_model, trackIndex, lock));
 }
+
+/*!
+    \qmlmethod bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
+    \brief Moves the clip at (\a fromTrack, \a clipIndex) to \a position on \a toTrack.
+    If \a ripple is \c true, downstream clips shift to fill the gap. Returns \c true on success.
+*/
 
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
@@ -3799,6 +4126,13 @@ bool TimelineDock::resizeTransition(int trackIndex, int clipIndex, int delta)
     return false;
 }
 
+/*!
+    \qmlmethod void TimelineDock::insert(int trackIndex, int position, string xml, bool seek)
+    \brief Inserts the producer described by \a xml at time \a position on \a trackIndex,
+    rippling downstream clips. Pass \c -1 for \a position to use the playhead.
+    If \a seek is \c true, moves the playhead to the end of the inserted clip.
+*/
+
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
     // Validations
@@ -3967,6 +4301,13 @@ void TimelineDock::reloadTimelineModels()
     m_markersModel.load(m_model.tractor());
     m_subtitlesModel.load(m_model.tractor());
 }
+
+/*!
+    \qmlmethod void TimelineDock::overwrite(int trackIndex, int position, string xml, bool seek)
+    \brief Overwrites at time \a position on \a trackIndex with the producer described by \a xml.
+    Pass \c -1 for \a position to use the playhead.
+    If \a seek is \c true, moves the playhead to the end of the overwritten region.
+*/
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)
 {
@@ -4166,6 +4507,12 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, b
     m_model.checkForEmptyTracks(trackIndex);
 }
 
+/*!
+    \qmlmethod bool TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
+    \brief Sets the audio \a gain of the clip at (\a trackIndex, \a clipIndex).
+    Returns \c true on success.
+*/
+
 bool TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
 {
     if (isTrackLocked(trackIndex)) {
@@ -4188,6 +4535,12 @@ bool TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
     return true;
 }
 
+/*!
+    \qmlmethod void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
+    \brief Sets the fade-in \a duration (frames) for the clip at (\a trackIndex, \a clipIndex).
+    Pass \c -1 for \a clipIndex to use the clip under the playhead.
+*/
+
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {
@@ -4201,6 +4554,12 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
     emit fadeInChanged(duration);
 }
 
+/*!
+    \qmlmethod void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
+    \brief Sets the fade-out \a duration (frames) for the clip at (\a trackIndex, \a clipIndex).
+    Pass \c -1 for \a clipIndex to use the clip under the playhead.
+*/
+
 void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {
@@ -4213,6 +4572,11 @@ void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
     MAIN.undoStack()->push(new Timeline::FadeOutCommand(m_model, trackIndex, clipIndex, duration));
     emit fadeOutChanged(duration);
 }
+
+/*!
+    \qmlmethod void TimelineDock::seekPreviousEdit()
+    \brief Seeks the playhead to the nearest edit point (clip boundary) before the current position.
+*/
 
 void TimelineDock::seekPreviousEdit()
 {
@@ -4241,6 +4605,11 @@ void TimelineDock::seekPreviousEdit()
         setPosition(newPosition);
 }
 
+/*!
+    \qmlmethod void TimelineDock::seekNextEdit()
+    \brief Seeks the playhead to the nearest edit point (clip boundary) after the current position.
+*/
+
 void TimelineDock::seekNextEdit()
 {
     if (!MLT.isMultitrack())
@@ -4268,6 +4637,11 @@ void TimelineDock::seekNextEdit()
     if (newPosition != m_position)
         setPosition(newPosition);
 }
+
+/*!
+    \qmlmethod void TimelineDock::seekInPoint(int clipIndex)
+    \brief Seeks the playhead to the in-point of the clip at \a clipIndex on the current track.
+*/
 
 void TimelineDock::seekInPoint(int clipIndex)
 {
@@ -4565,6 +4939,11 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
         MAIN.undoStack()->endMacro();
 }
 
+/*!
+    \qmlmethod void TimelineDock::recordAudio()
+    \brief Starts audio recording into the current track at the playhead position.
+*/
+
 void TimelineDock::recordAudio()
 {
     // Get the file name.
@@ -4674,6 +5053,11 @@ void TimelineDock::onRecordFinished(AbstractJob *, bool success)
 #endif
     }
 }
+
+/*!
+    \qmlmethod void TimelineDock::stopRecording()
+    \brief Stops an in-progress audio recording.
+*/
 
 void TimelineDock::stopRecording()
 {

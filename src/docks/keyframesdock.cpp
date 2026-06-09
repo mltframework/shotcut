@@ -44,6 +44,65 @@
 static QmlMetadata m_emptyQmlMetadata;
 static QmlFilter m_emptyQmlFilter;
 
+/*!
+    \qmltype KeyframesDock
+    \inqmlmodule org.shotcut.qml
+    \brief The Keyframes panel controller, available as the \c keyframes context property.
+
+    \c keyframes is injected into the Keyframes QML view and exposes navigation
+    methods and the time-scale zoom state.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::changed()
+    \brief Emitted when a filter parameter value changes from within the Keyframes panel.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::newFilter()
+    \brief Emitted when the filter itself (not just a parameter) has been changed.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::timeScaleChanged()
+    \brief Emitted when \l timeScale changes.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::seekPreviousSimple()
+    \brief Emitted to request seeking to the previous simple-keyframe boundary.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::seekNextSimple()
+    \brief Emitted to request seeking to the next simple-keyframe boundary.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::zoomIn()
+    \brief Emitted to request zooming in on the keyframes ruler.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::zoomOut()
+    \brief Emitted to request zooming out on the keyframes ruler.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::zoomToFit()
+    \brief Emitted to request resetting zoom to show all keyframes.
+*/
+
+/*!
+    \qmlsignal KeyframesDock::dockClicked()
+    \brief Emitted when the user clicks inside the Keyframes dock area.
+*/
+
+/*!
+    \qmlproperty double KeyframesDock::timeScale
+    \brief The horizontal zoom factor of the Keyframes ruler. Settable.
+*/
+
 KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
@@ -1080,6 +1139,12 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesToggleKeyframeAction", action);
 }
 
+/*!
+    \qmlmethod int KeyframesDock::seekPrevious()
+    \brief Seeks the playhead to the previous keyframe position.
+    Returns the new playhead position in frames.
+*/
+
 int KeyframesDock::seekPrevious()
 {
     if (m_qmlProducer) {
@@ -1093,6 +1158,12 @@ int KeyframesDock::seekPrevious()
     }
     return 0;
 }
+
+/*!
+    \qmlmethod int KeyframesDock::seekNext()
+    \brief Seeks the playhead to the next keyframe position.
+    Returns the new playhead position in frames.
+*/
 
 int KeyframesDock::seekNext()
 {
@@ -1164,6 +1235,11 @@ void KeyframesDock::setTimeScale(double value)
     emit timeScaleChanged();
 }
 
+/*!
+    \qmlmethod void KeyframesDock::load(bool force)
+    \brief Loads (or reloads if \a force is \c true) the Keyframes panel for the current filter.
+*/
+
 void KeyframesDock::load(bool force)
 {
     LOG_DEBUG() << "begin" << m_qview.source().isEmpty() << force;
@@ -1191,6 +1267,11 @@ void KeyframesDock::load(bool force)
         emit timeScaleChanged();
     }
 }
+
+/*!
+    \qmlmethod void KeyframesDock::reload()
+    \brief Reloads the keyframes model for the current filter without resetting the view.
+*/
 
 void KeyframesDock::reload()
 {
