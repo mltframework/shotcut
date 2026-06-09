@@ -142,58 +142,67 @@ void FilterController::loadFilterMetadata()
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QScopedPointer<Mlt::Properties> mltLinks(MLT.repository()->links());
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
-    QDir dir = QmlUtilities::qmlDir();
-    dir.cd("filters");
-    foreach (QString dirName,
+    QList<QDir> dirs;
+    auto dir = QmlUtilities::qmlDir();
+    if (dir.cd("filters"))
+        dirs.append(dir);
+    dir = QDir(Settings.appDataLocation());
+    if (dir.cd("extensions") &&dir.cd("filters"))
+        dirs.append(dir);
+    for (auto dir : dirs) {
+        for (const auto &dirName :
              dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
-        QDir subdir = dir;
-        subdir.cd(dirName);
-        subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-        subdir.setNameFilters(QStringList("meta*.qml"));
-        foreach (QString fileName, subdir.entryList()) {
-            LOG_DEBUG() << "reading filter metadata" << dirName << fileName;
-            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
-            QmlMetadata *meta = qobject_cast<QmlMetadata *>(component.create());
-            if (meta) {
-                QScopedPointer<Mlt::Properties> mltMetadata(
-                    MLT.repository()->metadata(mlt_service_filter_type,
-                                               meta->mlt_service().toLatin1().constData()));
-                QString version;
-                if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version")) {
-                    version = QString::fromLatin1(mltMetadata->get("version"));
-                    if (version.startsWith("lavfi"))
-                        version.remove(0, 5);
-                }
-
-                // Check if mlt_service is available.
-                if (mltFilters->get_data(meta->mlt_service().toLatin1().constData()) &&
-                    // Check if MLT glaxnimate producer is available if needed
-                    ("maskGlaxnimate" != meta->objectName() || mltProducers->get_data("glaxnimate"))
-                    && (version.isEmpty() || meta->isMltVersion(version))) {
-                    LOG_DEBUG() << "added filter" << meta->name();
-                    meta->loadSettings();
-                    meta->setPath(subdir);
-                    meta->setParent(0);
-                    addMetadata(meta);
-
-                    // Check if a keyframes minimum version is required.
-                    if (!version.isEmpty() && meta->keyframes()) {
-                        meta->setProperty("version", version);
-                        meta->keyframes()->checkVersion(version);
+            QDir subdir = dir;
+            subdir.cd(dirName);
+            subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+            subdir.setNameFilters(QStringList("meta*.qml"));
+            for (const auto &fileName : subdir.entryList()) {
+                LOG_DEBUG() << "reading filter metadata" << dirName << fileName;
+                QQmlComponent component(QmlUtilities::sharedEngine(),
+                                        subdir.absoluteFilePath(fileName));
+                QmlMetadata *meta = qobject_cast<QmlMetadata *>(component.create());
+                if (meta) {
+                    QScopedPointer<Mlt::Properties> mltMetadata(
+                        MLT.repository()->metadata(mlt_service_filter_type,
+                                                   meta->mlt_service().toLatin1().constData()));
+                    QString version;
+                    if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version")) {
+                        version = QString::fromLatin1(mltMetadata->get("version"));
+                        if (version.startsWith("lavfi"))
+                            version.remove(0, 5);
                     }
-                } else if (meta->type() == QmlMetadata::Link
-                           && mltLinks->get_data(meta->mlt_service().toLatin1().constData())) {
-                    LOG_DEBUG() << "added link" << meta->name();
-                    meta->loadSettings();
-                    meta->setPath(subdir);
-                    meta->setParent(0);
-                    addMetadata(meta);
-                }
 
-                if (meta->isDeprecated())
-                    meta->setName(meta->name() + " " + tr("(DEPRECATED)"));
-            } else if (!meta) {
-                LOG_WARNING() << component.errorString();
+                    // Check if mlt_service is available.
+                    if (mltFilters->get_data(meta->mlt_service().toLatin1().constData()) &&
+                        // Check if MLT glaxnimate producer is available if needed
+                        ("maskGlaxnimate" != meta->objectName()
+                         || mltProducers->get_data("glaxnimate"))
+                        && (version.isEmpty() || meta->isMltVersion(version))) {
+                        LOG_DEBUG() << "added filter" << meta->name();
+                        meta->loadSettings();
+                        meta->setPath(subdir);
+                        meta->setParent(0);
+                        addMetadata(meta);
+
+                        // Check if a keyframes minimum version is required.
+                        if (!version.isEmpty() && meta->keyframes()) {
+                            meta->setProperty("version", version);
+                            meta->keyframes()->checkVersion(version);
+                        }
+                    } else if (meta->type() == QmlMetadata::Link
+                               && mltLinks->get_data(meta->mlt_service().toLatin1().constData())) {
+                        LOG_DEBUG() << "added link" << meta->name();
+                        meta->loadSettings();
+                        meta->setPath(subdir);
+                        meta->setParent(0);
+                        addMetadata(meta);
+                    }
+
+                    if (meta->isDeprecated())
+                        meta->setName(meta->name() + " " + tr("(DEPRECATED)"));
+                } else if (!meta) {
+                    LOG_WARNING() << component.errorString();
+                }
             }
         }
     };
