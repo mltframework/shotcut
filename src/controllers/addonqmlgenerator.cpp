@@ -88,10 +88,11 @@ static bool hasDividerLayoutHint(const AddOnParameterDescriptor &parameter)
     return parameter.layoutHint.trimmed().toLower() == QStringLiteral("divider");
 }
 
-static bool isLadspaChannelMaskParameter(const AddOnFilterDescriptor &descriptor,
-                                         const AddOnParameterDescriptor &parameter)
+static bool isChannelMaskParameter(const AddOnFilterDescriptor &descriptor,
+                                   const AddOnParameterDescriptor &parameter)
 {
-    return descriptor.service.startsWith(QStringLiteral("ladspa"), Qt::CaseInsensitive)
+    return (descriptor.service.startsWith(QStringLiteral("ladspa."), Qt::CaseSensitive)
+           || descriptor.service.startsWith(QStringLiteral("vst2."), Qt::CaseSensitive))
            && parameter.name.trimmed().toLower() == QStringLiteral("channel_mask");
 }
 
@@ -187,12 +188,12 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString editorId = parameterId + QStringLiteral("_editor");
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
         const QString nameLiteral = quotedJsString(parameter.name);
-        const bool useLadspaChannelMask = isLadspaChannelMaskParameter(descriptor, parameter);
+        const bool useChannelMask = isChannelMaskParameter(descriptor, parameter);
         if (supportsGeneratedKeyframes) {
             quotedKeyframeProperties << nameLiteral;
             quotedKeyframeMapEntries << QStringLiteral("%1: true").arg(nameLiteral);
         }
-        if (useLadspaChannelMask) {
+        if (useChannelMask) {
             setControlsLines << QStringLiteral("        %1.setChannelsControls();").arg(editorId);
         } else if (parameter.isReadOnly) {
             setControlsLines << QStringLiteral("        %1.text = root.textValue(%2);")
