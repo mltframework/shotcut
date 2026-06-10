@@ -92,7 +92,7 @@ static bool isChannelMaskParameter(const AddOnFilterDescriptor &descriptor,
                                    const AddOnParameterDescriptor &parameter)
 {
     return (descriptor.service.startsWith(QStringLiteral("ladspa."), Qt::CaseSensitive)
-           || descriptor.service.startsWith(QStringLiteral("vst2."), Qt::CaseSensitive))
+            || descriptor.service.startsWith(QStringLiteral("vst2."), Qt::CaseSensitive))
            && parameter.name.trimmed().toLower() == QStringLiteral("channel_mask");
 }
 
@@ -561,7 +561,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
 
         const QString nameLiteral = quotedJsString(parameter.name);
-        const bool useLadspaChannelMask = isLadspaChannelMaskParameter(descriptor, parameter);
+        const bool useChannelMask = isChannelMaskParameter(descriptor, parameter);
 
         if (parameter.hideLabel) {
         } else if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
@@ -602,7 +602,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n\n";
         }
 
-        if (useLadspaChannelMask) {
+        if (useChannelMask) {
             stream << "        Shotcut.ChannelMask {\n"
                       "            id: "
                    << editorId
@@ -866,7 +866,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n";
         }
 
-        if (!parameter.isReadOnly && !useLadspaChannelMask) {
+        if (!parameter.isReadOnly && !useChannelMask) {
             stream << "\n"
                       "        Shotcut.UndoButton {\n"
                       "            readonly property string propertyName: "
