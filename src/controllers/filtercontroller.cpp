@@ -340,6 +340,8 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
     if (!m_addOnQmlGenerator.generate(descriptor, tempDir, cachedFileName, &generationError)) {
         LOG_WARNING() << "Failed to generate add-on UI QML for" << service << generationError;
         return false;
+    } else {
+        LOG_INFO() << "Generated add-on UI QML file:" << tempDir.filePath(cachedFileName);
     }
 
     meta->setPath(tempDir);
