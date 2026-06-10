@@ -59,6 +59,25 @@ Rectangle {
         }
     }
 
+    // Drag to move window — only starts after actual movement so that
+    // double-click is not consumed by startSystemMove().
+    // Double-click toggles fullscreen.
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+
+        property bool _moveBegan: false
+
+        onPressed: _moveBegan = false
+        onPositionChanged: {
+            if (pressed && !_moveBegan && !hdrWindow.fullScreen) {
+                _moveBegan = true;
+                hdrWindow.beginSystemMove();
+            }
+        }
+        onDoubleClicked: hdrWindow.toggleFullScreen()
+    }
+
     // Auto-hide overlay
     Item {
         id: overlay

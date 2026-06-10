@@ -456,6 +456,18 @@ void HdrPreviewWindow::keyPressEvent(QKeyEvent *event)
     if (event->isAccepted())
         return;
 
+    // Fullscreen shortcuts
+    if (event->key() == Qt::Key_F) {
+        toggleFullScreen();
+        event->accept();
+        return;
+    }
+    if (event->key() == Qt::Key_Escape && isFullScreen()) {
+        toggleFullScreen();
+        event->accept();
+        return;
+    }
+
     // Match QAction shortcuts since this window is outside MainWindow's hierarchy
     QKeySequence keySeq(event->keyCombination());
     for (const auto &key : Actions.keys()) {
