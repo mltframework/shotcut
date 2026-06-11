@@ -124,6 +124,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
     QStringList quotedMaximums;
     QStringList quotedDescriptions;
     QStringList quotedValueLists;
+    QStringList quotedNormalizedCoordinates;
     QStringList quotedKeyframeProperties;
     QStringList quotedKeyframeMapEntries;
     QStringList setControlsLines;
@@ -160,6 +161,10 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         if (!parameter.maximum.isEmpty()) {
             quotedMaximums << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
                                                            quotedJsString(parameter.maximum));
+        }
+        if (parameter.normalizedCoordinates) {
+            quotedNormalizedCoordinates
+                << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
         }
         if (!parameter.description.isEmpty()) {
             quotedDescriptions << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
@@ -216,6 +221,14 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         } else if (parameterType == QStringLiteral("boolean")) {
             setControlsLines << QStringLiteral("        %1.checked = root.booleanValue(%2);")
                                     .arg(editorId, nameLiteral);
+        } else if (parameterType == QStringLiteral("rect")
+                   && (parameterWidget == QStringLiteral("point")
+                       || parameterWidget == QStringLiteral("size"))) {
+            setControlsLines
+                << QStringLiteral(
+                       "        { var _r = filter.getRect(%2); %1.valueX = isNaN(_r.x) ? 0 : "
+                       "_r.x; %1.valueY = isNaN(_r.y) ? 0 : _r.y; }")
+                       .arg(editorId, nameLiteral);
         } else if ((parameterType == QStringLiteral("integer")
                     || parameterType == QStringLiteral("float"))
                    && !useTextForNumericEditor) {
@@ -274,6 +287,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         << "}\n\n"
            "    property var propertyValues: {"
         << quotedValueLists.join(QStringLiteral(", "))
+        << "}\n\n"
+           "    property var propertyNormalizedCoordinates: {"
+        << quotedNormalizedCoordinates.join(QStringLiteral(", "))
         << "}\n\n"
            "    keyframableParameters: ["
         << quotedKeyframeProperties.join(QStringLiteral(", "))
@@ -434,10 +450,27 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "                var d = root.propertyDefaults[p];\n"
            "                var type = propertyType(p);\n"
            "                var widget = propertyWidget(p);\n"
-           "                if (d !== undefined && d !== null && d !== '')\n"
-           "                    filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : '0') "
+           "                if (d !== undefined && d !== null && d !== '') {\n"
+           "                    if (type === 'rect' && root.propertyNormalizedCoordinates\n"
+           "                            && root.propertyNormalizedCoordinates[p] === 'yes') {\n"
+           "                        var _np = String(d).trim().split(/\\s+/);\n"
+           "                        var _nx = _np.length > 0 ? parseFloat(_np[0]) : 0;\n"
+           "                        var _ny = _np.length > 1 ? parseFloat(_np[1]) : 0;\n"
+           "                        filter.set(p, (isNaN(_nx) ? 0 : _nx * profile.width) + ' ' + "
+           "(isNaN(_ny) ? 0 : _ny * profile.height) + ' 0 0 1');\n"
+           "                    } else if (type === 'rect' && widget === 'size') {\n"
+           "                        // OFX plugins that use kParamDoubleTypeXY (size/extent)\n"
+           "                        // but do not declare kOfxParamPropDefaultCoordinateSystem\n"
+           "                        // (e.g. CropOFX in filter context). Default to full frame.\n"
+           "                        filter.set(p, profile.width + ' ' + profile.height + ' 0 0 "
+           "1');\n"
+           "                    } else {\n"
+           "                        filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : "
+           "'0') "
            ": ((isNumericType(type) && widget === 'text') ? String(d) : (isNumericType(type) ? "
            "Number(d) : d)));\n"
+           "                    }\n"
+           "                }\n"
            "            }\n"
            "            filter.savePreset(propertyNames);\n"
            "        }\n"
@@ -740,6 +773,48 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    "                }\n"
                    "            }\n"
                    "        }\n";
+        } else if (parameterType == QStringLiteral("rect")
+                   && (parameterWidget == QStringLiteral("point")
+                       || parameterWidget == QStringLiteral("size"))) {
+            const QString labelFirst = (parameterWidget == QStringLiteral("size"))
+                                           ? QStringLiteral("W")
+                                           : QStringLiteral("X");
+            const QString labelSecond = (parameterWidget == QStringLiteral("size"))
+                                            ? QStringLiteral("H")
+                                            : QStringLiteral("Y");
+            stream
+                << "        Shotcut.Number2D {\n"
+                   "            id: "
+                << editorId
+                << "\n"
+                   "            Layout.columnSpan: "
+                << (parameter.hideLabel ? "2" : "1")
+                << "\n"
+                   "            Layout.fillWidth: true\n"
+                   "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
+                   "            readonly property string propertyName: "
+                << nameLiteral
+                << "\n"
+                   "            readonly property string typeName: "
+                   "root.propertyType(propertyName)\n"
+                   "            decimals: root.isIntegerType(typeName) ? 0 : 3\n"
+                   "            from: (root.propertyMinimums && "
+                   "root.propertyMinimums[propertyName] !== undefined && "
+                   "root.propertyMinimums[propertyName] !== '') ? "
+                   "Number(root.propertyMinimums[propertyName]) : -99999\n"
+                   "            to: (root.propertyMaximums && root.propertyMaximums[propertyName] "
+                   "!== undefined && root.propertyMaximums[propertyName] !== '') ? "
+                   "Number(root.propertyMaximums[propertyName]) : 99999\n"
+                   "            labelFirst: "
+                << quotedJsString(labelFirst)
+                << "\n"
+                   "            labelSecond: "
+                << quotedJsString(labelSecond)
+                << "\n"
+                   "            onValuesModified: {\n"
+                   "                filter.set(propertyName, valueX + ' ' + valueY + ' 0 0 1');\n"
+                   "            }\n"
+                   "        }\n";
         } else if ((parameterType == QStringLiteral("integer")
                     || parameterType == QStringLiteral("float"))
                    && !useTextForNumericEditor) {
@@ -914,6 +989,24 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                               "                    filter.set(propertyName, defaultValue);\n"
                               "                root.setControls();\n";
                 }
+            } else if (parameterType == QStringLiteral("rect")
+                       && (parameterWidget == QStringLiteral("point")
+                           || parameterWidget == QStringLiteral("size"))) {
+                stream << "                var _ds = root.propertyDefaults ? "
+                          "(root.propertyDefaults[propertyName] || '') : '';\n"
+                          "                var _dp = String(_ds).trim().split(/\\s+/);\n"
+                          "                var _dx = _dp.length > 0 ? parseFloat(_dp[0]) : 0;\n"
+                          "                var _dy = _dp.length > 1 ? parseFloat(_dp[1]) : 0;\n"
+                          "                if (isNaN(_dx)) _dx = 0;\n"
+                          "                if (isNaN(_dy)) _dy = 0;\n"
+                          "                if (root.propertyNormalizedCoordinates &&\n"
+                          "                        "
+                          "root.propertyNormalizedCoordinates[propertyName] === 'yes') {\n"
+                          "                    _dx *= profile.width;\n"
+                          "                    _dy *= profile.height;\n"
+                          "                }\n"
+                          "                filter.set(propertyName, _dx + ' ' + _dy + ' 0 0 1');\n"
+                          "                root.setControls();\n";
             } else {
                 stream
                     << "                var defaultValue = root.defaultTextValue(propertyName);\n"

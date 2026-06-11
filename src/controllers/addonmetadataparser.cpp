@@ -80,6 +80,7 @@ AddOnFilterDescriptor AddOnMetadataParser::parse(const QString &service,
             out.minimum = QString::fromUtf8(parameter.get("minimum"));
             out.maximum = QString::fromUtf8(parameter.get("maximum"));
             out.description = QString::fromUtf8(parameter.get("description"));
+            out.normalizedCoordinates = parseYesNoBool(parameter.get("normalized_coordinates"));
             out.name = QString::fromUtf8(parameter.get("identifier"));
 
             const QString parameterType = out.type.trimmed().toLower();
