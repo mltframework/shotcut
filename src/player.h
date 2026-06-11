@@ -22,6 +22,7 @@
 
 #include <QIcon>
 #include <QSize>
+#include <QTimer>
 #include <QWidget>
 
 class DockToolBar;
@@ -72,6 +73,7 @@ signals:
     void paused(int position);
     void stopped();
     void seeked(int position);
+    void positionRequested(int position);
     void rewound(bool forceChangeDirection);
     void fastForwarded(bool forceChangeDirection);
     void previousSought(int currentPosition);
@@ -176,6 +178,8 @@ private:
     QHBoxLayout *m_toolRow1;
     QHBoxLayout *m_toolRow2;
     int m_requestedPosition{0};
+    QTimer *m_seekDebounceTimer;
+    int m_seekTargetPosition;
 
 private slots:
     void updateSelection();
@@ -188,6 +192,7 @@ private slots:
     void toggleZoom(bool checked);
     void onGridToggled();
     void toggleGrid(bool checked);
+    void onSeekDebounceTimerFired();
     void onStatusFinished();
     void onOffsetChanged(const QPoint &offset);
 };
