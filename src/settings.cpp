@@ -948,12 +948,7 @@ void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
 
 bool ShotcutSettings::playerOldVideoOutput() const
 {
-#if defined(Q_OS_WIN)
-    bool defaultValue = QSysInfo::currentCpuArchitecture() == QLatin1String("arm64");
-#else
-    bool defaultValue = false;
-#endif
-    return settings.value("player/oldVideoOutput", defaultValue).toBool();
+    return settings.value("player/oldVideoOutput", false).toBool();
 }
 
 void ShotcutSettings::setPlayerOldVideoOutput(bool b)

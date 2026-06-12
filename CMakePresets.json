@@ -64,13 +64,15 @@
                 "rhs": "Windows"
             },
             "environment": {
-                "PKG_CONFIG_PATH": "C:/Projects/Shotcut/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
-                "Path": "C:/msys64/usr/local/bin;C:/msys64/usr/bin;C:/msys64/mingw64/bin;$penv{Path}"
+                "HOME": "C:/msys64/home/ddenn",
+                "MSYSTEM": "clangarm64",
+                "PKG_CONFIG_PATH": "$env{HOME}/build/Shotcut/lib/pkgconfig;C:/msys64/$env{MSYSTEM}/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
+                "Path": "C:/msys64/$env{MSYSTEM}/bin;C:/msys64/usr/local/bin;C:/msys64/usr/bin;$penv{Path}"
             },
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "C:/Qt/$env{QT_VERSION}/mingw_64;C:/msys64/mingw64",
-                "CMAKE_INSTALL_PREFIX": "C:/Projects/Shotcut"
+                "CMAKE_PREFIX_PATH": "C:/msys64/$env{MSYSTEM}/share/qt6",
+                "CMAKE_INSTALL_PREFIX": "$env{HOME}/build/Shotcut"
             }
         }
     ],
