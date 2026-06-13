@@ -40,6 +40,7 @@ struct AddOnParameterDescriptor
     QString maximum;
     QString description;
     bool normalizedCoordinates = false;
+    bool normalizedDefault = false;
 };
 
 struct AddOnFilterDescriptor

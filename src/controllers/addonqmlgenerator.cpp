@@ -125,6 +125,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
     QStringList quotedDescriptions;
     QStringList quotedValueLists;
     QStringList quotedNormalizedCoordinates;
+    QStringList quotedNormalizedDefault;
     QStringList quotedKeyframeProperties;
     QStringList quotedKeyframeMapEntries;
     QStringList setControlsLines;
@@ -164,6 +165,10 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         }
         if (parameter.normalizedCoordinates) {
             quotedNormalizedCoordinates
+                << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
+        }
+        if (parameter.normalizedDefault) {
+            quotedNormalizedDefault
                 << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
         }
         if (!parameter.description.isEmpty()) {
@@ -290,6 +295,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         << "}\n\n"
            "    property var propertyNormalizedCoordinates: {"
         << quotedNormalizedCoordinates.join(QStringLiteral(", "))
+        << "}\n\n"
+           "    property var propertyNormalizedDefault: {"
+        << quotedNormalizedDefault.join(QStringLiteral(", "))
         << "}\n\n"
            "    keyframableParameters: ["
         << quotedKeyframeProperties.join(QStringLiteral(", "))
@@ -451,19 +459,16 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "                var type = propertyType(p);\n"
            "                var widget = propertyWidget(p);\n"
            "                if (d !== undefined && d !== null && d !== '') {\n"
-           "                    if (type === 'rect' && root.propertyNormalizedCoordinates\n"
-           "                            && root.propertyNormalizedCoordinates[p] === 'yes') {\n"
-           "                        var _np = String(d).trim().split(/\\s+/);\n"
-           "                        var _nx = _np.length > 0 ? parseFloat(_np[0]) : 0;\n"
-           "                        var _ny = _np.length > 1 ? parseFloat(_np[1]) : 0;\n"
-           "                        filter.set(p, (isNaN(_nx) ? 0 : _nx * profile.width) + ' ' + "
-           "(isNaN(_ny) ? 0 : _ny * profile.height) + ' 0 0 1');\n"
-           "                    } else if (type === 'rect' && widget === 'size') {\n"
-           "                        // OFX plugins that use kParamDoubleTypeXY (size/extent)\n"
-           "                        // but do not declare kOfxParamPropDefaultCoordinateSystem\n"
-           "                        // (e.g. CropOFX in filter context). Default to full frame.\n"
-           "                        filter.set(p, profile.width + ' ' + profile.height + ' 0 0 "
-           "1');\n"
+           "                    if (type === 'rect' && root.propertyNormalizedDefault\n"
+           "                            && root.propertyNormalizedDefault[p] === 'yes') {\n"
+           "                        var _dp = String(d).trim().split(/\\s+/);\n"
+           "                        var _dx = _dp.length > 0 ? parseFloat(_dp[0]) : 0;\n"
+           "                        var _dy = _dp.length > 1 ? parseFloat(_dp[1]) : 0;\n"
+           "                        if (isNaN(_dx)) _dx = 0;\n"
+           "                        if (isNaN(_dy)) _dy = 0;\n"
+           "                        _dx *= profile.width;\n"
+           "                        _dy *= profile.height;\n"
+           "                        filter.set(p, _dx + ' ' + _dy + ' 0 0 0');\n"
            "                    } else {\n"
            "                        filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : "
            "'0') "
@@ -999,13 +1004,12 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                           "                var _dy = _dp.length > 1 ? parseFloat(_dp[1]) : 0;\n"
                           "                if (isNaN(_dx)) _dx = 0;\n"
                           "                if (isNaN(_dy)) _dy = 0;\n"
-                          "                if (root.propertyNormalizedCoordinates &&\n"
-                          "                        "
-                          "root.propertyNormalizedCoordinates[propertyName] === 'yes') {\n"
+                          "                if (root.propertyNormalizedDefault &&\n"
+                          "root.propertyNormalizedDefault[propertyName] === 'yes') {\n"
                           "                    _dx *= profile.width;\n"
                           "                    _dy *= profile.height;\n"
                           "                }\n"
-                          "                filter.set(propertyName, _dx + ' ' + _dy + ' 0 0 1');\n"
+                          "                filter.set(propertyName, _dx + ' ' + _dy + ' 0 0 0');\n"
                           "                root.setControls();\n";
             } else {
                 stream
