@@ -29,3 +29,4 @@ MotionTrackerDialog 1.0 MotionTrackerDialog.qml
 HorizontalScrollBar 1.0 HorizontalScrollBar.qml
 VerticalScrollBar 1.0 VerticalScrollBar.qml
 ChannelMask 1.0 ChannelMask.qml
+Number2D 1.0 Number2D.qml
