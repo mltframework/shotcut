@@ -47,6 +47,7 @@
 #include "docks/recentdock.h"
 #include "docks/subtitlesdock.h"
 #include "docks/timelinedock.h"
+#include "gpuinfo.h"
 #include "hdrpreviewwindow.h"
 #include "jobqueue.h"
 #include "jobs/screencapturejob.h"
@@ -1613,6 +1614,43 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
+
+    // Setup the Graphics Adapter (GPU) selection menu. This is currently only
+    // populated where index-based GPU selection is supported (Windows D3D RHI);
+    // enumerateGpuAdapters() returns empty elsewhere and the menu is hidden.
+    {
+        const QList<GpuAdapterInfo> adapters = enumerateGpuAdapters();
+        if (adapters.isEmpty()) {
+            delete ui->menuGpuAdapter;
+            ui->menuGpuAdapter = nullptr;
+        } else {
+            QActionGroup *gpuGroup = new QActionGroup(this);
+            const uint currentVendor = Settings.gpuAdapterVendorId();
+            const uint currentDevice = Settings.gpuAdapterDeviceId();
+            QAction *autoAction = ui->menuGpuAdapter->addAction(tr("Automatic"));
+            autoAction->setCheckable(true);
+            autoAction->setProperty("vendorId", 0u);
+            autoAction->setProperty("deviceId", 0u);
+            autoAction->setChecked(currentVendor == 0);
+            gpuGroup->addAction(autoAction);
+            for (const GpuAdapterInfo &gpu : adapters) {
+                QAction *action = ui->menuGpuAdapter->addAction(gpu.name);
+                action->setCheckable(true);
+                action->setProperty("vendorId", gpu.vendorId);
+                action->setProperty("deviceId", gpu.deviceId);
+                action->setChecked(currentVendor == gpu.vendorId && currentDevice == gpu.deviceId);
+                gpuGroup->addAction(action);
+                LOG_INFO() << "GPU adapter" << gpu.index << gpu.name
+                           << QString::asprintf("vendor=0x%04X device=0x%04X",
+                                                gpu.vendorId,
+                                                gpu.deviceId);
+            }
+            connect(gpuGroup,
+                    SIGNAL(triggered(QAction *)),
+                    this,
+                    SLOT(onGpuAdapterTriggered(QAction *)));
+        }
+    }
 
     // Setup the job priority actions
     group = new QActionGroup(this);
@@ -5344,6 +5382,25 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     }
 }
 #endif
+
+void MainWindow::onGpuAdapterTriggered(QAction *action)
+{
+    Settings.setGpuAdapterVendorId(action->property("vendorId").toUInt());
+    Settings.setGpuAdapterDeviceId(action->property("deviceId").toUInt());
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart Shotcut to change the graphics adapter.\n"
+                          "Do you want to restart now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
+    }
+}
 
 void MainWindow::on_actionResources_triggered()
 {

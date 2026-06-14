@@ -302,6 +302,10 @@ public:
     // general continued
     int drawMethod() const;
     void setDrawMethod(int);
+    uint gpuAdapterVendorId() const;
+    void setGpuAdapterVendorId(uint);
+    uint gpuAdapterDeviceId() const;
+    void setGpuAdapterDeviceId(uint);
     bool safeMode() const;
     void setSafeMode(bool value);
     bool noUpgrade() const;
