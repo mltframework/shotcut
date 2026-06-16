@@ -2171,32 +2171,10 @@ void EncodeDock::onAudioChannelsChanged()
 
 void EncodeDock::setResolutionAspectFromProfile()
 {
-    int width = MLT.profile().width();
-    int height = MLT.profile().height();
-    double sar = MLT.profile().sar();
-    int dar_numerator = width * sar;
-    int dar_denominator = height;
-
-    if (height > 0) {
-        switch (int(sar * width / height * 100)) {
-        case 133:
-            dar_numerator = 4;
-            dar_denominator = 3;
-            break;
-        case 177:
-            dar_numerator = 16;
-            dar_denominator = 9;
-            break;
-        case 56:
-            dar_numerator = 9;
-            dar_denominator = 16;
-            break;
-        }
-    }
-    ui->widthSpinner->setValue(width);
-    ui->heightSpinner->setValue(height);
-    ui->aspectNumSpinner->setValue(dar_numerator);
-    ui->aspectDenSpinner->setValue(dar_denominator);
+    ui->widthSpinner->setValue(MLT.profile().width());
+    ui->heightSpinner->setValue(MLT.profile().height());
+    ui->aspectNumSpinner->setValue(MLT.profile().display_aspect_num());
+    ui->aspectDenSpinner->setValue(MLT.profile().display_aspect_den());
 }
 
 void EncodeDock::onProfileChanged()
