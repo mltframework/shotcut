@@ -1004,11 +1004,23 @@ void MainWindow::connectVideoWidgetSignals()
             &Mlt::VideoWidget::frameDisplayed,
             m_scopeController,
             &ScopeController::newFrame);
-    connect(m_filterController,
-            &FilterController::currentFilterChanged,
-            videoWidget,
-            &Mlt::VideoWidget::setCurrentFilter,
-            Qt::QueuedConnection);
+    connect(
+        m_filterController,
+        &FilterController::currentFilterChanged,
+        videoWidget,
+        [=]() {
+            // Query the controller's live state rather than using the signal
+            // arguments, which may be dangling by the time this queued event
+            // is processed (e.g. when a filter set applies multiple filters
+            // in rapid succession and m_currentFilter is reset before the
+            // event loop runs).
+            auto filter = m_filterController->currentFilter();
+            auto meta = filter ? m_filterController->attachedModel()->getMetadata(
+                            m_filterController->currentIndex())
+                               : nullptr;
+            videoWidget->setCurrentFilter(filter, meta);
+        },
+        Qt::QueuedConnection);
     connect(m_player, &Player::toggleVuiRequested, videoWidget, &Mlt::VideoWidget::toggleVuiDisplay);
 }
 
