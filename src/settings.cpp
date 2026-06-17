@@ -1404,7 +1404,7 @@ void ShotcutSettings::setVideoOutDuration(double d)
 }
 
 /*!
-    \qmlproperty real Settings::audioInCurve
+    \qmlproperty int Settings::audioInCurve
     \brief The curve type for audio fade-in (0 = linear, higher = more exponential).
 */
 
@@ -1420,7 +1420,7 @@ void ShotcutSettings::setAudioInCurve(int c)
 }
 
 /*!
-    \qmlproperty real Settings::audioOutCurve
+    \qmlproperty int Settings::audioOutCurve
     \brief The curve type for audio fade-out (0 = linear, higher = more exponential).
 */
 

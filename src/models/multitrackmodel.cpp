@@ -94,7 +94,7 @@ static const char *kShotcutDefaultTransition = "lumaMix";
 
 /*!
     \qmlsignal MultitrackModel::seeked(int position)
-    \brief Emitted when the playhead is moved to \time \a position.
+    \brief Emitted when the playhead is moved to time \a position.
 */
 
 /*!
@@ -800,7 +800,7 @@ void MultitrackModel::setTrackHeaderWidth(int width)
 }
 
 /*!
-    \qmlproperty double MultitrackModel::scaleFactor
+    \qmlproperty real MultitrackModel::scaleFactor
     \brief The horizontal zoom/scale factor of the timeline. Settable.
 */
 

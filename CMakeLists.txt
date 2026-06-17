@@ -115,10 +115,10 @@ add_custom_target(qmlformat COMMAND
 
 if(BUILD_DOCS)
   find_program(QDOC_EXECUTABLE qdoc
-    HINTS
-      "${Qt6_DIR}/../../../bin"
-      "$ENV{HOME}/Qt/6.10.3/gcc_64/bin"
-      "${CMAKE_PREFIX_PATH}/bin"
+    PATHS
+      "${Qt6_DIR}/../../.."
+      "${CMAKE_PREFIX_PATH}"
+    PATH_SUFFIXES bin
   )
   if(NOT QDOC_EXECUTABLE)
     message(FATAL_ERROR "qdoc not found. Install Qt documentation tools or set Qt6_DIR correctly.")

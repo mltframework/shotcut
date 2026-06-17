@@ -99,7 +99,7 @@ static QmlFilter m_emptyQmlFilter;
 */
 
 /*!
-    \qmlproperty double KeyframesDock::timeScale
+    \qmlproperty real KeyframesDock::timeScale
     \brief The horizontal zoom factor of the Keyframes ruler. Settable.
 */
 

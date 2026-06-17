@@ -150,7 +150,7 @@ int QmlProducer::out()
 }
 
 /*!
-    \qmlproperty int Producer::aspectRatio
+    \qmlproperty real Producer::aspectRatio
     \brief The pixel aspect ratio of the producer's media.
 */
 
