@@ -83,6 +83,19 @@ static bool isGroupHeadingParameter(const AddOnParameterDescriptor &parameter)
                && parameterType == QStringLiteral("string"));
 }
 
+static bool hasDividerLayoutHint(const AddOnParameterDescriptor &parameter)
+{
+    return parameter.layoutHint.trimmed().toLower() == QStringLiteral("divider");
+}
+
+static bool isChannelMaskParameter(const AddOnFilterDescriptor &descriptor,
+                                   const AddOnParameterDescriptor &parameter)
+{
+    return (descriptor.service.startsWith(QStringLiteral("ladspa."), Qt::CaseSensitive)
+            || descriptor.service.startsWith(QStringLiteral("vst2."), Qt::CaseSensitive))
+           && parameter.name.trimmed().toLower() == QStringLiteral("channel_mask");
+}
+
 bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                                  const QDir &outputDir,
                                  const QString &qmlFileName,
@@ -111,6 +124,8 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
     QStringList quotedMaximums;
     QStringList quotedDescriptions;
     QStringList quotedValueLists;
+    QStringList quotedNormalizedCoordinates;
+    QStringList quotedNormalizedDefault;
     QStringList quotedKeyframeProperties;
     QStringList quotedKeyframeMapEntries;
     QStringList setControlsLines;
@@ -148,6 +163,14 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
             quotedMaximums << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
                                                            quotedJsString(parameter.maximum));
         }
+        if (parameter.normalizedCoordinates) {
+            quotedNormalizedCoordinates
+                << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
+        }
+        if (parameter.normalizedDefault) {
+            quotedNormalizedDefault
+                << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
+        }
         if (!parameter.description.isEmpty()) {
             quotedDescriptions << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
                                                                quotedJsString(
@@ -175,11 +198,14 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString editorId = parameterId + QStringLiteral("_editor");
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
         const QString nameLiteral = quotedJsString(parameter.name);
+        const bool useChannelMask = isChannelMaskParameter(descriptor, parameter);
         if (supportsGeneratedKeyframes) {
             quotedKeyframeProperties << nameLiteral;
             quotedKeyframeMapEntries << QStringLiteral("%1: true").arg(nameLiteral);
         }
-        if (parameter.isReadOnly) {
+        if (useChannelMask) {
+            setControlsLines << QStringLiteral("        %1.setChannelsControls();").arg(editorId);
+        } else if (parameter.isReadOnly) {
             setControlsLines << QStringLiteral("        %1.text = root.textValue(%2);")
                                     .arg(editorId, nameLiteral);
         } else if (parameterType == QStringLiteral("string") && !parameter.values.isEmpty()) {
@@ -200,6 +226,14 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         } else if (parameterType == QStringLiteral("boolean")) {
             setControlsLines << QStringLiteral("        %1.checked = root.booleanValue(%2);")
                                     .arg(editorId, nameLiteral);
+        } else if (parameterType == QStringLiteral("rect")
+                   && (parameterWidget == QStringLiteral("point")
+                       || parameterWidget == QStringLiteral("size"))) {
+            setControlsLines
+                << QStringLiteral(
+                       "        { var _r = filter.getRect(%2); %1.valueX = isNaN(_r.x) ? 0 : "
+                       "_r.x; %1.valueY = isNaN(_r.y) ? 0 : _r.y; }")
+                       .arg(editorId, nameLiteral);
         } else if ((parameterType == QStringLiteral("integer")
                     || parameterType == QStringLiteral("float"))
                    && !useTextForNumericEditor) {
@@ -258,6 +292,12 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         << "}\n\n"
            "    property var propertyValues: {"
         << quotedValueLists.join(QStringLiteral(", "))
+        << "}\n\n"
+           "    property var propertyNormalizedCoordinates: {"
+        << quotedNormalizedCoordinates.join(QStringLiteral(", "))
+        << "}\n\n"
+           "    property var propertyNormalizedDefault: {"
+        << quotedNormalizedDefault.join(QStringLiteral(", "))
         << "}\n\n"
            "    keyframableParameters: ["
         << quotedKeyframeProperties.join(QStringLiteral(", "))
@@ -418,10 +458,24 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "                var d = root.propertyDefaults[p];\n"
            "                var type = propertyType(p);\n"
            "                var widget = propertyWidget(p);\n"
-           "                if (d !== undefined && d !== null && d !== '')\n"
-           "                    filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : '0') "
+           "                if (d !== undefined && d !== null && d !== '') {\n"
+           "                    if (type === 'rect' && root.propertyNormalizedDefault\n"
+           "                            && root.propertyNormalizedDefault[p] === 'yes') {\n"
+           "                        var _dp = String(d).trim().split(/\\s+/);\n"
+           "                        var _dx = _dp.length > 0 ? parseFloat(_dp[0]) : 0;\n"
+           "                        var _dy = _dp.length > 1 ? parseFloat(_dp[1]) : 0;\n"
+           "                        if (isNaN(_dx)) _dx = 0;\n"
+           "                        if (isNaN(_dy)) _dy = 0;\n"
+           "                        _dx *= profile.width;\n"
+           "                        _dy *= profile.height;\n"
+           "                        filter.set(p, _dx + ' ' + _dy + ' 0 0 0');\n"
+           "                    } else {\n"
+           "                        filter.set(p, isBooleanType(type) ? (booleanValue(p) ? '1' : "
+           "'0') "
            ": ((isNumericType(type) && widget === 'text') ? String(d) : (isNumericType(type) ? "
            "Number(d) : d)));\n"
+           "                    }\n"
+           "                }\n"
            "            }\n"
            "            filter.savePreset(propertyNames);\n"
            "        }\n"
@@ -439,13 +493,22 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "        columnSpacing: 8\n"
            "        rowSpacing: 6\n\n"
            "        Label {\n"
+           "            id: descriptionText\n"
            "            Layout.columnSpan: 3\n"
-           "            Layout.fillWidth: true\n"
+           "            Layout.preferredWidth: root.width - helpButton.implicitWidth - "
+           "parent.anchors.margins * 2\n"
+           "            maximumLineCount: 1\n"
+           "            elide: Text.ElideRight\n"
            "            text: root.filterDescription.length > 0 ? qsTr('Add-on Filter: "
            "%1').arg(root.filterDescription) : qsTr('Add-on Filter')\n"
-           "            wrapMode: Text.Wrap\n"
+           "            textFormat: Text.PlainText\n\n"
+           "            Shotcut.HoverTip {\n"
+           "                visible: descriptionText.truncated\n"
+           "                text: root.filterDescription\n"
+           "            }\n"
            "        }\n\n"
            "        ToolButton {\n"
+           "            id: helpButton\n"
            "            icon.name: 'help-contextual'\n"
            "            icon.source: 'qrc:///icons/oxygen/32x32/actions/help-contextual.png'\n"
            "            text: ''\n"
@@ -457,6 +520,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "        }\n\n"
            "        Label {\n"
            "            text: qsTr('Preset')\n"
+           "            textFormat: Text.PlainText\n"
            "            horizontalAlignment: Text.AlignRight\n"
            "            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter\n"
            "        }\n"
@@ -499,6 +563,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "            Layout.fillWidth: true\n"
                       "            horizontalAlignment: Text.AlignHCenter\n"
                       "            font.bold: true\n"
+                      "            textFormat: Text.PlainText\n"
                       "            text: "
                    << quotedJsString(sectionTitle)
                    << "\n"
@@ -521,15 +586,18 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         const QString keyframesId = parameterId + QStringLiteral("_keyframes");
 
         const QString nameLiteral = quotedJsString(parameter.name);
+        const bool useChannelMask = isChannelMaskParameter(descriptor, parameter);
 
-        if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
-            stream << "        Item { }\n\n";
+        if (parameter.hideLabel) {
+        } else if (parameterType == QStringLiteral("boolean") && !parameter.isReadOnly) {
+            stream << "        Item {}\n\n";
         } else {
             stream << "        Label {\n"
                       "            text: (root.propertyTitles && root.propertyTitles["
                    << nameLiteral << "]) ? root.propertyTitles[" << nameLiteral
                    << "] : " << nameLiteral
                    << "\n"
+                      "            textFormat: Text.PlainText\n"
                       "            horizontalAlignment: Text.AlignRight\n"
                       "            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter\n"
                       "            elide: Text.ElideRight\n"
@@ -559,21 +627,59 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n\n";
         }
 
-        if (parameter.isReadOnly) {
-            stream << "        TextField {\n"
+        if (useChannelMask) {
+            stream << "        Shotcut.ChannelMask {\n"
+                      "            id: "
+                   << editorId
+                   << "\n"
+                      ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "3" : "2")
+                   << "\n"
+                      "            readonly property string propertyName: "
+                   << nameLiteral
+                   << "\n"
+                      "            channelMaskProperty: propertyName\n"
+                      "        }\n";
+        } else if (parameter.isReadOnly && parameter.hideLabel) {
+            stream << "        TextEdit {\n"
+                      "            id: "
+                   << editorId
+                   << "\n"
+                      ""
+                      "            Layout.columnSpan: 4\n"
+                      "            Layout.fillWidth: true\n"
+                      "            Layout.preferredHeight: contentHeight\n"
+                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignTop\n"
+                      "            readonly property string propertyName: "
+                   << nameLiteral
+                   << "\n"
+                      "            textFormat: TextEdit.PlainText\n"
+                      "            text: ''\n"
+                      "            wrapMode: TextEdit.Wrap\n"
+                      "            readOnly: true\n"
+                      "            selectByMouse: true\n"
+                      "            color: activePalette.windowText\n"
+                      "        }\n";
+        } else if (parameter.isReadOnly) {
+            stream << "        TextEdit {\n"
                       "            id: "
                    << editorId
                    << "\n"
                       ""
                       "            Layout.columnSpan: 3\n"
                       "            Layout.fillWidth: true\n"
-                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
+                      "            Layout.preferredHeight: contentHeight\n"
+                      "            Layout.alignment: Qt.AlignLeft | Qt.AlignTop\n"
                       "            readonly property string propertyName: "
                    << nameLiteral
                    << "\n"
-                      "            text: root.textValue(propertyName)\n"
-                      "            selectByMouse: true\n"
+                      "            textFormat: TextEdit.PlainText\n"
+                      "            text: ''\n"
+                      "            wrapMode: TextEdit.Wrap\n"
                       "            readOnly: true\n"
+                      "            selectByMouse: true\n"
+                      "            color: activePalette.windowText\n"
                       "        }\n";
         } else if (parameterType == QStringLiteral("string") && !parameter.values.isEmpty()) {
             stream << "        ComboBox {\n"
@@ -581,6 +687,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            readonly property string propertyName: "
@@ -600,6 +709,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            readonly property string propertyName: "
@@ -632,6 +744,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                 << editorId
                 << "\n"
                    ""
+                   "            Layout.columnSpan: "
+                << (parameter.hideLabel ? "2" : "1")
+                << "\n"
                    "            Layout.fillWidth: false\n"
                    "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                    "            readonly property string propertyName: "
@@ -663,6 +778,48 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    "                }\n"
                    "            }\n"
                    "        }\n";
+        } else if (parameterType == QStringLiteral("rect")
+                   && (parameterWidget == QStringLiteral("point")
+                       || parameterWidget == QStringLiteral("size"))) {
+            const QString labelFirst = (parameterWidget == QStringLiteral("size"))
+                                           ? QStringLiteral("W")
+                                           : QStringLiteral("X");
+            const QString labelSecond = (parameterWidget == QStringLiteral("size"))
+                                            ? QStringLiteral("H")
+                                            : QStringLiteral("Y");
+            stream
+                << "        Shotcut.Number2D {\n"
+                   "            id: "
+                << editorId
+                << "\n"
+                   "            Layout.columnSpan: "
+                << (parameter.hideLabel ? "2" : "1")
+                << "\n"
+                   "            Layout.fillWidth: true\n"
+                   "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
+                   "            readonly property string propertyName: "
+                << nameLiteral
+                << "\n"
+                   "            readonly property string typeName: "
+                   "root.propertyType(propertyName)\n"
+                   "            decimals: root.isIntegerType(typeName) ? 0 : 3\n"
+                   "            from: (root.propertyMinimums && "
+                   "root.propertyMinimums[propertyName] !== undefined && "
+                   "root.propertyMinimums[propertyName] !== '') ? "
+                   "Number(root.propertyMinimums[propertyName]) : -99999\n"
+                   "            to: (root.propertyMaximums && root.propertyMaximums[propertyName] "
+                   "!== undefined && root.propertyMaximums[propertyName] !== '') ? "
+                   "Number(root.propertyMaximums[propertyName]) : 99999\n"
+                   "            labelFirst: "
+                << quotedJsString(labelFirst)
+                << "\n"
+                   "            labelSecond: "
+                << quotedJsString(labelSecond)
+                << "\n"
+                   "            onValuesModified: {\n"
+                   "                filter.set(propertyName, valueX + ' ' + valueY + ' 0 0 1');\n"
+                   "            }\n"
+                   "        }\n";
         } else if ((parameterType == QStringLiteral("integer")
                     || parameterType == QStringLiteral("float"))
                    && !useTextForNumericEditor) {
@@ -671,6 +828,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            Layout.minimumWidth: 180\n"
@@ -704,6 +864,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                    << editorId
                    << "\n"
                       ""
+                      "            Layout.columnSpan: "
+                   << (parameter.hideLabel ? "2" : "1")
+                   << "\n"
                       "            Layout.fillWidth: true\n"
                       "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
                       "            selectByMouse: true\n"
@@ -770,7 +933,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "        }\n";
         }
 
-        if (!parameter.isReadOnly) {
+        if (!parameter.isReadOnly && !useChannelMask) {
             stream << "\n"
                       "        Shotcut.UndoButton {\n"
                       "            readonly property string propertyName: "
@@ -831,6 +994,23 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                               "                    filter.set(propertyName, defaultValue);\n"
                               "                root.setControls();\n";
                 }
+            } else if (parameterType == QStringLiteral("rect")
+                       && (parameterWidget == QStringLiteral("point")
+                           || parameterWidget == QStringLiteral("size"))) {
+                stream << "                var _ds = root.propertyDefaults ? "
+                          "(root.propertyDefaults[propertyName] || '') : '';\n"
+                          "                var _dp = String(_ds).trim().split(/\\s+/);\n"
+                          "                var _dx = _dp.length > 0 ? parseFloat(_dp[0]) : 0;\n"
+                          "                var _dy = _dp.length > 1 ? parseFloat(_dp[1]) : 0;\n"
+                          "                if (isNaN(_dx)) _dx = 0;\n"
+                          "                if (isNaN(_dy)) _dy = 0;\n"
+                          "                if (root.propertyNormalizedDefault &&\n"
+                          "root.propertyNormalizedDefault[propertyName] === 'yes') {\n"
+                          "                    _dx *= profile.width;\n"
+                          "                    _dy *= profile.height;\n"
+                          "                }\n"
+                          "                filter.set(propertyName, _dx + ' ' + _dy + ' 0 0 0');\n"
+                          "                root.setControls();\n";
             } else {
                 stream
                     << "                var defaultValue = root.defaultTextValue(propertyName);\n"
@@ -889,12 +1069,31 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                 stream << "\n";
             }
         }
+
+        if (hasDividerLayoutHint(parameter)) {
+            stream << "\n"
+                      "        Item {\n"
+                      "            Layout.columnSpan: 4\n"
+                      "            Layout.fillWidth: true\n"
+                      "            Layout.preferredHeight: 8\n"
+                      "\n"
+                      "            Rectangle {\n"
+                      "                anchors.left: parent.left\n"
+                      "                anchors.right: parent.right\n"
+                      "                anchors.verticalCenter: parent.verticalCenter\n"
+                      "                height: 1\n"
+                      "                color: '#808080'\n"
+                      "                opacity: 0.45\n"
+                      "            }\n"
+                      "        }\n";
+        }
     }
 
     stream << "        Label {\n"
               "            Layout.columnSpan: 4\n"
               "            Layout.fillWidth: true\n"
               "            visible: propertyNames.length === 0\n"
+              "            textFormat: Text.PlainText\n"
               "            text: qsTr('No properties were discovered for this filter service.')\n"
               "            wrapMode: Text.Wrap\n"
               "        }\n"

@@ -23,10 +23,45 @@
 #include <QFile>
 #include <QFileInfo>
 
+/*!
+    \qmltype File
+    \inqmlmodule org.shotcut.qml
+    \brief A file URL wrapper with optional filesystem change watching.
+
+    Use \c File in filter panels to manage paths to auxiliary files
+    (e.g. LUT files, preset data files). Set \l url and call \l{File::watch()}{watch()}
+    to receive \l fileChanged notifications when the file is modified externally.
+
+    \code
+    File {
+        id: lutFile
+        url: filter.get("av.file")
+        onFileChanged: filter.set("av.file", path)
+    }
+    \endcode
+*/
+
+/*!
+    \qmlsignal File::urlChanged(url url)
+    \brief Emitted when \l url changes. \a url is the new URL value.
+*/
+
+/*!
+    \qmlsignal File::fileChanged(string path)
+    \brief Emitted when the watched file is modified or deleted externally.
+    \a path is the full file system path. Connect a file watcher by calling \l{File::watch()}{watch()} first.
+*/
+
 QmlFile::QmlFile(QObject *parent)
     : QObject(parent)
     , m_url()
 {}
+
+/*!
+    \qmlproperty string File::url
+    \brief The file URL as a string (e.g. \c "file:///home/user/lut.cube").
+    Setting this property stops watching any previously watched file.
+*/
 
 QString QmlFile::getUrl()
 {
@@ -94,20 +129,40 @@ void QmlFile::setUrl(QString text)
     }
 }
 
+/*!
+    \qmlproperty string File::fileName
+    \brief The base file name without the directory path (e.g. \c "lut.cube").
+*/
+
 QString QmlFile::getFileName()
 {
     return QFileInfo(getUrl()).fileName();
 }
+
+/*!
+    \qmlproperty string File::path
+    \brief The directory path portion of the URL (without the file name).
+*/
 
 QString QmlFile::getPath()
 {
     return QDir::toNativeSeparators(QFileInfo(getUrl()).path());
 }
 
+/*!
+    \qmlproperty string File::filePath
+    \brief The full local filesystem path (e.g. \c "/home/user/lut.cube").
+*/
+
 QString QmlFile::getFilePath()
 {
     return QDir::toNativeSeparators(getUrl());
 }
+
+/*!
+    \qmlmethod File::copyFromFile(string source)
+    \brief Copies the file at \a source to the path described by \l url.
+*/
 
 void QmlFile::copyFromFile(QString source)
 {
@@ -130,16 +185,31 @@ void QmlFile::copyFromFile(QString source)
     outfile.close();
 }
 
+/*!
+    \qmlmethod bool File::exists()
+    \brief Returns \c true if the file at \l url exists on the filesystem.
+*/
+
 bool QmlFile::exists()
 {
     return QFileInfo(m_url.toString()).exists();
 }
+
+/*!
+    \qmlmethod string File::suffix()
+    \brief Returns the file extension without the leading dot (e.g. \c "cube").
+*/
 
 QString QmlFile::suffix()
 {
     return QFileInfo(m_url.toString()).suffix();
 }
 
+/*!
+    \qmlmethod File::watch()
+    \brief Begins watching the file at \l url for external changes.
+    When the file is modified or deleted, \l fileChanged is emitted.
+*/
 void QmlFile::watch()
 {
     m_watcher.reset(new QFileSystemWatcher({getUrl()}));

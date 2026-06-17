@@ -1,0 +1,119 @@
+/*!
+    \page index.html
+    \title Shotcut QML Scripting API
+
+    \brief Reference for all QML types and context properties available when
+    writing filter panels, VUIs, and timeline extensions for Shotcut.
+
+    \section1 Overview
+
+    \warning This API is subject to change and may not be stable across Shotcut versions.
+
+    Shotcut exposes its internal state to QML views through two mechanisms:
+
+    \list
+        \li \b{Registered types} — classes you can instantiate directly in QML
+            using their type name (e.g. \c Filter, \c File, \c Metadata).
+        \li \b{Context properties} — singleton objects injected into every view's
+            root context and accessed by a fixed name (e.g. \c application,
+            \c profile, \c settings).
+    \endlist
+
+    \section1 Modules
+
+    \annotatedlist qmlmodules
+
+    \section1 Context Properties (Singletons)
+
+    These objects are available in every Shotcut QML view without import statements:
+
+    \table
+        \header
+            \li Name
+            \li Type
+            \li Description
+        \row
+            \li \c application
+            \li \l{Application}
+            \li Application-wide utilities (copy/paste filters, status messages, etc.)
+        \row
+            \li \c profile
+            \li \l{Profile}
+            \li Current project video profile (width, height, fps, aspect ratio)
+        \row
+            \li \c settings
+            \li \l{Settings}
+            \li Persistent user settings (timeline options, fade durations, etc.)
+    \endtable
+
+    \section1 Per-View Context Properties
+
+    Additional context properties are injected by specific dock/view classes:
+
+    \table
+        \header
+            \li View
+            \li Name
+            \li Type
+        \row
+            \li Filter panels
+            \li \c filter
+            \li \l{Filter}
+        \row
+            \li Filter panels
+            \li \c producer
+            \li \l{Producer}
+        \row
+            \li Filter panels
+            \li \c metadata
+            \li \l{Metadata}
+        \row
+            \li Filter panels
+            \li \c motionTrackerModel
+            \li \l{MotionTrackerModel}
+        \row
+            \li Video player
+            \li \c video
+            \li VideoWidget
+        \row
+            \li HDR preview
+            \li \c hdrWindow
+            \li HdrPreviewWindow
+        \row
+            \li Keyframes dock
+            \li \c keyframes
+            \li \l{KeyframesDock}
+        \row
+            \li Keyframes dock
+            \li \c parameters
+            \li \l{KeyframesModel}
+        \row
+            \li Timeline dock
+            \li \c timeline
+            \li \l{TimelineDock}
+        \row
+            \li Timeline dock
+            \li \c multitrack
+            \li \l{MultitrackModel}
+        \row
+            \li Timeline dock
+            \li \c markers
+            \li \l{MarkersModel}
+        \row
+            \li Timeline dock
+            \li \c subtitlesModel
+            \li \l{SubtitlesModel}
+        \row
+            \li Timeline dock
+            \li \c subtitlesSelectionModel
+            \li \l{SubtitlesSelectionModel}
+        \row
+            \li Filters dock
+            \li \c attachedfiltersmodel
+            \li \l{AttachedFiltersModel}
+        \row
+            \li All docks
+            \li \c view
+            \li \l{QmlView}
+    \endtable
+*/

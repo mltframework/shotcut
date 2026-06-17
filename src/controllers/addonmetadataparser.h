@@ -29,6 +29,8 @@ struct AddOnParameterDescriptor
     QString title;
     QString type;
     QString widget;
+    QString layoutHint;
+    bool hideLabel = false;
     bool isReadOnly = false;
     bool supportsKeyframes = false;
     QStringList values;
@@ -37,6 +39,8 @@ struct AddOnParameterDescriptor
     QString minimum;
     QString maximum;
     QString description;
+    bool normalizedCoordinates = false;
+    bool normalizedDefault = false;
 };
 
 struct AddOnFilterDescriptor

@@ -76,6 +76,7 @@ public:
     Q_INVOKABLE void triggerFastForward();
     Q_INVOKABLE void toggleFullScreen();
     Q_INVOKABLE void seekToFrame(int frame);
+    Q_INVOKABLE void beginSystemMove() { startSystemMove(); }
 
 public slots:
     void pushFrame(const QVideoFrame &frame);

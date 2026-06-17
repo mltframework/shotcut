@@ -44,6 +44,54 @@
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 
+/*!
+    \qmltype RichText
+    \inqmlmodule org.shotcut.qml
+    \brief Provides rich-text editing helpers for the Text: Rich filter panel.
+
+    \c RichText is available as a context property in the Text: Rich filter QML panel.
+    It bridges the QML \c TextEdit item to the underlying \c QTextDocument, enabling
+    character-level formatting, cursor management, and file persistence.
+
+    \code
+    RichText {
+        id: richText
+        target: textEditItem
+        onTextChanged: filter.set("argument", text)
+    }
+    \endcode
+*/
+
+/*!
+    \qmlsignal RichText::error(string message)
+    \brief Emitted when a file load or save operation fails. \a message describes the error.
+*/
+
+/*!
+    \qmlproperty Item RichText::target
+    \brief The QML \c TextEdit item whose document this object manages.
+*/
+
+/*!
+    \qmlproperty int RichText::cursorPosition
+    \brief The cursor position within the document.
+*/
+
+/*!
+    \qmlproperty int RichText::selectionStart
+    \brief The start of the current text selection.
+*/
+
+/*!
+    \qmlproperty int RichText::selectionEnd
+    \brief The end of the current text selection.
+*/
+
+/*!
+    \qmlproperty size RichText::size
+    \brief The natural rendered size of the document (read-only).
+*/
+
 QmlRichText::QmlRichText()
     : m_target(0)
     , m_doc(0)
@@ -127,6 +175,11 @@ void QmlRichText::setText(const QString &arg)
     }
 }
 
+/*!
+    \qmlmethod RichText::saveAs(url fileUrl, string fileType)
+    \brief Saves the document to \a fileUrl. \a fileType may be \c "html" or \c "txt".
+*/
+
 void QmlRichText::saveAs(const QUrl &arg, QString fileType)
 {
     if (fileType.isEmpty())
@@ -146,6 +199,11 @@ void QmlRichText::saveAs(const QUrl &arg, QString fileType)
     f.close();
     setFileUrl(QUrl::fromLocalFile(localPath));
 }
+
+/*!
+    \qmlmethod RichText::insertTable(int rows, int columns, int border)
+    \brief Inserts a table at the cursor with \a rows rows, \a columns columns, and \a border width.
+*/
 
 void QmlRichText::insertTable(int rows, int columns, int border)
 {
@@ -183,6 +241,11 @@ void QmlRichText::insertTable(int rows, int columns, int border)
     cursor.insertHtml(html);
 }
 
+/*!
+    \qmlmethod RichText::indentLess()
+    \brief Decreases the indentation level of the current paragraph.
+*/
+
 void QmlRichText::indentLess()
 {
     QTextCursor cursor = textCursor();
@@ -193,6 +256,11 @@ void QmlRichText::indentLess()
     format.setIndent(qMax(indent - 1, 0));
     cursor.mergeBlockFormat(format);
 }
+
+/*!
+    \qmlmethod RichText::indentMore()
+    \brief Increases the indentation level of the current paragraph.
+*/
 
 void QmlRichText::indentMore()
 {
@@ -205,6 +273,11 @@ void QmlRichText::indentMore()
     cursor.mergeBlockFormat(format);
 }
 
+/*!
+    \qmlmethod RichText::pastePlain()
+    \brief Pastes clipboard text as plain text, stripping any formatting.
+*/
+
 void QmlRichText::pastePlain()
 {
     QTextCursor cursor = textCursor();
@@ -213,10 +286,20 @@ void QmlRichText::pastePlain()
     cursor.insertText(QGuiApplication::clipboard()->text());
 }
 
+/*!
+    \qmlproperty url RichText::fileUrl
+    \brief The URL of the HTML file backing the document. Setting this loads the file.
+*/
+
 QUrl QmlRichText::fileUrl() const
 {
     return m_fileUrl;
 }
+
+/*!
+    \qmlproperty string RichText::text
+    \brief The full HTML content of the document.
+*/
 
 QString QmlRichText::text() const
 {
@@ -232,6 +315,11 @@ void QmlRichText::setCursorPosition(int position)
 
     reset();
 }
+
+/*!
+    \qmlmethod RichText::reset()
+    \brief Clears the document content.
+*/
 
 void QmlRichText::reset()
 {
@@ -293,6 +381,11 @@ void QmlRichText::setAlignment(Qt::Alignment a)
     emit alignmentChanged();
 }
 
+/*!
+    \qmlproperty int RichText::alignment
+    \brief The paragraph alignment (\c Qt.AlignLeft, \c Qt.AlignCenter, etc.) at the cursor.
+*/
+
 Qt::Alignment QmlRichText::alignment() const
 {
     QTextCursor cursor = textCursor();
@@ -300,6 +393,11 @@ Qt::Alignment QmlRichText::alignment() const
         return Qt::AlignLeft;
     return textCursor().blockFormat().alignment();
 }
+
+/*!
+    \qmlproperty bool RichText::bold
+    \brief Whether the text at the cursor/selection is bold.
+*/
 
 bool QmlRichText::bold() const
 {
@@ -309,6 +407,11 @@ bool QmlRichText::bold() const
     return textCursor().charFormat().fontWeight() == QFont::Bold;
 }
 
+/*!
+    \qmlproperty bool RichText::italic
+    \brief Whether the text at the cursor/selection is italic.
+*/
+
 bool QmlRichText::italic() const
 {
     QTextCursor cursor = textCursor();
@@ -317,6 +420,11 @@ bool QmlRichText::italic() const
     return textCursor().charFormat().fontItalic();
 }
 
+/*!
+    \qmlproperty bool RichText::underline
+    \brief Whether the text at the cursor/selection is underlined.
+*/
+
 bool QmlRichText::underline() const
 {
     QTextCursor cursor = textCursor();
@@ -324,6 +432,11 @@ bool QmlRichText::underline() const
         return false;
     return textCursor().charFormat().fontUnderline();
 }
+
+/*!
+    \qmlproperty bool RichText::strikeout
+    \brief Whether the text at the cursor/selection has strikethrough.
+*/
 
 bool QmlRichText::strikeout() const
 {
@@ -365,6 +478,11 @@ void QmlRichText::setStrikeout(bool arg)
     emit strikeoutChanged();
 }
 
+/*!
+    \qmlproperty int RichText::fontSize
+    \brief The font size in points at the cursor or selection.
+*/
+
 int QmlRichText::fontSize() const
 {
     QTextCursor cursor = textCursor();
@@ -384,6 +502,11 @@ void QmlRichText::setFontSize(int arg)
     mergeFormatOnWordOrSelection(format);
     emit fontSizeChanged();
 }
+
+/*!
+    \qmlproperty color RichText::textColor
+    \brief The foreground color of the text at (or to be applied to) the selection.
+*/
 
 QColor QmlRichText::textColor() const
 {
@@ -405,6 +528,11 @@ void QmlRichText::setTextColor(const QColor &c)
     emit textColorChanged();
 }
 
+/*!
+    \qmlproperty string RichText::fontFamily
+    \brief The font family of the text at the cursor or selection.
+*/
+
 QString QmlRichText::fontFamily() const
 {
     QTextCursor cursor = textCursor();
@@ -424,6 +552,11 @@ void QmlRichText::setFontFamily(const QString &arg)
     mergeFormatOnWordOrSelection(format);
     emit fontFamilyChanged();
 }
+
+/*!
+    \qmlproperty string RichText::fontStyleName
+    \brief The font style name (e.g. \c "Bold Italic") at the cursor or selection.
+*/
 
 QString QmlRichText::fontStyleName() const
 {

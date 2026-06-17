@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,43 @@
 #include <QQmlComponent>
 
 const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
+
+/*!
+    \qmltype QmlExtensionFile
+    \inqmlmodule org.shotcut.qml
+    \brief Describes a single downloadable file within an extension package.
+    \sa QmlExtension
+*/
+
+/*!
+    \qmlproperty string QmlExtensionFile::name
+    \brief The display name of the file.
+*/
+
+/*!
+    \qmlproperty string QmlExtensionFile::description
+    \brief A brief description of the file's purpose.
+*/
+
+/*!
+    \qmlproperty string QmlExtensionFile::file
+    \brief The local filename to store the downloaded file as.
+*/
+
+/*!
+    \qmlproperty string QmlExtensionFile::url
+    \brief The remote URL from which the file can be downloaded.
+*/
+
+/*!
+    \qmlproperty string QmlExtensionFile::size
+    \brief The human-readable size of the download (e.g. \c "120 MB").
+*/
+
+/*!
+    \qmlproperty bool QmlExtensionFile::standard
+    \brief Whether this file is a standard (default) file vs. an optional add-on.
+*/
 
 QmlExtensionFile::QmlExtensionFile(QObject *parent)
     : QObject(parent)
@@ -71,6 +108,41 @@ QDir QmlExtension::appDir(const QString &id)
     dir.cd(id);
     return dir;
 }
+
+/*!
+    \qmltype QmlExtension
+    \inqmlmodule org.shotcut.qml
+    \brief Represents a loadable Shotcut extension (e.g. the Whisper speech-to-text package).
+
+    Extensions are installed or downloaded as a bundle of files described by
+    \l{QmlExtensionFile} entries. Access the current extension object through the
+    \c extension context property in extension-related QML views.
+
+    \code
+    Text { text: extension.name + " v" + extension.version }
+    \endcode
+*/
+
+/*!
+    \qmlproperty string QmlExtension::id
+    \brief The unique identifier for the extension (e.g. \c "whisper").
+*/
+
+/*!
+    \qmlproperty string QmlExtension::name
+    \brief The human-readable display name of the extension.
+*/
+
+/*!
+    \qmlproperty string QmlExtension::version
+    \brief The installed version string of the extension.
+*/
+
+/*!
+    \qmlproperty list<QmlExtensionFile> QmlExtension::files
+    \brief The list of files that make up this extension.
+    \sa QmlExtensionFile
+*/
 
 QmlExtension::QmlExtension(QObject *parent)
     : QObject(parent)

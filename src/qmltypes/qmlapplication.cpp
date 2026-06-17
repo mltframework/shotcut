@@ -49,6 +49,41 @@ QmlApplication &QmlApplication::singleton()
     return instance;
 }
 
+/*!
+    \qmltype Application
+    \inqmlmodule org.shotcut.qml
+    \brief Application-wide utilities, accessed via the \c application context property.
+
+    \c application is set as a context property on every Shotcut QML view.
+    It cannot be instantiated from QML — use the global \c application identifier directly:
+
+    \code
+    application.showStatusMessage("Ready")
+    var t = application.clockFromFrames(150)
+    var c = application.contrastingColor("red")
+    \endcode
+*/
+
+/*!
+    \qmlsignal Application::paletteChanged()
+    \brief Emitted when the application color palette changes (e.g. dark/light mode switch).
+*/
+
+/*!
+    \qmlsignal Application::filtersCopied()
+    \brief Emitted when filters are copied to the clipboard.
+*/
+
+/*!
+    \qmlsignal Application::filtersPasted()
+    \brief Emitted when filters are pasted from the clipboard.
+*/
+
+/*!
+    \qmlproperty Qt::WindowModality Application::dialogModality
+    \brief The modality to use for dialogs launched from QML.
+*/
+
 QmlApplication::QmlApplication()
     : QObject()
 {}
@@ -62,10 +97,21 @@ Qt::WindowModality QmlApplication::dialogModality()
 #endif
 }
 
+/*!
+    \qmlproperty point Application::mousePos
+    \brief The current global cursor screen coordinates.
+*/
+
 QPoint QmlApplication::mousePos()
 {
     return QCursor::pos();
 }
+
+/*!
+    \qmlproperty color Application::toolTipBaseColor
+    \brief The background color of tooltips, derived from the current palette.
+    Notifies \l paletteChanged.
+*/
 
 QColor QmlApplication::toolTipBaseColor()
 {
@@ -76,6 +122,12 @@ QColor QmlApplication::toolTipBaseColor()
     return QApplication::palette().toolTipBase().color();
 }
 
+/*!
+    \qmlproperty color Application::toolTipTextColor
+    \brief The text color of tooltips, derived from the current palette.
+    Notifies \l paletteChanged.
+*/
+
 QColor QmlApplication::toolTipTextColor()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -84,6 +136,11 @@ QColor QmlApplication::toolTipTextColor()
 #endif
     return QApplication::palette().toolTipText().color();
 }
+
+/*!
+    \qmlproperty string Application::OS
+    \brief The operating system name: \c "Windows", \c "Linux", or \c "macOS".
+*/
 
 QString QmlApplication::OS()
 {
@@ -100,15 +157,31 @@ QString QmlApplication::OS()
 #endif
 }
 
+/*!
+    \qmlproperty rect Application::mainWinRect
+    \brief The geometry of the main application window.
+*/
+
 QRect QmlApplication::mainWinRect()
 {
     return MAIN.geometry();
 }
 
+/*!
+    \qmlproperty bool Application::hasFiltersOnClipboard
+    \brief Whether the clipboard currently contains copied filters.
+    Notifies \l filtersCopied.
+*/
+
 bool QmlApplication::hasFiltersOnClipboard()
 {
     return MLT.hasFiltersOnClipboard();
 }
+
+/*!
+    \qmlmethod Application::copyEnabledFilters()
+    \brief Copies only the checked (enabled) filters to the clipboard.
+*/
 
 void QmlApplication::copyEnabledFilters()
 {
@@ -119,6 +192,11 @@ void QmlApplication::copyEnabledFilters()
     emit QmlApplication::singleton().filtersCopied();
 }
 
+/*!
+    \qmlmethod Application::copyAllFilters()
+    \brief Copies all filters on the currently selected clip to the clipboard.
+*/
+
 void QmlApplication::copyAllFilters()
 {
     QScopedPointer<Mlt::Producer> producer(
@@ -127,6 +205,11 @@ void QmlApplication::copyAllFilters()
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
 }
+
+/*!
+    \qmlmethod Application::copyCurrentFilter()
+    \brief Copies the currently selected filter to the clipboard.
+*/
 
 void QmlApplication::copyCurrentFilter()
 {
@@ -142,6 +225,11 @@ void QmlApplication::copyCurrentFilter()
     emit QmlApplication::singleton().filtersCopied();
 }
 
+/*!
+    \qmlmethod string Application::clockFromFrames(int frames)
+    \brief Converts a frame number \a frames to a clock string (\c HH:MM:SS.mmm or \c HH:MM:SS:FF) at the current profile fps.
+*/
+
 QString QmlApplication::clockFromFrames(int frames)
 {
     if (MLT.producer()) {
@@ -149,6 +237,11 @@ QString QmlApplication::clockFromFrames(int frames)
     }
     return QString();
 }
+
+/*!
+    \qmlmethod string Application::timeFromFrames(int frames)
+    \brief Converts a frame number \a frames to an MLT timecode string.
+*/
 
 QString QmlApplication::timeFromFrames(int frames)
 {
@@ -158,10 +251,21 @@ QString QmlApplication::timeFromFrames(int frames)
     return QString();
 }
 
+/*!
+    \qmlmethod int Application::audioChannels()
+    \brief Returns the number of audio channels in the current project.
+*/
+
 int QmlApplication::audioChannels()
 {
     return MLT.audioChannels();
 }
+
+/*!
+    \qmlmethod string Application::getNextProjectFile(string filename)
+    \brief Returns a versioned file path for saving a new project-related file
+    named \a filename (e.g. \c project-001.txt) next to the current project file.
+*/
 
 QString QmlApplication::getNextProjectFile(const QString &filename)
 {
@@ -183,21 +287,41 @@ QString QmlApplication::getNextProjectFile(const QString &filename)
     return QString();
 }
 
+/*!
+    \qmlmethod bool Application::isProjectFolder()
+    \brief Returns \c true if the current project is saved inside a project folder.
+*/
+
 bool QmlApplication::isProjectFolder()
 {
     QDir dir(MLT.projectFolder());
     return (!MLT.projectFolder().isEmpty() && dir.exists());
 }
 
+/*!
+    \qmlproperty real Application::devicePixelRatio
+    \brief The display device pixel ratio (e.g. 2.0 on HiDPI screens).
+*/
+
 qreal QmlApplication::devicePixelRatio()
 {
     return MAIN.devicePixelRatioF();
 }
 
+/*!
+    \qmlmethod Application::showStatusMessage(string message, int timeoutSeconds = 15)
+    \brief Displays \a message in the main window status bar for \a timeoutSeconds seconds.
+*/
+
 void QmlApplication::showStatusMessage(const QString &message, int timeoutSeconds)
 {
     MAIN.showStatusMessage(message, timeoutSeconds);
 }
+
+/*!
+    \qmlmethod Application::showAddOnFiltersDialog()
+    \brief Opens the Add-On Filters catalog dialog.
+*/
 
 void QmlApplication::showAddOnFiltersDialog()
 {
@@ -210,11 +334,22 @@ void QmlApplication::showAddOnFiltersDialog()
     dialog.exec();
 }
 
+/*!
+    \qmlproperty int Application::maxTextureSize
+    \brief The maximum supported GPU texture dimension in pixels.
+*/
+
 int QmlApplication::maxTextureSize()
 {
     auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
     return videoWidget ? videoWidget->maxTextureSize() : 0;
 }
+
+/*!
+    \qmlmethod bool Application::confirmOutputFilter()
+    \brief Prompts the user to confirm applying a filter to the timeline output.
+    Returns \c true if the user confirms.
+*/
 
 bool QmlApplication::confirmOutputFilter()
 {
@@ -256,10 +391,20 @@ QDir QmlApplication::dataDir()
     return dir;
 }
 
+/*!
+    \qmlmethod color Application::contrastingColor(string color)
+    \brief Returns black or white, whichever contrasts better against \a color.
+*/
+
 QColor QmlApplication::contrastingColor(QString color)
 {
     return Util::textColor(color);
 }
+
+/*!
+    \qmlproperty list<string> Application::wipes
+    \brief The list of available wipe transition file names.
+*/
 
 QStringList QmlApplication::wipes()
 {
@@ -277,6 +422,12 @@ QStringList QmlApplication::wipes()
     return result;
 }
 
+/*!
+    \qmlmethod bool Application::addWipe(string filePath)
+    \brief Adds a custom wipe transition image at \a filePath to the wipes list.
+    Returns \c true on success.
+*/
+
 bool QmlApplication::addWipe(const QString &filePath)
 {
     const auto transitions = QString::fromLatin1("transitions");
@@ -290,10 +441,21 @@ bool QmlApplication::addWipe(const QString &filePath)
     return false;
 }
 
+/*!
+    \qmlmethod bool Application::intersects(rect a, rect b)
+    \brief Returns \c true if rectangle \a a intersects rectangle \a b.
+*/
+
 bool QmlApplication::intersects(const QRectF &a, const QRectF &b)
 {
     return a.intersects(b);
 }
+
+/*!
+    \qmlmethod string Application::actionFirstShortcut(string actionName)
+    \brief Returns the first keyboard shortcut string for the action identified by \a actionName,
+    or an empty string if none is assigned.
+*/
 
 QString QmlApplication::actionFirstShortcut(const QString &actionName)
 {

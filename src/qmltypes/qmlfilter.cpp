@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,102 @@
 #include <QTemporaryFile>
 #include <QtXml>
 
+/*!
+    \qmltype Filter
+    \inqmlmodule org.shotcut.qml
+    \brief Provides access to the current filter's properties, keyframes, and presets.
+
+    \c Filter is the primary scripting interface for filter UI panels and VUI overlays.
+    Each filter's QML file receives a \c filter context property of this type.
+    Use it to read and write MLT service properties, manage keyframes,
+    load/save presets, and trigger analysis jobs.
+
+    \code
+    // Inside a filter's QML panel:
+    filter.set("level", slider.value)
+    var current = filter.getDouble("level")
+    filter.startUndoParameterCommand("Change Level")
+    filter.set("level", newValue)
+    filter.endUndoCommand()
+    \endcode
+*/
+
+/*!
+    \qmlsignal Filter::presetsChanged()
+    \brief Emitted when the list of saved presets changes.
+*/
+
+/*!
+    \qmlsignal Filter::analyzeFinished(bool isSuccess)
+    \brief Emitted when an analysis job completes. \a isSuccess is \c true on success.
+*/
+
+/*!
+    \qmlsignal Filter::changed(string name)
+    \brief Emitted when any filter property changes. \a name is the property name,
+    or empty if multiple properties changed.
+*/
+
+/*!
+    \qmlsignal Filter::inChanged(int delta)
+    \brief Emitted when the filter's in-point changes. \a delta is the frame offset.
+*/
+
+/*!
+    \qmlsignal Filter::outChanged(int delta)
+    \brief Emitted when the filter's out-point changes. \a delta is the frame offset.
+*/
+
+/*!
+    \qmlsignal Filter::animateInChanged()
+    \brief Emitted when \l animateIn changes.
+*/
+
+/*!
+    \qmlsignal Filter::animateOutChanged()
+    \brief Emitted when \l animateOut changes.
+*/
+
+/*!
+    \qmlsignal Filter::animateInOutChanged()
+    \brief Emitted when either \l animateIn or \l animateOut changes.
+*/
+
+/*!
+    \qmlsignal Filter::durationChanged()
+    \brief Emitted when the filter's \l duration changes.
+*/
+
+/*!
+    \qmlsignal Filter::propertyChanged(string name)
+    \brief Emitted when a specific named property \a name changes. Use in bindings that
+    need to react to individual property updates.
+*/
+
+/*!
+    \qmlproperty bool Filter::isNew
+    \brief Whether this filter was just added or its UI is simply being reloaded.
+    Use this to set sensible initial property values on first load.
+*/
+
+/*!
+    \qmlproperty string Filter::path
+    \brief Absolute path to the directory containing this filter's QML files.
+    Use to load auxiliary QML files relative to the filter.
+*/
+
+/*!
+    \qmlproperty list<string> Filter::presets
+    \brief The list of saved preset names for this filter.
+    Notifies \l presetsChanged when the list changes.
+*/
+
+/*!
+    \qmlproperty bool Filter::blockSignals
+    \brief When \c true, suppresses all QML signals from this object.
+    Set while performing bulk property updates to avoid redundant UI refreshes.
+*/
+
 QmlFilter::QmlFilter()
     : QObject(nullptr)
     , m_metadata(nullptr)
@@ -72,6 +168,14 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
 
 QmlFilter::~QmlFilter() {}
 
+/*!
+    \qmlmethod string Filter::get(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a string.
+    If time \a position is \c -1 (default), returns the current value;
+    otherwise returns the interpolated value at that frame position.
+    To get an integer value, convert the result using \c parseInt(), e.g. \c parseInt(filter.get("someProperty")).
+*/
+
 QString QmlFilter::get(QString name, int position)
 {
     if (m_service.is_valid()) {
@@ -83,6 +187,12 @@ QString QmlFilter::get(QString name, int position)
         return QString();
     }
 }
+
+/*!
+    \qmlmethod color Filter::getColor(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a \c color.
+    \a position defaults to \c -1 (current value).
+*/
 
 QColor QmlFilter::getColor(QString name, int position)
 {
@@ -96,6 +206,12 @@ QColor QmlFilter::getColor(QString name, int position)
     return QColor(color.r, color.g, color.b, color.a);
 }
 
+/*!
+    \qmlmethod real Filter::getDouble(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a floating-point number.
+    \a position defaults to \c -1 (current value).
+*/
+
 double QmlFilter::getDouble(QString name, int position)
 {
     if (m_service.is_valid()) {
@@ -107,6 +223,13 @@ double QmlFilter::getDouble(QString name, int position)
         return 0.0;
     }
 }
+
+/*!
+    \qmlmethod rect Filter::getRect(string name, int position = -1)
+    \brief Returns the value of MLT property \a name as a \c rect.
+    The rectangle values are in the project coordinate space.
+    \a position defaults to \c -1 (current value).
+*/
 
 QRectF QmlFilter::getRect(QString name, int position)
 {
@@ -132,6 +255,12 @@ QRectF QmlFilter::getRect(QString name, int position)
         return QRectF(0.0, 0.0, 0.0, 0.0);
     }
 }
+
+/*!
+    \qmlmethod Filter::removeRectPercents(string name)
+    \brief Converts a rect property stored as percentages to absolute pixel values.
+    \a name is the MLT property to convert in-place.
+*/
 
 void QmlFilter::removeRectPercents(QString name)
 {
@@ -161,6 +290,11 @@ void QmlFilter::removeRectPercents(QString name)
     }
 }
 
+/*!
+    \qmlmethod list<string> Filter::getGradient(string name)
+    \brief Returns the gradient stop colors for property \a name as a list of color strings.
+*/
+
 QStringList QmlFilter::getGradient(QString name)
 {
     QStringList list;
@@ -175,6 +309,44 @@ QStringList QmlFilter::getGradient(QString name)
     }
     return list;
 }
+
+/*!
+    \qmlmethod Filter::set(string name, string value, int position = -1)
+    \brief Sets MLT property \a name to the string \a value.
+    If time \a position is given, sets a keyframe at that position.
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, color value, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to the color \a value, optionally at time \a position.
+    \a keyframeType is one of the \c mlt_keyframe_type enum values; use \c -1 for the default.
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, real value, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to the floating-point \a value, optionally at time \a position.
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, int value, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to the integer \a value, optionally at time \a position.
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, bool value, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to the boolean \a value, optionally at time \a position.
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, real x, real y, real width, real height, real opacity = 1.0, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to a rect specified by components, optionally at time \a position.
+    \a opacity is clamped to [0.0, 1.0].
+*/
+
+/*!
+    \qmlmethod Filter::set(string name, rect value, int position = -1, int keyframeType = -1)
+    \brief Sets MLT property \a name to the \a value rect, optionally at time \a position.
+*/
 
 void QmlFilter::set(QString name, QString value, int position)
 {
@@ -333,6 +505,11 @@ void QmlFilter::set(QString name,
     }
 }
 
+/*!
+    \qmlmethod Filter::setGradient(string name, list<string> colors)
+    \brief Sets the gradient stops for property \a name from a list of \a colors strings.
+*/
+
 void QmlFilter::setGradient(QString name, const QStringList &gradient)
 {
     for (int i = 1; i <= 10; i++) {
@@ -351,6 +528,11 @@ void QmlFilter::set(QString name, const QRectF &rect, int position, mlt_keyframe
 {
     set(name, rect.x(), rect.y(), rect.width(), rect.height(), 1.0, position, keyframeType);
 }
+
+/*!
+    \qmlmethod Filter::loadPresets()
+    \brief Reloads the list of saved presets from disk and emits \l presetsChanged.
+*/
 
 void QmlFilter::loadPresets()
 {
@@ -373,6 +555,12 @@ void QmlFilter::loadPresets()
     }
     emit presetsChanged();
 }
+
+/*!
+    \qmlmethod int Filter::savePreset(list<string> propertyNames, string name = "")
+    \brief Saves the current values of \a propertyNames as a preset named \a name.
+    Returns the index of the new preset in \l presets.
+*/
 
 int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 {
@@ -408,6 +596,11 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     return m_presets.indexOf(name);
 }
 
+/*!
+    \qmlmethod Filter::deletePreset(string name)
+    \brief Deletes the saved preset named \a name.
+*/
+
 void QmlFilter::deletePreset(const QString &name)
 {
     QDir dir(Settings.appDataLocation());
@@ -418,6 +611,13 @@ void QmlFilter::deletePreset(const QString &name)
     m_presets.removeOne(name);
     emit presetsChanged();
 }
+
+/*!
+    \qmlmethod Filter::analyze(bool isAudio = false, bool deferJob = true)
+    \brief Starts an analysis job for this filter.
+    Set \a isAudio to \c true for audio filters. When \a deferJob is \c true
+    the job is queued rather than run immediately. Emits \l analyzeFinished when done.
+*/
 
 void QmlFilter::analyze(bool isAudio, bool deferJob)
 {
@@ -543,6 +743,11 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
     }
 }
 
+/*!
+    \qmlmethod int Filter::framesFromTime(string time)
+    \brief Converts a timecode \a time string (HH:MM:SS.ms or MLT time format) to a frame number.
+*/
+
 int QmlFilter::framesFromTime(const QString &time)
 {
     if (MLT.producer()) {
@@ -551,11 +756,22 @@ int QmlFilter::framesFromTime(const QString &time)
     return 0;
 }
 
+/*!
+    \qmlmethod Filter::getHash()
+    \brief Computes a hash of the filter's input producer and stores it as the
+    \c shotcut:hash property. Used internally by analysis jobs.
+*/
+
 void QmlFilter::getHash()
 {
     if (m_service.is_valid())
         Util::getHash(m_service);
 }
+
+/*!
+    \qmlproperty int Filter::in
+    \brief The filter's in-point in frames, relative to the clip start.
+*/
 
 int QmlFilter::in()
 {
@@ -581,6 +797,11 @@ int QmlFilter::in()
     return result;
 }
 
+/*!
+    \qmlproperty int Filter::out
+    \brief The filter's out-point in frames, relative to the clip start.
+*/
+
 int QmlFilter::out()
 {
     int result = 0;
@@ -604,6 +825,12 @@ int QmlFilter::out()
     }
     return result;
 }
+
+/*!
+    \qmlproperty int Filter::animateIn
+    \brief Number of frames over which the "animate in" simple keyframe ramp runs.
+    Set to 0 to disable. Writing this triggers the \l animateInChanged signal.
+*/
 
 int QmlFilter::animateIn()
 {
@@ -638,6 +865,12 @@ void QmlFilter::setAnimateIn(int value)
         emit animateInChanged();
     }
 }
+
+/*!
+    \qmlproperty int Filter::animateOut
+    \brief Number of frames over which the "animate out" simple keyframe ramp runs.
+    Set to 0 to disable. Writing this triggers the \l animateOutChanged signal.
+*/
 
 int QmlFilter::animateOut()
 {
@@ -686,6 +919,11 @@ void QmlFilter::clearAnimateInOut()
         emit animateOutChanged();
 }
 
+/*!
+    \qmlproperty int Filter::duration
+    \brief Total duration of the filter in frames (\c out - \c in + 1).
+*/
+
 int QmlFilter::duration()
 {
     return out() - in() + 1;
@@ -703,16 +941,32 @@ Mlt::Animation QmlFilter::getAnimation(const QString &name)
     return Mlt::Animation();
 }
 
+/*!
+    \qmlmethod int Filter::keyframeCount(string name)
+    \brief Returns the number of keyframes set on property \a name.
+*/
+
 int QmlFilter::keyframeCount(const QString &name)
 {
     return getAnimation(name).key_count();
 }
+
+/*!
+    \qmlmethod Filter::resetProperty(string name)
+    \brief Removes all keyframes for property \a name and resets it to its default value.
+*/
 
 void QmlFilter::resetProperty(const QString &name)
 {
     m_service.clear(qUtf8Printable(name));
     emit changed(name.toUtf8().constData());
 }
+
+/*!
+    \qmlmethod Filter::clearSimpleAnimation(string name)
+    \brief Clears the "animate in/out" simple keyframe mode for property \a name,
+    leaving only the static value at the current time position.
+*/
 
 void QmlFilter::clearSimpleAnimation(const QString &name)
 {
@@ -820,6 +1074,13 @@ void QmlFilter::stopUndoTracking()
     m_previousState = Mlt::Properties();
 }
 
+/*!
+    \qmlmethod Filter::startUndoParameterCommand(string description = "")
+    \brief Begins an undo/redo command group for parameter changes.
+    All \l set() calls until \l endUndoCommand() are grouped as one undoable step.
+    \a description appears in the Edit > Undo menu.
+*/
+
 void QmlFilter::startUndoParameterCommand(const QString &desc)
 {
     if (!m_previousState.count()) {
@@ -918,6 +1179,11 @@ void QmlFilter::updateUndoCommand(const QString &name)
     m_previousState.pass_property(m_service, name.toUtf8().constData());
 }
 
+/*!
+    \qmlmethod Filter::endUndoCommand()
+    \brief Ends the undo/redo command group started by \l startUndoParameterCommand().
+*/
+
 void QmlFilter::endUndoCommand()
 {
     if (!m_previousState.count()) {
@@ -952,17 +1218,34 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation &animation,
     return result;
 }
 
+/*!
+    \qmlmethod int Filter::getKeyFrameType(string name, int keyIndex)
+    \brief Returns the interpolation type (\c mlt_keyframe_type) of keyframe \a keyIndex
+    for property \a name.
+*/
+
 int QmlFilter::getKeyFrameType(const QString &name, int keyIndex)
 {
     Mlt::Animation animation = getAnimation(name);
     return (int) animation.key_get_type(keyIndex);
 }
 
+/*!
+    \qmlmethod Filter::setKeyFrameType(string name, int keyIndex, int type)
+    \brief Sets the interpolation \a type of keyframe \a keyIndex for property \a name.
+*/
+
 void QmlFilter::setKeyFrameType(const QString &name, int keyIndex, int type)
 {
     Mlt::Animation animation = getAnimation(name);
     animation.key_set_type(keyIndex, (mlt_keyframe_type) type);
 }
+
+/*!
+    \qmlmethod int Filter::getNextKeyframePosition(string name, int position)
+    \brief Returns the position of the next keyframe for property \a name
+    after time \a position, or \c -1 if none.
+*/
 
 int QmlFilter::getNextKeyframePosition(const QString &name, int position)
 {
@@ -974,6 +1257,12 @@ int QmlFilter::getNextKeyframePosition(const QString &name, int position)
     return result;
 }
 
+/*!
+    \qmlmethod int Filter::getPrevKeyframePosition(string name, int position)
+    \brief Returns the position of the previous keyframe for property \a name
+    before time \a position, or \c -1 if none.
+*/
+
 int QmlFilter::getPrevKeyframePosition(const QString &name, int position)
 {
     int result = -1;
@@ -984,12 +1273,23 @@ int QmlFilter::getPrevKeyframePosition(const QString &name, int position)
     return result;
 }
 
+/*!
+    \qmlmethod bool Filter::isAtLeastVersion(string version)
+    \brief Returns \c true if Shotcut's version is greater than or equal to \a version.
+    Use to guard features introduced in specific releases.
+*/
+
 bool QmlFilter::isAtLeastVersion(const QString &version)
 {
     QVersionNumber v1 = QVersionNumber::fromString(version);
     QVersionNumber v2 = QVersionNumber::fromString(m_metadata->property("version").toString());
     return v2 >= v1;
 }
+
+/*!
+    \qmlmethod Filter::deselect()
+    \brief Deselects the current filter in the Filters panel.
+*/
 
 void QmlFilter::deselect()
 {
@@ -1017,6 +1317,11 @@ bool QmlFilter::allowAnimateOut() const
     return false;
 }
 
+/*!
+    \qmlmethod Filter::copyParameters()
+    \brief Copies this filter's current parameters to the clipboard.
+*/
+
 void QmlFilter::copyParameters()
 {
     auto name = "color";
@@ -1025,6 +1330,12 @@ void QmlFilter::copyParameters()
     dummy.set("mlt_service", name);
     QGuiApplication::clipboard()->setText(MLT.XML(&dummy));
 }
+
+/*!
+    \qmlmethod Filter::pasteParameters(list<string> propertyNames)
+    \brief Pastes parameters from the clipboard into this filter,
+    restricted to the properties listed in \a propertyNames.
+*/
 
 void QmlFilter::pasteParameters(const QStringList &propertyNames)
 {
@@ -1046,6 +1357,11 @@ void QmlFilter::pasteParameters(const QStringList &propertyNames)
     if (isChanged)
         emit changed();
 }
+
+/*!
+    \qmlmethod Filter::crop(rect r)
+    \brief Applies a crop rectangle \a r to the filter's producer source.
+*/
 
 void QmlFilter::crop(const QRectF &rect)
 {

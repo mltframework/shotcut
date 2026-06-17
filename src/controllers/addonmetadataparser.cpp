@@ -72,12 +72,16 @@ AddOnFilterDescriptor AddOnMetadataParser::parse(const QString &service,
             out.defaultValue = QString::fromUtf8(parameter.get("default"));
             out.type = QString::fromUtf8(parameter.get("type"));
             out.widget = QString::fromUtf8(parameter.get("widget"));
+            out.layoutHint = QString::fromUtf8(parameter.get("layout-hint"));
+            out.hideLabel = parseYesNoBool(parameter.get("hide-label"));
             out.isReadOnly = parseYesNoBool(parameter.get("readonly"));
             out.supportsKeyframes = parseYesNoBool(parameter.get("animation"));
             out.unit = QString::fromUtf8(parameter.get("unit"));
             out.minimum = QString::fromUtf8(parameter.get("minimum"));
             out.maximum = QString::fromUtf8(parameter.get("maximum"));
             out.description = QString::fromUtf8(parameter.get("description"));
+            out.normalizedCoordinates = parseYesNoBool(parameter.get("normalized_coordinates"));
+            out.normalizedDefault = parseYesNoBool(parameter.get("normalized_default"));
             out.name = QString::fromUtf8(parameter.get("identifier"));
 
             const QString parameterType = out.type.trimmed().toLower();

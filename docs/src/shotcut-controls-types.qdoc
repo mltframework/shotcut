@@ -1,0 +1,338 @@
+/*!
+    \qmltype ColorDialog
+    \inqmlmodule Shotcut.Controls
+    \brief A native color-chooser dialog.
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.ColorDialog {
+        id: colorDialog
+        title: qsTr("Choose Color")
+        onAccepted: filter.set("color", colorDialog.selectedColor)
+    }
+
+    Button {
+        onClicked: colorDialog.open()
+    }
+    \endcode
+*/
+
+/*!
+    \qmlproperty color ColorDialog::selectedColor
+    \brief The color currently selected in the dialog.
+    Set this before calling \l open() to pre-populate the dialog.
+    Read it in the \l accepted signal handler to retrieve the chosen color.
+*/
+
+/*!
+    \qmlproperty string ColorDialog::title
+    \brief The window title shown in the dialog's title bar.
+*/
+
+/*!
+    \qmlproperty bool ColorDialog::showAlpha
+    \brief Whether the alpha (opacity) slider is shown. Defaults to \c true.
+*/
+
+/*!
+    \qmlmethod ColorDialog::open()
+    \brief Opens the native color dialog modally. Emits \l accepted if the user confirms,
+    or no signal if cancelled.
+*/
+
+/*!
+    \qmlsignal ColorDialog::accepted()
+    \brief Emitted when the user clicks OK. Read \l selectedColor for the result.
+*/
+
+/*!
+    \qmlsignal ColorDialog::selectedColorChanged(color color)
+    \brief Emitted whenever \l selectedColor changes. \a color is the new value.
+*/
+
+// ── FontDialog ───────────────────────────────────────────────────────────────
+
+/*!
+    \qmltype FontDialog
+    \inqmlmodule Shotcut.Controls
+    \brief A native font-chooser dialog.
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.FontDialog {
+        id: fontDialog
+        onAccepted: document.setFontFamily(fontDialog.selectedFont.family)
+    }
+    \endcode
+*/
+
+/*!
+    \qmlproperty font FontDialog::selectedFont
+    \brief The font currently selected in the dialog.
+    Set before \l open() to pre-populate; read in \l accepted to retrieve the choice.
+*/
+
+/*!
+    \qmlmethod FontDialog::open()
+    \brief Opens the native font dialog modally.
+*/
+
+/*!
+    \qmlsignal FontDialog::accepted()
+    \brief Emitted when the user confirms the font selection.
+*/
+
+/*!
+    \qmlsignal FontDialog::rejected()
+    \brief Emitted when the user dismisses the dialog without selecting a font.
+*/
+
+// ── MessageDialog ─────────────────────────────────────────────────────────────
+
+/*!
+    \qmltype MessageDialog
+    \inqmlmodule Shotcut.Controls
+    \brief A native message/confirmation dialog with configurable buttons.
+
+    \section2 StandardButtons enum
+
+    \table
+    \header \li Value \li Button shown
+    \row \li \c MessageDialog.Ok \li OK
+    \row \li \c MessageDialog.Yes \li Yes
+    \row \li \c MessageDialog.No \li No
+    \row \li \c MessageDialog.Cancel \li Cancel
+    \endtable
+
+    Combine values with \c | to show multiple buttons.
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.MessageDialog {
+        title: qsTr("Confirm")
+        text: qsTr("Are you sure?")
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: doSomething()
+    }
+    \endcode
+*/
+
+/*!
+    \qmlproperty string MessageDialog::title
+    \brief The dialog window title.
+*/
+
+/*!
+    \qmlproperty string MessageDialog::text
+    \brief The message text displayed inside the dialog.
+*/
+
+/*!
+    \qmlproperty int MessageDialog::buttons
+    \brief A bitwise OR of \c StandardButtons values controlling which buttons appear.
+*/
+
+/*!
+    \qmlmethod MessageDialog::open()
+    \brief Opens the dialog modally. Emits \l accepted or \l rejected depending on
+    which button the user clicks.
+*/
+
+/*!
+    \qmlsignal MessageDialog::accepted()
+    \brief Emitted when the user clicks an affirmative button (OK or Yes).
+*/
+
+/*!
+    \qmlsignal MessageDialog::rejected()
+    \brief Emitted when the user clicks a negative button (No or Cancel) or closes the dialog.
+*/
+
+// ── FileDialog ────────────────────────────────────────────────────────────────
+
+/*!
+    \qmltype FileDialog
+    \inqmlmodule Shotcut.Controls
+    \brief A native file open/save dialog.
+
+    \section2 FileMode enum
+
+    \table
+    \header \li Value \li Description
+    \row \li \c FileDialog.OpenFile \li Select an existing file to open (default)
+    \row \li \c FileDialog.SaveFile \li Choose a filename to save
+    \endtable
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.FileDialog {
+        id: fileDialog
+        title: qsTr("Open File")
+        fileMode: Shotcut.FileDialog.OpenFile
+        nameFilters: ["GPS files (*.gpx *.kml)", "All files (*)"]
+        onFileSelected: myFile.url = file
+    }
+    \endcode
+*/
+
+/*!
+    \qmlproperty int FileDialog::fileMode
+    \brief Whether the dialog is for opening or saving. One of \c FileDialog.OpenFile or
+    \c FileDialog.SaveFile.
+*/
+
+/*!
+    \qmlproperty string FileDialog::title
+    \brief The dialog window title.
+*/
+
+/*!
+    \qmlproperty list<string> FileDialog::nameFilters
+    \brief The list of file type filters shown in the dialog
+    (e.g. \c {["Images (*.png *.jpg)", "All files (*)"]} ).
+*/
+
+/*!
+    \qmlproperty string FileDialog::selectedFile
+    \brief The full file path of the last selected file (read-only).
+    Available after \l fileSelected is emitted.
+*/
+
+/*!
+    \qmlmethod FileDialog::open()
+    \brief Opens the native file dialog modally.
+*/
+
+/*!
+    \qmlsignal FileDialog::fileSelected(string file)
+    \brief Emitted when the user confirms a selection. \a file is the full path.
+*/
+
+/*!
+    \qmlsignal FileDialog::accepted()
+    \brief Emitted when the user confirms the dialog.
+*/
+
+/*!
+    \qmlsignal FileDialog::rejected()
+    \brief Emitted when the user cancels or closes the dialog.
+*/
+
+// ── ColorPickerItem ──────────────────────────────────────────────────────────
+
+/*!
+    \qmltype ColorPickerItem
+    \inqmlmodule Shotcut.Controls
+    \brief An eyedropper tool that picks a color by sampling any pixel on screen.
+
+    When \l pickColor is emitted (typically by clicking a button), the user can
+    drag a crosshair over any part of the screen; releasing emits \l colorPicked
+    with the sampled color.
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.ColorPickerItem {
+        id: eyedropper
+        onColorPicked: filter.set("color", color)
+    }
+
+    Button {
+        text: qsTr("Pick")
+        onClicked: eyedropper.pickColor()
+    }
+    \endcode
+*/
+
+/*!
+    \qmlsignal ColorPickerItem::pickColor(point initialPos)
+    \brief Invoke this signal (emit via \c eyedropper.pickColor()) to start the
+    screen-sampling mode. \a initialPos is the initial crosshair position;
+    pass no argument to use the current cursor position.
+*/
+
+/*!
+    \qmlsignal ColorPickerItem::colorPicked(color color)
+    \brief Emitted when the user releases the mouse after picking. \a color is the
+    sampled screen color.
+*/
+
+/*!
+    \qmlsignal ColorPickerItem::cancelled()
+    \brief Emitted when the user cancels the pick without selecting a color
+    (e.g. by pressing Escape).
+*/
+
+// ── ColorWheelItem ────────────────────────────────────────────────────────────
+
+/*!
+    \qmltype ColorWheelItem
+    \inqmlmodule Shotcut.Controls
+    \brief An interactive hue/saturation color wheel with a brightness slider.
+
+    Renders a circular color wheel (hue + saturation) with an integrated
+    brightness slider. The user can click and drag inside the wheel or slider
+    to change the color interactively.
+
+    \code
+    import Shotcut.Controls as Shotcut
+
+    Shotcut.ColorWheelItem {
+        id: wheel
+        color: filter.getColor("color")
+        onColorChanged: filter.set("color", color)
+    }
+    \endcode
+*/
+
+/*!
+    \qmlproperty color ColorWheelItem::color
+    \brief The currently selected color. Settable to programmatically position the
+    wheel marker and slider.
+*/
+
+/*!
+    \qmlproperty int ColorWheelItem::red
+    \brief The red channel (0–255) of the selected color.
+*/
+
+/*!
+    \qmlproperty int ColorWheelItem::green
+    \brief The green channel (0–255) of the selected color.
+*/
+
+/*!
+    \qmlproperty int ColorWheelItem::blue
+    \brief The blue channel (0–255) of the selected color.
+*/
+
+/*!
+    \qmlproperty real ColorWheelItem::redF
+    \brief The red channel as a normalized floating-point value (0.0–1.0).
+*/
+
+/*!
+    \qmlproperty real ColorWheelItem::greenF
+    \brief The green channel as a normalized floating-point value (0.0–1.0).
+*/
+
+/*!
+    \qmlproperty real ColorWheelItem::blueF
+    \brief The blue channel as a normalized floating-point value (0.0–1.0).
+*/
+
+/*!
+    \qmlproperty real ColorWheelItem::step
+    \brief The increment applied per mouse-wheel tick or arrow-key press when
+    adjusting the brightness slider. Defaults to a small fractional value.
+*/
+
+/*!
+    \qmlsignal ColorWheelItem::colorChanged(color color)
+    \brief Emitted whenever the selected \a color changes due to user interaction
+    or a property assignment.
+*/

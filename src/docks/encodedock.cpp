@@ -1139,11 +1139,12 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
-                        setIfNotSet(p,
-                                    "vb",
-                                    (vcodec == "libvpx-vp9")
-                                        ? "0" // VP9 needs this to prevent constrained quality mode
-                                        : "100M");
+                        setIfNotSet(
+                            p,
+                            "vb",
+                            (vcodec == "libvpx")
+                                ? "100M" // VP8 needs a sufficiently high bitrate; otherwise logs a messaage about using a very low default bitrate
+                                : "0");  // VP9 needs 0 to prevent constrained quality mode);
                     } else if (vcodec.endsWith("_vaapi")) {
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
@@ -2173,32 +2174,10 @@ void EncodeDock::onAudioChannelsChanged()
 
 void EncodeDock::setResolutionAspectFromProfile()
 {
-    int width = MLT.profile().width();
-    int height = MLT.profile().height();
-    double sar = MLT.profile().sar();
-    int dar_numerator = width * sar;
-    int dar_denominator = height;
-
-    if (height > 0) {
-        switch (int(sar * width / height * 100)) {
-        case 133:
-            dar_numerator = 4;
-            dar_denominator = 3;
-            break;
-        case 177:
-            dar_numerator = 16;
-            dar_denominator = 9;
-            break;
-        case 56:
-            dar_numerator = 9;
-            dar_denominator = 16;
-            break;
-        }
-    }
-    ui->widthSpinner->setValue(width);
-    ui->heightSpinner->setValue(height);
-    ui->aspectNumSpinner->setValue(dar_numerator);
-    ui->aspectDenSpinner->setValue(dar_denominator);
+    ui->widthSpinner->setValue(MLT.profile().width());
+    ui->heightSpinner->setValue(MLT.profile().height());
+    ui->aspectNumSpinner->setValue(MLT.profile().display_aspect_num());
+    ui->aspectDenSpinner->setValue(MLT.profile().display_aspect_den());
 }
 
 void EncodeDock::onProfileChanged()

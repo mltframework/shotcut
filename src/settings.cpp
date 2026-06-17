@@ -74,6 +74,27 @@ ShotcutSettings &ShotcutSettings::singleton()
     return *instance;
 }
 
+/*!
+    \qmltype Settings
+    \inqmlmodule org.shotcut.qml
+    \brief Persistent application settings, accessed via the \c settings context property.
+
+    \c settings is an uncreatable QML type — use the global \c settings identifier
+    available in every Shotcut QML view. Settings are backed by QSettings and persist
+    across sessions.
+
+    \code
+    if (settings.timelineSnap) { ... }
+    settings.timelineSnap = true
+    \endcode
+*/
+
+/*!
+    \qmlproperty Settings::TimelineScrolling Settings::timelineScrolling
+    \brief The timeline auto-scroll mode.
+    One of \c NoScrolling, \c CenterPlayhead, \c PageScrolling, or \c SmoothScrolling.
+*/
+
 ShotcutSettings::ShotcutSettings()
     : QObject()
     , m_recent(QDir(appDataLocation()).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
@@ -167,6 +188,11 @@ void ShotcutSettings::setImageDuration(double d)
     settings.setValue("imageDuration", d);
 }
 
+/*!
+    \qmlproperty string Settings::openPath
+    \brief The last directory used for opening files.
+*/
+
 QString ShotcutSettings::openPath() const
 {
     return settings
@@ -179,6 +205,11 @@ void ShotcutSettings::setOpenPath(const QString &s)
     settings.setValue("openPath", s);
     emit savePathChanged();
 }
+
+/*!
+    \qmlproperty string Settings::savePath
+    \brief The last directory used for saving files.
+*/
 
 QString ShotcutSettings::savePath() const
 {
@@ -284,6 +315,11 @@ void ShotcutSettings::setTextUnderIcons(bool b)
     settings.setValue("textUnderIcons", b);
 }
 
+/*!
+    \qmlproperty bool Settings::smallIcons
+    \brief Whether the toolbar uses small icons.
+*/
+
 bool ShotcutSettings::smallIcons() const
 {
     return settings.value("smallIcons", false).toBool();
@@ -334,6 +370,11 @@ void ShotcutSettings::setWindowStateDefault(const QByteArray &a)
 {
     settings.setValue("windowStateDefault", a);
 }
+
+/*!
+    \qmlproperty string Settings::viewMode
+    \brief The current view mode of the Playlist panel (e.g. \c "details", \c "icons").
+*/
 
 QString ShotcutSettings::viewMode() const
 {
@@ -616,6 +657,11 @@ void ShotcutSettings::setEncodeParallelProcessing(bool b)
     settings.setValue("encode/parallelProcessing", b);
 }
 
+/*!
+    \qmlproperty int Settings::playerAudioChannels
+    \brief The number of audio channels used by the player (e.g. 2 or 6).
+*/
+
 int ShotcutSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();
@@ -667,6 +713,11 @@ void ShotcutSettings::setPlayerInterpolation(const QString &s)
 {
     settings.setValue("player/interpolation", s);
 }
+
+/*!
+    \qmlproperty bool Settings::playerGPU
+    \brief Whether GPU processing (GLSL) is enabled for the video player.
+*/
 
 bool ShotcutSettings::playerGPU() const
 {
@@ -970,6 +1021,11 @@ void ShotcutSettings::setPlayerHdrToneMapping(bool b)
     settings.setValue("player/hdrToneMapping", b);
 }
 
+/*!
+    \qmlproperty string Settings::playlistThumbnails
+    \brief The thumbnail display mode for the Playlist panel.
+*/
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();
@@ -1001,6 +1057,11 @@ void ShotcutSettings::setPlaylistShowColumn(const QString &column, bool b)
     settings.setValue("playlist/columns/" + column, b);
 }
 
+/*!
+    \qmlproperty bool Settings::timelineDragScrub
+    \brief Whether scrubbing occurs while dragging clips on the timeline.
+*/
+
 bool ShotcutSettings::timelineDragScrub() const
 {
     return settings.value("timeline/dragScrub", false).toBool();
@@ -1011,6 +1072,11 @@ void ShotcutSettings::setTimelineDragScrub(bool b)
     settings.setValue("timeline/dragScrub", b);
     emit timelineDragScrubChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::timelineShowWaveforms
+    \brief Whether audio waveforms are shown on timeline clips.
+*/
 
 bool ShotcutSettings::timelineShowWaveforms() const
 {
@@ -1023,6 +1089,11 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
     emit timelineShowWaveformsChanged();
 }
 
+/*!
+    \qmlproperty bool Settings::timelineShowThumbnails
+    \brief Whether video thumbnails are shown on timeline clips.
+*/
+
 bool ShotcutSettings::timelineShowThumbnails() const
 {
     return settings.value("timeline/thumbnails", true).toBool();
@@ -1033,6 +1104,11 @@ void ShotcutSettings::setTimelineShowThumbnails(bool b)
     settings.setValue("timeline/thumbnails", b);
     emit timelineShowThumbnailsChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::timelineRipple
+    \brief Whether ripple editing is enabled on the timeline.
+*/
 
 bool ShotcutSettings::timelineRipple() const
 {
@@ -1045,6 +1121,11 @@ void ShotcutSettings::setTimelineRipple(bool b)
     emit timelineRippleChanged();
 }
 
+/*!
+    \qmlproperty bool Settings::timelineRippleAllTracks
+    \brief Whether ripple editing affects all tracks simultaneously.
+*/
+
 bool ShotcutSettings::timelineRippleAllTracks() const
 {
     return settings.value("timeline/rippleAllTracks", false).toBool();
@@ -1056,6 +1137,11 @@ void ShotcutSettings::setTimelineRippleAllTracks(bool b)
     emit timelineRippleAllTracksChanged();
 }
 
+/*!
+    \qmlproperty bool Settings::timelineRippleMarkers
+    \brief Whether markers are moved along with ripple edits.
+*/
+
 bool ShotcutSettings::timelineRippleMarkers() const
 {
     return settings.value("timeline/rippleMarkers", false).toBool();
@@ -1066,6 +1152,11 @@ void ShotcutSettings::setTimelineRippleMarkers(bool b)
     settings.setValue("timeline/rippleMarkers", b);
     emit timelineRippleMarkersChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::timelineSnap
+    \brief Whether clip snapping is enabled on the timeline.
+*/
 
 bool ShotcutSettings::timelineSnap() const
 {
@@ -1088,6 +1179,11 @@ void ShotcutSettings::setTimelineTrackHeight(int n)
     settings.setValue("timeline/trackHeight", qMin(n, kMaximumTrackHeight));
 }
 
+/*!
+    \qmlproperty bool Settings::timelineScrollZoom
+    \brief Whether the scroll wheel zooms the timeline (instead of scrolling).
+*/
+
 bool ShotcutSettings::timelineScrollZoom() const
 {
     return settings.value("timeline/scrollZoom", true).toBool();
@@ -1098,6 +1194,11 @@ void ShotcutSettings::setTimelineScrollZoom(bool b)
     settings.setValue("timeline/scrollZoom", b);
     emit timelineScrollZoomChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::timelineFramebufferWaveform
+    \brief Whether waveforms are rendered using a framebuffer (GPU) path.
+*/
 
 bool ShotcutSettings::timelineFramebufferWaveform() const
 {
@@ -1168,6 +1269,11 @@ void ShotcutSettings::setTimelineAutoAddTracks(bool b)
     }
 }
 
+/*!
+    \qmlproperty bool Settings::timelineRectangleSelect
+    \brief Whether rectangle (rubber-band) selection is enabled on the timeline.
+*/
+
 bool ShotcutSettings::timelineRectangleSelect() const
 {
     return settings.value("timeline/rectangleSelect", true).toBool();
@@ -1179,6 +1285,11 @@ void ShotcutSettings::setTimelineRectangleSelect(bool b)
     emit timelineRectangleSelectChanged();
 }
 
+/*!
+    \qmlproperty bool Settings::timelineAdjustGain
+    \brief Whether dragging the gain handle on audio clips adjusts volume inline.
+*/
+
 bool ShotcutSettings::timelineAdjustGain() const
 {
     return settings.value("timeline/adjustGain", false).toBool();
@@ -1189,6 +1300,11 @@ void ShotcutSettings::setTimelineAdjustGain(bool b)
     settings.setValue("timeline/adjustGain", b);
     emit timelineAdjustGainChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::timelineAllowTransitions
+    \brief Whether overlapping clips on the timeline automatically create transitions.
+*/
 
 bool ShotcutSettings::timelineAllowTransitions() const
 {
@@ -1223,6 +1339,11 @@ void ShotcutSettings::setAddOnFilterServices(const QStringList &services)
     settings.setValue("filter/addOnServices", services);
 }
 
+/*!
+    \qmlproperty real Settings::audioInDuration
+    \brief The default duration in seconds for audio fade-in transitions.
+*/
+
 double ShotcutSettings::audioInDuration() const
 {
     return settings.value("filter/audioInDuration", 1.0).toDouble();
@@ -1233,6 +1354,11 @@ void ShotcutSettings::setAudioInDuration(double d)
     settings.setValue("filter/audioInDuration", d);
     emit audioInDurationChanged();
 }
+
+/*!
+    \qmlproperty real Settings::audioOutDuration
+    \brief The default duration in seconds for audio fade-out transitions.
+*/
 
 double ShotcutSettings::audioOutDuration() const
 {
@@ -1245,6 +1371,11 @@ void ShotcutSettings::setAudioOutDuration(double d)
     emit audioOutDurationChanged();
 }
 
+/*!
+    \qmlproperty real Settings::videoInDuration
+    \brief The default duration in seconds for video fade-in transitions.
+*/
+
 double ShotcutSettings::videoInDuration() const
 {
     return settings.value("filter/videoInDuration", 1.0).toDouble();
@@ -1255,6 +1386,11 @@ void ShotcutSettings::setVideoInDuration(double d)
     settings.setValue("filter/videoInDuration", d);
     emit videoInDurationChanged();
 }
+
+/*!
+    \qmlproperty real Settings::videoOutDuration
+    \brief The default duration in seconds for video fade-out transitions.
+*/
 
 double ShotcutSettings::videoOutDuration() const
 {
@@ -1267,6 +1403,11 @@ void ShotcutSettings::setVideoOutDuration(double d)
     emit videoOutDurationChanged();
 }
 
+/*!
+    \qmlproperty int Settings::audioInCurve
+    \brief The curve type for audio fade-in (0 = linear, higher = more exponential).
+*/
+
 int ShotcutSettings::audioInCurve() const
 {
     return settings.value("filter/audioInCurve", mlt_keyframe_linear).toInt();
@@ -1278,6 +1419,11 @@ void ShotcutSettings::setAudioInCurve(int c)
     emit audioInCurveChanged();
 }
 
+/*!
+    \qmlproperty int Settings::audioOutCurve
+    \brief The curve type for audio fade-out (0 = linear, higher = more exponential).
+*/
+
 int ShotcutSettings::audioOutCurve() const
 {
     return settings.value("filter/audioOutCurve", mlt_keyframe_linear).toInt();
@@ -1288,6 +1434,11 @@ void ShotcutSettings::setAudioOutCurve(int c)
     settings.setValue("filter/audioOutCurve", c);
     emit audioOutCurveChanged();
 }
+
+/*!
+    \qmlproperty bool Settings::askOutputFilter
+    \brief Whether Shotcut should prompt before applying a filter to the output node.
+*/
 
 bool ShotcutSettings::askOutputFilter() const
 {
@@ -1438,6 +1589,11 @@ void ShotcutSettings::sync()
 {
     settings.sync();
 }
+
+/*!
+    \qmlproperty string Settings::appDataLocation
+    \brief The path to the application data directory (read-only).
+*/
 
 QString ShotcutSettings::appDataLocation() const
 {
@@ -1759,6 +1915,11 @@ void ShotcutSettings::setSlideshowTransitionSoftness(int transitionSoftness)
 {
     settings.setValue("slideshow/transitionSoftness", transitionSoftness);
 }
+
+/*!
+    \qmlproperty bool Settings::keyframesDragScrub
+    \brief Whether scrubbing occurs while dragging keyframes.
+*/
 
 bool ShotcutSettings::keyframesDragScrub() const
 {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,40 @@
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
 enum Columns { COLUMN_TEXT = 0, COLUMN_START, COLUMN_END, COLUMN_DURATION, COLUMN_COUNT };
+
+/*!
+    \qmltype SubtitlesModel
+    \inqmlmodule org.shotcut.qml
+    \brief A two-level item model for subtitle tracks and subtitle items on the timeline.
+
+    \c SubtitlesModel is available as the \c subtitlesModel context property in the Subtitles dock.
+    The top level is the list of subtitle tracks; each track row contains the subtitle item rows.
+
+    \section2 Roles
+
+    Item data roles returned by \c data():
+
+    \table
+    \header \li Role name \li Description
+    \row \li \c text \li Subtitle text
+    \row \li \c start \li Start time in milliseconds
+    \row \li \c end \li End time in milliseconds
+    \row \li \c duration \li Duration in milliseconds
+    \row \li \c startFrame \li Start position in frames
+    \row \li \c endFrame \li End position in frames
+    \row \li \c siblingCount \li Number of overlapping subtitles at this time
+    \endtable
+*/
+
+/*!
+    \qmlsignal SubtitlesModel::tracksChanged(int count)
+    \brief Emitted when the number of tracks changes. \a count is the new track count.
+*/
+
+/*!
+    \qmlsignal SubtitlesModel::modified()
+    \brief Emitted whenever any subtitle data is modified.
+*/
 
 SubtitlesModel::SubtitlesModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -102,10 +136,20 @@ int64_t SubtitlesModel::maxTime() const
     return maxTime;
 }
 
+/*!
+    \qmlproperty int SubtitlesModel::trackCount
+    \brief The number of subtitle tracks. Read-only.
+*/
+
 int SubtitlesModel::trackCount() const
 {
     return m_tracks.size();
 }
+
+/*!
+    \qmlmethod QModelIndex SubtitlesModel::trackModelIndex(int trackIndex)
+    \brief Returns the \c QModelIndex for the track row at \a trackIndex.
+*/
 
 QModelIndex SubtitlesModel::trackModelIndex(int trackIndex) const
 {
@@ -224,6 +268,11 @@ void SubtitlesModel::editTrack(int trackIndex, SubtitlesModel::SubtitleTrack &tr
     Subtitles::EditTrackCommand *command = new Subtitles::EditTrackCommand(*this, track, trackIndex);
     MAIN.undoStack()->push(command);
 }
+
+/*!
+    \qmlmethod int SubtitlesModel::itemCount(int trackIndex)
+    \brief Returns the number of subtitle items on the track at \a trackIndex.
+*/
 
 int SubtitlesModel::itemCount(int trackIndex) const
 {
@@ -442,6 +491,12 @@ void SubtitlesModel::setText(int trackIndex, int itemIndex, const QString &text)
     MAIN.undoStack()->push(command);
 }
 
+/*!
+    \qmlmethod void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int msTime)
+    \brief Moves the subtitle items from \a firstItemIndex to \a lastItemIndex on \a trackIndex
+    so that the first item starts at \a msTime milliseconds.
+*/
+
 void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int64_t msTime)
 {
     int count = m_items[trackIndex].size();
@@ -457,6 +512,11 @@ void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemI
         = new Subtitles::MoveSubtitlesCommand(*this, trackIndex, items, msTime);
     MAIN.undoStack()->push(command);
 }
+
+/*!
+    \qmlmethod bool SubtitlesModel::validateMove(list items, int msTime)
+    \brief Returns \c true if moving the given \a items to \a msTime would not create an overlap.
+*/
 
 bool SubtitlesModel::validateMove(const QModelIndexList &items, int64_t msTime)
 {
@@ -863,3 +923,51 @@ QHash<int, QByteArray> SubtitlesModel::roleNames() const
     roles[SiblingCountRole] = "siblingCount";
     return roles;
 }
+/*!
+    \qmltype SubtitlesSelectionModel
+    \inqmlmodule org.shotcut.qml
+    \brief Tracks the selected track and selected subtitle items in the Subtitles dock.
+
+    \c SubtitlesSelectionModel is available as the \c subtitlesSelectionModel context property
+    in the Subtitles dock.
+*/
+
+/*!
+    \qmlsignal SubtitlesSelectionModel::selectedTrackModelIndexChanged(QModelIndex trackModelIndex)
+    \brief Emitted when the selected track changes. \a trackModelIndex is the new track's model index.
+*/
+
+/*!
+    \qmlsignal SubtitlesSelectionModel::selectedItemsChanged()
+    \brief Emitted when the set of selected subtitle items changes.
+*/
+
+/*!
+    \qmlproperty QModelIndex SubtitlesSelectionModel::selectedTrackModelIndex
+    \brief The model index of the currently selected track (read-only).
+*/
+
+/*!
+    \qmlproperty list<var> SubtitlesSelectionModel::selectedItems
+    \brief The list of currently selected subtitle item indices (read-only).
+*/
+
+/*!
+    \qmlmethod int SubtitlesSelectionModel::selectedTrack()
+    \brief Returns the zero-based index of the currently selected track, or \c -1 if none.
+*/
+
+/*!
+    \qmlmethod bool SubtitlesSelectionModel::isItemSelected(int itemIndex)
+    \brief Returns \c true if the subtitle item at \a itemIndex is currently selected.
+*/
+
+/*!
+    \qmlmethod void SubtitlesSelectionModel::selectItem(int itemIndex)
+    \brief Selects only the subtitle item at \a itemIndex, clearing any other selection.
+*/
+
+/*!
+    \qmlmethod void SubtitlesSelectionModel::selectRange(int itemIndex)
+    \brief Extends the selection from the last single-selection anchor to \a itemIndex.
+*/

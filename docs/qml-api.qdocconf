@@ -1,0 +1,48 @@
+project     = Shotcut
+description = Shotcut QML Scripting API
+version     = 26.x
+
+# Output
+outputdir       = ./qml-api
+outputformats   = HTML
+
+# Scan both .qdoc structural files and .cpp files with inline qdoc blocks.
+# Headers are NOT listed — qdoc cannot parse them without a full build tree.
+sources.fileextensions  = *.qdoc *.cpp
+
+# Structural .qdoc files (no C++ counterpart) + all inline-documented .cpp files
+sources = \
+    ./src/index.qdoc \
+    ./src/org-shotcut-qml.qdoc \
+    ./src/shotcut-controls.qdoc \
+    ./src/shotcut-controls-types.qdoc \
+    ../src/qmltypes/qmlapplication.cpp \
+    ../src/qmltypes/qmlfilter.cpp \
+    ../src/qmltypes/qmlproducer.cpp \
+    ../src/qmltypes/qmlprofile.cpp \
+    ../src/qmltypes/qmlview.cpp \
+    ../src/qmltypes/qmlextension.cpp \
+    ../src/qmltypes/qmlrichtext.cpp \
+    ../src/qmltypes/qmlmetadata.cpp \
+    ../src/qmltypes/qmlfile.cpp \
+    ../src/settings.cpp \
+    ../src/models/attachedfiltersmodel.cpp \
+    ../src/models/keyframesmodel.cpp \
+    ../src/models/markersmodel.cpp \
+    ../src/models/motiontrackermodel.cpp \
+    ../src/models/multitrackmodel.cpp \
+    ../src/models/subtitlesmodel.cpp \
+    ../src/docks/timelinedock.cpp \
+    ../src/docks/keyframesdock.cpp
+
+# Custom stylesheet for readability
+HTML.stylesheets = shotcut.css
+HTML.headerstyles = "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style/shotcut.css\">\n"
+
+# Suppress warnings about undocumented symbols while docs are being built incrementally
+# (remove or lower this once all headers are annotated)
+warninglimit = 0
+
+# Do not generate a full Qt-style index; this is a standalone reference
+navigation.landingpage   = "Shotcut QML Scripting API"
+navigation.cppclassespage  = "C++ Classes"

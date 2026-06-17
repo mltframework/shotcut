@@ -83,13 +83,19 @@ static const QSet<QString> kImageExtensions{
     QLatin1String("gif"),
     QLatin1String("tga"),
 };
-static const QSet<QString> kOtherExtensions{
-    QLatin1String("mlt"),   QLatin1String("xml"), QLatin1String("txt"),      QLatin1String("pdf"),
-    QLatin1String("doc"),   QLatin1String("gpx"), QLatin1String("rawr"),     QLatin1String("stab"),
-    QLatin1String("srt"),   QLatin1String("so"),  QLatin1String("dll"),      QLatin1String("exe"),
-    QLatin1String("zip"),   QLatin1String("edl"), QLatin1String("kdenlive"), QLatin1String("osp"),
-    QLatin1String("blend"), QLatin1String("swf"), QLatin1String("cube"),     QLatin1String("json"),
-};
+static const QSet<QString> kOtherExtensions{QLatin1String("mlt"),      QLatin1String("xml"),
+                                            QLatin1String("txt"),      QLatin1String("pdf"),
+                                            QLatin1String("doc"),      QLatin1String("gpx"),
+                                            QLatin1String("rawr"),     QLatin1String("stab"),
+                                            QLatin1String("srt"),      QLatin1String("so"),
+                                            QLatin1String("dll"),      QLatin1String("exe"),
+                                            QLatin1String("zip"),      QLatin1String("edl"),
+                                            QLatin1String("kdenlive"), QLatin1String("osp"),
+                                            QLatin1String("blend"),    QLatin1String("swf"),
+                                            QLatin1String("cube"),     QLatin1String("json"),
+                                            QLatin1String("lottie"),   QLatin1String("riv"),
+                                            QLatin1String("tgs"),      QLatin1String("avd"),
+                                            QLatin1String("aep"),      QLatin1String("lot")};
 static const QSet<QString> kVideoExtensions{
     QLatin1String("mp4"),
     QLatin1String("m4v"),
