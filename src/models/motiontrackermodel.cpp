@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +75,28 @@ public:
     int on_start_link(Mlt::Link *) { return 0; }
     int on_end_link(Mlt::Link *) { return 0; }
 };
+
+/*!
+    \qmltype MotionTrackerModel
+    \inqmlmodule org.shotcut.qml
+    \brief A list model of motion tracker entries attached to the current producer.
+
+    \c MotionTrackerModel is available as the \c motionTrackerModel context property
+    in the Filters panel. Each row represents one stored motion tracker (a named bounding-box
+    trajectory recorded against the clip).
+*/
+
+/*!
+    \qmlproperty string MotionTrackerModel::nameProperty
+    \brief The MLT property name used to store the tracker's display name on a filter
+    (value: \c "shotcut:motionTracker.name"). CONSTANT.
+*/
+
+/*!
+    \qmlproperty string MotionTrackerModel::operationProperty
+    \brief The MLT property name used to store the tracker's link operation on a filter
+    (value: \c "shotcut:motionTracker.operation"). CONSTANT.
+*/
 
 MotionTrackerModel::MotionTrackerModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -165,6 +187,11 @@ void MotionTrackerModel::removeFromService(Mlt::Service *service)
     }
 }
 
+/*!
+    \qmlmethod void MotionTrackerModel::setName(Filter filter, string name)
+    \brief Sets the display \a name for the tracker linked to \a filter.
+*/
+
 void MotionTrackerModel::setName(QmlFilter *filter, const QString &name)
 {
     if (filter && filter->service().is_valid()) {
@@ -174,6 +201,11 @@ void MotionTrackerModel::setName(QmlFilter *filter, const QString &name)
         }
     }
 }
+
+/*!
+    \qmlmethod string MotionTrackerModel::nextName()
+    \brief Returns an auto-generated unique name for a new tracker (e.g. \c "Tracker 2").
+*/
 
 QString MotionTrackerModel::nextName() const
 {
@@ -198,6 +230,12 @@ QString MotionTrackerModel::keyForFilter(Mlt::Service *service)
     return key;
 }
 
+/*!
+    \qmlmethod void MotionTrackerModel::reset(Filter filter, string property, int row)
+    \brief Clears the keyframes for \a property on \a filter that were written by the tracker
+    at model row \a row.
+*/
+
 void MotionTrackerModel::reset(QmlFilter *filter, const QString &property, int row)
 {
     auto key = keyForRow(row);
@@ -214,6 +252,12 @@ void MotionTrackerModel::reset(QmlFilter *filter, const QString &property, int r
         }
     }
 }
+
+/*!
+    \qmlmethod list<rect> MotionTrackerModel::trackingData(int row)
+    \brief Returns the list of bounding-box rectangles recorded by the tracker at \a row,
+    one entry per keyframe interval frame.
+*/
 
 QList<MotionTrackerModel::TrackingItem> MotionTrackerModel::trackingData(const QString &key) const
 {
@@ -248,6 +292,11 @@ QList<QRectF> MotionTrackerModel::trackingData(int row) const
     }
     return result;
 }
+
+/*!
+    \qmlmethod int MotionTrackerModel::keyframeIntervalFrames(int row)
+    \brief Returns the keyframe interval in frames for the tracker at \a row.
+*/
 
 int MotionTrackerModel::keyframeIntervalFrames(int row) const
 {
@@ -316,6 +365,12 @@ Qt::ItemFlags MotionTrackerModel::flags(const QModelIndex &index) const
 
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
+
+/*!
+    \qmlmethod void MotionTrackerModel::undo(Filter filter, string propertyName)
+    \brief Static helper that removes motion-tracker–written keyframes for \a propertyName
+    on \a filter, typically called before re-applying a tracker.
+*/
 
 void MotionTrackerModel::undo(QmlFilter *filter, const QString &propertyName)
 {

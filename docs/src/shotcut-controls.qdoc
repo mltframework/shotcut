@@ -1,0 +1,14 @@
+/*!
+    \qmlmodule Shotcut.Controls
+    \title Shotcut.Controls QML Module
+    \ingroup qmlmodules
+    \brief C++-backed UI controls and dialogs for Shotcut QML views.
+
+    \code
+    import Shotcut.Controls
+    \endcode
+
+    This module provides the C++-backed types registered for use in the
+    \c Shotcut.Controls import. These are native dialogs and canvas items
+    that cannot be replicated purely in QML.
+*/

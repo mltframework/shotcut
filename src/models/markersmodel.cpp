@@ -59,6 +59,40 @@ static void propertiesToMarker(Mlt::Properties *properties,
     }
 }
 
+/*!
+    \qmltype MarkersModel
+    \inqmlmodule org.shotcut.qml
+    \brief A model of timeline markers (cue points with optional range spans and colors).
+
+    \c MarkersModel is available as the \c markers context property in the Timeline dock.
+    Each row represents one marker.
+
+    \section2 Roles
+
+    \table
+    \header \li Role name \li Description
+    \row \li \c text \li Marker label text
+    \row \li \c start \li Start position in frames
+    \row \li \c end \li End position in frames (\c == \c start for point markers)
+    \row \li \c color \li Marker color (\c color type)
+    \endtable
+*/
+
+/*!
+    \qmlsignal MarkersModel::rangesChanged()
+    \brief Emitted when any marker's start/end range changes.
+*/
+
+/*!
+    \qmlsignal MarkersModel::modified()
+    \brief Emitted whenever any marker is added, removed, or edited.
+*/
+
+/*!
+    \qmlsignal MarkersModel::recentColorsChanged()
+    \brief Emitted when the recent-colors list is updated.
+*/
+
 MarkersModel::MarkersModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_producer(nullptr)
@@ -105,6 +139,11 @@ Markers::Marker MarkersModel::getMarker(int markerIndex)
     }
     return retMarker;
 }
+
+/*!
+    \qmlmethod void MarkersModel::remove(int markerIndex)
+    \brief Removes the marker at \a markerIndex.
+*/
 
 void MarkersModel::remove(int markerIndex)
 {
@@ -367,6 +406,12 @@ void MarkersModel::doShift(int shiftPosition, int shiftAmount)
     }
 }
 
+/*!
+    \qmlmethod void MarkersModel::move(int markerIndex, int start, int end)
+    \brief Moves the marker at \a markerIndex so it spans \a start to \a end (in frames).
+    For a point marker set \a end equal to \a start.
+*/
+
 void MarkersModel::move(int markerIndex, int start, int end)
 {
     Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
@@ -386,6 +431,11 @@ void MarkersModel::move(int markerIndex, int start, int end)
     MAIN.undoStack()->push(command);
 }
 
+/*!
+    \qmlmethod void MarkersModel::setColor(int markerIndex, color color)
+    \brief Sets the display \a color of the marker at \a markerIndex.
+*/
+
 void MarkersModel::setColor(int markerIndex, const QColor &color)
 {
     Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
@@ -403,6 +453,11 @@ void MarkersModel::setColor(int markerIndex, const QColor &color)
         = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
     MAIN.undoStack()->push(command);
 }
+
+/*!
+    \qmlmethod void MarkersModel::clear()
+    \brief Removes all markers from the timeline.
+*/
 
 void MarkersModel::clear()
 {
@@ -529,6 +584,12 @@ int MarkersModel::rangeMarkerIndexForPosition(int position)
     return -1;
 }
 
+/*!
+    \qmlmethod int MarkersModel::nextMarkerPosition(int position)
+    \brief Returns the start frame of the nearest marker after \a position,
+    or \c -1 if no marker exists after that position.
+*/
+
 int MarkersModel::nextMarkerPosition(int position)
 {
     int nextPosition = -1;
@@ -557,6 +618,12 @@ int MarkersModel::nextMarkerPosition(int position)
     }
     return nextPosition;
 }
+
+/*!
+    \qmlmethod int MarkersModel::prevMarkerPosition(int position)
+    \brief Returns the start frame of the nearest marker before time \a position,
+    or \c -1 if no marker exists before that position.
+*/
 
 int MarkersModel::prevMarkerPosition(int position)
 {
@@ -613,6 +680,11 @@ QMap<int, QString> MarkersModel::ranges()
     }
     return result;
 }
+
+/*!
+    \qmlproperty list<string> MarkersModel::recentColors
+    \brief The list of recently used marker color strings, most-recent first.
+*/
 
 QStringList MarkersModel::recentColors()
 {

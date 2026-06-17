@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 Meltytech, LLC
+ * Copyright (c) 2018-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,50 @@
 #include <QTimer>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
+
+/*!
+    \qmltype KeyframesModel
+    \inqmlmodule org.shotcut.qml
+    \brief A two-level item model describing a filter's keyframeable parameters and their keyframes.
+
+    \c KeyframesModel is available as the \c parameters context property in the Keyframes panel.
+    The top level contains one row per keyframeable parameter; each parameter row contains
+    one child row per keyframe.
+
+    \section2 InterpolationType enum
+
+    Passed to \l setInterpolation() and \l addKeyframe():
+
+    \table
+    \header \li Value \li Name
+    \row \li 0 \li DiscreteInterpolation
+    \row \li 1 \li LinearInterpolation
+    \row \li 2 \li SmoothLooseInterpolation
+    \row \li 3 \li SmoothNaturalInterpolation
+    \row \li 4 \li SmoothTightInterpolation
+    \row \li 5–7 \li EaseInSinusoidal / EaseOutSinusoidal / EaseInOutSinusoidal
+    \row \li 8–10 \li EaseIn/Out/InOutQuadratic
+    \row \li 11–13 \li EaseIn/Out/InOutCubic
+    \row \li 14–16 \li EaseIn/Out/InOutQuartic
+    \row \li 17–19 \li EaseIn/Out/InOutQuintic
+    \row \li 20–22 \li EaseIn/Out/InOutExponential
+    \row \li 23–25 \li EaseIn/Out/InOutCircular
+    \row \li 26–28 \li EaseIn/Out/InOutBack
+    \row \li 29–31 \li EaseIn/Out/InOutElastic
+    \row \li 32–34 \li EaseIn/Out/InOutBounce
+    \endtable
+*/
+
+/*!
+    \qmlsignal KeyframesModel::loaded()
+    \brief Emitted after the model has been populated for a new filter.
+*/
+
+/*!
+    \qmlsignal KeyframesModel::keyframeAdded(string parameter, int position)
+    \brief Emitted when a keyframe is added. \a parameter is the MLT property name;
+    \a position is the frame number.
+*/
 
 KeyframesModel::KeyframesModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -363,6 +407,12 @@ void KeyframesModel::load(QmlFilter *filter, QmlMetadata *meta)
     emit loaded();
 }
 
+/*!
+    \qmlmethod bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
+    \brief Removes the keyframe at \a keyframeIndex on parameter \a parameterIndex.
+    Returns \c true on success.
+*/
+
 bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
 {
     bool error = true;
@@ -447,6 +497,12 @@ int KeyframesModel::nextKeyframePosition(int parameterIndex, int currentPosition
     return result;
 }
 
+/*!
+    \qmlmethod int KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
+    \brief Returns the keyframe index at time \a currentPosition for the given \a parameterIndex,
+    or \c -1 if no keyframe exists at that position.
+*/
+
 int KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
 {
     int result = -1;
@@ -466,10 +522,22 @@ int KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
     return result;
 }
 
+/*!
+    \qmlmethod int KeyframesModel::parameterIndex(string propertyName)
+    \brief Returns the row index of the parameter identified by \a propertyName, or \c -1.
+*/
+
 int KeyframesModel::parameterIndex(const QString &propertyName) const
 {
     return m_propertyNames.indexOf(propertyName);
 }
+
+/*!
+    \qmlmethod bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, int type)
+    \brief Sets the interpolation \a type for the keyframe at \a keyframeIndex on \a parameterIndex.
+    \a type is a value from the \c InterpolationType enum.
+    Returns \c true on success.
+*/
 
 bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type)
 {
@@ -512,6 +580,11 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                     << "to type" << type;
     return error;
 }
+
+/*!
+    \qmlmethod void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, int position)
+    \brief Moves the keyframe at \a keyframeIndex on \a parameterIndex to \a position (in frames).
+*/
 
 void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, int position)
 {
@@ -571,6 +644,17 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
     emit m_filter->propertyChanged(name.toUtf8().constData());
     m_filter->endUndoCommand();
 }
+
+/*!
+    \qmlmethod void KeyframesModel::addKeyframe(int parameterIndex, double value, int position, int type)
+    \brief Adds a keyframe at time \a position for \a parameterIndex with numeric \a value and
+    interpolation \a type.
+*/
+
+/*!
+    \qmlmethod void KeyframesModel::addKeyframe(int parameterIndex, int position)
+    \brief Adds a keyframe at time \a position for \a parameterIndex using the current filter value.
+*/
 
 void KeyframesModel::addKeyframe(int parameterIndex,
                                  double value,
@@ -665,6 +749,12 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
     }
 }
 
+/*!
+    \qmlmethod void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, double value)
+    \brief Sets the numeric \a value of an existing keyframe on parameter \a parameterIndex
+    at \a keyframeIndex.
+*/
+
 void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, double value)
 {
     if (!m_filter) {
@@ -719,6 +809,12 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
                      QVector<int>() << LowestValueRole << HighestValueRole);
     m_filter->endUndoCommand();
 }
+
+/*!
+    \qmlmethod void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position)
+    \brief Sets both the \a value and time \a position of keyframe \a keyframeIndex on
+    parameter \a parameterIndex in one operation.
+*/
 
 void KeyframesModel::setKeyframeValuePosition(int parameterIndex,
                                               int keyframeIndex,
@@ -795,6 +891,11 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex,
     m_filter->endUndoCommand();
 }
 
+/*!
+    \qmlmethod bool KeyframesModel::isKeyframe(int parameterIndex, int position)
+    \brief Returns \c true if a keyframe exists at time \a position for \a parameterIndex.
+*/
+
 bool KeyframesModel::isKeyframe(int parameterIndex, int position)
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
@@ -804,6 +905,11 @@ bool KeyframesModel::isKeyframe(int parameterIndex, int position)
     }
     return false;
 }
+
+/*!
+    \qmlmethod bool KeyframesModel::advancedKeyframesInUse()
+    \brief Returns \c true if the filter is currently using advanced (per-keyframe) interpolation.
+*/
 
 bool KeyframesModel::advancedKeyframesInUse()
 {
@@ -815,6 +921,11 @@ bool KeyframesModel::advancedKeyframesInUse()
         }
     return false;
 }
+
+/*!
+    \qmlmethod void KeyframesModel::removeAdvancedKeyframes()
+    \brief Converts all advanced keyframes to simple (linear) keyframes.
+*/
 
 void KeyframesModel::removeAdvancedKeyframes()
 {
@@ -834,10 +945,20 @@ void KeyframesModel::removeAdvancedKeyframes()
     }
 }
 
+/*!
+    \qmlmethod bool KeyframesModel::simpleKeyframesInUse()
+    \brief Returns \c true if the filter is currently using simple (two-keyframe) animation.
+*/
+
 bool KeyframesModel::simpleKeyframesInUse()
 {
     return m_filter && m_metadata && (m_filter->animateIn() > 0 || m_filter->animateOut() > 0);
 }
+
+/*!
+    \qmlmethod void KeyframesModel::removeSimpleKeyframes()
+    \brief Removes the simple keyframe animation, returning the filter to a static state.
+*/
 
 void KeyframesModel::removeSimpleKeyframes()
 {
@@ -918,6 +1039,11 @@ void KeyframesModel::removeSimpleKeyframes()
         m_filter->clearAnimateInOut();
     }
 }
+
+/*!
+    \qmlmethod void KeyframesModel::reload()
+    \brief Reloads the model from the current filter, refreshing all parameter and keyframe rows.
+*/
 
 void KeyframesModel::reload()
 {
