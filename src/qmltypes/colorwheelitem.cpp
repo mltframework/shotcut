@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
  * and Steinar Gunderson's Movit demo app.
@@ -200,6 +200,7 @@ void ColorWheelItem::mousePressEvent(QMouseEvent *event)
             setColor(color);
         }
         m_isMouseDown = true;
+        setKeepMouseGrab(true);
     }
 }
 
@@ -225,6 +226,7 @@ void ColorWheelItem::mouseReleaseEvent(QMouseEvent *event)
         m_isMouseDown = false;
         m_isInWheel = false;
         m_isInSquare = false;
+        setKeepMouseGrab(false);
     }
 }
 
