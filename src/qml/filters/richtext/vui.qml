@@ -584,7 +584,7 @@ Shotcut.VuiBase {
             textArea.selectAll();
         }
         onInsertTableTriggered: {
-            tableDialog.show();
+            tableDialog.open();
         }
     }
 
@@ -732,31 +732,21 @@ Shotcut.VuiBase {
         id: errorDialog
     }
 
-    SystemPalette {
-        id: dialogPalette
-
-        colorGroup: SystemPalette.Active
-    }
-
-    Window {
+    Dialog {
         id: tableDialog
 
         function accept() {
             document.insertTable(rowsSpinner.value, columnsSpinner.value, borderSpinner.value);
         }
 
-        flags: Qt.Dialog
-        color: dialogPalette.window
         title: qsTr('Insert Table')
-        modality: Qt.ApplicationModal
-        width: 320
-        height: 140
+        modal: true
+        standardButtons: Dialog.NoButton
+        padding: 8
+        anchors.centerIn: Overlay.overlay
 
         GridLayout {
-            rows: 4
             columns: 2
-            anchors.fill: parent
-            anchors.margins: 8
 
             Label {
                 text: qsTr('Rows')
@@ -824,10 +814,6 @@ Shotcut.VuiBase {
                     text: qsTr('Cancel')
                     onClicked: tableDialog.close()
                 }
-            }
-
-            Item {
-                Layout.fillHeight: true
             }
         }
     }
