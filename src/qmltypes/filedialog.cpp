@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,22 @@
 
 FileDialog::FileDialog(QObject *parent)
     : QObject{parent}
+{}
+
+QFileDialog *FileDialog::getOrCreateDialog()
 {
-    m_fileDialog.reset(new QFileDialog(&MAIN));
-    connect(m_fileDialog.get(), &QDialog::accepted, this, &FileDialog::accepted);
-    connect(m_fileDialog.get(), &QDialog::rejected, this, &FileDialog::rejected);
-    connect(m_fileDialog.get(), &QFileDialog::fileSelected, this, &FileDialog::fileSelected);
-    connect(m_fileDialog.get(), &QFileDialog::filterSelected, this, &FileDialog::filterSelected);
+    if (!m_fileDialog) {
+        m_fileDialog.reset(new QFileDialog(&MAIN));
+        if (!m_title.isEmpty())
+            m_fileDialog->setWindowTitle(m_title);
+        if (!m_nameFilters.isEmpty())
+            m_fileDialog->setNameFilters(m_nameFilters);
+        connect(m_fileDialog.get(), &QDialog::accepted, this, &FileDialog::accepted);
+        connect(m_fileDialog.get(), &QDialog::rejected, this, &FileDialog::rejected);
+        connect(m_fileDialog.get(), &QFileDialog::fileSelected, this, &FileDialog::fileSelected);
+        connect(m_fileDialog.get(), &QFileDialog::filterSelected, this, &FileDialog::filterSelected);
+    }
+    return m_fileDialog.get();
 }
 
 void FileDialog::setFileMode(FileMode mode)
@@ -38,49 +48,54 @@ void FileDialog::setFileMode(FileMode mode)
 
 QString FileDialog::title() const
 {
-    return m_fileDialog->windowTitle();
+    return m_fileDialog ? m_fileDialog->windowTitle() : m_title;
 }
 
 void FileDialog::setTitle(const QString &title)
 {
-    if (title != m_fileDialog->windowTitle()) {
-        m_fileDialog->setWindowTitle(title);
+    if (title != m_title) {
+        m_title = title;
+        if (m_fileDialog)
+            m_fileDialog->setWindowTitle(title);
         emit titleChanged();
     }
 }
 
 QStringList FileDialog::nameFilters() const
 {
-    return m_fileDialog->nameFilters();
+    return m_fileDialog ? m_fileDialog->nameFilters() : m_nameFilters;
 }
 
 void FileDialog::setNameFilters(const QStringList &filters)
 {
-    if (filters != m_fileDialog->nameFilters()) {
-        m_fileDialog->setNameFilters(filters);
+    if (filters != m_nameFilters) {
+        m_nameFilters = filters;
+        if (m_fileDialog)
+            m_fileDialog->setNameFilters(filters);
         emit nameFiltersChanged();
     }
 }
 
 QString FileDialog::selectedFile()
 {
-    return m_fileDialog->selectedFiles().first();
+    return m_fileDialog ? m_fileDialog->selectedFiles().first() : QString();
 }
 
 void FileDialog::open()
 {
+    auto *dialog = getOrCreateDialog();
     if (m_fileMode == FileDialog::OpenFile) {
-        m_fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
-        m_fileDialog->setDirectory(Settings.openPath());
+        dialog->setAcceptMode(QFileDialog::AcceptOpen);
+        dialog->setDirectory(Settings.openPath());
     } else {
-        m_fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-        m_fileDialog->setDirectory(Settings.savePath());
+        dialog->setAcceptMode(QFileDialog::AcceptSave);
+        dialog->setDirectory(Settings.savePath());
     }
 #ifdef Q_OS_MAC
-    m_fileDialog->setWindowModality(Qt::NonModal);
+    dialog->setWindowModality(Qt::NonModal);
 #else
-    m_fileDialog->setWindowModality(Qt::ApplicationModal);
+    dialog->setWindowModality(Qt::ApplicationModal);
 #endif
-    m_fileDialog->setOptions(Util::getFileDialogOptions());
-    m_fileDialog->open();
+    dialog->setOptions(Util::getFileDialogOptions());
+    dialog->open();
 }
