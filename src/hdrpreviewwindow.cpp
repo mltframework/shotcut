@@ -240,6 +240,10 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
                      << "potential =" << macosPotentialEdrHeadroom(wid)
                      << "reference =" << macosReferenceEdrHeadroom(wid);
 #endif
+            // Notify MainWindow that the swap chain is now ready so it can
+            // activate HDR mode on the consumer if HDR content was already
+            // loaded before this preview window was opened.
+            emit hdrModeConfirmed(isHdrAvailable());
         }
         updateHdrGain();
         m_lastKnownHdrMode = isHdrMode();
