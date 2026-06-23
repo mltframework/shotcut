@@ -634,7 +634,11 @@ void HdrPreviewWindow::updateHdrGain()
                 qDebug() << "HDR Preview: gain skipped — no swapChain";
             else
                 qDebug() << "HDR Preview: gain skipped — swapChain format" << sc->format()
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
                          << "is not HDR. Try QSG_RHI_BACKEND=vulkan on Linux.";
+#else
+                         << "is not HDR.";
+#endif
         }
         return;
     }
