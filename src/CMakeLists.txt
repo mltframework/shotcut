@@ -93,6 +93,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/alignclipsmodel.cpp models/alignclipsmodel.h
   models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
   models/audiolevelstask.cpp models/audiolevelstask.h
+  models/keyframestask.cpp models/keyframestask.h
   models/extensionmodel.cpp models/extensionmodel.h
   models/keyframesmodel.cpp models/keyframesmodel.h
   models/markersmodel.cpp models/markersmodel.h

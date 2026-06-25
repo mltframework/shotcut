@@ -52,6 +52,7 @@
 #include "jobs/screencapturejob.h"
 #include "models/audiolevelstask.h"
 #include "models/keyframesmodel.h"
+#include "models/keyframestask.h"
 #include "models/motiontrackermodel.h"
 #include "openotherdialog.h"
 #include "player.h"
@@ -525,6 +526,10 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onTimelineDockTriggered(bool)));
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
+    connect(m_player,
+            &Player::positionRequested,
+            m_timelineDock,
+            &TimelineDock::setRequestedPosition);
     connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_timelineDock, SIGNAL(clipClicked()), SLOT(onTimelineClipSelected()));
     connect(m_timelineDock,
@@ -3391,6 +3396,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
         QThreadPool::globalInstance()->clear();
         AudioLevelsTask::closeAll();
+        KeyframesTask::closeAll();
         event->accept();
         emit aboutToShutDown();
         if (m_exitCode == EXIT_SUCCESS) {
@@ -3491,6 +3497,7 @@ void MainWindow::onProducerOpened(bool withReopen)
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(MLT.isClosedClip() ? Player::ProjectTabIndex : Player::SourceTabIndex);
         Util::getHash(*MLT.producer());
+        KeyframesTask::start(*MLT.producer());
     }
     ui->actionSave->setEnabled(true);
     QMutexLocker locker(&m_autosaveMutex);
