@@ -77,6 +77,12 @@ if(UNIX AND NOT APPLE AND BUILD_MINIMAL_MEDIA_BACKEND)
   add_subdirectory(MinimalMediaBackend)
 endif()
 
+option(SHOTCUT_BUILD_TESTS "Build unit tests" OFF)
+if(SHOTCUT_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
+
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 add_custom_target(codespell COMMAND

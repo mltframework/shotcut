@@ -196,6 +196,11 @@
      <addaction name="actionDrawingDirectX"/>
      <addaction name="actionDrawingVulkan"/>
     </widget>
+    <widget class="QMenu" name="menuGpuAdapter">
+     <property name="title">
+      <string>Graphics Adapter</string>
+     </property>
+    </widget>
     <widget class="QMenu" name="menuJobPriority">
      <property name="title">
       <string>Job Priority</string>
@@ -314,6 +319,7 @@
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
+    <addaction name="menuGpuAdapter"/>
     <addaction name="menuJobPriority"/>
     <addaction name="menuData_Directory"/>
     <addaction name="actionAudioVideoDevice"/>

@@ -1511,6 +1511,30 @@ void ShotcutSettings::setDrawMethod(int i)
     settings.setValue("opengl", i);
 }
 
+uint ShotcutSettings::gpuAdapterVendorId() const
+{
+    // PCI vendor id of the selected GPU (0x10DE NVIDIA, 0x1002 AMD, 0x8086 Intel).
+    // 0 means Automatic / system default. The vendor+device pair is the stable identity
+    // of the chosen GPU; the live DXGI adapter index is resolved from it at startup.
+    return settings.value("player/gpuAdapterVendorId", 0).toUInt();
+}
+
+void ShotcutSettings::setGpuAdapterVendorId(uint id)
+{
+    settings.setValue("player/gpuAdapterVendorId", id);
+}
+
+uint ShotcutSettings::gpuAdapterDeviceId() const
+{
+    // PCI device id of the selected GPU; pairs with the vendor id to identify it.
+    return settings.value("player/gpuAdapterDeviceId", 0).toUInt();
+}
+
+void ShotcutSettings::setGpuAdapterDeviceId(uint id)
+{
+    settings.setValue("player/gpuAdapterDeviceId", id);
+}
+
 bool ShotcutSettings::safeMode() const
 {
     return settings.value("safeMode", false).toBool();
