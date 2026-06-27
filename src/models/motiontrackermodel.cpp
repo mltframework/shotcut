@@ -270,12 +270,18 @@ QList<MotionTrackerModel::TrackingItem> MotionTrackerModel::trackingData(const Q
     for (const auto &i : l) {
         auto pair = i.split("~=");
         if (pair.size() == 2) {
-            auto frame = pair.at(0).toInt(&ok);
+            // The keyframe time may be serialized either as a frame number
+            // ("5") or as a clock value ("00:00:00.167"), depending on the MLT
+            // time format used when the project was written. toInt() only
+            // parses the frame-number form; for the clock form it fails, so we
+            // fall back to the running index. Only the rectangles are consumed
+            // downstream, so the exact frame value is not significant here.
+            int frame = pair.at(0).toInt(&ok);
+            if (!ok)
+                frame = int(result.size());
             props.set("", pair.at(1).toLatin1().constData());
             auto rect = props.get_rect("");
-            if (ok) {
-                result << TrackingItem{frame, QRectF(rect.x, rect.y, rect.w, rect.h)};
-            }
+            result << TrackingItem{frame, QRectF(rect.x, rect.y, rect.w, rect.h)};
         }
     }
     return result;
