@@ -275,7 +275,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     if (is10bit) {
         // Intermediate (format 1) encodes to yuv422p10le (DNxHR HQX); preserve chroma.
         const auto pixFmt = dialog.format() == 1 ? QStringLiteral("yuv422p10le")
-                                                  : QStringLiteral("yuv420p10le");
+                                                 : QStringLiteral("yuv420p10le");
         filterString += QStringLiteral(",format=") + pixFmt;
     }
     args << filterString;
