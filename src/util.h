@@ -84,7 +84,7 @@ public:
     static bool isFpsDifferent(double a, double b);
     static QString getNextFile(const QString &filePath);
     static QString trcString(int trc);
-    static bool trcIsCompatible(int trc);
+    static bool trcIsSdrCompatible(int trc);
     static QString getConversionAdvice(Mlt::Producer *producer);
     static mlt_color mltColorFromQColor(const QColor &color);
     static void offerSingleFileConversion(QString &message,

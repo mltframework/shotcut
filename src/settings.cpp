@@ -627,6 +627,12 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString 
     return Native8Cpu;
 }
 
+bool ShotcutSettings::isHdrCompatibleProcessingMode()
+{
+    const auto mode = processingMode();
+    return mode == Native10Cpu || mode == Linear10GpuCpu;
+}
+
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();

@@ -132,6 +132,7 @@ public:
     void setProcessingMode(ProcessingMode mode);
     QString processingModeStr(ProcessingMode mode);
     ProcessingMode processingModeId(const QString &mode);
+    bool isHdrCompatibleProcessingMode();
 
     // encode
     QString encodePath() const;

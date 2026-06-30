@@ -812,7 +812,7 @@ QString Util::trcString(int trc)
     return trcString;
 }
 
-bool Util::trcIsCompatible(int trc)
+bool Util::trcIsSdrCompatible(int trc)
 {
     // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
     return trc <= 7 || trc == 11 || trc == 13 || trc == 14 || trc == 15 || trc == 18;
@@ -824,7 +824,7 @@ QString Util::getConversionAdvice(Mlt::Producer *producer)
     producer->probe();
     QString resource = Util::GetFilenameFromProducer(producer);
     int trc = producer->get_int("meta.media.color_trc");
-    if (!Util::trcIsCompatible(trc)) {
+    if (!Settings.isHdrCompatibleProcessingMode() && !Util::trcIsSdrCompatible(trc)) {
         QString trcString = Util::trcString(trc);
         LOG_INFO() << resource << "Probable HDR" << trcString;
         advice = QObject::tr("This file uses color transfer characteristics %1, which may result "
@@ -865,7 +865,8 @@ void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, 
                parent);
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.showCheckBox();
-    dialog.set709Convert(!Util::trcIsCompatible(producer->get_int("meta.media.color_trc")));
+    dialog.set709Convert(!Settings.isHdrCompatibleProcessingMode()
+                         && !Util::trcIsSdrCompatible(producer->get_int("meta.media.color_trc")));
     dialog.showSubClipCheckBox();
     LOG_DEBUG() << "in" << producer->get_in() << "out" << producer->get_out() << "length"
                 << producer->get_length() - 1;

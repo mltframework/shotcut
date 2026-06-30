@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,6 +150,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     QString resource = Util::GetFilenameFromProducer(producer);
     QStringList args;
     int in = -1;
+    const bool is10bit = Settings.isHdrCompatibleProcessingMode();
 
     args << "-loglevel"
          << "verbose";
@@ -264,11 +265,23 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     if (denominator == 1001) {
         fpsStr = QStringLiteral("%1/%2").arg(numerator).arg(denominator);
     }
-    QString minterpFilter
-        = QStringLiteral(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'")
-              .arg(dialog.frc(), fpsStr);
-    filterString = filterString + minterpFilter;
+    if (dialog.fpsOverride()) {
+        QString minterpFilter
+            = QStringLiteral(
+                  ",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'")
+                  .arg(dialog.frc(), fpsStr);
+        filterString += minterpFilter;
+    }
+    if (is10bit) {
+        // Intermediate (format 1) encodes to yuv422p10le (DNxHR HQX); preserve chroma.
+        const auto pixFmt = dialog.format() == 1 ? QStringLiteral("yuv422p10le")
+                                                 : QStringLiteral("yuv420p10le");
+        filterString += QStringLiteral(",format=") + pixFmt;
+    }
     args << filterString;
+    args << "-fps_mode"
+         << "cfr"
+         << "-r" << fpsStr;
 
     // Specify color range
     if (color_range == "full") {
@@ -298,6 +311,12 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
              << "512k"
              << "-codec:v"
              << "libx264";
+        if (is10bit) {
+            args << "-profile:v"
+                 << "high10"
+                 << "-pix_fmt"
+                 << "yuv420p10le";
+        }
         args << "-preset"
              << "medium"
              << "-g"
@@ -313,10 +332,8 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         if (dialog.deinterlace() || progressive) {
             args << "-codec:v"
                  << "dnxhd"
-                 << "-profile:v"
-                 << "dnxhr_hq"
-                 << "-pix_fmt"
-                 << "yuv422p";
+                 << "-profile:v" << (is10bit ? "dnxhr_hqx" : "dnxhr_hq") << "-pix_fmt"
+                 << (is10bit ? "yuv422p10le" : "yuv422p");
         } else { // interlaced
             args << "-codec:v"
                  << "prores_ks"
@@ -328,11 +345,22 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         args << "-f"
              << "matroska"
              << "-codec:a"
-             << "pcm_f32le"
-             << "-codec:v"
-             << "utvideo";
-        args << "-pix_fmt"
-             << "yuv422p";
+             << "pcm_f32le";
+        if (is10bit) {
+            args << "-codec:v"
+                 << "libx264"
+                 << "-profile:v"
+                 << "high10"
+                 << "-pix_fmt"
+                 << "yuv420p10le"
+                 << "-crf"
+                 << "0";
+        } else {
+            args << "-codec:v"
+                 << "utvideo"
+                 << "-pix_fmt"
+                 << "yuv422p";
+        }
         break;
     }
     if (dialog.get709Convert()) {
@@ -342,7 +370,8 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
              << "bt709"
              << "-color_trc"
              << "bt709";
-    } else if (dialog.format() == 2 && producer->get_int("meta.media.colorspace") == 709) {
+    } else if (dialog.format() == 2 && !is10bit
+               && producer->get_int("meta.media.colorspace") == 709) {
         // Work around a limitation that FFMpeg does not pass colorspace for utvideo
         args << "-colorspace"
              << "bt709";
