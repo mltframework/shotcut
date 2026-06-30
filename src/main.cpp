@@ -595,7 +595,8 @@ int main(int argc, char **argv)
             return timer.elapsed();
         };
 
-        const qint64 firstRunElapsedMs = runChildAndWait("d3d11");
+        const qint64 firstRunElapsedMs = runChildAndWait(
+            (qEnvironmentVariableIsSet("QSG_RHI_BACKEND") ? qgetenv("QSG_RHI_BACKEND") : "d3d11"));
         const bool firstRunFailed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
         if (firstRunFailed && firstRunElapsedMs <= kWatchdogTimeoutMs) {
             LOG_WARNING() << "child process failed, restarting in OpenGL mode";
