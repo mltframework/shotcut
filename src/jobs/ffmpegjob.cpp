@@ -44,6 +44,7 @@ FfmpegJob::FfmpegJob(const QString &name,
     action->setData("Open");
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTriggered()));
     m_successActions << action;
+    m_args.append("-hide_banner");
     m_args.append(args);
     setLabel(tr("Check %1").arg(Util::baseName(name)));
 }

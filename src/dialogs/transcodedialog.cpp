@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2024 Meltytech, LLC
+ * Copyright (c) 2017-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,9 +149,12 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(
             tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/PCM MOV" : "ProRes/PCM MOV"));
         break;
-    case 2:
-        ui->formatLabel->setText(tr("Lossless: %1").arg("Ut Video/PCM MKV"));
+    case 2: {
+        const bool is8bit = !Settings.isHdrCompatibleProcessingMode();
+        ui->formatLabel->setText(
+            tr("Lossless: %1").arg(is8bit ? "Ut Video/PCM MKV" : "H.264/PCM MKV"));
         break;
+    }
     }
     m_format = position;
 }

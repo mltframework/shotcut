@@ -853,7 +853,8 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
                ui->scanComboBox->currentIndex(),
                this);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
+    dialog.set709Convert(!Settings.isHdrCompatibleProcessingMode()
+                         && ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
     dialog.showSubClipCheckBox();
     auto fps = Util::getAndroidFrameRate(m_producer.get());
     if (fps > 0.0)
