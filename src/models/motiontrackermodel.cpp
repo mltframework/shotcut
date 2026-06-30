@@ -264,18 +264,22 @@ QList<MotionTrackerModel::TrackingItem> MotionTrackerModel::trackingData(const Q
     QList<TrackingItem> result;
     auto s = m_data.value(key, {}).trackingData;
     auto l = s.split(';');
-    bool ok{false};
     Mlt::Properties props;
+    auto consumer = MLT.consumer();
 
     for (const auto &i : l) {
         auto pair = i.split("~=");
         if (pair.size() == 2) {
-            auto frame = pair.at(0).toInt(&ok);
+            // The keyframe time is serialized either as a frame number ("5") or
+            // as a clock value ("00:00:00.167"), depending on the time format
+            // MLT used when the project was written (animated properties are
+            // saved as time so they adapt to a frame-rate change). time_to_frames()
+            // parses both forms to the correct frame using the project frame rate.
+            int frame = consumer ? consumer->time_to_frames(pair.at(0).toUtf8().constData())
+                                 : pair.at(0).toInt();
             props.set("", pair.at(1).toLatin1().constData());
             auto rect = props.get_rect("");
-            if (ok) {
-                result << TrackingItem{frame, QRectF(rect.x, rect.y, rect.w, rect.h)};
-            }
+            result << TrackingItem{frame, QRectF(rect.x, rect.y, rect.w, rect.h)};
         }
     }
     return result;

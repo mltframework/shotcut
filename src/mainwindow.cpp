@@ -4742,6 +4742,32 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                     Actions["hdrPreviewAction"]->setChecked(false);
                 }
             });
+            // If HDR content was already open when the preview window is shown,
+            // the hdrTransferChanged signal will not fire again.  hdrModeConfirmed
+            // fires on the first rendered frame (when the swap chain is ready) so
+            // we can switch the consumer to HDR output at that point if needed.
+            connect(m_hdrPreviewWindow,
+                    &HdrPreviewWindow::hdrModeConfirmed,
+                    this,
+                    [this](bool available) {
+                        auto *videoWidget = MLT.videoWidget();
+                        if (!videoWidget || !m_hdrPreviewWindow)
+                            return;
+                        // Use MLT.isHDR() (the same check reconfigure() uses) rather
+                        // than hdrTransferMode() so that the condition is authoritative
+                        // regardless of when setHdrTransfer() ran relative to this slot.
+                        const bool hdrPreview = MLT.isHDR() && available;
+                        if (hdrPreview && !videoWidget->property("hdr_preview").toBool()) {
+                            videoWidget->setProperty("hdr_preview", true);
+                            if (MLT.consumer() && MLT.consumer()->is_valid()) {
+                                MLT.consumerChanged();
+                                // If playback is paused the restarted consumer won't push
+                                // a new frame on its own; force one so the preview renders
+                                // in HDR immediately.
+                                QTimer::singleShot(100, this, []() { MLT.refreshConsumer(); });
+                            }
+                        }
+                    });
             win->setPlaying(!MLT.isPaused());
             if (MLT.isPaused()) {
                 // Ensure the last frame is shown in the preview when paused.

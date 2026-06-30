@@ -3784,7 +3784,8 @@ void TimelineDock::toggleOtherTracksHidden(int trackIndex)
     }
     MAIN.undoStack()->beginMacro(tr("Toggle other tracks hidden"));
     for (int otherTrackIndex = 0; otherTrackIndex < trackCount; otherTrackIndex++) {
-        if (otherTrackIndex != trackIndex) {
+        if (otherTrackIndex != trackIndex
+            && m_model.trackList().at(otherTrackIndex).type == VideoTrackType) {
             MAIN.undoStack()->push(new Timeline::HideTrackCommand(m_model, otherTrackIndex));
         }
     }

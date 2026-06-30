@@ -240,6 +240,10 @@ void HdrPreviewWindow::pushFrame(const QVideoFrame &frame)
                      << "potential =" << macosPotentialEdrHeadroom(wid)
                      << "reference =" << macosReferenceEdrHeadroom(wid);
 #endif
+            // Notify MainWindow that the swap chain is now ready so it can
+            // activate HDR mode on the consumer if HDR content was already
+            // loaded before this preview window was opened.
+            emit hdrModeConfirmed(isHdrAvailable());
         }
         updateHdrGain();
         m_lastKnownHdrMode = isHdrMode();
@@ -630,7 +634,11 @@ void HdrPreviewWindow::updateHdrGain()
                 qDebug() << "HDR Preview: gain skipped — no swapChain";
             else
                 qDebug() << "HDR Preview: gain skipped — swapChain format" << sc->format()
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
                          << "is not HDR. Try QSG_RHI_BACKEND=vulkan on Linux.";
+#else
+                         << "is not HDR.";
+#endif
         }
         return;
     }

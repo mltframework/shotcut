@@ -87,6 +87,10 @@ signals:
     void hdrGainChanged();
     void hdrTransferModeChanged();
     void hdrModeRestartRequested();
+    /// Emitted once, on the first rendered frame, with whether HDR output is
+    /// actually available on the current display.  Used to activate HDR mode
+    /// when HDR content was already open before the preview window was shown.
+    void hdrModeConfirmed(bool available);
     void displayPeakNitsChanged();
     void contentPeakNitsChanged();
     void toneMappingChanged();

@@ -355,8 +355,17 @@ protected:
 
 int main(int argc, char **argv)
 {
-#if defined(Q_OS_WIN) && defined(QT_DEBUG) && !defined(__ARM_ARCH)
+#if defined(Q_OS_WIN)
+#if defined(QT_DEBUG)
+    // Attach to a parent console for console logging.
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        FILE *dummy;
+        freopen_s(&dummy, "CONOUT$", "w", stdout);
+        freopen_s(&dummy, "CONOUT$", "w", stderr);
+    }
+#elif !defined(__ARM_ARCH)
     ExcHndlInit();
+#endif
 #endif
 #ifndef QT_DEBUG
     ::qputenv("QT_LOGGING_RULES", "*.warning=false");
@@ -620,7 +629,8 @@ int main(int argc, char **argv)
             return timer.elapsed();
         };
 
-        const qint64 firstRunElapsedMs = runChildAndWait("d3d11");
+        const qint64 firstRunElapsedMs = runChildAndWait(
+            (qEnvironmentVariableIsSet("QSG_RHI_BACKEND") ? qgetenv("QSG_RHI_BACKEND") : "d3d11"));
         const bool firstRunFailed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
         if (firstRunFailed && firstRunElapsedMs <= kWatchdogTimeoutMs) {
             LOG_WARNING() << "child process failed, restarting in OpenGL mode";

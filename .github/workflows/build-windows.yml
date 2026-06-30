@@ -12,11 +12,6 @@ jobs:
     runs-on: windows-latest
     outputs:
       version: ${{ steps.set_version.outputs.version }}
-    env:
-      SM_API_KEY: ${{ secrets.SM_API_KEY }}
-      SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
-      SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
-      SM_HOST: ${{ vars.SM_HOST }}
 
     steps:
       - uses: actions/checkout@v6
@@ -95,10 +90,10 @@ jobs:
           echo VERSION=$VERSION
           cd "$HOME"
           echo Downloading a few prebuilt dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v7.txz
           echo Extracting prebuilt dependencies
-          tar -xJf mlt-prebuilt-mingw64-v6.txz
-          rm mlt-prebuilt-mingw64-v6.txz
+          tar -xJf mlt-prebuilt-mingw64-v7.txz
+          rm mlt-prebuilt-mingw64-v7.txz
 
       - name: Build
         shell: msys2 {0}
@@ -110,29 +105,6 @@ jobs:
           echo SHOTCUT_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
 
-      - name: Setup SM_CLIENT_CERT_FILE
-        if: ${{ github.repository_owner == 'mltframework' }}
-        shell: bash
-        run: |
-          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
-
-      - name: Setup Software Trust Manager
-        if: ${{ github.repository_owner == 'mltframework' }}
-        uses: digicert/code-signing-software-trust-action@v1
-        with:
-          simple-signing-mode: true
-
-      - name: Sign all the executables
-        if: ${{ github.repository_owner == 'mltframework' }}
-        shell: bash
-        run: |
-          smctl healthcheck
-          #smctl keypair list
-          for EXE in build/Shotcut/*.exe; do
-            echo Signing ${EXE}
-            smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
-          done
-
       - name: Package the portable zip
         shell: msys2 {0}
         run: |
@@ -143,97 +115,12 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows-x64-portable
-          path: ./build/shotcut-win64-${{ env.VERSION }}.zip
+          path: ./build/shotcut-win64-${{ steps.set_version.outputs.version }}.zip
 
-
-  installer:
-    if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
-    runs-on: windows-latest
-    needs: build
-    env:
-      SM_API_KEY: ${{ secrets.SM_API_KEY }}
-      SM_CLIENT_CERT_FILE: ${{ github.workspace }}/Certificate_pkcs12.p12
-      SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
-      SM_HOST: ${{ vars.SM_HOST }}
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: false
-          install: >-
-            unzip zip xz
-
-      - name: Download portable artifact
-        uses: actions/download-artifact@v6
-        with:
-          name: windows-x64-portable
-          path: dist
-
-      - name: Set version
-        shell: msys2 {0}
-        run: |
-          VERSION="${{ needs.build.outputs.version }}"
-          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          echo "PORTABLE_ZIP=dist/shotcut-win64-$VERSION.zip" >> "$GITHUB_ENV"
-
-      - name: Setup ISCC
-        shell: msys2 {0}
-        run: |
-          mkdir -p "$HOME/bin"
-          pushd "$HOME/bin"
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
-          tar -xJf iscc632.txz
-          popd
-
-      - name: Package installer
-        shell: msys2 {0}
-        run: |
-          PATH="$HOME/bin:$PATH"
-          mkdir -p build
-          unzip -q "$PORTABLE_ZIP" -d build
-          cp packaging/windows/shotcut.iss build
-          sed -i "s/YY.MM.DD/$VERSION/" build/shotcut.iss
-          cd build
-          echo Extracting installer dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
-          tar -xJf innosetup-opera-1.txz
-          rm innosetup-opera-1.txz
-          echo Running Inno Setup Compiler
-          ISCC -Q -O. shotcut.iss
-
-      - name: Setup SM_CLIENT_CERT_FILE
-        shell: bash
-        run: |
-          printf "%s" "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "$SM_CLIENT_CERT_FILE"
-
-      - name: Setup Software Trust Manager
-        uses: digicert/code-signing-software-trust-action@v1
-        with:
-          simple-signing-mode: true
-
-      - name: Sign installer
-        shell: bash
-        run: |
-          smctl healthcheck
-          smctl sign --simple --keypair-alias key_1464644718 --input build/shotcut-setup.exe
-          mv build/shotcut-setup.exe build/shotcut-win64-$VERSION.exe
-
-      - name: Upload installer artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: windows-x64-installer
-          path: ./build/shotcut-win64-${{ env.VERSION }}.exe
-
-  upload-s3:
+  upload-s3-portable:
     if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
     runs-on: ubuntu-latest
-    needs:
-      - build
-      - installer
+    needs: build
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
@@ -246,17 +133,10 @@ jobs:
           name: windows-x64-portable
           path: dist
 
-      - name: Download installer artifact
-        uses: actions/download-artifact@v6
-        with:
-          name: windows-x64-installer
-          path: dist
-
-      - name: Upload packages to S3
+      - name: Upload portable package to S3
         shell: bash
         run: |
           VERSION="${{ needs.build.outputs.version }}"
-          for file in dist/shotcut-win64-$VERSION.zip dist/shotcut-win64-$VERSION.exe; do
-            echo Uploading "$file" to S3
-            aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
-          done
+          file="dist/shotcut-win64-$VERSION.zip"
+          echo Uploading "$file" to S3
+          aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress

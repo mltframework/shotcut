@@ -1232,7 +1232,8 @@ void Controller::copyFilters(Producer &fromProducer,
             Mlt::Filter toFilter(MLT.profile(), fromFilter->get("mlt_service"));
             if (toFilter.is_valid()) {
                 toFilter.inherit(*fromFilter);
-                toFilter.clear("disable");
+                if (filterIndex != FILTER_INDEX_ALL)
+                    toFilter.clear("disable");
                 // Force any 2-pass filters to require re-analysis
                 toFilter.clear("results");
                 toProducer.attach(toFilter);

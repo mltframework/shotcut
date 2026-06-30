@@ -12,8 +12,7 @@
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CLANG_FORMAT": "ON",
-                "BUILD_MINIMAL_MEDIA_BACKEND": "ON"
+                "CLANG_FORMAT": "ON"
             }
         },
         {
@@ -31,6 +30,7 @@
                 "PATH": "$env{HOME}/Qt/$env{QT_VERSION}/macos/bin:$env{HOME}/opt/bin:/usr/local/bin:/opt/local/bin:$penv{PATH}"
             },
             "cacheVariables": {
+                "BUILD_MINIMAL_MEDIA_BACKEND": "ON",
                 "CMAKE_PREFIX_PATH": "$env{HOME}/Qt/$env{QT_VERSION}/gcc_64;$env{HOME}/Qt/$env{QT_VERSION}/macos;$env{HOME}/.local;$env{HOME}/opt;/usr/local;/opt/local",
                 "CMAKE_C_FLAGS": "-I/usr/local/include",
                 "BUILD_DOCS": "ON"
@@ -64,13 +64,15 @@
                 "rhs": "Windows"
             },
             "environment": {
-                "PKG_CONFIG_PATH": "C:/Projects/Shotcut/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
-                "Path": "C:/msys64/usr/local/bin;C:/msys64/usr/bin;C:/msys64/mingw64/bin;$penv{Path}"
+                "HOME": "C:/msys64/home/ddenn",
+                "MSYSTEM": "mingw64",
+                "PKG_CONFIG_PATH": "$env{HOME}/build/Shotcut/lib/pkgconfig;C:/msys64/$env{MSYSTEM}/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
+                "Path": "C:/msys64/$env{MSYSTEM}/bin;C:/msys64/usr/local/bin;C:/msys64/usr/bin;$penv{Path}"
             },
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "C:/Qt/$env{QT_VERSION}/mingw_64;C:/msys64/mingw64",
-                "CMAKE_INSTALL_PREFIX": "C:/Projects/Shotcut"
+                "CMAKE_PREFIX_PATH": "C:/msys64/$env{MSYSTEM}/share/qt6",
+                "CMAKE_INSTALL_PREFIX": "$env{HOME}/build/Shotcut"
             }
         }
     ],
