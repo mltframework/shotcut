@@ -12,7 +12,7 @@
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CLANG_FORMAT": "ON",
+                "CLANG_FORMAT": "ON"
             }
         },
         {
