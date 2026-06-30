@@ -329,9 +329,8 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         if (dialog.deinterlace() || progressive) {
             args << "-codec:v"
                  << "dnxhd"
-                 << "-profile:v"
-                 << (is10bit ? "dnxhr_hqx" : "dnxhr_hq")
-                 << "-pix_fmt" << (is10bit ? "yuv422p10le" : "yuv422p");
+                 << "-profile:v" << (is10bit ? "dnxhr_hqx" : "dnxhr_hq") << "-pix_fmt"
+                 << (is10bit ? "yuv422p10le" : "yuv422p");
         } else { // interlaced
             args << "-codec:v"
                  << "prores_ks"
