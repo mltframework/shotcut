@@ -42,6 +42,7 @@ class TimelineDock : public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(int requestedPosition READ requestedPosition NOTIFY requestedPositionChanged)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
     Q_PROPERTY(
         QVariantList selection READ selectionForJS WRITE setSelectionFromJS NOTIFY selectionChanged)
@@ -60,7 +61,9 @@ public:
     SubtitlesModel *subtitlesModel() { return &m_subtitlesModel; }
     SubtitlesSelectionModel *subtitlesSelectionModel() { return &m_subtitlesSelectionModel; }
     int position() const { return m_position; }
+    int requestedPosition() const { return m_requestedPosition; }
     void setPosition(int position);
+    void setRequestedPosition(int position);
     Mlt::Producer producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
@@ -102,6 +105,7 @@ signals:
     void selectionChanged();
     void seeked(int position);
     void positionChanged(int position);
+    void requestedPositionChanged(int position);
     void loopChanged();
     void clipOpened(Mlt::Producer *producer);
     void dragging(const QPointF &pos, int duration);
@@ -242,6 +246,7 @@ private:
     SubtitlesModel m_subtitlesModel;
     SubtitlesSelectionModel m_subtitlesSelectionModel;
     int m_position{-1};
+    int m_requestedPosition{-1};
     std::unique_ptr<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange{false};
     struct Selection

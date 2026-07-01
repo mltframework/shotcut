@@ -22,6 +22,7 @@
 #include "controllers/filtercontroller.h"
 #include "dialogs/longuitask.h"
 #include "docks/playlistdock.h"
+#include "keyframestask.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "proxymanager.h"
@@ -1150,6 +1151,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer &clip, int posi
         if (result >= 0) {
             QModelIndex index = createIndex(result, 0, trackIndex);
             AudioLevelsTask::start(clip.parent(), this, index);
+            KeyframesTask::start(clip.parent());
             emit modified();
             if (seek)
                 emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
@@ -1246,6 +1248,7 @@ QString MultitrackModel::overwrite(
         }
         QModelIndex index = createIndex(targetIndex, 0, trackIndex);
         AudioLevelsTask::start(clip.parent(), this, index);
+        KeyframesTask::start(clip.parent());
         if (notify) {
             emit overWritten(trackIndex, targetIndex);
             emit modified();
@@ -1350,6 +1353,7 @@ int MultitrackModel::insertClip(
 
             QModelIndex index = createIndex(result, 0, trackIndex);
             AudioLevelsTask::start(clip.parent(), this, index);
+            KeyframesTask::start(clip.parent());
             if (notify) {
                 emit inserted(trackIndex, result);
                 emit modified();
@@ -1381,6 +1385,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip, bool seek, 
         endInsertRows();
         QModelIndex index = createIndex(i, 0, trackIndex);
         AudioLevelsTask::start(clip.parent(), this, index);
+        KeyframesTask::start(clip.parent());
         if (notify) {
             emit appended(trackIndex, i);
             emit modified();
@@ -3797,6 +3802,7 @@ void MultitrackModel::load()
     if (m_tractor) {
         emit aboutToClose();
         AudioLevelsTask::closeAll();
+        KeyframesTask::closeAll();
         beginResetModel();
         delete m_tractor;
         m_tractor = nullptr;
@@ -3852,6 +3858,7 @@ void MultitrackModel::reload(bool asynchronous)
             emit reloadRequested();
         } else {
             AudioLevelsTask::closeAll();
+            KeyframesTask::closeAll();
             beginResetModel();
             endResetModel();
             getAudioLevels();
@@ -3939,6 +3946,7 @@ void MultitrackModel::close()
         return;
     emit aboutToClose();
     AudioLevelsTask::closeAll();
+    KeyframesTask::closeAll();
     beginResetModel();
     delete m_tractor;
     m_tractor = nullptr;
@@ -4042,10 +4050,11 @@ void MultitrackModel::getAudioLevels()
         if (playlist.is_valid()) {
             for (int clipIx = 0; clipIx < playlist.count(); clipIx++) {
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIx));
-                if (clip && clip->is_valid() && !clip->is_blank()
-                    && clip->get_int("audio_index") > -1) {
+                if (clip && clip->is_valid() && !clip->is_blank()) {
                     QModelIndex index = createIndex(clipIx, 0, trackIx);
-                    AudioLevelsTask::start(clip->parent(), this, index);
+                    KeyframesTask::start(clip->parent());
+                    if (clip->get_int("audio_index") > -1)
+                        AudioLevelsTask::start(clip->parent(), this, index);
                 }
             }
         }

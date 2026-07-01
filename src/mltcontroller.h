@@ -213,6 +213,7 @@ private:
     QString m_projectFolder;
     QMutex m_saveXmlMutex;
     bool m_blockRefresh;
+    int m_lastSeekedPosition{-1};
 
     static void on_jack_started(mlt_properties owner, void *object, mlt_event_data data);
     void onJackStarted(int position);
