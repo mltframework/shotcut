@@ -171,7 +171,7 @@ Rectangle {
         onEntered: {
             nameHoverTimer.start();
         }
-        onPositionChanged: {
+        onPositionChanged: mouse => {
             if (clipRoot.updateSkim(clipNameHover, mouse)) {
                 nameHoverTimer.stop();
                 return;
