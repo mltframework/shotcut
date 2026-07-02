@@ -30,6 +30,12 @@ public:
                   const QDir &outputDir,
                   const QString &qmlFileName,
                   QString *errorMessage = nullptr) const;
+
+    bool generateMetaQml(const AddOnFilterDescriptor &descriptor,
+                         const QDir &outputDir,
+                         const QString &uiQmlFileName,
+                         const QString &metaQmlFileName,
+                         QString *errorMessage = nullptr) const;
 };
 
 #endif // ADDONQMLGENERATOR_H

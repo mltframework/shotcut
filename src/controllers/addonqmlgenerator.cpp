@@ -136,8 +136,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
 
         quotedProperties << quotedJsString(parameter.name);
         if (!parameter.title.isEmpty()) {
-            quotedTitles << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
-                                                         quotedJsString(parameter.title));
+            quotedTitles << QStringLiteral("%1: qsTr(%2)")
+                                .arg(quotedJsString(parameter.name),
+                                     quotedJsString(parameter.title));
         }
         if (!parameter.defaultValue.isEmpty()) {
             quotedDefaults << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
@@ -172,9 +173,9 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                 << QStringLiteral("%1: 'yes'").arg(quotedJsString(parameter.name));
         }
         if (!parameter.description.isEmpty()) {
-            quotedDescriptions << QStringLiteral("%1: %2").arg(quotedJsString(parameter.name),
-                                                               quotedJsString(
-                                                                   parameter.description));
+            quotedDescriptions << QStringLiteral("%1: qsTr(%2)")
+                                      .arg(quotedJsString(parameter.name),
+                                           quotedJsString(parameter.description));
         }
         if (!parameter.values.isEmpty()) {
             QStringList quotedOptions;
@@ -1120,6 +1121,145 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
               "    }\n"
               "\n"
               "}\n";
+
+    file.close();
+    if (errorMessage)
+        errorMessage->clear();
+    return true;
+}
+
+static QString addOnKeywordsForMeta(const AddOnFilterDescriptor &descriptor)
+{
+    QStringList keywords;
+    keywords << descriptor.service << QStringLiteral("#addon");
+
+    const bool supportsRgba = descriptor.imageFormats.contains(QStringLiteral("rgba"))
+                              || descriptor.imageFormats.contains(QStringLiteral("rgba64"));
+    const bool supportsYuv = descriptor.imageFormats.contains(QStringLiteral("yuv422"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                             || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+    const bool supportsTenBit = descriptor.imageFormats.contains(QStringLiteral("rgba64"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv422p16"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv420p10"))
+                                || descriptor.imageFormats.contains(QStringLiteral("yuv444p10"));
+
+    if (supportsRgba)
+        keywords << QStringLiteral("#rgba");
+    if (supportsYuv)
+        keywords << QStringLiteral("#yuv");
+    if (supportsTenBit)
+        keywords << QStringLiteral("#10bit");
+
+    return keywords.join(QLatin1Char(' '));
+}
+
+bool AddOnQmlGenerator::generateMetaQml(const AddOnFilterDescriptor &descriptor,
+                                        const QDir &outputDir,
+                                        const QString &uiQmlFileName,
+                                        const QString &metaQmlFileName,
+                                        QString *errorMessage) const
+{
+    if (descriptor.service.isEmpty()) {
+        if (errorMessage)
+            *errorMessage = QStringLiteral("Missing add-on service identifier");
+        return false;
+    }
+
+    QFile file(outputDir.filePath(metaQmlFileName));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        if (errorMessage)
+            *errorMessage = QStringLiteral("Failed to open generated add-on meta.qml for writing");
+        return false;
+    }
+
+    QTextStream stream(&file);
+    stream.setEncoding(QStringConverter::Utf8);
+    stream << "import QtQuick\n"
+              "import org.shotcut.qml\n\n"
+              "Metadata {\n"
+              "    type: Metadata.Filter\n"
+              "    objectName: "
+           << quotedJsString(QStringLiteral("addOn.%1").arg(descriptor.service))
+           << "\n"
+              "    name: qsTr("
+           << quotedJsString(descriptor.title)
+           << ")\n"
+              "    keywords: "
+           << quotedJsString(addOnKeywordsForMeta(descriptor))
+           << "\n"
+              "    mlt_service: "
+           << quotedJsString(descriptor.service) << "\n";
+
+    if (descriptor.isAudio)
+        stream << "    isAudio: true\n";
+
+    stream << "    qml: " << quotedJsString(uiQmlFileName) << "\n";
+
+    QStringList keyframeableProperties;
+    for (const auto &parameter : descriptor.parameters) {
+        if (parameter.supportsKeyframes)
+            keyframeableProperties << parameter.name;
+    }
+
+    if (!keyframeableProperties.isEmpty()) {
+        QStringList quotedProps;
+        for (const auto &prop : keyframeableProperties)
+            quotedProps << quotedJsString(prop);
+
+        stream << "\n"
+                  "    keyframes {\n"
+                  "        allowAnimateIn: true\n"
+                  "        allowAnimateOut: true\n"
+                  "        simpleProperties: ["
+               << quotedProps.join(QStringLiteral(", "))
+               << "]\n"
+                  "        parameters: [\n";
+
+        bool first = true;
+        for (const auto &parameter : descriptor.parameters) {
+            if (!parameter.supportsKeyframes)
+                continue;
+            if (!first)
+                stream << ",\n";
+            first = false;
+
+            const QString paramType = parameter.type.trimmed().toLower();
+            const bool isNumericType = paramType == QStringLiteral("integer")
+                                       || paramType == QStringLiteral("float");
+            const bool isColorType = paramType == QStringLiteral("color");
+            const QString displayName = parameter.title.isEmpty() ? parameter.name
+                                                                  : parameter.title;
+
+            stream << "            Parameter {\n"
+                   << "                name: qsTr(" << quotedJsString(displayName) << ")\n"
+                   << "                property: " << quotedJsString(parameter.name) << "\n";
+
+            if (isNumericType) {
+                bool okMin = false, okMax = false;
+                const double minValue = parameter.minimum.toDouble(&okMin);
+                const double maxValue = parameter.maximum.toDouble(&okMax);
+                stream << "                isCurve: true\n"
+                       << "                minimum: " << (okMin ? minValue : 0.0) << "\n"
+                       << "                maximum: " << (okMax ? maxValue : 100.0) << "\n";
+            } else if (isColorType) {
+                stream << "                isCurve: false\n"
+                          "                isColor: true\n";
+            }
+
+            if (!parameter.unit.isEmpty())
+                stream << "                units: " << quotedJsString(parameter.unit) << "\n";
+
+            stream << "            }";
+        }
+
+        stream << "\n"
+                  "        ]\n"
+                  "    }\n";
+    }
+
+    stream << "}\n";
 
     file.close();
     if (errorMessage)

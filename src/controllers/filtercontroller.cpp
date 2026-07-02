@@ -353,6 +353,17 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
         LOG_INFO() << "Generated add-on UI QML file:" << tempDir.filePath(cachedFileName);
     }
 
+    const QString cachedMetaFileName = service + QStringLiteral("_meta.qml");
+    if (!m_addOnQmlGenerator.generateMetaQml(descriptor,
+                                             tempDir,
+                                             cachedFileName,
+                                             cachedMetaFileName,
+                                             &generationError)) {
+        LOG_WARNING() << "Failed to generate add-on meta QML for" << service << generationError;
+    } else {
+        LOG_INFO() << "Generated add-on meta QML file:" << tempDir.filePath(cachedMetaFileName);
+    }
+
     meta->setPath(tempDir);
     meta->setQmlFileName(cachedFileName);
     return true;
