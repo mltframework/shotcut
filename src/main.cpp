@@ -593,6 +593,9 @@ int main(int argc, char **argv)
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
+        // If a file-open event arrived before IPC was available, include it now.
+        if (!a.resourceArg.isEmpty())
+            args << a.resourceArg;
         ::qputenv(kWatchdogEnvVar, "1");
         child.setProcessChannelMode(QProcess::MergedChannels);
         QObject::connect(&child, &QProcess::readyRead, [&child]() {
