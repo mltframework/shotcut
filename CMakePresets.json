@@ -64,7 +64,7 @@
                 "rhs": "Windows"
             },
             "environment": {
-                "HOME": "C:/msys64/home/ddenn",
+                "HOME": "C:/msys64/home/$penv{USERNAME}",
                 "PKG_CONFIG_PATH": "$env{HOME}/build/Shotcut/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;C:/msys64/clangarm64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
                 "Path": "C:/msys64/usr/local/bin;C:/msys64/mingw64/bin;C:/msys64/clangarm64/bin;C:/msys64/usr/bin;$penv{Path}"
             },
