@@ -1782,7 +1782,17 @@ void TimelineDock::setPosition(int position)
         emit seeked(position);
     } else {
         m_position = m_model.tractor()->get_length();
+        m_requestedPosition = m_position;
         emit positionChanged(m_position);
+        emit requestedPositionChanged(m_requestedPosition);
+    }
+}
+
+void TimelineDock::setRequestedPosition(int position)
+{
+    if (MLT.isMultitrack() && m_requestedPosition != position && m_model.tractor()) {
+        m_requestedPosition = qMin(position, m_model.tractor()->get_length());
+        emit requestedPositionChanged(m_requestedPosition);
     }
 }
 
@@ -4290,6 +4300,7 @@ void TimelineDock::onMultitrackClosed()
 {
     stopRecording();
     m_position = -1;
+    m_requestedPosition = -1;
     m_ignoreNextPositionChange = false;
     m_trimDelta = 0;
     m_transitionDelta = 0;
