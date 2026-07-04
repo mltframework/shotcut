@@ -58,6 +58,7 @@
         <file>dark/32x32/edit-redo.png</file>
         <file>dark/32x32/edit-select-all.png</file>
         <file>dark/32x32/edit-undo.png</file>
+        <file>dark/32x32/fire.png</file>
         <file>dark/32x32/folder-new.png</file>
         <file>dark/32x32/folder.png</file>
         <file>dark/32x32/font.png</file>
@@ -203,6 +204,7 @@
         <file>light/32x32/edit-redo.png</file>
         <file>light/32x32/edit-select-all.png</file>
         <file>light/32x32/edit-undo.png</file>
+        <file>light/32x32/fire.png</file>
         <file>light/32x32/folder-new.png</file>
         <file>light/32x32/folder.png</file>
         <file>light/32x32/font.png</file>
@@ -424,6 +426,7 @@
         <file>oxygen/32x32/devices/audio-input-microphone.png</file>
         <file>oxygen/32x32/devices/cpu.png</file>
         <file>oxygen/32x32/devices/video-television.png</file>
+        <file>oxygen/32x32/fire.png</file>
         <file>oxygen/32x32/places/bookmarks.png</file>
         <file>oxygen/32x32/places/folder.png</file>
         <file>oxygen/32x32/places/server-database.png</file>
@@ -572,6 +575,7 @@
         <file>oxygen-dark/32x32/devices/audio-input-microphone.png</file>
         <file>oxygen-dark/32x32/devices/cpu.png</file>
         <file>oxygen-dark/32x32/devices/video-television.png</file>
+        <file>oxygen-dark/32x32/fire.png</file>
         <file>oxygen-dark/32x32/places/bookmarks.png</file>
         <file>oxygen-dark/32x32/places/folder.png</file>
         <file>oxygen-dark/32x32/places/server-database.png</file>

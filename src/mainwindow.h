@@ -45,6 +45,7 @@ class QUndoStack;
 class QActionGroup;
 class FilterController;
 class ScopeController;
+class ElementsDock;
 class FilesDock;
 class FiltersDock;
 class TimelineDock;
@@ -135,6 +136,7 @@ protected:
     void closeEvent(QCloseEvent *);
     void showEvent(QShowEvent *);
     void hideEvent(QHideEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private:
     void connectFocusSignals();
@@ -225,6 +227,7 @@ private:
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
+    ElementsDock *m_elementsDock;
     ScreenCapture *m_screenCapture;
     HdrPreviewWindow *m_hdrPreviewWindow{nullptr};
 
@@ -276,6 +279,7 @@ private slots:
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
     void onSubtitlesDockTriggered(bool = true);
+    void onElementsDockTriggered(bool = true);
     void onFilesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
@@ -382,6 +386,7 @@ private slots:
     void onHtmlGeneratorTriggered();
     void on_actionClearRecentOnExit_toggled(bool arg1);
     void onSceneGraphInitialized();
+    void adjustMainToolbar();
     void on_actionShowTextUnderIcons_toggled(bool b);
     void on_actionShowSmallIcons_toggled(bool b);
     void onPlaylistInChanged(int in);

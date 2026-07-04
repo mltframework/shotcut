@@ -1,0 +1,396 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "0814847c-b046-4c81-a412-d39b6feafe01",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#adde9e"
+                    },
+                    "name": "Stroke color",
+                    "uuid": "f2dd5d7e-4554-4012-86c7-cacdb2a164c3"
+                },
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#cde6c5"
+                    },
+                    "name": "Fill color",
+                    "uuid": "9ed17384-30e7-4ef8-84bc-812c52ab0dbe"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "e07b3151-5e6c-44bc-b574-4ff50bca8840",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Composition",
+                    "shapes": [
+                        {
+                            "__type__": "PreCompLayer",
+                            "composition": "989de338-e8d2-4485-b421-6d763009ed39",
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Composition Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "size": {
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "timing": {
+                                "__type__": "StretchableTime",
+                                "start_time": 0,
+                                "stretch": 1
+                            },
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 959.0577367205544,
+                                        "y": 554.8267898383373
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 959.0577367205544,
+                                        "y": 554.8267898383373
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 0.7153120636940002,
+                                        "y": 0.7153120636940002
+                                    }
+                                }
+                            },
+                            "uuid": "793e2cee-51ac-452a-bdc6-e6c4d60a2373",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "8a6c3c28-b728-4238-8cbd-57025d2694ee",
+                    "visible": true,
+                    "width": 1920
+                },
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Arrow",
+                    "shapes": [
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 180
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": "",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#adde9e"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 0,
+                                    "name": "Stroke 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "f2dd5d7e-4554-4012-86c7-cacdb2a164c3",
+                                    "uuid": "f840d310-27e3-484c-b604-82272f2be234",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 46
+                                    }
+                                },
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "PolyStar",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#cde6c5"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "9ed17384-30e7-4ef8-84bc-812c52ab0dbe",
+                                            "uuid": "a0ebc832-1626-49b2-9039-30ed66f33541",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "PolyStar",
+                                            "angle": {
+                                                "value": 210.06199645996094
+                                            },
+                                            "group_color": "#00000000",
+                                            "inner_radius": {
+                                                "value": 0
+                                            },
+                                            "inner_roundness": {
+                                                "value": 0
+                                            },
+                                            "locked": false,
+                                            "name": "PolyStar",
+                                            "outer_radius": {
+                                                "value": 519.6859741210938
+                                            },
+                                            "outer_roundness": {
+                                                "value": 0
+                                            },
+                                            "points": {
+                                                "value": 3
+                                            },
+                                            "position": {
+                                                "value": {
+                                                    "x": 873.889,
+                                                    "y": 315.333
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "type": "Polygon",
+                                            "uuid": "0764c95b-e8f0-4f09-9261-982efe318789",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 873.889,
+                                                "y": 315.333
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 1332.222,
+                                                "y": 540
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "abfd4366-f226-443b-9f7a-e5864227fa3d",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#cde6c5"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "9ed17384-30e7-4ef8-84bc-812c52ab0dbe",
+                                            "uuid": "8f8fa72f-3244-413c-b9c8-45f610417563",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Rect",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Rectangle",
+                                            "position": {
+                                                "value": {
+                                                    "x": 577.565,
+                                                    "y": 575.006
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "rounded": {
+                                                "value": 0
+                                            },
+                                            "size": {
+                                                "value": {
+                                                    "height": 392.971,
+                                                    "width": 1004.121
+                                                }
+                                            },
+                                            "uuid": "4a989891-ecc9-4d76-b995-caef4a323732",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 584.833,
+                                                "y": 577.5
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 584.833,
+                                                "y": 542.494
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "fd667c5f-122a-47a4-98d6-b86e957fe5dd",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 958.09,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "4da2cc52-de7c-4aaf-994f-905edd31620d",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "989de338-e8d2-4485-b421-6d763009ed39",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "ed6b7ea1-4ab1-4b38-bf2e-8b1261dd6f6e",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "43fe2830-783c-4226-baab-71c915a9df8b",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "fb1d3b7d-1b58-4ee0-ac2a-106ffbef9723",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "432df313-0f5c-47d0-b1bf-f2d39f7a838d",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "49967706-df6c-4b71-9454-3787de47f686"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

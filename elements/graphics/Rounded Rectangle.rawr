@@ -1,0 +1,237 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "b931b4cb-fadc-4062-84a4-312362629b62",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#e4beeb"
+                    },
+                    "name": "",
+                    "uuid": "11490b74-5b04-4328-9099-3b16d6fa1bb7"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "ae2a2f64-8877-48f2-b416-5776ad744d2d",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Composition",
+                    "shapes": [
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 180
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": "Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e4beeb"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill",
+                                            "opacity": {
+                                                "value": 0.20000000298023224
+                                            },
+                                            "use": "11490b74-5b04-4328-9099-3b16d6fa1bb7",
+                                            "uuid": "0a39f13d-4802-4fa6-b700-2691567b0f59",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Stroke",
+                                            "cap": "RoundCap",
+                                            "color": {
+                                                "value": "#e4beeb"
+                                            },
+                                            "group_color": "#00000000",
+                                            "join": "RoundJoin",
+                                            "locked": false,
+                                            "miter_limit": 4,
+                                            "name": "Stroke",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "11490b74-5b04-4328-9099-3b16d6fa1bb7",
+                                            "uuid": "980b65c7-b8f9-40e7-ba8f-b03ddfb385e8",
+                                            "visible": true,
+                                            "width": {
+                                                "value": 12
+                                            }
+                                        },
+                                        {
+                                            "__type__": "Rect",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Rectangle",
+                                            "position": {
+                                                "value": {
+                                                    "x": 895.278,
+                                                    "y": 603.167
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "rounded": {
+                                                "value": 24
+                                            },
+                                            "size": {
+                                                "value": {
+                                                    "height": 830,
+                                                    "width": 1520
+                                                }
+                                            },
+                                            "uuid": "f6a444e9-a260-43b2-8536-61ee003607cc",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 895.28,
+                                                "y": 603.17
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 958.78,
+                                                "y": 541.226
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "d06f5819-a507-440c-88c8-6f67bb349e4c",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 0.9347691535949707,
+                                        "y": 0.9347691535949707
+                                    }
+                                }
+                            },
+                            "uuid": "1978bffc-e01e-4bec-8745-227548cbea64",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "cc69e98e-06b9-4abd-8d1f-6be5c8d05523",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "97eea55c-55e2-49e6-b58b-3f2349417c36",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "5bbfadbb-123b-458d-8eb8-e487f1d09b1a",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "4f67ddc1-1c0a-4857-a1d5-240f034ac55d",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "708e87cb-f8de-49cf-9120-b3d6825c6c76",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "e0d9a695-ba18-430e-bed9-0c99dc906c92"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

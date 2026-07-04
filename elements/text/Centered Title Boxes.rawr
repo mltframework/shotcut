@@ -1,0 +1,930 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "8e5ba64b-d9a2-4922-ba57-34bb18912590",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#000000"
+                    },
+                    "name": "Description",
+                    "uuid": "fab90e8a-42ec-40d7-9e1b-146c251cb0d1"
+                },
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#000000"
+                    },
+                    "name": "Title",
+                    "uuid": "f8764991-9d53-4469-a2e5-bc808bb5d56a"
+                },
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#387fad"
+                    },
+                    "name": "Rectangle1",
+                    "uuid": "8f4c6476-7174-416f-8bf6-954a1ad362e7"
+                },
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#387fad"
+                    },
+                    "name": "Rectangle2",
+                    "uuid": "b9fea011-9488-401e-8795-3086b318d0e9"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "eff23064-ee9a-438d-9899-a9745cede02a",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Composition",
+                    "shapes": [
+                        {
+                            "__type__": "PreCompLayer",
+                            "composition": "6d61d6ff-1d47-4784-83c2-dc62bf6f001b",
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Composition Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "size": {
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "timing": {
+                                "__type__": "StretchableTime",
+                                "start_time": 0,
+                                "stretch": 1
+                            },
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "648481ae-96e3-4f33-85c9-e7905e60d9b5",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "aacdf54f-c483-41a4-a5e7-2790c515dd4b",
+                    "visible": true,
+                    "width": 1920
+                },
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Title",
+                    "shapes": [
+                        {
+                            "__type__": "Group",
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Rectangle2",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "shapes": [
+                                {
+                                    "__type__": "Fill",
+                                    "color": {
+                                        "value": "#387fad"
+                                    },
+                                    "fill_rule": "NonZero",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Fill 1",
+                                    "opacity": {
+                                        "value": 0.25
+                                    },
+                                    "use": "b9fea011-9488-401e-8795-3086b318d0e9",
+                                    "uuid": "d44a4398-af2a-44ba-975b-9e7dec50ae28",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Rect",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle2",
+                                    "position": {
+                                        "value": {
+                                            "x": 960,
+                                            "y": 592.1666666666667
+                                        }
+                                    },
+                                    "reversed": false,
+                                    "rounded": {
+                                        "value": 0
+                                    },
+                                    "size": {
+                                        "value": {
+                                            "height": 364,
+                                            "width": 1720
+                                        }
+                                    },
+                                    "uuid": "15f9c2ca-96c8-41e6-bc49-ce6f1fc6eca9",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 1037.6666666666667,
+                                        "y": 592.1666666666666
+                                    }
+                                },
+                                "position": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 2957,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 2957,
+                                                "y": 540
+                                            },
+                                            "time": 0,
+                                            "value": {
+                                                "x": 2957,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            },
+                                            "time": 70,
+                                            "value": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            },
+                                            "time": 105,
+                                            "value": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 1,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": -883,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": -883,
+                                                "y": 540
+                                            },
+                                            "time": 179,
+                                            "value": {
+                                                "x": -883,
+                                                "y": 540
+                                            }
+                                        }
+                                    ]
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "ce28618f-4041-4795-a8aa-fb5ed82eb0ab",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Group",
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Rectangle1",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "shapes": [
+                                {
+                                    "__type__": "Fill",
+                                    "color": {
+                                        "value": "#387fad"
+                                    },
+                                    "fill_rule": "NonZero",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Fill",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "8f4c6476-7174-416f-8bf6-954a1ad362e7",
+                                    "uuid": "7bdf6e10-0e1c-4925-afee-97c518940ca4",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#387fad"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 4,
+                                    "name": "Stroke",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "8f4c6476-7174-416f-8bf6-954a1ad362e7",
+                                    "uuid": "a615dd69-ab97-446a-8b2b-abf9792c35d4",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 2
+                                    }
+                                },
+                                {
+                                    "__type__": "Rect",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle1",
+                                    "position": {
+                                        "value": {
+                                            "x": 960,
+                                            "y": 592.1666666666667
+                                        }
+                                    },
+                                    "reversed": false,
+                                    "rounded": {
+                                        "value": 0
+                                    },
+                                    "size": {
+                                        "value": {
+                                            "height": 264,
+                                            "width": 1920
+                                        }
+                                    },
+                                    "uuid": "22197df5-131c-4ed6-850b-27b7e2b4787e",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 1037.6666666666667,
+                                        "y": 592.1666666666666
+                                    }
+                                },
+                                "position": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 2957,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 2957,
+                                                "y": 540
+                                            },
+                                            "time": 0,
+                                            "value": {
+                                                "x": 2957,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            },
+                                            "time": 65,
+                                            "value": {
+                                                "x": 1057.67,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            },
+                                            "time": 115,
+                                            "value": {
+                                                "x": 1017.67,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 1,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": -883,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": -883,
+                                                "y": 540
+                                            },
+                                            "time": 179,
+                                            "value": {
+                                                "x": -883,
+                                                "y": 540
+                                            }
+                                        }
+                                    ]
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "6815b19a-1b03-437c-9e7c-12c45921bf9d",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Group",
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Description",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "shapes": [
+                                {
+                                    "__type__": "Fill",
+                                    "color": {
+                                        "value": "#000000"
+                                    },
+                                    "fill_rule": "NonZero",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Fill",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "fab90e8a-42ec-40d7-9e1b-146c251cb0d1",
+                                    "uuid": "744f2d00-f889-4362-b0c5-6de723aaa145",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#000000"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 4,
+                                    "name": "Stroke",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "fab90e8a-42ec-40d7-9e1b-146c251cb0d1",
+                                    "uuid": "21e5584f-2f40-4393-afb1-653348992fb9",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 2
+                                    }
+                                },
+                                {
+                                    "__type__": "TextShape",
+                                    "font": {
+                                        "__type__": "Font",
+                                        "family": "Arial",
+                                        "line_height": 1,
+                                        "size": 48,
+                                        "style": "Italic"
+                                    },
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Description",
+                                    "path": null,
+                                    "path_offset": {
+                                        "value": 0
+                                    },
+                                    "position": {
+                                        "value": {
+                                            "x": 779.4101690222219,
+                                            "y": 611.7023193111115
+                                        }
+                                    },
+                                    "text": "Description",
+                                    "uuid": "b9fcf963-0d92-46c0-8bca-1c7ef562b005",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 560
+                                    }
+                                },
+                                "position": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": -150,
+                                                "y": 580
+                                            },
+                                            "tan_out": {
+                                                "x": -150,
+                                                "y": 580
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": -150,
+                                                "y": 580
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            },
+                                            "tan_out": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            },
+                                            "time": 78,
+                                            "value": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            },
+                                            "tan_out": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            },
+                                            "time": 132,
+                                            "value": {
+                                                "x": 980.03,
+                                                "y": 580
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 1,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 2150,
+                                                "y": 580
+                                            },
+                                            "tan_out": {
+                                                "x": 2150,
+                                                "y": 580
+                                            },
+                                            "time": 179,
+                                            "value": {
+                                                "x": 2150,
+                                                "y": 580
+                                            }
+                                        }
+                                    ]
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "8bbe7b7c-9a38-49c5-afaa-b6fd900d4496",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Group",
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Title",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "shapes": [
+                                {
+                                    "__type__": "Fill",
+                                    "color": {
+                                        "value": "#000000"
+                                    },
+                                    "fill_rule": "NonZero",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Fill",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "f8764991-9d53-4469-a2e5-bc808bb5d56a",
+                                    "uuid": "bf1b3d3d-38ff-4484-8d7c-88dfb84ffb76",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#000000"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 4,
+                                    "name": "Stroke",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "f8764991-9d53-4469-a2e5-bc808bb5d56a",
+                                    "uuid": "2e885cd7-1dc7-45f1-af71-5fadac2d404e",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 2
+                                    }
+                                },
+                                {
+                                    "__type__": "TextShape",
+                                    "font": {
+                                        "__type__": "Font",
+                                        "family": "Arial",
+                                        "line_height": 1,
+                                        "size": 64,
+                                        "style": "Bold"
+                                    },
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Title",
+                                    "path": null,
+                                    "path_offset": {
+                                        "value": 0
+                                    },
+                                    "position": {
+                                        "value": {
+                                            "x": 0,
+                                            "y": 0
+                                        }
+                                    },
+                                    "text": "Sample title",
+                                    "uuid": "8df8641f-cc9a-490d-9f9b-ef36e2694c83",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": -500,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": -500,
+                                                "y": 540
+                                            },
+                                            "time": 0,
+                                            "value": {
+                                                "x": -500,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            },
+                                            "time": 48,
+                                            "value": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            },
+                                            "time": 102,
+                                            "value": {
+                                                "x": 721.02,
+                                                "y": 540
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 1,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.3333333333333333,
+                                                "y": 0
+                                            },
+                                            "point_type": 0,
+                                            "tan_in": {
+                                                "x": 1950,
+                                                "y": 540
+                                            },
+                                            "tan_out": {
+                                                "x": 1950,
+                                                "y": 540
+                                            },
+                                            "time": 179,
+                                            "value": {
+                                                "x": 1950,
+                                                "y": 540
+                                            }
+                                        }
+                                    ]
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "244d195f-7f63-4653-8e6c-f9b5188eb310",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "6d61d6ff-1d47-4784-83c2-dc62bf6f001b",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "4d738e2e-0b72-4250-b4d5-cd1b5de91ad8",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "ec0865ac-38be-4de1-8bf9-fde85bd1c86a",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "2a14d5c9-a447-41d9-971d-f13d042837a7",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "c0b53f15-75fa-42cc-b94d-b5631c1624a2",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "e57fbc12-61c7-433f-87f1-58f0104cf2b1"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

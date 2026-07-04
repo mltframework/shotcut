@@ -1,0 +1,1537 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "e8365bc0-1bca-49c4-b04b-e37606d79210",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "name": "main color",
+                    "uuid": "64aec75f-a103-483b-9460-0ae2898df7fc"
+                },
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#000000"
+                    },
+                    "name": "Stroke color",
+                    "uuid": "a031a186-8212-4576-abf6-866318991244"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "fe069007-4a2d-4d6d-b10a-0f6f1a78031d",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Composition",
+                    "shapes": [
+                        {
+                            "__type__": "PreCompLayer",
+                            "composition": "33b1afdf-903c-4110-858b-5b11b52c0f7d",
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Composition Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "size": {
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "timing": {
+                                "__type__": "StretchableTime",
+                                "start_time": 0,
+                                "stretch": 1
+                            },
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "1ca5b3e4-92be-48d9-9a82-68967e757482",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "b143c5fb-0b3f-4c78-9bdd-68bd76e5f09e",
+                    "visible": true,
+                    "width": 1920
+                },
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "thought",
+                    "shapes": [
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 180
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": "thought",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#000000"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 0,
+                                    "name": "Stroke",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "a031a186-8212-4576-abf6-866318991244",
+                                    "uuid": "33f50466-c5d8-4d50-90a2-0f2abe40eebf",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 10
+                                    }
+                                },
+                                {
+                                    "__type__": "Layer",
+                                    "animation": {
+                                        "__type__": "AnimationContainer",
+                                        "first_frame": 0,
+                                        "last_frame": 180
+                                    },
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "mask": {
+                                        "__type__": "MaskSettings",
+                                        "inverted": false,
+                                        "mask": "NoMask"
+                                    },
+                                    "name": "little_bubbles",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "parent": null,
+                                    "render": true,
+                                    "shapes": [
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 10",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "91a29920-e72c-4209-947b-8a768feb67eb",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 10",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 693.0556259983368,
+                                                            "y": 717.2991415124226
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 57,
+                                                            "width": 57
+                                                        }
+                                                    },
+                                                    "uuid": "723e8606-0cf4-4adc-8776-dbcfe8ad7591",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 693.0556259983368,
+                                                        "y": 717.2991415124226
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 500,
+                                                        "y": 690
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "keyframes": [
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            },
+                                                            "time": 0,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 25,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 60,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": 0.6666666666666666
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 145,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 0.3333333333333333
+                                                            },
+                                                            "time": 180,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "uuid": "6c80a08c-b964-46f4-ac47-d2ac14cac435",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 11",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "ec5834c5-de17-47a3-8f58-79805ffe008b",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 11",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 617.6215982205592,
+                                                            "y": 761.2227526235336
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 34,
+                                                            "width": 34
+                                                        }
+                                                    },
+                                                    "uuid": "60e9dd8c-a6cb-4afe-b9c9-d45ab18a2fc8",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 617.6215982205592,
+                                                        "y": 761.2227526235336
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 500,
+                                                        "y": 761.22
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "keyframes": [
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            },
+                                                            "time": 0,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 10,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 45,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 135,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 170,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            },
+                                                            "time": 179,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "uuid": "8a3d9a1e-3aae-4df2-b0d4-5573ee75a8a5",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 12",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "70e5b9bc-7e6c-428f-a9f5-43b328b84e41",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 12",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 549.8264593316705,
+                                                            "y": 787.0040026235334
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 17,
+                                                            "width": 17
+                                                        }
+                                                    },
+                                                    "uuid": "a0faf795-78d7-4323-ab1d-4e942166279e",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 549.8264593316705,
+                                                        "y": 787.0040026235334
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 500,
+                                                        "y": 820
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "keyframes": [
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 0,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 0.3333333333333333,
+                                                                "y": 1.3333333333333333
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 30,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0.6666666666666666,
+                                                                "y": -0.3333333333333333
+                                                            },
+                                                            "time": 125,
+                                                            "value": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            },
+                                                            "time": 154,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        },
+                                                        {
+                                                            "after": {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            "before": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            },
+                                                            "time": 179,
+                                                            "value": {
+                                                                "x": 0,
+                                                                "y": 0
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "uuid": "7af00919-99db-444e-b2d5-872ca2e17cd7",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 960,
+                                                "y": 540
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 1420.7777777777778,
+                                                "y": 636.5555555555555
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "ffffb7c1-4354-481d-a014-08c910745cc0",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Layer",
+                                    "animation": {
+                                        "__type__": "AnimationContainer",
+                                        "first_frame": 0,
+                                        "last_frame": 180
+                                    },
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "mask": {
+                                        "__type__": "MaskSettings",
+                                        "inverted": false,
+                                        "mask": "NoMask"
+                                    },
+                                    "name": "cloud",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "parent": null,
+                                    "render": true,
+                                    "shapes": [
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "9cf7e429-da7d-48ce-861e-b088f3d48c04",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 1",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 579.3333333333333,
+                                                            "y": 586.0555555555554
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 128.33333333333337,
+                                                            "width": 146.66666666666669
+                                                        }
+                                                    },
+                                                    "uuid": "46d2f1a6-7f7a-4a4d-9656-cfd93a472bd5",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 579.3333333333333,
+                                                        "y": 586.0555555555554
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 802.9999999999999,
+                                                        "y": 546.9444444444442
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1.5252101421356201,
+                                                        "y": 1.646080732345581
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "2a12306e-639d-4473-a862-27f53ded5e54",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 2",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "6cc86a2c-ce6c-4d40-a09d-11c7b5ce1d4a",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 2",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 738.8333333333333,
+                                                            "y": 639.8333333333333
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 182.1111111111111,
+                                                            "width": 226.1111111111111
+                                                        }
+                                                    },
+                                                    "uuid": "ca44ef92-2aa0-4945-ac10-bab9e9a45085",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 738.8333333333333,
+                                                        "y": 639.8333333333333
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 928.2777777777777,
+                                                        "y": 586.0555555555554
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "6a9ad563-aadd-4aa9-9227-e312a3da140c",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 3",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "4e5917f8-4a53-4b8d-8af2-7fb655f69c65",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 3",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 933.1666666666665,
+                                                            "y": 588.5
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 108.77777777777771,
+                                                            "width": 106.33333333333337
+                                                        }
+                                                    },
+                                                    "uuid": "097c2e77-9ffc-443a-a87b-0c9272748d11",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 933.1666666666665,
+                                                        "y": 588.5
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 1122.6111111111109,
+                                                        "y": 534.7222222222222
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "6fc0c302-919e-4c19-afc2-152fb1173325",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 4",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "48c76bcb-551e-47c6-ae10-1c66325fbb71",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 4",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 850.0555555555554,
+                                                            "y": 603.1666666666666
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 184.5555555555555,
+                                                            "width": 155.22222222222229
+                                                        }
+                                                    },
+                                                    "uuid": "2bb307c5-b395-4bbc-a6b6-768adff34448",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 850.0555555555554,
+                                                        "y": 603.1666666666666
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 1052.9444444444446,
+                                                        "y": 573.8333333333334
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 0.8518937230110168
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "2159d968-1d68-4bd9-b864-8b611ba480df",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 5",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "3d1322f0-eba9-401b-a866-c1d620bd8ef7",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 5",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 923.9999999999999,
+                                                            "y": 493.16666666666663
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 101.4444444444444,
+                                                            "width": 117.33333333333326
+                                                        }
+                                                    },
+                                                    "uuid": "9af5f545-75e3-4821-b343-a02fc33851bf",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 923.9999999999999,
+                                                        "y": 493.16666666666663
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 1113.4444444444443,
+                                                        "y": 439.38888888888886
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "4ca40a1a-d72b-470a-9632-ac29891156d2",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 6",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "ad86c73d-2f68-4417-8861-269637abe017",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 6",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 537.1666666666666,
+                                                            "y": 502.9444444444444
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 96.55555555555554,
+                                                            "width": 96.55555555555549
+                                                        }
+                                                    },
+                                                    "uuid": "48bc9bd5-9bb6-44ff-88e1-564278725b27",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 537.1666666666666,
+                                                        "y": 502.9444444444444
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 726.6111111111111,
+                                                        "y": 449.16666666666663
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "f5455f0a-2555-489e-984d-95b802a05308",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 7",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "672f5b66-701e-453e-8e6b-d3e7808510e7",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 7",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 647.7777777777777,
+                                                            "y": 470.55555555555554
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 178.4444444444444,
+                                                            "width": 188.22222222222217
+                                                        }
+                                                    },
+                                                    "uuid": "36ee0d63-0b7c-44ab-a5f6-23edf2653994",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 647.7777777777777,
+                                                        "y": 470.55555555555554
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 837.2222222222222,
+                                                        "y": 416.77777777777777
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "f8618f5e-6828-4ba2-9798-7a58199b8b91",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 8",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "6693afdd-ada8-48eb-b2f3-e7f43ae02e5d",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 8",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 782.8333333333333,
+                                                            "y": 492.55555555555554
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 249.33333333333331,
+                                                            "width": 282.33333333333326
+                                                        }
+                                                    },
+                                                    "uuid": "127244d6-55ca-4a37-a304-578309a914c9",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 782.8333333333333,
+                                                        "y": 492.55555555555554
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 972.2777777777777,
+                                                        "y": 438.77777777777777
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "bce0f3ec-1e8a-4d67-901c-e442c864d83f",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Group",
+                                            "auto_orient": false,
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Ellipse 9",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "shapes": [
+                                                {
+                                                    "__type__": "Fill",
+                                                    "color": {
+                                                        "value": "#ffffff"
+                                                    },
+                                                    "fill_rule": "NonZero",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Fill",
+                                                    "opacity": {
+                                                        "value": 1
+                                                    },
+                                                    "use": "64aec75f-a103-483b-9460-0ae2898df7fc",
+                                                    "uuid": "d8172ed0-57de-4389-9c8f-00ff2ba6a160",
+                                                    "visible": true
+                                                },
+                                                {
+                                                    "__type__": "Ellipse",
+                                                    "group_color": "#00000000",
+                                                    "locked": false,
+                                                    "name": "Ellipse 9",
+                                                    "position": {
+                                                        "value": {
+                                                            "x": 649.6111111111111,
+                                                            "y": 568.9444444444443
+                                                        }
+                                                    },
+                                                    "reversed": false,
+                                                    "size": {
+                                                        "value": {
+                                                            "height": 64.77777777777771,
+                                                            "width": 103.8888888888888
+                                                        }
+                                                    },
+                                                    "uuid": "c513bcb7-11f1-4d44-9b10-f3fc80dbc82f",
+                                                    "visible": true
+                                                }
+                                            ],
+                                            "transform": {
+                                                "__type__": "Transform",
+                                                "anchor_point": {
+                                                    "value": {
+                                                        "x": 649.6111111111111,
+                                                        "y": 568.9444444444443
+                                                    }
+                                                },
+                                                "position": {
+                                                    "value": {
+                                                        "x": 839.0555555555555,
+                                                        "y": 515.1666666666665
+                                                    }
+                                                },
+                                                "rotation": {
+                                                    "value": 0
+                                                },
+                                                "scale": {
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            },
+                                            "uuid": "61b2b94b-0318-4b2a-8079-62dda8536465",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 928,
+                                                "y": 495
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 960.9444444444448,
+                                                "y": 539.3888888888887
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "keyframes": [
+                                                {
+                                                    "after": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    },
+                                                    "before": {
+                                                        "x": 0,
+                                                        "y": 0
+                                                    },
+                                                    "time": 0,
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                },
+                                                {
+                                                    "after": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    },
+                                                    "before": {
+                                                        "x": 0,
+                                                        "y": 0
+                                                    },
+                                                    "time": 45,
+                                                    "value": {
+                                                        "x": 0.9800000190734863,
+                                                        "y": 1.0199999809265137
+                                                    }
+                                                },
+                                                {
+                                                    "after": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    },
+                                                    "before": {
+                                                        "x": 0,
+                                                        "y": 0
+                                                    },
+                                                    "time": 90,
+                                                    "value": {
+                                                        "x": 1.0199999809265137,
+                                                        "y": 0.9800000190734863
+                                                    }
+                                                },
+                                                {
+                                                    "after": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    },
+                                                    "before": {
+                                                        "x": 0,
+                                                        "y": 0
+                                                    },
+                                                    "time": 135,
+                                                    "value": {
+                                                        "x": 0.9800000190734863,
+                                                        "y": 1.0199999809265137
+                                                    }
+                                                },
+                                                {
+                                                    "after": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    },
+                                                    "before": {
+                                                        "x": 0,
+                                                        "y": 0
+                                                    },
+                                                    "time": 179,
+                                                    "value": {
+                                                        "x": 1,
+                                                        "y": 1
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "uuid": "ebf80040-f56a-450b-8a41-20e54bd37aa7",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960.0062962902914,
+                                        "y": 437.59925985336315
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "29fa3ad6-a068-45a7-a556-3290e861fc4d",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "33b1afdf-903c-4110-858b-5b11b52c0f7d",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "40900db7-f472-4836-92fe-fc3b4cef647a",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "b6e6f9a5-ce29-471f-8dc7-b6cd870f2e32",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "2bc5f5f3-2121-4580-b1dd-25b98d4cceea",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "84d6ae11-e807-4708-a6d7-061156de6a3f",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "1dde8f06-6650-4f54-adec-2969f4a01725"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

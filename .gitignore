@@ -24,6 +24,7 @@ src/qml/export-edl/node_modules
 /.qmake.stash
 packaging/linux/org.shotcut.Shotcut.metainfo.xml
 build/
+install/
 *.Debug
 *.Release
 *.exe
