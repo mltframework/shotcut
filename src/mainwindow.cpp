@@ -207,7 +207,6 @@ MainWindow::MainWindow()
     setupAndConnectPlayerWidget();
 
     setupSettingsMenu();
-    setupOpenOtherMenu();
     readPlayerSettings();
     configureVideoWidget();
 
@@ -222,6 +221,7 @@ MainWindow::MainWindow()
         delete ui->actionUpgrade;
 
     setupAndConnectDocks();
+    setupOpenOtherMenu();
     setupMenuFile();
     setupMenuView();
     connectVideoWidgetSignals();
@@ -883,7 +883,6 @@ void MainWindow::setupAndConnectDocks()
             this,
             SLOT(onSubtitlesDockTriggered(bool)));
     connect(ui->actionSubtitles, SIGNAL(triggered()), this, SLOT(onSubtitlesDockTriggered()));
-    ui->menuView->addAction(m_elementsDock->toggleViewAction());
     connect(m_subtitlesDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
     connect(m_timelineDock,
             SIGNAL(positionChanged(int)),
@@ -1745,6 +1744,8 @@ void MainWindow::setupOpenOtherMenu()
         ui->menuNew->addAction(tr("Drawing/Animation"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
         otherMenu->addAction(ui->menuNew->actions().constLast());
+
+        ui->menuView->addAction(m_elementsDock->toggleViewAction());
         ui->menuNew->addAction(tr("Elements"), this, SLOT(onElementsDockTriggered()));
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
