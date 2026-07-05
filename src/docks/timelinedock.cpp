@@ -1466,6 +1466,7 @@ void TimelineDock::setupActions()
         if (mltProducers->get_data("glaxnimate")) {
             menu->addAction(tr("Drawing/Animation"), this, SLOT(addGenerator()))
                 ->setObjectName("glaxnimate");
+            menu->addAction(tr("Elements"), this, []() { MAIN.onElementsDockTriggered(); });
         }
         if (mltProducers->get_data("noise")) {
             menu->addAction(tr("Noise"), this, SLOT(addGenerator()))->setObjectName("noise");

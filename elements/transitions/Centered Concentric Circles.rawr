@@ -1,0 +1,1528 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "278c14f2-3828-4d1c-836f-d8cf51a90c6b",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#abcb2b"
+                    },
+                    "name": "main",
+                    "uuid": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "e39606c2-06e6-4895-8eaf-03a535d46e24",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 61
+                    },
+                    "fps": 30,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "comp_0",
+                    "shapes": [
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-bottom-01",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 1
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 1
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "376bad95-69c4-4485-8010-0193043d03b1",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "ad157dd2-6a95-4a5b-8667-f1c7ddf092ca",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "244d51dd-c50d-4372-a806-c9ba8942c026",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 20,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.16666666666666666,
+                                                "y": 0.3333333333333333
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1.0049999952316284,
+                                                "y": 1.0049999952316284
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 40,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "2f9c4068-fc6f-4eef-82ee-b4448252c637",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-bottom-02",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 0.5
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 0.5
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "6193aa7c-a307-43f8-a91c-90f8b9c7d6f7",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "125058b1-a90c-4e07-8611-50f0de661ab2",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "a606b638-5330-4a0e-ad3a-20dcfddb01e0",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 10,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.16666666666666666,
+                                                "y": 0.3333333333333333
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 50,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "4096176b-852a-43c4-85f0-411d5a3e9717",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-bottom-03",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 0.20000000298023224
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 0.20000000298023224
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "39796390-8552-4d57-9d54-41178004f3ff",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "2db0f0fe-f749-4d00-a3c5-70b91bd484f8",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "8a1a6886-f3f0-4c33-a2db-84bb9751a422",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 0,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.16666666666666666,
+                                                "y": 0.3333333333333333
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 60,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "2880ec9e-3fab-4cee-ab59-31d120d6757f",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-top-01",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 1
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 1
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "7d329eff-7154-4a0f-9a0d-8c2274872a06",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "26e4b2b3-ce51-410a-8290-9b82ba480afa",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "923f44f7-dcee-4b4b-aa88-b68b71e41a55",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 20,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1.0049999952316284,
+                                                "y": 1.0049999952316284
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 40,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "db648d0c-d6c8-4fc5-a5f5-60833d32c34b",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-top-02",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 0.5
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 0.5
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "36a8d7b7-6677-45c5-b446-dabd9542f573",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "6a5e17bd-145f-44dc-a855-fa4c4add2ec3",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "c0ac81a1-9435-4f22-8eea-d94713ca60b6",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 10,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.16666666666666666,
+                                                "y": 0.3333333333333333
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 50,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "1c05b402-8f5d-4d9a-b155-704a7232fafc",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-top-03",
+                            "opacity": {
+                                "keyframes": [
+                                    {
+                                        "after": {
+                                            "x": 0.6666666666666666,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 0,
+                                        "value": 0
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 0.125,
+                                            "y": 0
+                                        },
+                                        "time": 8,
+                                        "value": 0.20000000298023224
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0.875,
+                                            "y": 1
+                                        },
+                                        "before": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "time": 53,
+                                        "value": 0.20000000298023224
+                                    },
+                                    {
+                                        "after": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "before": {
+                                            "x": 1,
+                                            "y": 0
+                                        },
+                                        "time": 61,
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Group",
+                                    "auto_orient": false,
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Rectangle 1",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "shapes": [
+                                        {
+                                            "__type__": "Fill",
+                                            "color": {
+                                                "value": "#e0652f"
+                                            },
+                                            "fill_rule": "NonZero",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Fill 1",
+                                            "opacity": {
+                                                "value": 1
+                                            },
+                                            "use": "5a3f1c2e-8b4d-4e7a-9c6f-1d2e3f4a5b6c",
+                                            "uuid": "f62d1d97-0689-4768-8b22-45e0ec82baa4",
+                                            "visible": true
+                                        },
+                                        {
+                                            "__type__": "Ellipse",
+                                            "group_color": "#00000000",
+                                            "locked": false,
+                                            "name": "Circle Path 1",
+                                            "position": {
+                                                "value": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                }
+                                            },
+                                            "reversed": false,
+                                            "size": {
+                                                "value": {
+                                                    "height": 2200,
+                                                    "width": 2200
+                                                }
+                                            },
+                                            "uuid": "29385e95-50cd-40d1-b381-d903850da602",
+                                            "visible": true
+                                        }
+                                    ],
+                                    "transform": {
+                                        "__type__": "Transform",
+                                        "anchor_point": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "position": {
+                                            "value": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        },
+                                        "rotation": {
+                                            "value": 0
+                                        },
+                                        "scale": {
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        }
+                                    },
+                                    "uuid": "ac2ead37-3105-417c-8c62-bf0134d62858",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.6666666666666666,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 0,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0.093,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.16666666666666666,
+                                                "y": 0.3333333333333333
+                                            },
+                                            "time": 30,
+                                            "value": {
+                                                "x": 1,
+                                                "y": 1
+                                            }
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0.753,
+                                                "y": 0
+                                            },
+                                            "time": 60,
+                                            "value": {
+                                                "x": 0.22499999403953552,
+                                                "y": 0.22499999403953552
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "uuid": "b84fd4e9-88fe-42c6-afb7-f7c26555b3c5",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 61
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": ".ae-ctrl",
+                            "opacity": {
+                                "value": 0
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 50,
+                                        "y": 50
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 963.001,
+                                        "y": 543.001
+                                    }
+                                },
+                                "rotation": {
+                                    "keyframes": [
+                                        {
+                                            "after": {
+                                                "x": 0.189,
+                                                "y": 1
+                                            },
+                                            "before": {
+                                                "x": 0.604,
+                                                "y": 0
+                                            },
+                                            "time": 20,
+                                            "value": 90
+                                        },
+                                        {
+                                            "after": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "before": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "time": 40,
+                                            "value": 180
+                                        }
+                                    ]
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "37692229-6db2-4f5e-bf28-d0e0e2330c5e",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "edfa945d-3e4e-4963-9197-1aa86f0704b6",
+                    "visible": true,
+                    "width": 1920
+                },
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 61
+                    },
+                    "fps": 30,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "ae-transition-01",
+                    "shapes": [
+                        {
+                            "__type__": "PreCompLayer",
+                            "composition": null,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": ".ae-transition-inner-01",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "size": {
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "timing": {
+                                "__type__": "StretchableTime",
+                                "start_time": 0,
+                                "stretch": 1
+                            },
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "de3885a1-d848-4115-8671-e29e976e0b1d",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "efdb81f2-608a-4fba-96e5-3c061196d5ce",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "a5ba4c3d-3e32-47bb-9d43-fe48456c05ee",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "a3df6c76-9d36-4fe5-b33b-658342a83686",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "4fb89bac-81bf-4644-8ce6-098f9c6a5f88",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "dbce8df8-df9f-4a4e-abd2-97748d6f59e9",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "a4d0407f-87bd-4a6f-9809-058bfaa1a12c"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

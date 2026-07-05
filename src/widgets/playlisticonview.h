@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2025 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ public:
     PlaylistIconView(QWidget *parent);
     void resetMultiSelect();
     void setIconRole(int role);
+    void setElideMode(Qt::TextElideMode mode) { m_elideMode = mode; }
 
     QRect visualRect(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible) Q_DECL_OVERRIDE;
@@ -42,6 +43,7 @@ public:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) Q_DECL_OVERRIDE;
 
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
     void dragLeaveEvent(QDragLeaveEvent *e) Q_DECL_OVERRIDE;
@@ -78,6 +80,7 @@ private:
     bool m_isRangeSelect{false};
     QModelIndex m_pendingSelect;
     int m_iconRole;
+    Qt::TextElideMode m_elideMode{Qt::ElideMiddle};
 };
 
 #endif

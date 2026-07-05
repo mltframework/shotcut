@@ -1,0 +1,322 @@
+{
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "99bd03d6-8c4c-44be-aadf-b92f43c7261b",
+            "values": [
+                {
+                    "__type__": "NamedColor",
+                    "color": {
+                        "value": "#ffe941"
+                    },
+                    "name": "",
+                    "uuid": "db5ff044-bb6a-4daa-8a33-6b3f29b50de4"
+                }
+            ]
+        },
+        "compositions": {
+            "__type__": "CompositionList",
+            "name": "",
+            "uuid": "8811345f-ec18-4e3f-b045-55431e5400f6",
+            "values": [
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Composition",
+                    "shapes": [
+                        {
+                            "__type__": "PreCompLayer",
+                            "composition": "f179c1ce-a488-440a-bef0-bab2be2f8f9f",
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "name": "Composition Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "size": {
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "timing": {
+                                "__type__": "StretchableTime",
+                                "start_time": 0,
+                                "stretch": 1
+                            },
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 956.4157043879908,
+                                        "y": 538.9745958429561
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 956.4157043879908,
+                                        "y": 538.9745958429561
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 0.7222274541854858,
+                                        "y": 0.7222274541854858
+                                    }
+                                }
+                            },
+                            "uuid": "3b56a883-1588-4253-86a4-0e8f16d42f2d",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "22590575-f128-4ff4-88d8-09aab050325c",
+                    "visible": true,
+                    "width": 1920
+                },
+                {
+                    "__type__": "Composition",
+                    "animation": {
+                        "__type__": "AnimationContainer",
+                        "first_frame": 0,
+                        "last_frame": 180
+                    },
+                    "fps": 60,
+                    "group_color": "#00000000",
+                    "height": 1080,
+                    "locked": false,
+                    "name": "Star",
+                    "shapes": [
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 180
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": "Layer",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 960,
+                                        "y": 540
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 1,
+                                        "y": 1
+                                    }
+                                }
+                            },
+                            "uuid": "da48f42b-e79b-48d3-8fc4-1f0bfb317c38",
+                            "visible": true
+                        },
+                        {
+                            "__type__": "Layer",
+                            "animation": {
+                                "__type__": "AnimationContainer",
+                                "first_frame": 0,
+                                "last_frame": 180
+                            },
+                            "auto_orient": false,
+                            "group_color": "#00000000",
+                            "locked": false,
+                            "mask": {
+                                "__type__": "MaskSettings",
+                                "inverted": false,
+                                "mask": "NoMask"
+                            },
+                            "name": "",
+                            "opacity": {
+                                "value": 1
+                            },
+                            "parent": null,
+                            "render": true,
+                            "shapes": [
+                                {
+                                    "__type__": "Fill",
+                                    "color": {
+                                        "value": "#ffe941"
+                                    },
+                                    "fill_rule": "NonZero",
+                                    "group_color": "#00000000",
+                                    "locked": false,
+                                    "name": "Fill",
+                                    "opacity": {
+                                        "value": 0.6000000238418579
+                                    },
+                                    "use": "db5ff044-bb6a-4daa-8a33-6b3f29b50de4",
+                                    "uuid": "0d3d8a47-1042-412f-b6dd-6bde85dd0316",
+                                    "visible": true
+                                },
+                                {
+                                    "__type__": "Stroke",
+                                    "cap": "RoundCap",
+                                    "color": {
+                                        "value": "#ffe941"
+                                    },
+                                    "group_color": "#00000000",
+                                    "join": "RoundJoin",
+                                    "locked": false,
+                                    "miter_limit": 4,
+                                    "name": "Stroke",
+                                    "opacity": {
+                                        "value": 1
+                                    },
+                                    "use": "db5ff044-bb6a-4daa-8a33-6b3f29b50de4",
+                                    "uuid": "9a735e30-51cc-475c-9a95-68673575de8f",
+                                    "visible": true,
+                                    "width": {
+                                        "value": 12
+                                    }
+                                },
+                                {
+                                    "__type__": "PolyStar",
+                                    "angle": {
+                                        "value": 143.99000549316406
+                                    },
+                                    "group_color": "#00000000",
+                                    "inner_radius": {
+                                        "value": 301.4339904785156
+                                    },
+                                    "inner_roundness": {
+                                        "value": 0
+                                    },
+                                    "locked": false,
+                                    "name": "PolyStar 1",
+                                    "outer_radius": {
+                                        "value": 602.8679809570312
+                                    },
+                                    "outer_roundness": {
+                                        "value": 0.20000000298023224
+                                    },
+                                    "points": {
+                                        "value": 5
+                                    },
+                                    "position": {
+                                        "value": {
+                                            "x": 633.111,
+                                            "y": 210.222
+                                        }
+                                    },
+                                    "reversed": false,
+                                    "type": "Star",
+                                    "uuid": "7a1a5ad5-6897-48ec-8bda-1b7aaf7ffabb",
+                                    "visible": true
+                                }
+                            ],
+                            "transform": {
+                                "__type__": "Transform",
+                                "anchor_point": {
+                                    "value": {
+                                        "x": 633.111,
+                                        "y": 210.222
+                                    }
+                                },
+                                "position": {
+                                    "value": {
+                                        "x": 961.673,
+                                        "y": 541.995
+                                    }
+                                },
+                                "rotation": {
+                                    "value": 0
+                                },
+                                "scale": {
+                                    "value": {
+                                        "x": 0.6528099775314331,
+                                        "y": 0.6649699807167053
+                                    }
+                                }
+                            },
+                            "uuid": "38815a1d-4376-4368-bc39-3cc3e428beef",
+                            "visible": true
+                        }
+                    ],
+                    "uuid": "f179c1ce-a488-440a-bef0-bab2be2f8f9f",
+                    "visible": true,
+                    "width": 1920
+                }
+            ]
+        },
+        "fonts": {
+            "__type__": "FontList",
+            "name": "",
+            "uuid": "f3f69aec-c607-42d1-acd1-1031c75266ec",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "ed895889-19c9-4ce5-967c-894e4564385f",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "c19e2259-4152-4b3e-830b-b1d5726737bd",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "c70ea9a0-7dd4-4e41-b86c-b424d96b1e66",
+            "values": [
+            ]
+        },
+        "name": "",
+        "uuid": "ae103fce-89b1-4a2d-b7e6-b3ac3c2315f7"
+    },
+    "format": {
+        "format_version": 8,
+        "generator": "Glaxnimate",
+        "generator_version": "0.6.0+-git-"
+    },
+    "info": {
+        "author": "",
+        "description": "",
+        "keywords": [
+        ]
+    },
+    "metadata": {
+    }
+}

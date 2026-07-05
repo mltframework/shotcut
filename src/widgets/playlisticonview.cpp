@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2024 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,21 @@ PlaylistIconView::PlaylistIconView(QWidget *parent)
     verticalScrollBar()->setPageStep(400);
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(&Settings, SIGNAL(playlistThumbnailsChanged()), SLOT(updateSizes()));
+}
+
+bool PlaylistIconView::event(QEvent *event)
+{
+    // Accept ShortcutOverride for Left/Right so Qt delivers them as normal
+    // KeyPress events to this widget instead of firing window-level shortcuts
+    // (e.g. playerNextFrameAction / playerPreviousFrameAction in player.cpp).
+    if (event->type() == QEvent::ShortcutOverride) {
+        auto *ke = static_cast<QKeyEvent *>(event);
+        if (ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right) {
+            ke->accept();
+            return true;
+        }
+    }
+    return QAbstractItemView::event(event);
 }
 
 QRect PlaylistIconView::_visualRect(const QModelIndex &index) const
@@ -92,8 +107,16 @@ void PlaylistIconView::selectionChanged(const QItemSelection &selected,
 
 void PlaylistIconView::scrollTo(const QModelIndex &index, ScrollHint hint)
 {
-    Q_UNUSED(index);
     Q_UNUSED(hint);
+    if (!index.isValid() || !verticalScrollBar())
+        return;
+    const QRect rect = _visualRect(index);
+    const int viewTop = verticalScrollBar()->value();
+    const int viewBottom = viewTop + viewport()->height();
+    if (rect.top() < viewTop)
+        verticalScrollBar()->setValue(rect.top());
+    else if (rect.bottom() > viewBottom)
+        verticalScrollBar()->setValue(rect.bottom() - viewport()->height());
 }
 
 QModelIndex PlaylistIconView::indexAt(const QPoint &point) const
@@ -111,9 +134,43 @@ QModelIndex PlaylistIconView::indexAt(const QPoint &point) const
 
 QModelIndex PlaylistIconView::moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
 {
-    Q_UNUSED(cursorAction);
     Q_UNUSED(modifiers);
-    return QModelIndex();
+    if (!model())
+        return QModelIndex();
+    const int count = model()->rowCount(rootIndex());
+    if (count == 0)
+        return QModelIndex();
+    const QModelIndex current = currentIndex();
+    int row = current.isValid() ? current.row() : 0;
+    switch (cursorAction) {
+    case MoveLeft:
+        row = qMax(0, row - 1);
+        break;
+    case MoveRight:
+        row = qMin(count - 1, row + 1);
+        break;
+    case MoveUp:
+        row = qMax(0, row - m_itemsPerRow);
+        break;
+    case MoveDown:
+        row = qMin(count - 1, row + m_itemsPerRow);
+        break;
+    case MoveHome:
+        row = 0;
+        break;
+    case MoveEnd:
+        row = count - 1;
+        break;
+    case MoveNext:
+        row = qMin(count - 1, row + 1);
+        break;
+    case MovePrevious:
+        row = qMax(0, row - 1);
+        break;
+    default:
+        break;
+    }
+    return model()->index(row, 0, rootIndex());
 }
 
 int PlaylistIconView::horizontalOffset() const
@@ -134,6 +191,11 @@ bool PlaylistIconView::isIndexHidden(const QModelIndex &index) const
 
 void PlaylistIconView::setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command)
 {
+    // A null rect comes from keyboard navigation because visualRect() returns QRect().
+    // The force-select in keyPressEvent handles selection after the base class finishes.
+    if (rect.isNull())
+        return;
+
     QModelIndex topLeft;
     if (!selectionModel()->selectedIndexes().isEmpty()) {
         topLeft = selectionModel()->selectedIndexes().first();
@@ -255,7 +317,7 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
             painter.drawText(textRect,
                              Qt::AlignCenter,
                              painter.fontMetrics().elidedText(nameParts.first(),
-                                                              Qt::ElideMiddle,
+                                                              m_elideMode,
                                                               textRect.width()));
 
             if (!m_draggingOverPos.isNull() && itemRect.contains(m_draggingOverPos)) {
@@ -338,15 +400,39 @@ void PlaylistIconView::setModel(QAbstractItemModel *model)
 
 void PlaylistIconView::keyPressEvent(QKeyEvent *event)
 {
-    QAbstractItemView::keyPressEvent(event);
-    event->ignore();
     m_isToggleSelect = (event->modifiers() & Qt::ControlModifier);
     m_isRangeSelect = (event->modifiers() & Qt::ShiftModifier);
+
+    QAbstractItemView::keyPressEvent(event);
+    // Qt's internal setSelection() cannot work because visualRect() returns QRect().
+    // Force the selection to match the new current index after all internal handling.
+    if (!m_isToggleSelect && !m_isRangeSelect) {
+        const QModelIndex cur = currentIndex();
+        if (cur.isValid())
+            selectionModel()->select(cur, QItemSelectionModel::ClearAndSelect);
+    }
+    // Accept navigation keys so the parent scroll area does not also handle them.
+    // Other keys (Delete, Escape, etc.) are ignored so dock shortcuts can fire.
+    switch (event->key()) {
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+    case Qt::Key_Home:
+    case Qt::Key_End:
+    case Qt::Key_PageUp:
+    case Qt::Key_PageDown:
+        event->accept();
+        break;
+    default:
+        event->ignore();
+        break;
+    }
 }
 
 void PlaylistIconView::keyReleaseEvent(QKeyEvent *event)
 {
-    QAbstractItemView::keyPressEvent(event);
+    QAbstractItemView::keyReleaseEvent(event);
     event->ignore();
     resetMultiSelect();
 }

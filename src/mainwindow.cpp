@@ -35,6 +35,7 @@
 #include "dialogs/systemsyncdialog.h"
 #include "dialogs/textviewerdialog.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "docks/elementsdock.h"
 #include "docks/encodedock.h"
 #include "docks/filesdock.h"
 #include "docks/filtersdock.h"
@@ -206,7 +207,6 @@ MainWindow::MainWindow()
     setupAndConnectPlayerWidget();
 
     setupSettingsMenu();
-    setupOpenOtherMenu();
     readPlayerSettings();
     configureVideoWidget();
 
@@ -221,6 +221,7 @@ MainWindow::MainWindow()
         delete ui->actionUpgrade;
 
     setupAndConnectDocks();
+    setupOpenOtherMenu();
     setupMenuFile();
     setupMenuView();
     connectVideoWidgetSignals();
@@ -852,6 +853,14 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onJobsDockTriggered(bool)));
     connect(ui->actionJobs, SIGNAL(triggered()), this, SLOT(onJobsDockTriggered()));
 
+    m_elementsDock = new ElementsDock(this);
+    m_elementsDock->hide();
+    m_elementsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_2));
+    connect(m_elementsDock->toggleViewAction(),
+            SIGNAL(triggered(bool)),
+            this,
+            SLOT(onElementsDockTriggered(bool)));
+
     m_notesDock = new NotesDock(this);
     m_notesDock->hide();
     m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_3));
@@ -895,29 +904,34 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::onCreateOrEditFilterOnOutput);
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
+    // Left area
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
-    addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
-    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_notesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_subtitlesDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_filesDock);
-    splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
     tabifyDockWidget(m_encodeDock, m_notesDock);
     tabifyDockWidget(m_notesDock, m_subtitlesDock);
+    // Right area
+    addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_filesDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_elementsDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget *>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_filesDock);
     tabifyDockWidget(m_filesDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
+    tabifyDockWidget(m_jobsDock, m_elementsDock);
+    // Bottom area
+    addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
+    splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
     resetDockCorners();
@@ -1729,6 +1743,10 @@ void MainWindow::setupOpenOtherMenu()
     if (mltProducers->get_data("glaxnimate")) {
         ui->menuNew->addAction(tr("Drawing/Animation"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
+
+        ui->menuView->addAction(m_elementsDock->toggleViewAction());
+        ui->menuNew->addAction(tr("Elements"), this, SLOT(onElementsDockTriggered()));
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
 #ifdef EXTERNAL_LAUNCHERS
@@ -3482,6 +3500,12 @@ void MainWindow::hideEvent(QHideEvent *event)
     setProperty("windowOpacity", 0.0);
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    adjustMainToolbar();
+}
+
 void MainWindow::on_actionOpenOther_triggered()
 {
     auto dialog = new OpenOtherDialog(this);
@@ -3889,6 +3913,14 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
     }
 }
 
+void MainWindow::onElementsDockTriggered(bool checked)
+{
+    if (checked) {
+        m_elementsDock->show();
+        m_elementsDock->raise();
+    }
+}
+
 void MainWindow::onFilesDockTriggered(bool checked)
 {
     if (checked) {
@@ -4157,7 +4189,8 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
         palette.setColor(QPalette::Link, palette.color(QPalette::Highlight).lighter());
         palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
-        palette.setColor(QPalette::Disabled, QPalette::Text, Qt::darkGray);
+        palette.setColor(QPalette::PlaceholderText, palette.color(QPalette::Text).darker());
+        palette.setColor(QPalette::Disabled, QPalette::Text, palette.color(QPalette::Text).darker());
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
@@ -6308,17 +6341,27 @@ void MainWindow::onSceneGraphInitialized()
     videoWidget->setBlankScene();
 }
 
+void MainWindow::adjustMainToolbar()
+{
+    if (Settings.textUnderIcons() && this->width() < 1590) {
+        ui->mainToolBar->removeAction(ui->actionFiles);
+        ui->mainToolBar->removeAction(ui->actionMarkers);
+        ui->mainToolBar->removeAction(ui->actionNotes);
+        ui->mainToolBar->removeAction(ui->actionHistory);
+    } else if (!ui->mainToolBar->actions().contains(ui->actionFiles)) {
+        ui->mainToolBar->insertAction(ui->actionTimeline, ui->actionFiles);
+        ui->mainToolBar->insertAction(ui->actionKeyframes, ui->actionMarkers);
+        ui->mainToolBar->insertAction(ui->actionPlaylist, ui->actionNotes);
+        ui->mainToolBar->insertAction(ui->actionEncode, ui->actionHistory);
+    }
+}
+
 void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
 {
     ui->mainToolBar->setToolButtonStyle(b ? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
     Settings.setTextUnderIcons(b);
     updateLayoutSwitcher();
-    if (b && this->width() < 1800) {
-        ui->mainToolBar->removeAction(ui->actionFiles);
-        ui->mainToolBar->removeAction(ui->actionMarkers);
-        ui->mainToolBar->removeAction(ui->actionNotes);
-        ui->mainToolBar->removeAction(ui->actionHistory);
-    }
+    adjustMainToolbar();
 }
 
 void MainWindow::on_actionShowSmallIcons_toggled(bool b)

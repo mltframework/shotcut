@@ -48,6 +48,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/transcribeaudiodialog.cpp dialogs/transcribeaudiodialog.h
   dialogs/unlinkedfilesdialog.cpp dialogs/unlinkedfilesdialog.h
   dialogs/unlinkedfilesdialog.ui
+  docks/elementsdock.cpp docks/elementsdock.h
   docks/encodedock.cpp docks/encodedock.h
   docks/encodedock.ui
   docks/filesdock.cpp docks/filesdock.h
@@ -94,6 +95,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/alignclipsmodel.cpp models/alignclipsmodel.h
   models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
   models/audiolevelstask.cpp models/audiolevelstask.h
+  models/elementsmodel.cpp models/elementsmodel.h
   models/extensionmodel.cpp models/extensionmodel.h
   models/keyframesmodel.cpp models/keyframesmodel.h
   models/markersmodel.cpp models/markersmodel.h
@@ -177,6 +179,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/docktoolbar.cpp widgets/docktoolbar.h
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
+  widgets/flowlayout.cpp widgets/flowlayout.h
   widgets/frameratewidget.cpp widgets/frameratewidget.h
   widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
   widgets/glaxnimateproducerwidget.ui
@@ -360,6 +363,8 @@ if(WIN32)
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/resources DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
 else()
   target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
@@ -384,12 +389,14 @@ if(APPLE)
     file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/qml SYMBOLIC)
     file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/filter-sets SYMBOLIC)
     file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/voices SYMBOLIC)
+    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/elements SYMBOLIC)
   endif()
 
   install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
 endif()
 
 if(UNIX AND NOT APPLE)
@@ -397,11 +404,13 @@ if(UNIX AND NOT APPLE)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_BINARY_DIR}/share/shotcut/qml SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_BINARY_DIR}/share/shotcut/filter-sets SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_BINARY_DIR}/share/shotcut/voices SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_BINARY_DIR}/share/shotcut/elements SYMBOLIC)
   include(GNUInstallDirs)
   install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
 
   string(REPLACE . - SHOTCUT_DATE  ${SHOTCUT_VERSION})
   string(PREPEND SHOTCUT_DATE "20")
