@@ -1745,6 +1745,8 @@ void MainWindow::setupOpenOtherMenu()
         ui->menuNew->addAction(tr("Drawing/Animation"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
         otherMenu->addAction(ui->menuNew->actions().constLast());
+        ui->menuNew->addAction(tr("Elements"), this, SLOT(onElementsDockTriggered()));
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
 #ifdef EXTERNAL_LAUNCHERS
     ui->menuNew->addAction(tr("Image/Video from HTML"), this, SLOT(onHtmlGeneratorTriggered()))

@@ -258,6 +258,7 @@ public slots:
     void onShuttle(float x);
     void onPropertiesDockTriggered(bool checked = true);
     void onFiltersDockTriggered(bool checked = true);
+    void onElementsDockTriggered(bool checked = true);
     bool on_actionSave_triggered();
     void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
     void showSettingsMenu() const;
@@ -279,7 +280,6 @@ private slots:
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
     void onSubtitlesDockTriggered(bool = true);
-    void onElementsDockTriggered(bool = true);
     void onFilesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
