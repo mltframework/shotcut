@@ -509,7 +509,7 @@ Mlt::Producer *ElementsDock::copyAndCreateProducer(const QString &sourcePath,
         const QString ext = info.suffix();
         for (unsigned i = 1; QFile::exists(dest); ++i)
             dest = QDir(dir).filePath(
-                QStringLiteral("%1-%2.%3").arg(base).arg(i, 3, 10, '0').arg(ext));
+                QStringLiteral("%1-%2.%3").arg(base).arg(i, 3, 10, QChar('0')).arg(ext));
     }
 
     QDir().mkpath(QFileInfo(dest).absolutePath());
