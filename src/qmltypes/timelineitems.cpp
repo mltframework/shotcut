@@ -182,7 +182,6 @@ public:
         QPainterPath path;
         path.moveTo(-1, height());
         QPainterPath peaksPath;
-        peaksPath.moveTo(-1, height());
         int i = 0;
         const int dataSize = data->size();
         for (; i < width(); ++i) {
@@ -193,8 +192,13 @@ public:
             qreal level = qMax(static_cast<quint8>(data->at(idx)),
                                static_cast<quint8>(data->at(idx + 1)))
                           / 256.0;
-            path.lineTo(i, height() - level * height());
-            peaksPath.lineTo(i, height() - level * height());
+            const qreal y = height() - level * height();
+            path.lineTo(i, y);
+            if (peaksPath.elementCount() == 0) {
+                peaksPath.moveTo(i, y);
+            } else {
+                peaksPath.lineTo(i, y);
+            }
         }
         path.lineTo(i, height());
         painter->fillPath(path, m_color.lighter());
