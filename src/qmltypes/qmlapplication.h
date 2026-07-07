@@ -35,6 +35,7 @@ class QmlApplication : public QObject
     Q_OBJECT
     Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality CONSTANT);
     Q_PROPERTY(QPoint mousePos READ mousePos);
+    Q_PROPERTY(QColor playheadColor READ playheadColor CONSTANT)
     Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY paletteChanged)
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
     Q_PROPERTY(QString OS READ OS CONSTANT)
@@ -48,6 +49,7 @@ public:
     static QmlApplication &singleton();
     static Qt::WindowModality dialogModality();
     static QPoint mousePos();
+    static QColor playheadColor() { return QColor(0xe0, 0x46, 0x4e); }
     static QColor toolTipBaseColor();
     static QColor toolTipTextColor();
     static QString OS();

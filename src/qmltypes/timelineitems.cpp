@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlproducer.h"
 #include "settings.h"
 
@@ -76,7 +77,7 @@ class TimelinePlayhead : public QQuickPaintedItem
         path.lineTo(width() / 2.0, height());
         path.lineTo(0, 0);
         QPalette p;
-        painter->fillPath(path, p.color(QPalette::WindowText));
+        painter->fillPath(path, QmlApplication::playheadColor());
     }
 };
 
