@@ -131,8 +131,6 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
-    border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
-    border.width: (isBlank && !selected) ? 0 : 1
     topLeftRadius: _roundLeft ? _cornerRadius : 0
     bottomLeftRadius: _roundLeft ? _cornerRadius : 0
     topRightRadius: _roundRight ? _cornerRadius : 0
@@ -444,7 +442,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : inThumbnail.width + filtersIcon.width) + 2
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : inThumbnail.width + filtersIcon.width)
         width: label.width + 2
         height: label.height
     }
@@ -869,8 +867,8 @@ Rectangle {
     Rectangle {
         anchors.fill: parent
         color: 'transparent'
-        border.color: clipRoot.border.color
-        border.width: clipRoot.border.width
+        border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
+        border.width: (isBlank && !selected) ? 0 : 1
         topLeftRadius: clipRoot.topLeftRadius
         bottomLeftRadius: clipRoot.bottomLeftRadius
         topRightRadius: clipRoot.topRightRadius
