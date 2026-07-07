@@ -180,6 +180,8 @@ public:
 
         QPainterPath path;
         path.moveTo(-1, height());
+        QPainterPath peaksPath;
+        peaksPath.moveTo(-1, height());
         int i = 0;
         const int dataSize = data->size();
         for (; i < width(); ++i) {
@@ -191,13 +193,16 @@ public:
                                static_cast<quint8>(data->at(idx + 1)))
                           / 256.0;
             path.lineTo(i, height() - level * height());
+            peaksPath.lineTo(i, height() - level * height());
         }
         path.lineTo(i, height());
         painter->fillPath(path, m_color.lighter());
 
+        // Stroke only the peaks outline, not the bottom closing line, so
+        // the dark horizontal edge does not fight the rounded clip corners.
         QPen pen(painter->pen());
         pen.setColor(m_color.darker());
-        painter->strokePath(path, pen);
+        painter->strokePath(peaksPath, pen);
 
         if (qmlProducer)
             qmlProducer->producer().unlock();
