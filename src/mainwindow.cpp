@@ -135,6 +135,9 @@ static bool eventDebugCallback(void **data)
 }
 
 static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
+// Bump kDockLayoutVersion whenever a new dock is added to setupAndConnectDocks().
+// This triggers a one-time re-tabification for users upgrading from an older saved state.
+static constexpr int kDockLayoutVersion = 1;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -2727,6 +2730,12 @@ void MainWindow::readWindowSettings()
     if (!Settings.windowGeometry().isEmpty()) {
         restoreState(Settings.windowState());
         restoreGeometry(Settings.windowGeometry());
+        // Re-tabify docks that were added after the user's saved layout version.
+        if (Settings.dockLayoutVersion() < kDockLayoutVersion) {
+            tabifyDockWidget(m_recentDock, m_filesDock);
+            tabifyDockWidget(m_filesDock, m_elementsDock);
+            Settings.setDockLayoutVersion(kDockLayoutVersion);
+        }
     } else {
         restoreState(kLayoutEditingDefault);
     }

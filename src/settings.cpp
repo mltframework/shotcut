@@ -371,6 +371,16 @@ void ShotcutSettings::setWindowStateDefault(const QByteArray &a)
     settings.setValue("windowStateDefault", a);
 }
 
+int ShotcutSettings::dockLayoutVersion() const
+{
+    return settings.value("dockLayoutVersion", 0).toInt();
+}
+
+void ShotcutSettings::setDockLayoutVersion(int v)
+{
+    settings.setValue("dockLayoutVersion", v);
+}
+
 /*!
     \qmlproperty string Settings::viewMode
     \brief The current view mode of the Playlist panel (e.g. \c "details", \c "icons").

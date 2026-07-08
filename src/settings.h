@@ -122,6 +122,8 @@ public:
     void setWindowState(const QByteArray &);
     QByteArray windowStateDefault() const;
     void setWindowStateDefault(const QByteArray &);
+    int dockLayoutVersion() const;
+    void setDockLayoutVersion(int);
     QString viewMode() const;
     void setViewMode(const QString &viewMode);
     QString exportFrameSuffix() const;
