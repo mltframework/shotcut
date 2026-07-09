@@ -4199,6 +4199,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Link, palette.color(QPalette::Highlight).lighter());
         palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
         palette.setColor(QPalette::PlaceholderText, palette.color(QPalette::Text).darker());
+        palette.setColor(QPalette::Disabled, QPalette::Base, palette.color(QPalette::Base).darker());
         palette.setColor(QPalette::Disabled, QPalette::Text, palette.color(QPalette::Text).darker());
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
