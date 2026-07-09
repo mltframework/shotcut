@@ -90,14 +90,14 @@ void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
 {
     if (role == QPalette::Base) {
         widget->setStyleSheet("QLineEdit {"
-                              " font-weight: bold;"
                               " background-color: palette(highlight);"
                               " color: palette(highlighted-text);"
                               " selection-background-color: palette(alternate-base);"
                               " selection-color: palette(text);"
-                              " padding-top: 2px;"
+                              " font-weight: bold;"
+                              " padding-top: 3px;"
                               " padding-bottom: 2px;"
-                              " border-radius: 4px;"
+                              " border-radius: 12px;"
                               "}"
                               "QLineEdit:hover {"
                               " border: 2px solid palette(button-text);"
@@ -109,9 +109,9 @@ void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
                                       " background-color: %1;"
                                       " color: %2;"
                                       " font-weight: bold;"
-                                      " padding-top: 2px;"
-                                      " padding-bottom: 2px;"
-                                      " border-radius: 4px;"
+                                      " padding-top: 4px;"
+                                      " padding-bottom: 3px;"
+                                      " border-radius: 12px;"
                                       "}")
                                   .arg(highlight, text);
         widget->setStyleSheet(style);

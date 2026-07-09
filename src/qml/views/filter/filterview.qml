@@ -112,7 +112,7 @@ Rectangle {
 
         color: activePalette.highlight
         visible: attachedfiltersmodel.producerTitle != ""
-        radius: 4
+        radius: 12
 
         anchors {
             top: parent.top
@@ -133,7 +133,7 @@ Rectangle {
         color: activePalette.highlightedText
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
-        topPadding: 3
+        topPadding: 4
         bottomPadding: 3
 
         anchors {

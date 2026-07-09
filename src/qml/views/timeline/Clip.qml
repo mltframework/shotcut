@@ -49,7 +49,7 @@ Rectangle {
     property bool isTrackMute: false
     property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
-    readonly property real _cornerRadius: 5
+    readonly property real _cornerRadius: 7.5
     property bool _roundLeft: {
         if (isBlank || !trackRoot || trackRoot.clipCount === 0)
             return false;

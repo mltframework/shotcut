@@ -292,7 +292,7 @@ void NewProjectFolder::setColors()
 {
     const auto highlight = QPalette().color(QPalette::Highlight).name();
     const auto highlightedText = QPalette().color(QPalette::HighlightedText).name();
-    const QString frameStyle = QString("QFrame#%1 { border: 4px solid %2; border-radius: 5px; }");
+    const QString frameStyle = QString("QFrame#%1 { border: 4px solid %2; border-radius: 8px; }");
     ui->frame->setStyleSheet(frameStyle.arg("frame", highlight));
     ui->frame_2->setStyleSheet(frameStyle.arg("frame_2", highlight));
 
@@ -301,8 +301,8 @@ void NewProjectFolder::setColors()
                                        " color: %2;"
                                        " font-weight: bold;"
                                        " margin: -4px -4px 0px -4px;"
-                                       " border-top-left-radius: 5px;"
-                                       " border-top-right-radius: 5px;"
+                                       " border-top-left-radius: 8px;"
+                                       " border-top-right-radius: 8px;"
                                        "}")
                                    .arg(highlight, highlightedText);
     ui->newProjectLabel->setStyleSheet(labelStyle);
