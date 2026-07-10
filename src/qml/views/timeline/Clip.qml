@@ -50,22 +50,24 @@ Rectangle {
     property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
     readonly property real _cornerRadius: 7.5
-    property bool _roundLeft: {
+    property real _roundLeft: {
         if (isBlank || !trackRoot || trackRoot.clipCount === 0)
-            return false;
+            return 0;
         if (index === 0)
-            return true;
+            return _cornerRadius;
         const prev = trackRoot.clipAt(index - 1);
-        return prev !== null && prev !== undefined && prev.isBlank;
+        return (prev && prev.isBlank) ? _cornerRadius : 0;
     }
-    property bool _roundRight: {
+    property real _roundRight: {
         if (isBlank || !trackRoot)
-            return false;
+            return 0;
         if (index === trackRoot.clipCount - 1)
-            return true;
+            return _cornerRadius;
         const next = trackRoot ? trackRoot.clipAt(index + 1) : null;
-        return next !== null && next !== undefined && next.isBlank;
+        return (next && next.isBlank) ? _cornerRadius : 0;
     }
+    readonly property real _leftRoundedInset: _roundLeft / 2
+    readonly property real _rightRoundedInset: _roundRight / 2
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -131,10 +133,10 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
-    topLeftRadius: _roundLeft ? _cornerRadius : 0
-    bottomLeftRadius: _roundLeft ? _cornerRadius : 0
-    topRightRadius: _roundRight ? _cornerRadius : 0
-    bottomRightRadius: _roundRight ? _cornerRadius : 0
+    topLeftRadius: _roundLeft
+    bottomLeftRadius: _roundLeft
+    topRightRadius: _roundRight
+    bottomRightRadius: _roundRight
     clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
@@ -318,7 +320,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + clipRoot.topRightRadius / 2
+        anchors.rightMargin: parent.border.width + _rightRoundedInset
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
@@ -333,7 +335,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + clipRoot.topLeftRadius / 2
+        anchors.leftMargin: parent.border.width + _leftRoundedInset
         anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
@@ -356,11 +358,12 @@ Rectangle {
         id: waveform
 
         readonly property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
-        readonly property real leftOffset: _roundLeft ? _cornerRadius / 2 : parent.border.width
-        readonly property real rightOffset: _roundRight ? _cornerRadius / 2 : parent.border.width
+        readonly property real leftOffset: Math.max(_leftRoundedInset, parent.border.width)
+        readonly property real rightOffset: Math.max(_rightRoundedInset, parent.border.width)
+        readonly property real availableWidth: Math.max(0, clipRoot.width - leftOffset - rightOffset)
 
         visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-        height: (isAudio || parent.height <= 20) ? parent.height - (_roundLeft || _roundRight ? _cornerRadius / 2 : 0) : parent.height / 2
+        height: (isAudio || parent.height <= 20) ? parent.height - (_cornerRadius / 2) : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.leftMargin: leftOffset
@@ -378,7 +381,7 @@ Rectangle {
 
                 trackIndex: clipRoot.trackIndex
                 clipIndex: clipRoot.readonlyClipIndex
-                width: Math.min(clipRoot.width - waveform.leftOffset - waveform.rightOffset, waveform.maxWidth)
+                width: Math.min(waveform.maxWidth, Math.max(0, waveform.availableWidth - index * waveform.maxWidth))
                 height: waveform.height
                 fillColor: clipColor
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
@@ -442,7 +445,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : inThumbnail.width + filtersIcon.width)
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : (inThumbnail.width + filtersIcon.width))
         width: label.width + 2
         height: label.height
     }
@@ -452,6 +455,7 @@ Rectangle {
 
         text: clipName
         visible: !elided && !isBlank && !isTransition
+        width: Math.min(implicitWidth, parent.width - leftLabelBackground.anchors.leftMargin - _rightRoundedInset - 2 * parent.border.width)
         font.pointSize: 8
         color: 'black'
 
@@ -471,7 +475,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? (clipRoot.topRightRadius / 2) : outThumbnail.width)
+        anchors.rightMargin: parent.border.width + _rightRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width)
         width: labelRight.width + 2
         height: labelRight.height
     }
@@ -505,7 +509,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width) + (clipRoot.topLeftRadius / 2)
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
         width: visible ? label.height : 0
         height: label.height
         padding: 0
@@ -529,9 +533,11 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
+        cornerRadius: _roundLeft
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.leftMargin: parent.border.width
+        anchors.topMargin: parent.border.width
         opacity: 0.5
     }
 
@@ -626,9 +632,11 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
+        cornerRadius: _roundRight
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.rightMargin: parent.border.width
+        anchors.topMargin: parent.border.width
         opacity: 0.5
 
         transform: Scale {
@@ -873,6 +881,6 @@ Rectangle {
         bottomLeftRadius: clipRoot.bottomLeftRadius
         topRightRadius: clipRoot.topRightRadius
         bottomRightRadius: clipRoot.bottomRightRadius
-        z: 1
+        z: 10
     }
 }
