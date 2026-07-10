@@ -83,16 +83,52 @@ class TimelinePlayhead : public QQuickPaintedItem
 
 class TimelineTriangle : public QQuickPaintedItem
 {
+    Q_OBJECT
+    Q_PROPERTY(qreal cornerRadius READ cornerRadius WRITE setCornerRadius NOTIFY cornerRadiusChanged)
+
 public:
     TimelineTriangle() { setAntialiasing(true); }
+
+    qreal cornerRadius() const { return m_cornerRadius; }
+
+    void setCornerRadius(qreal radius)
+    {
+        radius = qMax<qreal>(0.0, radius);
+        if (qFuzzyCompare(m_cornerRadius, radius))
+            return;
+        m_cornerRadius = radius;
+        emit cornerRadiusChanged();
+        update();
+    }
+
     void paint(QPainter *painter)
     {
+        const qreal w = width();
+        const qreal h = height();
+        if (w <= 0.0 || h <= 0.0)
+            return;
+
+        const qreal radius = qMin(m_cornerRadius, qMin(w, h));
         QPainterPath path;
-        path.moveTo(0, 0);
-        path.lineTo(width(), 0);
-        path.lineTo(0, height());
+        if (radius > 0.0) {
+            path.moveTo(0, h);
+            path.lineTo(0, radius);
+            path.quadTo(0, 0, radius, 0);
+            path.lineTo(w, 0);
+        } else {
+            path.moveTo(0, 0);
+            path.lineTo(w, 0);
+            path.lineTo(0, h);
+        }
+        path.closeSubpath();
         painter->fillPath(path, Qt::black);
     }
+
+signals:
+    void cornerRadiusChanged();
+
+private:
+    qreal m_cornerRadius{0.0};
 };
 
 class TimelineWaveform : public QQuickPaintedItem
