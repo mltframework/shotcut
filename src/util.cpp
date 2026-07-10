@@ -97,7 +97,7 @@ void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
                               " font-weight: bold;"
                               " padding-top: 3px;"
                               " padding-bottom: 2px;"
-                              " border-radius: 12px;"
+                              " border-radius: 11px;"
                               "}"
                               "QLineEdit:hover {"
                               " border: 2px solid palette(button-text);"
@@ -111,7 +111,7 @@ void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
                                       " font-weight: bold;"
                                       " padding-top: 4px;"
                                       " padding-bottom: 3px;"
-                                      " border-radius: 12px;"
+                                      " border-radius: 11px;"
                                       "}")
                                   .arg(highlight, text);
         widget->setStyleSheet(style);

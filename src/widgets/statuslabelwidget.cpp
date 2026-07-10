@@ -71,7 +71,7 @@ StatusLabelWidget::StatusLabelWidget(QWidget *parent)
     const QString style = QString("QWidget {"
                                   " background-color: %1;"
                                   " color: %2;"
-                                  " border-radius: 14px;"
+                                  " border-radius: 12px;"
                                   "}")
                               .arg(highlight, text);
     setStyleSheet(style);

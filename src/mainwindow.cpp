@@ -6755,7 +6755,7 @@ void MainWindow::updateLayoutSwitcher()
             button->setDefaultAction(ui->actionLayoutPlayer);
             layoutGrid->addWidget(button, 1, 2, Qt::AlignCenter);
             layoutSwitcher->setStyleSheet(
-                "QToolButton { border-radius: 12px; }"
+                "QToolButton { border-radius: 8px; }"
                 "QToolButton:checked { background-color: palette(highlight);"
                 " color: palette(highlighted-text); }");
         }
@@ -6780,7 +6780,7 @@ void MainWindow::updateLayoutSwitcher()
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutPlayer);
         }
         const QString layoutBtnStyle = QStringLiteral(
-            "QToolButton { border-radius: 12px; }"
+            "QToolButton { border-radius: 8px; }"
             "QToolButton:checked { background-color: palette(highlight);"
             " color: palette(highlighted-text); }");
         const QList<QAction *> layoutActions{ui->actionLayoutLogging,
