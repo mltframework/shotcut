@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "gpuinfo.h"
 #include "mainwindow.h"
+#include "rustbridge/sap_ffi.h"
 #include "settings.h"
 
 #include <framework/mlt_log.h>
@@ -34,6 +35,8 @@
 #include <QSysInfo>
 #include <QtGlobal>
 #include <QtWidgets>
+#include <string>
+#include <thread>
 
 #ifdef Q_OS_MAC
 #include "macos.h"
@@ -430,6 +433,16 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
+    // SAP (Snapshot App Protocol): SNAPSHOT_HEADLESS must be handled before
+    // Application/QApplication is constructed below -- QPA platform
+    // selection happens at construction time, so this env var can't be
+    // acted on any later. Per memory/head/gen/rust-fork/08-lifecycle-and-cli.md,
+    // this (like the rest of SAP) is strictly opt-in: stock Shotcut behavior
+    // is unchanged when SNAPSHOT_HEADLESS is unset.
+    if (qgetenv("SNAPSHOT_HEADLESS") == "1") {
+        ::qputenv("QT_QPA_PLATFORM", "offscreen");
+    }
+
     Application a(argc, argv);
     int result = EXIT_SUCCESS;
 #ifdef Q_OS_WIN
@@ -569,6 +582,29 @@ int main(int argc, char **argv)
             a.mainWindow->openMultiple(ls);
         } else {
             a.mainWindow->open(a.mainWindow->untitledFileName());
+        }
+
+        // SAP (Snapshot App Protocol): opt-in only, per
+        // memory/head/gen/rust-fork/{02-rust-embedding,08-lifecycle-and-cli}.md.
+        // Absent SNAPSHOT_SAP_SOCKET, this process behaves exactly like
+        // stock Shotcut -- no socket is opened, nothing below runs. This is
+        // the actual "Rust layer runs inside the Qt process" integration
+        // point: the sap-rust server is spawned on its own background
+        // std::thread (never the Qt main thread, since sap_start_server
+        // blocks running a tokio runtime for the server's lifetime) only
+        // once MainWindow exists and is usable.
+        if (qEnvironmentVariableIsSet("SNAPSHOT_SAP_SOCKET")) {
+            const std::string sapSocketPath = qgetenv("SNAPSHOT_SAP_SOCKET").toStdString();
+            const std::string sapToken = qgetenv("SNAPSHOT_SAP_TOKEN").toStdString();
+            // Must run on the Qt main thread (plain QObject::connect, not a
+            // cross-thread call) -- so this happens here, before handing
+            // the server itself off to a background thread.
+            sap_install_notification_bridge(a.mainWindow);
+            std::thread([mw = a.mainWindow, sapSocketPath, sapToken]() {
+                sap_start_server(mw, sapSocketPath.c_str(), sapToken.c_str());
+            }).detach();
+            LOG_INFO() << "SAP server starting, socket ="
+                       << QString::fromStdString(sapSocketPath);
         }
 
         result = a.exec();

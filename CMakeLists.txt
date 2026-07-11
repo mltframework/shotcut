@@ -70,6 +70,22 @@ if(NOT FFTW_FOUND)
   pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw)
 endif()
 
+# SAP (Snapshot App Protocol) Rust layer, per
+# memory/head/gen/rust-fork/02-rust-embedding.md. Additive only: builds
+# ../sap-rust (a sibling crate, not nested inside this fork) via corrosion
+# and exposes it as a linkable `sap_rust` CMake target (a static library,
+# per Cargo.toml's `crate-type = ["rlib", "staticlib"]`). real_ffi enables
+# the real Qt/C-ABI-backed Backend (src/rustbridge/sap_ffi.{h,cpp} below)
+# instead of the crate's own default MockBackend.
+include(FetchContent)
+FetchContent_Declare(
+  Corrosion
+  GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+  GIT_TAG v0.5.2
+)
+FetchContent_MakeAvailable(Corrosion)
+corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml FEATURES real_ffi)
+
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)

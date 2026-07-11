@@ -133,6 +133,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/thumbnailprovider.cpp qmltypes/thumbnailprovider.h
   qmltypes/timelineitems.cpp qmltypes/timelineitems.h
   resources.qrc
+  rustbridge/sap_ffi.cpp rustbridge/sap_ffi.h
   scrubbar.cpp scrubbar.h
   settings.cpp settings.h
   sharedframe.cpp sharedframe.h
@@ -308,6 +309,7 @@ target_link_libraries(shotcut
   Qt6::QuickControls2
   Qt6::QuickWidgets
   Qt6::Sql
+  sap_rust
   Qt6::WebSockets
   Qt6::Widgets
   Qt6::Xml
