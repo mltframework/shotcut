@@ -9,12 +9,16 @@
 
 #include "sap_ffi.h"
 
+#include "commands/timelinecommands.h"
 #include "docks/timelinedock.h"
 #include "mainwindow.h"
+#include "mltcontroller.h"
 #include "models/multitrackmodel.h"
 #include "player.h"
 
+#include <QBuffer>
 #include <QByteArray>
+#include <QImage>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -245,6 +249,144 @@ int sap_playback_seek(void *mainWindowHandle, long long frame)
     if (!QMetaObject::invokeMethod(mw, seek, Qt::BlockingQueuedConnection))
         return -1;
     return result;
+}
+
+char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, path, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+
+            // Open the source as a real MLT producer, exactly like
+            // MainWindow::open()/Controller::open() do for a user-selected
+            // file -- this is what lets appendClip take a path directly
+            // instead of being limited to whatever happens to be on the
+            // clipboard/"current source" (the prior stub's documented gap).
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+
+            const QString xml = MLT.XML(&producer);
+            if (xml.isEmpty())
+                return;
+
+            // The real, undoable primitive TimelineDock::appendFromPlaylist()
+            // pushes internally (timelinedock.cpp) -- lands on MAIN's
+            // QUndoStack, so this is a genuine user-equivalent append, not a
+            // bypass of undo/redo.
+            //
+            // Note: an empty track starts with a single blank placeholder
+            // clip that gets consumed/replaced by the real append, so clip
+            // count does not necessarily increase by 1 (it can even stay
+            // the same) -- do not infer success from a before/after count
+            // delta. The last clip on the track after the push is always
+            // the one just appended.
+            mw->undoStack()->push(new Timeline::AppendCommand(*model, trackIndex, xml, false));
+            const int index = dock->clipCount(trackIndex) - 1;
+            if (index < 0)
+                return;
+
+            auto info = model->getClipInfo(trackIndex, index);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(index);
+            result["index"] = index;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+unsigned char *sap_get_frame(void *mainWindowHandle,
+                             long long frame,
+                             const char *format,
+                             int *outLen)
+{
+    if (outLen)
+        *outLen = 0;
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !outLen || frame < 0 || frame > std::numeric_limits<int>::max())
+        return nullptr;
+
+    QByteArray formatUpper = format ? QByteArray(format).toUpper() : QByteArray("JPEG");
+    if (formatUpper == "JPG")
+        formatUpper = "JPEG";
+    if (formatUpper != "JPEG" && formatUpper != "PNG")
+        formatUpper = "JPEG";
+
+    QByteArray encoded;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, frame, formatUpper, &encoded, &ok]() {
+            // FFI-driven edits (sap_add_track/sap_append_clip) mutate the
+            // MultitrackModel/tractor directly and do not go through
+            // MainWindow::seekTimeline(), which is the normal UI path that
+            // points the live Controller::producer() at the timeline
+            // tractor (mainwindow.cpp). Without this, MLT.producer() can
+            // still be the original blank/untitled producer even after
+            // real appends. Mirror seekTimeline()'s own sync check here so
+            // getFrame renders the actual composited timeline, using the
+            // same real primitive (MLT.setProducer over the multitrack
+            // tractor), not a workaround.
+            if (mw->isMultitrackValid()
+                && (!MLT.producer() || !MLT.producer()->is_valid()
+                    || (void *) MLT.producer()->get_producer()
+                           != (void *) mw->multitrack()->get_producer())) {
+                MLT.setProducer(new Mlt::Producer(*mw->multitrack()));
+            }
+            // Renders off the same live Mlt::Producer/tractor that drives
+            // the app's own preview (Controller::producer()), via the same
+            // Controller::image() primitive Shotcut's own timeline/property
+            // thumbnails already use (mltcontroller.cpp) -- a real decode
+            // of the actual composited project, not a mock.
+            Mlt::Producer *producer = MLT.producer();
+            if (!producer || !producer->is_valid())
+                return;
+            const int width = MLT.profile().width();
+            const int height = MLT.profile().height();
+            if (width <= 0 || height <= 0)
+                return;
+            QImage image = MLT.image(*producer, static_cast<int>(frame), width, height);
+            if (image.isNull())
+                return;
+            QBuffer buffer(&encoded);
+            if (!buffer.open(QIODevice::WriteOnly))
+                return;
+            ok = image.save(&buffer, formatUpper.constData());
+        },
+        Qt::BlockingQueuedConnection);
+
+    if (!ok || encoded.isEmpty())
+        return nullptr;
+
+    auto *buffer = static_cast<unsigned char *>(std::malloc(static_cast<size_t>(encoded.size())));
+    if (!buffer)
+        return nullptr;
+    std::memcpy(buffer, encoded.constData(), static_cast<size_t>(encoded.size()));
+    *outLen = encoded.size();
+    return buffer;
+}
+
+void sap_free_bytes(unsigned char *buf)
+{
+    std::free(buf);
 }
 
 void sap_free_string(char *s)

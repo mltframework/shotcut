@@ -60,6 +60,51 @@ int sap_project_redo(void *mainWindowHandle);
  * failed cross-thread invocation. */
 int sap_playback_seek(void *mainWindowHandle, long long frame);
 
+/* Opens sourcePath as a real Mlt::Producer (the same primitive
+ * MainWindow::open()/Controller::open() use for a user-selected file) and
+ * appends it to the track at trackIndex via the real, undoable
+ * Timeline::AppendCommand -- the same QUndoCommand
+ * TimelineDock::appendFromPlaylist() pushes internally
+ * (timelinedock.cpp), so this is a genuine user-equivalent append (visible
+ * to Ctrl+Z), not a bypass of undo/redo. Unlike TimelineDock::append(),
+ * which only reads from the system clipboard/"current source", this takes
+ * the source path directly.
+ *
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the appended clip, e.g. `{"clipId":"t0c0","index":0,"inFrame":0,
+ * "outFrame":119}`, built from the real MultitrackModel::getClipInfo()
+ * after the append. NULL on error (invalid handle/trackIndex, or
+ * sourcePath fails to open as a valid MLT producer). Caller must free the
+ * returned pointer via sap_free_string. */
+char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath);
+
+/* Renders the pixels of the given absolute timeline frame from the
+ * currently open project's live producer (Controller::producer(), the same
+ * Mlt::Producer instance driving the app's own preview/player), using the
+ * real Controller::image() primitive (mltcontroller.cpp) that Shotcut's own
+ * timeline/property thumbnails already call, then encodes the result via
+ * Qt's QImage::save() -- JPEG unless format is "png"/"PNG". *outLen
+ * receives the byte length of the returned buffer; returns NULL (and
+ * *outLen = 0) on error (invalid handle/frame/producer, or no image codec
+ * plugin available for the requested format). Caller must free the
+ * returned pointer via sap_free_bytes.
+ *
+ * Caveat (documented limitation, not a bug): Controller::image() seeks the
+ * shared MLT.producer() instance to render, exactly like Shotcut's existing
+ * thumbnail code -- it is not isolated from a concurrently *playing* live
+ * preview. Calling this while the consumer is actively playing can visibly
+ * perturb playback position. This is acceptable for a headless/offscreen
+ * agent-driven session (no user-visible preview is running there); a
+ * fully isolated grab (rendering off a cloned producer/consumer so it never
+ * touches shared playback state) is flagged as follow-up work. */
+unsigned char *sap_get_frame(void *mainWindowHandle,
+                             long long frame,
+                             const char *format,
+                             int *outLen);
+
+/* Frees a byte buffer returned by sap_get_frame. */
+void sap_free_bytes(unsigned char *buf);
+
 /* Frees a string returned by sap_list_tracks. */
 void sap_free_string(char *s);
 
