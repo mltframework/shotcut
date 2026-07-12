@@ -13,6 +13,7 @@
 #include "docks/timelinedock.h"
 #include "docks/playlistdock.h"
 #include "models/playlistmodel.h"
+#include "models/markersmodel.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
@@ -21,6 +22,7 @@
 #include <Mlt.h>
 #include <QBuffer>
 #include <QByteArray>
+#include <QColor>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
@@ -547,6 +549,22 @@ QJsonObject playlistEntryToJson(int index, Mlt::ClipInfo *info)
     return entry;
 }
 
+// Builds the standard `markers.*` JSON marker object from a real
+// Markers::Marker, matching sap-rust's `Marker` wire shape (backend.rs):
+// `endFrame` is present only when the marker has a non-degenerate range
+// (end != start), same convention MockBackend/MltBackend use.
+QJsonObject markerToJson(int index, const Markers::Marker &marker)
+{
+    QJsonObject entry;
+    entry["index"] = index;
+    entry["frame"] = marker.start;
+    if (marker.end != marker.start)
+        entry["endFrame"] = marker.end;
+    entry["text"] = marker.text;
+    entry["color"] = marker.color.name(QColor::HexRgb);
+    return entry;
+}
+
 } // namespace
 
 char *sap_filter_add(void *mainWindowHandle,
@@ -838,6 +856,27 @@ char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long
         return nullptr;
     QJsonDocument doc(result);
     return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+long long sap_clip_length_frames(void *mainWindowHandle, int trackIndex, int clipIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    long long result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info)
+                return;
+            result = info->frame_count;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
 }
 
 int sap_filter_remove(void *mainWindowHandle, int trackIndex, int clipIndex, int filterIndex)
@@ -1375,6 +1414,227 @@ char *sap_playlist_list(void *mainWindowHandle)
         return nullptr;
     QJsonDocument doc(result);
     return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_markers_append(void *mainWindowHandle, long long frame, const char *text, const char *color)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, frame, text, color, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            Markers::Marker marker;
+            marker.text = QString::fromUtf8(text ? text : "");
+            marker.start = static_cast<int>(frame);
+            marker.end = static_cast<int>(frame);
+            marker.color = QColor(QString::fromUtf8(color && *color ? color : "#FF0000"));
+            const int index = model->getMarkers().size();
+            model->append(marker);
+            result = markerToJson(index, model->getMarker(index));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_markers_remove(void *mainWindowHandle, int markerIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, markerIndex, &result]() {
+            auto *model = mw->timelineDock()->markersModel();
+            if (markerIndex < 0 || markerIndex >= model->getMarkers().size())
+                return;
+            model->remove(markerIndex);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_markers_update(void *mainWindowHandle,
+                         int markerIndex,
+                         long long frame,
+                         long long endFrame,
+                         const char *text,
+                         const char *color)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, markerIndex, frame, endFrame, text, color, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            if (markerIndex < 0 || markerIndex >= model->getMarkers().size())
+                return;
+            Markers::Marker marker;
+            marker.text = QString::fromUtf8(text ? text : "");
+            marker.start = static_cast<int>(frame);
+            marker.end = static_cast<int>(endFrame);
+            marker.color = QColor(QString::fromUtf8(color && *color ? color : "#FF0000"));
+            model->update(markerIndex, marker);
+            result = markerToJson(markerIndex, model->getMarker(markerIndex));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_markers_move(void *mainWindowHandle, int markerIndex, long long start, long long end)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, markerIndex, start, end, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            if (markerIndex < 0 || markerIndex >= model->getMarkers().size())
+                return;
+            model->move(markerIndex, static_cast<int>(start), static_cast<int>(end));
+            result = markerToJson(markerIndex, model->getMarker(markerIndex));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_markers_set_color(void *mainWindowHandle, int markerIndex, const char *color)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel() || !color)
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, markerIndex, color, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            if (markerIndex < 0 || markerIndex >= model->getMarkers().size())
+                return;
+            model->setColor(markerIndex, QColor(QString::fromUtf8(color)));
+            result = markerToJson(markerIndex, model->getMarker(markerIndex));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_markers_clear(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, &result]() {
+            mw->timelineDock()->markersModel()->clear();
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_markers_list(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return nullptr;
+    QJsonArray result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            const auto markers = model->getMarkers();
+            for (int i = 0; i < markers.size(); ++i)
+                result.append(markerToJson(i, markers.at(i)));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_markers_get(void *mainWindowHandle, int markerIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, markerIndex, &result, &ok]() {
+            auto *model = mw->timelineDock()->markersModel();
+            if (markerIndex < 0 || markerIndex >= model->getMarkers().size())
+                return;
+            result = markerToJson(markerIndex, model->getMarker(markerIndex));
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+long long sap_markers_next(void *mainWindowHandle, long long fromFrame)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return -1;
+    long long result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, fromFrame, &result]() {
+            result = mw->timelineDock()->markersModel()->nextMarkerPosition(static_cast<int>(fromFrame));
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+long long sap_markers_prev(void *mainWindowHandle, long long fromFrame)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->markersModel())
+        return -1;
+    long long result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, fromFrame, &result]() {
+            result = mw->timelineDock()->markersModel()->prevMarkerPosition(static_cast<int>(fromFrame));
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
 }
 
 void sap_free_string(char *s)

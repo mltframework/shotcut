@@ -198,6 +198,11 @@ int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, lon
  * clip). Caller must free via sap_free_string. */
 char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long long position);
 
+/* Returns the clip's length in frames (Mlt::ClipInfo::frame_count, i.e.
+ * frame_out - frame_in + 1) for the clip at (trackIndex, clipIndex), or -1
+ * on error (invalid handle/track/clip). */
+long long sap_clip_length_frames(void *mainWindowHandle, int trackIndex, int clipIndex);
+
 /* Playlist ("Source"/bin panel, PlaylistDock, distinct from the per-track
  * timeline clips above) operations, via the real PlaylistModel slots
  * (append/insert/remove/move) -- these are NOT part of the undo stack in
@@ -213,6 +218,44 @@ int sap_playlist_remove(void *mainWindowHandle, int index);
 int sap_playlist_move(void *mainWindowHandle, int fromIndex, int toIndex);
 char *sap_playlist_get(void *mainWindowHandle, int index);
 char *sap_playlist_list(void *mainWindowHandle);
+
+/* Timeline markers (real TimelineDock::markersModel(), MarkersModel), per
+ * 01's `markers.*` namespace. Marker JSON shape:
+ * `{"index":N,"frame":N,"endFrame":N|absent,"text":"...","color":"#RRGGBB"}`
+ * -- "endFrame" is present only for range markers (end != start), mirroring
+ * MockBackend/MltBackend's `Marker::end_frame`. `color` accepts anything
+ * QColor's constructor parses ("#RRGGBB", "#AARRGGBB", named colors); the
+ * output is always normalized to "#RRGGBB" (marker colors have no alpha in
+ * real Shotcut -- see markerToProperties() in markersmodel.cpp). All
+ * mutations go through the real Markers::AppendCommand/DeleteCommand/
+ * UpdateCommand/ClearCommand (undoable via Ctrl+Z, MAIN.undoStack()) --
+ * MarkersModel's own append/remove/update/move/setColor/clear slots
+ * already construct+push these, so these wrappers call those slots
+ * directly rather than duplicating command construction. Caller must free
+ * string results via sap_free_string. */
+char *sap_markers_append(void *mainWindowHandle, long long frame, const char *text, const char *color);
+int sap_markers_remove(void *mainWindowHandle, int markerIndex);
+/* Full-replace update (frame/endFrame/text/color all required) -- callers
+ * on the Rust side resolve `markers.update`'s optional fields against the
+ * marker's current state (via sap_markers_get) before calling this, same
+ * division of labor as edit.setTrackProperties's independent per-field FFI
+ * calls. endFrame == frame means a point marker (no range). */
+char *sap_markers_update(void *mainWindowHandle,
+                         int markerIndex,
+                         long long frame,
+                         long long endFrame,
+                         const char *text,
+                         const char *color);
+char *sap_markers_move(void *mainWindowHandle, int markerIndex, long long start, long long end);
+char *sap_markers_set_color(void *mainWindowHandle, int markerIndex, const char *color);
+int sap_markers_clear(void *mainWindowHandle);
+char *sap_markers_list(void *mainWindowHandle);
+char *sap_markers_get(void *mainWindowHandle, int markerIndex);
+/* Next/previous marker (start or end) strictly after/before fromFrame, or
+ * -1 if none, via the real MarkersModel::nextMarkerPosition()/
+ * prevMarkerPosition(). */
+long long sap_markers_next(void *mainWindowHandle, long long fromFrame);
+long long sap_markers_prev(void *mainWindowHandle, long long fromFrame);
 
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
