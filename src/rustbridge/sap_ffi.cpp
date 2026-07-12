@@ -649,6 +649,58 @@ char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex)
     return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
+int sap_filter_remove(void *mainWindowHandle, int trackIndex, int clipIndex, int filterIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, filterIndex, &result]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            if (filterIndex < 0 || filterIndex >= cut->filter_count())
+                return;
+            QScopedPointer<Mlt::Filter> filter(cut->filter(filterIndex));
+            if (!filter || !filter->is_valid())
+                return;
+            if (cut->detach(*filter) != 0)
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, int fromIndex, int toIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, fromIndex, toIndex, &result]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            const int count = cut->filter_count();
+            if (fromIndex < 0 || fromIndex >= count || toIndex < 0 || toIndex >= count)
+                return;
+            if (cut->move_filter(fromIndex, toIndex) != 0)
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 char *sap_list_tracks(void *mainWindowHandle)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);

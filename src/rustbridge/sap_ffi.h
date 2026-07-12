@@ -146,6 +146,18 @@ int sap_filter_set_property(void *mainWindowHandle,
  * handle/track/clip). Caller must free via sap_free_string. */
 char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex);
 
+/* Removes the filterIndex-th filter attached to the clip at (trackIndex,
+ * clipIndex) via the real Mlt::Service::detach(). Same non-undoable
+ * caveat as sap_filter_add. Returns 0 on success, -1 on error (invalid
+ * handle/track/clip/filterIndex). */
+int sap_filter_remove(void *mainWindowHandle, int trackIndex, int clipIndex, int filterIndex);
+
+/* Moves the filter at fromIndex to toIndex in the clip's raw MLT filter
+ * chain via the real Mlt::Service::move_filter(). Same non-undoable
+ * caveat as sap_filter_add. Returns 0 on success, -1 on error (invalid
+ * handle/track/clip/index). */
+int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, int fromIndex, int toIndex);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
