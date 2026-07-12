@@ -514,6 +514,34 @@ std::unique_ptr<Mlt::ClipInfo> resolveClipInfo(MultitrackModel *model,
 // MLT filter's property set, matching how filter properties are typically
 // supplied by the filter panel's QML metadata bindings (string properties
 // for combo/text values, numeric for sliders).
+// Maps 01-jsonrpc-spec.md's filter.addKeyframe interpolation strings onto
+// the real MLT keyframe-type enum -- "" (default)/"smooth"/"discrete"|
+// "hold", matching MltBackend's own tag mapping (mlt_backend.rs) for
+// consistency between the two backends' accepted spellings.
+mlt_keyframe_type interpolationFromString(const QString &s)
+{
+    if (s == QLatin1String("smooth"))
+        return mlt_keyframe_smooth;
+    if (s == QLatin1String("discrete") || s == QLatin1String("hold"))
+        return mlt_keyframe_discrete;
+    return mlt_keyframe_linear;
+}
+
+QString keyframeTypeToString(mlt_keyframe_type type)
+{
+    switch (type) {
+    case mlt_keyframe_discrete:
+        return QStringLiteral("discrete");
+    case mlt_keyframe_smooth:
+    case mlt_keyframe_smooth_natural:
+    case mlt_keyframe_smooth_tight:
+        return QStringLiteral("smooth");
+    case mlt_keyframe_linear:
+    default:
+        return QStringLiteral("linear");
+    }
+}
+
 void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
 {
     for (auto it = props.constBegin(); it != props.constEnd(); ++it) {
@@ -613,11 +641,12 @@ char *sap_filter_add(void *mainWindowHandle,
 }
 
 int sap_filter_set_property(void *mainWindowHandle,
-                            int trackIndex,
-                            int clipIndex,
-                            int filterIndex,
-                            const char *property,
-                            const char *valueJson)
+                           int trackIndex,
+                           int clipIndex,
+                           int filterIndex,
+                           const char *property,
+                            const char *valueJson,
+                            long long position)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
     if (!mw || !mw->timelineDock() || !property || !valueJson)
@@ -633,7 +662,7 @@ int sap_filter_set_property(void *mainWindowHandle,
     int result = -1;
     QMetaObject::invokeMethod(
         mw->timelineDock(),
-        [mw, trackIndex, clipIndex, filterIndex, propertyStr, value, &result]() {
+        [mw, trackIndex, clipIndex, filterIndex, propertyStr, value, position, &result]() {
             auto *model = mw->timelineDock()->model();
             Mlt::Producer *cut = nullptr;
             auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
@@ -645,6 +674,28 @@ int sap_filter_set_property(void *mainWindowHandle,
             if (!filter || !filter->is_valid())
                 return;
             const QByteArray key = propertyStr.toUtf8();
+            if (position >= 0) {
+                // Real MLT keyframe at `position` (linear interpolation --
+                // sap_filter_add_keyframe is the entry point for other
+                // interpolation types), via the same anim_set() primitive.
+                int rc = -1;
+                if (value.isBool())
+                    rc = filter->anim_set(key.constData(), value.toBool() ? 1.0 : 0.0, static_cast<int>(position));
+                else if (value.isDouble())
+                    rc = filter->anim_set(key.constData(), value.toDouble(), static_cast<int>(position));
+                else if (value.isString()) {
+                    bool numOk = false;
+                    const double asDouble = value.toString().toDouble(&numOk);
+                    rc = numOk
+                             ? filter->anim_set(key.constData(), asDouble, static_cast<int>(position))
+                             : filter->anim_set(key.constData(),
+                                                value.toString().toUtf8().constData(),
+                                                static_cast<int>(position));
+                }
+                if (rc == 0)
+                    result = 0;
+                return;
+            }
             if (value.isString())
                 filter->set(key.constData(), value.toString().toUtf8().constData());
             else if (value.isBool())
@@ -976,6 +1027,154 @@ int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, in
             if (fromIndex < 0 || fromIndex >= count || toIndex < 0 || toIndex >= count)
                 return;
             if (cut->move_filter(fromIndex, toIndex) != 0)
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_filter_add_keyframe(void *mainWindowHandle,
+                            int trackIndex,
+                            int clipIndex,
+                            int filterIndex,
+                            const char *property,
+                            long long position,
+                            const char *valueJson,
+                            const char *interpolation)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !property || !valueJson)
+        return -1;
+    const QString propertyStr = QString::fromUtf8(property);
+    const QString interpStr = QString::fromUtf8(interpolation ? interpolation : "linear");
+    QJsonParseError err;
+    const QJsonDocument valueDoc = QJsonDocument::fromJson(QByteArray("[") + valueJson + "]", &err);
+    if (err.error != QJsonParseError::NoError || !valueDoc.isArray() || valueDoc.array().size() != 1)
+        return -1;
+    const QJsonValue value = valueDoc.array().at(0);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, filterIndex, propertyStr, position, value, interpStr, &result]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            if (filterIndex < 0 || filterIndex >= cut->filter_count())
+                return;
+            QScopedPointer<Mlt::Filter> filter(cut->filter(filterIndex));
+            if (!filter || !filter->is_valid())
+                return;
+            const QByteArray key = propertyStr.toUtf8();
+            const mlt_keyframe_type kfType = interpolationFromString(interpStr);
+            int rc = -1;
+            if (value.isBool()) {
+                rc = filter->anim_set(key.constData(), value.toBool() ? 1.0 : 0.0, static_cast<int>(position), 0, kfType);
+            } else if (value.isDouble()) {
+                rc = filter->anim_set(key.constData(), value.toDouble(), static_cast<int>(position), 0, kfType);
+            } else if (value.isString()) {
+                bool numOk = false;
+                const double asDouble = value.toString().toDouble(&numOk);
+                rc = numOk ? filter->anim_set(key.constData(), asDouble, static_cast<int>(position), 0, kfType)
+                           : filter->anim_set(key.constData(),
+                                              value.toString().toUtf8().constData(),
+                                              static_cast<int>(position));
+            }
+            if (rc == 0)
+                result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_filter_list_keyframes(void *mainWindowHandle,
+                                int trackIndex,
+                                int clipIndex,
+                                int filterIndex,
+                                const char *property)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !property)
+        return nullptr;
+    const QString propertyStr = QString::fromUtf8(property);
+    QJsonArray result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, filterIndex, propertyStr, &result, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            if (filterIndex < 0 || filterIndex >= cut->filter_count())
+                return;
+            QScopedPointer<Mlt::Filter> filter(cut->filter(filterIndex));
+            if (!filter || !filter->is_valid())
+                return;
+            const QByteArray key = propertyStr.toUtf8();
+            // Not owned by the caller -- see qmlfilter.cpp/encodedock.cpp's
+            // own get_anim() call sites, neither of which deletes it
+            // either; the underlying mlt_animation is cached inside the
+            // property itself.
+            auto *anim = filter->get_anim(key.constData());
+            if (!anim || !anim->is_valid()) {
+                ok = true; // Never keyframed -- empty list, not an error.
+                return;
+            }
+            const int count = anim->key_count();
+            for (int i = 0; i < count; ++i) {
+                int frame = 0;
+                mlt_keyframe_type type = mlt_keyframe_linear;
+                if (anim->key_get(i, frame, type) != 0)
+                    continue;
+                QJsonObject entry;
+                entry["position"] = frame;
+                entry["value"] = filter->anim_get_double(key.constData(), frame);
+                entry["interpolation"] = keyframeTypeToString(type);
+                result.append(entry);
+            }
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_filter_remove_keyframe(void *mainWindowHandle,
+                               int trackIndex,
+                               int clipIndex,
+                               int filterIndex,
+                               const char *property,
+                               long long position)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !property)
+        return -1;
+    const QString propertyStr = QString::fromUtf8(property);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, filterIndex, propertyStr, position, &result]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            if (filterIndex < 0 || filterIndex >= cut->filter_count())
+                return;
+            QScopedPointer<Mlt::Filter> filter(cut->filter(filterIndex));
+            if (!filter || !filter->is_valid())
+                return;
+            const QByteArray key = propertyStr.toUtf8();
+            auto *anim = filter->get_anim(key.constData());
+            if (!anim || !anim->is_valid() || !anim->is_key(static_cast<int>(position)))
+                return;
+            if (anim->remove(static_cast<int>(position)) != 0)
                 return;
             result = 0;
         },

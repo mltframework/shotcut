@@ -137,7 +137,13 @@ int sap_filter_set_property(void *mainWindowHandle,
                             int clipIndex,
                             int filterIndex,
                             const char *property,
-                            const char *valueJson);
+                            const char *valueJson,
+                            long long position);
+/* NOTE: `position` < 0 means "no keyframe position" (set the plain static
+ * property value, same as before this parameter was added). `position` >=
+ * 0 sets a real MLT keyframe at that frame via `Mlt::Properties::
+ * anim_set()` (linear interpolation) instead -- same primitive
+ * `sap_filter_add_keyframe` uses with an explicit interpolation. */
 
 /* Returns a heap-allocated JSON array string describing every filter
  * attached to the clip at (trackIndex, clipIndex), in raw MLT filter-chain
@@ -157,6 +163,57 @@ int sap_filter_remove(void *mainWindowHandle, int trackIndex, int clipIndex, int
  * caveat as sap_filter_add. Returns 0 on success, -1 on error (invalid
  * handle/track/clip/index). */
 int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, int fromIndex, int toIndex);
+
+/* Keyframe operations on one already-attached filter's property, via the
+ * real `Mlt::Properties::anim_set()`/`Mlt::Animation` C-ABI-wrapped MLT
+ * primitives (the same underlying animated-property machinery real
+ * Shotcut's own keyframable filter panel/QmlFilter use -- see
+ * qmlfilter.cpp/encodedock.cpp's own `get_anim()`/`anim_set()` call
+ * sites). Interpolation is one of "linear" (default)/"smooth"/
+ * "discrete"|"hold", matching `01-jsonrpc-spec.md`'s `filter.addKeyframe`
+ * spec. `valueJson` holds one JSON-encoded scalar; string values that
+ * don't parse as a number are stored via MLT's string `anim_set()`
+ * overload, which has no interpolation-type parameter -- MLT itself only
+ * interpolates numeric animated properties, so a string keyframe's
+ * `interpolation` argument is accepted but has no effect (same real MLT
+ * limitation, not a shim compromise). Same non-undoable caveat as
+ * sap_filter_add (no lightweight QUndoCommand exists for raw MLT filter
+ * property mutation). Returns 0 on success, -1 on error (invalid
+ * handle/track/clip/filterIndex, or unparseable valueJson).
+ *
+ * sap_filter_list_keyframes returns a heap-allocated JSON array
+ * `[{"position":N,"value":<number>,"interpolation":"linear"|"smooth"|
+ * "discrete"},...]` in keyframe order (empty array, not NULL, when the
+ * property has never been keyframed), or NULL on error (invalid
+ * handle/track/clip/filterIndex). Caller must free via sap_free_string.
+ * NOTE: values are always read back as doubles (`anim_get_double()`) --
+ * string-valued keyframed properties round-trip through this call as
+ * their numeric parse if any, else 0; rect/color animated properties
+ * (e.g. Size Position Rotate's "rect") are not supported by this call at
+ * all (out of scope for this shim; flagged as follow-up work). */
+int sap_filter_add_keyframe(void *mainWindowHandle,
+                            int trackIndex,
+                            int clipIndex,
+                            int filterIndex,
+                            const char *property,
+                            long long position,
+                            const char *valueJson,
+                            const char *interpolation);
+char *sap_filter_list_keyframes(void *mainWindowHandle,
+                                int trackIndex,
+                                int clipIndex,
+                                int filterIndex,
+                                const char *property);
+/* Removes the keyframe at exactly `position` via the real
+ * `Mlt::Animation::remove()`. Returns 0 on success, -1 on error (invalid
+ * handle/track/clip/filterIndex, no keyframes on that property, or no
+ * keyframe exactly at `position`). */
+int sap_filter_remove_keyframe(void *mainWindowHandle,
+                               int trackIndex,
+                               int clipIndex,
+                               int filterIndex,
+                               const char *property,
+                               long long position);
 
 /* Returns a heap-allocated JSON array string listing every clip on
  * trackIndex, in playlist order, of the form
