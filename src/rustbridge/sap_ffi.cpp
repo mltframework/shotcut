@@ -32,6 +32,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <limits>
+#include <vector>
 
 namespace {
 
@@ -640,6 +641,172 @@ char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex)
                 entry["mltService"] = QString::fromUtf8(filter->get("mlt_service"));
                 result.append(entry);
             }
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_list_clips(void *mainWindowHandle, int trackIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QJsonArray result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            const int count = dock->clipCount(trackIndex);
+            for (int clipIndex = 0; clipIndex < count; ++clipIndex) {
+                auto info = model->getClipInfo(trackIndex, clipIndex);
+                if (!info)
+                    continue;
+                QJsonObject entry;
+                entry["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(clipIndex);
+                entry["index"] = clipIndex;
+                entry["path"] = QString::fromUtf8(info->resource ? info->resource : "");
+                entry["inFrame"] = info->frame_in;
+                entry["outFrame"] = info->frame_out;
+                result.append(entry);
+            }
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, newInFrame, &result]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info)
+                return;
+            const int delta = static_cast<int>(newInFrame) - info->frame_in;
+            if (delta != 0) {
+                if (!model->trimClipInValid(trackIndex, clipIndex, delta, false))
+                    return;
+                // Real, undoable Timeline::TrimClipInCommand -- constructed
+                // and pushed directly (its redo() performs the actual
+                // mutation, same as the other real primitives in this
+                // file), skipping TimelineDock::trimClipIn()'s stateful
+                // drag-gesture machinery (m_trimCommand/commitTrimCommand,
+                // transition auto-add/remove) which isn't meaningful for a
+                // one-shot programmatic call.
+                auto *command = new Timeline::TrimClipInCommand(*model,
+                                                                 *dock->markersModel(),
+                                                                 trackIndex,
+                                                                 clipIndex,
+                                                                 delta,
+                                                                 /*ripple=*/false);
+                mw->undoStack()->push(command);
+            }
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, newOutFrame, &result]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info)
+                return;
+            // Note the inverted sign convention vs. trim-in: the real
+            // MultitrackModel::trimClipOutValid()/trimClipOut() compute the
+            // new out-point as (frame_out - delta), not (frame_out + delta).
+            const int delta = info->frame_out - static_cast<int>(newOutFrame);
+            if (delta != 0) {
+                if (!model->trimClipOutValid(trackIndex, clipIndex, delta, false))
+                    return;
+                auto *command = new Timeline::TrimClipOutCommand(*model,
+                                                                  *dock->markersModel(),
+                                                                  trackIndex,
+                                                                  clipIndex,
+                                                                  delta,
+                                                                  /*ripple=*/false);
+                mw->undoStack()->push(command);
+            }
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long long position)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, position, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info)
+                return;
+            const int clipStart = info->start;
+            const int clipEnd = clipStart + info->frame_count;
+            const int splitPosition = static_cast<int>(position);
+            if (splitPosition <= clipStart || splitPosition >= clipEnd)
+                return;
+            // Real, undoable Timeline::SplitCommand -- the same primitive
+            // the "Split At Playhead" action uses (constructed directly
+            // with a single-clip vector, same pattern as its multi-clip
+            // "split all selected clips" caller).
+            std::vector<int> trackIndices{trackIndex};
+            std::vector<int> clipIndices{clipIndex};
+            auto *command = new Timeline::SplitCommand(*model, trackIndices, clipIndices, splitPosition);
+            mw->undoStack()->push(command);
+            // After the split, clipIndex is the left half and clipIndex+1
+            // is the newly-inserted right half (real MultitrackModel::
+            // splitClip() inserts the new clip right after the original).
+            result["leftClipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(clipIndex);
+            result["rightClipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(clipIndex + 1);
+            result["leftIndex"] = clipIndex;
+            result["rightIndex"] = clipIndex + 1;
             ok = true;
         },
         Qt::BlockingQueuedConnection);

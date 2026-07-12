@@ -158,6 +158,46 @@ int sap_filter_remove(void *mainWindowHandle, int trackIndex, int clipIndex, int
  * handle/track/clip/index). */
 int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, int fromIndex, int toIndex);
 
+/* Returns a heap-allocated JSON array string listing every clip on
+ * trackIndex, in playlist order, of the form
+ * `[{"clipId":"t0c0","index":0,"path":"...","inFrame":0,"outFrame":299},...]`
+ * (built live from MultitrackModel::getClipInfo() for each slot -- "path"
+ * is the clip's real MLT resource path), or NULL on error (invalid
+ * handle/trackIndex). Caller must free via sap_free_string. */
+char *sap_list_clips(void *mainWindowHandle, int trackIndex);
+
+/* Adjusts the clip's in-point to absolute frame newInFrame via the real
+ * Timeline::TrimClipInCommand (undoable, constructed and pushed directly
+ * -- same primitive the timeline's edge-drag trim gesture uses, called
+ * non-ripple/single-track like a plain drag on one clip's edge, no
+ * transition auto-add/remove). Returns 0 on success, -1 on error (invalid
+ * handle/track/clip/locked track, or newInFrame out of the valid range --
+ * see MultitrackModel::trimClipInValid()). */
+int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame);
+/* NOTE (real, load-bearing MultitrackModel::trimClipIn() behavior, not a
+ * quirk of this shim): non-ripple trim-in with a positive delta (in-point
+ * moving forward, i.e. shrinking the clip from its start) inserts a NEW
+ * blank placeholder immediately to the clip's left when there is no
+ * existing blank there to absorb the gap -- this shifts clipIndex for the
+ * trimmed clip (and everything after it) up by one. Callers must re-query
+ * edit.listClips after a forward trimClipIn to learn the clip's new index
+ * (there is no way to return it from this call -- the shared Backend trait
+ * signature is `-> BackendResult<()>`, same as MockBackend/MltBackend). */
+
+/* Adjusts the clip's out-point to absolute frame newOutFrame via the real
+ * Timeline::TrimClipOutCommand (undoable). Same caveats as
+ * sap_trim_clip_in. Returns 0 on success, -1 on error. */
+int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame);
+
+/* Splits the clip at (trackIndex, clipIndex) at absolute frame position
+ * (relative to the start of the timeline) via the real
+ * Timeline::SplitCommand (undoable) -- the same primitive the "Split At
+ * Playhead" action uses. Returns a heap-allocated JSON object string
+ * `{"leftClipId":"t0c0","rightClipId":"t0c1","leftIndex":0,"rightIndex":1}`,
+ * or NULL on error (invalid handle/track/clip, or position not inside the
+ * clip). Caller must free via sap_free_string. */
+char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long long position);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
