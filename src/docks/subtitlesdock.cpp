@@ -544,7 +544,7 @@ void SubtitlesDock::importSrtFromFile(const QString &srtPath,
 {
     QList<Subtitles::SubtitleItem> items = readSrtFile(srtPath, 0, includeNonspoken);
     if (items.size() == 0) {
-        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        MAIN.showStatusMessage(tr("No subtitles found to import"));
         return;
     }
 
@@ -554,7 +554,7 @@ void SubtitlesDock::importSrtFromFile(const QString &srtPath,
 
     m_model->importSubtitlesToNewTrack(track, items);
 
-    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle item(s)", nullptr, items.size()));
+    MAIN.showStatusMessage(tr("Imported %n subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::addSubtitleTrack()
@@ -656,7 +656,7 @@ void SubtitlesDock::importSubtitles()
         return;
     }
 
-    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+    MAIN.showStatusMessage(tr("Importing subtitles..."));
 
     // Convert the subtitles to SRT using FFMpeg
     QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
@@ -674,7 +674,7 @@ void SubtitlesDock::importSubtitles()
          << "-hide_banner"
          << "-i" << subtitleFi.absoluteFilePath() << tmpFileName;
     LOG_INFO() << ffmpegPath.absoluteFilePath() << args;
-    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+    MAIN.showStatusMessage(tr("Importing subtitles..."));
     proc.setStandardOutputFile(QProcess::nullDevice());
     proc.setReadChannel(QProcess::StandardError);
     proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
@@ -690,12 +690,12 @@ void SubtitlesDock::importSubtitles()
     int64_t msTime = positionToMs(m_pos);
     QList<Subtitles::SubtitleItem> items = readSrtFile(tmpFileName, msTime, true);
     if (items.size() == 0) {
-        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        MAIN.showStatusMessage(tr("No subtitles found to import"));
         return;
     }
     ensureTrackExists();
     m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
-    MAIN.showStatusMessage(QObject::tr("Imported %n subtitle item(s)", nullptr, items.size()));
+    MAIN.showStatusMessage(tr("Imported %n subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::exportSubtitles()
