@@ -198,6 +198,29 @@ int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, lon
  * clip). Caller must free via sap_free_string. */
 char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long long position);
 
+/* Adds a real crossfade transition between two adjacent clips on
+ * trackIndex, via the real Timeline::AddTransitionCommand (undoable) --
+ * the same primitive that runs when a user drags one clip's edge to
+ * overlap its neighbor in the real Timeline panel. This wrapper computes
+ * the equivalent drag by moving secondClipIndex left by durationFrames
+ * (non-ripple, matching sap_trim_clip_in/Out's single-clip semantics), so
+ * the two clips end up overlapping by exactly durationFrames, joined by a
+ * real MLT mix (luma/movit.luma_mix dissolve + mix:-2 crossfade, the exact
+ * real transition services MultitrackModel::addTransition() attaches --
+ * see multitrackmodel.cpp). Returns a heap-allocated JSON object
+ * `{"trackIndex":N,"transitionIndex":N,"betweenClips":[first,second],
+ * "durationFrames":N}` (transitionIndex is the new mix clip's slot in the
+ * track's playlist -- everything from there onward shifts by one clip
+ * index, same re-indexing caveat as sap_trim_clip_in's forward case), or
+ * NULL on error (invalid handle/track/clip, non-adjacent clip indices,
+ * locked track, or durationFrames <= 0 or >= either clip's own length).
+ * Caller must free via sap_free_string. */
+char *sap_transitions_add_crossfade(void *mainWindowHandle,
+                                    int trackIndex,
+                                    int firstClipIndex,
+                                    int secondClipIndex,
+                                    long long durationFrames);
+
 /* Returns the clip's length in frames (Mlt::ClipInfo::frame_count, i.e.
  * frame_out - frame_in + 1) for the clip at (trackIndex, clipIndex), or -1
  * on error (invalid handle/track/clip). */

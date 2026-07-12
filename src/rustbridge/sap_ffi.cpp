@@ -858,6 +858,58 @@ char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long
     return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
+char *sap_transitions_add_crossfade(void *mainWindowHandle,
+                                    int trackIndex,
+                                    int firstClipIndex,
+                                    int secondClipIndex,
+                                    long long durationFrames)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, firstClipIndex, secondClipIndex, durationFrames, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+            if (secondClipIndex != firstClipIndex + 1)
+                return;
+            auto firstInfo = model->getClipInfo(trackIndex, firstClipIndex);
+            auto secondInfo = model->getClipInfo(trackIndex, secondClipIndex);
+            if (!firstInfo || !secondInfo)
+                return;
+            if (durationFrames <= 0 || durationFrames >= firstInfo->frame_count
+                || durationFrames >= secondInfo->frame_count)
+                return;
+            const int position = secondInfo->start - static_cast<int>(durationFrames);
+            auto *command = new Timeline::AddTransitionCommand(*dock,
+                                                                trackIndex,
+                                                                secondClipIndex,
+                                                                position,
+                                                                /*ripple=*/false);
+            mw->undoStack()->push(command);
+            const int transitionIndex = command->getTransitionIndex();
+            if (transitionIndex < 0)
+                return;
+            result["trackIndex"] = trackIndex;
+            result["transitionIndex"] = transitionIndex;
+            result["betweenClips"] = QJsonArray{firstClipIndex, secondClipIndex};
+            result["durationFrames"] = static_cast<double>(durationFrames);
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
 long long sap_clip_length_frames(void *mainWindowHandle, int trackIndex, int clipIndex)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
