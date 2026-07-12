@@ -114,6 +114,63 @@ int sap_remove_track(void *mainWindowHandle, int trackIndex)
     return result;
 }
 
+int sap_set_track_muted(void *mainWindowHandle, int trackIndex, int muted)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, muted, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            model->setTrackMute(trackIndex, muted != 0);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_track_hidden(void *mainWindowHandle, int trackIndex, int hidden)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, hidden, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            model->setTrackHidden(trackIndex, hidden != 0);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_track_locked(void *mainWindowHandle, int trackIndex, int locked)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, locked, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            model->setTrackLock(trackIndex, locked != 0);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 char *sap_list_tracks(void *mainWindowHandle)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -134,6 +191,20 @@ char *sap_list_tracks(void *mainWindowHandle)
                 QJsonObject obj;
                 obj["index"] = i;
                 obj["kind"] = trackKindString(t.type);
+                // Real read-back via MultitrackModel's own public
+                // Is{Mute,Hidden,Locked}Role -- the same roles the QML
+                // timeline UI reads to draw the mute/hide/lock icons
+                // (multitrackmodel.cpp's data()), so this is genuine
+                // current Qt/MLT state, not an echo of whatever was last
+                // requested.
+                const QModelIndex modelIndex = model->index(i, 0);
+                obj["muted"] = model->data(modelIndex, MultitrackModel::IsMuteRole).toBool();
+                obj["hidden"] = model->data(modelIndex, MultitrackModel::IsHiddenRole).toBool();
+                obj["locked"] = model->data(modelIndex, MultitrackModel::IsLockedRole).toBool();
+                // blendMode has no real read-back wired yet (the qtblend/
+                // cairoblend transition lookup is a private model method) --
+                // report the default rather than fabricate a real value.
+                obj["blendMode"] = QStringLiteral("0");
                 tracks.append(obj);
             }
         },

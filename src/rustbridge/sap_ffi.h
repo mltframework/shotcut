@@ -34,6 +34,15 @@ int sap_add_audio_track(void *mainWindowHandle);
  * 0 on success, -1 on error (invalid handle/index). */
 int sap_remove_track(void *mainWindowHandle, int trackIndex);
 
+/* Set a track's mute/hidden(video)/locked state via the real
+ * MultitrackModel::setTrackMute()/setTrackHidden()/setTrackLock() slots
+ * (the same primitives the real Track Properties panel uses -- see
+ * trackpropertieswidget.cpp), each independently callable. Returns 0 on
+ * success, -1 on error (invalid handle/trackIndex). */
+int sap_set_track_muted(void *mainWindowHandle, int trackIndex, int muted);
+int sap_set_track_hidden(void *mainWindowHandle, int trackIndex, int hidden);
+int sap_set_track_locked(void *mainWindowHandle, int trackIndex, int locked);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
