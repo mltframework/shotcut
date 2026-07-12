@@ -16,6 +16,7 @@
 #include "models/multitrackmodel.h"
 #include "player.h"
 
+#include <Mlt.h>
 #include <QBuffer>
 #include <QByteArray>
 #include <QImage>
@@ -23,6 +24,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMetaObject>
+#include <QScopedPointer>
 #include <QThread>
 #include <QString>
 #include <QUndoStack>
@@ -58,6 +60,57 @@ char *newCString(const QByteArray &bytes)
     std::memcpy(buffer, bytes.constData(), static_cast<size_t>(bytes.size()));
     buffer[bytes.size()] = '\0';
     return buffer;
+}
+
+// Duplicates TrackPropertiesWidget::getTransition()'s transition-chain walk
+// (trackpropertieswidget.cpp) rather than calling MultitrackModel's private
+// getVideoBlendTransition() of the same shape -- per sap_ffi.h/.cpp's
+// "only new files" constraint, this file may not add a friend declaration
+// or new public method to multitrackmodel.h. `trackProducer` is the
+// specific track's own Mlt::Producer (model->tractor()->track(mltIndex)),
+// exactly like TrackPropertiesWidget's m_track.
+Mlt::Transition *findTrackBlendTransition(Mlt::Producer &trackProducer, const QString &name)
+{
+    QScopedPointer<Mlt::Service> service(trackProducer.consumer());
+    if (service && service->is_valid()) {
+        Mlt::Multitrack multi(*service);
+        int trackIndex;
+        for (trackIndex = 0; trackIndex < multi.count(); ++trackIndex) {
+            QScopedPointer<Mlt::Producer> producer(multi.track(trackIndex));
+            if (producer->get_producer() == trackProducer.get_producer())
+                break;
+        }
+        while (service && service->is_valid() && mlt_service_tractor_type != service->type()) {
+            if (service->type() == mlt_service_transition_type) {
+                Mlt::Transition t((mlt_transition) service->get_service());
+                if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
+                    return new Mlt::Transition(t);
+            }
+            service.reset(service->consumer());
+        }
+    }
+    return nullptr;
+}
+
+// Same qtblend -> movit.overlay -> cairoblend fallback order as
+// TrackPropertiesWidget's constructor. Returns the transition (caller
+// owns it) and, via `isCairoblend`, which property name/value space
+// applies (BLEND_PROPERTY_QTBLEND's numeric "compositing" property vs
+// BLEND_PROPERTY_CAIROBLEND's named property "1").
+Mlt::Transition *findAnyTrackBlendTransition(Mlt::Producer &trackProducer, bool *isCairoblend)
+{
+    Mlt::Transition *transition = findTrackBlendTransition(trackProducer, QStringLiteral("qtblend"));
+    if (!transition)
+        transition = findTrackBlendTransition(trackProducer, QStringLiteral("movit.overlay"));
+    if (transition) {
+        if (isCairoblend)
+            *isCairoblend = false;
+        return transition;
+    }
+    transition = findTrackBlendTransition(trackProducer, QStringLiteral("frei0r.cairoblend"));
+    if (isCairoblend)
+        *isCairoblend = (transition != nullptr);
+    return transition;
 }
 
 } // namespace
@@ -171,6 +224,239 @@ int sap_set_track_locked(void *mainWindowHandle, int trackIndex, int locked)
     return result;
 }
 
+int sap_reorder_track(void *mainWindowHandle, int fromTrackIndex, int toTrackIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, fromTrackIndex, toTrackIndex, &result]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model)
+                return;
+            const int count = model->trackList().size();
+            if (fromTrackIndex < 0 || fromTrackIndex >= count || toTrackIndex < 0
+                || toTrackIndex >= count)
+                return;
+            if (model->trackList().at(fromTrackIndex).type
+                != model->trackList().at(toTrackIndex).type)
+                return;
+            // The real, undoable TimelineDock::moveTrack() primitive (the
+            // same one the Track panel's up/down move buttons call).
+            dock->moveTrack(fromTrackIndex, toTrackIndex);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_remove_clip(void *mainWindowHandle, int trackIndex, int clipIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, &result]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+            if (clipIndex < 0 || clipIndex >= dock->clipCount(trackIndex))
+                return;
+            // The real, undoable TimelineDock::remove() primitive (the
+            // same one the timeline's Delete/Ripple-Delete action calls).
+            dock->remove(trackIndex, clipIndex, false);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_move_clip(void *mainWindowHandle,
+                    int fromTrackIndex,
+                    int fromClipIndex,
+                    int toTrackIndex,
+                    int toClipIndex,
+                    int ripple)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, fromTrackIndex, fromClipIndex, toTrackIndex, toClipIndex, ripple, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model)
+                return;
+            const int trackCount = model->trackList().size();
+            if (fromTrackIndex < 0 || fromTrackIndex >= trackCount || toTrackIndex < 0
+                || toTrackIndex >= trackCount)
+                return;
+            if (dock->isTrackLocked(fromTrackIndex) || dock->isTrackLocked(toTrackIndex))
+                return;
+            if (fromClipIndex < 0 || fromClipIndex >= dock->clipCount(fromTrackIndex))
+                return;
+
+            // Compute the absolute destination frame position from the
+            // requested clip-slot index -- moveClip() itself (and its
+            // onClipMoved() handler) wants an absolute timeline frame, the
+            // same as a drag-and-drop cursor position would supply.
+            const int destClipCount = dock->clipCount(toTrackIndex);
+            if (toClipIndex < 0 || toClipIndex > destClipCount)
+                return;
+            int targetPosition = 0;
+            if (toClipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(toTrackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        targetPosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(toTrackIndex, toClipIndex);
+                if (!destInfo)
+                    return;
+                targetPosition = destInfo->start;
+            }
+
+            // NOT calling TimelineDock::moveClip() here: that's the
+            // drag-and-drop entry point, and it (a) can silently take a
+            // completely different code path -- emitting transitionAdded
+            // instead of clipMoved when Settings.timelineAllowTransitions()
+            // is on and addTransitionValid() agrees, which is desirable for
+            // a mouse drag but not for an explicit programmatic "move this
+            // clip" call -- and (b) only *emits* clipMoved; the actual
+            // model mutation happens in onClipMoved(), connected via
+            // Qt::QueuedConnection (timelinedock.cpp's constructor), which
+            // does not reliably drain in this headless/offscreen host even
+            // with an explicit processEvents() pump (confirmed live: the
+            // undo stack depth did not change afterward).
+            //
+            // Instead, construct and push the same real, undoable
+            // Timeline::MoveClipCommand that onClipMoved() itself builds
+            // (timelinedock.cpp), replicating its exact delta math
+            // (position delta = target absolute frame minus the source
+            // clip's current start) -- deterministic, synchronous, and
+            // unambiguous for an API-driven move.
+            auto sourceInfo = model->getClipInfo(fromTrackIndex, fromClipIndex);
+            if (!sourceInfo)
+                return;
+            const int positionDelta = targetPosition - sourceInfo->start;
+            const int trackDelta = toTrackIndex - fromTrackIndex;
+            auto *command = new Timeline::MoveClipCommand(*dock, trackDelta, positionDelta, ripple != 0);
+            command->addClip(fromTrackIndex, fromClipIndex);
+            mw->undoStack()->push(command);
+
+            // Re-read the real destination playlist to report where the
+            // clip actually landed (not an echo of the request) -- the
+            // same get_clip_index_at() lookup moveClip() itself uses
+            // internally for its own overlap validation.
+            const int mltIndex = model->trackList().at(toTrackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(targetPosition);
+            if (finalIndex < 0)
+                return;
+            auto finalInfo = model->getClipInfo(toTrackIndex, finalIndex);
+            if (!finalInfo)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(toTrackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
+            result["inFrame"] = finalInfo->frame_in;
+            result["outFrame"] = finalInfo->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QByteArray value;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, &value, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> trackProducer(model->tractor()->track(mltIndex));
+            if (!trackProducer || !trackProducer->is_valid())
+                return;
+            bool isCairoblend = false;
+            QScopedPointer<Mlt::Transition> transition(
+                findAnyTrackBlendTransition(*trackProducer, &isCairoblend));
+            if (!transition || !transition->is_valid())
+                return;
+            QString mode = transition->get(isCairoblend ? "1" : "compositing");
+            if (transition->get_int("disable"))
+                mode.clear();
+            else if (mode.isEmpty())
+                mode = isCairoblend ? QStringLiteral("normal") : QStringLiteral("0");
+            value = mode.toUtf8();
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(value);
+}
+
+int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mode)
+        return -1;
+    const QString modeStr = QString::fromUtf8(mode);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, modeStr, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> trackProducer(model->tractor()->track(mltIndex));
+            if (!trackProducer || !trackProducer->is_valid())
+                return;
+            bool isCairoblend = false;
+            QScopedPointer<Mlt::Transition> transition(
+                findAnyTrackBlendTransition(*trackProducer, &isCairoblend));
+            if (!transition || !transition->is_valid())
+                return;
+            // The real, undoable Timeline::ChangeBlendModeCommand -- the
+            // same primitive TrackPropertiesWidget's blend mode combo box
+            // pushes (trackpropertieswidget.cpp).
+            auto *command = new Timeline::ChangeBlendModeCommand(*transition,
+                                                                  isCairoblend ? QStringLiteral("1")
+                                                                              : QStringLiteral(
+                                                                                    "compositing"),
+                                                                  modeStr);
+            mw->undoStack()->push(command);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 char *sap_list_tracks(void *mainWindowHandle)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -201,10 +487,30 @@ char *sap_list_tracks(void *mainWindowHandle)
                 obj["muted"] = model->data(modelIndex, MultitrackModel::IsMuteRole).toBool();
                 obj["hidden"] = model->data(modelIndex, MultitrackModel::IsHiddenRole).toBool();
                 obj["locked"] = model->data(modelIndex, MultitrackModel::IsLockedRole).toBool();
-                // blendMode has no real read-back wired yet (the qtblend/
-                // cairoblend transition lookup is a private model method) --
-                // report the default rather than fabricate a real value.
-                obj["blendMode"] = QStringLiteral("0");
+                // Real read-back of the qtblend/movit.overlay/cairoblend
+                // transition's mode property, via the same transition-chain
+                // walk sap_get_track_blend_mode()/findAnyTrackBlendTransition()
+                // use (duplicated from TrackPropertiesWidget::getTransition()
+                // since MultitrackModel's own lookup is private).
+                QString blendMode = QStringLiteral("0");
+                if (t.type == VideoTrackType) {
+                    const int mltIndex = t.mlt_index;
+                    QScopedPointer<Mlt::Producer> trackProducer(model->tractor()->track(mltIndex));
+                    if (trackProducer && trackProducer->is_valid()) {
+                        bool isCairoblend = false;
+                        QScopedPointer<Mlt::Transition> transition(
+                            findAnyTrackBlendTransition(*trackProducer, &isCairoblend));
+                        if (transition && transition->is_valid()) {
+                            QString mode = transition->get(isCairoblend ? "1" : "compositing");
+                            if (transition->get_int("disable"))
+                                mode.clear();
+                            else if (mode.isEmpty())
+                                mode = isCairoblend ? QStringLiteral("normal") : QStringLiteral("0");
+                            blendMode = mode;
+                        }
+                    }
+                }
+                obj["blendMode"] = blendMode;
                 tracks.append(obj);
             }
         },

@@ -43,6 +43,61 @@ int sap_set_track_muted(void *mainWindowHandle, int trackIndex, int muted);
 int sap_set_track_hidden(void *mainWindowHandle, int trackIndex, int hidden);
 int sap_set_track_locked(void *mainWindowHandle, int trackIndex, int locked);
 
+/* Moves the track at fromTrackIndex to toTrackIndex via the real
+ * TimelineDock::moveTrack() (Timeline::MoveTrackCommand, undoable) -- the
+ * same primitive the Track Height panel's up/down buttons use. Returns 0
+ * on success, -1 on error (invalid handle/index, or mismatched track
+ * types -- video tracks can't swap with audio tracks). */
+int sap_reorder_track(void *mainWindowHandle, int fromTrackIndex, int toTrackIndex);
+
+/* Removes the clip at (trackIndex, clipIndex) via the real
+ * TimelineDock::remove() (Timeline::RemoveCommand, undoable), replacing it
+ * with a blank -- the same primitive the "Ripple Delete"/Delete timeline
+ * action uses. Returns 0 on success, -1 on error (invalid handle/index,
+ * locked track). */
+int sap_remove_clip(void *mainWindowHandle, int trackIndex, int clipIndex);
+
+/* Moves the clip at (fromTrackIndex, fromClipIndex) to the destination
+ * clip-slot toClipIndex on toTrackIndex (toClipIndex == that track's
+ * current clip count means "append at end"), via the real
+ * TimelineDock::moveClip()/Timeline::MoveClipCommand path (the same one a
+ * timeline drag-and-drop drives) -- this selects the source clip first
+ * since moveClip()'s own onClipMoved() handler computes its position
+ * delta from the current selection, exactly like a real drag does.
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the clip at its final position, e.g. `{"clipId":"t1c2","index":2,
+ * "inFrame":0,"outFrame":119}`, re-read from the real destination
+ * playlist after the move (not an echo of the request). NULL on error
+ * (invalid handle/index, locked track, or the move was rejected e.g. by
+ * an overlapping non-ripple destination). Caller must free the returned
+ * pointer via sap_free_string. */
+char *sap_move_clip(void *mainWindowHandle,
+                    int fromTrackIndex,
+                    int fromClipIndex,
+                    int toTrackIndex,
+                    int toClipIndex,
+                    int ripple);
+
+/* Reads a track's real per-track video blend mode off its qtblend/
+ * movit.overlay/frei0r.cairoblend transition (MultitrackModel's own
+ * getVideoBlendTransition() lookup is private, so this replicates
+ * TrackPropertiesWidget::getTransition()'s same transition-chain walk --
+ * see trackpropertieswidget.cpp). Returns a heap-allocated, NUL-terminated
+ * string holding the transition's mode property value (numeric string for
+ * qtblend/movit.overlay's `compositing` property, a named string like
+ * "normal"/"multiply" for cairoblend's property "1"), or NULL if the track
+ * has no blend transition (e.g. the bottom video track) or on error.
+ * Caller must free the returned pointer via sap_free_string. */
+char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex);
+
+/* Sets a track's real per-track video blend mode via the real
+ * Timeline::ChangeBlendModeCommand (undoable) -- the same primitive
+ * TrackPropertiesWidget's blend mode combo box pushes. `mode` is
+ * interpreted according to whichever transition type is actually present
+ * on the track (see sap_get_track_blend_mode). Returns 0 on success, -1 on
+ * error (invalid handle/index, or no blend transition on that track). */
+int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
