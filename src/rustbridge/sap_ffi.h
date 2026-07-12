@@ -268,6 +268,17 @@ char *sap_list_tracks(void *mainWindowHandle);
  * the untitled default. Returns 0 on success, -1 on failure. */
 int sap_save_project(void *mainWindowHandle);
 
+/* Writes the current project to outputXmlPath as a self-contained MLT XML
+ * file (absolute clip source paths, not project-relative) via the same
+ * real MainWindow::saveXML() primitive "Save As" uses -- it already
+ * branches on whatever's actually populated (timeline multitrack /
+ * playlist-only / single producer / empty), so this is a faithful export
+ * of "the current project" in every state, not just the common
+ * timeline-has-clips case. Used by sap-rust's file.export to hand a real,
+ * standalone-renderable XML to `melt` on a background thread. Returns 0 on
+ * success, -1 on failure (invalid handle, or MLT.saveXML() itself fails). */
+int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath);
+
 /* Number of commands available to undo/redo on MAIN.undoStack(). -1 on
  * error. */
 int sap_get_undo_depth(void *mainWindowHandle);

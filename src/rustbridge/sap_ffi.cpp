@@ -1011,6 +1011,20 @@ int sap_save_project(void *mainWindowHandle)
     return result;
 }
 
+int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !outputXmlPath)
+        return -1;
+    const QString path = QString::fromUtf8(outputXmlPath);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, path, &result]() { result = mw->saveXML(path, /*withRelativePaths=*/false) ? 0 : -1; },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 int sap_get_undo_depth(void *mainWindowHandle)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
