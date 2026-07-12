@@ -653,7 +653,7 @@ void SubtitlesDock::importSubtitles()
 
     MAIN.showStatusMessage(tr("Importing subtitles..."));
 
-    // Convert the subtitles to SRT using FFMpeg
+    // Convert the subtitles to SRT using FFmpeg
     QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(tmpLocation, "XXXXXX.srt"));
     if (!tmp->open()) {

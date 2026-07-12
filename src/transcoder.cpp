@@ -372,7 +372,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
              << "bt709";
     } else if (dialog.format() == 2 && !is10bit
                && producer->get_int("meta.media.colorspace") == 709) {
-        // Work around a limitation that FFMpeg does not pass colorspace for utvideo
+        // Work around a limitation that FFmpeg does not pass colorspace for utvideo
         args << "-colorspace"
              << "bt709";
     }

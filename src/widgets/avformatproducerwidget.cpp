@@ -1350,7 +1350,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
                     QString path = pathTemplate.arg(subText);
                     if (Util::warnIfNotWritable(path, this, caption))
                         return;
-                    // Make an FFMpeg job
+                    // Make an FFmpeg job
                     QStringList ffmpegArgs;
                     QString streamSelect = QStringLiteral("0:s:%1").arg(subtitleCount - 1);
                     ffmpegArgs << "-loglevel"

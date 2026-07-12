@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ void FileDateDialog::populateDateOptions(Mlt::Producer *producer)
     // Add metadata dates
     Mlt::Producer tmpProducer(MLT.profile(), "avformat", resource.toUtf8().constData());
     if (tmpProducer.is_valid()) {
-        // Standard FFMpeg creation_time
+        // Standard FFmpeg creation_time
         dateTime = QDateTime::fromString(tmpProducer.get("meta.attr.creation_time.markup"),
                                          Qt::ISODateWithMs);
         if (dateTime.isValid()) {
