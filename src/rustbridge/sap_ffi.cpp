@@ -14,6 +14,9 @@
 #include "docks/playlistdock.h"
 #include "models/playlistmodel.h"
 #include "models/markersmodel.h"
+#include "models/subtitlesmodel.h"
+#include "models/subtitles.h"
+#include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
@@ -33,6 +36,8 @@
 #include <QThread>
 #include <QString>
 #include <QUndoStack>
+#include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -1900,6 +1905,260 @@ long long sap_markers_prev(void *mainWindowHandle, long long fromFrame)
         },
         Qt::BlockingQueuedConnection);
     return result;
+}
+
+char *sap_generator_create_title(void *mainWindowHandle,
+                                 const char *mode,
+                                 const char *text,
+                                 const char *fgColour,
+                                 const char *bgColour)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !text || !*text)
+        return nullptr;
+    const QString modeStr = QString::fromUtf8(mode && *mode ? mode : "simple");
+    const QString textStr = QString::fromUtf8(text);
+    const QString fg = QString::fromUtf8(fgColour && *fgColour ? fgColour : "#ffffffff");
+    const QString bg = QString::fromUtf8(bgColour && *bgColour ? bgColour : "#00000000");
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, modeStr, textStr, fg, bg, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+            Mlt::Producer producer(MLT.profile(), "color:");
+            if (!producer.is_valid())
+                return;
+            producer.set("resource", bg.toUtf8().constData());
+            producer.set("mlt_image_format", "rgba");
+            const QString caption = QStringLiteral("Title: %1").arg(textStr);
+            producer.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            MLT.setDurationFromDefault(&producer);
+            const bool rich = (modeStr == QLatin1String("rich"));
+            Mlt::Filter filter(MLT.profile(), rich ? "qtext" : "dynamictext");
+            if (!filter.is_valid())
+                return;
+            if (rich) {
+                filter.set("html", textStr.toUtf8().constData());
+            } else {
+                filter.set("argument", textStr.toUtf8().constData());
+                filter.set("fgcolour", fg.toUtf8().constData());
+                filter.set("bgcolour", "#00000000");
+            }
+            if (producer.attach(filter) != 0)
+                return;
+            model->append(producer);
+            auto *playlist = model->playlist();
+            if (!playlist)
+                return;
+            const int index = playlist->count() - 1;
+            if (index < 0)
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info)
+                return;
+            QJsonObject source;
+            source["kind"] = "title";
+            source["mode"] = modeStr;
+            source["text"] = textStr;
+            result["index"] = index;
+            result["name"] = QStringLiteral("Title: %1").arg(textStr);
+            result["source"] = source;
+            result["durationFrames"] = info->frame_count;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+namespace {
+
+// Converts an inclusive [startFrame,endFrame] frame range to millisecond
+// timestamps via the real project fps (SubtitlesModel's own primitive --
+// Subtitles::SubtitleItem -- stores ms, not frames).
+int64_t frameToMs(long long frame, double fps)
+{
+    if (fps <= 0.0)
+        fps = 25.0;
+    return static_cast<int64_t>(std::llround(static_cast<double>(frame) * 1000.0 / fps));
+}
+
+} // namespace
+
+char *sap_subtitles_add_track(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, &result, &ok]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            const int trackIndex = model->trackCount();
+            SubtitlesModel::SubtitleTrack track;
+            track.name = QStringLiteral("Subtitle %1").arg(trackIndex + 1);
+            track.lang = QString();
+            model->addTrack(track);
+            if (model->trackCount() != trackIndex + 1)
+                return;
+            result["trackIndex"] = trackIndex;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_subtitles_append_item(void *mainWindowHandle,
+                              int trackIndex,
+                              long long startFrame,
+                              long long endFrame,
+                              const char *text)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid())
+        return -1;
+    const QString textStr = QString::fromUtf8(text ? text : "");
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, startFrame, endFrame, textStr, &result]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            if (trackIndex < 0 || trackIndex >= model->trackCount())
+                return;
+            const double fps = MLT.profile().fps();
+            const int before = model->itemCount(trackIndex);
+            Subtitles::SubtitleItem item;
+            item.start = frameToMs(startFrame, fps);
+            item.end = frameToMs(endFrame, fps);
+            item.text = textStr.toUtf8().toStdString();
+            model->appendItem(trackIndex, item);
+            if (model->itemCount(trackIndex) != before + 1)
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_subtitles_remove_items(void *mainWindowHandle, int trackIndex, const char *itemIndicesJson)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid()
+        || !itemIndicesJson)
+        return -1;
+    QJsonParseError err;
+    QJsonDocument indicesDoc = QJsonDocument::fromJson(QByteArray(itemIndicesJson), &err);
+    if (err.error != QJsonParseError::NoError || !indicesDoc.isArray())
+        return -1;
+    std::vector<int> indices;
+    for (const auto &v : indicesDoc.array()) {
+        if (!v.isDouble())
+            return -1;
+        indices.push_back(v.toInt());
+    }
+    if (indices.empty())
+        return -1;
+    std::sort(indices.begin(), indices.end());
+    indices.erase(std::unique(indices.begin(), indices.end()), indices.end());
+    const int first = indices.front();
+    const int last = indices.back();
+    if (static_cast<size_t>(last - first + 1) != indices.size())
+        return -1; // not a contiguous run -- see sap_ffi.h caveat
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, first, last, &result]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            if (trackIndex < 0 || trackIndex >= model->trackCount())
+                return;
+            const int count = model->itemCount(trackIndex);
+            if (first < 0 || last >= count)
+                return;
+            const int before = count;
+            model->removeItems(trackIndex, first, last);
+            if (model->itemCount(trackIndex) != before - (last - first + 1))
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_subtitles_import_srt(void *mainWindowHandle, const char *path, int newTrack)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid()
+        || !path || !*path)
+        return nullptr;
+    const Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(path);
+    if (srtItems.empty())
+        return nullptr;
+    const QString pathStr = QString::fromUtf8(path);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, srtItems, pathStr, newTrack, &result, &ok]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            QList<Subtitles::SubtitleItem> items;
+            for (const auto &item : srtItems)
+                items.append(item);
+            int trackIndex;
+            if (newTrack || model->trackCount() == 0) {
+                trackIndex = model->trackCount();
+                SubtitlesModel::SubtitleTrack track;
+                track.name = QFileInfo(pathStr).completeBaseName();
+                if (track.name.isEmpty())
+                    track.name = QStringLiteral("Subtitle %1").arg(trackIndex + 1);
+                track.lang = QString();
+                model->importSubtitlesToNewTrack(track, items);
+                if (model->trackCount() != trackIndex + 1)
+                    return;
+            } else {
+                trackIndex = 0;
+                model->importSubtitles(trackIndex, 0, items);
+            }
+            result["trackIndex"] = trackIndex;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const char *path)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid()
+        || !path || !*path)
+        return nullptr;
+    const QString pathStr = QString::fromUtf8(path);
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, pathStr, &ok]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            if (trackIndex < 0 || trackIndex >= model->trackCount())
+                return;
+            model->exportSubtitles(pathStr, trackIndex);
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(pathStr.toUtf8());
 }
 
 void sap_free_string(char *s)

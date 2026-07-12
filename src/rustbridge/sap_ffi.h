@@ -419,6 +419,88 @@ unsigned char *sap_get_frame(void *mainWindowHandle,
 /* Frees a byte buffer returned by sap_get_frame. */
 void sap_free_bytes(unsigned char *buf);
 
+/* Creates a real MLT title-card producer (a `color:` producer with a
+ * `dynamictext` (mode="simple", default) or `qtext` (mode="rich") filter
+ * attached -- the same construction TextProducerWidget::newProducer()/
+ * createFilter() use, minus the QWidget UI) and appends it to the real
+ * Playlist bin via `PlaylistModel::append()`. text is required (rich mode
+ * sets the filter's `html` property verbatim; simple mode sets `argument`
+ * plus `fgcolour`). fgColour/bgColour are `#AARRGGBB` strings (default
+ * opaque white text, `#00000000` fully-transparent background). Returns a
+ * heap-allocated JSON object `{"index":N,"name":"Title: ...",
+ * "source":{"kind":"title","mode":"...","text":"..."},"durationFrames":N}`
+ * matching sap-rust's `PlaylistEntry` wire shape, or NULL on error
+ * (invalid handle, no playlist dock, missing/empty text). Caller must
+ * free via sap_free_string. */
+char *sap_generator_create_title(void *mainWindowHandle,
+                                 const char *mode,
+                                 const char *text,
+                                 const char *fgColour,
+                                 const char *bgColour);
+
+/* Subtitle operations on the real per-project `SubtitlesModel`
+ * (`TimelineDock::subtitlesModel()`, loaded from the current tractor --
+ * requires at least one clip already on the timeline;
+ * `MainWindow::isMultitrackValid()` mirrors real Shotcut's own
+ * `SubtitlesDock::addSubtitleTrack()` guard, since `SubtitlesModel`'s own
+ * mutating methods silently no-op when no producer has been loaded via
+ * `load()`). All mutating calls go through `SubtitlesModel`'s own real
+ * QUndoCommand-pushing methods (`InsertTrackCommand`/
+ * `OverwriteSubtitlesCommand`/`RemoveSubtitlesCommand` -- genuinely
+ * undoable via Ctrl+Z, unlike filter.add/filter.setProperty). start/end
+ * frame parameters are converted to/from milliseconds via the real
+ * project fps (`MLT.profile().fps()`), since `SubtitlesModel`'s own
+ * primitive uses millisecond timestamps, not frames. */
+
+/* Adds a new subtitle track (auto-named "Subtitle N", 1-based, empty
+ * language) via `SubtitlesModel::addTrack()`. Returns a heap-allocated
+ * JSON object `{"trackIndex":N}`, or NULL on error (invalid handle, or no
+ * multitrack producer loaded yet -- add a clip to the timeline first).
+ * Caller must free via sap_free_string. */
+char *sap_subtitles_add_track(void *mainWindowHandle);
+
+/* Appends one subtitle cue [startFrame,endFrame] (inclusive, converted to
+ * milliseconds) with text to trackIndex via `SubtitlesModel::appendItem()`
+ * (a real, undoable `OverwriteSubtitlesCommand`). Returns 0 on success, -1
+ * on error (invalid handle/trackIndex, or no multitrack producer loaded). */
+int sap_subtitles_append_item(void *mainWindowHandle,
+                              int trackIndex,
+                              long long startFrame,
+                              long long endFrame,
+                              const char *text);
+
+/* Removes the cues at itemIndicesJson (a JSON array of 0-based,
+ * append-order indices) from trackIndex via `SubtitlesModel::removeItems()`
+ * (a real, undoable `RemoveSubtitlesCommand`). NOTE: the real primitive
+ * only supports removing one contiguous `[firstItemIndex,lastItemIndex]`
+ * run at a time (there is no arbitrary-multi-select removal command) --
+ * itemIndicesJson's sorted/deduplicated indices MUST already form such a
+ * contiguous run (a single index always qualifies). Returns 0 on success,
+ * -1 on error (invalid handle/trackIndex, any index out of range, empty
+ * array, or a non-contiguous index set). */
+int sap_subtitles_remove_items(void *mainWindowHandle,
+                               int trackIndex,
+                               const char *itemIndicesJson);
+
+/* Imports path (an SRT file, read via the real
+ * `Subtitles::readFromSrtFile`) into subtitle track 0 (creating it via
+ * `addTrack()` first if no tracks exist yet) when newTrack is 0, or into a
+ * brand-new track (via `SubtitlesModel::importSubtitlesToNewTrack()`, a
+ * single undo macro combining the real `InsertTrackCommand` +
+ * `OverwriteSubtitlesCommand`) when newTrack is non-zero. Returns a
+ * heap-allocated JSON object `{"trackIndex":N}`, or NULL on error (invalid
+ * handle, unreadable/empty-of-cues path, or no multitrack producer
+ * loaded). Caller must free via sap_free_string. */
+char *sap_subtitles_import_srt(void *mainWindowHandle, const char *path, int newTrack);
+
+/* Exports trackIndex's cues to path via `SubtitlesModel::exportSubtitles()`
+ * (wraps the real `Subtitles::writeToSrtFile`). Returns a heap-allocated
+ * copy of path itself (relative-path resolution against the project root,
+ * mirroring `sap_export_project_xml`'s own convention, is left to the
+ * caller), or NULL on error (invalid handle/trackIndex, or the write
+ * failed). Caller must free via sap_free_string. */
+char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const char *path);
+
 /* Frees a string returned by sap_list_tracks. */
 void sap_free_string(char *s);
 
