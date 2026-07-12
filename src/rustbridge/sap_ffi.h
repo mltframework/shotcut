@@ -418,6 +418,30 @@ char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *source
  * pointer via sap_free_string. */
 char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
 
+/* Places sourcePath as a real MLT producer starting at clip-slot `clipIndex`
+ * on trackIndex, REPLACING (not rippling) whatever clip currently occupies
+ * that slot -- the real distinct primitive from sap_insert_clip: per
+ * rust-fork/01-jsonrpc-spec.md's `edit.overwriteClip`, it wraps the real
+ * Timeline::OverwriteCommand (timelinecommands.h:123), a "drop and replace"
+ * that leaves downstream clips at the same clip-slot indices, called
+ * directly here (not via TimelineDock::overwrite(), which reads the system
+ * clipboard/"current source" instead of taking a path -- same reasoning as
+ * sap_append_clip vs. TimelineDock::append()). `clipIndex` == that track's
+ * current clip count means "no clip to replace", equivalent to
+ * sap_append_clip. clipIndex is a clip-slot index rather than an absolute
+ * frame, matching sap_insert_clip/sap_move_clip's convention; the absolute
+ * overwrite frame is derived internally from the target slot's start
+ * position exactly like sap_insert_clip derives its own insert position.
+ *
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the placed clip, e.g. `{"clipId":"t0c1","index":1,"inFrame":0,
+ * "outFrame":119}`, re-read from the real MultitrackModel::getClipInfo()
+ * after the overwrite (not an echo of the request). NULL on error (invalid
+ * handle/trackIndex, out-of-range clipIndex, locked track, or sourcePath
+ * fails to open as a valid MLT producer). Caller must free the returned
+ * pointer via sap_free_string. */
+char *sap_overwrite_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
+
 /* Renders the pixels of the given absolute timeline frame from the
  * currently open project's live producer (Controller::producer(), the same
  * Mlt::Producer instance driving the app's own preview/player), using the
