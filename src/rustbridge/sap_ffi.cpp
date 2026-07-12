@@ -11,6 +11,8 @@
 
 #include "commands/timelinecommands.h"
 #include "docks/timelinedock.h"
+#include "docks/playlistdock.h"
+#include "models/playlistmodel.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
@@ -19,6 +21,7 @@
 #include <Mlt.h>
 #include <QBuffer>
 #include <QByteArray>
+#include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -521,6 +524,27 @@ void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
         else if (v.isDouble())
             filter.set(key.constData(), v.toDouble());
     }
+}
+
+// Builds the standard playlist-entry JSON object for row `index` from a
+// live Mlt::ClipInfo, matching PlaylistModel::data()'s COLUMN_RESOURCE
+// display logic (prefer the real shotcut:caption property, else the
+// resource's file basename) -- see playlistmodel.cpp.
+QJsonObject playlistEntryToJson(int index, Mlt::ClipInfo *info)
+{
+    QJsonObject entry;
+    entry["index"] = index;
+    QString name;
+    if (info->producer && info->producer->is_valid()) {
+        name = QString::fromUtf8(info->producer->get("shotcut:caption"));
+    }
+    const QString resource = QString::fromUtf8(info->resource ? info->resource : "");
+    if (name.isEmpty())
+        name = QFileInfo(resource).fileName();
+    entry["name"] = name;
+    entry["path"] = resource;
+    entry["durationFrames"] = info->frame_count;
+    return entry;
 }
 
 } // namespace
@@ -1175,6 +1199,182 @@ unsigned char *sap_get_frame(void *mainWindowHandle,
 void sap_free_bytes(unsigned char *buf)
 {
     std::free(buf);
+}
+
+char *sap_playlist_append(void *mainWindowHandle, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, path, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+            model->append(producer);
+            auto *playlist = model->playlist();
+            if (!playlist)
+                return;
+            const int index = playlist->count() - 1;
+            if (index < 0)
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info)
+                return;
+            result = playlistEntryToJson(index, info.data());
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_playlist_insert(void *mainWindowHandle, int index, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, index, path, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+            // PlaylistModel::createIfNeeded() (called inside append/insert)
+            // means the playlist may still be null before the very first
+            // entry -- only index 0 is valid on an empty playlist.
+            auto *playlist = model->playlist();
+            const int count = playlist ? playlist->count() : 0;
+            if (index < 0 || index > count)
+                return;
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+            model->insert(producer, index);
+            playlist = model->playlist();
+            if (!playlist)
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info)
+                return;
+            result = playlistEntryToJson(index, info.data());
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_playlist_remove(void *mainWindowHandle, int index)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, index, &result]() {
+            auto *model = mw->playlistDock()->model();
+            auto *playlist = model ? model->playlist() : nullptr;
+            if (!playlist || index < 0 || index >= playlist->count())
+                return;
+            model->remove(index);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_playlist_move(void *mainWindowHandle, int fromIndex, int toIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, fromIndex, toIndex, &result]() {
+            auto *model = mw->playlistDock()->model();
+            auto *playlist = model ? model->playlist() : nullptr;
+            if (!playlist || fromIndex < 0 || fromIndex >= playlist->count() || toIndex < 0
+                || toIndex >= playlist->count())
+                return;
+            model->move(fromIndex, toIndex);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_playlist_get(void *mainWindowHandle, int index)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock())
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, index, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            auto *playlist = model ? model->playlist() : nullptr;
+            if (!playlist || index < 0 || index >= playlist->count())
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info)
+                return;
+            result = playlistEntryToJson(index, info.data());
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_playlist_list(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock())
+        return nullptr;
+    QJsonArray result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            auto *playlist = model ? model->playlist() : nullptr;
+            const int count = playlist ? playlist->count() : 0;
+            for (int i = 0; i < count; ++i) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(i));
+                if (!info)
+                    continue;
+                result.append(playlistEntryToJson(i, info.data()));
+            }
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
 void sap_free_string(char *s)

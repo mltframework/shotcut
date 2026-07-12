@@ -198,6 +198,22 @@ int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, lon
  * clip). Caller must free via sap_free_string. */
 char *sap_split_clip(void *mainWindowHandle, int trackIndex, int clipIndex, long long position);
 
+/* Playlist ("Source"/bin panel, PlaylistDock, distinct from the per-track
+ * timeline clips above) operations, via the real PlaylistModel slots
+ * (append/insert/remove/move) -- these are NOT part of the undo stack in
+ * real Shotcut (bin management isn't undoable there either), so this is a
+ * faithful match, not a compromise. Each returns a heap-allocated JSON
+ * object/array of the form `{"index":N,"name":"...","path":"...",
+ * "durationFrames":N}` (name prefers the real `shotcut:caption` property,
+ * falling back to the resource's file basename), or NULL/-1 on error.
+ * Caller must free string results via sap_free_string. */
+char *sap_playlist_append(void *mainWindowHandle, const char *sourcePath);
+char *sap_playlist_insert(void *mainWindowHandle, int index, const char *sourcePath);
+int sap_playlist_remove(void *mainWindowHandle, int index);
+int sap_playlist_move(void *mainWindowHandle, int fromIndex, int toIndex);
+char *sap_playlist_get(void *mainWindowHandle, int index);
+char *sap_playlist_list(void *mainWindowHandle);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
