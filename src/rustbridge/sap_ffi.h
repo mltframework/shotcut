@@ -392,6 +392,32 @@ int sap_playback_seek(void *mainWindowHandle, long long frame);
  * returned pointer via sap_free_string. */
 char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath);
 
+/* Inserts sourcePath as a real MLT producer BEFORE the clip currently at
+ * clip-slot `clipIndex` on trackIndex (clipIndex == that track's current
+ * clip count means "insert at the end", equivalent to append), RIPPLING
+ * all downstream clips on that track forward to make room -- this is the
+ * real distinct primitive from sap_move_clip/sap_append_clip: per
+ * rust-fork/01-jsonrpc-spec.md's `edit.insertClip`, it wraps the same
+ * Timeline::InsertCommand (timelinecommands.h:95) that
+ * TimelineDock::insert() pushes internally, called directly here (not via
+ * TimelineDock::insert() itself, which reads the system clipboard/"current
+ * source" instead of taking a path -- same reasoning as sap_append_clip
+ * vs. TimelineDock::append()). clipIndex is a clip-slot index rather than
+ * an absolute frame, matching sap_move_clip's toClipIndex convention (this
+ * FFI/Rust layer models tracks as an ordered clip list, not raw frame
+ * offsets); the absolute insert frame is derived internally from the
+ * target slot's start position exactly like sap_move_clip derives its own
+ * targetPosition.
+ *
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the inserted clip, e.g. `{"clipId":"t0c1","index":1,"inFrame":0,
+ * "outFrame":119}`, re-read from the real MultitrackModel::getClipInfo()
+ * after the insert (not an echo of the request). NULL on error (invalid
+ * handle/trackIndex, out-of-range clipIndex, locked track, or sourcePath
+ * fails to open as a valid MLT producer). Caller must free the returned
+ * pointer via sap_free_string. */
+char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
+
 /* Renders the pixels of the given absolute timeline frame from the
  * currently open project's live producer (Controller::producer(), the same
  * Mlt::Producer instance driving the app's own preview/player), using the

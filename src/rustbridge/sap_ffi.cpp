@@ -1438,6 +1438,102 @@ char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *source
     return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
+char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, path, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+
+            // clipIndex is a clip-SLOT index (insert before this slot),
+            // matching sap_move_clip's toClipIndex convention rather than
+            // an absolute frame -- computed into an absolute frame below
+            // exactly like sap_move_clip does for its own toClipIndex,
+            // since Timeline::InsertCommand itself wants an absolute
+            // frame position.
+            const int destClipCount = dock->clipCount(trackIndex);
+            if (clipIndex < 0 || clipIndex > destClipCount)
+                return;
+
+            // Open the source as a real MLT producer, exactly like
+            // sap_append_clip does -- lets insertClip take a path
+            // directly instead of being limited to the clipboard/"current
+            // source" TimelineDock::insert() itself reads from.
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+
+            const QString xml = MLT.XML(&producer);
+            if (xml.isEmpty())
+                return;
+
+            int insertPosition = 0;
+            if (clipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(trackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        insertPosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(trackIndex, clipIndex);
+                if (!destInfo)
+                    return;
+                insertPosition = destInfo->start;
+            }
+
+            // The real, undoable primitive: the exact same
+            // Timeline::InsertCommand TimelineDock::insert() itself
+            // pushes (timelinedock.cpp), called directly here rather
+            // than through insert() so a filesystem path can be taken
+            // without going via the system clipboard. seek=false so this
+            // FFI call does not move the playhead as a side effect.
+            mw->undoStack()->push(new Timeline::InsertCommand(*model,
+                                                                *dock->markersModel(),
+                                                                trackIndex,
+                                                                insertPosition,
+                                                                xml,
+                                                                false));
+
+            // Re-read the real destination playlist to report where the
+            // clip actually landed -- same get_clip_index_at() lookup
+            // sap_move_clip uses, since insert() only takes an absolute
+            // frame position, not a clip-slot index.
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(insertPosition);
+            if (finalIndex < 0)
+                return;
+            auto info = model->getClipInfo(trackIndex, finalIndex);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
 unsigned char *sap_get_frame(void *mainWindowHandle,
                              long long frame,
                              const char *format,
