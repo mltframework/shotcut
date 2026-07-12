@@ -501,6 +501,40 @@ char *sap_subtitles_import_srt(void *mainWindowHandle, const char *path, int new
  * failed). Caller must free via sap_free_string. */
 char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const char *path);
 
+/* Sets/gets the real project Notes free-text field via
+ * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
+ * as a `shotcut:projectNotes` property, not a QUndoCommand -- matches
+ * real Shotcut's own Notes panel, which has no undo/redo either).
+ * sap_notes_set_text returns 0 on success, -1 on error (invalid handle).
+ * sap_notes_get_text returns a heap-allocated copy of the current text
+ * (empty string, not NULL, when there is none), or NULL on error (invalid
+ * handle). Caller must free via sap_free_string. */
+int sap_notes_set_text(void *mainWindowHandle, const char *text);
+char *sap_notes_get_text(void *mainWindowHandle);
+
+/* Real "recent files" MRU list operations via `RecentDock::add()`/
+ * `remove()`, backed by `Settings.recent()`/`Settings.setRecent()` (a
+ * `QSettings`-persisted, application-wide list -- NOT scoped to any one
+ * project, same real Shotcut MRU semantics 01-jsonrpc-spec.md's
+ * `recent.*` namespace note calls out as "low-value but real"; every
+ * project shares the same underlying list). */
+
+/* Adds path via the real `RecentDock::add()` (also updates
+ * `Settings.setProjects()` when path ends in .mlt, matching real
+ * Shotcut). Returns 0 on success, -1 on error (invalid handle). */
+int sap_recent_add(void *mainWindowHandle, const char *path);
+
+/* Removes path via the real `RecentDock::remove()`. Returns a
+ * heap-allocated copy of path on success, or NULL on error (invalid
+ * handle, or path was not present in the list). Caller must free via
+ * sap_free_string. */
+char *sap_recent_remove(void *mainWindowHandle, const char *path);
+
+/* Returns a heap-allocated JSON array of strings -- the real recent-files
+ * list (`Settings.recent()`, newest first) -- or NULL on error (invalid
+ * handle). Caller must free via sap_free_string. */
+char *sap_recent_list(void *mainWindowHandle);
+
 /* Frees a string returned by sap_list_tracks. */
 void sap_free_string(char *s);
 

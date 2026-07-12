@@ -75,6 +75,8 @@ public:
     static void changeTheme(const QString &theme);
     PlaylistDock *playlistDock() const { return m_playlistDock; }
     TimelineDock *timelineDock() const { return m_timelineDock; }
+    RecentDock *recentDock() const { return m_recentDock; }
+    NotesDock *notesDock() const { return m_notesDock; }
     FilterController *filterController() const { return m_filterController; }
     Mlt::Playlist *playlist() const;
     bool isPlaylistValid() const;

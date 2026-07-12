@@ -12,6 +12,8 @@
 #include "commands/timelinecommands.h"
 #include "docks/timelinedock.h"
 #include "docks/playlistdock.h"
+#include "docks/notesdock.h"
+#include "docks/recentdock.h"
 #include "models/playlistmodel.h"
 #include "models/markersmodel.h"
 #include "models/subtitlesmodel.h"
@@ -20,12 +22,14 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
+#include "settings.h"
 #include "player.h"
 
 #include <Mlt.h>
 #include <QBuffer>
 #include <QByteArray>
 #include <QColor>
+#include <QDir>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
@@ -2159,6 +2163,93 @@ char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const cha
     if (!ok)
         return nullptr;
     return newCString(pathStr.toUtf8());
+}
+
+int sap_notes_set_text(void *mainWindowHandle, const char *text)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->notesDock())
+        return -1;
+    const QString textStr = QString::fromUtf8(text ? text : "");
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->notesDock(),
+        [mw, textStr, &result]() {
+            mw->notesDock()->setText(textStr);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_notes_get_text(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->notesDock())
+        return nullptr;
+    QString text;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->notesDock(),
+        [mw, &text, &ok]() {
+            text = mw->notesDock()->getText();
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(text.toUtf8());
+}
+
+int sap_recent_add(void *mainWindowHandle, const char *path)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->recentDock() || !path || !*path)
+        return -1;
+    const QString pathStr = QString::fromUtf8(path);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->recentDock(),
+        [mw, pathStr, &result]() {
+            mw->recentDock()->add(pathStr);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_recent_remove(void *mainWindowHandle, const char *path)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->recentDock() || !path || !*path)
+        return nullptr;
+    const QString pathStr = QString::fromUtf8(path);
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->recentDock(),
+        [mw, pathStr, &ok]() {
+            const QString normalized = QDir::fromNativeSeparators(pathStr);
+            if (!Settings.recent().contains(normalized))
+                return;
+            mw->recentDock()->remove(pathStr);
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(pathStr.toUtf8());
+}
+
+char *sap_recent_list(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return nullptr;
+    QJsonArray result;
+    for (const QString &s : Settings.recent())
+        result.append(s);
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
 void sap_free_string(char *s)
