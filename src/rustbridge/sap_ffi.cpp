@@ -2452,13 +2452,17 @@ void sap_free_string(char *s)
 
 void sap_emit_event(const char *jsonPayload)
 {
-    // Stub: proves the symbol is real and linkable, and that the signal
-    // path below actually fires it. Full bridging into sap-rust's
-    // broadcast/notification channel (so this reaches connected JSON-RPC
-    // clients as an unsolicited edit.changed notification) is flagged as
-    // follow-up work in the README's "Real FFI" section.
-    if (jsonPayload)
+    // Forwards into the real Rust-side bridge (sap_ffi_notify_bridge,
+    // sap-rust/src/ffi_backend.rs), which fans this out to every SAP
+    // client currently bound to this process's document. Kept as its own
+    // function (rather than connecting sap_ffi_notify_bridge directly to
+    // MultitrackModel::modified) so the JSON payload shape stays owned by
+    // this file, and so the stderr log below -- useful for headless
+    // harness debugging -- has a single call site.
+    if (jsonPayload) {
         std::fprintf(stderr, "[sap_ffi] event: %s\n", jsonPayload);
+        sap_ffi_notify_bridge(jsonPayload);
+    }
 }
 
 void sap_install_notification_bridge(void *mainWindowHandle)

@@ -588,12 +588,18 @@ char *sap_recent_list(void *mainWindowHandle);
 /* Frees a string returned by sap_list_tracks. */
 void sap_free_string(char *s);
 
-/* Notification bridge hook (Qt -> SAP). Currently a stub: logs to stderr.
- * Full wiring into the SAP broadcast/notification channel (so edit.changed
- * reaches connected JSON-RPC clients without the client having to poll) is
- * follow-up work -- see sap_ffi.cpp and the README's "Real FFI" section for
- * exactly what's stubbed. The extern "C" symbol is real and linkable so that
- * follow-up work is a body-only change, not a new call site. */
+/* Notification bridge hook (Qt -> SAP). Forwards jsonPayload (a small JSON
+ * object with at least a "type" field naming the notification method, e.g.
+ * `{"type":"edit.changed"}`) to sap_ffi_notify_bridge (implemented in Rust,
+ * declared below), which fans it out to every SAP client currently bound
+ * to this process's single open document via the same per-project
+ * broadcast channel real RPC-driven edits use -- see server.rs's `serve`
+ * doc comment for why "every project", not one. Also logs to stderr
+ * (cheap, useful for headless-harness debugging). Safe to call before
+ * sap_start_server has finished starting the server: sap_ffi_notify_bridge
+ * silently drops the event in that case, matching this hook's own
+ * best-effort semantics -- it must never block or throw on the Qt main
+ * thread it runs on. */
 void sap_emit_event(const char *jsonPayload);
 
 /* Connects MultitrackModel::modified (the nearest real, already-emitted
@@ -612,6 +618,13 @@ void sap_install_notification_bridge(void *mainWindowHandle);
  * calling thread for the server's entire lifetime -- callers MUST invoke
  * this from a dedicated background std::thread, never the Qt main thread. */
 void sap_start_server(void *mainWindowHandle, const char *socketPath, const char *token);
+
+/* Implemented in Rust (sap-rust/src/ffi_backend.rs) -- the actual bridge
+ * body sap_emit_event above forwards into. jsonPayload must be a valid
+ * NUL-terminated C string; NULL is a silent no-op. Non-blocking, never
+ * panics/throws across the FFI boundary -- safe to call from a Qt signal
+ * handler on the main thread. */
+void sap_ffi_notify_bridge(const char *jsonPayload);
 
 #ifdef __cplusplus
 }
