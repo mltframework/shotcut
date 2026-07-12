@@ -457,6 +457,198 @@ int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char 
     return result;
 }
 
+int sap_set_track_height(void *mainWindowHandle, int height)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, height, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model)
+                return;
+            // Real MultitrackModel::setTrackHeight() clamps to [10, 150]
+            // and stores it as the single project-wide `shotcut:trackHeight`
+            // tractor property (not per-track), matching the Timeline
+            // panel's row-height control (see multitrackmodel.cpp).
+            model->setTrackHeight(height);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+namespace {
+
+// Resolves the real per-instance "cut" producer for (trackIndex, clipIndex)
+// (see Mlt::ClipInfo::cut in framework/mlt_playlist.h -- the instance
+// producer, as opposed to the shared parent/source producer, so filters
+// attached here never leak onto other clips sharing the same source
+// file). Must be called on the Qt main thread (from inside an
+// invokeMethod lambda). Returns a null ClipInfo unique_ptr AND a null
+// Producer* on any failure (invalid track/clip/model).
+std::unique_ptr<Mlt::ClipInfo> resolveClipInfo(MultitrackModel *model,
+                                               int trackIndex,
+                                               int clipIndex,
+                                               Mlt::Producer **cutOut)
+{
+    *cutOut = nullptr;
+    if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+        return nullptr;
+    auto info = model->getClipInfo(trackIndex, clipIndex);
+    if (!info || !info->cut || !info->cut->is_valid())
+        return nullptr;
+    *cutOut = info->cut;
+    return info;
+}
+
+// Applies a flat JSON object of scalar (string/number/bool) values onto an
+// MLT filter's property set, matching how filter properties are typically
+// supplied by the filter panel's QML metadata bindings (string properties
+// for combo/text values, numeric for sliders).
+void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
+{
+    for (auto it = props.constBegin(); it != props.constEnd(); ++it) {
+        const QByteArray key = it.key().toUtf8();
+        const QJsonValue v = it.value();
+        if (v.isString())
+            filter.set(key.constData(), v.toString().toUtf8().constData());
+        else if (v.isBool())
+            filter.set(key.constData(), v.toBool() ? 1 : 0);
+        else if (v.isDouble())
+            filter.set(key.constData(), v.toDouble());
+    }
+}
+
+} // namespace
+
+char *sap_filter_add(void *mainWindowHandle,
+                     int trackIndex,
+                     int clipIndex,
+                     const char *mltService,
+                     const char *propertiesJson)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mltService)
+        return nullptr;
+    const QString serviceStr = QString::fromUtf8(mltService);
+    QJsonObject props;
+    if (propertiesJson && *propertiesJson) {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(QByteArray(propertiesJson), &err);
+        if (err.error == QJsonParseError::NoError && doc.isObject())
+            props = doc.object();
+    }
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, serviceStr, props, &result, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            Mlt::Filter filter(MLT.profile(), serviceStr.toUtf8().constData());
+            if (!filter.is_valid())
+                return;
+            applyJsonPropertiesToFilter(filter, props);
+            const int filterIndex = cut->filter_count();
+            if (cut->attach(filter) != 0)
+                return;
+            result["filterIndex"] = filterIndex;
+            result["mltService"] = serviceStr;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+int sap_filter_set_property(void *mainWindowHandle,
+                            int trackIndex,
+                            int clipIndex,
+                            int filterIndex,
+                            const char *property,
+                            const char *valueJson)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !property || !valueJson)
+        return -1;
+    const QString propertyStr = QString::fromUtf8(property);
+    QJsonParseError err;
+    const QJsonDocument valueDoc = QJsonDocument::fromJson(
+        QByteArray("[") + valueJson + "]", &err);
+    if (err.error != QJsonParseError::NoError || !valueDoc.isArray()
+        || valueDoc.array().size() != 1)
+        return -1;
+    const QJsonValue value = valueDoc.array().at(0);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, filterIndex, propertyStr, value, &result]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            if (filterIndex < 0 || filterIndex >= cut->filter_count())
+                return;
+            QScopedPointer<Mlt::Filter> filter(cut->filter(filterIndex));
+            if (!filter || !filter->is_valid())
+                return;
+            const QByteArray key = propertyStr.toUtf8();
+            if (value.isString())
+                filter->set(key.constData(), value.toString().toUtf8().constData());
+            else if (value.isBool())
+                filter->set(key.constData(), value.toBool() ? 1 : 0);
+            else if (value.isDouble())
+                filter->set(key.constData(), value.toDouble());
+            else
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return nullptr;
+    QJsonArray result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, &result, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            Mlt::Producer *cut = nullptr;
+            auto info = resolveClipInfo(model, trackIndex, clipIndex, &cut);
+            if (!cut)
+                return;
+            for (int i = 0; i < cut->filter_count(); ++i) {
+                QScopedPointer<Mlt::Filter> filter(cut->filter(i));
+                if (!filter || !filter->is_valid())
+                    continue;
+                QJsonObject entry;
+                entry["filterIndex"] = i;
+                entry["mltService"] = QString::fromUtf8(filter->get("mlt_service"));
+                result.append(entry);
+            }
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
 char *sap_list_tracks(void *mainWindowHandle)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);

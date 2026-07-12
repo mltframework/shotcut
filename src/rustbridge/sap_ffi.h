@@ -98,6 +98,54 @@ char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex);
  * error (invalid handle/index, or no blend transition on that track). */
 int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode);
 
+/* Sets the project-wide timeline row height in pixels via the real
+ * MultitrackModel::setTrackHeight() (a single `shotcut:trackHeight`
+ * property on the tractor, not per-track -- same primitive the Timeline
+ * panel's zoom/height slider uses). Value is clamped to [10, 150] by the
+ * real setter itself. Returns 0 on success, -1 on error (invalid handle). */
+int sap_set_track_height(void *mainWindowHandle, int height);
+
+/* Attaches a new MLT filter of mltService to the clip's real per-instance
+ * "cut" producer (per Mlt::ClipInfo::cut -- the same instance-specific
+ * producer Shotcut's own filter panel binds to for a selected clip, so
+ * filters on one clip never leak onto other clips sharing the same source
+ * file). propertiesJson (may be NULL/empty) is a flat JSON object of
+ * string/number/bool values applied via Mlt::Properties::set() right after
+ * attach. NOTE: unlike reorderTrack/removeClip/moveClip, this does NOT go
+ * through a QUndoCommand (there is no lightweight one that doesn't also
+ * require the full QmlMetadata-driven filter-panel machinery) -- it is a
+ * direct, synchronous MLT mutation, not undoable via Ctrl+Z. Returns a
+ * heap-allocated JSON object string `{"filterIndex":N,"mltService":"..."}`
+ * (filterIndex is the filter's position in that clip's raw MLT filter
+ * chain, i.e. producer->filter_count() at attach time), or NULL on error
+ * (invalid handle/track/clip/mltService). Caller must free via
+ * sap_free_string. */
+char *sap_filter_add(void *mainWindowHandle,
+                     int trackIndex,
+                     int clipIndex,
+                     const char *mltService,
+                     const char *propertiesJson);
+
+/* Sets one property on the filterIndex-th filter attached to the clip at
+ * (trackIndex, clipIndex) (see sap_filter_add for indexing), via the real
+ * Mlt::Properties::set(). valueJson holds one JSON-encoded scalar
+ * (string/number/bool). Same non-undoable caveat as sap_filter_add.
+ * Returns 0 on success, -1 on error (invalid handle/track/clip/filterIndex,
+ * or unparseable valueJson). */
+int sap_filter_set_property(void *mainWindowHandle,
+                            int trackIndex,
+                            int clipIndex,
+                            int filterIndex,
+                            const char *property,
+                            const char *valueJson);
+
+/* Returns a heap-allocated JSON array string describing every filter
+ * attached to the clip at (trackIndex, clipIndex), in raw MLT filter-chain
+ * order (matching sap_filter_add's filterIndex), of the form
+ * `[{"filterIndex":0,"mltService":"..."},...]`, or NULL on error (invalid
+ * handle/track/clip). Caller must free via sap_free_string. */
+char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex);
+
 /* Returns a heap-allocated, NUL-terminated JSON array string describing the
  * project's audio/video tracks, e.g. `[{"index":0,"kind":"video"}, ...]`,
  * built from the real MultitrackModel::trackList(). NULL on error. Caller
