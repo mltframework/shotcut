@@ -110,6 +110,7 @@ public:
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool openUrl(const QUrl &url);
     static bool cpuHasAVX2();
+    static int msToPosition(int64_t ms);
 };
 
 #endif // UTIL_H

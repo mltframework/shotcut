@@ -23,6 +23,7 @@
 #include "mltcontroller.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 
 #include <QTimer>
 
@@ -819,21 +820,18 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
         case COLUMN_TEXT:
             result = QString::fromStdString(item.text).replace('\n', ' ');
             break;
-        case COLUMN_START: {
-            mlt_position frames = item.start * MLT.profile().fps() / 1000;
-            result = QString(m_producer->frames_to_time(frames, Settings.timeFormat()));
+        case COLUMN_START:
+            result = QString(
+                m_producer->frames_to_time(Util::msToPosition(item.start), Settings.timeFormat()));
             break;
-        }
-        case COLUMN_END: {
-            mlt_position frames = item.end * MLT.profile().fps() / 1000;
-            result = QString(m_producer->frames_to_time(frames, Settings.timeFormat()));
+        case COLUMN_END:
+            result = QString(
+                m_producer->frames_to_time(Util::msToPosition(item.end), Settings.timeFormat()));
             break;
-        }
-        case COLUMN_DURATION: {
-            mlt_position frames = (item.end - item.start) * MLT.profile().fps() / 1000;
-            result = QString(m_producer->frames_to_time(frames, Settings.timeFormat()));
+        case COLUMN_DURATION:
+            result = QString(
+                m_producer->frames_to_time(item.end - item.start, Settings.timeFormat()));
             break;
-        }
         default:
             LOG_ERROR() << "Invalid Column" << index.column() << role;
             break;
@@ -855,10 +853,10 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
         result = QString::fromStdString(item.text).replace('\n', ' ');
         break;
     case StartFrameRole:
-        result = (int) std::round(item.start * MLT.profile().fps() / 1000);
+        result = Util::msToPosition(item.start);
         break;
     case EndFrameRole:
-        result = (int) std::round(item.end * MLT.profile().fps() / 1000);
+        result = Util::msToPosition(item.end);
         break;
     case SiblingCountRole:
         result = m_items[index.parent().row()].size();

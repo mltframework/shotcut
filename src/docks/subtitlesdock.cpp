@@ -67,11 +67,6 @@ static int64_t positionToMs(mlt_position position)
     return 1000 * seconds;
 }
 
-static mlt_position msToPosition(int64_t ms)
-{
-    return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
-}
-
 static QModelIndexList selectedRowsOrCurrentItem(QItemSelectionModel *selectionModel)
 {
     QModelIndexList rows = selectionModel->selectedRows();
@@ -915,7 +910,7 @@ void SubtitlesDock::onItemDoubleClicked(const QModelIndex &index)
 {
     if (index.parent().isValid()) {
         const Subtitles::SubtitleItem item = m_model->getItem(index.parent().row(), index.row());
-        int64_t position = msToPosition(item.start);
+        int64_t position = Util::msToPosition(item.start);
         emit seekRequested((int) position);
     }
 }
@@ -1267,8 +1262,8 @@ void SubtitlesDock::generateTextOnTimeline()
     int lastItemFrameEnd = 0;
     for (int itemIndex = 0; itemIndex < itemCount; itemIndex++) {
         auto item = m_model->getItem(trackIndex, itemIndex);
-        int frameStart = msToPosition(item.start);
-        int frameEnd = msToPosition(item.end);
+        int frameStart = Util::msToPosition(item.start);
+        int frameEnd = Util::msToPosition(item.end);
         // Create a transparent color producer
         Mlt::Producer producer(MLT.profile(), "color:");
         producer.set("resource", "#00000000");

@@ -1314,3 +1314,8 @@ bool Util::cpuHasAVX2()
     }();
     return result;
 }
+
+int Util::msToPosition(int64_t ms)
+{
+    return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
+}
