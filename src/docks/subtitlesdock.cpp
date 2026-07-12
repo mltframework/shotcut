@@ -664,6 +664,10 @@ void SubtitlesDock::importSubtitles()
     tmp->close();
     QProcess proc;
     QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    if (!ffmpegPath.exists()) {
+        MAIN.showStatusMessage(tr("ffmpeg not found. Cannot import subtitles."));
+        return;
+    }
     QStringList args;
     args << "-y"
          << "-hide_banner"
@@ -679,6 +683,9 @@ void SubtitlesDock::importSubtitles()
         QString output = proc.readAll();
         foreach (const QString &line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts))
             LOG_INFO() << line;
+    } else {
+        LOG_ERROR() << "converting subtitle file with ffmpeg failed with" << proc.exitCode() << ":"
+                    << proc.readAll();
     }
 
     // Read the subtitles
