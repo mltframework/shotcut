@@ -4240,6 +4240,19 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
+        qApp->setStyleSheet(QStringLiteral(
+            "QTabBar::tab { background: #c8c8c8; color: #222222; padding: 4px 8px;"
+            " border: 1px solid #c5c5c5; }"
+            "QTabBar::tab:top { border-bottom: none;"
+            " border-top-left-radius: 4px; border-top-right-radius: 4px; }"
+            "QTabBar::tab:bottom { border-top: none;"
+            " border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }"
+            "QTabBar::tab:selected { background: #e8e8e8; color: #000000; }"
+            "QTabBar::tab:top:selected { background: #f0f0f0; border-top: 2px solid #308cc6; }"
+            "QTabBar::tab:bottom:selected { border-bottom: 2px solid #308cc6; }"
+            "QTabBar::tab:hover:!selected { background: #e0e0e0; }"
+            "QTabBar::tab:top:!selected { margin-top: 2px; }"
+            "QTabBar::tab:bottom:!selected { margin-bottom: 2px; }"));
         QIcon::setThemeName(kThemeLight);
         ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
