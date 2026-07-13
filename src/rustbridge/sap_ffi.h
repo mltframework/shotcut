@@ -229,8 +229,14 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex);
  * non-ripple/single-track like a plain drag on one clip's edge, no
  * transition auto-add/remove). Returns 0 on success, -1 on error (invalid
  * handle/track/clip/locked track, or newInFrame out of the valid range --
- * see MultitrackModel::trimClipInValid()). */
-int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame);
+ * see MultitrackModel::trimClipInValid()). ripple != 0 shifts every
+ * downstream clip on the SAME track to close/
+ * open the gap instead of leaving (or requiring) a blank -- the real
+ * Timeline Ripple Trim mode, same `ripple` bool
+ * Timeline::TrimClipInCommand/MultitrackModel::trimClipIn() already
+ * accept; ripple == 0 keeps the original non-ripple behavior below. */
+int sap_trim_clip_in(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame, int ripple);
 /* NOTE (real, load-bearing MultitrackModel::trimClipIn() behavior, not a
  * quirk of this shim): non-ripple trim-in with a positive delta (in-point
  * moving forward, i.e. shrinking the clip from its start) inserts a NEW
@@ -243,8 +249,10 @@ int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long
 
 /* Adjusts the clip's out-point to absolute frame newOutFrame via the real
  * Timeline::TrimClipOutCommand (undoable). Same caveats as
- * sap_trim_clip_in. Returns 0 on success, -1 on error. */
-int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame);
+ * sap_trim_clip_in, including the ripple parameter. Returns 0 on success,
+ * -1 on error. */
+int sap_trim_clip_out(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame, int ripple);
 
 /* Splits the clip at (trackIndex, clipIndex) at absolute frame position
  * (relative to the start of the timeline) via the real
@@ -348,6 +356,16 @@ char *sap_list_tracks(void *mainWindowHandle);
  * the untitled default. Returns 0 on success, -1 on failure. */
 int sap_save_project(void *mainWindowHandle);
 
+/* Binds this session's "current file" (MainWindow::fileName(), what
+ * sap_save_project saves to) to filename, without opening/loading
+ * anything from disk -- see MainWindow::setSapProjectFile's doc comment.
+ * Intended to be called once, right after launch, with
+ * <projectRoot>/<mltFileName> (per 09-project-folder-layout.md), so
+ * project.save persists to the real project folder instead of
+ * MainWindow::untitledFileName()'s scratch default. Returns 0 on success,
+ * -1 if mainWindowHandle/filename is invalid. */
+int sap_set_project_file(void *mainWindowHandle, const char *filename);
+
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already
@@ -442,6 +460,35 @@ char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, con
  * pointer via sap_free_string. */
 char *sap_overwrite_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
 
+/* Returns a heap-allocated, NUL-terminated MLT XML string serializing the
+ * *live* Mlt::Producer sitting at playlist bin index `index` (with any
+ * attached filters intact -- e.g. a sap_generator_create_title clip's
+ * dynamictext/qtext filter), for `{source:{playlistIndex}}` per
+ * rust-fork/01-jsonrpc-spec.md's edit.appendClip/insertClip/overwriteClip
+ * source union. Distinct from sap_playlist_get's "path" field, which is
+ * only the raw resource string (e.g. "color:#00000000" for a title) --
+ * reopening that resource fresh would silently drop the attached filter
+ * chain, unlike this XML which is the exact producer as it sits in the
+ * bin. Feed the result to sap_append_clip_xml/sap_insert_clip_xml/
+ * sap_overwrite_clip_xml. NULL on error (invalid handle, out-of-range
+ * index, or an unexpectedly invalid producer). Caller must free the
+ * returned pointer via sap_free_string. */
+char *sap_playlist_get_xml(void *mainWindowHandle, int index);
+
+/* XML-sourced siblings of sap_append_clip/sap_insert_clip/
+ * sap_overwrite_clip: identical undoable Timeline::AppendCommand/
+ * InsertCommand/OverwriteCommand plumbing and return shape, but take a
+ * ready-made MLT producer XML string directly instead of opening a
+ * filesystem path -- for `{source:{xml}}` (caller already has raw
+ * producer XML, e.g. clipboard/duplicate case) and `{source:
+ * {playlistIndex}}` (resolve via sap_playlist_get_xml first) per
+ * rust-fork/01-jsonrpc-spec.md's shared source union. NULL on error
+ * (invalid handle/trackIndex, out-of-range clipIndex, locked track, or
+ * empty xml). Caller must free string results via sap_free_string. */
+char *sap_append_clip_xml(void *mainWindowHandle, int trackIndex, const char *xml);
+char *sap_insert_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xml);
+char *sap_overwrite_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xml);
+
 /* Renders the pixels of the given absolute timeline frame from the
  * currently open project's live producer (Controller::producer(), the same
  * Mlt::Producer instance driving the app's own preview/player), using the
@@ -487,6 +534,19 @@ char *sap_generator_create_title(void *mainWindowHandle,
                                  const char *text,
                                  const char *fgColour,
                                  const char *bgColour);
+
+/* Creates a real MLT plain `color:` producer (the same construction
+ * ColorProducerWidget::newProducer() uses, minus the QWidget UI, and
+ * minus any attached text filter -- see sap_generator_create_title for
+ * that variant) and appends it to the real Playlist bin via
+ * `PlaylistModel::append()`. hexColor is an `#AARRGGBB` string (required,
+ * e.g. `#00000000` for a fully-transparent spacer clip). Returns a
+ * heap-allocated JSON object `{"index":N,"name":"...",
+ * "source":{"kind":"color","hexColor":"..."},"durationFrames":N}`
+ * matching sap-rust's `PlaylistEntry` wire shape, or NULL on error
+ * (invalid handle, no playlist dock, missing/empty hexColor). Caller
+ * must free via sap_free_string. */
+char *sap_generator_create_color(void *mainWindowHandle, const char *hexColor);
 
 /* Subtitle operations on the real per-project `SubtitlesModel`
  * (`TimelineDock::subtitlesModel()`, loaded from the current tractor --
@@ -550,6 +610,18 @@ char *sap_subtitles_import_srt(void *mainWindowHandle, const char *path, int new
  * caller), or NULL on error (invalid handle/trackIndex, or the write
  * failed). Caller must free via sap_free_string. */
 char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const char *path);
+
+/* Attaches (or, if a matching one is already attached, leaves in place) a
+ * real MLT "subtitle" burn-in filter on the timeline output (the tractor
+ * itself, i.e. an "on Output" filter), feeding it from trackIndex's cues,
+ * mirroring `SubtitlesDock::burnInOnTimeline()`'s filter setup exactly
+ * (same mlt_service, colours, outline, geometry, size) but driven
+ * headlessly instead of through `MainWindow::onCreateOrEditFilterOnOutput`
+ * (which requires a live FiltersDock selection). Idempotent per track:
+ * re-running for the same trackIndex does not add a duplicate filter.
+ * Returns 0 on success, -1 on error (invalid handle/trackIndex, or no
+ * multitrack producer loaded). */
+int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex);
 
 /* Sets/gets the real project Notes free-text field via
  * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
