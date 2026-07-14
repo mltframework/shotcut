@@ -53,6 +53,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/encodedock.ui
   docks/filesdock.cpp docks/filesdock.h
   docks/filesdock.ui
+  docks/chatrustdock.cpp docks/chatrustdock.h
   docks/filtersdock.cpp docks/filtersdock.h
   docks/jobsdock.cpp docks/jobsdock.h
   docks/jobsdock.ui
@@ -130,6 +131,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/qmlrichtextmenu.cpp qmltypes/qmlrichtextmenu.h
   qmltypes/qmlutilities.cpp qmltypes/qmlutilities.h
   qmltypes/qmlview.cpp qmltypes/qmlview.h
+  qmltypes/rustpanelitem.cpp qmltypes/rustpanelitem.h
   qmltypes/thumbnailprovider.cpp qmltypes/thumbnailprovider.h
   qmltypes/timelineitems.cpp qmltypes/timelineitems.h
   resources.qrc
@@ -310,6 +312,8 @@ target_link_libraries(shotcut
   Qt6::QuickWidgets
   Qt6::Sql
   sap_rust
+  panel_rust
+  PkgConfig::Fontconfig
   Qt6::WebSockets
   Qt6::Widgets
   Qt6::Xml

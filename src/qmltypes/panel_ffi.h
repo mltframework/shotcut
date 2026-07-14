@@ -1,0 +1,30 @@
+// C ABI declarations for panel-rust (Phase 1 render-bridge spike).
+// Mirrors sap-rust's sap_ffi.h pattern (plain extern "C", opaque handle).
+#pragma once
+
+#include <cstdint>
+
+extern "C" {
+struct PanelHandle;
+
+PanelHandle *panel_rust_create(unsigned int width, unsigned int height);
+void panel_rust_destroy(PanelHandle *handle);
+bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y);
+// qt_key is QKeyEvent::key(); text/text_len is QKeyEvent::text() as UTF-8
+// (may be empty for pure modifier presses). See panel-rust's map_qt_key
+// for the Qt -> Slint key mapping this expects.
+bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *text, size_t text_len, bool pressed);
+// theme is "dark"/"light"/etc, per MainWindow::changeTheme()'s resolved
+// theme name.
+bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);
+// Drains queued agent-bridge events (phase 4, rui-acp-client) into the
+// Slint model. Must be polled periodically (see RustPanelItem's QTimer) --
+// nothing else notices background agent activity on this single-threaded
+// render loop. Returns whether a repaint is needed.
+bool panel_rust_poll(PanelHandle *handle);
+bool panel_rust_render(PanelHandle *handle);
+const unsigned char *panel_rust_buffer_ptr(PanelHandle *handle);
+size_t panel_rust_buffer_len(PanelHandle *handle);
+unsigned int panel_rust_width(PanelHandle *handle);
+unsigned int panel_rust_height(PanelHandle *handle);
+}

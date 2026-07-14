@@ -44,6 +44,7 @@
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
 #include "docks/notesdock.h"
+#include "docks/chatrustdock.h"
 #include "docks/playlistdock.h"
 #include "docks/recentdock.h"
 #include "docks/subtitlesdock.h"
@@ -875,6 +876,28 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionNotes, SIGNAL(triggered()), this, SLOT(onNotesDockTriggered()));
     connect(m_notesDock, SIGNAL(modified()), this, SLOT(onNoteModified()));
 
+    // Rust-rendered (Slint) chat panel spike -- additive only, per
+    // memory/head/gen/plans/rust-qt-cross-render-option-b.md. Left visible
+    // (not hidden) and un-tabified so it's directly observable alongside
+    // the rest of the app for this verification pass.
+    m_chatRustDock = new ChatRustDock(this);
+    // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
+    // ~20% of the main window's width on a fresh launch/profile, while
+    // staying natively resizable afterward -- QDockWidget/QMainWindow's
+    // own splitter-drag already covers "adjustable going forward" once
+    // the container's minimum-size floor is loosened (see
+    // ChatRustDock::ChatRustDock's `setMinimumSize` call), so no custom
+    // resize handling is added here, only this one-time initial target.
+    // `readWindowSettings()` (called later in this same constructor)
+    // calls `restoreState()`/`restoreGeometry()` when a prior run saved
+    // one, which overrides this default with the user's last manually-
+    // resized width -- this call therefore only actually shows up on a
+    // fresh settings profile, matching the plan's Phase 4 acceptance
+    // criteria. Mirrors the same `resizeDocks(...)` API already sketched
+    // (currently commented out) for other docks in
+    // `on_actionLayoutLogging_triggered` below.
+    resizeDocks({m_chatRustDock}, {qRound(width() * 0.20)}, Qt::Horizontal);
+
     m_subtitlesDock = new SubtitlesDock(this);
     m_subtitlesDock->hide();
     m_subtitlesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9));
@@ -920,6 +943,7 @@ void MainWindow::setupAndConnectDocks()
     tabifyDockWidget(m_encodeDock, m_notesDock);
     tabifyDockWidget(m_notesDock, m_subtitlesDock);
     // Right area
+    addDockWidget(Qt::RightDockWidgetArea, m_chatRustDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
@@ -4301,8 +4325,28 @@ void MainWindow::changeTheme(const QString &theme)
     //    LOG_INFO() << "highlightedText" << pal.highlightedText().color().name();
     //    LOG_INFO() << "link" << pal.link().color().name();
     //    LOG_INFO() << "linkVisited" << pal.linkVisited().color().name();
+
+    // ChatRustDock (panel-rust, Slint) tracks the app's resolved theme
+    // name ("dark"/"light"/etc, per mytheme above) rather than hardcoding
+    // its own palette -- see memory/head/gen/docs/05-ui-theming-extensibility.md's
+    // proposed ThemeDefinition direction; this is the minimal-diff version
+    // of that for the one new dock, not the full ThemeRegistry refactor.
+    // changeTheme() is static and runs once at startup before MainWindow
+    // (and its docks) exist -- this app requires a restart to switch
+    // themes (see restartAfterChangeTheme()), there is no live
+    // theme-changed signal to connect to. So the resolved name is cached
+    // here and read once by ChatRustDock's constructor instead.
+    s_resolvedTheme = mytheme;
+
     LOG_DEBUG() << "end";
 }
+
+QString MainWindow::resolvedTheme()
+{
+    return s_resolvedTheme;
+}
+
+QString MainWindow::s_resolvedTheme = QStringLiteral("dark");
 
 Mlt::Playlist *MainWindow::playlist() const
 {

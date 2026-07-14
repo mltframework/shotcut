@@ -54,6 +54,7 @@ class QNetworkReply;
 class KeyframesDock;
 class MarkersDock;
 class NotesDock;
+class ChatRustDock;
 class SubtitlesDock;
 class ScreenCapture;
 class HdrPreviewWindow;
@@ -73,6 +74,10 @@ public:
     QUndoStack *undoStack() const;
     bool saveXML(const QString &filename, bool withRelativePaths = true);
     static void changeTheme(const QString &theme);
+    // Resolved theme name ("dark"/"light"/etc) from the most recent
+    // changeTheme() call -- see mainwindow.cpp's ChatRustDock comment for
+    // why this is a cached static getter rather than a live signal.
+    static QString resolvedTheme();
     PlaylistDock *playlistDock() const { return m_playlistDock; }
     TimelineDock *timelineDock() const { return m_timelineDock; }
     RecentDock *recentDock() const { return m_recentDock; }
@@ -226,6 +231,8 @@ private:
     QDateTime m_lastBackupDateTime;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
+    ChatRustDock *m_chatRustDock;
+    static QString s_resolvedTheme;
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;

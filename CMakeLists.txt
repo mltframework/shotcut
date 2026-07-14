@@ -86,6 +86,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Corrosion)
 corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml FEATURES real_ffi)
 
+# panel-rust: Rust-rendered (Slint) chat panel spike, per
+# memory/head/gen/plans/rust-qt-cross-render-option-b.md. Additive only,
+# same sibling-crate + corrosion pattern as sap-rust above. Renders into a
+# CPU pixel buffer (no GPU texture sharing yet); composited by
+# src/qmltypes/rustpanelitem.{h,cpp} via QQuickPaintedItem.
+corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml)
+pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
+
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)
