@@ -49,3 +49,4 @@ MinimalMediaBackend/
 CuteLogger/libCuteLogger.dll
 docs/qml-api/
 shotcut.code-workspace
+.qtcreator/
