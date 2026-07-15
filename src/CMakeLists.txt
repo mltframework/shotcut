@@ -1,4 +1,5 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(SQLite3 REQUIRED)
 
 add_executable(shotcut WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
@@ -297,6 +298,10 @@ if(QSB_EXECUTABLE)
   add_dependencies(shotcut hdr_shaders)
 endif()
 
+# panel_rust is a static Rust archive; its rusqlite symbols are encountered
+# after CMake's imported SQLite target in the final link line.
+target_link_options(shotcut PRIVATE "LINKER:--no-as-needed")
+
 target_link_libraries(shotcut
   PRIVATE
   CuteLogger
@@ -313,6 +318,7 @@ target_link_libraries(shotcut
   Qt6::Sql
   sap_rust
   panel_rust
+  SQLite3::SQLite3
   PkgConfig::Fontconfig
   Qt6::WebSockets
   Qt6::Widgets

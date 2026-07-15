@@ -49,10 +49,8 @@ void RustPanelItem::ensureHandle()
     if (!m_handle)
         qWarning() << "RustPanelItem: panel_rust_create failed";
     if (m_handle && !m_pendingTheme.isEmpty()) {
-        QByteArray bytes = m_pendingTheme.toUtf8();
-        panel_rust_set_theme(m_handle,
-                              reinterpret_cast<const unsigned char *>(bytes.constData()),
-                              static_cast<size_t>(bytes.size()));
+        const bool dark = m_pendingTheme != "light";
+        panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark);
     }
 }
 
@@ -114,10 +112,8 @@ void RustPanelItem::setTheme(const QString &theme)
     m_pendingTheme = theme;
     if (!m_handle)
         return; // applied by ensureHandle() once the panel actually exists
-    QByteArray bytes = theme.toUtf8();
-    if (panel_rust_set_theme(m_handle,
-                              reinterpret_cast<const unsigned char *>(bytes.constData()),
-                              static_cast<size_t>(bytes.size())))
+    const bool dark = theme != "light";
+    if (panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark))
         update();
 }
 

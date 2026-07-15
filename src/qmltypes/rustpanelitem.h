@@ -41,4 +41,5 @@ private:
     // was called (e.g. at dock construction, to match the app's current
     // theme) before the handle existed yet.
     QString m_pendingTheme;
+    uint64_t m_appearanceGeneration = 0;
 };

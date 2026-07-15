@@ -17,6 +17,7 @@ bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *
 // theme is "dark"/"light"/etc, per MainWindow::changeTheme()'s resolved
 // theme name.
 bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);
+bool panel_rust_apply_appearance(PanelHandle *handle, uint64_t generation, bool dark);
 // Drains queued agent-bridge events (phase 4, rui-acp-client) into the
 // Slint model. Must be polled periodically (see RustPanelItem's QTimer) --
 // nothing else notices background agent activity on this single-threaded
