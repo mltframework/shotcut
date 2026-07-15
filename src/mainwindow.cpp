@@ -138,7 +138,7 @@ static bool eventDebugCallback(void **data)
 static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 // Bump kDockLayoutVersion whenever a new dock is added to setupAndConnectDocks().
 // This triggers a one-time re-tabification for users upgrading from an older saved state.
-static constexpr int kDockLayoutVersion = 1;
+static constexpr int kDockLayoutVersion = 2;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -229,7 +229,19 @@ MainWindow::MainWindow()
     setupMenuFile();
     setupMenuView();
     connectVideoWidgetSignals();
+    const bool hasSavedWindowGeometry = !Settings.windowGeometry().isEmpty();
+    const bool needsChatRustDockDefault =
+        !hasSavedWindowGeometry || Settings.dockLayoutVersion() < kDockLayoutVersion;
     readWindowSettings();
+    if (needsChatRustDockDefault) {
+        // Apply the target after the first event-loop turn, when the window
+        // has its actual on-screen geometry. The layout-version condition
+        // also migrates users upgrading from a profile saved before this
+        // dock existed; later launches preserve the user's manual width.
+        QTimer::singleShot(0, this, [this] {
+            resizeDocks({m_chatRustDock}, {qRound(width() * 0.20)}, Qt::Horizontal);
+        });
+    }
     setupActions();
     setupLayoutSwitcher();
 
@@ -888,16 +900,6 @@ void MainWindow::setupAndConnectDocks()
     // the container's minimum-size floor is loosened (see
     // ChatRustDock::ChatRustDock's `setMinimumSize` call), so no custom
     // resize handling is added here, only this one-time initial target.
-    // `readWindowSettings()` (called later in this same constructor)
-    // calls `restoreState()`/`restoreGeometry()` when a prior run saved
-    // one, which overrides this default with the user's last manually-
-    // resized width -- this call therefore only actually shows up on a
-    // fresh settings profile, matching the plan's Phase 4 acceptance
-    // criteria. Mirrors the same `resizeDocks(...)` API already sketched
-    // (currently commented out) for other docks in
-    // `on_actionLayoutLogging_triggered` below.
-    resizeDocks({m_chatRustDock}, {qRound(width() * 0.20)}, Qt::Horizontal);
-
     m_subtitlesDock = new SubtitlesDock(this);
     m_subtitlesDock->hide();
     m_subtitlesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9));

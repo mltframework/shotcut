@@ -36,10 +36,15 @@ void RustPanelItem::ensureHandle()
 {
     const unsigned int w = static_cast<unsigned int>(qMax(1.0, width()));
     const unsigned int h = static_cast<unsigned int>(qMax(1.0, height()));
-    if (m_handle && panel_rust_width(m_handle) == w && panel_rust_height(m_handle) == h)
+    if (m_handle) {
+        if (panel_rust_width(m_handle) == w && panel_rust_height(m_handle) == h)
+            return;
+        // panel_rust_create resizes the existing singleton in place. Do not
+        // destroy/recreate it for every Qt geometry change, because Slint's
+        // process-global software platform is installed only once.
+        panel_rust_create(w, h);
         return;
-    if (m_handle)
-        panel_rust_destroy(m_handle);
+    }
     m_handle = panel_rust_create(w, h);
     if (!m_handle)
         qWarning() << "RustPanelItem: panel_rust_create failed";

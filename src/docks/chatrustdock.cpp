@@ -16,8 +16,11 @@ ChatRustDock::ChatRustDock(QWidget *parent)
     view->setResizeMode(QQuickView::SizeRootObjectToView);
 
     auto *panel = new RustPanelItem();
-    panel->setWidth(400);
-    panel->setHeight(500);
+    // Keep the embedded item's size hint below the fresh-launch target.
+    // QMainWindow's dock splitter can then grow it to the user's chosen
+    // width without the QQuickWindow forcing a 400px minimum.
+    panel->setWidth(240);
+    panel->setHeight(260);
     view->setContent(QUrl(), nullptr, panel);
 
     QWidget *container = QWidget::createWindowContainer(view, this);

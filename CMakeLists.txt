@@ -17,12 +17,16 @@ project(shotcut
   LANGUAGES CXX
 )
 
+include(GNUInstallDirs)
+
 if(WIN32)
   option(WINDOWS_DEPLOY "Install exes/libs directly to prefix (no subdir /bin)" ON)
 endif()
 option(CLANG_FORMAT "Enable Clang Format" ON)
 option(BUILD_DOCS "Build QDoc API documentation" OFF)
 option(EXTERNAL_LAUNCHERS "Whether include features to launch external programs; for example, this should be off for Flatpak due to sandbox." ON)
+set(RUI_ACPX_SERVER_BIN "" CACHE FILEPATH
+  "Optional built acpx-server binary to install beside Shotcut for the Rust chat panel")
 option(USE_VULKAN "Whether to use Vulkan for hardware video decoding" OFF)
 if (UNIX AND NOT APPLE)
   option(BUILD_MINIMAL_MEDIA_BACKEND "Whether to build the `minimal` Qt media backend for Linux/BSD" OFF)
@@ -108,6 +112,23 @@ if(SHOTCUT_BUILD_TESTS)
 endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+if(RUI_ACPX_SERVER_BIN)
+  # panel-rust resolves an installed gateway beside the Shotcut executable,
+  # while RUI_ACPX_SERVER_BIN remains available as an explicit runtime
+  # override for non-standard deployments.
+  if(APPLE)
+    set(RUI_ACPX_INSTALL_DIR
+        "${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/MacOS")
+  elseif(WIN32 AND WINDOWS_DEPLOY)
+    set(RUI_ACPX_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}")
+  else()
+    set(RUI_ACPX_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
+  endif()
+  install(PROGRAMS "${RUI_ACPX_SERVER_BIN}"
+          DESTINATION "${RUI_ACPX_INSTALL_DIR}"
+          RENAME acpx-server)
+endif()
 
 add_custom_target(codespell COMMAND
   cd "${CMAKE_SOURCE_DIR}" &&
