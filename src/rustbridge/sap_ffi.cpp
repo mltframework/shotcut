@@ -30,6 +30,7 @@
 #include <QByteArray>
 #include <QColor>
 #include <QDir>
+#include <QFont>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
@@ -37,6 +38,7 @@
 #include <QJsonObject>
 #include <QMetaObject>
 #include <QScopedPointer>
+#include <QSet>
 #include <QThread>
 #include <QString>
 #include <QUndoStack>
@@ -565,6 +567,50 @@ void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
     }
 }
 
+// Enumerates a real, attached Mlt::Filter's user-visible properties for
+// filter.list, live off the actual MLT property store (not an echo of
+// whatever filter.add/filter.setProperty happened to be called with) --
+// skips MLT/Shotcut's own internal bookkeeping keys (mlt_type,
+// mlt_service, in/out/disable/version, anything "_"-prefixed like
+// _unique_id, "shotcut:"-prefixed, or "meta."-prefixed metadata) since
+// those are never a filter's own tunable parameters. Values come back as
+// real MLT property strings; each is smart-typed to a JSON number when it
+// parses cleanly as one (matching how filter.setProperty/anim_set already
+// accept numeric values), otherwise left as a JSON string.
+QJsonObject filterUserPropertiesToJson(Mlt::Filter &filter)
+{
+    static const QSet<QString> kReservedKeys{
+        QStringLiteral("mlt_type"),
+        QStringLiteral("mlt_service"),
+        QStringLiteral("in"),
+        QStringLiteral("out"),
+        QStringLiteral("disable"),
+        QStringLiteral("version"),
+    };
+    QJsonObject props;
+    const int count = filter.count();
+    for (int i = 0; i < count; ++i) {
+        const char *rawName = filter.get_name(i);
+        if (!rawName || !*rawName)
+            continue;
+        const QString name = QString::fromUtf8(rawName);
+        if (kReservedKeys.contains(name) || name.startsWith(QLatin1Char('_'))
+            || name.startsWith(QLatin1String("shotcut:")) || name.startsWith(QLatin1String("meta.")))
+            continue;
+        const char *rawValue = filter.get(rawName);
+        if (!rawValue)
+            continue;
+        const QString value = QString::fromUtf8(rawValue);
+        bool numOk = false;
+        const double asDouble = value.toDouble(&numOk);
+        if (numOk)
+            props[name] = asDouble;
+        else
+            props[name] = value;
+    }
+    return props;
+}
+
 // Builds the standard playlist-entry JSON object for row `index` from a
 // live Mlt::ClipInfo, matching PlaylistModel::data()'s COLUMN_RESOURCE
 // display logic (prefer the real shotcut:caption property, else the
@@ -741,6 +787,7 @@ char *sap_filter_list(void *mainWindowHandle, int trackIndex, int clipIndex)
                 QJsonObject entry;
                 entry["filterIndex"] = i;
                 entry["mltService"] = QString::fromUtf8(filter->get("mlt_service"));
+                entry["properties"] = filterUserPropertiesToJson(*filter);
                 result.append(entry);
             }
             ok = true;
@@ -788,15 +835,17 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex)
     return newCString(doc.toJson(QJsonDocument::Compact));
 }
 
-int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame)
+int sap_trim_clip_in(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame, int ripple)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
     if (!mw || !mw->timelineDock())
         return -1;
+    const bool doRipple = ripple != 0;
     int result = -1;
     QMetaObject::invokeMethod(
         mw->timelineDock(),
-        [mw, trackIndex, clipIndex, newInFrame, &result]() {
+        [mw, trackIndex, clipIndex, newInFrame, doRipple, &result]() {
             auto *dock = mw->timelineDock();
             auto *model = dock->model();
             if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
@@ -808,7 +857,7 @@ int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long
                 return;
             const int delta = static_cast<int>(newInFrame) - info->frame_in;
             if (delta != 0) {
-                if (!model->trimClipInValid(trackIndex, clipIndex, delta, false))
+                if (!model->trimClipInValid(trackIndex, clipIndex, delta, doRipple))
                     return;
                 // Real, undoable Timeline::TrimClipInCommand -- constructed
                 // and pushed directly (its redo() performs the actual
@@ -816,13 +865,17 @@ int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long
                 // file), skipping TimelineDock::trimClipIn()'s stateful
                 // drag-gesture machinery (m_trimCommand/commitTrimCommand,
                 // transition auto-add/remove) which isn't meaningful for a
-                // one-shot programmatic call.
+                // one-shot programmatic call. ripple mirrors the real
+                // Ripple Trim toggle -- closes/opens the gap on this track
+                // by shifting every downstream clip instead of leaving a
+                // blank (see sap_ffi.h's non-ripple caveat for the
+                // ripple==0 case).
                 auto *command = new Timeline::TrimClipInCommand(*model,
                                                                  *dock->markersModel(),
                                                                  trackIndex,
                                                                  clipIndex,
                                                                  delta,
-                                                                 /*ripple=*/false);
+                                                                 doRipple);
                 mw->undoStack()->push(command);
             }
             result = 0;
@@ -831,15 +884,17 @@ int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long
     return result;
 }
 
-int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame)
+int sap_trim_clip_out(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame, int ripple)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
     if (!mw || !mw->timelineDock())
         return -1;
+    const bool doRipple = ripple != 0;
     int result = -1;
     QMetaObject::invokeMethod(
         mw->timelineDock(),
-        [mw, trackIndex, clipIndex, newOutFrame, &result]() {
+        [mw, trackIndex, clipIndex, newOutFrame, doRipple, &result]() {
             auto *dock = mw->timelineDock();
             auto *model = dock->model();
             if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
@@ -854,14 +909,14 @@ int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, lon
             // new out-point as (frame_out - delta), not (frame_out + delta).
             const int delta = info->frame_out - static_cast<int>(newOutFrame);
             if (delta != 0) {
-                if (!model->trimClipOutValid(trackIndex, clipIndex, delta, false))
+                if (!model->trimClipOutValid(trackIndex, clipIndex, delta, doRipple))
                     return;
                 auto *command = new Timeline::TrimClipOutCommand(*model,
                                                                   *dock->markersModel(),
                                                                   trackIndex,
                                                                   clipIndex,
                                                                   delta,
-                                                                  /*ripple=*/false);
+                                                                  doRipple);
                 mw->undoStack()->push(command);
             }
             result = 0;
@@ -946,13 +1001,41 @@ char *sap_transitions_add_crossfade(void *mainWindowHandle,
                 return;
             if (durationFrames <= 0 || durationFrames >= firstInfo->frame_count
                 || durationFrames >= secondInfo->frame_count)
+            {
+                qWarning("[sap_ffi] transitions.addCrossfade rejected: track=%d clips=%d/%d "
+                         "durationFrames=%lld firstLen=%d secondLen=%d",
+                         trackIndex,
+                         firstClipIndex,
+                         secondClipIndex,
+                         durationFrames,
+                         firstInfo->frame_count,
+                         secondInfo->frame_count);
                 return;
+            }
             const int position = secondInfo->start - static_cast<int>(durationFrames);
+            // ripple=true: without this, MultitrackModel::addTransition's
+            // moveClipInBlank() only slides secondClipIndex left to build the
+            // overlap and leaves everything downstream at its original
+            // absolute position, backfilling the vacated durationFrames as an
+            // explicit blank/gap clip -- confirmed live (repro:
+            // scripts/debug-crossfade-repro.py) via edit.listClips showing a
+            // spurious {"source":{"path":"blank"}} entry right after the
+            // transition, which then makes a *second*, later crossfade
+            // targeting the (now-shifted) downstream clip indices reject
+            // with "durationFrames >= either clip's length" because the
+            // blank's own length happened to equal durationFrames. Rippling
+            // (matching Settings.timelineRippleAllTracks()-independent
+            // downstream-clip-shift semantics real drag-to-crossfade already
+            // gets from the timeline gesture path, timelinedock.cpp's
+            // onTransitionAdded) closes that gap instead of leaving it, which
+            // is what a one-shot programmatic "add this crossfade" call
+            // should do -- there is no drag gesture here to preserve a
+            // deliberate downstream gap for.
             auto *command = new Timeline::AddTransitionCommand(*dock,
                                                                 trackIndex,
                                                                 secondClipIndex,
                                                                 position,
-                                                                /*ripple=*/false);
+                                                                /*ripple=*/true);
             mw->undoStack()->push(command);
             const int transitionIndex = command->getTransitionIndex();
             if (transitionIndex < 0)
@@ -1090,6 +1173,41 @@ int sap_filter_add_keyframe(void *mainWindowHandle,
                            : filter->anim_set(key.constData(),
                                               value.toString().toUtf8().constData(),
                                               static_cast<int>(position));
+                if (rc == 0 && !numOk) {
+                    // mlt++'s only const-char*-value anim_set() overload
+                    // (MltProperties.h) has no keyframe_type parameter at
+                    // all -- it silently always creates a discrete/hold
+                    // keyframe regardless of what the caller asked for,
+                    // which for a non-numeric animated property (e.g. this
+                    // filter's own "transition.rect" geometry string, "0%
+                    // 0% 100% 100% 1") meant every requested "linear"/
+                    // "smooth" keyframe silently downgraded to "discrete":
+                    // the value stayed pinned at the previous keyframe and
+                    // only snapped to the new one exactly at its frame,
+                    // instead of interpolating -- confirmed live (a
+                    // "linear" zoom rect keyframe pair rendered as a flat
+                    // corner color for every sampled frame up to, but not
+                    // including, the final keyframe's own exact frame; see
+                    // scripts/debug-zoom-repro.py). Since Animation::
+                    // key_set_type() can retroactively fix the type of the
+                    // keyframe anim_set() just created, look it up by its
+                    // now-known frame and correct it rather than avoiding
+                    // the string overload (which is otherwise the only
+                    // API that accepts a raw geometry/rect string as-is).
+                    auto *anim = filter->get_anim(key.constData());
+                    if (anim && anim->is_valid()) {
+                        const int count = anim->key_count();
+                        for (int i = 0; i < count; ++i) {
+                            int frame = 0;
+                            mlt_keyframe_type existingType = mlt_keyframe_linear;
+                            if (anim->key_get(i, frame, existingType) == 0
+                                && frame == static_cast<int>(position)) {
+                                anim->key_set_type(i, kfType);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             if (rc == 0)
                 result = 0;
@@ -1271,6 +1389,17 @@ int sap_save_project(void *mainWindowHandle)
     return result;
 }
 
+int sap_set_project_file(void *mainWindowHandle, const char *filename)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !filename || !*filename)
+        return -1;
+    const QString path = QString::fromUtf8(filename);
+    QMetaObject::invokeMethod(
+        mw, [mw, path]() { mw->setSapProjectFile(path); }, Qt::BlockingQueuedConnection);
+    return 0;
+}
+
 int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -1427,6 +1556,431 @@ char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *source
                 return;
             result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(index);
             result["index"] = index;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, path, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+
+            // clipIndex is a clip-SLOT index (insert before this slot),
+            // matching sap_move_clip's toClipIndex convention rather than
+            // an absolute frame -- computed into an absolute frame below
+            // exactly like sap_move_clip does for its own toClipIndex,
+            // since Timeline::InsertCommand itself wants an absolute
+            // frame position.
+            const int destClipCount = dock->clipCount(trackIndex);
+            if (clipIndex < 0 || clipIndex > destClipCount)
+                return;
+
+            // Open the source as a real MLT producer, exactly like
+            // sap_append_clip does -- lets insertClip take a path
+            // directly instead of being limited to the clipboard/"current
+            // source" TimelineDock::insert() itself reads from.
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+
+            const QString xml = MLT.XML(&producer);
+            if (xml.isEmpty())
+                return;
+
+            int insertPosition = 0;
+            if (clipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(trackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        insertPosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(trackIndex, clipIndex);
+                if (!destInfo)
+                    return;
+                insertPosition = destInfo->start;
+            }
+
+            // The real, undoable primitive: the exact same
+            // Timeline::InsertCommand TimelineDock::insert() itself
+            // pushes (timelinedock.cpp), called directly here rather
+            // than through insert() so a filesystem path can be taken
+            // without going via the system clipboard. seek=false so this
+            // FFI call does not move the playhead as a side effect.
+            mw->undoStack()->push(new Timeline::InsertCommand(*model,
+                                                                *dock->markersModel(),
+                                                                trackIndex,
+                                                                insertPosition,
+                                                                xml,
+                                                                false));
+
+            // Re-read the real destination playlist to report where the
+            // clip actually landed -- same get_clip_index_at() lookup
+            // sap_move_clip uses, since insert() only takes an absolute
+            // frame position, not a clip-slot index.
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(insertPosition);
+            if (finalIndex < 0)
+                return;
+            auto info = model->getClipInfo(trackIndex, finalIndex);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_overwrite_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !sourcePath || !*sourcePath)
+        return nullptr;
+    const QString path = QString::fromUtf8(sourcePath);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, path, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+
+            // clipIndex is a clip-SLOT index (the slot to replace), matching
+            // sap_insert_clip's convention -- computed into an absolute frame
+            // below exactly like sap_insert_clip does for its own clipIndex,
+            // since Timeline::OverwriteCommand itself wants an absolute
+            // frame position.
+            const int destClipCount = dock->clipCount(trackIndex);
+            if (clipIndex < 0 || clipIndex > destClipCount)
+                return;
+
+            // Open the source as a real MLT producer, exactly like
+            // sap_insert_clip/sap_append_clip do -- lets overwriteClip take
+            // a path directly instead of being limited to the
+            // clipboard/"current source" TimelineDock::overwrite() itself
+            // reads from.
+            Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            producer.set_in_and_out(0, producer.get_length() - 1);
+
+            const QString xml = MLT.XML(&producer);
+            if (xml.isEmpty())
+                return;
+
+            int overwritePosition = 0;
+            if (clipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(trackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        overwritePosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(trackIndex, clipIndex);
+                if (!destInfo)
+                    return;
+                overwritePosition = destInfo->start;
+            }
+
+            // The real, undoable primitive: the exact same
+            // Timeline::OverwriteCommand TimelineDock::overwrite() itself
+            // pushes (timelinedock.cpp), called directly here rather than
+            // through overwrite() so a filesystem path can be taken without
+            // going via the system clipboard. Unlike InsertCommand, this
+            // does NOT ripple downstream clips -- it drops and replaces
+            // whatever occupies the target frame range. seek=false so this
+            // FFI call does not move the playhead as a side effect.
+            mw->undoStack()->push(new Timeline::OverwriteCommand(*model,
+                                                                   trackIndex,
+                                                                   overwritePosition,
+                                                                   xml,
+                                                                   false));
+
+            // Re-read the real destination playlist to report where the
+            // clip actually landed -- same get_clip_index_at() lookup
+            // sap_insert_clip/sap_move_clip use, since overwrite() only
+            // takes an absolute frame position, not a clip-slot index.
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(overwritePosition);
+            if (finalIndex < 0)
+                return;
+            auto info = model->getClipInfo(trackIndex, finalIndex);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+// Shared tail for sap_append_clip_xml/sap_insert_clip_xml/
+// sap_overwrite_clip_xml/sap_playlist_get_xml's *_clip_xml siblings:
+// resolves a playlist entry's *live* Mlt::Producer (with any attached
+// filters intact, e.g. the dynamictext/qtext filter a
+// sap_generator_create_title clip carries) to its full MLT XML
+// serialization. Distinct from playlistEntryToJson's plain "path" field,
+// which is only the raw resource string (e.g. "color:#00000000" for a
+// title) and loses any attached filter chain -- reopening that resource
+// as a fresh producer instead of reusing this XML would silently drop
+// the title text/colour filter. Reused by both `{source:{xml}}` (caller
+// already has XML) and `{source:{playlistIndex}}` (resolved here first)
+// per 01-jsonrpc-spec.md's shared source union across
+// appendClip/insertClip/overwriteClip.
+char *sap_playlist_get_xml(void *mainWindowHandle, int index)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock())
+        return nullptr;
+    QString xml;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, index, &xml, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            auto *playlist = model ? model->playlist() : nullptr;
+            if (!playlist || index < 0 || index >= playlist->count())
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info || !info->producer || !info->producer->is_valid())
+                return;
+            // ClipInfo::frame_in/frame_out (not info->producer's OWN in/out,
+            // which for e.g. a title/color producer defaults to its full
+            // multi-hour underlying `length`) is this specific bin entry's
+            // real trim -- PlaylistModel::append() sets it via
+            // producer.set_in_and_out(0, producer.get_length() - 1) at
+            // append time, e.g. 100 frames for a generator.createTitle
+            // clip, but that trim lives on the playlist ENTRY (a distinct
+            // MLT "cut" of the producer), not the raw producer object
+            // itself. Applying it here before serializing is required --
+            // skipping this step silently exports/appends the untrimmed
+            // full-length producer instead of the real bin entry.
+            info->producer->set_in_and_out(info->frame_in, info->frame_out);
+            xml = MLT.XML(info->producer);
+            ok = !xml.isEmpty();
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(xml.toUtf8());
+}
+
+char *sap_append_clip_xml(void *mainWindowHandle, int trackIndex, const char *xmlStr)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !xmlStr || !*xmlStr)
+        return nullptr;
+    const QString xml = QString::fromUtf8(xmlStr);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, xml, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+
+            // Same real, undoable Timeline::AppendCommand sap_append_clip
+            // pushes -- the only difference is the caller already has a
+            // ready-made MLT XML producer (from `{source:{xml}}` or a
+            // resolved `{source:{playlistIndex}}` via
+            // sap_playlist_get_xml) instead of a filesystem path to open.
+            mw->undoStack()->push(new Timeline::AppendCommand(*model, trackIndex, xml, false));
+            const int index = dock->clipCount(trackIndex) - 1;
+            if (index < 0)
+                return;
+
+            auto info = model->getClipInfo(trackIndex, index);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(index);
+            result["index"] = index;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_insert_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xmlStr)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !xmlStr || !*xmlStr)
+        return nullptr;
+    const QString xml = QString::fromUtf8(xmlStr);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, xml, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+
+            const int destClipCount = dock->clipCount(trackIndex);
+            if (clipIndex < 0 || clipIndex > destClipCount)
+                return;
+
+            int insertPosition = 0;
+            if (clipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(trackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        insertPosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(trackIndex, clipIndex);
+                if (!destInfo)
+                    return;
+                insertPosition = destInfo->start;
+            }
+
+            // Same real, undoable Timeline::InsertCommand sap_insert_clip
+            // pushes -- see sap_append_clip_xml for why xml is taken
+            // ready-made here instead of a path.
+            mw->undoStack()->push(new Timeline::InsertCommand(*model,
+                                                                *dock->markersModel(),
+                                                                trackIndex,
+                                                                insertPosition,
+                                                                xml,
+                                                                false));
+
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(insertPosition);
+            if (finalIndex < 0)
+                return;
+            auto info = model->getClipInfo(trackIndex, finalIndex);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
+            result["inFrame"] = info->frame_in;
+            result["outFrame"] = info->frame_out;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_overwrite_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xmlStr)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !xmlStr || !*xmlStr)
+        return nullptr;
+    const QString xml = QString::fromUtf8(xmlStr);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, clipIndex, xml, &result, &ok]() {
+            auto *dock = mw->timelineDock();
+            auto *model = dock->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            if (dock->isTrackLocked(trackIndex))
+                return;
+
+            const int destClipCount = dock->clipCount(trackIndex);
+            if (clipIndex < 0 || clipIndex > destClipCount)
+                return;
+
+            int overwritePosition = 0;
+            if (clipIndex >= destClipCount) {
+                if (destClipCount > 0) {
+                    auto lastInfo = model->getClipInfo(trackIndex, destClipCount - 1);
+                    if (lastInfo)
+                        overwritePosition = lastInfo->start + lastInfo->frame_count;
+                }
+            } else {
+                auto destInfo = model->getClipInfo(trackIndex, clipIndex);
+                if (!destInfo)
+                    return;
+                overwritePosition = destInfo->start;
+            }
+
+            // Same real, undoable Timeline::OverwriteCommand
+            // sap_overwrite_clip pushes -- see sap_append_clip_xml for
+            // why xml is taken ready-made here instead of a path.
+            mw->undoStack()->push(new Timeline::OverwriteCommand(*model,
+                                                                   trackIndex,
+                                                                   overwritePosition,
+                                                                   xml,
+                                                                   false));
+
+            const int mltIndex = model->trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(mltIndex));
+            if (!track || !track->is_valid())
+                return;
+            Mlt::Playlist playlist(*track.data());
+            const int finalIndex = playlist.get_clip_index_at(overwritePosition);
+            if (finalIndex < 0)
+                return;
+            auto info = model->getClipInfo(trackIndex, finalIndex);
+            if (!info)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(finalIndex);
+            result["index"] = finalIndex;
             result["inFrame"] = info->frame_in;
             result["outFrame"] = info->frame_out;
             ok = true;
@@ -1944,6 +2498,14 @@ char *sap_generator_create_title(void *mainWindowHandle,
             Mlt::Filter filter(MLT.profile(), rich ? "qtext" : "dynamictext");
             if (!filter.is_valid())
                 return;
+            // Both dynamictext and qtext default to halign=left/valign=top
+            // (see filter_dynamictext.yml / filter_qtext.yml), which pins
+            // the text to the top-left corner of the frame. A title card
+            // generator should center its text by default; callers that
+            // want a different placement can add their own filter.set
+            // calls on the returned clip via the filter/keyframe RPCs.
+            filter.set("halign", "centre");
+            filter.set("valign", "middle");
             if (rich) {
                 filter.set("html", textStr.toUtf8().constData());
             } else {
@@ -1969,6 +2531,54 @@ char *sap_generator_create_title(void *mainWindowHandle,
             source["text"] = textStr;
             result["index"] = index;
             result["name"] = QStringLiteral("Title: %1").arg(textStr);
+            result["source"] = source;
+            result["durationFrames"] = info->frame_count;
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    QJsonDocument doc(result);
+    return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_generator_create_color(void *mainWindowHandle, const char *hexColor)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !hexColor || !*hexColor)
+        return nullptr;
+    const QString hex = QString::fromUtf8(hexColor);
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, hex, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+            Mlt::Producer producer(MLT.profile(), "color:");
+            if (!producer.is_valid())
+                return;
+            producer.set("resource", hex.toUtf8().constData());
+            producer.set("mlt_image_format", "rgba");
+            const QString caption = QStringLiteral("Color: %1").arg(hex);
+            producer.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            MLT.setDurationFromDefault(&producer);
+            model->append(producer);
+            auto *playlist = model->playlist();
+            if (!playlist)
+                return;
+            const int index = playlist->count() - 1;
+            if (index < 0)
+                return;
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(index));
+            if (!info)
+                return;
+            QJsonObject source;
+            source["kind"] = "color";
+            source["hexColor"] = hex;
+            result["index"] = index;
+            result["name"] = caption;
             result["source"] = source;
             result["durationFrames"] = info->frame_count;
             ok = true;
@@ -2165,6 +2775,61 @@ char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const cha
     return newCString(pathStr.toUtf8());
 }
 
+int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->timelineDock()->subtitlesModel() || !mw->isMultitrackValid())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, &result]() {
+            auto *model = mw->timelineDock()->subtitlesModel();
+            if (trackIndex < 0 || trackIndex >= model->trackCount())
+                return;
+            const SubtitlesModel::SubtitleTrack track = model->getTrack(trackIndex);
+            Mlt::Producer *output = mw->multitrack();
+            if (!output || !output->is_valid())
+                return;
+            // Mirror SubtitlesModel::doEditTrack's own scan (subtitlesmodel.cpp)
+            // so re-burning the same track is idempotent instead of stacking
+            // duplicate "subtitle" filters on the output each call.
+            for (int i = 0; i < output->filter_count(); i++) {
+                QScopedPointer<Mlt::Filter> existing(output->filter(i));
+                if (existing && existing->is_valid()
+                    && existing->get("mlt_service") == QStringLiteral("subtitle")
+                    && existing->get("feed") == track.name) {
+                    result = 0;
+                    return;
+                }
+            }
+            // Same filter construction as SubtitlesDock::burnInOnTimeline()
+            // (subtitlesdock.cpp), attached directly to the tractor instead
+            // of routed through MainWindow::onCreateOrEditFilterOnOutput
+            // (which needs a live FiltersDock/selection to run headlessly).
+            Mlt::Filter filter(MLT.profile(), "subtitle");
+            filter.set(kShotcutFilterProperty, "subtitles");
+            filter.set("fgcolour", "#ffffffff");
+            filter.set("bgcolour", "#00000000");
+            filter.set("olcolour", "#aa000000");
+            filter.set("outline", 3);
+            filter.set("weight", QFont::Bold);
+            filter.set("style", "normal");
+            filter.set("shotcut:usePointSize", 1);
+            filter.set("size", MLT.profile().height() / 20);
+            filter.set("geometry", "20%/75%:60%x20%");
+            filter.set("valign", "bottom");
+            filter.set("halign", "center");
+            filter.set("feed", track.name.toUtf8().constData());
+            filter.set("typewriter", 0);
+            if (output->attach(filter) != 0)
+                return;
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 int sap_notes_set_text(void *mainWindowHandle, const char *text)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -2259,13 +2924,17 @@ void sap_free_string(char *s)
 
 void sap_emit_event(const char *jsonPayload)
 {
-    // Stub: proves the symbol is real and linkable, and that the signal
-    // path below actually fires it. Full bridging into sap-rust's
-    // broadcast/notification channel (so this reaches connected JSON-RPC
-    // clients as an unsolicited edit.changed notification) is flagged as
-    // follow-up work in the README's "Real FFI" section.
-    if (jsonPayload)
+    // Forwards into the real Rust-side bridge (sap_ffi_notify_bridge,
+    // sap-rust/src/ffi_backend.rs), which fans this out to every SAP
+    // client currently bound to this process's document. Kept as its own
+    // function (rather than connecting sap_ffi_notify_bridge directly to
+    // MultitrackModel::modified) so the JSON payload shape stays owned by
+    // this file, and so the stderr log below -- useful for headless
+    // harness debugging -- has a single call site.
+    if (jsonPayload) {
         std::fprintf(stderr, "[sap_ffi] event: %s\n", jsonPayload);
+        sap_ffi_notify_bridge(jsonPayload);
+    }
 }
 
 void sap_install_notification_bridge(void *mainWindowHandle)

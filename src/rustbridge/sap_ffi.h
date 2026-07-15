@@ -229,8 +229,14 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex);
  * non-ripple/single-track like a plain drag on one clip's edge, no
  * transition auto-add/remove). Returns 0 on success, -1 on error (invalid
  * handle/track/clip/locked track, or newInFrame out of the valid range --
- * see MultitrackModel::trimClipInValid()). */
-int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame);
+ * see MultitrackModel::trimClipInValid()). ripple != 0 shifts every
+ * downstream clip on the SAME track to close/
+ * open the gap instead of leaving (or requiring) a blank -- the real
+ * Timeline Ripple Trim mode, same `ripple` bool
+ * Timeline::TrimClipInCommand/MultitrackModel::trimClipIn() already
+ * accept; ripple == 0 keeps the original non-ripple behavior below. */
+int sap_trim_clip_in(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newInFrame, int ripple);
 /* NOTE (real, load-bearing MultitrackModel::trimClipIn() behavior, not a
  * quirk of this shim): non-ripple trim-in with a positive delta (in-point
  * moving forward, i.e. shrinking the clip from its start) inserts a NEW
@@ -243,8 +249,10 @@ int sap_trim_clip_in(void *mainWindowHandle, int trackIndex, int clipIndex, long
 
 /* Adjusts the clip's out-point to absolute frame newOutFrame via the real
  * Timeline::TrimClipOutCommand (undoable). Same caveats as
- * sap_trim_clip_in. Returns 0 on success, -1 on error. */
-int sap_trim_clip_out(void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame);
+ * sap_trim_clip_in, including the ripple parameter. Returns 0 on success,
+ * -1 on error. */
+int sap_trim_clip_out(
+    void *mainWindowHandle, int trackIndex, int clipIndex, long long newOutFrame, int ripple);
 
 /* Splits the clip at (trackIndex, clipIndex) at absolute frame position
  * (relative to the start of the timeline) via the real
@@ -348,6 +356,16 @@ char *sap_list_tracks(void *mainWindowHandle);
  * the untitled default. Returns 0 on success, -1 on failure. */
 int sap_save_project(void *mainWindowHandle);
 
+/* Binds this session's "current file" (MainWindow::fileName(), what
+ * sap_save_project saves to) to filename, without opening/loading
+ * anything from disk -- see MainWindow::setSapProjectFile's doc comment.
+ * Intended to be called once, right after launch, with
+ * <projectRoot>/<mltFileName> (per 09-project-folder-layout.md), so
+ * project.save persists to the real project folder instead of
+ * MainWindow::untitledFileName()'s scratch default. Returns 0 on success,
+ * -1 if mainWindowHandle/filename is invalid. */
+int sap_set_project_file(void *mainWindowHandle, const char *filename);
+
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already
@@ -391,6 +409,85 @@ int sap_playback_seek(void *mainWindowHandle, long long frame);
  * sourcePath fails to open as a valid MLT producer). Caller must free the
  * returned pointer via sap_free_string. */
 char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath);
+
+/* Inserts sourcePath as a real MLT producer BEFORE the clip currently at
+ * clip-slot `clipIndex` on trackIndex (clipIndex == that track's current
+ * clip count means "insert at the end", equivalent to append), RIPPLING
+ * all downstream clips on that track forward to make room -- this is the
+ * real distinct primitive from sap_move_clip/sap_append_clip: per
+ * rust-fork/01-jsonrpc-spec.md's `edit.insertClip`, it wraps the same
+ * Timeline::InsertCommand (timelinecommands.h:95) that
+ * TimelineDock::insert() pushes internally, called directly here (not via
+ * TimelineDock::insert() itself, which reads the system clipboard/"current
+ * source" instead of taking a path -- same reasoning as sap_append_clip
+ * vs. TimelineDock::append()). clipIndex is a clip-slot index rather than
+ * an absolute frame, matching sap_move_clip's toClipIndex convention (this
+ * FFI/Rust layer models tracks as an ordered clip list, not raw frame
+ * offsets); the absolute insert frame is derived internally from the
+ * target slot's start position exactly like sap_move_clip derives its own
+ * targetPosition.
+ *
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the inserted clip, e.g. `{"clipId":"t0c1","index":1,"inFrame":0,
+ * "outFrame":119}`, re-read from the real MultitrackModel::getClipInfo()
+ * after the insert (not an echo of the request). NULL on error (invalid
+ * handle/trackIndex, out-of-range clipIndex, locked track, or sourcePath
+ * fails to open as a valid MLT producer). Caller must free the returned
+ * pointer via sap_free_string. */
+char *sap_insert_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
+
+/* Places sourcePath as a real MLT producer starting at clip-slot `clipIndex`
+ * on trackIndex, REPLACING (not rippling) whatever clip currently occupies
+ * that slot -- the real distinct primitive from sap_insert_clip: per
+ * rust-fork/01-jsonrpc-spec.md's `edit.overwriteClip`, it wraps the real
+ * Timeline::OverwriteCommand (timelinecommands.h:123), a "drop and replace"
+ * that leaves downstream clips at the same clip-slot indices, called
+ * directly here (not via TimelineDock::overwrite(), which reads the system
+ * clipboard/"current source" instead of taking a path -- same reasoning as
+ * sap_append_clip vs. TimelineDock::append()). `clipIndex` == that track's
+ * current clip count means "no clip to replace", equivalent to
+ * sap_append_clip. clipIndex is a clip-slot index rather than an absolute
+ * frame, matching sap_insert_clip/sap_move_clip's convention; the absolute
+ * overwrite frame is derived internally from the target slot's start
+ * position exactly like sap_insert_clip derives its own insert position.
+ *
+ * Returns a heap-allocated, NUL-terminated JSON object string describing
+ * the placed clip, e.g. `{"clipId":"t0c1","index":1,"inFrame":0,
+ * "outFrame":119}`, re-read from the real MultitrackModel::getClipInfo()
+ * after the overwrite (not an echo of the request). NULL on error (invalid
+ * handle/trackIndex, out-of-range clipIndex, locked track, or sourcePath
+ * fails to open as a valid MLT producer). Caller must free the returned
+ * pointer via sap_free_string. */
+char *sap_overwrite_clip(void *mainWindowHandle, int trackIndex, int clipIndex, const char *sourcePath);
+
+/* Returns a heap-allocated, NUL-terminated MLT XML string serializing the
+ * *live* Mlt::Producer sitting at playlist bin index `index` (with any
+ * attached filters intact -- e.g. a sap_generator_create_title clip's
+ * dynamictext/qtext filter), for `{source:{playlistIndex}}` per
+ * rust-fork/01-jsonrpc-spec.md's edit.appendClip/insertClip/overwriteClip
+ * source union. Distinct from sap_playlist_get's "path" field, which is
+ * only the raw resource string (e.g. "color:#00000000" for a title) --
+ * reopening that resource fresh would silently drop the attached filter
+ * chain, unlike this XML which is the exact producer as it sits in the
+ * bin. Feed the result to sap_append_clip_xml/sap_insert_clip_xml/
+ * sap_overwrite_clip_xml. NULL on error (invalid handle, out-of-range
+ * index, or an unexpectedly invalid producer). Caller must free the
+ * returned pointer via sap_free_string. */
+char *sap_playlist_get_xml(void *mainWindowHandle, int index);
+
+/* XML-sourced siblings of sap_append_clip/sap_insert_clip/
+ * sap_overwrite_clip: identical undoable Timeline::AppendCommand/
+ * InsertCommand/OverwriteCommand plumbing and return shape, but take a
+ * ready-made MLT producer XML string directly instead of opening a
+ * filesystem path -- for `{source:{xml}}` (caller already has raw
+ * producer XML, e.g. clipboard/duplicate case) and `{source:
+ * {playlistIndex}}` (resolve via sap_playlist_get_xml first) per
+ * rust-fork/01-jsonrpc-spec.md's shared source union. NULL on error
+ * (invalid handle/trackIndex, out-of-range clipIndex, locked track, or
+ * empty xml). Caller must free string results via sap_free_string. */
+char *sap_append_clip_xml(void *mainWindowHandle, int trackIndex, const char *xml);
+char *sap_insert_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xml);
+char *sap_overwrite_clip_xml(void *mainWindowHandle, int trackIndex, int clipIndex, const char *xml);
 
 /* Renders the pixels of the given absolute timeline frame from the
  * currently open project's live producer (Controller::producer(), the same
@@ -437,6 +534,19 @@ char *sap_generator_create_title(void *mainWindowHandle,
                                  const char *text,
                                  const char *fgColour,
                                  const char *bgColour);
+
+/* Creates a real MLT plain `color:` producer (the same construction
+ * ColorProducerWidget::newProducer() uses, minus the QWidget UI, and
+ * minus any attached text filter -- see sap_generator_create_title for
+ * that variant) and appends it to the real Playlist bin via
+ * `PlaylistModel::append()`. hexColor is an `#AARRGGBB` string (required,
+ * e.g. `#00000000` for a fully-transparent spacer clip). Returns a
+ * heap-allocated JSON object `{"index":N,"name":"...",
+ * "source":{"kind":"color","hexColor":"..."},"durationFrames":N}`
+ * matching sap-rust's `PlaylistEntry` wire shape, or NULL on error
+ * (invalid handle, no playlist dock, missing/empty hexColor). Caller
+ * must free via sap_free_string. */
+char *sap_generator_create_color(void *mainWindowHandle, const char *hexColor);
 
 /* Subtitle operations on the real per-project `SubtitlesModel`
  * (`TimelineDock::subtitlesModel()`, loaded from the current tractor --
@@ -501,6 +611,18 @@ char *sap_subtitles_import_srt(void *mainWindowHandle, const char *path, int new
  * failed). Caller must free via sap_free_string. */
 char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const char *path);
 
+/* Attaches (or, if a matching one is already attached, leaves in place) a
+ * real MLT "subtitle" burn-in filter on the timeline output (the tractor
+ * itself, i.e. an "on Output" filter), feeding it from trackIndex's cues,
+ * mirroring `SubtitlesDock::burnInOnTimeline()`'s filter setup exactly
+ * (same mlt_service, colours, outline, geometry, size) but driven
+ * headlessly instead of through `MainWindow::onCreateOrEditFilterOnOutput`
+ * (which requires a live FiltersDock selection). Idempotent per track:
+ * re-running for the same trackIndex does not add a duplicate filter.
+ * Returns 0 on success, -1 on error (invalid handle/trackIndex, or no
+ * multitrack producer loaded). */
+int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex);
+
 /* Sets/gets the real project Notes free-text field via
  * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
  * as a `shotcut:projectNotes` property, not a QUndoCommand -- matches
@@ -538,12 +660,18 @@ char *sap_recent_list(void *mainWindowHandle);
 /* Frees a string returned by sap_list_tracks. */
 void sap_free_string(char *s);
 
-/* Notification bridge hook (Qt -> SAP). Currently a stub: logs to stderr.
- * Full wiring into the SAP broadcast/notification channel (so edit.changed
- * reaches connected JSON-RPC clients without the client having to poll) is
- * follow-up work -- see sap_ffi.cpp and the README's "Real FFI" section for
- * exactly what's stubbed. The extern "C" symbol is real and linkable so that
- * follow-up work is a body-only change, not a new call site. */
+/* Notification bridge hook (Qt -> SAP). Forwards jsonPayload (a small JSON
+ * object with at least a "type" field naming the notification method, e.g.
+ * `{"type":"edit.changed"}`) to sap_ffi_notify_bridge (implemented in Rust,
+ * declared below), which fans it out to every SAP client currently bound
+ * to this process's single open document via the same per-project
+ * broadcast channel real RPC-driven edits use -- see server.rs's `serve`
+ * doc comment for why "every project", not one. Also logs to stderr
+ * (cheap, useful for headless-harness debugging). Safe to call before
+ * sap_start_server has finished starting the server: sap_ffi_notify_bridge
+ * silently drops the event in that case, matching this hook's own
+ * best-effort semantics -- it must never block or throw on the Qt main
+ * thread it runs on. */
 void sap_emit_event(const char *jsonPayload);
 
 /* Connects MultitrackModel::modified (the nearest real, already-emitted
@@ -562,6 +690,13 @@ void sap_install_notification_bridge(void *mainWindowHandle);
  * calling thread for the server's entire lifetime -- callers MUST invoke
  * this from a dedicated background std::thread, never the Qt main thread. */
 void sap_start_server(void *mainWindowHandle, const char *socketPath, const char *token);
+
+/* Implemented in Rust (sap-rust/src/ffi_backend.rs) -- the actual bridge
+ * body sap_emit_event above forwards into. jsonPayload must be a valid
+ * NUL-terminated C string; NULL is a silent no-op. Non-blocking, never
+ * panics/throws across the FFI boundary -- safe to call from a Qt signal
+ * handler on the main thread. */
+void sap_ffi_notify_bridge(const char *jsonPayload);
 
 #ifdef __cplusplus
 }
