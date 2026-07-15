@@ -138,7 +138,15 @@ static bool eventDebugCallback(void **data)
 static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 // Bump kDockLayoutVersion whenever a new dock is added to setupAndConnectDocks().
 // This triggers a one-time re-tabification for users upgrading from an older saved state.
-static constexpr int kDockLayoutVersion = 2;
+// v3: ChatRustDock moved from Qt::RightDockWidgetArea to
+// Qt::LeftDockWidgetArea as an independent column (chat-panel-
+// production-ui/execution-plan.md Phase 4 step 6) -- users with a
+// saved layout from version < 3 get ChatRustDock explicitly re-added
+// to the left area in readWindowSettings()'s migration block below,
+// since restoreState() alone would otherwise keep restoring it to its
+// old saved right-side position regardless of what setupAndConnectDocks()
+// requests for a brand-new profile.
+static constexpr int kDockLayoutVersion = 3;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -933,6 +941,19 @@ void MainWindow::setupAndConnectDocks()
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
     // Left area
+    // Phase 4 step 6 (chat-panel-production-ui/execution-plan.md):
+    // ChatRustDock lives in the *left* dock area as its own independent
+    // column (not tabified with the properties/playlist/filters/encode/
+    // notes/subtitles group below) -- per this plan's own Objective
+    // ("Deliver the left-docked Slint chat panel") and the explicit,
+    // repeated user requirement earlier in this project's history.
+    // `resetDockCorners()`'s `BottomLeftCorner -> BottomDockWidgetArea`
+    // assignment (unchanged, already correct) is what makes this
+    // automatically stop above `m_timelineDock` at the bottom rather
+    // than overlapping it, with no further geometry code needed here --
+    // any Left-area dock already spans the full height between the
+    // toolbar/menu (top) and the bottom dock area by construction.
+    addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
@@ -945,7 +966,6 @@ void MainWindow::setupAndConnectDocks()
     tabifyDockWidget(m_encodeDock, m_notesDock);
     tabifyDockWidget(m_notesDock, m_subtitlesDock);
     // Right area
-    addDockWidget(Qt::RightDockWidgetArea, m_chatRustDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
@@ -2760,6 +2780,15 @@ void MainWindow::readWindowSettings()
         if (Settings.dockLayoutVersion() < kDockLayoutVersion) {
             tabifyDockWidget(m_recentDock, m_filesDock);
             tabifyDockWidget(m_filesDock, m_elementsDock);
+            // v3 migration: move ChatRustDock from its old saved
+            // right-side position onto the left, independent of the
+            // properties/playlist/etc. tab group -- restoreState()
+            // above already restored the pre-v3 right-side placement
+            // for any user upgrading from an older saved layout, so
+            // this must explicitly re-add it after that restore, not
+            // rely on setupAndConnectDocks()'s own (correct, but
+            // restoreState()-overridden) initial placement.
+            addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
             Settings.setDockLayoutVersion(kDockLayoutVersion);
         }
     } else {
