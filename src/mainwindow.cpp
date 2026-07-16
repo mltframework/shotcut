@@ -171,6 +171,11 @@ MainWindow::MainWindow()
     }
 #endif
 
+    QThreadPool::globalInstance()->setMaxThreadCount(
+        qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
+    QThreadPool::globalInstance()->setThreadPriority(QThread::LowPriority);
+    QImageReader::setAllocationLimit(1024);
+
     connectFocusSignals();
 
     registerDebugCallback();
@@ -242,11 +247,6 @@ MainWindow::MainWindow()
     m_clipboardUpdatedAt.setSecsSinceEpoch(0);
     onClipboardChanged();
     connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
-
-    QThreadPool::globalInstance()->setMaxThreadCount(
-        qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
-    QThreadPool::globalInstance()->setThreadPriority(QThread::LowPriority);
-    QImageReader::setAllocationLimit(1024);
 
     ProxyManager::removePending();
 

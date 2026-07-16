@@ -31,6 +31,7 @@
 #include <QThreadPool>
 
 static const QStringList kElementExtensions{"*.tgs", "*.flac", "*.json", "*.rawr", "*.lot"};
+static QThreadPool *gThreadPool = nullptr;
 
 // ---------------------------------------------------------------------------
 // Background thumbnail task
@@ -150,6 +151,8 @@ ElementsModel::ElementsModel(const QDir &dir, QObject *parent)
     : QAbstractListModel(parent)
     , m_dir(dir)
 {
+    gThreadPool = new QThreadPool(this);
+    gThreadPool->setMaxThreadCount(1);
     m_files = dir.entryInfoList(kElementExtensions,
                                 QDir::Files | QDir::Readable,
                                 QDir::Name | QDir::IgnoreCase);
@@ -197,10 +200,9 @@ QVariant ElementsModel::data(const QModelIndex &index, int role) const
         auto image = DB.getThumbnail(key);
         if (image.isNull()) {
             ::cacheThumbnail(const_cast<ElementsModel *>(this), info.filePath(), image, index);
-            QThreadPool::globalInstance()->start(
-                new ElementsThumbnailTask(const_cast<ElementsModel *>(this),
-                                          info.filePath(),
-                                          index));
+            gThreadPool->start(new ElementsThumbnailTask(const_cast<ElementsModel *>(this),
+                                                         info.filePath(),
+                                                         index));
         }
         return image;
     }
