@@ -79,6 +79,32 @@ void RustPanelItem::mouseReleaseEvent(QMouseEvent *event)
     event->accept();
 }
 
+void RustPanelItem::wheelEvent(QWheelEvent *event)
+{
+    ensureHandle();
+    if (m_handle) {
+        // Trackpads report precise pixel deltas directly; a real mouse
+        // wheel only reports angleDelta (eighths of a degree per Qt's
+        // docs, 120 units == one physical notch on a typical wheel). Scale
+        // the latter to a comparable logical-pixel amount -- 15 degrees
+        // (one notch) -> ~60px, matching common desktop "3 lines" scroll
+        // conventions -- since panel_rust_input_scroll expects logical
+        // pixels either way (see its own doc comment).
+        QPointF delta = event->pixelDelta();
+        if (delta.isNull()) {
+            constexpr qreal kPixelsPerDegree = 4.0;
+            delta = QPointF(event->angleDelta()) / 8.0 * kPixelsPerDegree;
+        }
+        panel_rust_input_scroll(m_handle,
+                                 static_cast<float>(event->position().x()),
+                                 static_cast<float>(event->position().y()),
+                                 static_cast<float>(delta.x()),
+                                 static_cast<float>(delta.y()));
+        update();
+    }
+    event->accept();
+}
+
 void RustPanelItem::keyPressEvent(QKeyEvent *event)
 {
     ensureHandle();
@@ -88,7 +114,8 @@ void RustPanelItem::keyPressEvent(QKeyEvent *event)
                                   event->key(),
                                   reinterpret_cast<const unsigned char *>(text.constData()),
                                   static_cast<size_t>(text.size()),
-                                  /*pressed=*/true))
+                                  /*pressed=*/true,
+                                  static_cast<int>(event->modifiers())))
             update();
     }
     event->accept();
@@ -102,7 +129,8 @@ void RustPanelItem::keyReleaseEvent(QKeyEvent *event)
                               event->key(),
                               reinterpret_cast<const unsigned char *>(text.constData()),
                               static_cast<size_t>(text.size()),
-                              /*pressed=*/false);
+                              /*pressed=*/false,
+                              static_cast<int>(event->modifiers()));
     }
     event->accept();
 }

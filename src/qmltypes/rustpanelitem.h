@@ -7,6 +7,7 @@
 
 #include <QQuickPaintedItem>
 #include <QTimer>
+#include <QWheelEvent>
 
 struct PanelHandle;
 
@@ -30,6 +31,11 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+    // Never wired up before -- panel_rust_input_scroll existed on the Rust
+    // side (and in panel_ffi.h once added alongside this) but nothing ever
+    // called it, so wheel/trackpad scroll inside the chat panel (thread
+    // list, message history, ...) silently did nothing.
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     void ensureHandle();

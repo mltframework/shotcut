@@ -10,10 +10,14 @@ struct PanelHandle;
 PanelHandle *panel_rust_create(unsigned int width, unsigned int height);
 void panel_rust_destroy(PanelHandle *handle);
 bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y);
+// Forwards a Qt wheel/touchpad gesture in logical pixels -- see
+// panel_rust_input_scroll's own doc comment in panel-rust/src/lib.rs.
+bool panel_rust_input_scroll(PanelHandle *handle, float x, float y, float delta_x, float delta_y);
 // qt_key is QKeyEvent::key(); text/text_len is QKeyEvent::text() as UTF-8
-// (may be empty for pure modifier presses). See panel-rust's map_qt_key
-// for the Qt -> Slint key mapping this expects.
-bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *text, size_t text_len, bool pressed);
+// (may be empty for pure modifier presses); modifiers is the raw
+// QKeyEvent::modifiers() bitmask (Qt::KeyboardModifiers). See panel-rust's
+// map_qt_key for the Qt -> Slint key mapping this expects.
+bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *text, size_t text_len, bool pressed, int modifiers);
 // theme is "dark"/"light"/etc, per MainWindow::changeTheme()'s resolved
 // theme name.
 bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);
