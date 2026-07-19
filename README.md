@@ -53,6 +53,14 @@ The fastest way to build and try Shotcut development version is through [Qt Crea
 
 First, check dependencies are satisfied and various paths are correctly set to find different libraries and include files (Qt, MLT, frei0r and so forth).
 
+If you build with `scripts/build-shotcut.sh`, run the Debian/Ubuntu preflight checker to verify host build tools up front:
+
+```
+scripts/preflight-deps.sh
+```
+
+`build-shotcut.sh` runs this check by default before fetching or compiling. Disable it with `ACTION_PREFLIGHT=0` in `build-shotcut.conf`.
+
 #### Configure
 
 In a new directory in which to make the build (separate from the source):

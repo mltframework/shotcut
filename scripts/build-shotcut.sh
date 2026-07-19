@@ -18,6 +18,7 @@ INSTALL_DIR="$HOME/shotcut"
 AUTO_APPEND_DATE=0
 SOURCE_DIR="$INSTALL_DIR/src"
 ACTION_CLEAN_SOURCE=0
+ACTION_PREFLIGHT=1
 ACTION_GET=1
 ACTION_CONFIGURE=1
 ACTION_COMPILE_INSTALL=1
@@ -2259,6 +2260,22 @@ End-of-shotcut-wrapper
 function perform_action {
   trace "Entering perform_action @ = $@"
   # Test that may fail goes here, before we do anything
+  if test 1 = "$ACTION_PREFLIGHT"; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [ -x "$SCRIPT_DIR/preflight-deps.sh" ]; then
+      set +e
+      "$SCRIPT_DIR/preflight-deps.sh"
+      PREFLIGHT_EXIT=$?
+      set -e
+      if test "$PREFLIGHT_EXIT" = "1"; then
+        die "Missing build dependencies. Install them with the sudo apt install command printed above, or set ACTION_PREFLIGHT=0 to skip."
+      elif test "$PREFLIGHT_EXIT" = "2"; then
+        warn "Preflight check not supported on this OS. Continuing without the dependency check."
+      fi
+    else
+      warn "Preflight script not found at $SCRIPT_DIR/preflight-deps.sh. Skipping dependency check."
+    fi
+  fi
   if test 1 = "$ACTION_CLEAN_SOURCE"; then
     clean_dirs
   fi
