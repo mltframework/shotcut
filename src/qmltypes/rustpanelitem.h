@@ -23,6 +23,10 @@ public slots:
     // Forwarded from ChatRustDock, itself driven by
     // MainWindow::changeTheme() -- see chatrustdock.cpp.
     void setTheme(const QString &theme);
+    // Forwarded from ChatRustDock, itself driven by
+    // MainWindow::producerOpened() -- see chatrustdock.cpp. Empty string
+    // means no project currently open.
+    void setProjectPath(const QString &path);
 
 protected:
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
@@ -42,4 +46,9 @@ private:
     // theme) before the handle existed yet.
     QString m_pendingTheme;
     uint64_t m_appearanceGeneration = 0;
+    // Applied once ensureHandle() creates the panel, same reasoning as
+    // m_pendingTheme above. Null (not just empty) means setProjectPath()
+    // was never called yet -- distinct from "no project open".
+    QString m_pendingProjectPath;
+    bool m_hasPendingProjectPath = false;
 };

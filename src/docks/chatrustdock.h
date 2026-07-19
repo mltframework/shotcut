@@ -24,6 +24,12 @@ public slots:
     // mainwindow.cpp) so the chat panel's Slint markup tracks the app's
     // Dark/Light/System theme instead of being hardcoded.
     void applyTheme(const QString &theme);
+    // Forwards the active project's path to the embedded RustPanelItem;
+    // connected to MainWindow::producerOpened (see mainwindow.cpp), which
+    // fires on every project open/close/switch. `withReopen` is unused --
+    // matches MainWindow::producerOpened(bool)'s signal signature so a
+    // direct connect() works without a lambda.
+    void updateProjectPath(bool withReopen = true);
 
 private:
     RustPanelItem *m_panel = nullptr;

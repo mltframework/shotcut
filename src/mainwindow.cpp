@@ -901,6 +901,13 @@ void MainWindow::setupAndConnectDocks()
     // (not hidden) and un-tabified so it's directly observable alongside
     // the rest of the app for this verification pass.
     m_chatRustDock = new ChatRustDock(this);
+    // active_project_binding phase: keep panel-rust's stored project path
+    // in sync with the currently-open MLT project, the same way every
+    // other dock below tracks producerOpened.
+    connect(this,
+            &MainWindow::producerOpened,
+            m_chatRustDock,
+            &ChatRustDock::updateProjectPath);
     // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
     // ~20% of the main window's width on a fresh launch/profile, while
     // staying natively resizable afterward -- QDockWidget/QMainWindow's

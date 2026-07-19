@@ -52,6 +52,12 @@ void RustPanelItem::ensureHandle()
         const bool dark = m_pendingTheme != "light";
         panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark);
     }
+    if (m_handle && m_hasPendingProjectPath) {
+        const QByteArray path = m_pendingProjectPath.toUtf8();
+        panel_rust_set_project_path(m_handle,
+                                     reinterpret_cast<const unsigned char *>(path.constData()),
+                                     static_cast<size_t>(path.size()));
+    }
 }
 
 void RustPanelItem::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -115,6 +121,18 @@ void RustPanelItem::setTheme(const QString &theme)
     const bool dark = theme != "light";
     if (panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark))
         update();
+}
+
+void RustPanelItem::setProjectPath(const QString &path)
+{
+    m_pendingProjectPath = path;
+    m_hasPendingProjectPath = true;
+    if (!m_handle)
+        return; // applied by ensureHandle() once the panel actually exists
+    const QByteArray bytes = path.toUtf8();
+    panel_rust_set_project_path(m_handle,
+                                 reinterpret_cast<const unsigned char *>(bytes.constData()),
+                                 static_cast<size_t>(bytes.size()));
 }
 
 void RustPanelItem::poll()

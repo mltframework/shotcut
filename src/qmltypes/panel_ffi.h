@@ -18,6 +18,12 @@ bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *
 // theme name.
 bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);
 bool panel_rust_apply_appearance(PanelHandle *handle, uint64_t generation, bool dark);
+// active_project_binding phase: the currently-open MLT project's path
+// (MainWindow::fileName()), pushed whenever MainWindow::producerOpened
+// fires. Empty buffer (zero length) means no project open -- always
+// call this on producerOpened, even when closing, so panel-rust's
+// stored path can't go stale.
+bool panel_rust_set_project_path(PanelHandle *handle, const unsigned char *path, size_t path_len);
 // Drains queued agent-bridge events (phase 4, rui-acp-client) into the
 // Slint model. Must be polled periodically (see RustPanelItem's QTimer) --
 // nothing else notices background agent activity on this single-threaded
