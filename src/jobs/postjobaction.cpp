@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 Meltytech, LLC
+ * Copyright (c) 2018-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,11 @@
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
 
+#include <QCoreApplication>
+#include <QDir>
 #include <QFile>
+#include <QProcess>
+#include <QString>
 
 // For file time functions in FilePropertiesPostJobAction::doAction();
 #include <sys/stat.h>
@@ -87,6 +91,23 @@ void ReplaceAllPostJobAction::doAction()
 
 void ProxyReplacePostJobAction::doAction()
 {
+    // Inject rotation metadata via a fast -c copy pass before the final rename.
+    if (m_rotation != 0) {
+        QString shotcutPath = qApp->applicationDirPath();
+        QString ffmpegExe = QDir(shotcutPath).filePath("ffmpeg");
+        QString tempFile = m_dstFile + ".rot.mp4";
+        QStringList args;
+        args << QStringLiteral("-display_rotation:v:0") << QString::number(m_rotation)
+             << QStringLiteral("-i") << m_dstFile << QStringLiteral("-c") << QStringLiteral("copy")
+             << QStringLiteral("-y") << tempFile;
+        if (QProcess::execute(ffmpegExe, args) == 0) {
+            QFile::remove(m_dstFile);
+            QFile::rename(tempFile, m_dstFile);
+        } else {
+            LOG_WARNING() << "rotation injection failed for" << m_dstFile;
+            QFile::remove(tempFile);
+        }
+    }
     FilePropertiesPostJobAction::doAction();
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
@@ -111,6 +132,23 @@ void ProxyReplacePostJobAction::doAction()
 
 void ProxyFinalizePostJobAction::doAction()
 {
+    // Inject rotation metadata via a fast -c copy pass before the final rename.
+    if (m_rotation != 0) {
+        QString shotcutPath = qApp->applicationDirPath();
+        QString ffmpegExe = QDir(shotcutPath).filePath("ffmpeg");
+        QString tempFile = m_dstFile + ".rot.mp4";
+        QStringList args;
+        args << QStringLiteral("-display_rotation:v:0") << QString::number(m_rotation)
+             << QStringLiteral("-i") << m_dstFile << QStringLiteral("-c") << QStringLiteral("copy")
+             << QStringLiteral("-y") << tempFile;
+        if (QProcess::execute(ffmpegExe, args) == 0) {
+            QFile::remove(m_dstFile);
+            QFile::rename(tempFile, m_dstFile);
+        } else {
+            LOG_WARNING() << "rotation injection failed for" << m_dstFile;
+            QFile::remove(tempFile);
+        }
+    }
     FilePropertiesPostJobAction::doAction();
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
