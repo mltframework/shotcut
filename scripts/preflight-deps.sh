@@ -113,7 +113,11 @@ check_debian_deps() {
     check_command perl perl || true
     check_command autoconf autoconf || true
     check_command automake automake || true
-    check_command libtool libtool || true
+    # Debian's libtool package provides libtoolize; libtool-bin adds the
+    # libtool wrapper. Either is enough for the autoconf build path.
+    if ! have_cmd libtool && ! have_cmd libtoolize; then
+        add_missing "libtool/libtoolize" libtool
+    fi
     check_command autoreconf autoconf || true
     check_command aclocal automake || true
     check_command autopoint gettext || true
