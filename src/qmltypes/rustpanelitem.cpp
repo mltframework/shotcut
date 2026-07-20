@@ -40,6 +40,28 @@ bool RustPanelItem::event(QEvent *e)
             e->accept();
             return true;
         }
+        // Shotcut binds many single-key (no-modifier) shortcuts on its main
+        // window (e.g. bare "A" for Append, bare "/" for its own binding,
+        // per QAction::setShortcut with the default Qt::WindowShortcut
+        // context) -- those fire whenever *any* widget in the window has
+        // focus, since Qt Quick items (unlike QLineEdit/QTextEdit) aren't
+        // part of Qt's built-in "focused editor wins over a bare-letter
+        // shortcut" heuristic. Concretely reported: typing "/" into the
+        // chat composer instead opened Shotcut's own Keyboard Shortcuts
+        // editor and never reached the composer (or, by the same
+        // mechanism, thread/skill search, settings search, dropdown
+        // filters, or the mention popup) at all. QEvent::ShortcutOverride
+        // is Qt's own purpose-built escape hatch for exactly this: sent to
+        // the focused item *before* the shortcut system decides to fire a
+        // match, and accepting it tells Qt "let me handle this key
+        // normally instead" -- the same mechanism QLineEdit uses
+        // internally. Only claimed while some editable Slint surface
+        // actually owns focus, so it does nothing when this dock is merely
+        // visible but not the thing being typed into.
+        if (m_handle && panel_rust_has_text_focus(m_handle)) {
+            e->accept();
+            return true;
+        }
     }
     return QQuickPaintedItem::event(e);
 }

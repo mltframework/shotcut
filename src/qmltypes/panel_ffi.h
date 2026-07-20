@@ -9,6 +9,10 @@ struct PanelHandle;
 
 PanelHandle *panel_rust_create(unsigned int width, unsigned int height);
 void panel_rust_destroy(PanelHandle *handle);
+// Whether the composer/a local terminal/a secondary text input (search
+// boxes, dropdown filters, the mention popup) currently owns focus -- see
+// RustPanelItem::event()'s QEvent::ShortcutOverride handling.
+bool panel_rust_has_text_focus(PanelHandle *handle);
 bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y);
 // Forwards a Qt wheel/touchpad gesture in logical pixels -- see
 // panel_rust_input_scroll's own doc comment in panel-rust/src/lib.rs.
