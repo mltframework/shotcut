@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-This tracker is for defects only! For feature requests, see [our discussion forum](https://forum.snapflow.org/).
+This tracker is for defects only! For feature requests, see [our discussion forum](https://forum.shotcut.org/).
 
 **OS and Version (please complete the following information):**
  - Operating System: [e.g. Windows, macOS]

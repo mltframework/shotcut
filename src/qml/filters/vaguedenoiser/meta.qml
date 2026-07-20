@@ -9,5 +9,5 @@ Metadata {
     mlt_service: 'avfilter.vaguedenoiser'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/reduce-noise-wavelet-video-filter/17789/1'
+    help: 'https://forum.shotcut.org/t/reduce-noise-wavelet-video-filter/17789/1'
 }

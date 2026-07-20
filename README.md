@@ -1,32 +1,91 @@
-[![build-snapflow-linux](https://github.com/mltframework/snapflow/workflows/build-snapflow-linux/badge.svg)](https://github.com/mltframework/snapflow/actions?query=workflow%3Abuild-snapflow-linux+is%3Acompleted+branch%3Amaster)
-[![build-snapflow-macos](https://github.com/mltframework/snapflow/workflows/build-snapflow-macos/badge.svg)](https://github.com/mltframework/snapflow/actions?query=workflow%3Abuild-snapflow-macos+is%3Acompleted+branch%3Amaster)
-[![build-snapflow-windows](https://github.com/mltframework/snapflow/workflows/build-snapflow-windows/badge.svg)](https://github.com/mltframework/snapflow/actions?query=workflow%3Abuild-snapflow-windows+is%3Acompleted+branch%3Amaster)
+[![build-snapflow-linux](https://github.com/mltframework/shotcut/workflows/build-snapflow-linux/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-snapflow-linux+is%3Acompleted+branch%3Amaster)
+[![build-snapflow-macos](https://github.com/mltframework/shotcut/workflows/build-snapflow-macos/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-snapflow-macos+is%3Acompleted+branch%3Amaster)
+[![build-snapflow-windows](https://github.com/mltframework/shotcut/workflows/build-snapflow-windows/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-snapflow-windows+is%3Acompleted+branch%3Amaster)
 
+# Snapflow
 
-# Snapflow - a free, open source, cross-platform **video editor**
+**The editor got an upgrade — an assistant for your craft.**
+
+A free, open source, cross-platform **video editor**, now with an inbuilt AI agent that
+edits alongside you.
 
 <div align="center">
 
-<img src="https://www.snapflow.org/assets/img/screenshots/Snapflow-18.11.18.png" alt="screenshot" />
+<!-- TODO: replace with a real product screenshot/GIF -->
+<img src="docs/img/preview.png" alt="Snapflow preview" width="800" />
 
 </div>
 
-- Features: https://www.snapflow.org/features/
-- Roadmap: https://www.snapflow.org/roadmap/
+## What's new: an agent that edits with you
+
+Snapflow keeps the full manual editor and adds an inbuilt chat panel to prepare
+timelines, edit media, and craft your video alongside an AI agent — you stay the
+artist, the agent handles the busywork.
+
+The agent can act on:
+
+- **Frame** — inspect and adjust individual frames
+- **Timeline** — arrange, trim, and reorder clips
+- **Animations** — add and tune keyframed motion
+- **Crop** — reframe shots
+- **Timing** — adjust pacing, speed, and sync
+
+### Bring your own model
+
+Use your existing subscription — Snapflow talks to OpenAI (ChatGPT), Anthropic
+(Claude), and other providers through a pluggable model layer, so you're not locked
+into one vendor.
+
+### MCP tool integrations
+
+The agent connects to your editing and production tools over the
+[Model Context Protocol](https://modelcontextprotocol.io/). Verified, widely-used MCP
+servers you can wire in today:
+
+| Server | Use in Snapflow |
+|---|---|
+| [Filesystem](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) | Read/write project media and export files |
+| [GitHub](https://github.com/modelcontextprotocol/servers/tree/main/src/github) | Version-control project files, script assets |
+| [Fetch](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch) | Pull reference media/pages from the web |
+| [Memory](https://github.com/modelcontextprotocol/servers/tree/main/src/memory) | Persist project/style notes across sessions |
+| [Puppeteer](https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer) | Capture web content as source footage |
+| [Slack](https://github.com/modelcontextprotocol/servers) | Pull feedback/review threads into the edit |
+| [Google Drive](https://github.com/modelcontextprotocol/servers) | Import/export project media |
+| [Postgres](https://github.com/modelcontextprotocol/servers/tree/main/src/postgres) | Query production/asset metadata |
+| [Sentry](https://github.com/modelcontextprotocol/servers) | Surface render/export errors |
+| [Notion](https://github.com/makenotion/notion-mcp-server) | Pull shot lists / scripts into the timeline |
+
+> This list is a starting point, not an endorsement of exclusivity — any spec-compliant
+> MCP server works. Check each server's own repo for current install/auth steps before
+> relying on it.
+
+Use Snapflow itself as an MCP server so other agents/tools can drive the editor:
+
+```json
+{
+  "mcpServers": {
+    "snapflow": {
+      "command": "snapflow",
+      "args": ["--mcp-server"]
+    }
+  }
+}
+```
 
 ## Install
 
-Binaries are regularly built and are available at https://www.snapflow.org/download/.
+<!-- TODO: no hosted site/binaries yet — replace with real download links or a package
+     manager entry once release infrastructure exists. Until then, build from source
+     (see "How to build" below). -->
 
-## Contributors
-
-- Dan Dennedy <<http://www.dennedy.org>> : main author
-- Brian Matherly <<code@brianmatherly.com>> : contributor
+Build from source using the instructions below. Prebuilt binaries and an install
+script are not available yet.
 
 ## Dependencies
 
 Snapflow's direct (linked or hard runtime) dependencies are:
 
+- [Shotcut](https://www.shotcut.org/): the video editor Snapflow is forked from
 - [MLT](https://www.mltframework.org/): multimedia authoring framework
 - [Qt 6 (6.4 minimum)](https://www.qt.io/): application and UI framework
 - [FFTW](https://fftw.org/)
@@ -34,12 +93,14 @@ Snapflow's direct (linked or hard runtime) dependencies are:
 - [Frei0r](https://www.dyne.org/software/frei0r/): video plugins
 - [SDL](http://www.libsdl.org/): cross-platform audio playback
 
-See https://snapflow.org/credits/ for a more complete list including indirect
-and bundled dependencies.
-
 ## License
 
 GPLv3. See [COPYING](COPYING).
+
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for how to file
+issues, propose changes, and the PR process.
 
 ## How to build
 
@@ -80,4 +141,4 @@ cmake --install .
 
 ## Translation
 
-If you want to translate Snapflow to another language, please use [Transifex](https://explore.transifex.com/ddennedy/snapflow/).
+If you want to translate Snapflow to another language, please use [Transifex](https://explore.transifex.com/ddennedy/shotcut/).

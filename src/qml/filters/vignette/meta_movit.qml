@@ -9,7 +9,7 @@ Metadata {
     needsGPU: true
     qml: "ui_movit.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/vignette/12892/1'
+    help: 'https://forum.shotcut.org/t/vignette/12892/1'
 
     keyframes {
         allowAnimateIn: true

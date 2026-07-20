@@ -9,7 +9,7 @@ Metadata {
     qml: "ui_frei0r.qml"
     icon: 'icon.webp'
     gpuAlt: "movit.glow"
-    help: 'https://forum.snapflow.org/t/glow-video-filter/12849/1'
+    help: 'https://forum.shotcut.org/t/glow-video-filter/12849/1'
 
     keyframes {
         allowAnimateIn: true

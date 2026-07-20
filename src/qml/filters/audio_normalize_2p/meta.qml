@@ -10,7 +10,7 @@ Metadata {
     qml: "ui.qml"
     isClipOnly: true
     allowMultiple: false
-    help: 'https://forum.snapflow.org/t/normalize-two-pass/12912/1'
+    help: 'https://forum.shotcut.org/t/normalize-two-pass/12912/1'
 
     keyframes {
         allowTrim: false

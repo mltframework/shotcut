@@ -10,7 +10,7 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/text-simple/12888/1'
+    help: 'https://forum.shotcut.org/t/text-simple/12888/1'
 
     keyframes {
         allowAnimateIn: true

@@ -9,7 +9,7 @@ Metadata {
     qml: "ui_frei0r.qml"
     icon: 'icon.webp'
     gpuAlt: "movit.saturation"
-    help: 'https://forum.snapflow.org/t/saturation/12878/1'
+    help: 'https://forum.shotcut.org/t/saturation/12878/1'
 
     keyframes {
         allowAnimateIn: true

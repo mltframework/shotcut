@@ -9,5 +9,5 @@ Metadata {
     mlt_service: 'mirror'
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/reflect-video-filter/29279/1'
+    help: 'https://forum.shotcut.org/t/reflect-video-filter/29279/1'
 }

@@ -16,6 +16,7 @@
  */
 
 #include "lumamixtransition.h"
+#include "urls.h"
 #include "ui_lumamixtransition.h"
 
 #include "Logger.h"
@@ -107,7 +108,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
     ui->getCustomLabel->setText(
-        QString::fromLatin1("<a href=\"https://snapflow.org/resources/#transitions\">%1</a>")
+        (QStringLiteral("<a href=\"") + Urls::kBaseSite + QStringLiteral("/resources/#transitions\">%1</a>"))
             .arg(ui->getCustomLabel->text()));
     updateDuration();
 }

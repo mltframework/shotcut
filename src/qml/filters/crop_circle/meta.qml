@@ -9,7 +9,7 @@ Metadata {
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/crop-circle/12838/1'
+    help: 'https://forum.shotcut.org/t/crop-circle/12838/1'
 
     keyframes {
         allowAnimateIn: true

@@ -8,7 +8,7 @@ Metadata {
     mlt_service: "frei0r.rgbsplit0r"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/rgb-shift/12875/1'
+    help: 'https://forum.shotcut.org/t/rgb-shift/12875/1'
 
     keyframes {
         allowAnimateIn: true

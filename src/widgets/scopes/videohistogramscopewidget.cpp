@@ -16,6 +16,7 @@
  */
 
 #include "videohistogramscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 
@@ -38,7 +39,7 @@ VideoHistogramScopeWidget::VideoHistogramScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/video-histogram-scope/12921/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-histogram-scope/12921/1"));
     LOG_DEBUG() << "end";
 }
 

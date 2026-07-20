@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.snapflow.org/t/changing-the-type-of-video-transition/12959/1</string>
+   <string notr="true">https://forum.shotcut.org/t/changing-the-type-of-video-transition/12959/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

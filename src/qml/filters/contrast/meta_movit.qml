@@ -11,7 +11,7 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     isFavorite: true
-    help: 'https://forum.snapflow.org/t/contrast/12837/1'
+    help: 'https://forum.shotcut.org/t/contrast/12837/1'
 
     keyframes {
         allowAnimateIn: true

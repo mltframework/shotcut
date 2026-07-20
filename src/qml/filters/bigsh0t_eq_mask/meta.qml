@@ -10,7 +10,7 @@ Metadata {
     objectName: "bigsh0t_eq_mask"
     qml: "ui.qml"
     icon: "icon.webp"
-    help: 'https://forum.snapflow.org/t/360-equirectangular-mask-video-filter/19165/1'
+    help: 'https://forum.shotcut.org/t/360-equirectangular-mask-video-filter/19165/1'
 
     keyframes {
         allowAnimateIn: true

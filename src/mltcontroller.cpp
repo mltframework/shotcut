@@ -274,7 +274,7 @@ void Controller::pause(int position)
             // a value, which refreshes the consumer, and the position advances. If that value change
             // creates a keyframe, then a subsequent value change creates an additional keyframe one
             // (or more?) frames after the previous one.
-            // https://forum.snapflow.org/t/2-keyframes-created-instead-of-one/11252
+            // https://forum.shotcut.org/t/2-keyframes-created-instead-of-one/11252
             if (m_consumer->get_int("real_time") > 0)
                 refreshConsumer();
         }

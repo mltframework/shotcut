@@ -9,7 +9,7 @@ Metadata {
     mlt_service: 'frei0r.nosync0r'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/no-sync-video-filter/14176/1'
+    help: 'https://forum.shotcut.org/t/no-sync-video-filter/14176/1'
 
     keyframes {
         allowAnimateIn: true

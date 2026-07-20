@@ -10,7 +10,7 @@ Metadata {
     objectName: "bigsh0t_rect_to_eq"
     qml: "ui.qml"
     icon: "icon.webp"
-    help: 'https://forum.snapflow.org/t/360-rectlinear-to-equirectangular-video-filter/19168/1'
+    help: 'https://forum.shotcut.org/t/360-rectlinear-to-equirectangular-video-filter/19168/1'
 
     keyframes {
         allowAnimateIn: true

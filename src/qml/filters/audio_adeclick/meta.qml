@@ -9,5 +9,5 @@ Metadata {
     keywords: qsTr('declick crackle pop', 'search keywords for the Declick audio filter') + ' declick audio'
     objectName: 'audioDeclick'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/declick-audio-filter/42273/1'
+    help: 'https://forum.shotcut.org/t/declick-audio-filter/42273/1'
 }

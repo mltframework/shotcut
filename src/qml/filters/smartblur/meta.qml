@@ -8,5 +8,5 @@ Metadata {
     mlt_service: 'avfilter.smartblur'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/reduce-noise-smart-blur/12874/1'
+    help: 'https://forum.shotcut.org/t/reduce-noise-smart-blur/12874/1'
 }

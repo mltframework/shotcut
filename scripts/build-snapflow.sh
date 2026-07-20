@@ -574,7 +574,10 @@ function set_globals {
   REPOLOCS[4]="https://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="https://github.com/ddennedy/movit.git"
   REPOLOCS[6]="https://github.com/ddennedy/libspatialaudio.git"
-  REPOLOCS[7]="https://github.com/mltframework/snapflow.git"
+  # Rebrand fork: build from this project's own fork/branch instead of
+  # upstream mltframework/shotcut, overridable so CI can still target a
+  # PR head. Set SNAPFLOW_REPO in the build config to override.
+  REPOLOCS[7]="${SNAPFLOW_REPO:-https://github.com/Shaik-Sirajuddin/shotcut.git}"
   REPOLOCS[8]="https://github.com/swh/ladspa.git"
   REPOLOCS[9]="https://github.com/OpenMathLib/OpenBLAS.git"
   REPOLOCS[10]="https://github.com/georgmartius/vid.stab.git"

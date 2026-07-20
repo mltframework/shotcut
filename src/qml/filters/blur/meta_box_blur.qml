@@ -8,7 +8,7 @@ Metadata {
     mlt_service: "box_blur"
     qml: "ui_box_blur.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/blur-box/12828/1'
+    help: 'https://forum.shotcut.org/t/blur-box/12828/1'
 
     keyframes {
         allowAnimateIn: true

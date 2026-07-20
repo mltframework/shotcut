@@ -153,6 +153,7 @@ add_executable(snapflow WIN32 MACOSX_BUNDLE
   spatialmedia/sa3d.cpp spatialmedia/sa3d.h
   spatialmedia/spatialmedia.cpp spatialmedia/spatialmedia.h
   transportcontrol.h
+  urls.h
   util.cpp util.h
   videowidget.cpp videowidget.h
   hdrpreviewwindow.cpp hdrpreviewwindow.h

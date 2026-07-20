@@ -16,6 +16,7 @@
  */
 
 #include "timelinedock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "abstractproducerwidget.h"
@@ -172,7 +173,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     setAcceptDrops(true);
     QIcon icon = QIcon::fromTheme("view-time-schedule",
                                   QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
-    setWhatsThis("https://forum.snapflow.org/t/about-the-timeline/12952/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/about-the-timeline/12952/1"));
 
     toggleViewAction()->setIcon(icon);
     setupActions();
@@ -780,7 +781,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Cu&t"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_X));
-    action->setWhatsThis("https://forum.snapflow.org/t/cut-copy-and-paste-editing/12981/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/cut-copy-and-paste-editing/12981/1"));
     icon = QIcon::fromTheme("edit-cut", QIcon(":/icons/oxygen/32x32/actions/edit-cut.png"));
     action->setIcon(icon);
     action->setEnabled(false);
@@ -805,7 +806,7 @@ void TimelineDock::setupActions()
     copyShortcuts << QKeySequence(Qt::CTRL | Qt::Key_C);
     copyShortcuts << QKeySequence(Qt::Key_C);
     action->setShortcuts(copyShortcuts);
-    action->setWhatsThis("https://forum.snapflow.org/t/cut-copy-and-paste-editing/12981/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/cut-copy-and-paste-editing/12981/1"));
     icon = QIcon::fromTheme("edit-copy", QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
     action->setIcon(icon);
     action->setEnabled(false);
@@ -835,7 +836,7 @@ void TimelineDock::setupActions()
     pasteShortcuts << QKeySequence(Qt::CTRL | Qt::Key_V);
     pasteShortcuts << QKeySequence(Qt::Key_V);
     action->setShortcuts(pasteShortcuts);
-    action->setWhatsThis("https://forum.snapflow.org/t/cut-copy-and-paste-editing/12981/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/cut-copy-and-paste-editing/12981/1"));
     icon = QIcon::fromTheme("edit-paste", QIcon(":/icons/oxygen/32x32/actions/edit-paste.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
@@ -848,7 +849,7 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Nudge Forward"), this);
     action->setShortcut(QKeySequence(Qt::Key_Period));
     action->setEnabled(false);
-    action->setWhatsThis("https://forum.snapflow.org/t/nudge-tool/43158/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/nudge-tool/43158/1"));
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
         if (selectedClips.size() == 1) {
@@ -886,7 +887,7 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Nudge Backward"), this);
     action->setShortcut(QKeySequence(Qt::Key_Comma));
     action->setEnabled(false);
-    action->setWhatsThis("https://forum.snapflow.org/t/nudge-tool/43158/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/nudge-tool/43158/1"));
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
         if (selectedClips.size() == 1) {
@@ -1094,7 +1095,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Create/Edit Marker"), this);
     action->setShortcut(QKeySequence(Qt::Key_M));
-    action->setWhatsThis("https://forum.snapflow.org/t/timeline-markers/30535/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-markers/30535/1"));
     icon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
@@ -1108,7 +1109,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Previous Marker"), this);
     action->setShortcut(QKeySequence(Qt::Key_Less));
-    action->setWhatsThis("https://forum.snapflow.org/t/timeline-markers/30535/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-markers/30535/1"));
     icon = QIcon::fromTheme("format-indent-less",
                             QIcon(":/icons/oxygen/32x32/actions/format-indent-less.png"));
     action->setIcon(icon);
@@ -1123,7 +1124,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Next Marker"), this);
     action->setShortcut(QKeySequence(Qt::Key_Greater));
-    action->setWhatsThis("https://forum.snapflow.org/t/timeline-markers/30535/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-markers/30535/1"));
     icon = QIcon::fromTheme("format-indent-more",
                             QIcon(":/icons/oxygen/32x32/actions/format-indent-more.png"));
     action->setIcon(icon);
@@ -1177,7 +1178,7 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Rectangle Selection"), this);
     action->setCheckable(true);
     action->setChecked(Settings.timelineRectangleSelect());
-    action->setWhatsThis("https://forum.snapflow.org/t/rectangle-selection/42202/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/rectangle-selection/42202/1"));
     connect(action, &QAction::triggered, this, [&](bool checked) {
         Settings.setTimelineRectangleSelect(checked);
     });
@@ -1262,7 +1263,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Ripple All Tracks"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
-    action->setWhatsThis("https://forum.snapflow.org/t/timeline-ripple-all-tracks/23701/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-ripple-all-tracks/23701/1"));
     icon = QIcon::fromTheme("ripple-all", QIcon(":/icons/oxygen/32x32/actions/ripple-all.png"));
     action->setIcon(icon);
     action->setCheckable(true);
@@ -1277,7 +1278,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Ripple Markers"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_R));
-    action->setWhatsThis("https://forum.snapflow.org/t/timeline-markers/30535/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-markers/30535/1"));
     icon = QIcon::fromTheme("ripple-marker",
                             QIcon(":/icons/oxygen/32x32/actions/ripple-marker.png"));
     action->setIcon(icon);
@@ -1449,8 +1450,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineZoomFitAction", action);
 
     action = new QAction(tr("Generate"), this);
-    action->setWhatsThis(
-        "https://forum.snapflow.org/t/user-guide-table-of-contents/43285#p-145073-properties-14");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/user-guide-table-of-contents/43285#p-145073-properties-14"));
     icon = QIcon::fromTheme("document-new", QIcon(":/icons/oxygen/32x32/actions/document-new.png"));
     action->setIcon(icon);
     {
@@ -1489,7 +1489,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineNewGenerator", action, windowTitle());
 
     action = new QAction(tr("Record Audio"), this);
-    action->setWhatsThis("https://forum.snapflow.org/t/record-audio-voice-over/33111/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/record-audio-voice-over/33111/1"));
     icon = QIcon::fromTheme("audio-input-microphone",
                             QIcon(":/icons/oxygen/32x32/devices/audio-input-microphone.png"));
     action->setIcon(icon);

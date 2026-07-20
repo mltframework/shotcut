@@ -8,5 +8,5 @@ Metadata {
     mlt_service: "oldfilm"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/old-film-projector/12868/1'
+    help: 'https://forum.shotcut.org/t/old-film-projector/12868/1'
 }

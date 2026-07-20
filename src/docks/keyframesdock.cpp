@@ -16,6 +16,7 @@
  */
 
 #include "keyframesdock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "actions.h"
@@ -114,7 +115,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
                                   QIcon(":/icons/oxygen/32x32/actions/chronometer.png"));
     toggleViewAction()->setIcon(icon);
     setMinimumSize(200, 50);
-    setWhatsThis("https://forum.snapflow.org/t/about-keyframes/12957/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/about-keyframes/12957/1"));
 
     setupActions();
 
@@ -280,7 +281,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Filter Start"), this);
     action->setShortcut(QKeySequence(Qt::Key_BracketLeft));
-    action->setWhatsThis("https://forum.snapflow.org/t/trimming-filters/13212/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/trimming-filters/13212/1"));
     icon = QIcon::fromTheme("keyframes-filter-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png"));
     action->setIcon(icon);
@@ -300,7 +301,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Filter End"), this);
     action->setShortcut(QKeySequence(Qt::Key_BracketRight));
-    action->setWhatsThis("https://forum.snapflow.org/t/trimming-filters/13212/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/trimming-filters/13212/1"));
     icon = QIcon::fromTheme("keyframes-filter-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png"));
     action->setIcon(icon);
@@ -320,7 +321,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set First Simple Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::Key_BraceLeft));
-    action->setWhatsThis("https://forum.snapflow.org/t/simple-keyframes/43639/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/simple-keyframes/43639/1"));
     icon = QIcon::fromTheme("keyframes-simple-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-in.png"));
     action->setIcon(icon);
@@ -340,7 +341,7 @@ void KeyframesDock::setupActions()
 
     action = new QAction(tr("Set Second Simple Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::Key_BraceRight));
-    action->setWhatsThis("https://forum.snapflow.org/t/simple-keyframes/43639/1");
+    action->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/simple-keyframes/43639/1"));
     icon = QIcon::fromTheme("keyframes-simple-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-out.png"));
     action->setIcon(icon);

@@ -16,6 +16,7 @@
  */
 
 #include "player.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "actions.h"
@@ -79,7 +80,7 @@ Player::Player(QWidget *parent)
     setupActions();
 
     // Set WhatsThis help URL for the Player
-    setWhatsThis("https://forum.snapflow.org/t/source-vs-project-player/12576/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/source-vs-project-player/12576/1"));
 
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);

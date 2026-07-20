@@ -14,7 +14,7 @@
    <string>Add Custom Video Mode</string>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.snapflow.org/t/settings-video-mode/12790#p-40331-custom-3</string>
+   <string notr="true">https://forum.shotcut.org/t/settings-video-mode/12790#p-40331-custom-3</string>
   </property>
   <property name="modal">
    <bool>true</bool>

@@ -305,7 +305,7 @@ Rectangle {
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
-                    // workaround to fix https://github.com/mltframework/snapflow/issues/777
+                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: {
                         if (contentX === 0)
                             contentX = tracksFlickable.contentX;
@@ -325,7 +325,7 @@ Rectangle {
                     width: root.width - headerWidth - 16
                     height: root.height - ruler.height - 16
                     clip: true
-                    // workaround to fix https://github.com/mltframework/snapflow/issues/777
+                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: rulerFlickable.contentX = contentX
                     interactive: false
                     contentWidth: tracksContainer.width + headerWidth

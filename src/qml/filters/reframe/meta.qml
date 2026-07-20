@@ -12,7 +12,7 @@ Metadata {
     icon: 'icon.webp'
     isOutputOnly: true
     isGpuCompatible: false
-    help: 'https://forum.snapflow.org/t/reframe-output-video-filter/45832/1'
+    help: 'https://forum.shotcut.org/t/reframe-output-video-filter/45832/1'
 
     keyframes {
         allowAnimateIn: true

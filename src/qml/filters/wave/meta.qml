@@ -8,5 +8,5 @@ Metadata {
     mlt_service: "wave"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/wave-video-filter/12893/1'
+    help: 'https://forum.shotcut.org/t/wave-video-filter/12893/1'
 }

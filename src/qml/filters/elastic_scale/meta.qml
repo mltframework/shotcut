@@ -25,7 +25,7 @@ Metadata {
     objectName: 'elastic_scale'
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/elastic-scale-video-filter/12844'
+    help: 'https://forum.shotcut.org/t/elastic-scale-video-filter/12844'
 
     keyframes {
         allowAnimateIn: true

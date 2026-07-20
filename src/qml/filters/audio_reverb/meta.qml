@@ -8,7 +8,7 @@ Metadata {
     mlt_service: 'ladspa.1216'
     keywords: qsTr('delay time echo', 'search keywords for the Reverb audio filter') + ' reverb'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/reverb-audio-filter/12915/1'
+    help: 'https://forum.shotcut.org/t/reverb-audio-filter/12915/1'
 
     keyframes {
         allowAnimateIn: true

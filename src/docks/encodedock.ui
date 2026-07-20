@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.snapflow.org/t/export-basics/12953/1</string>
+   <string notr="true">https://forum.shotcut.org/t/export-basics/12953/1</string>
   </property>
   <property name="windowTitle">
    <string>Export</string>
@@ -280,7 +280,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="whatsThis">
-             <string notr="true">https://forum.snapflow.org/t/advanced-export/12956/1</string>
+             <string notr="true">https://forum.shotcut.org/t/advanced-export/12956/1</string>
             </property>
             <property name="currentIndex">
              <number>0</number>

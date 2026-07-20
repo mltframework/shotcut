@@ -16,6 +16,7 @@
  */
 
 #include "markersdock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "actions.h"
@@ -129,7 +130,7 @@ MarkersDock::MarkersDock(QWidget *parent)
     QDockWidget::setWindowTitle(tr("Markers"));
     QIcon icon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
     toggleViewAction()->setIcon(icon);
-    setWhatsThis("https://forum.snapflow.org/t/timeline-markers/30535/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/timeline-markers/30535/1"));
 
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setFrameShape(QFrame::NoFrame);

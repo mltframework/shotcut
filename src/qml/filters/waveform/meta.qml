@@ -11,5 +11,5 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     allowMultiple: true
-    help: 'https://forum.snapflow.org/t/audio-waveform-visualization/12827/1'
+    help: 'https://forum.shotcut.org/t/audio-waveform-visualization/12827/1'
 }

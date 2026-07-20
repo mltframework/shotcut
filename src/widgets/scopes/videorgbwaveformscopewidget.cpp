@@ -16,6 +16,7 @@
  */
 
 #include "videorgbwaveformscopewidget.h"
+#include "urls.h"
 
 #include <QMouseEvent>
 #include <QPainter>
@@ -32,7 +33,7 @@ VideoRgbWaveformScopeWidget::VideoRgbWaveformScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/video-rgb-waveform-scope/15652/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-rgb-waveform-scope/15652/1"));
     LOG_DEBUG() << "end";
 }
 

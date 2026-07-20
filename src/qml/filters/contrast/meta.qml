@@ -11,7 +11,7 @@ Metadata {
     icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
-    help: 'https://forum.snapflow.org/t/contrast/12837/1'
+    help: 'https://forum.shotcut.org/t/contrast/12837/1'
 
     keyframes {
         allowAnimateIn: true

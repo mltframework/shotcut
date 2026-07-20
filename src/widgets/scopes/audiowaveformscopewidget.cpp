@@ -16,6 +16,7 @@
  */
 
 #include "audiowaveformscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 
@@ -66,7 +67,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     setAutoFillBackground(true);
     setMinimumSize(100, 100);
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/audio-waveform-scope/12920/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-waveform-scope/12920/1"));
     LOG_DEBUG() << "end";
 }
 

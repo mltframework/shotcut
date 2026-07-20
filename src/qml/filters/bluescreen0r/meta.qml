@@ -26,5 +26,5 @@ Metadata {
     qml: 'ui.qml'
     allowMultiple: false
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/chroma-key-simple/12835/1'
+    help: 'https://forum.shotcut.org/t/chroma-key-simple/12835/1'
 }

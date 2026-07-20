@@ -4,7 +4,7 @@ Translation
 -----------
 
 We use the
-[Transifex](https://explore.transifex.com/ddennedy/snapflow/)
+[Transifex](https://explore.transifex.com/ddennedy/shotcut/)
 collaboration web site to translate the Snapflow user interface.
 Additional languages are already started but have not yet reached the
 60% minimum level to be included in a Snapflow release.
@@ -17,14 +17,14 @@ Support Other Users
 -------------------
 
 An easy way for non-programmers to help is simply to participate in the
-[Snapflow Forum](https://forum.snapflow.org/) by answering user's questions.
+[Snapflow Forum](https://forum.shotcut.org/) by answering user's questions.
 Alternatively, consider making a tutorial video on YouTube or similar.
 
 Write Documentation
 -------------------
 
 We are now building [documentation in the
-forum](https://forum.snapflow.org/c/docs/docs-english) using its wiki-mode where
+forum](https://forum.shotcut.org/c/docs/docs-english) using its wiki-mode where
 any trusted user (some forum experience required or manual promotion) can edit
 the topic. Please treat this like real documentation you would see in a user
 manual. Some day these topics might get compiled into an offline help file or
@@ -34,8 +34,8 @@ the hope that some day a volunteer will offer to translate to another language.
 Report a Bug
 ------------
 
-You can report a bug on the [Snapflow Forum](https://forum.snapflow.org/) using
-the Bug category or on [GitHub Issues](https://github.com/mltframework/snapflow/issues/). Bug reports must include the Snapflow version, your operating system,
+You can report a bug on the [Snapflow Forum](https://forum.shotcut.org/) using
+the Bug category or on [GitHub Issues](https://github.com/mltframework/shotcut/issues/). Bug reports must include the Snapflow version, your operating system,
 and the steps. It can helpful to include a screenshot, screencast video, or
 project file. Please do not use this to request a feature.
 
@@ -44,8 +44,8 @@ Make a Preset
 
 After you make a filter preset that you think others would like,
 you can share it on the
-[Snapflow Forum](https://forum.snapflow.org/) or as a
-[GitHub Pull Request](https://github.com/mltframework/snapflow/pulls).
+[Snapflow Forum](https://forum.shotcut.org/) or as a
+[GitHub Pull Request](https://github.com/mltframework/shotcut/pulls).
 You can locate presets on your system by choosing **Settings > App Data
 Directory > Show...** and navigating to the presets folder.
 
@@ -60,14 +60,14 @@ share/snapflow/qml/filters
 
 See [How to Make a Plugin](https://www.snapflow.com/notes/make-plugins/)
 for more information. You can share your filter UI on the
-[Snapflow Forum](https://forum.snapflow.org/) or as a [GitHub Pull
-Request](https://github.com/mltframework/snapflow/pulls).
+[Snapflow Forum](https://forum.shotcut.org/) or as a [GitHub Pull
+Request](https://github.com/mltframework/shotcut/pulls).
 
 Write Code
 ----------
 
 The biggest impact you can make is to contribute a code change and submit that
-as a [GitHub Pull Request](https://github.com/mltframework/snapflow/pulls).
+as a [GitHub Pull Request](https://github.com/mltframework/shotcut/pulls).
 To make working on Snapflow code and some of its dependencies easier we provide
 some SDKs with setup instructions. Of course, you are free to try to work on
 the Snapflow code another way, but there is no help provided for that as it gets

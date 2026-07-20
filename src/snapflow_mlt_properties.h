@@ -19,7 +19,7 @@
 #define SNAPFLOW_MLT_PROPERTIES_H
 
 /* This file contains all of the Snapflow-specific MLT properties.
- * See also https://www.snapflow.org/notes/mltxml-annotations/
+ * See also https://www.shotcut.org/notes/mltxml-annotations/
  *
  * A property should be prefaced with an underscore if it will not be saved
  * in the XML even if it never has a chance of getting into there. This makes

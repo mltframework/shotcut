@@ -26,5 +26,5 @@ Metadata {
     mlt_service: 'avfilter.deband'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/deband-video-filter/29277/1'
+    help: 'https://forum.shotcut.org/t/deband-video-filter/29277/1'
 }

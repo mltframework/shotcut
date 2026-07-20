@@ -8,5 +8,5 @@ Metadata {
     keywords: qsTr('loudness dynamics range', 'search keywords for the Compressor audio filter') + ' compressor'
     mlt_service: 'ladspa.1882'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/compressor-audio-filter/12899/1'
+    help: 'https://forum.shotcut.org/t/compressor-audio-filter/12899/1'
 }

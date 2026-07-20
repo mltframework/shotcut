@@ -16,6 +16,7 @@
  */
 
 #include "filtersdock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "actions.h"
@@ -53,7 +54,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
 {
     LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
-    setWhatsThis("https://forum.snapflow.org/t/about-filters/48127/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/about-filters/48127/1"));
     QIcon icon = QIcon::fromTheme("view-filter",
                                   QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     toggleViewAction()->setIcon(icon);

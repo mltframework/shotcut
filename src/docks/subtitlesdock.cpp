@@ -16,6 +16,7 @@
  */
 
 #include "subtitlesdock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "actions.h"
@@ -156,7 +157,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     QDockWidget::setWindowTitle(tr("Subtitles"));
     QIcon icon = QIcon::fromTheme("subtitle", QIcon(":/icons/oxygen/32x32/actions/subtitle.png"));
     toggleViewAction()->setIcon(icon);
-    setWhatsThis("https://forum.snapflow.org/t/subtitles-panel/45312/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/subtitles-panel/45312/1"));
 
     setupActions();
 

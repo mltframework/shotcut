@@ -12,7 +12,7 @@ Metadata {
     isFavorite: true
     gpuAlt: "movit.opacity"
     allowMultiple: false
-    help: 'https://forum.snapflow.org/t/fade-in-video/12845/1'
+    help: 'https://forum.shotcut.org/t/fade-in-video/12845/1'
 
     keyframes {
         allowTrim: false

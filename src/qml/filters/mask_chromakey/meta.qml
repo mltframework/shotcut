@@ -10,5 +10,5 @@ Metadata {
     qml: 'ui.qml'
     icon: 'icon.webp'
     allowMultiple: false
-    help: 'https://forum.snapflow.org/t/mask-chroma-key-video-filter/30534/1'
+    help: 'https://forum.shotcut.org/t/mask-chroma-key-video-filter/30534/1'
 }

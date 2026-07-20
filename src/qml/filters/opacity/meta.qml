@@ -10,7 +10,7 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     gpuAlt: "movit.opacity"
-    help: 'https://forum.snapflow.org/t/opacity/12871/1'
+    help: 'https://forum.shotcut.org/t/opacity/12871/1'
 
     keyframes {
         allowAnimateIn: true

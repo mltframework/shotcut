@@ -16,6 +16,7 @@
  */
 
 #include "videorgbparadescopewidget.h"
+#include "urls.h"
 
 #include <QMouseEvent>
 #include <QPainter>
@@ -32,7 +33,7 @@ VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/video-rgb-parade-scope/15651/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-rgb-parade-scope/15651/1"));
     LOG_DEBUG() << "end";
 }
 

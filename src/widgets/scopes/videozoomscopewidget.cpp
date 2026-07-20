@@ -16,6 +16,7 @@
  */
 
 #include "videozoomscopewidget.h"
+#include "urls.h"
 
 #include "videowidget.h"
 #include "videozoomwidget.h"
@@ -104,7 +105,7 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     , m_lockButton(new QToolButton(this))
 {
     LOG_DEBUG() << "begin";
-    setWhatsThis("https://forum.snapflow.org/t/video-zoom-scope/15654/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-zoom-scope/15654/1"));
     QFont font = QWidget::font();
     int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
     font.setPointSize(fontSize);

@@ -16,6 +16,7 @@
  */
 
 #include "transcribeaudiodialog.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "dialogs/filedownloaddialog.h"
@@ -44,7 +45,7 @@
 #include <QTreeView>
 
 static const QString WHISPER_MODEL_EXTENSION_URL = QStringLiteral(
-    "https://check.snapflow.org/whispermodel.qml");
+    Urls::kBaseCheck + QStringLiteral("/whispermodel.qml");
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {

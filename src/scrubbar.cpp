@@ -16,6 +16,7 @@
  */
 
 #include "scrubbar.h"
+#include "urls.h"
 
 #include "mltcontroller.h"
 #include "settings.h"
@@ -44,7 +45,7 @@ ScrubBar::ScrubBar(QWidget *parent)
 {
     setMouseTracking(true);
     setMinimumHeight(fontMetrics().height() + selectionSize);
-    setWhatsThis("https://forum.snapflow.org/t/trimming-clips/49216/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/trimming-clips/49216/1"));
 }
 
 void ScrubBar::setScale(int maximum)

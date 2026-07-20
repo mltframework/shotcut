@@ -16,6 +16,7 @@
  */
 
 #include "audioloudnessscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "mltcontroller.h"
@@ -61,7 +62,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     m_loudnessFilter->set("calc_true_peak", Settings.loudnessScopeShowMeter("truepeak"));
 
     setAutoFillBackground(true);
-    setWhatsThis("https://forum.snapflow.org/t/audio-loudness-scope/12917/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-loudness-scope/12917/1"));
 
     // Use a timer to update the meters for two reasons:
     // 1) The spec requires 10Hz updates

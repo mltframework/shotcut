@@ -16,6 +16,7 @@
  */
 
 #include "audiosurroundscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "settings.h"
@@ -54,7 +55,7 @@ AudioSurroundScopeWidget::AudioSurroundScopeWidget()
 {
     LOG_DEBUG() << "begin";
 
-    setWhatsThis("https://forum.snapflow.org/t/audio-surround-scope/43816/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-surround-scope/43816/1"));
     connect(&Settings, &SnapflowSettings::playerAudioChannelsChanged, this, [&]() {
         m_channelsChanged = true;
         m_channels = Settings.playerAudioChannels();

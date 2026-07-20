@@ -11,5 +11,5 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     allowMultiple: false
-    help: 'https://forum.snapflow.org/t/crop-source-video-filter/12840/1'
+    help: 'https://forum.shotcut.org/t/crop-source-video-filter/12840/1'
 }

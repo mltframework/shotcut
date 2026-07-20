@@ -13,7 +13,7 @@ Metadata {
     allowMultiple: false
     seekReverse: true
     minimumVersion: '2'
-    help: 'https://forum.snapflow.org/t/speed-forward-reverse-time-filter/40786/1'
+    help: 'https://forum.shotcut.org/t/speed-forward-reverse-time-filter/40786/1'
 
     keyframes {
         allowTrim: false

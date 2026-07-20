@@ -21,34 +21,34 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>https://www.snapflow.org/assets/img/pro-formats.png</image>
+      <image>https://www.shotcut.org/assets/img/pro-formats.png</image>
       <caption>Wide Format Support</caption>
     </screenshot>
     <screenshot>
-      <image>https://www.snapflow.org/assets/img/waveforms.png</image>
+      <image>https://www.shotcut.org/assets/img/waveforms.png</image>
       <caption>Audio Features</caption>
     </screenshot>
     <screenshot>
-      <image>https://www.snapflow.org/assets/img/snapflow_mac_monitor.png</image>
+      <image>https://www.shotcut.org/assets/img/shotcut_mac_monitor.png</image>
       <caption>Video Effects</caption>
     </screenshot>
     <screenshot>
-      <image>https://www.snapflow.org/assets/img/editing-group.jpg</image>
+      <image>https://www.shotcut.org/assets/img/editing-group.jpg</image>
       <caption>Editing Features</caption>
     </screenshot>
     <screenshot>
-      <image>https://www.snapflow.org/assets/img/external-monitoring.png</image>
+      <image>https://www.shotcut.org/assets/img/external-monitoring.png</image>
       <caption>Display and Monitoring</caption>
     </screenshot>
   </screenshots>
   <developer_name>Meltytech, LLC</developer_name>
   <update_contact>dan_AT_dennedy.org</update_contact>
   <url type="homepage">https://www.snapflow.org/</url>
-  <url type="bugtracker">https://github.com/mltframework/snapflow/issues/</url>
-  <url type="faq">https://www.snapflow.org/FAQ/</url>
-  <url type="help">https://www.snapflow.org/tutorials/</url>
-  <url type="translate">https://explore.transifex.com/ddennedy/snapflow/</url>
-  <url type="vcs-browser">https://github.com/mltframework/snapflow</url>
+  <url type="bugtracker">https://github.com/mltframework/shotcut/issues/</url>
+  <url type="faq">https://www.shotcut.org/FAQ/</url>
+  <url type="help">https://www.shotcut.org/tutorials/</url>
+  <url type="translate">https://explore.transifex.com/ddennedy/shotcut/</url>
+  <url type="vcs-browser">https://github.com/mltframework/shotcut</url>
   <content_rating type="oars-1.1"/>
   <releases>
     <release version="@SNAPFLOW_VERSION@" date="@SNAPFLOW_DATE@"></release>

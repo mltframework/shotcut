@@ -7,5 +7,5 @@ Metadata {
     keywords: qsTr('chroma alpha clean suppress', 'search keywords for the Key Spill: Simple video filter') + ' key spill: simple #rgba'
     mlt_service: 'frei0r.spillsupress'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/key-spill-simple/12855/1'
+    help: 'https://forum.shotcut.org/t/key-spill-simple/12855/1'
 }

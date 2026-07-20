@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.snapflow.org/t/timeline-output/19127/1</string>
+   <string notr="true">https://forum.shotcut.org/t/timeline-output/19127/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

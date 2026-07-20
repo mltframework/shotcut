@@ -16,6 +16,7 @@
  */
 
 #include "elementsdock.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "mainwindow.h"
@@ -83,7 +84,7 @@ ElementsDock::ElementsDock(QWidget *parent)
     setObjectName("ElementsDock");
     QIcon icon = QIcon::fromTheme("fire", QIcon(":/icons/oxygen/32x32/fire.png"));
     toggleViewAction()->setIcon(icon);
-    setWhatsThis("https://snapflow.org");
+    setWhatsThis(Urls::kBaseSite);
 
     auto *mainWidget = new QWidget(this);
     auto *layout = new QVBoxLayout(mainWidget);

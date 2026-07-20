@@ -439,7 +439,7 @@ function set_globals {
   REPOLOCS[1]="https://github.com/mltframework/mlt.git"
   REPOLOCS[2]="https://github.com/dyne/frei0r.git"
   REPOLOCS[3]="https://github.com/ddennedy/movit.git"
-  REPOLOCS[4]="https://github.com/mltframework/snapflow.git"
+  REPOLOCS[4]="https://github.com/mltframework/shotcut.git"
   REPOLOCS[5]="https://github.com/ddennedy/ladspa-swh.git"
   REPOLOCS[6]="https://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"

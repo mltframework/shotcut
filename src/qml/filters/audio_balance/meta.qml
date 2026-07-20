@@ -9,7 +9,7 @@ Metadata {
     mlt_service: 'panner'
     objectName: 'audioBalance'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/balance-audio-filter/12896/1'
+    help: 'https://forum.shotcut.org/t/balance-audio-filter/12896/1'
 
     keyframes {
         allowAnimateIn: true

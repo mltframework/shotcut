@@ -8,5 +8,5 @@ Metadata {
     mlt_service: "lines"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/old-film-scratches/12869/1'
+    help: 'https://forum.shotcut.org/t/old-film-scratches/12869/1'
 }

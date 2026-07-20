@@ -16,6 +16,7 @@
  */
 
 #include "videowaveformscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 
@@ -36,7 +37,7 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/video-waveform-scope/12922/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-waveform-scope/12922/1"));
     LOG_DEBUG() << "end";
 }
 

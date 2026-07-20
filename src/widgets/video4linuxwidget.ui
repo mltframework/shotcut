@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.snapflow.org/t/open-other-video4linux/12937/1</string>
+   <string notr="true">https://forum.shotcut.org/t/open-other-video4linux/12937/1</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="10" column="0">

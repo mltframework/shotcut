@@ -460,7 +460,7 @@
     <string>Save project as a MLT XML file</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/file-save-and-save-as/12973/1</string>
+    <string notr="true">https://forum.shotcut.org/t/file-save-and-save-as/12973/1</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+S</string>
@@ -477,7 +477,7 @@
     <string>Save project to a different MLT XML file</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/file-save-and-save-as/12973/1</string>
+    <string notr="true">https://forum.shotcut.org/t/file-save-and-save-as/12973/1</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+S</string>
@@ -495,7 +495,7 @@
     <string>Export</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/export-basics/12953//1</string>
+    <string notr="true">https://forum.shotcut.org/t/export-basics/12953//1</string>
    </property>
   </action>
   <action name="actionForum">
@@ -532,7 +532,7 @@
     <string>Audio Peak Meter</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/audio-peak-meter-scope/12918/1</string>
+    <string notr="true">https://forum.shotcut.org/t/audio-peak-meter-scope/12918/1</string>
    </property>
   </action>
   <action name="actionProperties">
@@ -544,7 +544,7 @@
     <string>Properties</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
+    <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
    </property>
   </action>
   <action name="actionRecent">
@@ -556,7 +556,7 @@
     <string>Recent</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/recent-panel/12941/1</string>
+    <string notr="true">https://forum.shotcut.org/t/recent-panel/12941/1</string>
    </property>
   </action>
   <action name="actionPlaylist">
@@ -568,7 +568,7 @@
     <string>Playlist</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/about-the-playlist/12951/1</string>
+    <string notr="true">https://forum.shotcut.org/t/about-the-playlist/12951/1</string>
    </property>
   </action>
   <action name="actionHistory">
@@ -580,7 +580,7 @@
     <string>History</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/history-panel/12944/1</string>
+    <string notr="true">https://forum.shotcut.org/t/history-panel/12944/1</string>
    </property>
   </action>
   <action name="actionRealtime">
@@ -781,7 +781,7 @@
     <string>Filters</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/add-search-remove-and-reorder-filters/48127/1</string>
+    <string notr="true">https://forum.shotcut.org/t/add-search-remove-and-reorder-filters/48127/1</string>
    </property>
   </action>
   <action name="actionAddCustomProfile">
@@ -838,7 +838,7 @@
     <string>Timeline</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/about-the-timeline/12952/1</string>
+    <string notr="true">https://forum.shotcut.org/t/about-the-timeline/12952/1</string>
    </property>
   </action>
   <action name="actionRestoreLayout">
@@ -1033,7 +1033,7 @@
     <string>Keyframes</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/about-keyframes/12957/1</string>
+    <string notr="true">https://forum.shotcut.org/t/about-keyframes/12957/1</string>
    </property>
   </action>
   <action name="actionNew">
@@ -1157,7 +1157,7 @@
     <string>Generate</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
+    <string notr="true">https://forum.shotcut.org/t/user-guide-table-of-contents/43285#p-145073-properties-14</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1196,7 +1196,7 @@
     <string>Jobs</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/jobs-panel/12945/1</string>
+    <string notr="true">https://forum.shotcut.org/t/jobs-panel/12945/1</string>
    </property>
   </action>
   <action name="actionMarkers">
@@ -1208,7 +1208,7 @@
     <string>Markers</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/timeline-markers/30535/1</string>
+    <string notr="true">https://forum.shotcut.org/t/timeline-markers/30535/1</string>
    </property>
   </action>
   <action name="actionNotes">
@@ -1220,7 +1220,7 @@
     <string>Notes</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/notes-panel/33110/1</string>
+    <string notr="true">https://forum.shotcut.org/t/notes-panel/33110/1</string>
    </property>
   </action>
   <action name="actionSubtitles">
@@ -1232,7 +1232,7 @@
     <string>Subtitles</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">https://forum.snapflow.org/t/subtitles-panel/45312/1</string>
+    <string notr="true">https://forum.shotcut.org/t/subtitles-panel/45312/1</string>
    </property>
   </action>
   <action name="actionPreview540">

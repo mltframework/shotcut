@@ -9,7 +9,7 @@ Metadata {
     mlt_service: "frei0r.vertigo"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/vertigo-video-filter/14178/1'
+    help: 'https://forum.shotcut.org/t/vertigo-video-filter/14178/1'
 
     keyframes {
         allowAnimateIn: true

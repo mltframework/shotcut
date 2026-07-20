@@ -11,7 +11,7 @@ Metadata {
     qml: "ui_movit.qml"
     icon: 'icon.webp'
     isFavorite: true
-    help: 'https://forum.snapflow.org/t/brightness/12832/1'
+    help: 'https://forum.shotcut.org/t/brightness/12832/1'
 
     keyframes {
         allowAnimateIn: true

@@ -16,6 +16,7 @@
  */
 
 #include "mainwindow.h"
+#include "urls.h"
 #include "ui_mainwindow.h"
 
 #include "Logger.h"
@@ -154,7 +155,7 @@ MainWindow::MainWindow()
     , m_multipleFilesLoading(false)
     , m_isPlaylistLoaded(false)
     , m_exitCode(EXIT_SUCCESS)
-    , m_upgradeUrl("https://www.snapflow.org/download/")
+    , m_upgradeUrl(Urls::kCurrentSite + QStringLiteral("/download/"))
     , m_keyframesDock(0)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -306,10 +307,8 @@ void MainWindow::setupAndConnectUndoStack()
 #else
     redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
 #endif
-    undoAction->setWhatsThis(
-        QString::fromLatin1("https://forum.snapflow.org/t/undo-and-redo/12979/1"));
-    redoAction->setWhatsThis(
-        QString::fromLatin1("https://forum.snapflow.org/t/undo-and-redo/12979/1"));
+    undoAction->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/undo-and-redo/12979/1"));
+    redoAction->setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/undo-and-redo/12979/1"));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->menuEdit->addSeparator();
@@ -3093,7 +3092,7 @@ void MainWindow::on_actionAbout_Snapflow_triggered()
         "Copyright &copy; 2011-2026 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
     const auto license = QStringLiteral(
         "<a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a>");
-    const auto url = QStringLiteral("https://www.snapflow.org/");
+    const auto url = Urls::kCurrentSite + QStringLiteral("/");
     QMessageBox::about(
         this,
         tr("About %1").arg(qApp->applicationName()),
@@ -4113,12 +4112,12 @@ void MainWindow::updateThumbnails()
 
 void MainWindow::on_actionFAQ_triggered()
 {
-    Util::openUrl(QUrl("https://www.snapflow.org/FAQ/"));
+    Util::openUrl(QUrl(Urls::kBaseSite + QStringLiteral("/FAQ/")));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    Util::openUrl(QUrl("https://forum.snapflow.org/"));
+    Util::openUrl(QUrl(Urls::kBaseForum));
 }
 
 bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
@@ -4521,7 +4520,7 @@ void MainWindow::showUpgradePrompt()
 {
     if (Settings.checkUpgradeAutomatic()) {
         showStatusMessage("Checking for upgrade...");
-        m_network.get(QNetworkRequest(QUrl("https://check.snapflow.org/version.json")));
+        m_network.get(QNetworkRequest(QUrl(Urls::kCurrentCheck + QStringLiteral("/version.json"))));
     } else {
         QAction *action = new QAction(tr("Click here to check for a new version of Snapflow."), 0);
         connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
@@ -5291,7 +5290,7 @@ void MainWindow::on_actionJobPriorityNormal_triggered()
 
 void MainWindow::on_actionTutorials_triggered()
 {
-    Util::openUrl(QUrl("https://www.snapflow.org/tutorials/"));
+    Util::openUrl(QUrl(Urls::kBaseSite + QStringLiteral("/tutorials/")));
 }
 
 void MainWindow::on_actionRestoreLayout_triggered()
@@ -5393,7 +5392,7 @@ void MainWindow::on_actionUpgrade_triggered()
             Settings.setAskUpgradeAutomatic(false);
     }
     showStatusMessage("Checking for upgrade...");
-    m_network.get(QNetworkRequest(QUrl("https://check.snapflow.org/version.json")));
+    m_network.get(QNetworkRequest(QUrl(Urls::kCurrentCheck + QStringLiteral("/version.json"))));
 }
 
 void MainWindow::on_actionOpenXML_triggered()
@@ -5595,7 +5594,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
     } else {
         LOG_WARNING() << reply->errorString();
         if (reply->error() == QNetworkReply::UnknownNetworkError) {
-            m_network.get(QNetworkRequest(QUrl("http://check.snapflow.org/version.json")));
+            m_network.get(QNetworkRequest(QUrl(Urls::kCurrentCheck + QStringLiteral("/version.json"))));
         }
     }
     QAction *action = new QAction(
@@ -6541,7 +6540,7 @@ int MainWindow::bottomVideoTrackIndex() const
 
 void MainWindow::on_actionTopics_triggered()
 {
-    Util::openUrl(QUrl("https://www.snapflow.org/howtos/"));
+    Util::openUrl(QUrl(Urls::kBaseSite + QStringLiteral("/howtos/")));
 }
 
 void MainWindow::on_actionWhatsThis_triggered()

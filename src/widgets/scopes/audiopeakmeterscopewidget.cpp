@@ -16,6 +16,7 @@
  */
 
 #include "audiopeakmeterscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "mltcontroller.h"
@@ -35,7 +36,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     LOG_DEBUG() << "begin";
     qRegisterMetaType<QVector<double>>("QVector<double>");
     setAutoFillBackground(true);
-    setWhatsThis("https://forum.snapflow.org/t/audio-peak-meter-scope/12918/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-peak-meter-scope/12918/1"));
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
     m_audioMeter = new AudioMeterWidget(this);

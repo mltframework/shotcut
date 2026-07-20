@@ -8,7 +8,7 @@ Metadata {
     mlt_service: 'dropshadow'
     icon: 'icon.webp'
     qml: 'ui.qml'
-    help: 'https://forum.snapflow.org/t/drop-shadow-video-filter/46273/1'
+    help: 'https://forum.shotcut.org/t/drop-shadow-video-filter/46273/1'
 
     keyframes {
         allowAnimateIn: true

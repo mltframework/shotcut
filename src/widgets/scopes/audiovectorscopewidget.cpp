@@ -16,6 +16,7 @@
  */
 
 #include "audiovectorscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "settings.h"
@@ -38,7 +39,7 @@ AudioVectorScopeWidget::AudioVectorScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMinimumSize(100, 100);
-    setWhatsThis("https://forum.snapflow.org/t/audio-vector-scope/43817/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-vector-scope/43817/1"));
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);

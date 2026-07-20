@@ -9,5 +9,5 @@ Metadata {
     mlt_service: "avfilter.noise"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.snapflow.org/t/noise-fast/12864/1'
+    help: 'https://forum.shotcut.org/t/noise-fast/12864/1'
 }

@@ -11,7 +11,7 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     isOutputOnly: true
-    help: 'https://forum.snapflow.org/t/subtitle-burn-in-video-filter/45313/1'
+    help: 'https://forum.shotcut.org/t/subtitle-burn-in-video-filter/45313/1'
 
     keyframes {
         allowAnimateIn: false

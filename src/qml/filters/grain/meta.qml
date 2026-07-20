@@ -7,5 +7,5 @@ Metadata {
     keywords: qsTr('dots particles noise dirt', 'search keywords for the Old Film: Grain video filter') + ' old film: grain #yuv'
     mlt_service: "grain"
     qml: "ui.qml"
-    help: 'https://forum.snapflow.org/t/old-film-grain/12867/1'
+    help: 'https://forum.shotcut.org/t/old-film-grain/12867/1'
 }

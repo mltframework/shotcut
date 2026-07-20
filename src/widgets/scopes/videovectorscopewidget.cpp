@@ -16,6 +16,7 @@
  */
 
 #include "videovectorscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "mltcontroller.h"
@@ -38,7 +39,7 @@ VideoVectorScopeWidget::VideoVectorScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.snapflow.org/t/video-vector-scope/15653/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/video-vector-scope/15653/1"));
     profileChanged();
     connect(&QmlProfile::singleton(), SIGNAL(profileChanged()), this, SLOT(profileChanged()));
     LOG_DEBUG() << "end";

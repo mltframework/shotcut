@@ -16,6 +16,7 @@
  */
 
 #include "audiospectrumscopewidget.h"
+#include "urls.h"
 
 #include "Logger.h"
 #include "widgets/audiometerwidget.h"
@@ -98,7 +99,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
 
     // Setup this widget
     qRegisterMetaType<QVector<double>>("QVector<double>");
-    setWhatsThis("https://forum.snapflow.org/t/audio-spectrum-scope/12919/1");
+    setWhatsThis(Urls::kBaseForum + QStringLiteral("/t/audio-spectrum-scope/12919/1"));
 
     // Create the FFT filter
     Mlt::Profile profile;
