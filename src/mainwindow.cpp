@@ -916,6 +916,16 @@ void MainWindow::setupAndConnectDocks()
     // custom hand-rolled one, so there's no separate show()/hide() slot
     // to keep in sync. Text overridden to "AI" (the dock's own window
     // title stays the more descriptive "Chat (Rust)" for its title bar).
+    // Every other dock in this constructor adds its own toggleViewAction()
+    // to ui->menuView so it can be re-opened after being closed (each
+    // dock's title-bar X button just calls QWidget::hide(), it does not
+    // delete the widget) -- ChatRustDock never got this wired up before
+    // either fix landed, which is exactly why closing it (or a
+    // fresh-vs-migrated Shotcut.conf that happens to have persisted it
+    // hidden) left users with no way to bring it back short of manually
+    // deleting their config. No shortcut assigned (every Ctrl+<digit> slot
+    // 1-0 is already taken by the docks above), matching
+    // m_historyDock/m_jobsDock's own no-shortcut pattern.
     m_chatRustDock->toggleViewAction()->setText(tr("AI"));
     ui->menuView->addAction(m_chatRustDock->toggleViewAction());
     // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to

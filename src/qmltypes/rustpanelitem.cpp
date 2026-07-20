@@ -1,14 +1,62 @@
 #include "rustpanelitem.h"
 #include "panel_ffi.h"
 
+#include <QEvent>
 #include <QImage>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QPainter>
 #include <QCursor>
-#include <QEvent>
+#include <QQuickWindow>
+#include <QScreen>
 #include <QDebug>
+
+bool RustPanelItem::invokeCommand(Command command)
+{
+    ensureHandle();
+    if (!m_handle)
+        return false;
+    return panel_rust_invoke_command(m_handle, static_cast<int>(command));
+}
+
+namespace {
+bool isThreadCommandChord(const QKeyEvent *event)
+{
+    const Qt::KeyboardModifiers mods = event->modifiers();
+    if (mods.testFlag(Qt::ControlModifier) && mods.testFlag(Qt::AltModifier)
+        && (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down))
+        return true;
+    if (mods.testFlag(Qt::ControlModifier) && !mods.testFlag(Qt::AltModifier)
+        && !mods.testFlag(Qt::ShiftModifier) && event->key() == Qt::Key_K)
+        return true;
+    return false;
+}
+} // namespace
+
+bool RustPanelItem::event(QEvent *event)
+{
+    // Two independent needs share this one override -- see the .h
+    // declaration's doc comment. While this item has Qt focus, claim
+    // every ShortcutOverride so global single-key app shortcuts
+    // (timeline's Backspace/Delete/Z/X) never win over typing/editing in
+    // a focused Slint TextInput; that subsumes the thread-command chords
+    // too when focused. When this item has NO Qt focus, still claim just
+    // the Ctrl+Alt+Up/Down/Ctrl+K chords so they keep working via
+    // ChatRustDock's window-wide QShortcut fallback.
+    if (event->type() == QEvent::ShortcutOverride) {
+        if (hasFocus()) {
+            event->accept();
+            return true;
+        }
+        auto *keyEvent = static_cast<QKeyEvent *>(event);
+        if (isThreadCommandChord(keyEvent)) {
+            event->accept();
+            return true;
+        }
+    }
+    return QQuickPaintedItem::event(event);
+}
 
 RustPanelItem::RustPanelItem(QQuickItem *parent)
     : QQuickPaintedItem(parent)
@@ -27,9 +75,17 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     // Phase 4: nothing else drives this single-threaded render loop to
     // notice background agent activity (see agent_bridge.rs's module
     // docs) -- poll on a plain timer and repaint if anything changed.
-    // 80ms is well under human-perceptible chat latency and nowhere near
-    // a hot loop.
-    m_pollTimer.setInterval(80);
+    // Interval targets the real display refresh rate (60-90fps, see
+    // updatePollIntervalForRefreshRate()) instead of a fixed 80ms
+    // (12.5fps) -- animations (hover fades, the sidebar's `animate
+    // width`, the loading spinner, Flickable momentum) only ever advance
+    // on this tick (see panel_rust_poll's doc comment in lib.rs), so a
+    // fixed low-rate poll was capping every animation's smoothness well
+    // below what the display can actually show, independent of how fast
+    // the panel itself could render a frame.
+    updatePollIntervalForRefreshRate();
+    connect(this, &QQuickItem::windowChanged, this,
+            &RustPanelItem::updatePollIntervalForRefreshRate);
     connect(&m_pollTimer, &QTimer::timeout, this, &RustPanelItem::poll);
     m_pollTimer.start();
 }
@@ -40,20 +96,28 @@ RustPanelItem::~RustPanelItem()
         panel_rust_destroy(m_handle);
 }
 
-bool RustPanelItem::event(QEvent *event)
+void RustPanelItem::updatePollIntervalForRefreshRate()
 {
-    // See the declaration's doc comment in rustpanelitem.h: while this
-    // item has focus, claim every ShortcutOverride so global single-key
-    // app shortcuts (timeline's Backspace/Delete/Z/X) never win over
-    // typing/editing in a focused Slint TextInput -- the actual key still
-    // reaches keyPressEvent() and Slint's own focused element right
-    // afterward exactly as before; this only stops Qt's shortcut system
-    // from intercepting it first.
-    if (event->type() == QEvent::ShortcutOverride && hasFocus()) {
-        event->accept();
-        return true;
+    qreal targetFps = kMinPollFps;
+    if (QQuickWindow *win = window()) {
+        if (QScreen *screen = win->screen()) {
+            const qreal refreshRate = screen->refreshRate();
+            // Some platforms/backends (notably under Xvfb, as this repo's
+            // own host-e2e/VNC-dev harnesses run) report 0 or a negative
+            // placeholder rather than a real rate -- fall back to
+            // kMinPollFps rather than let that collapse the poll interval
+            // to something absurd via qBound's lower-clamp-first behavior.
+            if (refreshRate > 0)
+                targetFps = qBound(kMinPollFps, refreshRate, kMaxPollFps);
+            connect(win, &QWindow::screenChanged, this,
+                    &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
+            connect(screen, &QScreen::refreshRateChanged, this,
+                    &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
+        }
     }
-    return QQuickPaintedItem::event(event);
+    const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
+    if (m_pollTimer.interval() != intervalMs)
+        m_pollTimer.setInterval(intervalMs);
 }
 
 void RustPanelItem::ensureHandle()
@@ -131,8 +195,50 @@ void RustPanelItem::hoverLeaveEvent(QHoverEvent *event)
     event->accept();
 }
 
+void RustPanelItem::wheelEvent(QWheelEvent *event)
+{
+    ensureHandle();
+    if (m_handle) {
+        // Trackpads report precise pixel deltas directly; a real mouse
+        // wheel only reports angleDelta (eighths of a degree per Qt's
+        // docs, 120 units == one physical notch on a typical wheel). Scale
+        // the latter to a comparable logical-pixel amount -- 15 degrees
+        // (one notch) -> ~60px, matching common desktop "3 lines" scroll
+        // conventions -- since panel_rust_input_scroll expects logical
+        // pixels either way (see its own doc comment).
+        QPointF delta = event->pixelDelta();
+        if (delta.isNull()) {
+            constexpr qreal kPixelsPerDegree = 4.0;
+            delta = QPointF(event->angleDelta()) / 8.0 * kPixelsPerDegree;
+        }
+        panel_rust_input_scroll(m_handle,
+                                 static_cast<float>(event->position().x()),
+                                 static_cast<float>(event->position().y()),
+                                 static_cast<float>(delta.x()),
+                                 static_cast<float>(delta.y()));
+        update();
+    }
+    event->accept();
+}
+
 void RustPanelItem::keyPressEvent(QKeyEvent *event)
 {
+    // Thread-switch/search chords must fire even when this item has Qt
+    // focus but no Slint-side text editor does (e.g. the sidebar itself is
+    // focused, nothing is) -- panel_rust_input_key's own focus guard would
+    // silently drop them otherwise (see its doc comment in lib.rs).
+    // ChatRustDock's global QShortcuts cover the remaining case (this item
+    // has no Qt focus at all).
+    if (isThreadCommandChord(event)) {
+        const Qt::KeyboardModifiers mods = event->modifiers();
+        if (mods.testFlag(Qt::AltModifier))
+            invokeCommand(event->key() == Qt::Key_Up ? PreviousThread : NextThread);
+        else
+            invokeCommand(OpenThreadSearch);
+        update();
+        event->accept();
+        return;
+    }
     ensureHandle();
     if (m_handle) {
         const QByteArray text = event->text().toUtf8();
@@ -140,7 +246,8 @@ void RustPanelItem::keyPressEvent(QKeyEvent *event)
                                   event->key(),
                                   reinterpret_cast<const unsigned char *>(text.constData()),
                                   static_cast<size_t>(text.size()),
-                                  /*pressed=*/true))
+                                  /*pressed=*/true,
+                                  static_cast<int>(event->modifiers())))
             update();
     }
     event->accept();
@@ -154,7 +261,8 @@ void RustPanelItem::keyReleaseEvent(QKeyEvent *event)
                               event->key(),
                               reinterpret_cast<const unsigned char *>(text.constData()),
                               static_cast<size_t>(text.size()),
-                              /*pressed=*/false);
+                              /*pressed=*/false,
+                              static_cast<int>(event->modifiers()));
     }
     event->accept();
 }

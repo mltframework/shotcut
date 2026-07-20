@@ -7,6 +7,7 @@
 
 #include <QQuickPaintedItem>
 #include <QTimer>
+#include <QWheelEvent>
 
 struct PanelHandle;
 
@@ -19,6 +20,23 @@ public:
 
     void paint(QPainter *painter) override;
 
+    // Command ids for invokeCommand() -- kept in sync with panel-rust's
+    // panel_rust_invoke_command doc comment (lib.rs).
+    enum Command {
+        PreviousThread = 0,
+        NextThread = 1,
+        OpenThreadSearch = 2,
+    };
+
+    // Focus-independent dispatch straight to panel_rust_invoke_command,
+    // bypassing the compose/terminal-focus gate that keyPressEvent's normal
+    // panel_rust_input_key path enforces. Used both by keyPressEvent (for
+    // the recognized chords below, while this item has Qt focus but no
+    // Slint-side text editor does) and by ChatRustDock's global QShortcuts
+    // (for when this item has no Qt focus at all). Returns false if the
+    // Rust panel handle doesn't exist yet.
+    bool invokeCommand(Command command);
+
 public slots:
     // Forwarded from ChatRustDock, itself driven by
     // MainWindow::changeTheme() -- see chatrustdock.cpp.
@@ -30,15 +48,17 @@ public slots:
 
 protected:
     // Qt's shortcut dispatch sends every focused item a ShortcutOverride
-    // event before delivering the real key press; a standard QWidget text
-    // input (QLineEdit et al.) accepts it so single-key global shortcuts
-    // elsewhere in the app (timeline's Backspace/Delete/Z/X = Lift/Ripple
-    // Delete) don't steal the keystroke instead of it reaching the field.
-    // RustPanelItem never participated in that protocol, so those global
-    // shortcuts silently won over every text field in the chat panel
-    // (thread rename, agent profile fields, etc.) whenever this item held
-    // focus -- accepting it here while focused restores normal typing/
-    // editing precedence, matching how those built-in widgets behave.
+    // event before delivering the real key press. Two independent needs
+    // share this one override: (1) a standard QWidget text input (QLineEdit
+    // et al.) accepts it so single-key global shortcuts elsewhere in the
+    // app (timeline's Backspace/Delete/Z/X = Lift/Ripple Delete) don't
+    // steal the keystroke instead of it reaching a focused chat text field
+    // (thread rename, agent profile fields, etc.); (2) the Ctrl+Alt+Up/
+    // Down/Ctrl+K thread-command chords need routing into keyPressEvent()
+    // below even when this item has no Qt focus at all (ChatRustDock's
+    // window-wide QShortcut is the fallback then) -- see invokeCommand's
+    // own doc comment. See the .cpp implementation for how both are
+    // combined without either one dropping the other's case.
     bool event(QEvent *event) override;
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -53,10 +73,25 @@ protected:
     // windowing backends.
     void hoverMoveEvent(QHoverEvent *event) override;
     void hoverLeaveEvent(QHoverEvent *event) override;
+    // Never wired up before -- panel_rust_input_scroll existed on the Rust
+    // side (and in panel_ffi.h once added alongside this) but nothing ever
+    // called it, so wheel/trackpad scroll inside the chat panel (thread
+    // list, message history, ...) silently did nothing.
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     void ensureHandle();
     void poll();
+    // Recomputes m_pollTimer's interval from window()->screen()->
+    // refreshRate(), clamped to [kMinPollFps, kMaxPollFps]. Called on
+    // construction (screen not known yet -> falls back to kMinPollFps),
+    // whenever this item's window changes, and whenever that window's
+    // screen or the screen's reported refresh rate changes (covers
+    // dragging the window to a different-refresh-rate monitor).
+    void updatePollIntervalForRefreshRate();
+
+    static constexpr qreal kMinPollFps = 60.0;
+    static constexpr qreal kMaxPollFps = 90.0;
 
     PanelHandle *m_handle = nullptr;
     QTimer m_pollTimer;
