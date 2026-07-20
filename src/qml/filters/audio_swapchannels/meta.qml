@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     keywords: qsTr('switch stereo', 'search keywords for the Swap Channels audio filter') + ' swap channels'
     objectName: 'audioSwapChannels'
     qml: "ui.qml"
-    help: 'https://forum.shotcut.org/t/swap-channels-audio-filter/12916/1'
+    help: 'https://forum.snapflow.org/t/swap-channels-audio-filter/12916/1'
 }

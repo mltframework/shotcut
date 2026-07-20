@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -139,7 +139,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
@@ -170,7 +170,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: wslider
 
             minimumValue: 0
@@ -179,11 +179,11 @@ Item {
             onValueChanged: updateFilterWidth(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: wslider.value = 2
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: widthKeyframesButton
 
             onToggled: {
@@ -209,7 +209,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hslider
 
             minimumValue: 0
@@ -218,11 +218,11 @@ Item {
             onValueChanged: updateFilterHeight(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hslider.value = 2
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: heightKeyframesButton
 
             onToggled: {

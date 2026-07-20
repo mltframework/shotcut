@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     keywords: qsTr('hue saturation lightness color primaries', 'search keywords for the HSL Range video filter') + ' hslrange #rgba #color #10bit'
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/hsl-range-video-filter/47070/1'
+    help: 'https://forum.snapflow.org/t/hsl-range-video-filter/47070/1'
 
     keyframes {
         allowAnimateIn: true

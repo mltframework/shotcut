@@ -328,7 +328,7 @@ void PasteCommand::undo()
     for (int i = 0; i < producer.filter_count(); i++) {
         Mlt::Filter *filter = producer.filter(i);
         if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty)) {
+            && !filter->get_int(kSnapflowHiddenProperty)) {
             producer.detach(*filter);
             i--;
         }

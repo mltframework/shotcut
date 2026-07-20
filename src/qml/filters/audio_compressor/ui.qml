@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -70,7 +70,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['0', '1', '2', '3', '4', '5', '6', channelMask.channelMaskProperty]
@@ -82,12 +82,12 @@ Item {
             text: qsTr('RMS')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderPeak
 
             minimumValue: 0
@@ -101,7 +101,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderPeak.value = sliderPeak.minimumValue
         }
 
@@ -110,7 +110,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderAttack
 
             minimumValue: 2
@@ -122,7 +122,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderAttack.value = 100
         }
 
@@ -131,7 +131,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRelease
 
             minimumValue: 2
@@ -143,7 +143,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRelease.value = 400
         }
 
@@ -151,12 +151,12 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The point at which the compressor will start to kick in.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderThreshold
 
             minimumValue: -30
@@ -169,7 +169,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderThreshold.value = 0
         }
 
@@ -177,12 +177,12 @@ Item {
             text: qsTr('Ratio')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRatio
 
             minimumValue: 1
@@ -194,7 +194,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRatio.value = 1
         }
 
@@ -202,12 +202,12 @@ Item {
             text: qsTr('Knee radius')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The distance from the threshold where the knee curve starts.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRadius
 
             minimumValue: 1
@@ -220,7 +220,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRadius.value = 3.25
         }
 
@@ -228,12 +228,12 @@ Item {
             text: qsTr('Makeup gain')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The gain of the makeup input signal.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderGain
 
             minimumValue: 0
@@ -246,7 +246,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderGain.value = 0
         }
 
@@ -255,7 +255,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2
@@ -282,12 +282,12 @@ Item {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing the gain reduction applied by the compressor.')
             }
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: grGauge
 
             Layout.columnSpan: 2

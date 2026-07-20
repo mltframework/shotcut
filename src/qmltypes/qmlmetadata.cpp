@@ -24,7 +24,7 @@
 
 /*!
     \qmltype Metadata
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Describes a filter's identity, capabilities, and keyframe configuration.
 
     \c Metadata is the read-only descriptor for a filter service. It is available
@@ -295,7 +295,7 @@ void QmlMetadata::setIsOutputOnly(bool isOutputOnly)
 bool QmlMetadata::isMltVersion(const QString &version)
 {
     if (!m_minimumVersion.isEmpty()) {
-        LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
+        LOG_DEBUG() << "MLT version:" << version << "Snapflow minimumVersion:" << m_minimumVersion;
         if (QVersionNumber::fromString(version) < QVersionNumber::fromString(m_minimumVersion))
             return false;
     }
@@ -304,7 +304,7 @@ bool QmlMetadata::isMltVersion(const QString &version)
 
 /*!
     \qmltype KeyframesMetadata
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Describes the keyframe capabilities of a filter.
 
     Accessed via \l{Metadata::keyframes}. Describes whether the filter supports
@@ -373,7 +373,7 @@ QmlKeyframesParameter *QmlKeyframesMetadata::parameter(const QString &propertyNa
 void QmlKeyframesMetadata::checkVersion(const QString &version)
 {
     if (!m_minimumVersion.isEmpty()) {
-        LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
+        LOG_DEBUG() << "MLT version:" << version << "Snapflow minimumVersion:" << m_minimumVersion;
         if (QVersionNumber::fromString(version) < QVersionNumber::fromString(m_minimumVersion))
             setDisabled();
     }
@@ -386,7 +386,7 @@ void QmlKeyframesMetadata::setDisabled()
 
 /*!
     \qmltype Parameter
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Describes a single keyframeable parameter within a filter's keyframes metadata.
 
     Accessed from \l{KeyframesMetadata::parameters}.

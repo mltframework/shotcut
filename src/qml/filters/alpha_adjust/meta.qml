@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     objectName: 'alphaChannelAdjust'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/alpha-channel-adjust/12577/1'
+    help: 'https://forum.snapflow.org/t/alpha-channel-adjust/12577/1'
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter

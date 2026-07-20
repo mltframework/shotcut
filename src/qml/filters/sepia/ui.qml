@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     width: 350
@@ -38,7 +38,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 2
@@ -54,7 +54,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderBlue
 
             minimumValue: 0
@@ -63,7 +63,7 @@ Item {
             onValueChanged: filter.set('u', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderBlue.value = 75
         }
 
@@ -72,7 +72,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRed
 
             minimumValue: 0
@@ -81,7 +81,7 @@ Item {
             onValueChanged: filter.set('v', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRed.value = 150
         }
 

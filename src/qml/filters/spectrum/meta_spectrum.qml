@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -11,5 +11,5 @@ Metadata {
     vui: 'vui_spectrum.qml'
     icon: 'icon.webp'
     allowMultiple: true
-    help: 'https://forum.shotcut.org/t/audio-spectrum-visualization/12826/1'
+    help: 'https://forum.snapflow.org/t/audio-spectrum-visualization/12826/1'
 }

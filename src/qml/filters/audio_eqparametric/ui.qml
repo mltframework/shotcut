@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property var defaultValues: [0, 50, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
     property bool blockControls: false
 
@@ -111,7 +111,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: keyframableParameters.concat(channelMask.channelMaskProperty)
@@ -147,7 +147,7 @@ Shotcut.KeyframableFilter {
                 Layout.alignment: Qt.AlignHCenter
             }
 
-            Shotcut.KeyframesButton {
+            Snapflow.KeyframesButton {
                 id: keyframesButton
 
                 onToggled: {
@@ -183,7 +183,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider1
 
             minimumValue: 20
@@ -198,7 +198,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider1.value = defaultValues[1]
         }
 
@@ -207,7 +207,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider0
 
             minimumValue: -30
@@ -222,7 +222,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider0.value = defaultValues[0]
         }
 
@@ -231,7 +231,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider2
 
             minimumValue: 0
@@ -245,7 +245,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider2.value = defaultValues[2]
         }
 
@@ -260,7 +260,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider4
 
             minimumValue: 20
@@ -275,7 +275,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider4.value = defaultValues[4]
         }
 
@@ -284,7 +284,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider3
 
             minimumValue: -30
@@ -299,7 +299,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider3.value = defaultValues[3]
         }
 
@@ -308,7 +308,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider5
 
             minimumValue: 0
@@ -323,7 +323,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider5.value = defaultValues[5]
         }
 
@@ -338,7 +338,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider7
 
             minimumValue: 20
@@ -353,7 +353,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider7.value = defaultValues[7]
         }
 
@@ -362,7 +362,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider6
 
             minimumValue: -30
@@ -377,7 +377,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider6.value = defaultValues[6]
         }
 
@@ -386,7 +386,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider8
 
             minimumValue: 0
@@ -401,7 +401,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider8.value = defaultValues[8]
         }
 
@@ -416,7 +416,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider10
 
             minimumValue: 20
@@ -431,7 +431,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider10.value = defaultValues[10]
         }
 
@@ -440,7 +440,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider9
 
             minimumValue: -30
@@ -455,7 +455,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider9.value = defaultValues[9]
         }
 
@@ -464,7 +464,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider11
 
             minimumValue: 0
@@ -479,7 +479,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider11.value = defaultValues[11]
         }
 
@@ -494,7 +494,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider13
 
             minimumValue: 20
@@ -509,7 +509,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider13.value = defaultValues[13]
         }
 
@@ -518,7 +518,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider12
 
             minimumValue: -30
@@ -533,7 +533,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider12.value = defaultValues[12]
         }
 
@@ -542,7 +542,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider14
 
             minimumValue: 0
@@ -556,7 +556,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider14.value = defaultValues[14]
         }
 
@@ -565,7 +565,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2

@@ -17,10 +17,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
 
     function setControls() {
         var position = getPosition();
@@ -64,7 +64,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider
 
             minimumValue: 0
@@ -74,11 +74,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('radius', value / maximumValue, radiusKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: radiusKeyframesButton
 
             onToggled: {
@@ -93,7 +93,7 @@ Shotcut.KeyframableFilter {
         }
 
         RowLayout {
-            Shotcut.ColorPicker {
+            Snapflow.ColorPicker {
                 id: colorSwatch
 
                 property bool isReady: false
@@ -109,17 +109,17 @@ Shotcut.KeyframableFilter {
                 onPickCancelled: filter.set('disable', 0)
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 text: qsTr('Transparent')
                 onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 0)
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 1)
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: colorKeyframesButton
             onToggled: toggleKeyframes(checked, 'color', Qt.color(colorSwatch.value))
         }

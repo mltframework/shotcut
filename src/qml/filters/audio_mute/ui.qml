@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
 
@@ -42,7 +42,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2

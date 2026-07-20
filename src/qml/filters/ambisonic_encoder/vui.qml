@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.VuiBase {
+Snapflow.VuiBase {
     property var keyframableParameters: ['azimuth', 'elevation']
     property var startValues: []
     property var middleValues: []

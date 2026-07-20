@@ -24,7 +24,7 @@
 #include "jobs/qimagejob.h"
 #include "mltcontroller.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QFile>
@@ -587,7 +587,7 @@ bool ProxyManager::isValidImage(Mlt::Producer &producer)
 {
     QString service = QString::fromLatin1(producer.get("mlt_service"));
     if ((service == "qimage" || service == "pixbuf")
-        && !producer.get_int(kShotcutSequenceProperty)) {
+        && !producer.get_int(kSnapflowSequenceProperty)) {
         QImageReader reader;
         reader.setDecideFormatFromContent(true);
         reader.setFileName(ProxyManager::resource(producer));

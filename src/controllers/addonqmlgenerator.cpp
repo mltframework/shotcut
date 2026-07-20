@@ -260,8 +260,8 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         << "import QtQuick\n"
            "import QtQuick.Controls\n"
            "import QtQuick.Layouts\n\n"
-           "import Shotcut.Controls as Shotcut\n\n"
-           "Shotcut.KeyframableFilter {\n"
+           "import Snapflow.Controls as Snapflow\n\n"
+           "Snapflow.KeyframableFilter {\n"
            "    id: root\n"
            "    signal metadataHelpRequested(string service)\n"
            "    property var propertyNames: ["
@@ -503,7 +503,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "            text: root.filterDescription.length > 0 ? qsTr('Add-on Filter: "
            "%1').arg(root.filterDescription) : qsTr('Add-on Filter')\n"
            "            textFormat: Text.PlainText\n\n"
-           "            Shotcut.HoverTip {\n"
+           "            Snapflow.HoverTip {\n"
            "                visible: descriptionText.truncated\n"
            "                text: root.filterDescription\n"
            "            }\n"
@@ -526,23 +526,23 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
            "            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter\n"
            "        }\n"
            "\n"
-           "        Shotcut.Preset {\n"
+           "        Snapflow.Preset {\n"
            "            id: preset\n"
            "            Layout.columnSpan: 3\n"
            "            Layout.fillWidth: true\n"
            "            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter\n"
            "            parameters: root.propertyNames ? root.propertyNames.slice(0) : []\n"
            "            onBeforePresetLoaded: {\n"
-           "                filter.resetProperty('shotcut:animIn');\n"
-           "                filter.resetProperty('shotcut:animOut');\n"
+           "                filter.resetProperty('snapflow:animIn');\n"
+           "                filter.resetProperty('snapflow:animOut');\n"
            "                if (keyframableParameters.length > 0)\n"
            "                    resetSimpleKeyframes();\n"
            "                for (var i = 0; i < root.propertyNames.length; ++i)\n"
            "                    filter.resetProperty(root.propertyNames[i]);\n"
            "            }\n"
            "            onPresetSelected: {\n"
-           "                filter.animateIn = Math.round(filter.getDouble('shotcut:animIn'));\n"
-           "                filter.animateOut = Math.round(filter.getDouble('shotcut:animOut'));\n"
+           "                filter.animateIn = Math.round(filter.getDouble('snapflow:animIn'));\n"
+           "                filter.animateOut = Math.round(filter.getDouble('snapflow:animOut'));\n"
            "                root.setControls();\n"
            "                if (keyframableParameters.length > 0)\n"
            "                    initializeSimpleKeyframes();\n"
@@ -629,7 +629,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         }
 
         if (useChannelMask) {
-            stream << "        Shotcut.ChannelMask {\n"
+            stream << "        Snapflow.ChannelMask {\n"
                       "            id: "
                    << editorId
                    << "\n"
@@ -705,7 +705,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                       "            }\n"
                       "        }\n";
         } else if (parameterType == QStringLiteral("color")) {
-            stream << "        Shotcut.ColorPicker {\n"
+            stream << "        Snapflow.ColorPicker {\n"
                       "                id: "
                    << editorId
                    << "\n"
@@ -789,7 +789,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
                                             ? QStringLiteral("H")
                                             : QStringLiteral("Y");
             stream
-                << "        Shotcut.Number2D {\n"
+                << "        Snapflow.Number2D {\n"
                    "            id: "
                 << editorId
                 << "\n"
@@ -824,7 +824,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
         } else if ((parameterType == QStringLiteral("integer")
                     || parameterType == QStringLiteral("float"))
                    && !useTextForNumericEditor) {
-            stream << "        Shotcut.SliderSpinner {\n"
+            stream << "        Snapflow.SliderSpinner {\n"
                       "            id: "
                    << editorId
                    << "\n"
@@ -936,7 +936,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
 
         if (!parameter.isReadOnly && !useChannelMask) {
             stream << "\n"
-                      "        Shotcut.UndoButton {\n"
+                      "        Snapflow.UndoButton {\n"
                       "            readonly property string propertyName: "
                    << nameLiteral << "\n";
 
@@ -1029,7 +1029,7 @@ bool AddOnQmlGenerator::generate(const AddOnFilterDescriptor &descriptor,
 
             if (supportsGeneratedKeyframes) {
                 stream << "\n"
-                          "        Shotcut.KeyframesButton {\n"
+                          "        Snapflow.KeyframesButton {\n"
                           "            id: "
                        << keyframesId
                        << "\n"
@@ -1177,7 +1177,7 @@ bool AddOnQmlGenerator::generateMetaQml(const AddOnFilterDescriptor &descriptor,
     QTextStream stream(&file);
     stream.setEncoding(QStringConverter::Utf8);
     stream << "import QtQuick\n"
-              "import org.shotcut.qml\n\n"
+              "import org.snapflow.qml\n\n"
               "Metadata {\n"
               "    type: Metadata.Filter\n"
               "    objectName: "

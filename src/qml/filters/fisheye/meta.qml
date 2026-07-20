@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     mlt_service: 'frei0r.defish0r'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/fisheye-video-filter/35894/1'
+    help: 'https://forum.snapflow.org/t/fisheye-video-filter/35894/1'
 }

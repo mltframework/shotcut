@@ -1,11 +1,11 @@
 /*
  * SAP (Snapshot App Protocol) FFI shim -- Option A from
  * memory/head/gen/rust-fork/02-rust-embedding.md: a thin extern "C" layer
- * over Shotcut's own real, already-traced Q_INVOKABLE/slot methods, plus one
+ * over Snapflow's own real, already-traced Q_INVOKABLE/slot methods, plus one
  * entry point (sap_start_server, implemented on the Rust side) that starts
  * the SAP JSON-RPC server inside this process.
  *
- * This header/its .cpp are the ONLY new files inside shotcut/src/ for this
+ * This header/its .cpp are the ONLY new files inside snapflow/src/ for this
  * feature -- everything else in the fork is unmodified except an additive
  * edit to CMakeLists.txt and a few lines in main.cpp that call into here.
  *
@@ -99,7 +99,7 @@ char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex);
 int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode);
 
 /* Sets the project-wide timeline row height in pixels via the real
- * MultitrackModel::setTrackHeight() (a single `shotcut:trackHeight`
+ * MultitrackModel::setTrackHeight() (a single `snapflow:trackHeight`
  * property on the tractor, not per-track -- same primitive the Timeline
  * panel's zoom/height slider uses). Value is clamped to [10, 150] by the
  * real setter itself. Returns 0 on success, -1 on error (invalid handle). */
@@ -107,7 +107,7 @@ int sap_set_track_height(void *mainWindowHandle, int height);
 
 /* Attaches a new MLT filter of mltService to the clip's real per-instance
  * "cut" producer (per Mlt::ClipInfo::cut -- the same instance-specific
- * producer Shotcut's own filter panel binds to for a selected clip, so
+ * producer Snapflow's own filter panel binds to for a selected clip, so
  * filters on one clip never leak onto other clips sharing the same source
  * file). propertiesJson (may be NULL/empty) is a flat JSON object of
  * string/number/bool values applied via Mlt::Properties::set() right after
@@ -167,7 +167,7 @@ int sap_filter_reorder(void *mainWindowHandle, int trackIndex, int clipIndex, in
 /* Keyframe operations on one already-attached filter's property, via the
  * real `Mlt::Properties::anim_set()`/`Mlt::Animation` C-ABI-wrapped MLT
  * primitives (the same underlying animated-property machinery real
- * Shotcut's own keyframable filter panel/QmlFilter use -- see
+ * Snapflow's own keyframable filter panel/QmlFilter use -- see
  * qmlfilter.cpp/encodedock.cpp's own `get_anim()`/`anim_set()` call
  * sites). Interpolation is one of "linear" (default)/"smooth"/
  * "discrete"|"hold", matching `01-jsonrpc-spec.md`'s `filter.addKeyframe`
@@ -294,10 +294,10 @@ long long sap_clip_length_frames(void *mainWindowHandle, int trackIndex, int cli
 /* Playlist ("Source"/bin panel, PlaylistDock, distinct from the per-track
  * timeline clips above) operations, via the real PlaylistModel slots
  * (append/insert/remove/move) -- these are NOT part of the undo stack in
- * real Shotcut (bin management isn't undoable there either), so this is a
+ * real Snapflow (bin management isn't undoable there either), so this is a
  * faithful match, not a compromise. Each returns a heap-allocated JSON
  * object/array of the form `{"index":N,"name":"...","path":"...",
- * "durationFrames":N}` (name prefers the real `shotcut:caption` property,
+ * "durationFrames":N}` (name prefers the real `snapflow:caption` property,
  * falling back to the resource's file basename), or NULL/-1 on error.
  * Caller must free string results via sap_free_string. */
 char *sap_playlist_append(void *mainWindowHandle, const char *sourcePath);
@@ -314,7 +314,7 @@ char *sap_playlist_list(void *mainWindowHandle);
  * MockBackend/MltBackend's `Marker::end_frame`. `color` accepts anything
  * QColor's constructor parses ("#RRGGBB", "#AARRGGBB", named colors); the
  * output is always normalized to "#RRGGBB" (marker colors have no alpha in
- * real Shotcut -- see markerToProperties() in markersmodel.cpp). All
+ * real Snapflow -- see markerToProperties() in markersmodel.cpp). All
  * mutations go through the real Markers::AppendCommand/DeleteCommand/
  * UpdateCommand/ClearCommand (undoable via Ctrl+Z, MAIN.undoStack()) --
  * MarkersModel's own append/remove/update/move/setColor/clear slots
@@ -492,7 +492,7 @@ char *sap_overwrite_clip_xml(void *mainWindowHandle, int trackIndex, int clipInd
 /* Renders the pixels of the given absolute timeline frame from the
  * currently open project's live producer (Controller::producer(), the same
  * Mlt::Producer instance driving the app's own preview/player), using the
- * real Controller::image() primitive (mltcontroller.cpp) that Shotcut's own
+ * real Controller::image() primitive (mltcontroller.cpp) that Snapflow's own
  * timeline/property thumbnails already call, then encodes the result via
  * Qt's QImage::save() -- JPEG unless format is "png"/"PNG". *outLen
  * receives the byte length of the returned buffer; returns NULL (and
@@ -501,7 +501,7 @@ char *sap_overwrite_clip_xml(void *mainWindowHandle, int trackIndex, int clipInd
  * returned pointer via sap_free_bytes.
  *
  * Caveat (documented limitation, not a bug): Controller::image() seeks the
- * shared MLT.producer() instance to render, exactly like Shotcut's existing
+ * shared MLT.producer() instance to render, exactly like Snapflow's existing
  * thumbnail code -- it is not isolated from a concurrently *playing* live
  * preview. Calling this while the consumer is actively playing can visibly
  * perturb playback position. This is acceptable for a headless/offscreen
@@ -551,7 +551,7 @@ char *sap_generator_create_color(void *mainWindowHandle, const char *hexColor);
 /* Subtitle operations on the real per-project `SubtitlesModel`
  * (`TimelineDock::subtitlesModel()`, loaded from the current tractor --
  * requires at least one clip already on the timeline;
- * `MainWindow::isMultitrackValid()` mirrors real Shotcut's own
+ * `MainWindow::isMultitrackValid()` mirrors real Snapflow's own
  * `SubtitlesDock::addSubtitleTrack()` guard, since `SubtitlesModel`'s own
  * mutating methods silently no-op when no producer has been loaded via
  * `load()`). All mutating calls go through `SubtitlesModel`'s own real
@@ -625,8 +625,8 @@ int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex);
 
 /* Sets/gets the real project Notes free-text field via
  * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
- * as a `shotcut:projectNotes` property, not a QUndoCommand -- matches
- * real Shotcut's own Notes panel, which has no undo/redo either).
+ * as a `snapflow:projectNotes` property, not a QUndoCommand -- matches
+ * real Snapflow's own Notes panel, which has no undo/redo either).
  * sap_notes_set_text returns 0 on success, -1 on error (invalid handle).
  * sap_notes_get_text returns a heap-allocated copy of the current text
  * (empty string, not NULL, when there is none), or NULL on error (invalid
@@ -637,13 +637,13 @@ char *sap_notes_get_text(void *mainWindowHandle);
 /* Real "recent files" MRU list operations via `RecentDock::add()`/
  * `remove()`, backed by `Settings.recent()`/`Settings.setRecent()` (a
  * `QSettings`-persisted, application-wide list -- NOT scoped to any one
- * project, same real Shotcut MRU semantics 01-jsonrpc-spec.md's
+ * project, same real Snapflow MRU semantics 01-jsonrpc-spec.md's
  * `recent.*` namespace note calls out as "low-value but real"; every
  * project shares the same underlying list). */
 
 /* Adds path via the real `RecentDock::add()` (also updates
  * `Settings.setProjects()` when path ends in .mlt, matching real
- * Shotcut). Returns 0 on success, -1 on error (invalid handle). */
+ * Snapflow). Returns 0 on success, -1 on error (invalid handle). */
 int sap_recent_add(void *mainWindowHandle, const char *path);
 
 /* Removes path via the real `RecentDock::remove()`. Returns a
@@ -677,7 +677,7 @@ void sap_emit_event(const char *jsonPayload);
 /* Connects MultitrackModel::modified (the nearest real, already-emitted
  * aggregate signal, per 02-rust-embedding.md's "signal bridge" section) to
  * sap_emit_event. Must be called on the Qt main thread (it performs a plain
- * QObject::connect, not a cross-thread call) -- shotcut/src/main.cpp calls
+ * QObject::connect, not a cross-thread call) -- snapflow/src/main.cpp calls
  * this once, before spawning the SAP server's background thread. */
 void sap_install_notification_bridge(void *mainWindowHandle);
 

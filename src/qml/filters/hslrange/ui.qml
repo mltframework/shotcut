@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
 
     function setControls() {
         var position = getPosition();
@@ -110,7 +110,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['hue_center', 'hue_range', 'blend', 'h_shift', 's_scale', 'l_scale']
@@ -127,11 +127,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Hue Center')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The center of the color range to be changed.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hCenterSlider
 
             minimumValue: 0
@@ -140,11 +140,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('hue_center', value, hCenterKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hCenterSlider.value = 180
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hCenterKeyframesButton
 
             onToggled: {
@@ -156,11 +156,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Hue Range')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The width of the color range to be changed.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hRangeSlider
 
             minimumValue: 0
@@ -169,11 +169,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('hue_range', value, hRangeKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hRangeSlider.value = 60
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hRangeKeyframesButton
 
             onToggled: {
@@ -228,7 +228,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: pickerButton
 
             icon.name: 'color-picker'
@@ -237,7 +237,7 @@ Shotcut.KeyframableFilter {
             implicitHeight: 20
             checkable: true
 
-            Shotcut.ColorPickerItem {
+            Snapflow.ColorPickerItem {
                 id: pickerItem
 
                 onColorPicked: color => {
@@ -256,7 +256,7 @@ Shotcut.KeyframableFilter {
                 pickerItem.pickColor();
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: '<p>' + qsTr("Pick the center hue from a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
             }
         }
@@ -264,11 +264,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Blend')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount of blending to apply to the edges of the color range.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: blendSlider
 
             minimumValue: 0
@@ -277,11 +277,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('blend', value, blendKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: blendSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: blendKeyframesButton
 
             onToggled: {
@@ -293,11 +293,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Hue Shift')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount to shift the Hue of the color range.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hShiftSlider
 
             minimumValue: -180
@@ -306,11 +306,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('h_shift', value, hShiftKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hShiftSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hShiftKeyframesButton
 
             onToggled: {
@@ -322,11 +322,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Saturation Scale')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount to scale the saturation of the color range.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sScaleSlider
 
             minimumValue: 0
@@ -335,11 +335,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('s_scale', value, sScaleKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sScaleSlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: sScaleKeyframesButton
 
             onToggled: {
@@ -351,11 +351,11 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Lightness Scale')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount to scale the lightness of the color range.')
             }
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lScaleSlider
 
             minimumValue: 0
@@ -364,11 +364,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('l_scale', value, lScaleKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lScaleSlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: lScaleKeyframesButton
 
             onToggled: {

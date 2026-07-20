@@ -1,4 +1,4 @@
-name: build-shotcut-windows
+name: build-snapflow-windows
 
 on:
   workflow_dispatch:
@@ -90,7 +90,7 @@ jobs:
           echo VERSION=$VERSION
           cd "$HOME"
           echo Downloading a few prebuilt dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v7.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/snapflow-build/mlt-prebuilt-mingw64-v7.txz
           echo Extracting prebuilt dependencies
           tar -xJf mlt-prebuilt-mingw64-v7.txz
           rm mlt-prebuilt-mingw64-v7.txz
@@ -99,23 +99,23 @@ jobs:
         shell: msys2 {0}
         run: |
           echo INSTALL_DIR=\"$(pwd)/build\"
-          echo INSTALL_DIR=\"$(pwd)/build\" > build-shotcut.conf
-          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
-          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
-          echo SHOTCUT_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-shotcut.conf
-          bash scripts/build-shotcut-msys2.sh
+          echo INSTALL_DIR=\"$(pwd)/build\" > build-snapflow.conf
+          echo SNAPFLOW_VERSION=\"$VERSION\" >> build-snapflow.conf
+          echo SNAPFLOW_HEAD=0 >> build-snapflow.conf
+          echo SNAPFLOW_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-snapflow.conf
+          bash scripts/build-snapflow-msys2.sh
 
       - name: Package the portable zip
         shell: msys2 {0}
         run: |
           cd build
-          zip -gr shotcut-win64-$VERSION.zip Shotcut
+          zip -gr snapflow-win64-$VERSION.zip Snapflow
 
       - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-x64-portable
-          path: ./build/shotcut-win64-${{ steps.set_version.outputs.version }}.zip
+          path: ./build/snapflow-win64-${{ steps.set_version.outputs.version }}.zip
 
   upload-s3-portable:
     if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
@@ -137,6 +137,6 @@ jobs:
         shell: bash
         run: |
           VERSION="${{ needs.build.outputs.version }}"
-          file="dist/shotcut-win64-$VERSION.zip"
+          file="dist/snapflow-win64-$VERSION.zip"
           echo Uploading "$file" to S3
-          aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
+          aws s3 cp "$file" s3://builds.us.meltytech/snapflow/ --no-progress

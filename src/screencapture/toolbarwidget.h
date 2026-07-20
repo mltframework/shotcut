@@ -33,7 +33,7 @@ public:
     ~ScreenCaptureToolbar();
 
 signals:
-    void captureModeSelected(int mode, bool minimizeShotcut, bool recordAudio);
+    void captureModeSelected(int mode, bool minimizeSnapflow, bool recordAudio);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

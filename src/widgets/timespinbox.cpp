@@ -40,7 +40,7 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     setFont(font);
     setFixedWidth(fontMetrics().boundingRect("_HHH:MM:SS;FFF_").width());
 
-    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() { setValue(value()); });
+    connect(&Settings, &SnapflowSettings::timeFormatChanged, this, [&]() { setValue(value()); });
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
@@ -71,7 +71,7 @@ QString TimeSpinBox::textFromValue(int val) const
 void TimeSpinBox::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown) {
-        // Disable page up & page down (step by 10) since those keys are used for other things in Shotcut.
+        // Disable page up & page down (step by 10) since those keys are used for other things in Snapflow.
         event->ignore();
         return;
     }

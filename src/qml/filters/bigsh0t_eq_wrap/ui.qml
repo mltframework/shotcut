@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -315,7 +315,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
             parameters: ["hfov0", "hfov1", "vfov0", "vfov1"]
             Layout.columnSpan: 3
@@ -368,7 +368,7 @@ Item {
             text: qsTr('Start')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hfov0Slider
             minimumValue: -180
             maximumValue: 180
@@ -378,11 +378,11 @@ Item {
             stepSize: 1
             onValueChanged: updateProperty_hfov0(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: hfov0Undo
             onClicked: hfov0Slider.value = -90
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hfov0KeyframesButton
             onToggled: {
                 var value = hfov0Slider.value;
@@ -405,7 +405,7 @@ Item {
             text: qsTr('End')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hfov1Slider
             minimumValue: -180
             maximumValue: 180
@@ -415,11 +415,11 @@ Item {
             stepSize: 1
             onValueChanged: updateProperty_hfov1(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: hfov1Undo
             onClicked: hfov1Slider.value = 90
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hfov1KeyframesButton
             onToggled: {
                 var value = hfov1Slider.value;
@@ -447,7 +447,7 @@ Item {
             text: qsTr('Start')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vfov0Slider
             minimumValue: -90
             maximumValue: 90
@@ -457,11 +457,11 @@ Item {
             stepSize: 1
             onValueChanged: updateProperty_vfov0(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: vfov0Undo
             onClicked: vfov0Slider.value = -45
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: vfov0KeyframesButton
             onToggled: {
                 var value = vfov0Slider.value;
@@ -484,7 +484,7 @@ Item {
             text: qsTr('End')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vfov1Slider
             minimumValue: -90
             maximumValue: 90
@@ -494,11 +494,11 @@ Item {
             stepSize: 1
             onValueChanged: updateProperty_vfov1(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: vfov1Undo
             onClicked: vfov1Slider.value = 45
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: vfov1KeyframesButton
             onToggled: {
                 var value = vfov1Slider.value;
@@ -526,7 +526,7 @@ Item {
             text: qsTr('Start')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: blurStartSlider
             minimumValue: 0
             maximumValue: 2.0
@@ -536,11 +536,11 @@ Item {
             stepSize: 0.01
             onValueChanged: updateProperty_blurStart(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: blurStartUndo
             onClicked: blurStartSlider.value = 0.1
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: blurStartKeyframesButton
             onToggled: {
                 var value = blurStartSlider.value;
@@ -563,7 +563,7 @@ Item {
             text: qsTr('End')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: blurEndSlider
             minimumValue: 0
             maximumValue: 2.0
@@ -573,11 +573,11 @@ Item {
             stepSize: 0.01
             onValueChanged: updateProperty_blurEnd(getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: blurEndUndo
             onClicked: blurEndSlider.value = 1.0
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: blurEndKeyframesButton
             onToggled: {
                 var value = blurEndSlider.value;

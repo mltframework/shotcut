@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -11,5 +11,5 @@ Metadata {
     qml: "ui.qml"
     isTrackOnly: true
     minimumVersion: '2'
-    help: 'https://forum.shotcut.org/t/track-auto-fade-video-filter/50883/1'
+    help: 'https://forum.snapflow.org/t/track-auto-fade-video-filter/50883/1'
 }

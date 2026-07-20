@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string roomProperty: '0'
     property string timeProperty: '1'
     property string dampProperty: '2'
@@ -138,7 +138,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['0', '1', '2', '3', '4', '5', '6']
@@ -156,12 +156,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Room size')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRoom
 
             minimumValue: 1
@@ -170,11 +170,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(roomProperty, value, roomKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRoom.value = 30
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: roomKeyframesButton
 
             onToggled: {
@@ -188,7 +188,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderTime
 
             minimumValue: 0.1
@@ -198,11 +198,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(timeProperty, value, timeKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderTime.value = 7.5
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: timeKeyframesButton
 
             onToggled: {
@@ -215,12 +215,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Damping')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderDamp
 
             minimumValue: 0
@@ -230,11 +230,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(dampProperty, value / maximumValue, dampKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderDamp.value = 0.5 * sliderDamp.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: dampKeyframesButton
 
             onToggled: {
@@ -247,12 +247,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Input bandwidth')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderInput
 
             minimumValue: 0
@@ -262,11 +262,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(inputProperty, value / maximumValue, inputKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderInput.value = 0.75 * sliderInput.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: inputKeyframesButton
 
             onToggled: {
@@ -279,12 +279,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Dry signal level')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount of dry signal to be mixed with the reverberated signal.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderDry
 
             minimumValue: -70
@@ -294,11 +294,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(dryProperty, value, dryKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderDry.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: dryKeyframesButton
 
             onToggled: {
@@ -311,12 +311,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Early reflection level')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The distance from the threshold where the knee curve starts.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderReflection
 
             minimumValue: -70
@@ -325,11 +325,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(reflectionProperty, value, reflectionKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderReflection.value = -10
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: reflectionKeyframesButton
 
             onToggled: {
@@ -342,12 +342,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Tail level')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderTail
 
             minimumValue: -70
@@ -357,11 +357,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(tailProperty, value, tailKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderTail.value = -17.5
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: tailKeyframesButton
 
             onToggled: {

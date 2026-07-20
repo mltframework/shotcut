@@ -831,7 +831,7 @@ void FilesDock::setupActions()
     modeGroup->addAction(action);
     Actions.add("filesViewDetailsAction", action, m_mainMenu->title());
 
-    action = new QAction(tr("Open In Shotcut"), this);
+    action = new QAction(tr("Open In Snapflow"), this);
     action->setToolTip(tr("Open the clip in the Source player"));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onOpenActionTriggered);

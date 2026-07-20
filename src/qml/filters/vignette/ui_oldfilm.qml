@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['radius', 'smooth', 'opacity', 'mode']
@@ -138,7 +138,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 3
@@ -159,7 +159,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: radiusSlider
 
             minimumValue: 0
@@ -168,11 +168,11 @@ Item {
             onValueChanged: updateFilter('radius', value / 100, getPosition(), radiusKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: radiusSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: radiusKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100)
@@ -183,7 +183,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: smoothSlider
 
             minimumValue: 0
@@ -192,11 +192,11 @@ Item {
             onValueChanged: updateFilter('smooth', value / 100, getPosition(), smoothKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: smoothSlider.value = 200
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: smoothKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'smooth', smoothSlider.value / 100)
@@ -223,7 +223,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: opacitySlider
 
             minimumValue: 0
@@ -232,11 +232,11 @@ Item {
             onValueChanged: updateFilter('opacity', 1 - value / 100, getPosition(), opacityKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: opacitySlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: opacityKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'opacity', 1 - opacitySlider.value / 100)

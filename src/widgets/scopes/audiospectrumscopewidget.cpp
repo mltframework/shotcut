@@ -98,7 +98,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
 
     // Setup this widget
     qRegisterMetaType<QVector<double>>("QVector<double>");
-    setWhatsThis("https://forum.shotcut.org/t/audio-spectrum-scope/12919/1");
+    setWhatsThis("https://forum.snapflow.org/t/audio-spectrum-scope/12919/1");
 
     // Create the FFT filter
     Mlt::Profile profile;

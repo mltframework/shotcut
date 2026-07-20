@@ -24,7 +24,7 @@
 class QAction;
 class QMenu;
 
-class ShotcutActions : public QObject
+class SnapflowActions : public QObject
 {
     Q_OBJECT
 
@@ -35,8 +35,8 @@ public:
     static const char *defaultKey2Property;
     static const char *defaultToolTipProperty;
 
-    static ShotcutActions &singleton();
-    explicit ShotcutActions()
+    static SnapflowActions &singleton();
+    explicit SnapflowActions()
         : QObject()
     {}
 
@@ -55,6 +55,6 @@ private:
     QHash<QString, QAction *> m_actions;
 };
 
-#define Actions ShotcutActions::singleton()
+#define Actions SnapflowActions::singleton()
 
 #endif // ACTIONS_H

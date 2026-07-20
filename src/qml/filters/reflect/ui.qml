@@ -18,7 +18,7 @@ import QtQml.Models
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     width: 200
@@ -46,7 +46,7 @@ Item {
                 text: qsTr('Mode')
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: modeCombo
 
                 implicitWidth: 200
@@ -81,7 +81,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     filter.set('mirror', modeModel.get(0).value);
                     filter.set('reverse', 0);

@@ -27,7 +27,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QApplication>
@@ -37,11 +37,11 @@
 #include <qmath.h>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
-static const char *kShotcutDefaultTransition = "lumaMix";
+static const char *kSnapflowDefaultTransition = "lumaMix";
 
 /*!
     \qmltype MultitrackModel
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief A two-level item model representing the timeline: tracks at the top level, clips within each track.
 
     \c MultitrackModel is available as the \c multitrack context property in the Timeline dock.
@@ -181,7 +181,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 case NameRole: {
                     QString result;
                     if (info->producer && info->producer->is_valid()) {
-                        result = info->producer->get(kShotcutCaptionProperty);
+                        result = info->producer->get(kSnapflowCaptionProperty);
                         if (result.isNull()) {
                             result = Util::baseName(ProxyManager::resource(*info->producer));
                             if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
@@ -249,8 +249,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         filter.reset(getFilter("fadeInBrightness", info->producer));
                     if (!filter || !filter->is_valid())
                         filter.reset(getFilter("fadeInMovit", info->producer));
-                    if (filter && filter->is_valid() && filter->get(kShotcutAnimInProperty))
-                        return filter->get_int(kShotcutAnimInProperty);
+                    if (filter && filter->is_valid() && filter->get(kSnapflowAnimInProperty))
+                        return filter->get_int(kSnapflowAnimInProperty);
                     else
                         return (filter && filter->is_valid()) ? filter->get_length() : 0;
                 }
@@ -260,8 +260,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         filter.reset(getFilter("fadeOutBrightness", info->producer));
                     if (!filter || !filter->is_valid())
                         filter.reset(getFilter("fadeOutMovit", info->producer));
-                    if (filter && filter->is_valid() && filter->get(kShotcutAnimOutProperty))
-                        return filter->get_int(kShotcutAnimOutProperty);
+                    if (filter && filter->is_valid() && filter->get(kSnapflowAnimOutProperty))
+                        return filter->get_int(kSnapflowAnimOutProperty);
                     else
                         return (filter && filter->is_valid()) ? filter->get_length() : 0;
                 }
@@ -282,8 +282,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 case AudioIndexRole:
                     return QString::fromLatin1(info->producer->get("audio_index"));
                 case GroupRole:
-                    if (info->cut->property_exists(kShotcutGroupProperty))
-                        return info->cut->get_int(kShotcutGroupProperty);
+                    if (info->cut->property_exists(kSnapflowGroupProperty))
+                        return info->cut->get_int(kSnapflowGroupProperty);
                     else
                         return -1;
                 case GainEnabledRole:
@@ -1411,7 +1411,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex < playlist.count()) {
-            // Shotcut does not like the behavior of remove() on a
+            // Snapflow does not like the behavior of remove() on a
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
@@ -1464,7 +1464,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex < playlist.count()) {
-            // Shotcut does not like the behavior of replace_with_blank() on a
+            // Snapflow does not like the behavior of replace_with_blank() on a
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
@@ -1653,7 +1653,7 @@ void MultitrackModel::changeGain(int trackIndex, int clipIndex, double gain)
                 // Add audio filter if needed.
                 if (!filter) {
                     Mlt::Filter f(MLT.profile(), "volume");
-                    f.set(kShotcutFilterProperty, "audioGain");
+                    f.set(kSnapflowFilterProperty, "audioGain");
                     info->producer->attach(f);
                     filter.reset(new Mlt::Filter(f));
                     filter->set_in_and_out(info->frame_in, info->frame_out);
@@ -1681,7 +1681,7 @@ static void moveBeforeFirstAudioFilter(Mlt::Producer *producer)
     for (; index < n; index++) {
         QScopedPointer<Mlt::Filter> filter(producer->filter(index));
         if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty)) {
+            && !filter->get_int(kSnapflowHiddenProperty)) {
             QmlMetadata *meta = MAIN.filterController()->metadataForService(filter.data());
             if (meta && meta->isAudio()) {
                 break;
@@ -1723,13 +1723,13 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     if (!filter) {
                         if (Settings.playerGPU()) {
                             Mlt::Filter f(MLT.profile(), "movit.opacity");
-                            f.set(kShotcutFilterProperty, "fadeInMovit");
+                            f.set(kSnapflowFilterProperty, "fadeInMovit");
                             f.set("alpha", i == bottomVideoTrackMltIndex() ? 1 : -1);
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         } else {
                             Mlt::Filter f(MLT.profile(), "brightness");
-                            f.set(kShotcutFilterProperty, "fadeInBrightness");
+                            f.set(kSnapflowFilterProperty, "fadeInBrightness");
                             if (i == bottomVideoTrackMltIndex()) {
                                 f.set("alpha", 1);
                             } else {
@@ -1756,13 +1756,13 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         filter->anim_set(key, 0, 0);
                         filter->anim_set(key, 1, duration - 1);
                     }
-                    filter->set(kShotcutAnimInProperty, duration);
+                    filter->set(kSnapflowAnimInProperty, duration);
                     isChanged = true;
                 } else if (filter) {
                     // Remove the video filter.
                     info->producer->detach(*filter);
                     filterAddedOrRemoved(info->producer);
-                    filter->set(kShotcutAnimInProperty, duration);
+                    filter->set(kSnapflowAnimInProperty, duration);
                     isChanged = true;
                 }
             }
@@ -1778,7 +1778,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     // Add audio filter if needed.
                     if (!filter) {
                         Mlt::Filter f(MLT.profile(), "volume");
-                        f.set(kShotcutFilterProperty, "fadeInVolume");
+                        f.set(kSnapflowFilterProperty, "fadeInVolume");
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
@@ -1795,13 +1795,13 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     filter->anim_set("level", 0, duration - 1);
                     Mlt::Animation animation(filter->get_animation("level"));
                     animation.key_set_type(0, type);
-                    filter->set(kShotcutAnimInProperty, duration);
+                    filter->set(kSnapflowAnimInProperty, duration);
                     isChanged = true;
                 } else if (filter) {
                     // Remove the audio filter.
                     info->producer->detach(*filter);
                     filterAddedOrRemoved(info->producer);
-                    filter->set(kShotcutAnimInProperty, duration);
+                    filter->set(kSnapflowAnimInProperty, duration);
                     isChanged = true;
                 }
             }
@@ -1850,13 +1850,13 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     if (!filter) {
                         if (Settings.playerGPU()) {
                             Mlt::Filter f(MLT.profile(), "movit.opacity");
-                            f.set(kShotcutFilterProperty, "fadeOutMovit");
+                            f.set(kSnapflowFilterProperty, "fadeOutMovit");
                             f.set("alpha", i == bottomVideoTrackMltIndex() ? 1 : -1);
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         } else {
                             Mlt::Filter f(MLT.profile(), "brightness");
-                            f.set(kShotcutFilterProperty, "fadeOutBrightness");
+                            f.set(kSnapflowFilterProperty, "fadeOutBrightness");
                             if (i == bottomVideoTrackMltIndex()) {
                                 f.set("alpha", 1);
                             } else {
@@ -1887,13 +1887,13 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         filter->anim_set(key, 1, info->frame_count - std::max(duration, 2));
                         filter->anim_set(key, 0, info->frame_count - 1);
                     }
-                    filter->set(kShotcutAnimOutProperty, duration);
+                    filter->set(kSnapflowAnimOutProperty, duration);
                     isChanged = true;
                 } else if (filter) {
                     // Remove the video filter.
                     info->producer->detach(*filter);
                     filterAddedOrRemoved(info->producer);
-                    filter->set(kShotcutAnimOutProperty, duration);
+                    filter->set(kSnapflowAnimOutProperty, duration);
                     isChanged = true;
                 }
             }
@@ -1909,7 +1909,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     // Add audio filter if needed.
                     if (!filter) {
                         Mlt::Filter f(MLT.profile(), "volume");
-                        f.set(kShotcutFilterProperty, "fadeOutVolume");
+                        f.set(kSnapflowFilterProperty, "fadeOutVolume");
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
@@ -1926,13 +1926,13 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     filter->anim_set("level", -60, info->frame_count - 1);
                     Mlt::Animation animation(filter->get_animation("level"));
                     animation.key_set_type(0, type);
-                    filter->set(kShotcutAnimOutProperty, duration);
+                    filter->set(kSnapflowAnimOutProperty, duration);
                     isChanged = true;
                 } else if (filter) {
                     // Remove the audio filter.
                     info->producer->detach(*filter);
                     filterAddedOrRemoved(info->producer);
-                    filter->set(kShotcutAnimOutProperty, duration);
+                    filter->set(kSnapflowAnimOutProperty, duration);
                     isChanged = true;
                 }
             }
@@ -2036,7 +2036,7 @@ int MultitrackModel::addTransition(
             playlist.mix(targetIndex, duration);
             Mlt::Producer producer(playlist.get_clip(targetIndex + 1));
             if (producer.is_valid()) {
-                producer.parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
+                producer.parent().set(kSnapflowTransitionProperty, kSnapflowDefaultTransition);
             }
             endInsertRows();
 
@@ -2415,7 +2415,7 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.mix_out(clipIndex - 1, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
+            producer->parent().set(kSnapflowTransitionProperty, kSnapflowDefaultTransition);
             endInsertRows();
 
             // Add transitions.
@@ -2503,7 +2503,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
             playlist.mix_in(clipIndex, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
-            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
+            producer->parent().set(kSnapflowTransitionProperty, kSnapflowDefaultTransition);
             endInsertRows();
 
             // Add transitions.
@@ -2621,7 +2621,7 @@ void MultitrackModel::onFilterChanged(Mlt::Service *filter)
             if (parts.length() == 2) {
                 QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
                 QVector<int> roles;
-                const char *name = filter->get(kShotcutFilterProperty);
+                const char *name = filter->get(kSnapflowFilterProperty);
                 if (!qstrcmp("fadeInMovit", name) || !qstrcmp("fadeInBrightness", name)
                     || !qstrcmp("fadeInVolume", name))
                     roles << FadeInRole;
@@ -2866,8 +2866,8 @@ bool MultitrackModel::createIfNeeded()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
-        m_tractor->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
-        m_tractor->set(kShotcutXmlProperty, 1);
+        m_tractor->set(kSnapflowColorTransfer, MLT.colorTrc().toLatin1().constData());
+        m_tractor->set(kSnapflowXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
         addVideoTrack();
@@ -2926,7 +2926,7 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service &service, int du
         for (int i = 0; i < n; i++) {
             QScopedPointer<Mlt::Filter> filter(service.filter(i));
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kSnapflowHiddenProperty)) {
                 int in = filter->get_in();
                 int out = filter->get_out();
                 // Only change out if it is pinned (same as old track duration)
@@ -2948,7 +2948,7 @@ bool MultitrackModel::warnIfInvalid(Mlt::Service &service)
         LongUiTask::cancel();
         QMessageBox::critical(&MAIN,
                               qApp->applicationName(),
-                              tr("Error: Shotcut could not find the %1 plugin on your system.\n\n"
+                              tr("Error: Snapflow could not find the %1 plugin on your system.\n\n"
                                  "Please install the %2 plugins.")
                                   .arg(plugin)
                                   .arg(plugins));
@@ -3138,8 +3138,8 @@ int MultitrackModel::addAudioTrack()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
-        m_tractor->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
-        m_tractor->set(kShotcutXmlProperty, 1);
+        m_tractor->set(kSnapflowColorTransfer, MLT.colorTrc().toLatin1().constData());
+        m_tractor->set(kSnapflowXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
         addAudioTrack();
@@ -3172,7 +3172,7 @@ int MultitrackModel::addAudioTrack()
             ++a;
     }
 
-    // Add the shotcut logical audio track.
+    // Add the snapflow logical audio track.
     Track t;
     t.mlt_index = i;
     t.type = AudioTrackType;
@@ -3236,7 +3236,7 @@ int MultitrackModel::addVideoTrack()
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
 
-    // Add the shotcut logical video track.
+    // Add the snapflow logical video track.
     Track t;
     t.mlt_index = i;
     t.type = VideoTrackType;
@@ -3376,7 +3376,7 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
                 }
                 length -= playlist.clip_length(clipIndex);
                 if (clipIndex < playlist.count()) {
-                    // Shotcut does not like the behavior of remove() on a
+                    // Snapflow does not like the behavior of remove() on a
                     // transition (MLT mix clip). So, we null mlt_mix to prevent it.
                     clearMixReferences(trackIndex, clipIndex);
                     emit removing(playlist.get_clip(clipIndex));
@@ -3395,7 +3395,7 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
 {
     QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
     if (producer && producer->is_valid() && producer->parent().is_valid()
-        && producer->parent().get(kShotcutTransitionProperty))
+        && producer->parent().get(kSnapflowTransitionProperty))
         return true;
     return false;
 }
@@ -3539,7 +3539,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         }
     }
 
-    // Add the shotcut logical video track.
+    // Add the snapflow logical video track.
     Track t;
     t.mlt_index = new_mlt_index;
     t.type = type;
@@ -3772,7 +3772,7 @@ bool MultitrackModel::isFiltered(Mlt::Producer *producer) const
         for (int i = 0; i < count; i++) {
             QScopedPointer<Mlt::Filter> filter(producer->filter(i));
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty))
+                && !filter->get_int(kSnapflowHiddenProperty))
                 return true;
         }
     }
@@ -3812,8 +3812,8 @@ void MultitrackModel::load()
     MLT.producer()->set("resource", "<tractor>");
     MLT.profile().set_explicit(true);
     m_tractor = new Mlt::Tractor(*MLT.producer());
-    if (m_tractor->property_exists(kShotcutColorTransfer))
-        MLT.setColorTrc(QString::fromLatin1(m_tractor->get(kShotcutColorTransfer)));
+    if (m_tractor->property_exists(kSnapflowColorTransfer))
+        MLT.setColorTrc(QString::fromLatin1(m_tractor->get(kSnapflowColorTransfer)));
     if (!m_tractor->is_valid()) {
         delete m_tractor;
         m_tractor = 0;
@@ -3909,8 +3909,8 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
                 QScopedPointer<Mlt::Producer> track(tractor.track(1));
-                if (!qstrcmp(track->parent().get(kShotcutHashProperty),
-                             oldClip.parent().get(kShotcutHashProperty))) {
+                if (!qstrcmp(track->parent().get(kSnapflowHashProperty),
+                             oldClip.parent().get(kSnapflowHashProperty))) {
                     QScopedPointer<Mlt::Producer> cut(clip.cut(in - transitionIn, in - 1));
                     tractor.set_track(*cut.data(), 1);
                 }
@@ -3923,8 +3923,8 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
                 QScopedPointer<Mlt::Producer> track(tractor.track(0));
-                if (!qstrcmp(track->parent().get(kShotcutHashProperty),
-                             oldClip.parent().get(kShotcutHashProperty))) {
+                if (!qstrcmp(track->parent().get(kSnapflowHashProperty),
+                             oldClip.parent().get(kSnapflowHashProperty))) {
                     QScopedPointer<Mlt::Producer> cut(clip.cut(out + 1, out + transitionOut));
                     tractor.set_track(*cut.data(), 0);
                 }
@@ -3977,7 +3977,7 @@ void MultitrackModel::refreshTrackList()
             isKdenlive = true;
         else if (trackId == kBackgroundTrackId)
             continue;
-        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty)) {
+        else if (!track->get(kSnapflowPlaylistProperty) && !track->get(kAudioTrackProperty)) {
             int hide = track->get_int("hide");
             // hide: 0 = a/v, 2 = muted video track
             if (track->get(kVideoTrackProperty) || hide == 0 || hide == 2) {
@@ -4014,7 +4014,7 @@ void MultitrackModel::refreshTrackList()
             continue;
         else if (trackId == kPlaylistTrackId || trackId == kLegacyPlaylistTrackId)
             continue;
-        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty)) {
+        else if (!track->get(kSnapflowPlaylistProperty) && !track->get(kVideoTrackProperty)) {
             int hide = track->get_int("hide");
             // hide: 1 = audio only track, 3 = muted audio-only track
             if (track->get(kAudioTrackProperty) || hide == 1 || hide == 3) {

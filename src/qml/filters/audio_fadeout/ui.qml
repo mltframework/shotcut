@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property alias duration: timeSpinner.value
@@ -73,7 +73,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.TimeSpinner {
+        Snapflow.TimeSpinner {
             id: timeSpinner
 
             undoButtonVisible: false
@@ -90,11 +90,11 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: duration = Math.ceil(settings.audioOutDuration * profile.fps)
         }
 
-        Shotcut.SaveDefaultButton {
+        Snapflow.SaveDefaultButton {
             onClicked: settings.audioOutDuration = duration / profile.fps
         }
 
@@ -109,7 +109,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.CurveComboBox {
+        Snapflow.CurveComboBox {
             id: curveCombo
 
             implicitContentWidthPolicy: ComboBox.WidestText
@@ -122,13 +122,13 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: undoButton
 
             onClicked: curveCombo.setCurrentValue(settings.audioOutCurve)
         }
 
-        Shotcut.SaveDefaultButton {
+        Snapflow.SaveDefaultButton {
             id: saveButton
 
             onClicked: settings.audioOutCurve = curveCombo.currentValue

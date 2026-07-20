@@ -22,7 +22,7 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <QTimer>
 
@@ -34,7 +34,7 @@ enum Columns { COLUMN_TEXT = 0, COLUMN_START, COLUMN_END, COLUMN_DURATION, COLUM
 
 /*!
     \qmltype SubtitlesModel
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief A two-level item model for subtitle tracks and subtitle items on the timeline.
 
     \c SubtitlesModel is available as the \c subtitlesModel context property in the Subtitles dock.
@@ -71,7 +71,7 @@ SubtitlesModel::SubtitlesModel(QObject *parent)
     , m_producer(nullptr)
     , m_commitTrack(-1)
 {
-    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
+    connect(&Settings, &SnapflowSettings::timeFormatChanged, this, [&]() {
         if (m_items.size() > 0) {
             beginResetModel();
             endResetModel();
@@ -572,7 +572,7 @@ void SubtitlesModel::doInsertTrack(const SubtitlesModel::SubtitleTrack &track, i
         if (!filter || !filter->is_valid()) {
             continue;
         }
-        if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+        if (!filter->get_int("_loader") && !filter->get_int(kSnapflowHiddenProperty)) {
             filterIndex = i;
             break;
         }
@@ -580,7 +580,7 @@ void SubtitlesModel::doInsertTrack(const SubtitlesModel::SubtitleTrack &track, i
     Mlt::Filter newFilter(MLT.profile(), "subtitle_feed");
     newFilter.set("feed", track.name.toUtf8().constData());
     newFilter.set("lang", track.lang.toUtf8().constData());
-    newFilter.set(kShotcutHiddenProperty, 1);
+    newFilter.set(kSnapflowHiddenProperty, 1);
     m_producer->attach(newFilter);
     m_producer->move_filter(m_producer->filter_count() - 1, filterIndex);
     endInsertRows();
@@ -925,7 +925,7 @@ QHash<int, QByteArray> SubtitlesModel::roleNames() const
 }
 /*!
     \qmltype SubtitlesSelectionModel
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Tracks the selected track and selected subtitle items in the Subtitles dock.
 
     \c SubtitlesSelectionModel is available as the \c subtitlesSelectionModel context property

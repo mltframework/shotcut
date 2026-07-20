@@ -36,7 +36,7 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.shotcut.org/t/video-waveform-scope/12922/1");
+    setWhatsThis("https://forum.snapflow.org/t/video-waveform-scope/12922/1");
     LOG_DEBUG() << "end";
 }
 

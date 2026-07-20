@@ -28,7 +28,7 @@
 #include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QFileDialog>
@@ -42,13 +42,13 @@
 
 static const QString kTransparent = QObject::tr("transparent", "New > Image/Video From HTML");
 static QString kPresetsFolder("HTML");
-const char *HtmlGeneratorWidget::kColorProperty = "shotcut:color";
-const char *HtmlGeneratorWidget::kCssProperty = "shotcut:css";
-const char *HtmlGeneratorWidget::kBodyProperty = "shotcut:body";
-const char *HtmlGeneratorWidget::kJavaScriptProperty = "shotcut:javascript";
-const char *HtmlGeneratorWidget::kLine1Property = "shotcut:line1";
-const char *HtmlGeneratorWidget::kLine2Property = "shotcut:line2";
-const char *HtmlGeneratorWidget::kLine3Property = "shotcut:line3";
+const char *HtmlGeneratorWidget::kColorProperty = "snapflow:color";
+const char *HtmlGeneratorWidget::kCssProperty = "snapflow:css";
+const char *HtmlGeneratorWidget::kBodyProperty = "snapflow:body";
+const char *HtmlGeneratorWidget::kJavaScriptProperty = "snapflow:javascript";
+const char *HtmlGeneratorWidget::kLine1Property = "snapflow:line1";
+const char *HtmlGeneratorWidget::kLine2Property = "snapflow:line2";
+const char *HtmlGeneratorWidget::kLine3Property = "snapflow:line3";
 
 static QString colorToString(const QColor &color)
 {
@@ -240,8 +240,8 @@ Mlt::Producer *HtmlGeneratorWidget::newProducer(Mlt::Profile &profile)
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
     p->set("mlt_image_format", "rgba");
     MLT.setDurationFromDefault(p);
-    p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-    p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+    p->set(kSnapflowCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    p->set(kSnapflowDetailProperty, ui->colorLabel->text().toLatin1().constData());
     return p;
 }
 

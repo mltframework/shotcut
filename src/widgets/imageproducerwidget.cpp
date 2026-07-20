@@ -25,7 +25,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QClipboard>
@@ -39,7 +39,7 @@
 #include <qstandardpaths.h>
 
 // This legacy property is only used in this widget.
-#define kShotcutResourceProperty "shotcut_resource"
+#define kSnapflowResourceProperty "snapflow_resource"
 static const auto kImageMediaType = QLatin1String("image");
 
 static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true);
@@ -83,8 +83,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
     QString resource;
-    if (m_producer->get(kShotcutResourceProperty)) {
-        resource = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
+    if (m_producer->get(kSnapflowResourceProperty)) {
+        resource = QString::fromUtf8(m_producer->get(kSnapflowResourceProperty));
     } else if (m_producer->get(kOriginalResourceProperty)) {
         resource = QString::fromUtf8(m_producer->get(kOriginalResourceProperty));
     } else {
@@ -92,10 +92,10 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
         p->set("ttl", 1);
     }
     QString name = Util::baseName(resource);
-    QString caption = m_producer->get(kShotcutCaptionProperty);
+    QString caption = m_producer->get(kSnapflowCaptionProperty);
     if (caption.isEmpty()) {
         caption = name;
-        m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
     }
     ui->filenameLabel->setText(
         ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
@@ -127,9 +127,9 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
     ui->aspectNumSpinBox->blockSignals(false);
     if (m_producer->get_int("ttl"))
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
-    ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
-    ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
-    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
+    ui->sequenceCheckBox->setChecked(m_producer->get_int(kSnapflowSequenceProperty));
+    ui->repeatSpinBox->setEnabled(m_producer->get_int(kSnapflowSequenceProperty));
+    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kSnapflowSequenceProperty));
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
 }
 
@@ -162,7 +162,7 @@ void ImageProducerWidget::reopen(Mlt::Producer *p)
     setProducer(p);
     emit producerReopened(false);
     emit producerChanged(p);
-    if (p->get_int(kShotcutSequenceProperty)) {
+    if (p->get_int(kSnapflowSequenceProperty)) {
         MLT.play();
     } else {
         MLT.seek(position);
@@ -195,8 +195,8 @@ void ImageProducerWidget::recreateProducer()
     }
     p->pass_list(*m_producer,
                  "force_aspect_ratio," kAspectRatioNumerator "," kAspectRatioDenominator
-                 ", begin, ttl," kShotcutResourceProperty
-                 ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
+                 ", begin, ttl," kSnapflowResourceProperty
+                 ", autolength, length," kSnapflowSequenceProperty ", " kPlaylistIndexProperty
                  ", " kCommentProperty "," kOriginalResourceProperty "," kDisableProxyProperty
                  "," kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
@@ -265,9 +265,9 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
     }
     ui->repeatSpinBox->setEnabled(checked);
-    if (checked && !m_producer->get(kShotcutResourceProperty))
-        m_producer->set(kShotcutResourceProperty, resource.toUtf8().constData());
-    m_producer->set(kShotcutSequenceProperty, checked);
+    if (checked && !m_producer->get(kSnapflowResourceProperty))
+        m_producer->set(kSnapflowResourceProperty, resource.toUtf8().constData());
+    m_producer->set(kSnapflowSequenceProperty, checked);
     m_producer->set("autolength", checked);
     m_producer->set("ttl", ui->repeatSpinBox->value());
     if (checked) {
@@ -323,14 +323,14 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     } else {
         m_producer->Mlt::Properties::clear(kDisableProxyProperty);
         m_producer->Mlt::Properties::clear("begin");
-        m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
+        m_producer->set("resource", m_producer->get(kSnapflowResourceProperty));
         m_producer->set("length",
                         m_producer->frames_to_time(qRound(MLT.profile().fps()
                                                           * Mlt::kMaxImageDurationSecs),
                                                    mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
-    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
+    ui->defaultDurationButton->setEnabled(!m_producer->get_int(kSnapflowSequenceProperty));
     recreateProducer();
 }
 
@@ -375,8 +375,8 @@ static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal
     QString resource;
     if (useOriginal && producer->get(kOriginalResourceProperty)) {
         resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
-    } else if (producer->get(kShotcutResourceProperty)) {
-        resource = QString::fromUtf8(producer->get(kShotcutResourceProperty));
+    } else if (producer->get(kSnapflowResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kSnapflowResourceProperty));
     } else {
         resource = QString::fromUtf8(producer->get("resource"));
     }
@@ -414,9 +414,9 @@ void ImageProducerWidget::on_filenameLabel_editingFinished()
         if (caption.isEmpty()) {
             caption = Util::baseName(GetFilenameFromProducer(m_producer.data()));
             ui->filenameLabel->setText(caption);
-            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
         } else {
-            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
         }
         emit modified();
     }
@@ -596,7 +596,7 @@ void ImageProducerWidget::on_actionReset_triggered()
     if (!m_producer)
         return;
 
-    const char *s = m_producer->get(kShotcutResourceProperty);
+    const char *s = m_producer->get(kSnapflowResourceProperty);
     if (!s)
         s = m_producer->get(kOriginalResourceProperty);
     if (!s)

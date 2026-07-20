@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property int producerWidth: (producer.get('meta.media.width') === null) ? profile.width : producer.get('meta.media.width')
@@ -100,7 +100,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
@@ -128,7 +128,7 @@ Item {
             width: 1
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 centerCheckBox.checked = false;
                 filter.set('center', false);
@@ -141,7 +141,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: biasslider
 
             minimumValue: Math.round(-Math.max(profile.width, profile.height) / 2)
@@ -150,7 +150,7 @@ Item {
             onValueChanged: filter.set('center_bias', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: biasundo
 
             onClicked: biasslider.value = 0
@@ -161,7 +161,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: topslider
 
             minimumValue: 0
@@ -170,7 +170,7 @@ Item {
             onValueChanged: filter.set('top', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: topundo
 
             onClicked: topslider.value = 0
@@ -181,7 +181,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: bottomslider
 
             minimumValue: 0
@@ -190,7 +190,7 @@ Item {
             onValueChanged: filter.set('bottom', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: bottomundo
 
             onClicked: bottomslider.value = 0
@@ -201,7 +201,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: leftslider
 
             minimumValue: 0
@@ -210,7 +210,7 @@ Item {
             onValueChanged: filter.set('left', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: leftundo
 
             onClicked: leftslider.value = 0
@@ -221,7 +221,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rightslider
 
             minimumValue: 0
@@ -230,7 +230,7 @@ Item {
             onValueChanged: filter.set('right', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: rightundo
 
             onClicked: rightslider.value = 0

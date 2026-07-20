@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     keywords: qsTr('time echo', 'search keywords for the Delay audio filter') + ' delay'
     mlt_service: 'ladspa.1192'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/delay-audio-filter/12901/1'
+    help: 'https://forum.snapflow.org/t/delay-audio-filter/12901/1'
 }

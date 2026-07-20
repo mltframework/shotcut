@@ -113,15 +113,15 @@ static std::atomic<bool> s_edrOverrideEnabled{false};
 static bool s_swizzled = false;
 
 // Category that holds the swizzled implementation.
-@interface NSScreen (ShotcutEdrOverride)
-- (CGFloat)shotcut_maximumExtendedDynamicRangeColorComponentValue;
+@interface NSScreen (SnapflowEdrOverride)
+- (CGFloat)snapflow_maximumExtendedDynamicRangeColorComponentValue;
 @end
 
-@implementation NSScreen (ShotcutEdrOverride)
-- (CGFloat)shotcut_maximumExtendedDynamicRangeColorComponentValue
+@implementation NSScreen (SnapflowEdrOverride)
+- (CGFloat)snapflow_maximumExtendedDynamicRangeColorComponentValue
 {
     // After swizzling, calling the swizzled selector invokes the ORIGINAL impl.
-    CGFloat real = [self shotcut_maximumExtendedDynamicRangeColorComponentValue];
+    CGFloat real = [self snapflow_maximumExtendedDynamicRangeColorComponentValue];
     if (s_edrOverrideEnabled.load(std::memory_order_relaxed) && real < 2.0) {
         return self.maximumPotentialExtendedDynamicRangeColorComponentValue;
     }
@@ -138,7 +138,7 @@ void macosOverrideEdrHeadroom(bool enable)
             @selector(maximumExtendedDynamicRangeColorComponentValue));
         Method swizzled = class_getInstanceMethod(
             [NSScreen class],
-            @selector(shotcut_maximumExtendedDynamicRangeColorComponentValue));
+            @selector(snapflow_maximumExtendedDynamicRangeColorComponentValue));
         method_exchangeImplementations(original, swizzled);
         NSLog(@"macosOverrideEdrHeadroom: swizzled NSScreen.maximumExtendedDynamicRangeColorComponentValue");
     }

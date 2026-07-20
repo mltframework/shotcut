@@ -4,16 +4,16 @@ if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.20")
   cmake_policy(SET CMP0115 NEW)
 endif()
 
-if(NOT DEFINED SHOTCUT_VERSION)
-  string(TIMESTAMP SHOTCUT_VERSION "%y.%m.%d")
+if(NOT DEFINED SNAPFLOW_VERSION)
+  string(TIMESTAMP SNAPFLOW_VERSION "%y.%m.%d")
   # Remove leading zeros from each digit group
-  string(REGEX REPLACE "0*([0-9]+)" "\\1" SHOTCUT_VERSION "${SHOTCUT_VERSION}")
+  string(REGEX REPLACE "0*([0-9]+)" "\\1" SNAPFLOW_VERSION "${SNAPFLOW_VERSION}")
 endif()
 
-project(shotcut
-  VERSION ${SHOTCUT_VERSION}
+project(snapflow
+  VERSION ${SNAPFLOW_VERSION}
   DESCRIPTION "cross-platform (Qt), open-source (GPLv3) video editor"
-  HOMEPAGE_URL "https://www.shotcut.org"
+  HOMEPAGE_URL "https://www.snapflow.org"
   LANGUAGES CXX
 )
 
@@ -93,8 +93,8 @@ if(UNIX AND NOT APPLE AND BUILD_MINIMAL_MEDIA_BACKEND)
   add_subdirectory(MinimalMediaBackend)
 endif()
 
-option(SHOTCUT_BUILD_TESTS "Build unit tests" OFF)
-if(SHOTCUT_BUILD_TESTS)
+option(SNAPFLOW_BUILD_TESTS "Build unit tests" OFF)
+if(SNAPFLOW_BUILD_TESTS)
   enable_testing()
   add_subdirectory(tests)
 endif()
@@ -104,8 +104,8 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAG
 add_custom_target(codespell COMMAND
   cd "${CMAKE_SOURCE_DIR}" &&
   codespell -w -q 3
-  -L shotcut,uint,seeked,really,prevent
-  -S export-chapters.js,export-edl.js,CuteLogger,drmingw,node_modules,moc_*,index.theme,*.ts,three.min.js,three.js,jquery.js,rangy-*.js,Makefile,shotcut.pro,*.desktop
+  -L snapflow,uint,seeked,really,prevent
+  -S export-chapters.js,export-edl.js,CuteLogger,drmingw,node_modules,moc_*,index.theme,*.ts,three.min.js,three.js,jquery.js,rangy-*.js,Makefile,snapflow.pro,*.desktop
 )
 
 if(CLANG_FORMAT)

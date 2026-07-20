@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,7 @@ Metadata {
     isGpuCompatible: false
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/mask-from-file/12860/1'
+    help: 'https://forum.snapflow.org/t/mask-from-file/12860/1'
 
     keyframes {
         allowAnimateIn: true

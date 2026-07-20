@@ -36,8 +36,8 @@ GoPro2GpxJob::GoPro2GpxJob(const QString &name, const QStringList &args)
 
 void GoPro2GpxJob::start()
 {
-    QString shotcutPath = qApp->applicationDirPath();
-    QFileInfo gopro2gpxPath(shotcutPath, "gopro2gpx");
+    QString snapflowPath = qApp->applicationDirPath();
+    QFileInfo gopro2gpxPath(snapflowPath, "gopro2gpx");
     setReadChannel(QProcess::StandardOutput);
     LOG_DEBUG() << gopro2gpxPath.absoluteFilePath() + " " + m_args.join(' ');
     AbstractJob::start(gopro2gpxPath.absoluteFilePath(), m_args);

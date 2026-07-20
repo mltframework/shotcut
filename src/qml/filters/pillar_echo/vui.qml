@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.VuiBase {
+Snapflow.VuiBase {
     property string rectProperty: 'rect'
     property real zoom: (video.zoom > 0) ? video.zoom : 1
     property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
@@ -101,7 +101,7 @@ Shotcut.VuiBase {
             height: video.rect.height
             scale: zoom
 
-            Shotcut.RectangleControl {
+            Snapflow.RectangleControl {
                 id: rectangle
 
                 widthScale: video.rect.width / profile.width

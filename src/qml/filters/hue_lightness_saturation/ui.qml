@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property double hueDegreeDefault: 0
     property double lightnessDefault: 0
     property double saturationDefault: 1
@@ -76,7 +76,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: presetItem
 
             Layout.columnSpan: 3
@@ -93,7 +93,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hueDegreeSlider
 
             minimumValue: -360
@@ -102,11 +102,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('av.h', value, hueKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hueDegreeSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hueKeyframesButton
 
             onToggled: {
@@ -120,7 +120,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lightnessSlider
 
             minimumValue: 0
@@ -129,11 +129,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('av.b', (value - 100) * 10 / 100, lightnessKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lightnessSlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: lightnessKeyframesButton
 
             onToggled: {
@@ -147,7 +147,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: saturationSlider
 
             minimumValue: 0
@@ -156,11 +156,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('av.s', value / 100, saturationKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: saturationSlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: saturationKeyframesButton
 
             onToggled: {

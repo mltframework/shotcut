@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021 Meltytech, LLC
- * Written by Austin Brooks <ab.shotcut@outlook.com>
+ * Written by Austin Brooks <ab.snapflow@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
 
@@ -198,7 +198,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: idPreset
 
             Layout.columnSpan: 2
@@ -210,12 +210,12 @@ Item {
             text: qsTr('Contrast threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Banding similarity within first component\nY (luma) in YCbCr mode\nRed in RGB mode')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idThr1
 
             minimumValue: 0
@@ -225,7 +225,7 @@ Item {
             onValueChanged: setThreshold(thr1Param, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idThr1.value = thrToPct(thr1Default)
         }
 
@@ -233,12 +233,12 @@ Item {
             text: qsTr('Blue threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Banding similarity within second component\nCb (blue) in YCbCr mode\nGreen in RGB mode')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idThr2
 
             minimumValue: 0
@@ -248,7 +248,7 @@ Item {
             onValueChanged: setThreshold(thr2Param, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idThr2.value = thrToPct(thr2Default)
         }
 
@@ -256,12 +256,12 @@ Item {
             text: qsTr('Red threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Banding similarity within third component\nCr (red) in YCbCr mode\nBlue in RGB mode')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idThr3
 
             minimumValue: 0
@@ -271,7 +271,7 @@ Item {
             onValueChanged: setThreshold(thr3Param, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idThr3.value = thrToPct(thr3Default)
         }
 
@@ -279,12 +279,12 @@ Item {
             text: qsTr('Alpha threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Banding similarity within fourth component')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idThr4
 
             minimumValue: 0
@@ -294,7 +294,7 @@ Item {
             onValueChanged: setThreshold(thr4Param, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idThr4.value = thrToPct(thr4Default)
         }
 
@@ -317,12 +317,12 @@ Item {
             text: qsTr('Pixel range')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The size of bands being targeted')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idRange
 
             minimumValue: 0
@@ -331,7 +331,7 @@ Item {
             onValueChanged: filter.set(rangeParam, idRangeRand.checked ? rootToSqr(value) : -rootToSqr(value))
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(rangeParam, rangeDefault);
                 setControls();
@@ -357,12 +357,12 @@ Item {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Up = 270°\nDown = 90°\nLeft = 180°\nRight = 0° or 360°\nAll = 360° + Randomize')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idDirection
 
             minimumValue: 0
@@ -371,7 +371,7 @@ Item {
             onValueChanged: filter.set(directionParam, idDirectionRand.checked ? degToRad(value) : -degToRad(value))
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(directionParam, directionDefault);
                 setControls();
@@ -403,12 +403,12 @@ Item {
             text: qsTr('Measure similarity using average of neighbors')
             onClicked: filter.set(blurParam, checked)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Compare to thresholds using average versus exact neighbor values')
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(blurParam, blurDefault);
                 idBlur.checked = blurDefault;
@@ -425,12 +425,12 @@ Item {
             text: qsTr('All components required to trigger deband')
             onClicked: filter.set(couplingParam, checked)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Deband only if all pixel components (including alpha) are within thresholds')
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(couplingParam, couplingDefault);
                 idCoupling.checked = couplingDefault;

@@ -19,7 +19,7 @@
 #include "ui_countproducerwidget.h"
 
 #include "mltcontroller.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <MltProfile.h>
@@ -100,8 +100,8 @@ Mlt::Producer *CountProducerWidget::newProducer(Mlt::Profile &profile)
     p->set("background", currentBackground().toLatin1().constData());
     p->set("drop", ui->dropCheckBox->isChecked());
     setLength(p, ui->durationSpinBox->value());
-    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
-    p->set(kShotcutDetailProperty, detail().toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowDetailProperty, detail().toUtf8().constData());
     return p;
 }
 
@@ -146,7 +146,7 @@ void CountProducerWidget::loadPreset(Mlt::Properties &p)
         m_producer->set("background", p.get("background"));
         m_producer->set("drop", p.get("drop"));
         setLength(producer(), ui->durationSpinBox->value());
-        m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
+        m_producer->set(kSnapflowDetailProperty, detail().toUtf8().constData());
         emit producerChanged(producer());
     }
 }
@@ -155,7 +155,7 @@ void CountProducerWidget::on_directionCombo_activated(int /*index*/)
 {
     if (m_producer) {
         m_producer->set("direction", currentDirection().toLatin1().constData());
-        m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
+        m_producer->set(kSnapflowDetailProperty, detail().toUtf8().constData());
         emit producerChanged(producer());
     }
 }
@@ -164,7 +164,7 @@ void CountProducerWidget::on_styleCombo_activated(int /*index*/)
 {
     if (m_producer) {
         m_producer->set("style", currentStyle().toLatin1().constData());
-        m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
+        m_producer->set(kSnapflowDetailProperty, detail().toUtf8().constData());
         emit producerChanged(producer());
     }
 }

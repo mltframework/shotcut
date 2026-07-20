@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool channelMaskExists: filter.get("output_chmask") !== ''
@@ -54,7 +54,7 @@ Item {
             visible: leftToggle.visible
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: leftToggle
 
             text: qsTr('L', 'Left audio channel')
@@ -62,12 +62,12 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(0)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Left')
             }
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: rightToggle
 
             text: qsTr('R', 'Right audio channel')
@@ -75,12 +75,12 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(1)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Right')
             }
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: centerToggle
 
             text: qsTr('C', 'Center audio channel')
@@ -88,12 +88,12 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 4
             onClicked: updateFilter(2)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Center')
             }
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: lfToggle
 
             text: qsTr('LF', 'Low Frequency audio channel')
@@ -101,12 +101,12 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 4
             onClicked: updateFilter(3)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Low Frequency')
             }
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: leftSurroundToggle
 
             text: qsTr('Ls', 'Left surround audio channel')
@@ -114,12 +114,12 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(application.audioChannels() > 4 ? 4 : 2)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Left Surround')
             }
         }
 
-        Shotcut.ToggleButton {
+        Snapflow.ToggleButton {
             id: rightSurroundToggle
 
             text: qsTr('Rs', 'Right surround audio channel')
@@ -127,7 +127,7 @@ Item {
             visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(application.audioChannels() > 4 ? 5 : 3)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Right Surround')
             }
         }

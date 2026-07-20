@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,7 @@ Metadata {
     icon: 'icon.webp'
     isClipOnly: true
     allowMultiple: false
-    help: 'https://forum.shotcut.org/t/stabilize/12884/1'
+    help: 'https://forum.snapflow.org/t/stabilize/12884/1'
 
     keyframes {
         allowTrim: false

@@ -85,7 +85,7 @@ SpeechDialog::SpeechDialog(QWidget *parent)
     grid->addWidget(voiceRow, 1, 1, 1, 2);
     connect(voiceButton, &QPushButton::clicked, this, [this]() {
         auto dir = QmlApplication::dataDir();
-        dir.cd("shotcut");
+        dir.cd("snapflow");
         dir.cd("voices");
         const auto filename = dir.filePath(m_voice->currentData().toString().append(".opus"));
         LOG_DEBUG() << filename;

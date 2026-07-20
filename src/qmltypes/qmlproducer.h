@@ -18,7 +18,7 @@
 #ifndef QMLPRODUCER_H
 #define QMLPRODUCER_H
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <MltProducer.h>
 #include <QByteArray>
@@ -60,7 +60,7 @@ public:
     }
     QString hash()
     {
-        return m_producer.is_valid() ? m_producer.get(kShotcutHashProperty) : QString();
+        return m_producer.is_valid() ? m_producer.get(kSnapflowHashProperty) : QString();
     }
     QString name();
     const QByteArray *audioLevels();

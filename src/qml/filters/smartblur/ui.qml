@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property double radiusDefault: 2.5
@@ -56,7 +56,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: presetItem
 
             Layout.columnSpan: 2
@@ -68,12 +68,12 @@ Item {
             text: qsTr('Blur Radius')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The radius of the gaussian blur.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: radiusSlider
 
             minimumValue: 0.1
@@ -85,7 +85,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: radiusSlider.value = radiusDefault
         }
 
@@ -93,12 +93,12 @@ Item {
             text: qsTr('Blur Strength')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The strength of the gaussian blur.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: strengthSlider
 
             minimumValue: 0
@@ -110,7 +110,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: strengthSlider.value = strengthDefault
         }
 
@@ -118,12 +118,12 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             minimumValue: 0
@@ -135,7 +135,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = thresholdDefault
         }
 

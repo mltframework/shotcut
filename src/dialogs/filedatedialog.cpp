@@ -20,7 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "proxymanager.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <MltProducer.h>
 #include <QComboBox>

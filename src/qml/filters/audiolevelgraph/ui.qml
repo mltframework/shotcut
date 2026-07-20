@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string rectProperty: "rect"
@@ -93,7 +93,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: defaultParameters
@@ -110,7 +110,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: typeCombo
 
             property var values: ['bar', 'segment']
@@ -139,7 +139,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.GradientControl {
+        Snapflow.GradientControl {
             id: fgGradient
 
             Layout.columnSpan: 4
@@ -155,7 +155,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             Layout.columnSpan: 4
@@ -169,7 +169,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thicknessSlider
 
             Layout.columnSpan: 3
@@ -179,12 +179,12 @@ Item {
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'Set the thickness of the bars (in pixels)'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thicknessSlider.value = 15
         }
 
@@ -196,7 +196,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 value: filterRect.x
@@ -218,7 +218,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 value: filterRect.y
@@ -243,7 +243,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 value: filterRect.width
@@ -265,7 +265,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 value: filterRect.height
@@ -305,7 +305,7 @@ Item {
             text: qsTr('Reverse the levels.')
             onClicked: filter.set('reverse', checked ? 1 : 0)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'Reverse the order of channels.'
             }
         }
@@ -315,7 +315,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: channelsSlider
 
             Layout.columnSpan: 3
@@ -324,12 +324,12 @@ Item {
             decimals: 0
             onValueChanged: filter.set("channels", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'The number of audio channels to show.'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: channelsSlider.value = 2
         }
 
@@ -338,7 +338,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: segmentsSlider
 
             Layout.columnSpan: 3
@@ -347,12 +347,12 @@ Item {
             decimals: 0
             onValueChanged: filter.set("segments", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'The number of segments in the segment graph'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
 
@@ -361,7 +361,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: segmentGapSlider
 
             Layout.columnSpan: 3
@@ -370,12 +370,12 @@ Item {
             decimals: 0
             onValueChanged: filter.set("segment_gap", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'Space between segments in the segment graph (in pixels)'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
 

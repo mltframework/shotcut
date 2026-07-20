@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: clipRoot
@@ -50,7 +50,7 @@ Rectangle {
     signal rightClicked
 
     function getColor() {
-        return isAudio ? 'darkseagreen' : root.shotcutBlue;
+        return isAudio ? 'darkseagreen' : root.snapflowBlue;
     }
 
     function generateWaveform() {
@@ -161,7 +161,7 @@ Rectangle {
 
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
 
-            Shotcut.TimelineWaveform {
+            Snapflow.TimelineWaveform {
                 property int channels: 2
 
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
@@ -224,7 +224,7 @@ Rectangle {
         onClicked: clipRoot.rightClicked()
     }
 
-    Shotcut.TimelineTriangle {
+    Snapflow.TimelineTriangle {
         id: animateInTriangle
 
         visible: !isBlank
@@ -236,7 +236,7 @@ Rectangle {
         opacity: 0.5
     }
 
-    Shotcut.MessageDialog {
+    Snapflow.MessageDialog {
         id: confirmRemoveAdvancedDialog
 
         title: qsTr("Confirm Removing Advanced Keyframes")
@@ -336,7 +336,7 @@ Rectangle {
         }
     }
 
-    Shotcut.TimelineTriangle {
+    Snapflow.TimelineTriangle {
         id: animateOutTriangle
 
         visible: !isBlank

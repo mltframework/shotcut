@@ -25,7 +25,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QMetaObject>
@@ -64,8 +64,8 @@ int getUniqueGroupNumber(MultitrackModel &model)
             Mlt::Playlist playlist(*track);
             for (int clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
                 QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-                if (info && info->cut && info->cut->property_exists(kShotcutGroupProperty)) {
-                    groups.insert(info->cut->get_int(kShotcutGroupProperty));
+                if (info && info->cut && info->cut->property_exists(kSnapflowGroupProperty)) {
+                    groups.insert(info->cut->get_int(kSnapflowGroupProperty));
                 }
             }
         }
@@ -390,8 +390,8 @@ void GroupCommand::addToGroup(int trackIndex, int clipIndex)
     if (clipInfo && clipInfo->cut && !clipInfo->cut->is_blank()) {
         ClipPosition position(trackIndex, clipIndex);
         m_clips.append(position);
-        if (clipInfo->cut->property_exists(kShotcutGroupProperty)) {
-            m_prevGroups.insert(position, clipInfo->cut->get_int(kShotcutGroupProperty));
+        if (clipInfo->cut->property_exists(kSnapflowGroupProperty)) {
+            m_prevGroups.insert(position, clipInfo->cut->get_int(kSnapflowGroupProperty));
         }
     }
 }
@@ -403,7 +403,7 @@ void GroupCommand::redo()
     for (auto &clip : m_clips) {
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
-            clipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            clipInfo->cut->set(kSnapflowGroupProperty, groupNumber);
             QModelIndex modelIndex = m_model.index(clip.clipIndex,
                                                    0,
                                                    m_model.index(clip.trackIndex));
@@ -420,9 +420,9 @@ void GroupCommand::undo()
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
             if (m_prevGroups.contains(clip)) {
-                clipInfo->cut->set(kShotcutGroupProperty, m_prevGroups[clip]);
+                clipInfo->cut->set(kSnapflowGroupProperty, m_prevGroups[clip]);
             } else {
-                clipInfo->cut->Mlt::Properties::clear(kShotcutGroupProperty);
+                clipInfo->cut->Mlt::Properties::clear(kSnapflowGroupProperty);
             }
             QModelIndex modelIndex = m_model.index(clip.clipIndex,
                                                    0,
@@ -444,8 +444,8 @@ void UngroupCommand::removeFromGroup(int trackIndex, int clipIndex)
     auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
     if (clipInfo && clipInfo->cut) {
         ClipPosition position(trackIndex, clipIndex);
-        if (clipInfo->cut->property_exists(kShotcutGroupProperty)) {
-            m_prevGroups.insert(position, clipInfo->cut->get_int(kShotcutGroupProperty));
+        if (clipInfo->cut->property_exists(kSnapflowGroupProperty)) {
+            m_prevGroups.insert(position, clipInfo->cut->get_int(kSnapflowGroupProperty));
         }
     }
 }
@@ -456,7 +456,7 @@ void UngroupCommand::redo()
     for (auto &clip : m_prevGroups.keys()) {
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
-            clipInfo->cut->Mlt::Properties::clear(kShotcutGroupProperty);
+            clipInfo->cut->Mlt::Properties::clear(kSnapflowGroupProperty);
             QModelIndex modelIndex = m_model.index(clip.clipIndex,
                                                    0,
                                                    m_model.index(clip.trackIndex));
@@ -472,7 +472,7 @@ void UngroupCommand::undo()
     for (auto &clip : m_prevGroups.keys()) {
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
-            clipInfo->cut->set(kShotcutGroupProperty, m_prevGroups[clip]);
+            clipInfo->cut->set(kSnapflowGroupProperty, m_prevGroups[clip]);
             QModelIndex modelIndex = m_model.index(clip.clipIndex,
                                                    0,
                                                    m_model.index(clip.trackIndex));
@@ -660,8 +660,8 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
         if (m_earliestStart == -1 || saveInfo.start < m_earliestStart) {
             m_earliestStart = saveInfo.start;
         }
-        if (info->cut->property_exists(kShotcutGroupProperty)) {
-            saveInfo.group = info->cut->get_int(kShotcutGroupProperty);
+        if (info->cut->property_exists(kSnapflowGroupProperty)) {
+            saveInfo.group = info->cut->get_int(kSnapflowGroupProperty);
         }
         saveInfo.uuid = MLT.ensureHasUuid(*info->producer);
         m_clips.insert(saveInfo.start, saveInfo);
@@ -784,7 +784,7 @@ void MoveClipCommand::redo()
             auto clipInfo = m_model.getClipInfo(newTrackIndex, newClipIndex);
             if (clipInfo && clipInfo->cut) {
                 if (clip.group >= 0) {
-                    clipInfo->cut->set(kShotcutGroupProperty, clip.group);
+                    clipInfo->cut->set(kSnapflowGroupProperty, clip.group);
                     QModelIndex modelIndex = m_model.index(newClipIndex,
                                                            0,
                                                            m_model.index(newTrackIndex));
@@ -2034,8 +2034,8 @@ void DetachAudioCommand::redo()
         {
             auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
             if (videoClipInfo && videoClipInfo->cut
-                && videoClipInfo->cut->property_exists(kShotcutGroupProperty)) {
-                groupNumber = videoClipInfo->cut->get_int(kShotcutGroupProperty);
+                && videoClipInfo->cut->property_exists(kSnapflowGroupProperty)) {
+                groupNumber = videoClipInfo->cut->get_int(kSnapflowGroupProperty);
             }
         }
 
@@ -2046,7 +2046,7 @@ void DetachAudioCommand::redo()
         for (int i = 0; i < videoClip.filter_count(); i++) {
             Mlt::Filter *filter = videoClip.filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kSnapflowHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && newMeta->isAudio()) {
                     videoClip.detach(*filter);
@@ -2063,7 +2063,7 @@ void DetachAudioCommand::redo()
         for (int i = 0; i < audioClip.filter_count(); i++) {
             Mlt::Filter *filter = audioClip.filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kSnapflowHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && !newMeta->isAudio()) {
                     audioClip.detach(*filter);
@@ -2122,7 +2122,7 @@ void DetachAudioCommand::redo()
             if (groupNumber >= 0) {
                 auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
                 if (videoClipInfo && videoClipInfo->cut) {
-                    videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+                    videoClipInfo->cut->set(kSnapflowGroupProperty, groupNumber);
                 }
             }
             m_undoHelper.recordAfterState();
@@ -2296,7 +2296,7 @@ void ApplyFiltersCommand::redo()
 
     Mlt::Producer filtersProducer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (!filtersProducer.is_valid() || filtersProducer.filter_count() < 1
-        || !filtersProducer.get_int(kShotcutFiltersClipboard)) {
+        || !filtersProducer.get_int(kSnapflowFiltersClipboard)) {
         LOG_ERROR() << "Invalid filters producer";
         return;
     }
@@ -2306,7 +2306,7 @@ void ApplyFiltersCommand::redo()
     for (int i = 0; i < filtersProducer.filter_count(); i++) {
         Mlt::Filter *filter = filtersProducer.filter(i);
         if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty)) {
+            && !filter->get_int(kSnapflowHiddenProperty)) {
             m_applyMeta.append(MAIN.filterController()->metadataForService(filter));
         }
         delete filter;
@@ -2319,7 +2319,7 @@ void ApplyFiltersCommand::redo()
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
                 if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                    && !filter->get_int(kSnapflowHiddenProperty)) {
                     QmlMetadata *currentMeta = MAIN.filterController()->metadataForService(filter);
                     for (int j = 0; j < m_applyMeta.size(); j++) {
                         if (m_applyMeta[j] == currentMeta) {
@@ -2351,7 +2351,7 @@ void ApplyFiltersCommand::undo()
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
                 if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                    && !filter->get_int(kSnapflowHiddenProperty)) {
                     clipInfo->producer->detach(*filter);
                     i--;
                 }

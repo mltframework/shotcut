@@ -20,7 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlfilter.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <Mlt.h>
 #include <QUuid>
@@ -78,7 +78,7 @@ public:
 
 /*!
     \qmltype MotionTrackerModel
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief A list model of motion tracker entries attached to the current producer.
 
     \c MotionTrackerModel is available as the \c motionTrackerModel context property
@@ -89,13 +89,13 @@ public:
 /*!
     \qmlproperty string MotionTrackerModel::nameProperty
     \brief The MLT property name used to store the tracker's display name on a filter
-    (value: \c "shotcut:motionTracker.name"). CONSTANT.
+    (value: \c "snapflow:motionTracker.name"). CONSTANT.
 */
 
 /*!
     \qmlproperty string MotionTrackerModel::operationProperty
     \brief The MLT property name used to store the tracker's link operation on a filter
-    (value: \c "shotcut:motionTracker.operation"). CONSTANT.
+    (value: \c "snapflow:motionTracker.operation"). CONSTANT.
 */
 
 MotionTrackerModel::MotionTrackerModel(QObject *parent)
@@ -243,7 +243,7 @@ void MotionTrackerModel::reset(QmlFilter *filter, const QString &property, int r
         auto data = trackingData(key);
 
         if (!data.isEmpty()) {
-            // Use a shotcut property to backup current values
+            // Use a snapflow property to backup current values
             if (filter->get(kBackupProperty).isEmpty()) {
                 filter->set(kBackupProperty, filter->get(property));
             } else {

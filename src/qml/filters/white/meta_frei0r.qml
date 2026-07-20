@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,5 +10,5 @@ Metadata {
     icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.white_balance"
-    help: 'https://forum.shotcut.org/t/white-balance/12894/1'
+    help: 'https://forum.snapflow.org/t/white-balance/12894/1'
 }

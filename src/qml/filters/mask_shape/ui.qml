@@ -18,8 +18,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     id: shapeRoot
@@ -176,11 +176,11 @@ Item {
         setControls();
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: shapeFile
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: fileDialog
 
         onAccepted: {
@@ -205,7 +205,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 3
@@ -224,11 +224,11 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.File {
+        Snapflow.File {
             id: wipeFile
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: resourceCombo
 
             function updateResource(index) {
@@ -258,7 +258,7 @@ Item {
                 enabled = true;
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
                 visible: !resourceCombo.pressed
             }
@@ -393,7 +393,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 resourceCombo.currentIndex = 0;
                 resourceCombo.updateResource(resourceCombo.currentIndex);
@@ -404,7 +404,7 @@ Item {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: favoriteButton
 
             visible: fileLabel.text.length > 0
@@ -427,7 +427,7 @@ Item {
 
             Layout.columnSpan: 3
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 id: fileLabelTip
             }
         }
@@ -446,7 +446,7 @@ Item {
                 onClicked: filter.set('filter.invert', checked)
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     invertCheckBox.checked = false;
                     filter.set('filter.invert', 0);
@@ -470,7 +470,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
 
                 // reset the old reverse
                 visible: reverseCheckBox.visible
@@ -513,7 +513,7 @@ Item {
                 onClicked: filter.set('filter.use_luminance', 0)
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: operationCombo
 
                 implicitWidth: 180
@@ -552,7 +552,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 brightnessRadioButton.checked = true;
                 operationCombo.currentIndex = 0;
@@ -572,7 +572,7 @@ Item {
             onClicked: filter.set('filter.use_mix', checked)
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             minimumValue: 0
@@ -582,11 +582,11 @@ Item {
             onValueChanged: updateFilter('filter.mix', value, getPosition(), thresholdKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: thresholdKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'filter.mix', thresholdSlider.value)
@@ -597,7 +597,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: softnessSlider
 
             minimumValue: 0
@@ -607,7 +607,7 @@ Item {
             onValueChanged: filter.set('filter.softness', value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: softnessSlider.value = 0
         }
 
@@ -615,7 +615,7 @@ Item {
             width: 1
         }
 
-        Shotcut.TipBox {
+        Snapflow.TipBox {
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.margins: 10

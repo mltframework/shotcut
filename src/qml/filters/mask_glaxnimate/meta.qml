@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     objectName: 'maskGlaxnimate'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/mask-draw-glaxnimate-video-filter/34408/1'
+    help: 'https://forum.snapflow.org/t/mask-draw-glaxnimate-video-filter/34408/1'
 }

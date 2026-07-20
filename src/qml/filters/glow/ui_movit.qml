@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['radius', 'blur_mix', 'highlight_cutoff']
@@ -130,7 +130,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -150,7 +150,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: radiusslider
 
             minimumValue: 0
@@ -159,11 +159,11 @@ Item {
             onValueChanged: updateFilter('radius', value, getPosition(), radiusKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: radiusslider.value = 20
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: radiusKeyframesButton
 
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
@@ -176,7 +176,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: blurslider
 
             minimumValue: 0
@@ -185,11 +185,11 @@ Item {
             onValueChanged: updateFilter('blur_mix', value, getPosition(), blurKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: blurslider.value = 1
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: blurKeyframesButton
 
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('blur_mix') > 0
@@ -202,7 +202,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: cutoffslider
 
             minimumValue: 0.1
@@ -211,11 +211,11 @@ Item {
             onValueChanged: updateFilter('highlight_cutoff', value, getPosition(), cutoffKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: cutoffslider.value = 0.2
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: cutoffKeyframesButton
 
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('highlight_cutoff') > 0

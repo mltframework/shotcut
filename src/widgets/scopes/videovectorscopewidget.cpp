@@ -38,7 +38,7 @@ VideoVectorScopeWidget::VideoVectorScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.shotcut.org/t/video-vector-scope/15653/1");
+    setWhatsThis("https://forum.snapflow.org/t/video-vector-scope/15653/1");
     profileChanged();
     connect(&QmlProfile::singleton(), SIGNAL(profileChanged()), this, SLOT(profileChanged()));
     LOG_DEBUG() << "end";

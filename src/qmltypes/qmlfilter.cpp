@@ -26,7 +26,7 @@
 #include "mltcontroller.h"
 #include "proxymanager.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <MltProducer.h>
@@ -40,7 +40,7 @@
 
 /*!
     \qmltype Filter
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Provides access to the current filter's properties, keyframes, and presets.
 
     \c Filter is the primary scripting interface for filter UI panels and VUI overlays.
@@ -644,10 +644,10 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
     if (!isAudio)
         mltFilter.set("analyze", 1);
 
-    // Tag the filter with a UUID stored in a shotcut property to uniquely find it later
+    // Tag the filter with a UUID stored in a snapflow property to uniquely find it later
     auto uuid = QUuid::createUuid();
     auto ba = uuid.toByteArray();
-    mltFilter.set(kShotcutHashProperty, ba.constData());
+    mltFilter.set(kSnapflowHashProperty, ba.constData());
 
     // Fix in/out points of filters on clip-only project.
     if (MLT.isSeekableClip() && mlt_service_chain_type != MLT.producer()->type()) {
@@ -759,7 +759,7 @@ int QmlFilter::framesFromTime(const QString &time)
 /*!
     \qmlmethod Filter::getHash()
     \brief Computes a hash of the filter's input producer and stores it as the
-    \c shotcut:hash property. Used internally by analysis jobs.
+    \c snapflow:hash property. Used internally by analysis jobs.
 */
 
 void QmlFilter::getHash()
@@ -834,15 +834,15 @@ int QmlFilter::out()
 
 int QmlFilter::animateIn()
 {
-    return m_service.time_to_frames(m_service.get(kShotcutAnimInProperty));
+    return m_service.time_to_frames(m_service.get(kSnapflowAnimInProperty));
 }
 
 void QmlFilter::setAnimateIn(int value)
 {
     value = qBound(0, value, duration());
-    if (value != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
-        m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(value, mlt_time_clock));
-        if (value == 0 && m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty)) == 0) {
+    if (value != m_service.time_to_frames(m_service.get(kSnapflowAnimInProperty))) {
+        m_service.set(kSnapflowAnimInProperty, m_service.frames_to_time(value, mlt_time_clock));
+        if (value == 0 && m_service.time_to_frames(m_service.get(kSnapflowAnimOutProperty)) == 0) {
             // Clear simple keyframes
             for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
                 QString name = m_metadata->keyframes()->parameter(i)->property();
@@ -861,7 +861,7 @@ void QmlFilter::setAnimateIn(int value)
                 }
             }
         }
-        updateUndoCommand(kShotcutAnimInProperty);
+        updateUndoCommand(kSnapflowAnimInProperty);
         emit animateInChanged();
     }
 }
@@ -874,15 +874,15 @@ void QmlFilter::setAnimateIn(int value)
 
 int QmlFilter::animateOut()
 {
-    return m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty));
+    return m_service.time_to_frames(m_service.get(kSnapflowAnimOutProperty));
 }
 
 void QmlFilter::setAnimateOut(int value)
 {
     value = qBound(0, value, duration());
-    if (value != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
-        m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(value, mlt_time_clock));
-        if (value == 0 && m_service.time_to_frames(m_service.get(kShotcutAnimInProperty)) == 0) {
+    if (value != m_service.time_to_frames(m_service.get(kSnapflowAnimOutProperty))) {
+        m_service.set(kSnapflowAnimOutProperty, m_service.frames_to_time(value, mlt_time_clock));
+        if (value == 0 && m_service.time_to_frames(m_service.get(kSnapflowAnimInProperty)) == 0) {
             // Clear simple keyframes
             for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
                 QString name = m_metadata->keyframes()->parameter(i)->property();
@@ -896,7 +896,7 @@ void QmlFilter::setAnimateOut(int value)
                 }
             }
         }
-        updateUndoCommand(kShotcutAnimOutProperty);
+        updateUndoCommand(kSnapflowAnimOutProperty);
         emit animateOutChanged();
     }
 }
@@ -905,12 +905,12 @@ void QmlFilter::clearAnimateInOut()
 {
     bool inChanged = false;
     bool outChanged = false;
-    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
-        m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(0, mlt_time_clock));
+    if (0 != m_service.time_to_frames(m_service.get(kSnapflowAnimInProperty))) {
+        m_service.set(kSnapflowAnimInProperty, m_service.frames_to_time(0, mlt_time_clock));
         inChanged = true;
     }
-    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
-        m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(0, mlt_time_clock));
+    if (0 != m_service.time_to_frames(m_service.get(kSnapflowAnimOutProperty))) {
+        m_service.set(kSnapflowAnimOutProperty, m_service.frames_to_time(0, mlt_time_clock));
         outChanged = true;
     }
     if (inChanged)
@@ -1057,11 +1057,11 @@ void QmlFilter::startUndoTracking()
 {
     m_previousState = Mlt::Properties();
     m_previousState.inherit(m_service);
-    if (!m_previousState.property_exists(kShotcutAnimInProperty)) {
-        m_previousState.set(kShotcutAnimInProperty, 0);
+    if (!m_previousState.property_exists(kSnapflowAnimInProperty)) {
+        m_previousState.set(kSnapflowAnimInProperty, 0);
     }
-    if (!m_previousState.property_exists(kShotcutAnimOutProperty)) {
-        m_previousState.set(kShotcutAnimOutProperty, 0);
+    if (!m_previousState.property_exists(kSnapflowAnimOutProperty)) {
+        m_previousState.set(kSnapflowAnimOutProperty, 0);
     }
 }
 
@@ -1275,7 +1275,7 @@ int QmlFilter::getPrevKeyframePosition(const QString &name, int position)
 
 /*!
     \qmlmethod bool Filter::isAtLeastVersion(string version)
-    \brief Returns \c true if Shotcut's version is greater than or equal to \a version.
+    \brief Returns \c true if Snapflow's version is greater than or equal to \a version.
     Use to guard features introduced in specific releases.
 */
 
@@ -1370,7 +1370,7 @@ void QmlFilter::crop(const QRectF &rect)
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter &filter)
     : QObject(nullptr)
-    , m_uuid(filter.get(kShotcutHashProperty))
+    , m_uuid(filter.get(kSnapflowHashProperty))
 {}
 
 class FindFilterParser : public Mlt::Parser
@@ -1389,7 +1389,7 @@ public:
 
     int on_start_filter(Mlt::Filter *filter)
     {
-        QByteArray uuid = filter->get(kShotcutHashProperty);
+        QByteArray uuid = filter->get(kSnapflowHashProperty);
         if (uuid == m_uuid.toByteArray())
             m_filters << Mlt::Filter(*filter);
         return 0;
@@ -1436,7 +1436,7 @@ void AnalyzeDelegate::updateJob(EncodeJob *job, const QString &results)
         QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
         for (int j = 0; j < properties.size(); j++) {
             QDomNode propertyNode = properties.at(j);
-            if (propertyNode.attributes().namedItem("name").toAttr().value() == kShotcutHashProperty
+            if (propertyNode.attributes().namedItem("name").toAttr().value() == kSnapflowHashProperty
                 && propertyNode.toElement().text() == m_uuid.toString()) {
                 // found a matching filter
                 found = true;
@@ -1540,7 +1540,7 @@ QString AnalyzeDelegate::resultsFromXml(const QString &fileName)
         QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
         for (int j = 0; j < properties.size(); j++) {
             QDomNode propertyNode = properties.at(j);
-            if (propertyNode.attributes().namedItem("name").toAttr().value() == kShotcutHashProperty
+            if (propertyNode.attributes().namedItem("name").toAttr().value() == kSnapflowHashProperty
                 && propertyNode.toElement().text() == m_uuid.toString()) {
                 found = true;
                 break;
@@ -1563,7 +1563,7 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter &filter, const QString &results)
 {
     filter.set("results", qUtf8Printable(results));
     filter.set("reload", 1);
-    filter.clear(kShotcutHashProperty);
+    filter.clear(kSnapflowHashProperty);
     LOG_INFO() << "updated filter" << filter.get("mlt_service") << "with results:" << results;
 
     if (QString::fromLatin1("opencv.tracker") == filter.get("mlt_service")) {

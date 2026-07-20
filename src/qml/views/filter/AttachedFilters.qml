@@ -18,7 +18,7 @@ import QtQml.Models
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.shotcut.qml as Shotcut
+import org.snapflow.qml as Snapflow
 
 Rectangle {
     id: attachedFilters
@@ -73,7 +73,7 @@ Rectangle {
 
                     Layout.topMargin: (parent.height - height) / 2
                     Layout.alignment: Qt.AlignTop
-                    enabled: model.pluginType !== Shotcut.Metadata.Link
+                    enabled: model.pluginType !== Snapflow.Metadata.Link
                     opacity: enabled ? 1 : 0.5
                     checkState: model.checkState
 

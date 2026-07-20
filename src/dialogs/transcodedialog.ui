@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.shotcut.org/t/convert-to-edit-friendly-dialog/47720</string>
+   <string notr="true">https://forum.snapflow.org/t/convert-to-edit-friendly-dialog/47720</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">

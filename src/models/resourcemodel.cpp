@@ -18,7 +18,7 @@
 #include "resourcemodel.h"
 
 #include "Logger.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <Mlt.h>

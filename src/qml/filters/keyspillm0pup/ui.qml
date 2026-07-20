@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string keyColorParam: '0'
@@ -97,7 +97,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: presetItem
 
             Layout.columnSpan: 2
@@ -110,7 +110,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: keyColorPicker
 
             property bool isReady: false
@@ -127,7 +127,7 @@ Item {
             onPickCancelled: filter.set('disable', 0)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: keyColorPicker.value = keyColorDefault
         }
 
@@ -136,7 +136,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: targetColorPicker
 
             property bool isReady: false
@@ -154,7 +154,7 @@ Item {
             onPickCancelled: filter.set('disable', 0)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: targetColorPicker.value = targetColorDefault
         }
 
@@ -163,7 +163,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: maskTypeCombo
 
             implicitWidth: 180
@@ -171,7 +171,7 @@ Item {
             onActivated: filter.set(maskTypeParam, currentIndex)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(maskTypeParam, maskTypeDefault);
                 maskTypeCombo.currentIndex = maskTypeDefault;
@@ -183,7 +183,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: toleranceSlider
 
             minimumValue: 0
@@ -194,7 +194,7 @@ Item {
             onValueChanged: filter.set(toleranceParam, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: toleranceSlider.value = toleranceDefault * 100
         }
 
@@ -203,7 +203,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slopeSlider
 
             minimumValue: 0
@@ -214,7 +214,7 @@ Item {
             onValueChanged: filter.set(slopeParam, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slopeSlider.value = slopeDefault * 100
         }
 
@@ -223,7 +223,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hueGateSlider
 
             minimumValue: 0
@@ -234,7 +234,7 @@ Item {
             onValueChanged: filter.set(hueGateParam, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hueGateSlider.value = hueGateDefault * 100
         }
 
@@ -243,7 +243,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: saturationSlider
 
             minimumValue: 0
@@ -254,7 +254,7 @@ Item {
             onValueChanged: filter.set(saturationParam, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: saturationSlider.value = saturationDefault * 100
         }
 
@@ -263,7 +263,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: operation1Combo
 
             implicitWidth: 180
@@ -271,7 +271,7 @@ Item {
             onActivated: filter.set(operation1Param, currentIndex)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(operation1Param, operation1Default);
                 operation1Combo.currentIndex = operation1Default;
@@ -283,7 +283,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amount1Slider
 
             minimumValue: 0
@@ -294,7 +294,7 @@ Item {
             onValueChanged: filter.set(amount1Param, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amount1Slider.value = amount1Default * 100
         }
 
@@ -303,7 +303,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: operation2Combo
 
             implicitWidth: 180
@@ -311,7 +311,7 @@ Item {
             onActivated: filter.set(operation2Param, currentIndex)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(operation2Param, operation2Default);
                 operation2Combo.currentIndex = operation2Default;
@@ -323,7 +323,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amount2Slider
 
             minimumValue: 0
@@ -334,7 +334,7 @@ Item {
             onValueChanged: filter.set(amount2Param, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amount2Slider.value = amount2Default * 100
         }
 
@@ -347,7 +347,7 @@ Item {
             onCheckedChanged: filter.set(showMaskParam, checked)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: showMaskCheckbox.checked = showMaskDefault
         }
 
@@ -360,7 +360,7 @@ Item {
             onCheckedChanged: filter.set(maskAlphaParam, checked)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: maskAlphaCheckbox.checked = maskAlphaDefault
         }
 

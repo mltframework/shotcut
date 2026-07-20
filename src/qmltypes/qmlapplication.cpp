@@ -51,10 +51,10 @@ QmlApplication &QmlApplication::singleton()
 
 /*!
     \qmltype Application
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Application-wide utilities, accessed via the \c application context property.
 
-    \c application is set as a context property on every Shotcut QML view.
+    \c application is set as a context property on every Snapflow QML view.
     It cannot be instantiated from QML — use the global \c application identifier directly:
 
     \code

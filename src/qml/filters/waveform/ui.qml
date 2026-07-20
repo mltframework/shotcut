@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string rectProperty: "rect"
@@ -80,7 +80,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: defaultParameters
@@ -97,7 +97,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.GradientControl {
+        Snapflow.GradientControl {
             id: fgGradient
 
             Layout.columnSpan: 4
@@ -113,7 +113,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             Layout.columnSpan: 4
@@ -127,7 +127,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thicknessSlider
 
             Layout.columnSpan: 3
@@ -138,7 +138,7 @@ Item {
             onValueChanged: filter.set("thickness", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
 
@@ -150,7 +150,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 value: filterRect.x
@@ -169,7 +169,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 value: filterRect.y
@@ -191,7 +191,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 value: filterRect.width
@@ -210,7 +210,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 value: filterRect.height
@@ -253,7 +253,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: windowSlider
 
             Layout.columnSpan: 3
@@ -264,7 +264,7 @@ Item {
             onValueChanged: filter.set("window", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: windowSlider.value = 0.4
         }
 

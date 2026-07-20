@@ -27,7 +27,7 @@
 #include <QStringList>
 #include <QThread>
 
-class ShotcutSettings : public QObject
+class SnapflowSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool timelineDragScrub READ timelineDragScrub WRITE setTimelineDragScrub NOTIFY
@@ -86,7 +86,7 @@ public:
     enum TimelineScrolling { NoScrolling, CenterPlayhead, PageScrolling, SmoothScrolling };
     enum ProcessingMode { Native8Cpu, Linear8Cpu, Native10Cpu, Linear10Cpu, Linear10GpuCpu };
 
-    static ShotcutSettings &singleton();
+    static SnapflowSettings &singleton();
     void log();
 
     // general
@@ -482,8 +482,8 @@ signals:
     void timelineAllowTransitionsChanged();
 
 private:
-    explicit ShotcutSettings();
-    explicit ShotcutSettings(const QString &appDataLocation);
+    explicit SnapflowSettings();
+    explicit SnapflowSettings(const QString &appDataLocation);
     void migrateRecent();
     void migrateLayout();
 
@@ -492,6 +492,6 @@ private:
     QSettings m_recent;
 };
 
-#define Settings ShotcutSettings::singleton()
+#define Settings SnapflowSettings::singleton()
 
 #endif // SETTINGS_H

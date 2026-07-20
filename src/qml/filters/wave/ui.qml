@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     width: 350
@@ -43,7 +43,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 2
@@ -61,7 +61,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: waveSlider
 
             minimumValue: 1
@@ -70,7 +70,7 @@ Item {
             onValueChanged: filter.set('wave', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: waveSlider.value = 10
         }
 
@@ -79,7 +79,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: speedSlider
 
             minimumValue: 0
@@ -88,7 +88,7 @@ Item {
             onValueChanged: filter.set('speed', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: speedSlider.value = 5
         }
 

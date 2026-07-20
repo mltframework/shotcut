@@ -76,7 +76,7 @@ static QString formatTimecode(int frames, double fps)
 HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     : QQuickView(QmlUtilities::sharedEngine(), parent)
 {
-    setTitle(tr("Shotcut Preview"));
+    setTitle(tr("Snapflow Preview"));
     setResizeMode(QQuickView::SizeRootObjectToView);
     setColor(Qt::black);
 

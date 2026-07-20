@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,7 @@ Metadata {
     objectName: "ambisonic-decoder"
     qml: "ui.qml"
     vui: "vui.qml"
-    help: "https://forum.shotcut.org/t/ambisonic-decoder-audio-filter/50885/1"
+    help: "https://forum.snapflow.org/t/ambisonic-decoder-audio-filter/50885/1"
 
     keyframes {
         allowAnimateIn: true

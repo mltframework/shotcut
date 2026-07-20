@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockControls: false
@@ -55,7 +55,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['av.window', 'av.overlap', 'av.order', 'av.threshold', 'av.burst', 'av.method']
@@ -68,12 +68,12 @@ Item {
         Label {
             text: qsTr('Window')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The size of the window, in milliseconds, which will be processed at once.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderWindow
 
             minimumValue: 10
@@ -90,19 +90,19 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderWindow.value = 50
         }
 
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The strength of impulsive noise which is going to be removed. The lower value, the more samples will be detected as impulsive noise.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderThreshold
 
             minimumValue: 2
@@ -118,19 +118,19 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderThreshold.value = 2
         }
 
         Label {
             text: qsTr('Burst Fusion')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Treat small bursts that are close together as one large burst. Units are percent of the window size. A higher percent will combine bursts that are farther apart.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderBurst
 
             minimumValue: 0
@@ -147,7 +147,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderBurst.value = 2
         }
 

@@ -6,11 +6,11 @@
     <property name="resource">black</property>
     <property name="aspect_ratio">1</property>
     <property name="mlt_service">color</property>
-    <property name="shotcut:filtersClipboard">1</property>
+    <property name="snapflow:filtersClipboard">1</property>
     <filter id="filter0" out="00:00:30.030">
       <property name="filter">shape</property>
       <property name="mlt_service">mask_start</property>
-      <property name="shotcut:filter">maskFromFile</property>
+      <property name="snapflow:filter">maskFromFile</property>
       <property name="filter.mix">100</property>
       <property name="filter.softness">0</property>
       <property name="filter.invert">0</property>
@@ -29,7 +29,7 @@
       <property name="start">1</property>
       <property name="level">1</property>
       <property name="mlt_service">brightness</property>
-      <property name="shotcut:filter">brightnessOpacity</property>
+      <property name="snapflow:filter">brightnessOpacity</property>
       <property name="alpha">0.5</property>
       <property name="opacity">0.5</property>
     </filter>

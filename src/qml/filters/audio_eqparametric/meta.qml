@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     mlt_service: 'ladspa.1204'
     objectName: 'parametricEq'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/equalizer-parametric-audio-filter/32467/1'
+    help: 'https://forum.snapflow.org/t/equalizer-parametric-audio-filter/32467/1'
 
     keyframes {
         allowAnimateIn: true

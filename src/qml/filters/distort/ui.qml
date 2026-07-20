@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string amplitude: '0'
     property string frequency: '1'
     property string useVelocity: '2'
@@ -78,7 +78,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [amplitude, frequency, useVelocity, velocity]
@@ -97,7 +97,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amplitudeSlider
 
             minimumValue: 0
@@ -108,11 +108,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(amplitude, value / maximumValue, amplitudeKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amplitudeSlider.value = amplitudeDefault * amplitudeSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: amplitudeKeyframesButton
 
             onToggled: {
@@ -126,7 +126,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: frequencySlider
 
             minimumValue: 0
@@ -137,11 +137,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(frequency, value / maximumValue, frequencyKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: frequencySlider.value = frequencyDefault * frequencySlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: frequencyKeyframesButton
 
             onToggled: {
@@ -155,7 +155,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: velocitySlider
 
             minimumValue: 0
@@ -166,11 +166,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(velocity, value / maximumValue, velocityKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: velocitySlider.value = velocityDefault * velocitySlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: velocityKeyframesButton
 
             onToggled: {

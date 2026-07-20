@@ -180,13 +180,13 @@ private:
     bool saveConvertedXmlFile(MltXmlChecker &checker, QString &fileName);
     bool saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName);
     void setAudioChannels(int channels);
-    void setProcessingMode(ShotcutSettings::ProcessingMode mode);
+    void setProcessingMode(SnapflowSettings::ProcessingMode mode);
     void showSaveError();
     void setPreviewScale(int scale);
     void setVideoModeMenu();
     void resetVideoModeMenu();
     void resetDockCorners();
-    void showIncompatibleProjectMessage(const QString &shotcutVersion);
+    void showIncompatibleProjectMessage(const QString &snapflowVersion);
     void restartAfterChangeTheme();
     void backup();
     void backupPeriodically();
@@ -276,7 +276,7 @@ public slots:
 
 private slots:
     void showUpgradePrompt();
-    void on_actionAbout_Shotcut_triggered();
+    void on_actionAbout_Snapflow_triggered();
     void on_actionOpenOther_triggered();
     void onProducerChanged();
     bool on_actionSave_As_triggered();

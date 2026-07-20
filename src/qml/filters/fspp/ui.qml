@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property int qualityDefault: 5
@@ -53,7 +53,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['av.qp', 'av.strength']
@@ -66,7 +66,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: qpSlider
 
             minimumValue: 0
@@ -75,7 +75,7 @@ Item {
             onValueChanged: filter.set('av.qp', qpSlider.value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: qpSlider.value = qpDefault
         }
 
@@ -84,7 +84,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: strengthSlider
 
             minimumValue: 0
@@ -94,7 +94,7 @@ Item {
             onValueChanged: filter.set('av.strength', strengthSlider.value / 100 * (strengthMax - strengthMin) + strengthMin)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: strengthSlider.value = Math.round((strengthDefault - strengthMin) / (strengthMax - strengthMin) * 100)
         }
 

@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     mlt_service: "strobe"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/alpha-strobe-video-filter/50289/1'
+    help: 'https://forum.snapflow.org/t/alpha-strobe-video-filter/50289/1'
 
     keyframes {
         allowAnimateIn: true

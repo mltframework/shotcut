@@ -23,7 +23,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
 #if defined(Q_OS_WIN)
@@ -69,7 +69,7 @@ Controller::Controller()
         const bool experimental = qApp && qApp->property("experimental").toBool();
         if (Settings.safeMode()) {
             ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
-            ::qputenv("VST_PATH", "C:/__shotcut_safe_mode_no_vst__");
+            ::qputenv("VST_PATH", "C:/__snapflow_safe_mode_no_vst__");
         } else {
             ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
         }
@@ -167,12 +167,12 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
         setPreviewScale(Settings.playerPreviewScale());
         if (url.endsWith(".mlt")) {
             // Load the number of audio channels being used when this project was created.
-            int channels = newProducer->get_int(kShotcutProjectAudioChannels);
+            int channels = newProducer->get_int(kSnapflowProjectAudioChannels);
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
             // Load the processing mode
-            QString mode = newProducer->get(kShotcutProjectProcessingMode);
+            QString mode = newProducer->get(kSnapflowProjectProcessingMode);
             if (!mode.isEmpty()) {
                 m_processingMode = Settings.processingModeId(mode);
             }
@@ -187,7 +187,7 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             m_url = urlToSave;
         }
         Producer *producer = setupNewProducer(newProducer);
-        producer->set(kShotcutSkipConvertProperty, skipConvert);
+        producer->set(kSnapflowSkipConvertProperty, skipConvert);
         delete newProducer;
         newProducer = producer;
     } else {
@@ -270,11 +270,11 @@ void Controller::pause(int position)
             m_consumer->purge();
             m_consumer->start();
             // The following fixes a bug with frame-dropping. It is possible a video frame rendering
-            // was just dropped. Then, Shotcut does not know the latest position. Next, a filter modifies
+            // was just dropped. Then, Snapflow does not know the latest position. Next, a filter modifies
             // a value, which refreshes the consumer, and the position advances. If that value change
             // creates a keyframe, then a subsequent value change creates an additional keyframe one
             // (or more?) frames after the previous one.
-            // https://forum.shotcut.org/t/2-keyframes-created-instead-of-one/11252
+            // https://forum.snapflow.org/t/2-keyframes-created-instead-of-one/11252
             if (m_consumer->get_int("real_time") > 0)
                 refreshConsumer();
         }
@@ -351,7 +351,7 @@ void Controller::initFiltersClipboard()
 {
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     if (m_filtersClipboard->is_valid()) {
-        m_filtersClipboard->set(kShotcutFiltersClipboard, 1);
+        m_filtersClipboard->set(kSnapflowFiltersClipboard, 1);
     }
 }
 
@@ -360,7 +360,7 @@ bool Controller::enableJack(bool enable)
     if (!m_consumer)
         return true;
     if (enable && !m_jackFilter) {
-        m_jackFilter.reset(new Mlt::Filter(profile(), "jack", "Shotcut player"));
+        m_jackFilter.reset(new Mlt::Filter(profile(), "jack", "Snapflow player"));
         if (m_jackFilter->is_valid()) {
             m_jackFilter->set("channels", Settings.playerAudioChannels());
             switch (Settings.playerAudioChannels()) {
@@ -498,26 +498,26 @@ bool Controller::saveXML(const QString &filename,
     Consumer c(profile(), "xml", proxy ? filename.toUtf8().constData() : kMltXmlPropertyName);
     Service s(service ? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
-        // The Shotcut rule for paths in MLT XML is forward slashes as created by QFileDialog and QmlFile.
+        // The Snapflow rule for paths in MLT XML is forward slashes as created by QFileDialog and QmlFile.
         QString root = withRelativePaths ? QDir::fromNativeSeparators(fi.absolutePath()) : "";
-        s.set(kShotcutProjectAudioChannels, m_audioChannels);
-        s.set(kShotcutProjectFolder, m_projectFolder.isEmpty() ? 0 : 1);
-        s.set(kShotcutProjectProcessingMode,
+        s.set(kSnapflowProjectAudioChannels, m_audioChannels);
+        s.set(kSnapflowProjectFolder, m_projectFolder.isEmpty() ? 0 : 1);
+        s.set(kSnapflowProjectProcessingMode,
               Settings.processingModeStr(Settings.processingMode()).toUtf8().constData());
         if (!projectNote.isEmpty()) {
-            s.set(kShotcutProjectNote, projectNote.toUtf8().constData());
+            s.set(kSnapflowProjectNote, projectNote.toUtf8().constData());
         } else {
-            s.clear(kShotcutProjectNote);
+            s.clear(kSnapflowProjectNote);
         }
         int ignore = s.get_int("ignore_points");
         if (ignore)
             s.set("ignore_points", 0);
         c.set("time_format", "clock");
-        c.set("store", "shotcut");
+        c.set("store", "snapflow");
         c.set("root", root.toUtf8().constData());
         c.set("no_root", 1);
         c.set("title",
-              QStringLiteral("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
+              QStringLiteral("Snapflow version ").append(SNAPFLOW_VERSION).toUtf8().constData());
 
         // Save the consumer of this service so it can be restored.
         auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
@@ -579,7 +579,7 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     if (!withMetadata)
         c.set("no_meta", 1);
     c.set("no_profile", !withProfile);
-    c.set("store", "shotcut");
+    c.set("store", "snapflow");
     c.set("root", "");
     c.connect(s);
     c.start();
@@ -627,7 +627,7 @@ void Controller::setProfile(const QString &profile_name)
         // color_trc will remain empty, which is correct for SDR built-in profiles.
         Mlt::Properties profileProps;
         profileProps.load(profile_name.toUtf8().constData());
-        setColorTrc(profileProps.get(kShotcutColorTransfer));
+        setColorTrc(profileProps.get(kSnapflowColorTransfer));
     } else {
         m_colorTrc.clear();
         m_profile.set_explicit(false);
@@ -658,7 +658,7 @@ void Controller::setAudioChannels(int audioChannels)
     }
 }
 
-void Controller::setProcessingMode(ShotcutSettings::ProcessingMode mode)
+void Controller::setProcessingMode(SnapflowSettings::ProcessingMode mode)
 {
     if (m_processingMode != mode) {
         m_processingMode = mode;
@@ -675,8 +675,8 @@ QString Controller::colorTrc() const
     // Numeric values are FFmpeg's AVColorTransferCharacteristic enum (same as H.273):
     //   16 = SMPTE ST2084 (PQ), 18 = ARIB B67 (HLG).
     if (m_producer && m_producer->is_valid()) {
-        if (m_producer->property_exists(kShotcutColorTransfer)) {
-            return QString::fromLatin1(m_producer->get(kShotcutColorTransfer));
+        if (m_producer->property_exists(kSnapflowColorTransfer)) {
+            return QString::fromLatin1(m_producer->get(kSnapflowColorTransfer));
         } else {
             const int n = m_producer->get_int("meta.media.nb_streams");
             const int videoStreamIndex = m_producer->get_int(kVideoIndexProperty);
@@ -705,7 +705,7 @@ void Controller::setColorTrc(const QString &trc)
 {
     m_colorTrc = trc.isEmpty() ? QStringLiteral("sdr") : trc;
     if (m_producer && m_producer->is_valid())
-        m_producer->set(kShotcutColorTransfer, m_colorTrc.toLatin1().constData());
+        m_producer->set(kSnapflowColorTransfer, m_colorTrc.toLatin1().constData());
 }
 
 bool Controller::isHDR() const
@@ -784,17 +784,17 @@ bool Controller::isSeekableClip()
 
 bool Controller::isPlaylist() const
 {
-    return m_producer && m_producer->is_valid() && !m_producer->get_int(kShotcutVirtualClip)
+    return m_producer && m_producer->is_valid() && !m_producer->get_int(kSnapflowVirtualClip)
            && (m_producer->get_int("_original_type") == mlt_service_playlist_type
                || resource() == "<playlist>");
 }
 
 bool Controller::isMultitrack() const
 {
-    return m_producer && m_producer->is_valid() && !m_producer->get_int(kShotcutVirtualClip)
+    return m_producer && m_producer->is_valid() && !m_producer->get_int(kSnapflowVirtualClip)
            && (m_producer->get_int("_original_type") == mlt_service_tractor_type
                || resource() == "<tractor>")
-           && (m_producer->get(kShotcutXmlProperty));
+           && (m_producer->get(kSnapflowXmlProperty));
 }
 
 bool Controller::isImageProducer(Service *service) const
@@ -820,7 +820,7 @@ bool Controller::isProjectProducer(Service *service)
 {
     return service && service->is_valid() && QString(service->get("xml")) == "was here"
            && (service->get_int("_original_type") != mlt_service_tractor_type
-               || service->get(kShotcutXmlProperty));
+               || service->get(kSnapflowXmlProperty));
 }
 
 void Controller::rewind(bool forceChangeDirection)
@@ -1068,7 +1068,7 @@ int Controller::realTime() const
 void Controller::setImageDurationFromDefault(Service *service) const
 {
     if (service && service->is_valid()) {
-        if (isImageProducer(service) && !service->get_int("shotcut_sequence")) {
+        if (isImageProducer(service) && !service->get_int("snapflow_sequence")) {
             service->set("ttl", 1);
             service->set("length",
                          service->frames_to_time(qRound(m_profile.fps() * kMaxImageDurationSecs),
@@ -1105,7 +1105,7 @@ void Controller::lockCreationTime(Producer *producer) const
 
 Producer *Controller::setupNewProducer(Producer *newProducer) const
 {
-    // Call this function before adding a new producer to Shotcut so that
+    // Call this function before adding a new producer to Snapflow so that
     // It will be configured correctly. The returned producer must be deleted.
     QString serviceName = newProducer->get("mlt_service");
     if (serviceName == "avformat") {
@@ -1129,7 +1129,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
             int i = 0;
             QScopedPointer<Mlt::Filter> filter(newProducer->filter(i));
             while (filter && filter->is_valid()) {
-                if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+                if (!filter->get_int("_loader") && !filter->get_int(kSnapflowHiddenProperty)) {
                     newProducer->detach(*filter);
                     chain->Service::attach(*filter);
                 } else {
@@ -1168,7 +1168,7 @@ static int indexOfFirstNonGpu(Producer &toProducer)
     for (int i = 0; i < toProducer.filter_count(); i++) {
         QScopedPointer<Mlt::Filter> filter(toProducer.filter(i));
         if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty) && filter->get("mlt_service")) {
+            && !filter->get_int(kSnapflowHiddenProperty) && filter->get("mlt_service")) {
             if (!QString::fromLatin1(filter->get("mlt_service")).startsWith("movit."))
                 return i;
         }
@@ -1177,7 +1177,7 @@ static int indexOfFirstNonGpu(Producer &toProducer)
     for (int i = 0; i < toChain.link_count(); i++) {
         QScopedPointer<Mlt::Link> link(toChain.link(i));
         if (link && link->is_valid() && !link->get_int("_loader")
-            && !link->get_int(kShotcutHiddenProperty) && link->get("mlt_service")) {
+            && !link->get_int(kSnapflowHiddenProperty) && link->get("mlt_service")) {
             if (!QString::fromLatin1(link->get("mlt_service")).startsWith("movit."))
                 return i;
         }
@@ -1203,7 +1203,7 @@ void Controller::copyFilters(Producer &fromProducer,
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
         if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader")
-            && !fromFilter->get_int(kShotcutHiddenProperty) && fromFilter->get("mlt_service")) {
+            && !fromFilter->get_int(kSnapflowHiddenProperty) && fromFilter->get("mlt_service")) {
             filterCount++;
             if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
                 continue;
@@ -1321,15 +1321,15 @@ void Controller::adjustFilters(Producer &producer, int index)
         QScopedPointer<Mlt::Filter> filter(producer.filter(index));
 
         if (filter && filter->is_valid()) {
-            QString filterName = filter->get(kShotcutFilterProperty);
-            if (filterName.startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
+            QString filterName = filter->get(kSnapflowFilterProperty);
+            if (filterName.startsWith("fadeIn") && !filter->get(kSnapflowAnimInProperty)) {
                 // Convert legacy fadeIn filters.
-                filter->set(kShotcutAnimInProperty, filter->get_length());
-            } else if (filterName.startsWith("fadeOut") && !filter->get(kShotcutAnimOutProperty)) {
+                filter->set(kSnapflowAnimInProperty, filter->get_length());
+            } else if (filterName.startsWith("fadeOut") && !filter->get(kSnapflowAnimOutProperty)) {
                 // Convert legacy fadeIn filters.
-                filter->set(kShotcutAnimOutProperty, filter->get_length());
+                filter->set(kSnapflowAnimOutProperty, filter->get_length());
             }
-            if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+            if (!filter->get_int("_loader") && !filter->get_int(kSnapflowHiddenProperty)) {
                 int filterIn = in;
                 int filterOut = out;
                 if (filter->get(kFilterInProperty))
@@ -1345,14 +1345,14 @@ void Controller::adjustFilters(Producer &producer, int index)
                     filter->anim_set(key,
                                      1,
                                      filter->get_length()
-                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                         - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                     filter->anim_set(key, 0, filter->get_length() - 1);
                 } else if (filterName == "fadeOutMovit") {
                     filter->clear("opacity");
                     filter->anim_set("opacity",
                                      1,
                                      filter->get_length()
-                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
+                                         - std::max(filter->get_int(kSnapflowAnimOutProperty), 2),
                                      0,
                                      mlt_keyframe_smooth);
                     filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1361,9 +1361,9 @@ void Controller::adjustFilters(Producer &producer, int index)
                     filter->anim_set("level",
                                      0,
                                      filter->get_length()
-                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                         - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                     filter->anim_set("level", -60, filter->get_length() - 1);
-                } else if (filter->get_int(kShotcutAnimOutProperty) > 0) {
+                } else if (filter->get_int(kSnapflowAnimOutProperty) > 0) {
                     // Update simple keyframes.
                     QmlMetadata *meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
@@ -1388,7 +1388,7 @@ void Controller::adjustFilters(Producer &producer, int index)
                                     animation.key_set_frame(n - 2,
                                                             filter->get_length()
                                                                 - filter->get_int(
-                                                                    kShotcutAnimOutProperty));
+                                                                    kSnapflowAnimOutProperty));
                                     animation.key_set_frame(n - 1, filter->get_length() - 1);
                                 }
                             }
@@ -1481,7 +1481,7 @@ void Controller::adjustFilter(
         return;
     }
 
-    QString filterName = filter->get(kShotcutFilterProperty);
+    QString filterName = filter->get(kSnapflowFilterProperty);
     QmlMetadata *meta = MAIN.filterController()->metadataForService(filter);
 
     if ((inDelta || outDelta) && meta && meta->mlt_service().startsWith("vidstab")) {
@@ -1493,21 +1493,21 @@ void Controller::adjustFilter(
             inDelta = -in;
         }
         if (keyframeDelta
-            && filter->get_int(kShotcutAnimInProperty) == filter->get_int(kShotcutAnimOutProperty)) {
+            && filter->get_int(kSnapflowAnimInProperty) == filter->get_int(kSnapflowAnimOutProperty)) {
             // Shift all keyframes proportional to the in delta if they are not simple keyframes
             shiftKeyframes(filter, meta, keyframeDelta);
         }
         if (filterName.startsWith("fadeIn")) {
-            if (!filter->get(kShotcutAnimInProperty)) {
+            if (!filter->get(kSnapflowAnimInProperty)) {
                 // Convert legacy fadeIn filters.
-                filter->set(kShotcutAnimInProperty, filter->get_length());
+                filter->set(kSnapflowAnimInProperty, filter->get_length());
             }
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
         } else if (filterName.startsWith("fadeOut")) {
-            if (!filter->get(kShotcutAnimOutProperty)) {
+            if (!filter->get(kSnapflowAnimOutProperty)) {
                 // Convert legacy fadeOut filters.
-                filter->set(kShotcutAnimOutProperty, filter->get_length());
+                filter->set(kSnapflowAnimOutProperty, filter->get_length());
             }
             filter->set_in_and_out(in + inDelta, filter->get_out());
             if (filterName == "fadeOutBrightness") {
@@ -1516,14 +1516,14 @@ void Controller::adjustFilter(
                 filter->anim_set(key,
                                  1,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                 filter->anim_set(key, 0, filter->get_length() - 1);
             } else if (filterName == "fadeOutMovit") {
                 filter->clear("opacity");
                 filter->anim_set("opacity",
                                  1,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2),
                                  0,
                                  mlt_keyframe_smooth);
                 filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1532,11 +1532,11 @@ void Controller::adjustFilter(
                 filter->anim_set("level",
                                  0,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceInChanged(inDelta, filter);
-        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
+        } else if (!filter->get_int("_loader") && !filter->get_int(kSnapflowHiddenProperty)
                    && filter->get_in() <= in) {
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
@@ -1545,9 +1545,9 @@ void Controller::adjustFilter(
 
     if (outDelta) {
         if (filterName.startsWith("fadeOut")) {
-            if (!filter->get(kShotcutAnimOutProperty)) {
+            if (!filter->get(kSnapflowAnimOutProperty)) {
                 // Convert legacy fadeOut filters.
-                filter->set(kShotcutAnimOutProperty, filter->get_length());
+                filter->set(kSnapflowAnimOutProperty, filter->get_length());
             }
             filter->set_in_and_out(filter->get_in(), out - outDelta);
             if (filterName == "fadeOutBrightness") {
@@ -1556,14 +1556,14 @@ void Controller::adjustFilter(
                 filter->anim_set(key,
                                  1,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                 filter->anim_set(key, 0, filter->get_length() - 1);
             } else if (filterName == "fadeOutMovit") {
                 filter->clear("opacity");
                 filter->anim_set("opacity",
                                  1,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2),
                                  0,
                                  mlt_keyframe_smooth);
                 filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1572,17 +1572,17 @@ void Controller::adjustFilter(
                 filter->anim_set("level",
                                  0,
                                  filter->get_length()
-                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
+                                     - std::max(filter->get_int(kSnapflowAnimOutProperty), 2));
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceOutChanged(outDelta, filter);
-        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
+        } else if (!filter->get_int("_loader") && !filter->get_int(kSnapflowHiddenProperty)
                    && filter->get_out() >= out) {
             filter->set_in_and_out(filter->get_in(), out - outDelta);
             emit MAIN.serviceOutChanged(outDelta, filter);
 
             // Update simple keyframes
-            if ((filter->get_int(kShotcutAnimInProperty) || filter->get_int(kShotcutAnimOutProperty))
+            if ((filter->get_int(kSnapflowAnimInProperty) || filter->get_int(kSnapflowAnimOutProperty))
                 && meta && meta->keyframes()) {
                 for (const QString &name : meta->keyframes()->simpleProperties()) {
                     if (!filter->get_animation(name.toUtf8().constData())) {
@@ -1601,13 +1601,13 @@ void Controller::adjustFilter(
                         int n = animation.key_count();
                         if (n > 1) {
                             animation.set_length(filter->get_length());
-                            if (filter->get_int(kShotcutAnimInProperty) > filter->get_length() - 1) {
+                            if (filter->get_int(kSnapflowAnimInProperty) > filter->get_length() - 1) {
                                 animation.key_set_frame(n - 1, filter->get_length() - 1);
-                            } else if (filter->get_int(kShotcutAnimOutProperty)) {
+                            } else if (filter->get_int(kSnapflowAnimOutProperty)) {
                                 animation.key_set_frame(n - 2,
                                                         filter->get_length()
                                                             - filter->get_int(
-                                                                kShotcutAnimOutProperty));
+                                                                kSnapflowAnimOutProperty));
                                 animation.key_set_frame(n - 1, filter->get_length() - 1);
                             }
                         }
@@ -1663,7 +1663,7 @@ Link *Controller::getLink(const QString &name, Service *service)
         for (int j = 0; j < link_count; j++) {
             Link *link = chain.link(j);
             if (link && link->is_valid()) {
-                if (name == QString::fromUtf8(link->get(kShotcutFilterProperty))
+                if (name == QString::fromUtf8(link->get(kSnapflowFilterProperty))
                     || name == QString::fromUtf8(link->get("mlt_service")))
                     return link;
                 delete link;
@@ -1678,7 +1678,7 @@ Filter *Controller::getFilter(const QString &name, Service *service)
     for (int i = 0; i < service->filter_count(); i++) {
         Mlt::Filter *filter = service->filter(i);
         if (filter) {
-            auto filterName = QString::fromUtf8(filter->get(kShotcutFilterProperty));
+            auto filterName = QString::fromUtf8(filter->get(kSnapflowFilterProperty));
             if (filterName.isEmpty()) {
                 filterName = QString::fromUtf8(filter->get("mlt_service"));
             }
@@ -1724,7 +1724,7 @@ int Controller::filterIn(Playlist &playlist, int clipIndex)
     if (info) {
         QScopedPointer<Mlt::ClipInfo> info2(playlist.clip_info(clipIndex - 1));
         if (info2 && info2->producer && info2->producer->is_valid()
-            && info2->producer->get(kShotcutTransitionProperty)) {
+            && info2->producer->get(kSnapflowTransitionProperty)) {
             // Factor in a transition left of the clip.
             result = info->frame_in - info2->frame_count;
         } else {
@@ -1741,7 +1741,7 @@ int Controller::filterOut(Playlist &playlist, int clipIndex)
     if (info) {
         QScopedPointer<Mlt::ClipInfo> info2(playlist.clip_info(clipIndex + 1));
         if (info2 && info2->producer && info2->producer->is_valid()
-            && info2->producer->get(kShotcutTransitionProperty)) {
+            && info2->producer->get(kSnapflowTransitionProperty)) {
             // Factor in a transition right of the clip.
             result = info->frame_out + info2->frame_count;
         } else {
@@ -1815,7 +1815,7 @@ bool Controller::isTrackProducer(Producer &producer)
 {
     mlt_service_type service_type = producer.type();
     return service_type == mlt_service_playlist_type
-           || (service_type == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty));
+           || (service_type == mlt_service_tractor_type && producer.get_int(kSnapflowXmlProperty));
 }
 
 int Controller::checkFile(const QString &path)
@@ -1824,11 +1824,11 @@ int Controller::checkFile(const QString &path)
     if (path.endsWith(".json") || path.endsWith(".rawr") || path.endsWith(".lottie")
         || path.endsWith(".riv") || path.endsWith(".tgs") || path.endsWith(".avd")
         || path.endsWith(".aep") || path.endsWith(".lot")) {
-        QString shotcutPath = qApp->applicationDirPath();
+        QString snapflowPath = qApp->applicationDirPath();
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-        QFileInfo meltPath(shotcutPath, "melt-7");
+        QFileInfo meltPath(snapflowPath, "melt-7");
 #else
-        QFileInfo meltPath(shotcutPath, "melt");
+        QFileInfo meltPath(snapflowPath, "melt");
 #endif
         QStringList args;
         args << "-quiet"

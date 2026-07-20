@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string noise: 'av.all_strength'
@@ -48,7 +48,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [noise]
@@ -61,7 +61,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: noiseSlider
 
             minimumValue: 0
@@ -72,7 +72,7 @@ Item {
             onValueChanged: filter.set(noise, noiseSlider.value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: noiseSlider.value = noiseDefault
         }
 

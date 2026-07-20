@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -60,7 +60,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['delta', 'every', 'brightnessdelta_up', 'brightnessdelta_down', 'brightnessdelta_every', 'unevendevelop_up', 'unevendevelop_duration']
@@ -73,7 +73,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: deltaSlider
 
             minimumValue: 0
@@ -82,7 +82,7 @@ Item {
             onValueChanged: filter.set('delta', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: deltaSlider.value = 14
         }
 
@@ -91,7 +91,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 0
@@ -101,7 +101,7 @@ Item {
             onValueChanged: filter.set('every', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = 20
         }
 
@@ -110,7 +110,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: brightDeltaSlider
 
             minimumValue: 0
@@ -119,7 +119,7 @@ Item {
             onValueChanged: filter.set('brightnessdelta_up', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: brightDeltaSlider.value = 20
         }
 
@@ -128,7 +128,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: darkDeltaSlider
 
             minimumValue: 0
@@ -137,7 +137,7 @@ Item {
             onValueChanged: filter.set('brightnessdelta_down', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: darkDeltaSlider.value = 30
         }
 
@@ -146,7 +146,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: valueSlider
 
             minimumValue: 0
@@ -156,7 +156,7 @@ Item {
             onValueChanged: filter.set('brightnessdelta_every', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: valueSlider.value = 70
         }
 
@@ -165,7 +165,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: highDevelopSlider
 
             minimumValue: 0
@@ -174,7 +174,7 @@ Item {
             onValueChanged: filter.set('unevendevelop_up', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: highDevelopSlider.value = 60
         }
 
@@ -183,7 +183,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lowDevelopSlider
 
             minimumValue: 0
@@ -192,7 +192,7 @@ Item {
             onValueChanged: filter.set('unevendevelop_down', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lowDevelopSlider.value = 20
         }
 
@@ -201,7 +201,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: durationSlider
 
             minimumValue: 0
@@ -210,7 +210,7 @@ Item {
             onValueChanged: filter.set('unevendevelop_duration', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: durationSlider.value = 70
         }
 

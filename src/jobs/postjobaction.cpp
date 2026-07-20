@@ -21,7 +21,7 @@
 #include "docks/playlistdock.h"
 #include "docks/subtitlesdock.h"
 #include "mainwindow.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <QFile>
 

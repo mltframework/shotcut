@@ -187,8 +187,8 @@ void ScreenCaptureJob::start()
     args << "-colorspace"
          << "bt709";
     args << "-y" << m_filename;
-    QString shotcutPath = qApp->applicationDirPath();
-    QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
+    QString snapflowPath = qApp->applicationDirPath();
+    QFileInfo ffmpegPath(snapflowPath, "ffmpeg");
     setReadChannel(QProcess::StandardError);
     LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + args.join(' ');
     AbstractJob::start(ffmpegPath.absoluteFilePath(), args);

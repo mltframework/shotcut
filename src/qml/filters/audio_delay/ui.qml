@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -50,7 +50,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['0', '1', 'wetness', channelMask.channelMaskProperty]
@@ -62,12 +62,12 @@ Item {
             text: qsTr('Delay')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The neutral delay time is 2 seconds.\nTimes above 2 seconds will have reduced quality.\nTimes below will have increased CPU usage.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderDelay
 
             minimumValue: 0
@@ -80,7 +80,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderDelay.value = 1
         }
 
@@ -89,7 +89,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderFeedback
 
             minimumValue: -70
@@ -102,7 +102,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderFeedback.value = -10
         }
 
@@ -111,7 +111,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderWetness
 
             minimumValue: 0
@@ -125,7 +125,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
@@ -134,7 +134,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2

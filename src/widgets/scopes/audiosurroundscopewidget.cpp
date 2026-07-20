@@ -54,8 +54,8 @@ AudioSurroundScopeWidget::AudioSurroundScopeWidget()
 {
     LOG_DEBUG() << "begin";
 
-    setWhatsThis("https://forum.shotcut.org/t/audio-surround-scope/43816/1");
-    connect(&Settings, &ShotcutSettings::playerAudioChannelsChanged, this, [&]() {
+    setWhatsThis("https://forum.snapflow.org/t/audio-surround-scope/43816/1");
+    connect(&Settings, &SnapflowSettings::playerAudioChannelsChanged, this, [&]() {
         m_channelsChanged = true;
         m_channels = Settings.playerAudioChannels();
         requestRefresh();

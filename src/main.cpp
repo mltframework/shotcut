@@ -56,7 +56,7 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 
 static constexpr int kMaxCacheCount = 5000;
 constexpr const auto kWatchdogTimeoutMs = 30000;
-constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
+constexpr const auto kWatchdogEnvVar = "SNAPFLOW_WATCHDOG";
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
@@ -117,7 +117,7 @@ public:
     MainWindow *mainWindow{nullptr};
     QTranslator qtTranslator;
     QTranslator qtBaseTranslator;
-    QTranslator shotcutTranslator;
+    QTranslator snapflowTranslator;
     QStringList resourceArg;
     bool isFullScreen;
     QString appDirArg;
@@ -131,7 +131,7 @@ public:
 #ifdef Q_OS_WIN
 #include <winbase.h>
         SetDllDirectoryA(appPath.toLocal8Bit());
-        CreateMutexA(NULL, FALSE, "Meltytech Shotcut Running Mutex");
+        CreateMutexA(NULL, FALSE, "Meltytech Snapflow Running Mutex");
 #else
         dir.cdUp();
 #endif
@@ -145,13 +145,13 @@ public:
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-        setOrganizationDomain("shotcut.org");
-        setDesktopFileName("org.shotcut.Shotcut");
+        setOrganizationDomain("snapflow.org");
+        setDesktopFileName("org.snapflow.Snapflow");
 #else
         setOrganizationDomain("meltytech.com");
 #endif
-        setApplicationName("Shotcut");
-        setApplicationVersion(SHOTCUT_VERSION);
+        setApplicationName("Snapflow");
+        setApplicationVersion(SNAPFLOW_VERSION);
 
         // Process command line options.
         QCommandLineParser parser;
@@ -160,7 +160,7 @@ public:
 #ifndef Q_OS_WIN
         QCommandLineOption fullscreenOption(
             "fullscreen",
-            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
+            QCoreApplication::translate("main", "Fill the screen with the Snapflow window."));
         parser.addOption(fullscreenOption);
 #endif
         QCommandLineOption noupgradeOption(
@@ -169,7 +169,7 @@ public:
         QCommandLineOption
             glaxnimateOption("glaxnimate",
                              QCoreApplication::translate("main",
-                                                         "Run Glaxnimate instead of Shotcut."));
+                                                         "Run Glaxnimate instead of Snapflow."));
         parser.addOption(glaxnimateOption);
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
@@ -253,10 +253,10 @@ public:
 #endif
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
-            ShotcutSettings::setAppDataForSession(appDirArg);
+            SnapflowSettings::setAppDataForSession(appDirArg);
         }
         if (parser.isSet(gpuOption))
-            Settings.setProcessingMode(ShotcutSettings::Linear10GpuCpu);
+            Settings.setProcessingMode(SnapflowSettings::Linear10GpuCpu);
         if (!parser.positionalArguments().isEmpty())
             resourceArg = parser.positionalArguments();
 
@@ -264,9 +264,9 @@ public:
         dir.setPath(Settings.appDataLocation());
         if (!dir.exists())
             dir.mkpath(dir.path());
-        const auto logFileName = dir.filePath("shotcut-log.txt");
+        const auto logFileName = dir.filePath("snapflow-log.txt");
         if (QFile::exists(logFileName)) {
-            const auto previousLogName = dir.filePath("shotcut-log.bak");
+            const auto previousLogName = dir.filePath("snapflow-log.bak");
             if (QFile::exists(previousLogName))
                 QFile::remove(previousLogName);
             if (!QFile::rename(logFileName, previousLogName))
@@ -297,7 +297,7 @@ public:
 #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");
-        dir.cd("shotcut");
+        dir.cd("snapflow");
         dir.cd("translations");
 #elif defined(Q_OS_WIN)
         dir.cd("share");
@@ -305,7 +305,7 @@ public:
 #else
         dir.cdUp();
         dir.cd("share");
-        dir.cd("shotcut");
+        dir.cd("snapflow");
         dir.cd("translations");
 #endif
         if (locale.startsWith("pt_"))
@@ -321,8 +321,8 @@ public:
             installTranslator(&qtBaseTranslator);
         else if (qtBaseTranslator.load("qtbase_" + locale, dir.absolutePath()))
             installTranslator(&qtBaseTranslator);
-        if (shotcutTranslator.load("shotcut_" + Settings.language(), dir.absolutePath()))
-            installTranslator(&shotcutTranslator);
+        if (snapflowTranslator.load("snapflow_" + Settings.language(), dir.absolutePath()))
+            installTranslator(&snapflowTranslator);
     }
 
     ~Application()
@@ -341,7 +341,7 @@ protected:
             } else {
                 // Running as the watchdog parent — forward to the child via IPC.
                 QLocalSocket socket;
-                socket.connectToServer("shotcut-file-open");
+                socket.connectToServer("snapflow-file-open");
                 if (socket.waitForConnected(500)) {
                     socket.write(openEvent->file().toUtf8());
                     socket.waitForBytesWritten(500);
@@ -437,7 +437,7 @@ int main(int argc, char **argv)
     // Application/QApplication is constructed below -- QPA platform
     // selection happens at construction time, so this env var can't be
     // acted on any later. Per memory/head/gen/rust-fork/08-lifecycle-and-cli.md,
-    // this (like the rest of SAP) is strictly opt-in: stock Shotcut behavior
+    // this (like the rest of SAP) is strictly opt-in: stock Snapflow behavior
     // is unchanged when SNAPSHOT_HEADLESS is unset.
     if (qgetenv("SNAPSHOT_HEADLESS") == "1") {
         ::qputenv("QT_QPA_PLATFORM", "offscreen");
@@ -473,10 +473,10 @@ int main(int argc, char **argv)
     ::qputenv(kWatchdogEnvVar, "1");
 #endif
     if (::qEnvironmentVariableIsSet(kWatchdogEnvVar)) {
-        QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
+        QSplashScreen splash(QPixmap(":/icons/snapflow-logo-320x320.png"));
 
         // Log some basic info.
-        LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
+        LOG_INFO() << "Starting Snapflow version" << SNAPFLOW_VERSION;
 #if defined(Q_OS_WIN)
         LOG_INFO() << "Windows version" << QSysInfo::productVersion();
 #elif defined(Q_OS_MAC)
@@ -563,8 +563,8 @@ int main(int argc, char **argv)
         // QFileOpenEvent file paths (e.g. files opened from Finder on macOS)
         // to this child process which holds the actual main window.
         QLocalServer fileOpenServer;
-        QLocalServer::removeServer("shotcut-file-open");
-        fileOpenServer.listen("shotcut-file-open");
+        QLocalServer::removeServer("snapflow-file-open");
+        fileOpenServer.listen("snapflow-file-open");
         QObject::connect(&fileOpenServer, &QLocalServer::newConnection, [&]() {
             QLocalSocket *socket = fileOpenServer.nextPendingConnection();
             QObject::connect(socket, &QLocalSocket::readyRead, [socket, &a]() {
@@ -587,7 +587,7 @@ int main(int argc, char **argv)
         // SAP (Snapshot App Protocol): opt-in only, per
         // memory/head/gen/rust-fork/{02-rust-embedding,08-lifecycle-and-cli}.md.
         // Absent SNAPSHOT_SAP_SOCKET, this process behaves exactly like
-        // stock Shotcut -- no socket is opened, nothing below runs. This is
+        // stock Snapflow -- no socket is opened, nothing below runs. This is
         // the actual "Rust layer runs inside the Qt process" integration
         // point: the sap-rust server is spawned on its own background
         // std::thread (never the Qt main thread, since sap_start_server

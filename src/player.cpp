@@ -79,7 +79,7 @@ Player::Player(QWidget *parent)
     setupActions();
 
     // Set WhatsThis help URL for the Player
-    setWhatsThis("https://forum.shotcut.org/t/source-vs-project-player/12576/1");
+    setWhatsThis("https://forum.snapflow.org/t/source-vs-project-player/12576/1");
 
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);
@@ -440,7 +440,7 @@ Player::Player(QWidget *parent)
             SLOT(onOffsetChanged(const QPoint &)));
     connect(MLT.videoWidget(), SIGNAL(stepZoom(float, float)), SLOT(stepZoom(float, float)));
 
-    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
+    connect(&Settings, &SnapflowSettings::timeFormatChanged, this, [&]() {
         updateSelection();
         if (MLT.isSeekable()) {
             onDurationChanged();

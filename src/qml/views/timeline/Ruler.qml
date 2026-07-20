@@ -16,7 +16,7 @@
  */
 import QtQuick
 import QtQuick.Controls
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: rulerTop
@@ -73,7 +73,7 @@ Rectangle {
         }
     }
 
-    Shotcut.MarkerBar {
+    Snapflow.MarkerBar {
         anchors.top: rulerTop.top
         anchors.left: parent.left
         anchors.right: parent.right

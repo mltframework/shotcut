@@ -23,7 +23,7 @@
 
 /*!
     \qmltype QmlView
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Provides access to the host widget geometry, available via the \c view context property.
 
     \c view is injected as a context property into every dock's QML view.

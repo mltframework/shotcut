@@ -1,0 +1,14 @@
+/*!
+    \qmlmodule Snapflow.Controls
+    \title Snapflow.Controls QML Module
+    \ingroup qmlmodules
+    \brief C++-backed UI controls and dialogs for Snapflow QML views.
+
+    \code
+    import Snapflow.Controls
+    \endcode
+
+    This module provides the C++-backed types registered for use in the
+    \c Snapflow.Controls import. These are native dialogs and canvas items
+    that cannot be replicated purely in QML.
+*/

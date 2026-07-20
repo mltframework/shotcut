@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     keywords: qsTr('frequency', 'search keywords for the Band Pass audio filter') + ' band pass'
     mlt_service: 'ladspa.1892'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/band-pass-audio-filter/12897/1'
+    help: 'https://forum.snapflow.org/t/band-pass-audio-filter/12897/1'
 
     keyframes {
         allowAnimateIn: true

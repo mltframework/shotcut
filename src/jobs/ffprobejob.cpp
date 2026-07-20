@@ -37,8 +37,8 @@ FfprobeJob::~FfprobeJob() {}
 
 void FfprobeJob::start()
 {
-    QString shotcutPath = qApp->applicationDirPath();
-    QFileInfo ffprobePath(shotcutPath, "ffprobe");
+    QString snapflowPath = qApp->applicationDirPath();
+    QFileInfo ffprobePath(snapflowPath, "ffprobe");
     setReadChannel(QProcess::StandardOutput);
     LOG_DEBUG() << ffprobePath.absoluteFilePath() + " " + m_args.join(' ');
     AbstractJob::start(ffprobePath.absoluteFilePath(), m_args);

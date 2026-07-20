@@ -1,6 +1,6 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-add_executable(shotcut WIN32 MACOSX_BUNDLE
+add_executable(snapflow WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
   autosavefile.cpp autosavefile.h
@@ -137,7 +137,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   scrubbar.cpp scrubbar.h
   settings.cpp settings.h
   sharedframe.cpp sharedframe.h
-  shotcut_mlt_properties.h
+  snapflow_mlt_properties.h
   transcoder.cpp transcoder.h
   screencapture/rectangleselector.cpp
   screencapture/rectangleselector.h
@@ -260,18 +260,18 @@ add_custom_target(OTHER_FILES
   ../icons/light/index.theme
   ../packaging/linux/appimage/appimage.yml
   ../packaging/linux/Makefile
-  ../packaging/linux/org.shotcut.Shotcut.desktop
-  ../packaging/linux/org.shotcut.Shotcut.metainfo.xml.in
-  ../packaging/linux/org.shotcut.Shotcut.xml
-  ../packaging/linux/shotcut.1
+  ../packaging/linux/org.snapflow.Snapflow.desktop
+  ../packaging/linux/org.snapflow.Snapflow.metainfo.xml.in
+  ../packaging/linux/org.snapflow.Snapflow.xml
+  ../packaging/linux/snapflow.1
   ../packaging/linux/snapcraft.yaml.in
   ../packaging/macos/Info.plist.in
-  ../packaging/macos/shotcut.icns
-  ../packaging/windows/shotcut.iss
-  ../packaging/windows/shotcut.rc.in
+  ../packaging/macos/snapflow.icns
+  ../packaging/windows/snapflow.iss
+  ../packaging/windows/snapflow.rc.in
   ../README.md
-  ../scripts/build-shotcut-msys2.sh
-  ../scripts/build-shotcut.sh
+  ../scripts/build-snapflow-msys2.sh
+  ../scripts/build-snapflow.sh
   ../scripts/codesign_and_notarize.sh
   ../scripts/notarize.sh
   ../scripts/staple.sh
@@ -292,10 +292,10 @@ if(QSB_EXECUTABLE)
     )
   endif()
   add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB})
-  add_dependencies(shotcut hdr_shaders)
+  add_dependencies(snapflow hdr_shaders)
 endif()
 
-target_link_libraries(shotcut
+target_link_libraries(snapflow
   PRIVATE
   CuteLogger
   PkgConfig::mlt++
@@ -315,119 +315,119 @@ target_link_libraries(shotcut
   Qt6::Xml
 )
 if(UNIX AND NOT APPLE)
-  target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
-  target_sources(shotcut PRIVATE linuxtools.cpp linuxtools.h)
+  target_link_libraries(snapflow PRIVATE Qt6::DBus X11::X11)
+  target_sources(snapflow PRIVATE linuxtools.cpp linuxtools.h)
 endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")
-target_sources(shotcut PRIVATE ${QML_SRC})
+target_sources(snapflow PRIVATE ${QML_SRC})
 
-target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
-target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
+target_include_directories(snapflow PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
+target_compile_definitions(snapflow PRIVATE SNAPFLOW_VERSION="${SNAPFLOW_VERSION}")
 
 # Add compile definitions when certain custom cache variables are ON
 if(EXTERNAL_LAUNCHERS)
-  target_compile_definitions(shotcut PRIVATE EXTERNAL_LAUNCHERS)
+  target_compile_definitions(snapflow PRIVATE EXTERNAL_LAUNCHERS)
 endif()
 if(USE_VULKAN)
-  target_compile_definitions(shotcut PRIVATE USE_VULKAN)
+  target_compile_definitions(snapflow PRIVATE USE_VULKAN)
 endif()
 if(BUILD_MINIMAL_MEDIA_BACKEND)
-  target_compile_definitions(shotcut PRIVATE BUILD_MINIMAL_MEDIA_BACKEND)
+  target_compile_definitions(snapflow PRIVATE BUILD_MINIMAL_MEDIA_BACKEND)
 endif()
 
 if(WIN32)
   # Windows resource
   string(REPLACE . , PRODUCT_VERSION ${PROJECT_VERSION})
-  configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc.in ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
-  target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
+  configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/snapflow.rc.in ${CMAKE_SOURCE_DIR}/packaging/windows/snapflow.rc)
+  target_sources(snapflow PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/snapflow.rc)
 
   # Windows integration features
-  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
-  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
-  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler dxgi dxguid ole32)
+  target_sources(snapflow PRIVATE windowstools.cpp windowstools.h)
+  target_sources(snapflow PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_sources(snapflow PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+  target_link_libraries(snapflow PRIVATE d3d11 d3dcompiler dxgi dxguid ole32)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-    target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
-    target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
-    target_link_libraries(shotcut PRIVATE debug exchndl)
+    target_include_directories(snapflow PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
+    target_link_directories(snapflow PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
+    target_link_libraries(snapflow PRIVATE debug exchndl)
   endif()
 
   if(WINDOWS_DEPLOY)
-    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(TARGETS snapflow RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
   else()
-    target_compile_definitions(shotcut PRIVATE NODEPLOY)
-    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    target_compile_definitions(snapflow PRIVATE NODEPLOY)
+    install(TARGETS snapflow RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   endif()
 
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/resources DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/resources DESTINATION ${CMAKE_INSTALL_PREFIX}/share/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/share/snapflow/)
 else()
-  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+  target_sources(snapflow PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h
+  target_sources(snapflow PRIVATE macos.mm macos.h
     widgets/metalvideowidget.h widgets/metalvideowidget.mm)
-  set_target_properties(shotcut PROPERTIES
-    OUTPUT_NAME "Shotcut"
+  set_target_properties(snapflow PROPERTIES
+    OUTPUT_NAME "Snapflow"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)
   find_library(FOUNDATION Foundation)
   find_library(COCOA Cocoa)
-  target_link_libraries(shotcut PRIVATE ${FOUNDATION} ${COCOA})
-  set(APP_ICON ${CMAKE_SOURCE_DIR}/packaging/macos/shotcut.icns)
-  target_sources(shotcut PRIVATE ${APP_ICON})
+  target_link_libraries(snapflow PRIVATE ${FOUNDATION} ${COCOA})
+  set(APP_ICON ${CMAKE_SOURCE_DIR}/packaging/macos/snapflow.icns)
+  target_sources(snapflow PRIVATE ${APP_ICON})
   set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
   # Create a symlink to the qml folder after building
   # These are skipped for release because it breaks the app bundling and is only for development.
   if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut)
-    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/qml SYMBOLIC)
-    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/filter-sets SYMBOLIC)
-    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/voices SYMBOLIC)
-    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/elements SYMBOLIC)
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Snapflow.app/Contents/Resources/snapflow)
+    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Snapflow.app/Contents/Resources/snapflow/qml SYMBOLIC)
+    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_CURRENT_BINARY_DIR}/Snapflow.app/Contents/Resources/snapflow/filter-sets SYMBOLIC)
+    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_CURRENT_BINARY_DIR}/Snapflow.app/Contents/Resources/snapflow/voices SYMBOLIC)
+    file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_CURRENT_BINARY_DIR}/Snapflow.app/Contents/Resources/snapflow/elements SYMBOLIC)
   endif()
 
-  install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
+  install(TARGETS snapflow BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Snapflow.app/Contents/Resources/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Snapflow.app/Contents/Resources/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/Snapflow.app/Contents/Resources/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/Snapflow.app/Contents/Resources/snapflow/)
 endif()
 
 if(UNIX AND NOT APPLE)
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share/shotcut)
-  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_BINARY_DIR}/share/shotcut/qml SYMBOLIC)
-  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_BINARY_DIR}/share/shotcut/filter-sets SYMBOLIC)
-  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_BINARY_DIR}/share/shotcut/voices SYMBOLIC)
-  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_BINARY_DIR}/share/shotcut/elements SYMBOLIC)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share/snapflow)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_BINARY_DIR}/share/snapflow/qml SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_BINARY_DIR}/share/snapflow/filter-sets SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_BINARY_DIR}/share/snapflow/voices SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_BINARY_DIR}/share/snapflow/elements SYMBOLIC)
   include(GNUInstallDirs)
-  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
+  install(TARGETS snapflow RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_DATADIR}/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_DATADIR}/snapflow/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_DATADIR}/snapflow/)
 
-  string(REPLACE . - SHOTCUT_DATE  ${SHOTCUT_VERSION})
-  string(PREPEND SHOTCUT_DATE "20")
-  configure_file(${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml.in
-    ${CMAKE_BINARY_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml)
-  install(FILES ${CMAKE_BINARY_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml
+  string(REPLACE . - SNAPFLOW_DATE  ${SNAPFLOW_VERSION})
+  string(PREPEND SNAPFLOW_DATE "20")
+  configure_file(${CMAKE_SOURCE_DIR}/packaging/linux/org.snapflow.Snapflow.metainfo.xml.in
+    ${CMAKE_BINARY_DIR}/packaging/linux/org.snapflow.Snapflow.metainfo.xml)
+  install(FILES ${CMAKE_BINARY_DIR}/packaging/linux/org.snapflow.Snapflow.metainfo.xml
     DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo/)
-  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.desktop
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.snapflow.Snapflow.desktop
     DESTINATION ${CMAKE_INSTALL_DATADIR}/applications/)
-  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.xml
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.snapflow.Snapflow.xml
     DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages/)
-  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/64x64/org.shotcut.Shotcut.png
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/64x64/org.snapflow.Snapflow.png
     DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/64x64/apps/)
-  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/128x128/org.shotcut.Shotcut.png
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/128x128/org.snapflow.Snapflow.png
     DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)
-  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/shotcut.1
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/snapflow.1
     DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1/)
 endif()

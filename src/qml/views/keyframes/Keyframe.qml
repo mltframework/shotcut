@@ -17,7 +17,7 @@
 import "Keyframes.js" as Logic
 import QtQuick
 import QtQuick.Controls
-import org.shotcut.qml
+import org.snapflow.qml
 
 Rectangle {
     id: keyframeRoot

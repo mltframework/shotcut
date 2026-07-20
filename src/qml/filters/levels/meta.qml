@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     mlt_service: 'frei0r.levels'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/levels-video-filter/12857/1'
+    help: 'https://forum.snapflow.org/t/levels-video-filter/12857/1'
 
     keyframes {
         allowAnimateIn: true

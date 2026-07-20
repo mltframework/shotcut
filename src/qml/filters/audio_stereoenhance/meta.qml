@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     keywords: qsTr('channel spatial delay', 'search keywords for the Stereo Enhancer audio filter') + ' stereo enhancer'
     objectName: 'stereoEnhance'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/stereo-enhancer-audio-filter/33109/1'
+    help: 'https://forum.snapflow.org/t/stereo-enhancer-audio-filter/33109/1'
 }

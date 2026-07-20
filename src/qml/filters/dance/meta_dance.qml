@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,5 +10,5 @@ Metadata {
     qml: 'ui_dance.qml'
     icon: 'icon.webp'
     allowMultiple: false
-    help: 'https://forum.shotcut.org/t/audio-dance-visualization/12822/1'
+    help: 'https://forum.snapflow.org/t/audio-dance-visualization/12822/1'
 }

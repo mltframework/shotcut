@@ -21,7 +21,7 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "widgets/htmlgeneratorwidget.h"
 
 #include <QAction>
@@ -54,7 +54,7 @@ HtmlGeneratorJob::HtmlGeneratorJob(const QString &name,
 
     // Create temporary directory for animation frames
     const auto outDir = QFileInfo(m_outputPath).dir();
-    m_tempDir.reset(new QTemporaryDir(outDir.filePath("shotcut-htmlgen-XXXXXX")));
+    m_tempDir.reset(new QTemporaryDir(outDir.filePath("snapflow-htmlgen-XXXXXX")));
     if (!m_tempDir->isValid()) {
         LOG_ERROR() << "Failed to create temp directory for HTML animation frames:"
                     << m_tempDir->path();
@@ -124,8 +124,8 @@ void HtmlGeneratorJob::onAnimationFramesReady()
     }
 
     // Now start FFmpeg process
-    const auto shotcutPath = qApp->applicationDirPath();
-    const QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
+    const auto snapflowPath = qApp->applicationDirPath();
+    const QFileInfo ffmpegPath(snapflowPath, "ffmpeg");
 
     QStringList args;
     args << "-r" << QString::number(fps()) << "-i" << m_tempDir->path() + "/frame_%04d.png"

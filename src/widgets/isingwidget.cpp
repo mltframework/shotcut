@@ -18,7 +18,7 @@
 #include "isingwidget.h"
 #include "ui_isingwidget.h"
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 static const char *kParamTemperature = "0";
@@ -88,8 +88,8 @@ Mlt::Producer *IsingWidget::newProducer(Mlt::Profile &profile)
     p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
     p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
     p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
-    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
-    p->set(kShotcutDetailProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowDetailProperty, ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

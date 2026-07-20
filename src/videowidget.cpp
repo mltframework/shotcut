@@ -273,7 +273,7 @@ void VideoWidget::onFrameDisplayed(const SharedFrame &frame)
     m_mutex.lock();
     m_sharedFrame = frame;
     m_mutex.unlock();
-    bool isVui = frame.get_int(kShotcutVuiMetaProperty) && !m_hideVui;
+    bool isVui = frame.get_int(kSnapflowVuiMetaProperty) && !m_hideVui;
     if (!isVui && source() != QmlUtilities::blankVui()) {
         m_savedQmlSource = source();
         setSource(QmlUtilities::blankVui());
@@ -464,11 +464,11 @@ int VideoWidget::reconfigure(bool isMulti)
         const bool hdrPreview = MLT.isHDR() && property("hdr_preview").toBool();
         const bool isDeckLinkHdr = serviceName.startsWith("decklink") && MLT.isHDR();
         switch (processingMode) {
-        case ShotcutSettings::Linear10Cpu:
+        case SnapflowSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
             break;
-        case ShotcutSettings::Native10Cpu:
-        case ShotcutSettings::Linear10GpuCpu:
+        case SnapflowSettings::Native10Cpu:
+        case SnapflowSettings::Linear10GpuCpu:
             m_consumer->set("mlt_image_format",
                             isDeckLinkHdr ? "yuv444p10"
                             : hdrPreview  ? "yuv420p10"
@@ -509,8 +509,8 @@ int VideoWidget::reconfigure(bool isMulti)
         const char *activeTrc = m_consumer->get("color_trc");
         HdrTransfer hdrTransfer = hdrTransferFromTrc(QLatin1String(activeTrc));
         emit hdrTransferChanged(hdrTransfer);
-        if (processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Linear10GpuCpu && !MLT.isHDR())) {
+        if (processingMode == SnapflowSettings::Linear10Cpu
+            || (processingMode == SnapflowSettings::Linear10GpuCpu && !MLT.isHDR())) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");
@@ -995,7 +995,7 @@ void VideoWidget::showFrame(Mlt::Frame frame, QByteArray p016Buffer)
     m_mutex.lock();
     m_sharedFrame = SharedFrame(frame);
     m_mutex.unlock();
-    bool isVui = m_sharedFrame.get_int(kShotcutVuiMetaProperty) && !m_hideVui;
+    bool isVui = m_sharedFrame.get_int(kSnapflowVuiMetaProperty) && !m_hideVui;
     if (!isVui && source() != QmlUtilities::blankVui()) {
         m_savedQmlSource = source();
         setSource(QmlUtilities::blankVui());
@@ -1046,7 +1046,7 @@ void VideoWidget::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
     m_hideVui = false;
     if (meta && meta->type() == QmlMetadata::Filter
         && QFile::exists(meta->vuiFilePath().toLocalFile())) {
-        filter->producer().set(kShotcutVuiMetaProperty, 1);
+        filter->producer().set(kSnapflowVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());
         refreshConsumer();

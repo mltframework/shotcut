@@ -25,7 +25,7 @@
 #include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
 
@@ -217,8 +217,8 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
     p->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
 
     m_title = info.fileName();
-    p->set(kShotcutCaptionProperty, m_title.toUtf8().constData());
-    p->set(kShotcutDetailProperty, filename.toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, m_title.toUtf8().constData());
+    p->set(kSnapflowDetailProperty, filename.toUtf8().constData());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
     connect(m_watcher.get(),
@@ -242,10 +242,10 @@ void GlaxnimateProducerWidget::setProducer(Mlt::Producer *p)
 
     auto filename = QString::fromUtf8(p->get("resource"));
     m_title = QFileInfo(filename).fileName();
-    if (QString::fromUtf8(p->get(kShotcutCaptionProperty)).isEmpty()) {
-        p->set(kShotcutCaptionProperty, m_title.toUtf8().constData());
+    if (QString::fromUtf8(p->get(kSnapflowCaptionProperty)).isEmpty()) {
+        p->set(kSnapflowCaptionProperty, m_title.toUtf8().constData());
     }
-    ui->lineEdit->setText(QString::fromUtf8(p->get(kShotcutCaptionProperty)));
+    ui->lineEdit->setText(QString::fromUtf8(p->get(kSnapflowCaptionProperty)));
     ui->durationSpinBox->setValue(p->get_length());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
@@ -307,7 +307,7 @@ void GlaxnimateProducerWidget::on_lineEdit_editingFinished()
             caption = m_title;
             ui->lineEdit->setText(m_title);
         }
-        m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
         emit modified();
     }
 }
@@ -338,8 +338,8 @@ void GlaxnimateProducerWidget::onFileChanged(const QString &path)
     if (m_producer && m_producer->is_valid()) {
         m_producer->set("resource", path.toUtf8().constData());
         auto caption = QFileInfo(path).fileName();
-        if (QString::fromUtf8(m_producer->get(kShotcutCaptionProperty)) == m_title) {
-            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        if (QString::fromUtf8(m_producer->get(kSnapflowCaptionProperty)) == m_title) {
+            m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
         }
         m_title = caption;
         m_producer->set("refresh", 1);
@@ -430,7 +430,7 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                         std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
                         if (filter && filter->is_valid()) {
                             if (found
-                                || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
+                                || !qstrcmp(filter->get(kSnapflowFilterProperty), "maskGlaxnimate")) {
                                 found = true;
                                 filter->set("disable", 1);
                             }
@@ -492,7 +492,7 @@ void GlaxnimateIpcServer::onReadyRead()
         int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(time)
                        - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
-            LOG_DEBUG() << "glaxnimate time =" << time << "=> Shotcut frameNum =" << frameNum;
+            LOG_DEBUG() << "glaxnimate time =" << time << "=> Snapflow frameNum =" << frameNum;
 
             if (!parent || !parent->m_glaxnimateProducer
                 || !parent->m_glaxnimateProducer->is_valid() || time < 0.0) {
@@ -647,7 +647,7 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer,
 
     m_server.reset(new QLocalServer);
     connect(m_server.get(), &QLocalServer::newConnection, this, &GlaxnimateIpcServer::onConnect);
-    QString name = "shotcut-%1";
+    QString name = "snapflow-%1";
     name = name.arg(QCoreApplication::applicationPid());
     QStringList args = {"--ipc", name, filename};
     QProcess childProcess;

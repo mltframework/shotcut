@@ -18,8 +18,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     property string fillProperty
@@ -32,12 +32,12 @@ Item {
     property string rotationProperty
     property string trackingProperty
     property rect filterRect
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
-    property string rotationStartValue: '_shotcut:rotationStartValue'
-    property string rotationMiddleValue: '_shotcut:rotationMiddleValue'
-    property string rotationEndValue: '_shotcut:rotationEndValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
+    property string rotationStartValue: '_snapflow:rotationStartValue'
+    property string rotationMiddleValue: '_snapflow:rotationMiddleValue'
+    property string rotationEndValue: '_snapflow:rotationEndValue'
     property bool blockUpdate: true
     property rect defaultRect
     property real aspectRatio: producer.displayAspectRatio
@@ -266,7 +266,7 @@ Item {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
             let current = filter.getRect(trackingProperty, frame);
@@ -288,14 +288,14 @@ Item {
             case 'absPos':
                 current.x = i.x + i.width / 2 - current.width / 2;
                 current.y = i.y + i.height / 2 - current.height / 2;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             case 'absSizePos':
                 current.x = i.x;
                 current.y = i.y;
                 current.width = i.width;
                 current.height = i.height;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             }
             previous = i;
@@ -353,74 +353,74 @@ Item {
             filter.set(halignProperty, 'center');
             filter.animateIn = Math.round(profile.fps);
             filter.set(rectProperty, '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slide In From Left'));
             filter.set(rectProperty, '0=100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slide In From Right'));
             filter.set(rectProperty, '0=0%/-100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Top'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slide In From Top'));
             filter.set(rectProperty, '0=0%/100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Bottom'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slide In From Bottom'));
             filter.animateIn = 0;
             filter.animateOut = Math.round(profile.fps);
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=-100%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animOut'), qsTr('Slide Out Left'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=100%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animOut'), qsTr('Slide Out Right'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/-100%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Top'));
+            filter.savePreset(preset.parameters.concat('snapflow:animOut'), qsTr('Slide Out Top'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/100%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Bottom'));
+            filter.savePreset(preset.parameters.concat('snapflow:animOut'), qsTr('Slide Out Bottom'));
             filter.set(fillProperty, 1);
             filter.animateOut = 0;
             filter.animateIn = filter.duration;
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-5%/-5%:110%x110%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=-10%/-5%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Left'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Move Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Move Left'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=0%/-5%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Right'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Move Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Move Right'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=-5%/-10%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Up'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Move Up'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Move Up'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=-5%/0%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Down'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Move Down'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Move Down'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-10%/-10%:110%x110%');
             filter.deletePreset(qsTr('Slow Zoom In, Pan Up Left'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Up Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Move Up Left'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=0%/0%:110%x110%');
             filter.deletePreset(qsTr('Slow Zoom In, Pan Down Right'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Down Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Move Down Right'));
             filter.set(rectProperty, '0=-10%/0%:110%x110%; -1=0%/0%:100%x100%');
             filter.deletePreset(qsTr('Slow Zoom Out, Pan Up Right'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Up Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Move Up Right'));
             filter.set(rectProperty, '0=0%/-10%:110%x110%; -1=0%/0%:100%x100%');
             filter.deletePreset(qsTr('Slow Zoom Out, Pan Down Left'));
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Down Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Move Down Left'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-5%/-10%:110%x110%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Hold Bottom'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Hold Bottom'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-5%/0%:110%x110%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Hold Top'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Hold Top'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=0%/-5%:110%x110%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Hold Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Hold Left'));
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-10%/-5%:110%x110%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Hold Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom In, Hold Right'));
             filter.set(rectProperty, '0=-5%/-10%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Hold Bottom'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Hold Bottom'));
             filter.set(rectProperty, '0=-5%/0%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Hold Top'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Hold Top'));
             filter.set(rectProperty, '0=0%/-5%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Hold Left'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Hold Left'));
             filter.set(rectProperty, '0=-10%/-5%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Hold Right'));
+            filter.savePreset(preset.parameters.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Hold Right'));
             filter.animateIn = 0;
             filter.resetProperty(rectProperty);
-            filter.set('_shotcut:test_locale', 0.1);
-            if (filter.get('_shotcut:test_locale') === '0,1') {
+            filter.set('_snapflow:test_locale', 0.1);
+            if (filter.get('_snapflow:test_locale') === '0,1') {
                 filter.set(rectProperty, '00:00:00,000= -7,937%  -7,648% 115% 115%; 00:00:00,080= -7,781% -11,815% 115% 115%;' + '00:00:00,160= -0,094% -13,019% 115% 115%; 00:00:00,240= -7,313%  -9,037% 115% 115%;' + '00:00:00,320= -7,469% -13,760% 115% 115%; 00:00:00,400=-10,229%  -5,593% 115% 115%;' + '00:00:00,480= -6,615% -11,074% 115% 115%; 00:00:00,560= -5,031%  -6,074% 115% 115%;' + '00:00:00,640= -2,990%  -6,074% 115% 115%; 00:00:00,720= -3,260%  -3,574% 115% 115%;' + '00:00:00,800= -5,229%  -7,093% 115% 115%; 00:00:00,880= -5,906%  -3,574% 115% 115%;' + '00:00:00,960=-10,958%  -9,315% 115% 115%; 00:00:01,040= -7,500%  -7,500% 115% 115%');
                 filter.savePreset(preset.parameters, qsTr('Shake 1 Second - Scaled'));
                 filter.set(rectProperty, '00:00:00,000=  -0,437%  -0,148% 100% 100%; 00:00:00,080= -0,281%  -4,315% 100% 100%;' + '00:00:00,160=   7,406%  -5,519% 100% 100%; 00:00:00,240=  0,187%  -1,537% 100% 100%;' + '00:00:00,320=   0,031%  -6,260% 100% 100%; 00:00:00,400= -2,729%   1,907% 100% 100%;' + '00:00:00,480=   0,885%  -3,574% 100% 100%; 00:00:00,560=  2,469%   1,426% 100% 100%;' + '00:00:00,640=   4,510%   1,426% 100% 100%; 00:00:00,720=  4,240%   3,926% 100% 100%;' + '00:00:00,800=   2,271%   0,407% 100% 100%; 00:00:00,880=  1,594%   3,926% 100% 100%;' + '00:00:00,960=  -3,458%  -1,815% 100% 100%; 00:00:01,040=  0,000%   0,000% 100% 100%');
@@ -431,7 +431,7 @@ Item {
                 filter.set(rectProperty, '00:00:00.000=  -0.437%  -0.148% 100% 100%; 00:00:00.080= -0.281%  -4.315% 100% 100%;' + '00:00:00.160=   7.406%  -5.519% 100% 100%; 00:00:00.240=  0.187%  -1.537% 100% 100%;' + '00:00:00.320=   0.031%  -6.260% 100% 100%; 00:00:00.400= -2.729%   1.907% 100% 100%;' + '00:00:00.480=   0.885%  -3.574% 100% 100%; 00:00:00.560=  2.469%   1.426% 100% 100%;' + '00:00:00.640=   4.510%   1.426% 100% 100%; 00:00:00.720=  4.240%   3.926% 100% 100%;' + '00:00:00.800=   2.271%   0.407% 100% 100%; 00:00:00.880=  1.594%   3.926% 100% 100%;' + '00:00:00.960=  -3.458%  -1.815% 100% 100%; 00:00:01.040=  0.000%   0.000% 100% 100%');
                 filter.savePreset(preset.parameters, qsTr('Shake 1 Second - Unscaled'));
             }
-            filter.resetProperty('_shotcut:test_locale');
+            filter.resetProperty('_snapflow:test_locale');
             filter.resetProperty(rectProperty);
             // Add default preset.
             if (backgroundProperty)
@@ -488,7 +488,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
@@ -526,7 +526,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 horizontalAlignment: Qt.AlignRight
@@ -551,7 +551,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 horizontalAlignment: Qt.AlignRight
@@ -571,7 +571,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(positionLabel.text);
                 filterRect.x = rectX.value = defaultRect.x;
@@ -596,7 +596,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
-            Shotcut.KeyframesButton {
+            Snapflow.KeyframesButton {
                 id: positionKeyframesButton
 
                 onToggled: {
@@ -636,7 +636,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 horizontalAlignment: Qt.AlignRight
@@ -665,7 +665,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 horizontalAlignment: Qt.AlignRight
@@ -689,7 +689,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: sizeUndoButton
 
             onClicked: {
@@ -708,7 +708,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: scaleSlider
 
             function update() {
@@ -745,7 +745,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             enabled: scaleSlider.enabled
             onClicked: scaleSlider.value = 100
         }
@@ -804,7 +804,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(sizeModeLabel.text);
                 fitRadioButton.checked = true;
@@ -861,7 +861,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(horizontalFitLabel.text);
                 leftRadioButton.checked = true;
@@ -916,7 +916,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(verticalFitLabel.text);
                 topRadioButton.checked = true;
@@ -936,7 +936,7 @@ Item {
             visible: !!rotationProperty
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rotationSlider
 
             Layout.columnSpan: 3
@@ -952,12 +952,12 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: !!rotationProperty
             onClicked: rotationSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: rotationKeyframesButton
 
             visible: !!rotationProperty
@@ -976,7 +976,7 @@ Item {
             visible: bgColor.visible
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             visible: !!backgroundProperty
@@ -990,7 +990,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: bgColor.visible
             onClicked: bgColor.value = '#00000000'
         }
@@ -1005,7 +1005,7 @@ Item {
             visible: !!trackingProperty
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             visible: !!trackingProperty
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
@@ -1017,7 +1017,7 @@ Item {
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         onAccepted: (motionTrackerRow, operation, startFrame) => {
             filter.startUndoParameterCommand(title);

@@ -32,7 +32,7 @@ static const char *kAspectDenProperty = "meta.media.sample_aspect_den";
 
 /*!
     \qmltype Producer
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Represents the clip currently loaded in the \b Filters panel, accessed via the \c producer context property.
 
     \c producer describes the clip that the currently displayed filter is attached to.

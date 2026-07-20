@@ -6,11 +6,11 @@
     <property name="resource">black</property>
     <property name="aspect_ratio">1</property>
     <property name="mlt_service">color</property>
-    <property name="shotcut:filtersClipboard">1</property>
+    <property name="snapflow:filtersClipboard">1</property>
     <filter id="filter0" out="00:00:03.960">
       <property name="version">1</property>
       <property name="mlt_service">frei0r.cairogradient</property>
-      <property name="shotcut:filter">gradient</property>
+      <property name="snapflow:filter">gradient</property>
       <property name="0">gradient_linear</property>
       <property name="1">#000000</property>
       <property name="2">1</property>
@@ -18,7 +18,7 @@
       <property name="4">0</property>
       <property name="9">0</property>
       <property name="10">normal</property>
-      <property name="shotcut:rect">50% 65% 0 25%</property>
+      <property name="snapflow:rect">50% 65% 0 25%</property>
       <property name="5">0.5</property>
       <property name="6">0.75</property>
       <property name="7">0.5</property>
@@ -39,9 +39,9 @@
       <property name="valign">top</property>
       <property name="outline">3</property>
       <property name="mlt_service">dynamictext</property>
-      <property name="shotcut:filter">dynamicText</property>
-      <property name="shotcut:usePointSize">1</property>
-      <property name="shotcut:pointSize">60</property>
+      <property name="snapflow:filter">dynamicText</property>
+      <property name="snapflow:usePointSize">1</property>
+      <property name="snapflow:pointSize">60</property>
     </filter>
   </producer>
 </mlt>

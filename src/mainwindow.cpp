@@ -63,7 +63,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "screencapture/screencapture.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
 #include "widgets/alsawidget.h"
@@ -118,7 +118,7 @@
 
 #include <algorithm>
 
-#define SHOTCUT_THEME
+#define SNAPFLOW_THEME
 
 static bool eventDebugCallback(void **data)
 {
@@ -154,7 +154,7 @@ MainWindow::MainWindow()
     , m_multipleFilesLoading(false)
     , m_isPlaylistLoaded(false)
     , m_exitCode(EXIT_SUCCESS)
-    , m_upgradeUrl("https://www.shotcut.org/download/")
+    , m_upgradeUrl("https://www.snapflow.org/download/")
     , m_keyframesDock(0)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -218,7 +218,7 @@ MainWindow::MainWindow()
 
     centerLayoutInRemainingToolbarSpace();
 
-#ifndef SHOTCUT_NOUPGRADE
+#ifndef SNAPFLOW_NOUPGRADE
     if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
 #endif
         delete ui->actionUpgrade;
@@ -307,9 +307,9 @@ void MainWindow::setupAndConnectUndoStack()
     redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
 #endif
     undoAction->setWhatsThis(
-        QString::fromLatin1("https://forum.shotcut.org/t/undo-and-redo/12979/1"));
+        QString::fromLatin1("https://forum.snapflow.org/t/undo-and-redo/12979/1"));
     redoAction->setWhatsThis(
-        QString::fromLatin1("https://forum.shotcut.org/t/undo-and-redo/12979/1"));
+        QString::fromLatin1("https://forum.snapflow.org/t/undo-and-redo/12979/1"));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->menuEdit->addSeparator();
@@ -708,7 +708,7 @@ void MainWindow::setupAndConnectDocks()
             &TimelineDock::trimEnded,
             m_filterController,
             &FilterController::resumeUndoTracking);
-    connect(&Actions, &ShotcutActions::shortcutsChanged, this, [this](const QAction *action) {
+    connect(&Actions, &SnapflowActions::shortcutsChanged, this, [this](const QAction *action) {
         static const QStringList
             actionsNeedingReload{QStringLiteral("timelineToggleTrackLockedAction"),
                                  QStringLiteral("timelineToggleTrackMuteAction"),
@@ -836,7 +836,7 @@ void MainWindow::setupAndConnectDocks()
             &EncodeDock::onProfileChanged);
     connect(m_filterController, &FilterController::filterChanged, this, [&](Mlt::Service *filter) {
         if (filter && filter->is_valid()
-            && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty))) {
+            && !::qstrcmp("reframe", filter->get(kSnapflowFilterProperty))) {
             m_encodeDock->onReframeChanged();
         }
     });
@@ -1103,12 +1103,12 @@ void MainWindow::setupSettingsMenu()
         ui->actionLinear10bitCpu->setVisible(false);
     }
     QActionGroup *group = new QActionGroup(this);
-    ui->actionNative8bitCpu->setData(ShotcutSettings::Native8Cpu);
+    ui->actionNative8bitCpu->setData(SnapflowSettings::Native8Cpu);
     if (ui->actionNative10bitCpu->isVisible())
-        ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
+        ui->actionNative10bitCpu->setData(SnapflowSettings::Native10Cpu);
     if (ui->actionLinear10bitCpu->isVisible())
-        ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
-    ui->actionLinear10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
+        ui->actionLinear10bitCpu->setData(SnapflowSettings::Linear10Cpu);
+    ui->actionLinear10bitGpuCpu->setData(SnapflowSettings::Linear10GpuCpu);
     if (ui->actionNative8bitCpu->isVisible())
         group->addAction(ui->actionNative8bitCpu);
     if (ui->actionNative10bitCpu->isVisible())
@@ -1118,7 +1118,7 @@ void MainWindow::setupSettingsMenu()
     if (ui->actionLinear10bitGpuCpu->isVisible())
         group->addAction(ui->actionLinear10bitGpuCpu);
     for (auto a : group->actions()) {
-        const auto mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
+        const auto mode = (SnapflowSettings::ProcessingMode) a->data().toInt();
         if (Settings.processingMode() == mode) {
             a->setChecked(true);
             setProcessingMode(mode);
@@ -1127,17 +1127,17 @@ void MainWindow::setupSettingsMenu()
     }
     connect(group, &QActionGroup::triggered, this, [&](QAction *action) {
         const auto oldMode = Settings.processingMode();
-        const auto newMode = (ShotcutSettings::ProcessingMode) action->data().toInt();
+        const auto newMode = (SnapflowSettings::ProcessingMode) action->data().toInt();
         if (oldMode == newMode)
             return;
         LOG_INFO() << "Processing Mode" << oldMode << "->" << newMode;
-        if (newMode == ShotcutSettings::Linear10GpuCpu) {
+        if (newMode == SnapflowSettings::Linear10GpuCpu) {
             QMessageBox
                 dialog(QMessageBox::Warning,
                        qApp->applicationName(),
                        tr("GPU processing is experimental and does not work on all computers. "
                           "Plan to do some testing after turning this on.\n\n"
-                          "Do you want to enable GPU processing and restart Shotcut?"),
+                          "Do you want to enable GPU processing and restart Snapflow?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
             dialog.setDefaultButton(QMessageBox::Yes);
@@ -1155,10 +1155,10 @@ void MainWindow::setupSettingsMenu()
                     break;
                 }
             }
-        } else if (oldMode == ShotcutSettings::Linear10GpuCpu) {
+        } else if (oldMode == SnapflowSettings::Linear10GpuCpu) {
             QMessageBox dialog(QMessageBox::Information,
                                qApp->applicationName(),
-                               tr("Shotcut must restart to disable GPU processing.\n"
+                               tr("Snapflow must restart to disable GPU processing.\n"
                                   "Disable GPU processing and restart?"),
                                QMessageBox::No | QMessageBox::Yes,
                                this);
@@ -1173,7 +1173,7 @@ void MainWindow::setupSettingsMenu()
             }
             ui->actionLinear10bitGpuCpu->setChecked(true);
         } else {
-            setProcessingMode((ShotcutSettings::ProcessingMode) action->data().toInt());
+            setProcessingMode((SnapflowSettings::ProcessingMode) action->data().toInt());
         }
     });
 
@@ -1217,7 +1217,7 @@ void MainWindow::setupSettingsMenu()
         Settings.setPlayerAudioDriver(action->data().toString());
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
-                           tr("You must restart Shotcut to change the audio API.\n"
+                           tr("You must restart Snapflow to change the audio API.\n"
                               "Do you want to restart now?"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
@@ -1404,7 +1404,7 @@ void MainWindow::setupSettingsMenu()
         Settings.setPlayerOldVideoOutput(checked);
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
-                           tr("Shotcut must restart to change the video output.\n"
+                           tr("Snapflow must restart to change the video output.\n"
                               "Restart now?"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
@@ -1578,7 +1578,7 @@ void MainWindow::setupSettingsMenu()
             SLOT(onLanguageTriggered(QAction *)));
 
     // Setup the themes actions
-#if defined(SHOTCUT_THEME)
+#if defined(SNAPFLOW_THEME)
     group = new QActionGroup(this);
     group->addAction(ui->actionSystemTheme);
     group->addAction(ui->actionSystemFusion);
@@ -1598,8 +1598,8 @@ void MainWindow::setupSettingsMenu()
 
 #if defined(Q_OS_WIN)
     // On Windows, if there is no JACK or it is not running
-    // then Shotcut crashes inside MLT's call to jack_client_open().
-    // Therefore, the JACK option for Shotcut is banned on Windows.
+    // then Snapflow crashes inside MLT's call to jack_client_open().
+    // Therefore, the JACK option for Snapflow is banned on Windows.
     delete ui->actionJack;
     ui->actionJack = nullptr;
 #else
@@ -1859,8 +1859,8 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
             QMessageBox::Question,
             qApp->applicationName(),
             tr("The file you opened uses GPU processing, which is not enabled.\n"
-               "Do you want Shotcut to convert it for CPU? Conversion is an approximation.\n\n"
-               "If you choose Yes, Shotcut will create a copy of your project\n"
+               "Do you want Snapflow to convert it for CPU? Conversion is an approximation.\n\n"
+               "If you choose Yes, Snapflow will create a copy of your project\n"
                "with \"- Converted for CPU\" in the file name and open it."),
             QMessageBox::No | QMessageBox::Yes,
             this);
@@ -1876,8 +1876,8 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("The file you opened uses CPU processing, which is not enabled.\n"
-                              "Do you want Shotcut to convert it for GPU?\n\n"
-                              "If you choose Yes, Shotcut will create a copy of your project\n"
+                              "Do you want Snapflow to convert it for GPU?\n\n"
+                              "If you choose Yes, Snapflow will create a copy of your project\n"
                               "with \"- Converted for GPU\" in the file name and open it."),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
@@ -1995,9 +1995,9 @@ bool MainWindow::isXmlRepaired(MltXmlChecker &checker, QString &fileName)
         LOG_WARNING() << fileName;
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
-                           tr("Shotcut noticed some problems in your project.\n"
-                              "Do you want Shotcut to try to repair it?\n\n"
-                              "If you choose Yes, Shotcut will create a copy of your project\n"
+                           tr("Snapflow noticed some problems in your project.\n"
+                              "Do you want Snapflow to try to repair it?\n\n"
+                              "If you choose Yes, Snapflow will create a copy of your project\n"
                               "with \"- Repaired\" in the file name and open it."),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
@@ -2136,24 +2136,24 @@ void MainWindow::setAudioChannels(int channels)
     emit audioChannelsChanged();
 }
 
-void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
+void MainWindow::setProcessingMode(SnapflowSettings::ProcessingMode mode)
 {
     LOG_DEBUG() << mode;
     if (mode != Settings.processingMode()) {
         Settings.setProcessingMode(mode);
     }
     switch (mode) {
-    case ShotcutSettings::Native8Cpu:
-    case ShotcutSettings::Linear8Cpu:
+    case SnapflowSettings::Native8Cpu:
+    case SnapflowSettings::Linear8Cpu:
         ui->actionNative8bitCpu->setChecked(true);
         break;
-    case ShotcutSettings::Native10Cpu:
+    case SnapflowSettings::Native10Cpu:
         ui->actionNative10bitCpu->setChecked(true);
         break;
-    case ShotcutSettings::Linear10Cpu:
+    case SnapflowSettings::Linear10Cpu:
         ui->actionLinear10bitCpu->setChecked(true);
         break;
-    case ShotcutSettings::Linear10GpuCpu:
+    case SnapflowSettings::Linear10GpuCpu:
         ui->actionLinear10bitGpuCpu->setChecked(true);
         break;
     }
@@ -2258,14 +2258,14 @@ void MainWindow::resetDockCorners()
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 }
 
-void MainWindow::showIncompatibleProjectMessage(const QString &shotcutVersion)
+void MainWindow::showIncompatibleProjectMessage(const QString &snapflowVersion)
 {
-    LOG_INFO() << shotcutVersion;
+    LOG_INFO() << snapflowVersion;
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("This project file requires a newer version!\n\n"
                           "It was made with version ")
-                           + shotcutVersion,
+                           + snapflowVersion,
                        QMessageBox::Ok,
                        this);
     dialog.setDefaultButton(QMessageBox::Ok);
@@ -2293,7 +2293,7 @@ void MainWindow::onAutosaveTimeout()
                               qApp->applicationName(),
                               tr("You are running low on available memory!\n\n"
                                  "Please close other applications or web browser tabs and retry.\n"
-                                 "Or save and restart Shotcut."),
+                                 "Or save and restart Snapflow."),
                               QMessageBox::Retry | QMessageBox::Save | QMessageBox::Ignore,
                               this);
         dialog->setDefaultButton(QMessageBox::Retry);
@@ -2355,7 +2355,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
             }
             break;
         case QXmlStreamReader::CustomError:
-            showIncompatibleProjectMessage(checker.shotcutVersion());
+            showIncompatibleProjectMessage(checker.snapflowVersion());
             return true;
         default:
             showStatusMessage(tr("Failed to open ").append(url));
@@ -2382,7 +2382,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
                     return true;
             } else {
                 showStatusMessage(tr("Failed to open ").append(url));
-                showIncompatibleProjectMessage(checker.shotcutVersion());
+                showIncompatibleProjectMessage(checker.snapflowVersion());
                 return true;
             }
             if (!isXmlRepaired(checker, url))
@@ -2416,7 +2416,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         bool isNonSequenceImage = MLT.isImageProducer(MLT.producer())
-                                  && !MLT.producer()->get_int(kShotcutSequenceProperty);
+                                  && !MLT.producer()->get_int(kSnapflowSequenceProperty);
         m_player->setPauseAfterOpen(!play || !MLT.isClip() || isNonSequenceImage);
 
         setAudioChannels(MLT.audioChannels());
@@ -2424,14 +2424,14 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         if (filter.is_valid())
             setProcessingMode(MLT.processingMode());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
-            if (MLT.producer()->get_int(kShotcutProjectFolder)) {
+            if (MLT.producer()->get_int(kSnapflowProjectFolder)) {
                 MLT.setProjectFolder(info.absolutePath());
                 ProxyManager::removePending();
             } else {
                 MLT.setProjectFolder(QString());
             }
             setVideoModeMenu();
-            m_notesDock->setText(MLT.producer()->get(kShotcutProjectNote));
+            m_notesDock->setText(MLT.producer()->get(kSnapflowProjectNote));
         }
 
         open(MLT.producer());
@@ -2923,16 +2923,16 @@ void MainWindow::mirrorViewActionShortcuts()
         if (!sourceAction || !targetAction)
             continue;
 
-        QVariant defaultToolTip = targetAction->property(ShotcutActions::defaultToolTipProperty);
+        QVariant defaultToolTip = targetAction->property(SnapflowActions::defaultToolTipProperty);
         if (!defaultToolTip.isValid()) {
             defaultToolTip = targetAction->toolTip();
-            targetAction->setProperty(ShotcutActions::defaultToolTipProperty, defaultToolTip);
+            targetAction->setProperty(SnapflowActions::defaultToolTipProperty, defaultToolTip);
         }
 
         QString toolTip = defaultToolTip.toString();
         QString shortcut = sourceAction->shortcut().toString(QKeySequence::NativeText);
         if (shortcut.isEmpty())
-            shortcut = sourceAction->property(ShotcutActions::hardKeyProperty).toString();
+            shortcut = sourceAction->property(SnapflowActions::hardKeyProperty).toString();
 
         if (!shortcut.isEmpty()) {
             if (!toolTip.isEmpty())
@@ -2943,7 +2943,7 @@ void MainWindow::mirrorViewActionShortcuts()
     }
 
     connect(&Actions,
-            &ShotcutActions::shortcutsChanged,
+            &SnapflowActions::shortcutsChanged,
             this,
             [mirroredActions](const QAction *action) {
                 if (!action)
@@ -2954,17 +2954,17 @@ void MainWindow::mirrorViewActionShortcuts()
                     return;
 
                 QVariant defaultToolTip = targetAction->property(
-                    ShotcutActions::defaultToolTipProperty);
+                    SnapflowActions::defaultToolTipProperty);
                 if (!defaultToolTip.isValid()) {
                     defaultToolTip = targetAction->toolTip();
-                    targetAction->setProperty(ShotcutActions::defaultToolTipProperty,
+                    targetAction->setProperty(SnapflowActions::defaultToolTipProperty,
                                               defaultToolTip);
                 }
 
                 QString toolTip = defaultToolTip.toString();
                 QString shortcut = action->shortcut().toString(QKeySequence::NativeText);
                 if (shortcut.isEmpty())
-                    shortcut = action->property(ShotcutActions::hardKeyProperty).toString();
+                    shortcut = action->property(SnapflowActions::hardKeyProperty).toString();
 
                 if (!shortcut.isEmpty()) {
                     if (!toolTip.isEmpty())
@@ -3087,18 +3087,18 @@ void MainWindow::updateWindowTitle()
 #endif
 }
 
-void MainWindow::on_actionAbout_Shotcut_triggered()
+void MainWindow::on_actionAbout_Snapflow_triggered()
 {
     const auto copyright = QStringLiteral(
         "Copyright &copy; 2011-2026 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
     const auto license = QStringLiteral(
         "<a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a>");
-    const auto url = QStringLiteral("https://www.shotcut.org/");
+    const auto url = QStringLiteral("https://www.snapflow.org/");
     QMessageBox::about(
         this,
         tr("About %1").arg(qApp->applicationName()),
         QStringLiteral(
-            "<h1>Shotcut version %2</h1>"
+            "<h1>Snapflow version %2</h1>"
             "<p><a href=\"%3\">%1</a> is a free, open source, cross platform video editor.</p>"
             "<small><p>%4</p>"
             "<p>Licensed under the %5</p>"
@@ -3487,7 +3487,7 @@ void MainWindow::showEvent(QShowEvent *event)
 
     windowHandle()->installEventFilter(this);
 
-#ifndef SHOTCUT_NOUPGRADE
+#ifndef SNAPFLOW_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
 #endif
@@ -4020,7 +4020,7 @@ void MainWindow::onMultitrackModified()
             int expected = info->frame_in;
             auto info2 = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex - 1);
             if (info2 && info2->producer && info2->producer->is_valid()
-                && info2->producer->get(kShotcutTransitionProperty)) {
+                && info2->producer->get(kSnapflowTransitionProperty)) {
                 // Factor in a transition left of the clip.
                 expected -= info2->frame_count;
                 info->producer->set(kPlaylistStartProperty, info2->start);
@@ -4035,7 +4035,7 @@ void MainWindow::onMultitrackModified()
             expected = info->frame_out;
             info2 = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex + 1);
             if (info2 && info2->producer && info2->producer->is_valid()
-                && info2->producer->get(kShotcutTransitionProperty)) {
+                && info2->producer->get(kSnapflowTransitionProperty)) {
                 // Factor in a transition right of the clip.
                 expected += info2->frame_count;
             }
@@ -4113,12 +4113,12 @@ void MainWindow::updateThumbnails()
 
 void MainWindow::on_actionFAQ_triggered()
 {
-    Util::openUrl(QUrl("https://www.shotcut.org/FAQ/"));
+    Util::openUrl(QUrl("https://www.snapflow.org/FAQ/"));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    Util::openUrl(QUrl("https://forum.shotcut.org/"));
+    Util::openUrl(QUrl("https://forum.snapflow.org/"));
 }
 
 bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
@@ -4142,7 +4142,7 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
                              false,
                              notes);
     } else {
-        // Save an empty playlist, which is accepted by both MLT and Shotcut.
+        // Save an empty playlist, which is accepted by both MLT and Snapflow.
         Mlt::Playlist playlist(MLT.profile());
         result = MLT.saveXML(filename, &playlist, withRelativePaths, nullptr, false, notes);
     }
@@ -4163,7 +4163,7 @@ void MainWindow::changeTheme(const QString &theme)
     LOG_DEBUG() << "Available styles:" << QStyleFactory::keys();
     auto mytheme = theme;
 
-#if !defined(SHOTCUT_THEME)
+#if !defined(SNAPFLOW_THEME)
     // Workaround Quick Controls not using our custom palette - temporarily?
     std::unique_ptr<QStyle> style{QStyleFactory::create("fusion")};
     auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
@@ -4339,7 +4339,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
-    QString shotcutProducer(producer->get(kShotcutProducerProperty));
+    QString snapflowProducer(producer->get(kSnapflowProducerProperty));
 
     if (resource.startsWith("video4linux2:")
         || QString::fromUtf8(producer->get("resource1")).startsWith("video4linux2:"))
@@ -4355,7 +4355,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new AvfoundationProducerWidget(this);
     else if (QString::fromLatin1(producer->get(kPrivateProducerProperty)) == "htmlGenerator")
         w = new HtmlGeneratorWidget(this);
-    else if (service.startsWith("avformat") || shotcutProducer == "avformat")
+    else if (service.startsWith("avformat") || snapflowProducer == "avformat")
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
         w = new ImageProducerWidget(this);
@@ -4384,7 +4384,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new BlipProducerWidget(this);
     else if (service == "xml-clip")
         w = new MltClipProducerWidget(this);
-    else if (producer->parent().get(kShotcutTransitionProperty)) {
+    else if (producer->parent().get(kSnapflowTransitionProperty)) {
         auto *lumaMixTransition = new LumaMixTransition(producer->parent(), this);
         w = lumaMixTransition;
         scrollArea->setWidget(w);
@@ -4497,8 +4497,8 @@ void MainWindow::on_actionEnterFullScreen_triggered()
 
 void MainWindow::onGpuNotSupported()
 {
-    if (Settings.processingMode() == ShotcutSettings::Linear10GpuCpu) {
-        Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
+    if (Settings.processingMode() == SnapflowSettings::Linear10GpuCpu) {
+        Settings.setProcessingMode(SnapflowSettings::Native8Cpu);
     }
     ui->actionLinear10bitGpuCpu->setChecked(false);
     ui->actionLinear10bitGpuCpu->setDisabled(true);
@@ -4521,9 +4521,9 @@ void MainWindow::showUpgradePrompt()
 {
     if (Settings.checkUpgradeAutomatic()) {
         showStatusMessage("Checking for upgrade...");
-        m_network.get(QNetworkRequest(QUrl("https://check.shotcut.org/version.json")));
+        m_network.get(QNetworkRequest(QUrl("https://check.snapflow.org/version.json")));
     } else {
-        QAction *action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
+        QAction *action = new QAction(tr("Click here to check for a new version of Snapflow."), 0);
         connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
         showStatusMessage(action, 15 /* seconds */);
     }
@@ -4651,7 +4651,7 @@ void MainWindow::processMultipleFiles()
                 Util::getHash(p);
                 Mlt::Producer *producer = MLT.setupNewProducer(&p);
                 ProxyManager::generateIfNotExists(*producer);
-                producer->set(kShotcutSkipConvertProperty, true);
+                producer->set(kSnapflowSkipConvertProperty, true);
                 undoStack()->push(
                     new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(producer), false));
                 m_recentDock->add(filename.toUtf8().constData());
@@ -4676,10 +4676,10 @@ void MainWindow::processMultipleFiles()
 void MainWindow::processSingleFile()
 {
     if (!m_multipleFilesLoading && Settings.showConvertClipDialog()
-        && !MLT.producer()->get_int(kShotcutSkipConvertProperty)) {
+        && !MLT.producer()->get_int(kSnapflowSkipConvertProperty)) {
         QString convertAdvice = Util::getConversionAdvice(MLT.producer());
         if (!convertAdvice.isEmpty()) {
-            MLT.producer()->set(kShotcutSkipConvertProperty, true);
+            MLT.producer()->set(kSnapflowSkipConvertProperty, true);
             LongUiTask::cancel();
             MLT.pause();
             Util::offerSingleFileConversion(convertAdvice, MLT.producer(), this);
@@ -4692,7 +4692,7 @@ void MainWindow::onLanguageTriggered(QAction *action)
     Settings.setLanguage(action->data().toString());
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("You must restart Shotcut to switch to the new language.\n"
+                       tr("You must restart Snapflow to switch to the new language.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -5200,7 +5200,7 @@ bool MainWindow::confirmProfileChange()
     QMessageBox dialog(QMessageBox::Warning,
                        QCoreApplication::applicationName(),
                        tr("<p>Please review your entire project after making this change.</p>"
-                          "<p>Shotcut does not automatically adjust things that are sensitive to "
+                          "<p>Snapflow does not automatically adjust things that are sensitive to "
                           "size and position if you change resolution or aspect ratio.</p"
                           "<br>The timing of edits and keyframes may be slightly different if you "
                           "change frame rate.</p>"
@@ -5224,7 +5224,7 @@ bool MainWindow::confirmRestartExternalMonitor()
 {
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("Shotcut must restart to change external monitoring.\n"
+                       tr("Snapflow must restart to change external monitoring.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -5291,7 +5291,7 @@ void MainWindow::on_actionJobPriorityNormal_triggered()
 
 void MainWindow::on_actionTutorials_triggered()
 {
-    Util::openUrl(QUrl("https://www.shotcut.org/tutorials/"));
+    Util::openUrl(QUrl("https://www.snapflow.org/tutorials/"));
 }
 
 void MainWindow::on_actionRestoreLayout_triggered()
@@ -5393,7 +5393,7 @@ void MainWindow::on_actionUpgrade_triggered()
             Settings.setAskUpgradeAutomatic(false);
     }
     showStatusMessage("Checking for upgrade...");
-    m_network.get(QNetworkRequest(QUrl("https://check.shotcut.org/version.json")));
+    m_network.get(QNetworkRequest(QUrl("https://check.snapflow.org/version.json")));
 }
 
 void MainWindow::on_actionOpenXML_triggered()
@@ -5421,7 +5421,7 @@ void MainWindow::on_actionOpenXML_triggered()
             isXmlRepaired(checker, url);
         } else {
             showStatusMessage(tr("Failed to open ").append(url));
-            showIncompatibleProjectMessage(checker.shotcutVersion());
+            showIncompatibleProjectMessage(checker.snapflowVersion());
             return;
         }
         Settings.setOpenPath(QFileInfo(url).path());
@@ -5463,7 +5463,7 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     Settings.setDrawMethod(action->data().toInt());
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("You must restart Shotcut to change the display method.\n"
+                       tr("You must restart Snapflow to change the display method.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -5483,7 +5483,7 @@ void MainWindow::onGpuAdapterTriggered(QAction *action)
     Settings.setGpuAdapterDeviceId(action->property("deviceId").toUInt());
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("You must restart Shotcut to change the graphics adapter.\n"
+                       tr("You must restart Snapflow to change the graphics adapter.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -5508,13 +5508,13 @@ void MainWindow::on_actionApplicationLog_triggered()
 {
     TextViewerDialog dialog(this);
     QDir dir = Settings.appDataLocation();
-    QFile logFile(dir.filePath("shotcut-log.txt"));
+    QFile logFile(dir.filePath("snapflow-log.txt"));
     if (logFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         dialog.setText(logFile.readAll());
         logFile.close();
     }
     dialog.setWindowTitle(tr("Application Log"));
-    const auto previousLogName = dir.filePath("shotcut-log.bak");
+    const auto previousLogName = dir.filePath("snapflow-log.bak");
     if (QFile::exists(previousLogName)) {
         auto button = dialog.buttonBox()->addButton(tr("Previous"), QDialogButtonBox::ActionRole);
         connect(button, &QAbstractButton::clicked, this, [&]() {
@@ -5579,13 +5579,13 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
             if (current != "adhoc"
                 && QVersionNumber::fromString(current) < QVersionNumber::fromString(latest)) {
                 QAction *action = new QAction(
-                    tr("Shotcut version %1 is available! Click here to get it.").arg(latest), 0);
+                    tr("Snapflow version %1 is available! Click here to get it.").arg(latest), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
                 if (!json.object().value("url").isUndefined())
                     m_upgradeUrl = json.object().value("url").toString();
                 showStatusMessage(action, 15 /* seconds */);
             } else {
-                showStatusMessage(tr("You are running the latest version of Shotcut."));
+                showStatusMessage(tr("You are running the latest version of Snapflow."));
             }
             reply->deleteLater();
             return;
@@ -5595,7 +5595,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
     } else {
         LOG_WARNING() << reply->errorString();
         if (reply->error() == QNetworkReply::UnknownNetworkError) {
-            m_network.get(QNetworkRequest(QUrl("http://check.shotcut.org/version.json")));
+            m_network.get(QNetworkRequest(QUrl("http://check.snapflow.org/version.json")));
         }
     }
     QAction *action = new QAction(
@@ -5732,7 +5732,7 @@ void MainWindow::on_actionAppDataSet_triggered()
 {
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("You must restart Shotcut to change the data directory.\n"
+                       tr("You must restart Snapflow to change the data directory.\n"
                           "Do you want to continue?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -5806,7 +5806,7 @@ void MainWindow::on_actionScreenSnapshot_triggered()
     const auto mode = ScreenCapture::isWayland() ? ScreenCapture::Fullscreen
                                                  : ScreenCapture::Interactive;
     m_screenCapture = new ScreenCapture(fileName, mode, this);
-    connect(m_screenCapture, &ScreenCapture::minimizeShotcut, this, [this]() { showMinimized(); });
+    connect(m_screenCapture, &ScreenCapture::minimizeSnapflow, this, [this]() { showMinimized(); });
     connect(m_screenCapture, &ScreenCapture::finished, this, [=](bool success) {
         if (success)
             // Automatically open the captured file
@@ -5899,7 +5899,7 @@ void MainWindow::on_actionScreenRecording_triggered()
     }
 #endif
     m_screenCapture = new ScreenCapture(fileName, mode, this);
-    connect(m_screenCapture, &ScreenCapture::minimizeShotcut, this, [this]() { showMinimized(); });
+    connect(m_screenCapture, &ScreenCapture::minimizeSnapflow, this, [this]() { showMinimized(); });
     connect(m_screenCapture,
             &ScreenCapture::beginRecording,
             this,
@@ -6348,14 +6348,14 @@ void MainWindow::onSceneGraphInitialized()
                    qApp->applicationName(),
                    tr("GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported "
                       "means do not report bugs about it.\n\n"
-                      "Do you want to disable GPU processing and restart Shotcut?"),
+                      "Do you want to disable GPU processing and restart Snapflow?"),
                    QMessageBox::No | QMessageBox::Yes,
                    this);
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QMessageBox::Yes) {
-            Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
+            Settings.setProcessingMode(SnapflowSettings::Native8Cpu);
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
         }
@@ -6541,7 +6541,7 @@ int MainWindow::bottomVideoTrackIndex() const
 
 void MainWindow::on_actionTopics_triggered()
 {
-    Util::openUrl(QUrl("https://www.shotcut.org/howtos/"));
+    Util::openUrl(QUrl("https://www.snapflow.org/howtos/"));
 }
 
 void MainWindow::on_actionWhatsThis_triggered()
@@ -6561,7 +6561,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
     if (MLT.producer()) {
         QDir dir(m_currentFile.isEmpty() ? QDir::tempPath() : QFileInfo(m_currentFile).dir());
-        QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(dir.filePath("shotcut-XXXXXX.mlt")));
+        QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(dir.filePath("snapflow-XXXXXX.mlt")));
         if (!tmp->open()) {
             return;
         }
@@ -6789,7 +6789,7 @@ void MainWindow::clearCurrentLayout()
 void MainWindow::onClipboardChanged()
 {
     auto s = QGuiApplication::clipboard()->text();
-    if (MLT.isMltXml(s) && !s.contains(kShotcutFiltersClipboard)) {
+    if (MLT.isMltXml(s) && !s.contains(kSnapflowFiltersClipboard)) {
         m_clipboardUpdatedAt = QDateTime::currentDateTime();
         LOG_DEBUG() << m_clipboardUpdatedAt;
     }
@@ -6952,7 +6952,7 @@ void MainWindow::on_actionReset_triggered()
     QMessageBox
         dialog(QMessageBox::Question,
                qApp->applicationName(),
-               tr("This will reset <b>all</b> settings, and Shotcut must restart afterwards.\n"
+               tr("This will reset <b>all</b> settings, and Snapflow must restart afterwards.\n"
                   "Do you want to reset and restart now?"),
                QMessageBox::No | QMessageBox::Yes,
                this);
@@ -6987,7 +6987,7 @@ void MainWindow::on_actionLeaveSafeMode_triggered()
 {
     QMessageBox dialog(QMessageBox::Question,
                        qApp->applicationName(),
-                       tr("Safe mode was enabled because Shotcut crashed during startup.\n"
+                       tr("Safe mode was enabled because Snapflow crashed during startup.\n"
                           "Safe mode disables external plugins.\n"
                           "\n"
                           "Do you want to turn off safe mode and restart now?"),

@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     mlt_service: "frei0r.colorhalftone"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/halftone/12851/1'
+    help: 'https://forum.snapflow.org/t/halftone/12851/1'
 
     keyframes {
         allowAnimateIn: true

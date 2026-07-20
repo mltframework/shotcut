@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: trackHeadRoot
@@ -54,7 +54,7 @@ Rectangle {
 
             PropertyChanges {
                 target: trackHeadRoot
-                color: isVideo ? root.shotcutBlue : 'darkseagreen'
+                color: isVideo ? root.snapflowBlue : 'darkseagreen'
             }
         },
         State {
@@ -135,7 +135,7 @@ Rectangle {
             }
 
             Control {
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: trackName
                 }
 
@@ -179,7 +179,7 @@ Rectangle {
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 transformOrigin: Item.Center
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: (isLocked ? qsTr('Unlock track') : qsTr('Lock track')) + application.actionFirstShortcut('timelineToggleTrackLockedAction')
                 }
 
@@ -225,7 +225,7 @@ Rectangle {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')
                 }
             }
@@ -252,7 +252,7 @@ Rectangle {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + application.actionFirstShortcut('timelineToggleTrackHiddenAction')
                 }
             }
@@ -271,7 +271,7 @@ Rectangle {
                     timeline.filteredClicked();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Filters')
                 }
             }

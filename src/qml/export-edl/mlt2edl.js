@@ -94,9 +94,9 @@ MltXmlParser.prototype.getPlaylists = function() {
         plDict.id = p.attr.id;
         plDict.format = 'V';
         p.childrenNamed('property').forEach(function (fe) {
-            if (fe.attr.name === 'shotcut:audio')
+            if (fe.attr.name === 'snapflow:audio')
                 plDict.format = 'A'
-            else if (fe.attr.name === 'shotcut:video')
+            else if (fe.attr.name === 'snapflow:video')
                 plDict.format = self.channelsAV;
         });
         var track = self.getTrackByProducerId(p.attr.id);
@@ -203,8 +203,8 @@ MltXmlParser.prototype.linkReferences = function() {
     var self = this;
     this.getProducers().forEach(function(p) {
         sourceLinks[p.id] = p;
-        if (!self.useBaseNameForReelName && 'shotcut:hash' in p) {
-            sourceLinks[p.id].reel_name = p['shotcut:hash']
+        if (!self.useBaseNameForReelName && 'snapflow:hash' in p) {
+            sourceLinks[p.id].reel_name = p['snapflow:hash']
         } else if ('resource' in p) {
             var reelName = self.baseName(p.resource, false);
             sourceLinks[p.id].reel_name = reelName.replace(/\W/g, '_');

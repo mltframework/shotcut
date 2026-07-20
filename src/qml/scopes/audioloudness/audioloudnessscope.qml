@@ -18,7 +18,7 @@ import QtQml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: root
@@ -182,7 +182,7 @@ Rectangle {
             color: activePalette.text
             visible: enableMomentary
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Momentary Loudness.')
             }
         }
@@ -208,7 +208,7 @@ Rectangle {
             visible: enableMomentary
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: momentaryGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -225,7 +225,7 @@ Rectangle {
             color: activePalette.text
             visible: enableShortterm
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Short-term Loudness.')
             }
         }
@@ -251,7 +251,7 @@ Rectangle {
             visible: enableShortterm
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: shorttermGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -268,7 +268,7 @@ Rectangle {
             color: activePalette.text
             visible: enableIntegrated
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Integrated Loudness.')
             }
         }
@@ -294,7 +294,7 @@ Rectangle {
             visible: enableIntegrated
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: integratedGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -311,7 +311,7 @@ Rectangle {
             color: activePalette.text
             visible: enableRange
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Loudness Range.')
             }
         }
@@ -337,7 +337,7 @@ Rectangle {
             visible: enableRange
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: rangeGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -354,7 +354,7 @@ Rectangle {
             color: activePalette.text
             visible: enablePeak
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Peak.')
             }
         }
@@ -380,7 +380,7 @@ Rectangle {
             visible: enablePeak
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: peakGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -397,7 +397,7 @@ Rectangle {
             color: activePalette.text
             visible: enableTruePeak
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('True Peak.')
             }
         }
@@ -423,7 +423,7 @@ Rectangle {
             visible: enableTruePeak
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: truePeakGauge
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter

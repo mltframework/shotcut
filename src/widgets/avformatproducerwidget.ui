@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="whatsThis">
-   <string notr="true">https://forum.shotcut.org/t/audio-video-properties/12923/1</string>
+   <string notr="true">https://forum.snapflow.org/t/audio-video-properties/12923/1</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -1085,7 +1085,7 @@
      <item>
       <widget class="QPushButton" name="reloadButton">
        <property name="toolTip">
-        <string>Refresh the file in Shotcut if you changed it in another app</string>
+        <string>Refresh the file in Snapflow if you changed it in another app</string>
        </property>
        <property name="text">
         <string>Reload</string>

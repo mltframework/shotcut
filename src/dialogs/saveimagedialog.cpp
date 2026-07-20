@@ -61,7 +61,7 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString &caption, QImage
 
     // Use the current player time as a suggested file name
     QString nameSuggestion
-        = QStringLiteral("Shotcut_%1").arg(MLT.producer()->frame_time(mlt_time_clock));
+        = QStringLiteral("Snapflow_%1").arg(MLT.producer()->frame_time(mlt_time_clock));
     nameSuggestion = nameSuggestion.replace(":", "_");
     nameSuggestion = nameSuggestion.replace(".", "_");
     nameSuggestion += suffix;

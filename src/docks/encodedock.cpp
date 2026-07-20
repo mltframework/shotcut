@@ -31,7 +31,7 @@
 #include "models/markersmodel.h"
 #include "qmltypes/qmlfilter.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QFileInfo>
@@ -65,7 +65,7 @@ static Mlt::Filter getReframeFilter(Mlt::Service *service)
         for (auto i = 0; i < service->filter_count(); ++i) {
             std::unique_ptr<Mlt::Filter> filter(service->filter(i));
             if (filter && filter->is_valid()
-                && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty)))
+                && !::qstrcmp("reframe", filter->get(kSnapflowFilterProperty)))
                 return Mlt::Filter(filter->get_filter());
         }
     return Mlt::Filter();
@@ -331,7 +331,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (value.contains("p10le")) {
                 // Let 8-bit processing modes utilize full range RGB
                 const auto pm = Settings.processingMode();
-                if ((pm == ShotcutSettings::Native8Cpu) && !other.contains("mlt_image_format=rgb")) {
+                if ((pm == SnapflowSettings::Native8Cpu) && !other.contains("mlt_image_format=rgb")) {
                     other.append("mlt_image_format=rgb");
                 }
                 // Hardware encoder
@@ -1308,9 +1308,9 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
         }
 
         const auto processingMode = Settings.processingMode();
-        if (processingMode == ShotcutSettings::Native10Cpu
-            || processingMode == ShotcutSettings::Linear10Cpu
-            || processingMode == ShotcutSettings::Linear10GpuCpu) {
+        if (processingMode == SnapflowSettings::Native10Cpu
+            || processingMode == SnapflowSettings::Linear10Cpu
+            || processingMode == SnapflowSettings::Linear10GpuCpu) {
             if (!p->property_exists("mlt_image_format")) {
                 const char *trc = p->get("color_trc");
                 const bool isHlg = !::qstrcmp(trc, "arib-std-b67");
@@ -1321,8 +1321,8 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
                     node.setAttribute("mlt_image_format", "rgba64");
             }
         }
-        if ((processingMode == ShotcutSettings::Linear10Cpu
-             || processingMode == ShotcutSettings::Linear10GpuCpu)
+        if ((processingMode == SnapflowSettings::Linear10Cpu
+             || processingMode == SnapflowSettings::Linear10GpuCpu)
             && ::qstrcmp(p->get("color_trc"), "arib-std-b67")
             && ::qstrcmp(p->get("color_trc"), "smpte2084")) {
             if (!p->property_exists("mlt_color_trc"))
@@ -1432,7 +1432,7 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service,
     // Look for the reframe filter
     for (auto i = 0; !job && i < service->filter_count(); ++i) {
         Mlt::Filter filter(service->filter(i));
-        if (!::qstrcmp("reframe", filter.get(kShotcutFilterProperty))
+        if (!::qstrcmp("reframe", filter.get(kSnapflowFilterProperty))
             && !filter.get_int("disable")) {
             // If it exists, make another XML with new profile based on reframe rect width and height
             auto rect = filter.anim_get_rect("rect", 0);
@@ -1698,7 +1698,7 @@ void EncodeDock::enqueueAnalysis()
             QMessageBox
                 dialog(QMessageBox::Question,
                        windowTitle(),
-                       tr("Shotcut found filters that require analysis jobs that have not run.\n"
+                       tr("Snapflow found filters that require analysis jobs that have not run.\n"
                           "Do you want to run the analysis jobs now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -1829,7 +1829,7 @@ void EncodeDock::resetOptions()
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
     preset.set("crf", "23");
-    if (Settings.processingMode() == ShotcutSettings::Native8Cpu) {
+    if (Settings.processingMode() == SnapflowSettings::Native8Cpu) {
         preset.set("vcodec", "libx264");
         preset.set("preset", "fast");
         preset.set("acodec", "aac");
@@ -2262,7 +2262,7 @@ void EncodeDock::on_streamButton_clicked()
             // Stream in background
             runMelt(url, 1);
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
-            // Stream Shotcut screencast
+            // Stream Snapflow screencast
             MLT.stop();
             runMelt(url, 1);
             ui->stopCaptureButton->show();
@@ -3068,7 +3068,7 @@ bool EncodeDock::checkForMissingFiles()
                            qApp->applicationName(),
                            tr("Your project is missing some files.\n\n"
                               "Save your project, close it, and reopen it.\n"
-                              "Shotcut will attempt to repair your project."),
+                              "Snapflow will attempt to repair your project."),
                            QMessageBox::Ok | QMessageBox::Ignore,
                            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3093,7 +3093,7 @@ void EncodeDock::on_resolutionComboBox_activated(int arg1)
 void EncodeDock::on_reframeButton_clicked()
 {
     Mlt::Filter filter(MLT.profile(), "mask_start");
-    filter.set(kShotcutFilterProperty, "reframe");
+    filter.set(kSnapflowFilterProperty, "reframe");
     filter.set("filter", "0");
     filter.set("transition.valign", "middle");
     filter.set("transition.halign", "center");

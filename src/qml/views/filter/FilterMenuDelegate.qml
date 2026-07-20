@@ -18,8 +18,8 @@ import "FilterMenu.js" as Logic
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Rectangle {
     id: wrapper
@@ -68,8 +68,8 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: false
-                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : pluginType === Shotcut.Metadata.Link ? 'chronometer' : pluginType === Shotcut.Metadata.FilterSet ? 'server-database' : 'video-television'
-                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : pluginType === Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : pluginType === Shotcut.Metadata.FilterSet ? 'qrc:///icons/oxygen/32x32/places/server-database.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : pluginType === Snapflow.Metadata.Link ? 'chronometer' : pluginType === Snapflow.Metadata.FilterSet ? 'server-database' : 'video-television'
+                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : pluginType === Snapflow.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : pluginType === Snapflow.Metadata.FilterSet ? 'qrc:///icons/oxygen/32x32/places/server-database.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
             }
 
             Label {
@@ -93,7 +93,7 @@ Rectangle {
                 onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton)
                         wrapper.ListView.view.itemSelected(index);
-                    else if (pluginType === Shotcut.Metadata.FilterSet && service.length === 0)
+                    else if (pluginType === Snapflow.Metadata.FilterSet && service.length === 0)
                         confirmDialog.show();
                 }
                 onEntered: {
@@ -133,7 +133,7 @@ Rectangle {
             RowLayout {
                 Layout.alignment: Qt.AlignRight
 
-                Shotcut.Button {
+                Snapflow.Button {
                     id: confirmDialogOk
 
                     text: qsTr('OK')
@@ -145,7 +145,7 @@ Rectangle {
                     Keys.onEscapePressed: confirmDialog.close()
                 }
 
-                Shotcut.Button {
+                Snapflow.Button {
                     text: qsTr('Cancel')
                     onClicked: confirmDialog.close()
                     Keys.onEscapePressed: confirmDialog.close()

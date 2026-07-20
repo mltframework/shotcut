@@ -47,10 +47,10 @@ signals:
     void finished(bool success);
     void beginRecording(const QRect &captureRect, bool recordAudio);
     void onSelectionCanceled();
-    void minimizeShotcut();
+    void minimizeSnapflow();
 
 private slots:
-    void onCaptureModeSelected(CaptureMode mode, bool minimizeShotcut, bool recordAudio);
+    void onCaptureModeSelected(CaptureMode mode, bool minimizeSnapflow, bool recordAudio);
     void onRectangleSelected(const QRect &rect);
     void onWindowSelected(const QRect &rect);
     void onImageRectangleSelected(const QRect &rect);
@@ -81,7 +81,7 @@ private:
     QString m_outputFile;
     CaptureMode m_mode;
     bool m_isImageMode;
-    bool m_minimizeShotcut;
+    bool m_minimizeSnapflow;
     bool m_recordAudio;
 
     std::unique_ptr<ScreenCaptureToolbar> m_toolbar;

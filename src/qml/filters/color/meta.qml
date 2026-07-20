@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,7 @@ Metadata {
     icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
-    help: 'https://forum.shotcut.org/t/color-grading/12836/1'
+    help: 'https://forum.snapflow.org/t/color-grading/12836/1'
 
     keyframes {
         parameters: [

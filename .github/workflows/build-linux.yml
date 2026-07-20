@@ -1,4 +1,4 @@
-name: build-shotcut-linux
+name: build-snapflow-linux
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
     - cron: '0 8 * * *'
 
 env:
-  IMAGE_NAME: mltframework/shotcut-build:qt6.10.3-ubuntu22.04
+  IMAGE_NAME: mltframework/snapflow-build:qt6.10.3-ubuntu22.04
 
 jobs:
   build:
@@ -27,21 +27,21 @@ jobs:
           FILENAME_VERSION=$VERSION
           cd scripts
           echo Making build script config file
-          echo CLEANUP=0 > build-shotcut.conf
-          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
-          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
-          echo SHOTCUT_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-shotcut.conf
-          docker run -v $PWD:/root/shotcut $IMAGE_NAME
+          echo CLEANUP=0 > build-snapflow.conf
+          echo SNAPFLOW_VERSION=\"$VERSION\" >> build-snapflow.conf
+          echo SNAPFLOW_HEAD=0 >> build-snapflow.conf
+          echo SNAPFLOW_REVISION=origin/${{ github.head_ref || github.ref_name }} >> build-snapflow.conf
+          docker run -v $PWD:/root/snapflow $IMAGE_NAME
           echo Renaming build artifacts
-          mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
-          mv src.txz shotcut-src-$FILENAME_VERSION.txz
+          mv snapflow.txz snapflow-linux-x86_64-$FILENAME_VERSION.txz
+          mv src.txz snapflow-src-$FILENAME_VERSION.txz
 
       - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
           name: linux-portable
           path: |
-            scripts/shotcut-linux-x86_64-*.txz
+            scripts/snapflow-linux-x86_64-*.txz
 
       - name: Upload version file
         uses: actions/upload-artifact@v7
@@ -59,7 +59,7 @@ jobs:
             --secret_key=${{ secrets.AWS_SECRET_KEY }}
             --acl-public
             --stop-on-error
-            put scripts/*.txz s3://builds.us.meltytech/shotcut/
+            put scripts/*.txz s3://builds.us.meltytech/snapflow/
 
   appimage:
     runs-on: ubuntu-latest
@@ -85,14 +85,14 @@ jobs:
         run: |
           sudo apt update
           sudo apt install desktop-file-utils libfuse2 imagemagick
-          mkdir packaging/linux/Shotcut
-          cp dist/version/VERSION packaging/linux/Shotcut/VERSION
+          mkdir packaging/linux/Snapflow
+          cp dist/version/VERSION packaging/linux/Snapflow/VERSION
           cd packaging/linux
           export PKG2AICOMMIT=1eceb306077e51b991e987690b364e11971b44b3
           wget https://raw.githubusercontent.com/probonopd/AppImages/${PKG2AICOMMIT}/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
-          FILENAME_VERSION=$(cat Shotcut/VERSION)
-          mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
+          FILENAME_VERSION=$(cat Snapflow/VERSION)
+          mv out/*.AppImage out/snapflow-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3
         uses: mltframework/s3cmd-action@v1
@@ -102,7 +102,7 @@ jobs:
             --secret_key=${{ secrets.AWS_SECRET_KEY }}
             --acl-public
             --stop-on-error
-            put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
+            put packaging/linux/out/*.AppImage s3://builds.us.meltytech/snapflow/
 
   snap:
     runs-on: ubuntu-latest
@@ -129,8 +129,8 @@ jobs:
           VERSION=$(cat dist/version/VERSION)
           cd packaging/linux
           mkdir -p snap/gui
-          cp ../../icons/shotcut-logo-64.png snap/gui
-          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
+          cp ../../icons/snapflow-logo-64.png snap/gui
+          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/snapflow-logo-64.png|' org.snapflow.Snapflow.desktop > snap/gui/snapflow.desktop
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
 

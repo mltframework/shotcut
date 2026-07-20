@@ -32,7 +32,7 @@ VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
-    setWhatsThis("https://forum.shotcut.org/t/video-rgb-parade-scope/15651/1");
+    setWhatsThis("https://forum.snapflow.org/t/video-rgb-parade-scope/15651/1");
     LOG_DEBUG() << "end";
 }
 

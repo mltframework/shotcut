@@ -7567,7 +7567,7 @@ MltXmlParser.prototype.createChapters = function() {
 
     this.xmldoc.childrenNamed('tractor').forEach(function (tractor) {
         tractor.childrenNamed('properties').forEach(function (p) {
-            if (p.attr.name === 'shotcut:markers') {
+            if (p.attr.name === 'snapflow:markers') {
                 p.childrenNamed('properties').forEach(function (m) {
                     let marker = {};
                     m.childrenNamed('property').forEach(function (prop) {

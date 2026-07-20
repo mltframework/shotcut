@@ -3,7 +3,7 @@
 <plist version="0.9">
 <dict>
 	<key>CFBundleIconFile</key>
-	<string>shotcut.icns</string>
+	<string>snapflow.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -13,13 +13,13 @@
 	<key>CFBundleSignature</key>
 	<string>scut</string>
 	<key>CFBundleExecutable</key>
-	<string>Shotcut</string>
+	<string>Snapflow</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Meltytech.Shotcut</string>
+	<string>com.Meltytech.Snapflow</string>
 	<key>CFBundleVersion</key>
-	<string>@SHOTCUT_VERSION@</string>
+	<string>@SNAPFLOW_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
-	<string>@SHOTCUT_VERSION@</string>
+	<string>@SNAPFLOW_VERSION@</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
@@ -27,9 +27,9 @@
     <key>LSMinimumSystemVersion</key>
 	<string>12.0.0</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Shotcut can show and record video</string>
+	<string>Snapflow can show and record video</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Shotcut can monitor and record audio</string>
+	<string>Snapflow can monitor and record audio</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -488,7 +488,7 @@
 				<string>mlt</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>shotcut.icns</string>
+			<string>snapflow.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 			<string>application/vnd.mlt+xml</string>

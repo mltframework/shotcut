@@ -38,7 +38,7 @@ VideoQualityJob::VideoQualityJob(const QString &name,
 {
     QAction *action = new QAction(tr("Open"), this);
     action->setData("Open");
-    action->setToolTip(tr("Open original and encoded side-by-side in the Shotcut player"));
+    action->setToolTip(tr("Open original and encoded side-by-side in the Snapflow player"));
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
 

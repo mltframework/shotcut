@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     qml: 'ui.qml'
     vui: 'vui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/motion-tracker-video-filter/40784/1'
+    help: 'https://forum.snapflow.org/t/motion-tracker-video-filter/40784/1'
 }

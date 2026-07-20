@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import org.shotcut.qml 1.0
+import org.snapflow.qml 1.0
 
 Metadata {
     type: Metadata.Link
@@ -12,7 +12,7 @@ Metadata {
     isFavorite: false
     allowMultiple: false
     minimumVersion: '2'
-    help: 'https://forum.shotcut.org/t/speed-forward-only-time-filter/40785/1'
+    help: 'https://forum.snapflow.org/t/speed-forward-only-time-filter/40785/1'
 
     keyframes {
         allowTrim: false

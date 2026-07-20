@@ -1,6 +1,6 @@
-# Shotcut — Workspace Instructions
+# Snapflow — Workspace Instructions
 
-Shotcut is a free, open-source, cross-platform video editor built on Qt 6 and the [MLT multimedia framework](https://www.mltframework.org/).
+Snapflow is a free, open-source, cross-platform video editor built on Qt 6 and the [MLT multimedia framework](https://www.mltframework.org/).
 
 ## Build and Run
 
@@ -15,7 +15,7 @@ cmake --build build/cc-debug --target clang-format
 cmake --build build/cc-debug
 
 # Run directly from build tree
-build/cc-debug/src/shotcut
+build/cc-debug/src/snapflow
 ```
 
 The default preset `cc-debug` (defined in `CMakePresets.json`) uses Ninja, gcc or clang from `$PATH` and Qt 6.10.3 from `~/Qt/6.10.3`, and produces a Debug build.
@@ -28,8 +28,8 @@ To properly debug on Windows you must set the environment variable `QSG_RHI_BACK
 |-----------|-------|------|
 | `Mlt::Controller` | `MLT` | Media engine: producer/consumer/seek/profile |
 | `MainWindow` | `MAIN` | Central hub; owns all docks, undo stack, layout |
-| `ShotcutActions` | `Actions` | Global `QAction` registry keyed by string |
-| `ShotcutSettings` | `Settings` | `QSettings`-backed properties; bindable from QML |
+| `SnapflowActions` | `Actions` | Global `QAction` registry keyed by string |
+| `SnapflowSettings` | `Settings` | `QSettings`-backed properties; bindable from QML |
 
 **Data flow**: UI events → `Actions["someKey"]` → undoable `QUndoCommand` in `src/commands/` → `MLT` producer/filter mutation → Qt signals → model updates → QML views re-render.
 

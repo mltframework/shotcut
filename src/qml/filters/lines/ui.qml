@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -52,7 +52,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['line_width', 'num', 'darker', 'lighter']
@@ -65,7 +65,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: widthSlider
 
             minimumValue: 1
@@ -74,7 +74,7 @@ Item {
             onValueChanged: filter.set('line_width', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: widthSlider.value = 2
         }
 
@@ -83,7 +83,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 1
@@ -92,7 +92,7 @@ Item {
             onValueChanged: filter.set('num', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = 5
         }
 
@@ -101,7 +101,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: darkSlider
 
             minimumValue: 1
@@ -110,7 +110,7 @@ Item {
             onValueChanged: filter.set('darker', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: darkSlider.value = 40
         }
 
@@ -119,7 +119,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lightSlider
 
             minimumValue: 0
@@ -128,7 +128,7 @@ Item {
             onValueChanged: filter.set('lighter', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lightSlider.value = 40
         }
 

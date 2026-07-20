@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,5 +9,5 @@ Metadata {
     mlt_service: "channelcopy"
     objectName: 'audioChannelCopy'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/copy-channel-audio-filter/12900/1'
+    help: 'https://forum.snapflow.org/t/copy-channel-audio-filter/12900/1'
 }

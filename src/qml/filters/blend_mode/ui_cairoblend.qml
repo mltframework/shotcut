@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string propertyName: 'mode'
@@ -50,7 +50,7 @@ Item {
             text: qsTr('Blend mode')
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: combo
 
             textRole: 'text'
@@ -153,7 +153,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(propertyName, comboItems.get(0).value);
                 combo.currentIndex = 0;

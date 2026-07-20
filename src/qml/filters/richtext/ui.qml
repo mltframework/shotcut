@@ -17,17 +17,17 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string rectProperty: 'geometry'
     property rect filterRect
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
-    property string sizeProperty: '_shotcut:size'
-    property string specialPresetProperty: 'shotcut:preset'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
+    property string sizeProperty: '_snapflow:size'
+    property string specialPresetProperty: 'snapflow:preset'
     property rect defaultRect: Qt.rect(Math.round(profile.width * 0.1), Math.round(profile.height * 0.1), Math.round(profile.width * 0.8), Math.round(profile.height * 0.8))
 
     function updateFilterRect(position) {
@@ -141,7 +141,7 @@ Shotcut.KeyframableFilter {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
             let current = filter.getRect(rectProperty, frame);
@@ -163,14 +163,14 @@ Shotcut.KeyframableFilter {
             case 'absPos':
                 current.x = i.x + i.width / 2 - current.width / 2;
                 current.y = i.y + i.height / 2 - current.height / 2;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             case 'absSizePos':
                 current.x = i.x;
                 current.y = i.y;
                 current.width = i.width;
                 current.height = i.height;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             }
             previous = i;
@@ -209,39 +209,39 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             // Add some animated presets.
             filter.animateIn = filter.duration;
             filter.set(specialPresetProperty, 'scroll-down');
-            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Down'));
+            filter.savePreset(['snapflow:animIn', specialPresetProperty], qsTr('Scroll Down'));
             filter.set(specialPresetProperty, 'scroll-up');
-            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Up'));
+            filter.savePreset(['snapflow:animIn', specialPresetProperty], qsTr('Scroll Up'));
             filter.set(specialPresetProperty, 'scroll-right');
-            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Right'));
+            filter.savePreset(['snapflow:animIn', specialPresetProperty], qsTr('Scroll Right'));
             filter.set(specialPresetProperty, 'scroll-left');
-            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Left'));
+            filter.savePreset(['snapflow:animIn', specialPresetProperty], qsTr('Scroll Left'));
             filter.resetProperty(specialPresetProperty);
             filter.animateIn = Math.round(profile.fps);
             filter.set(rectProperty, '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Left'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Left'));
             filter.set(rectProperty, '0=100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Right'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Right'));
             filter.set(rectProperty, '0=0%/-100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Top'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Top'));
             filter.set(rectProperty, '0=0%/100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Bottom'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Bottom'));
             filter.animateIn = 0;
             filter.animateOut = Math.round(profile.fps);
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=-100%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Left'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Left'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=100%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Right'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Right'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/-100%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Top'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Top'));
             filter.set(rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/100%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Bottom'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Bottom'));
             filter.animateOut = 0;
             filter.animateIn = filter.duration;
             filter.set(rectProperty, '0=0%/0%:100%x100%; -1=-5%/-5%:110%x110%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom In'));
             filter.set(rectProperty, '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom Out'));
             // Add default preset.
             filter.animateIn = 0;
             filter.resetProperty(rectProperty);
@@ -276,7 +276,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [rectProperty, 'bgcolour', 'overflow-y']
@@ -302,7 +302,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.TipBox {
+        Snapflow.TipBox {
             Layout.columnSpan: parent.columns
             Layout.margins: 10
             Layout.fillWidth: true
@@ -318,7 +318,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 horizontalAlignment: Qt.AlignRight
@@ -343,7 +343,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 horizontalAlignment: Qt.AlignRight
@@ -363,7 +363,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(positionLabel.text);
                 filterRect.x = rectX.value = defaultRect.x;
@@ -373,7 +373,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: positionKeyframesButton
 
             Layout.rowSpan: 2
@@ -405,7 +405,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 horizontalAlignment: Qt.AlignRight
@@ -430,7 +430,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 horizontalAlignment: Qt.AlignRight
@@ -450,7 +450,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(backgroundSizeLabel.text);
                 filterRect.width = rectW.value = defaultRect.width;
@@ -483,7 +483,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                     onClicked: contextMenu.popup()
                 }
 
-                Shotcut.EditMenu {
+                Snapflow.EditMenu {
                     id: contextMenu
 
                     readOnly: true
@@ -511,7 +511,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                     onClicked: contextMenu2.popup()
                 }
 
-                Shotcut.EditMenu {
+                Snapflow.EditMenu {
                     id: contextMenu2
 
                     readOnly: true
@@ -530,7 +530,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             Layout.columnSpan: 3
@@ -543,11 +543,11 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: bgColor.value = Qt.rgba(0, 0, 0, 0)
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: bgcolorKeyframesButton
             onToggled: {
                 filter.startUndoParameterCommand(backgroundColorLabel.text);
@@ -612,7 +612,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.startUndoParameterCommand(overflowLabel.text);
                 filter.resetProperty('overflow-y');
@@ -629,7 +629,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
             onClicked: {
@@ -642,7 +642,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         onAccepted: (motionTrackerRow, operation, startFrame) => {
             filter.startUndoParameterCommand(title);

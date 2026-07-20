@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['radius', 'inner_radius']
@@ -128,7 +128,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 3
@@ -148,7 +148,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: radiusSlider
 
             minimumValue: 0
@@ -157,11 +157,11 @@ Item {
             onValueChanged: updateFilter('radius', value / 100, getPosition(), radiusKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: radiusSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: radiusKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100)
@@ -172,7 +172,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: innerSlider
 
             minimumValue: 0
@@ -181,11 +181,11 @@ Item {
             onValueChanged: updateFilter('inner_radius', value / 100, getPosition(), innerKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: innerSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: innerKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'inner_radius', innerSlider.value / 100)

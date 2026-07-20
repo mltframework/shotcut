@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string amount: '0'
     property double amountDefault: 0.2
 
@@ -66,7 +66,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [amount]
@@ -85,7 +85,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 0
@@ -96,11 +96,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(amount, amountSlider.value / amountSlider.maximumValue, amountKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = amountDefault * amountSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: amountKeyframesButton
 
             onToggled: {

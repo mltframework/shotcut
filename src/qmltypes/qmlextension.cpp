@@ -28,7 +28,7 @@ const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
 
 /*!
     \qmltype QmlExtensionFile
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Describes a single downloadable file within an extension package.
     \sa QmlExtension
 */
@@ -111,8 +111,8 @@ QDir QmlExtension::appDir(const QString &id)
 
 /*!
     \qmltype QmlExtension
-    \inqmlmodule org.shotcut.qml
-    \brief Represents a loadable Shotcut extension (e.g. the Whisper speech-to-text package).
+    \inqmlmodule org.snapflow.qml
+    \brief Represents a loadable Snapflow extension (e.g. the Whisper speech-to-text package).
 
     Extensions are installed or downloaded as a bundle of files described by
     \l{QmlExtensionFile} entries. Access the current extension object through the

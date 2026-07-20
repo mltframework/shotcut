@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string paramRed: '0'
@@ -43,7 +43,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             parameters: defaultParameters
             onPresetSelected: {
                 modeCombo.currentIndex = Math.round(filter.getDouble(paramAction) * 2);
@@ -56,7 +56,7 @@ Item {
                 text: qsTr('Mode')
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: modeCombo
 
                 Layout.minimumWidth: 200
@@ -65,7 +65,7 @@ Item {
             }
         }
 
-        Shotcut.ColorWheelItem {
+        Snapflow.ColorWheelItem {
             id: wheel
 
             Layout.columnSpan: 2

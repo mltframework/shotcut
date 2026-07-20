@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     keywords: qsTr('frequency', 'search keywords for the Low Pass audio filter') + ' low pass'
     mlt_service: 'ladspa.1891'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/low-pass-audio-filter/12909/1'
+    help: 'https://forum.snapflow.org/t/low-pass-audio-filter/12909/1'
 
     keyframes {
         allowAnimateIn: true

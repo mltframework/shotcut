@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     keywords: qsTr('spherical stretch', 'search keywords for the 360: Equirectangular Wrap video filter') + ' 360: equirectangular wrap bigsh0t'
     objectName: "bigsh0t_eq_wrap"
     qml: "ui.qml"
-    help: 'https://forum.shotcut.org/t/360-equirectangular-wrap-video-filter/48130/1'
+    help: 'https://forum.snapflow.org/t/360-equirectangular-wrap-video-filter/48130/1'
 
     keyframes {
         allowAnimateIn: true

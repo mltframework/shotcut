@@ -17,8 +17,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     property string paramShape: 'filter.0'
@@ -29,15 +29,15 @@ Item {
     property string paramRotation: 'filter.5'
     property string paramSoftness: 'filter.6'
     property string paramOperation: 'filter.9'
-    property string rectProperty: 'shotcut:rect'
+    property string rectProperty: 'snapflow:rect'
     property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight, paramShape, paramRotation, paramSoftness, paramOperation, rectProperty]
     property bool blockUpdate: true
     property var startValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
     property var middleValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
     property var endValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
-    property string startValueRect: '_shotcut:startValue'
-    property string middleValueRect: '_shotcut:middleValue'
-    property string endValueRect: '_shotcut:endValue'
+    property string startValueRect: '_snapflow:startValue'
+    property string middleValueRect: '_snapflow:middleValue'
+    property string endValueRect: '_snapflow:endValue'
     property rect filterRect
 
     function initSimpleAnimation() {
@@ -207,24 +207,24 @@ Item {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
 
         // reset
         if (data.length > 0) {
             let params = [paramHorizontal, paramVertical, paramWidth, paramHeight];
-            // Use a shotcut property to backup current values
-            if (filter.get('shotcut:backup.' + paramHorizontal).length === 0) {
+            // Use a snapflow property to backup current values
+            if (filter.get('snapflow:backup.' + paramHorizontal).length === 0) {
                 params.forEach(param => {
-                    filter.set('shotcut:backup.' + param, filter.getDouble(param));
+                    filter.set('snapflow:backup.' + param, filter.getDouble(param));
                 });
-                filter.set('shotcut:backup.rect', filter.getRect(rectProperty));
+                filter.set('snapflow:backup.rect', filter.getRect(rectProperty));
             } else {
                 params.forEach(param => {
                     filter.resetProperty(param);
-                    filter.set(param, filter.getDouble('shotcut:backup.' + param));
+                    filter.set(param, filter.getDouble('snapflow:backup.' + param));
                 });
-                filter.set(rectProperty, filter.getRect('shotcut:backup.rect'));
+                filter.set(rectProperty, filter.getRect('snapflow:backup.rect'));
             }
         }
         filterRect = filter.getRect(rectProperty, frame);
@@ -258,7 +258,7 @@ Item {
             case 'absPos':
                 current.x = (i.x + i.width / 2) / profile.width;
                 current.y = (i.y + i.height / 2) / profile.height;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 filter.set(paramHorizontal, current.x, frame, interpolation);
                 filter.set(paramVertical, current.y, frame, interpolation);
                 filterRect.x = i.x + i.width / 2 - filterRect.width / 2;
@@ -270,7 +270,7 @@ Item {
                 current.y = (i.y + i.height / 2) / profile.height;
                 current.width = i.width / profile.width / 2;
                 current.height = i.height / profile.height / 2;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 filter.set(paramHorizontal, current.x, frame, interpolation);
                 filter.set(paramVertical, current.y, frame, interpolation);
                 filter.set(paramWidth, current.width, frame, interpolation);
@@ -327,7 +327,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -349,7 +349,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: operationCombo
 
             implicitWidth: 180
@@ -357,7 +357,7 @@ Item {
             onActivated: filter.set(paramOperation, currentIndex / 4)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.columnSpan: 2
             onClicked: {
                 filter.set(paramOperation, 0);
@@ -370,7 +370,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: shapeCombo
 
             implicitWidth: 180
@@ -378,7 +378,7 @@ Item {
             onActivated: filter.set(paramShape, currentIndex / 3)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.columnSpan: 2
             onClicked: {
                 filter.set(paramShape, 0);
@@ -392,7 +392,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -416,7 +416,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -435,7 +435,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectX.value = 0.4 * profile.width;
                 rectY.value = 0.4 * profile.height;
@@ -445,7 +445,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: positionKeyframesButton
 
             Layout.rowSpan: 2
@@ -473,7 +473,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -497,7 +497,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -516,7 +516,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectW.value = 0.2 * profile.width;
                 rectH.value = 0.2 * profile.height;
@@ -531,7 +531,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rotationSlider
 
             function updateFromFilter() {
@@ -550,11 +550,11 @@ Item {
             onValueChanged: updateFilterParam(paramRotation, filterValue(), getPosition(), rotationKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: rotationSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: rotationKeyframesButton
 
             onToggled: onRotationKeyframesButtonClicked(checked, paramRotation, rotationSlider.filterValue())
@@ -567,7 +567,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: softnessSlider
 
             minimumValue: 0
@@ -577,7 +577,7 @@ Item {
             onValueChanged: filter.set(paramSoftness, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.columnSpan: 2
             onClicked: softnessSlider.value = 20
         }
@@ -586,13 +586,13 @@ Item {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
             onClicked: motionTrackerDialog.show()
         }
 
-        Shotcut.TipBox {
+        Snapflow.TipBox {
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.margins: 10
@@ -604,7 +604,7 @@ Item {
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
         onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
@@ -614,12 +614,12 @@ Item {
             let params = [paramHorizontal, paramVertical, paramWidth, paramHeight];
             params.forEach(param => {
                 filter.resetProperty(param);
-                filter.set(param, filter.getDouble('shotcut:backup.' + param));
-                filter.resetProperty('shotcut:backup.' + param);
+                filter.set(param, filter.getDouble('snapflow:backup.' + param));
+                filter.resetProperty('snapflow:backup.' + param);
             });
             filter.resetProperty(rectProperty);
-            filter.set(rectProperty, filter.getRect('shotcut:backup.rect'));
-            filter.resetProperty('shotcut:backup.rect');
+            filter.set(rectProperty, filter.getRect('snapflow:backup.rect'));
+            filter.resetProperty('snapflow:backup.rect');
             motionTrackerRow = 0;
             trackingOperationCombo.currentIndex = 0;
             startRadioButton.checked = true;

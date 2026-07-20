@@ -1,4 +1,4 @@
-name: build-shotcut-windows-arm64
+name: build-snapflow-windows-arm64
 
 on:
   workflow_dispatch:
@@ -34,16 +34,16 @@ jobs:
       - name: Download from S3
         shell: bash
         run: |
-          aws s3 cp s3://builds.us.meltytech/shotcut-build-win_arm.txt.xz . --no-progress
-          aws s3 cp s3://builds.us.meltytech/shotcut/shotcut-win_ARM-$VERSION.zip . --no-progress
+          aws s3 cp s3://builds.us.meltytech/snapflow-build-win_arm.txt.xz . --no-progress
+          aws s3 cp s3://builds.us.meltytech/snapflow/snapflow-win_ARM-$VERSION.zip . --no-progress
 
       - name: Dump log
         shell: msys2 {0}
-        run: xzcat shotcut-build-win_arm.txt.xz
+        run: xzcat snapflow-build-win_arm.txt.xz
 
       - name: Extract zip
         shell: msys2 {0}
-        run: unzip -q shotcut-win_ARM-$VERSION.zip
+        run: unzip -q snapflow-win_ARM-$VERSION.zip
 
       - name: Setup SM_CLIENT_CERT_FILE
         if: ${{ github.repository_owner == 'mltframework' }}
@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           smctl healthcheck
-          for EXE in Shotcut/*.exe; do
+          for EXE in Snapflow/*.exe; do
             echo Signing ${EXE}
             smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
           done
@@ -69,21 +69,21 @@ jobs:
       - name: Re-zip portable
         shell: msys2 {0}
         run: |
-          rm shotcut-win_ARM-$VERSION.zip
-          zip -gr shotcut-win_ARM-$VERSION.zip Shotcut
+          rm snapflow-win_ARM-$VERSION.zip
+          zip -gr snapflow-win_ARM-$VERSION.zip Snapflow
 
       - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-portable
-          path: ./shotcut-win_ARM-${{ env.VERSION }}.zip
+          path: ./snapflow-win_ARM-${{ env.VERSION }}.zip
 
       - name: Setup ISCC
         shell: msys2 {0}
         run: |
           mkdir -p "$HOME/bin"
           pushd "$HOME/bin"
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/snapflow-build/iscc632.txz
           tar -xJf iscc632.txz
           popd
 
@@ -92,31 +92,31 @@ jobs:
         run: |
           PATH="$HOME/bin:$PATH"
           echo Extracting installer dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/snapflow-build/innosetup-opera-1.txz
           tar -xJf innosetup-opera-1.txz
           rm innosetup-opera-1.txz
-          cp packaging/windows/shotcut.iss .
+          cp packaging/windows/snapflow.iss .
           echo Running Inno Setup Compiler
-          ISCC -Q -O. shotcut.iss
+          ISCC -Q -O. snapflow.iss
 
       - name: Sign installer
         if: ${{ github.repository_owner == 'mltframework' }}
         shell: bash
         run: |
-          smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
-          mv shotcut-setup.exe shotcut-win_ARM-$VERSION.exe
+          smctl sign --simple --keypair-alias key_1464644718 --input snapflow-setup.exe
+          mv snapflow-setup.exe snapflow-win_ARM-$VERSION.exe
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-arm64-installer
-          path: ./shotcut-win_ARM-${{ env.VERSION }}.exe
+          path: ./snapflow-win_ARM-${{ env.VERSION }}.exe
 
       - name: Upload packages to S3
         if: ${{ github.repository_owner == 'mltframework' && github.ref_name == 'master' }}
         shell: bash
         run: |
-          for file in shotcut-win_ARM-$VERSION.*; do
+          for file in snapflow-win_ARM-$VERSION.*; do
             echo Uploading "$file" to S3
-            aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
+            aws s3 cp "$file" s3://builds.us.meltytech/snapflow/ --no-progress
           done

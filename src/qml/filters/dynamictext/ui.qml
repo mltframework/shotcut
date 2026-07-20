@@ -17,10 +17,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     function setControls() {
         textArea.text = filter.get('argument');
         textFilterUi.setControls();
@@ -78,53 +78,53 @@ Shotcut.KeyframableFilter {
             // Add some animated presets.
             filter.animateIn = Math.round(profile.fps);
             filter.set(textFilterUi.rectProperty, '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Left'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Left'));
             filter.set(textFilterUi.rectProperty, '0=100%/0%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Right'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Right'));
             filter.set(textFilterUi.rectProperty, '0=0%/-100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Top'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Top'));
             filter.set(textFilterUi.rectProperty, '0=0%/100%:100%x100%; :1.0=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Bottom'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slide In From Bottom'));
             filter.animateIn = 0;
             filter.animateOut = Math.round(profile.fps);
             filter.set(textFilterUi.rectProperty, ':-1.0=0%/0%:100%x100%; -1=-100%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Left'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Left'));
             filter.set(textFilterUi.rectProperty, ':-1.0=0%/0%:100%x100%; -1=100%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Right'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Right'));
             filter.set(textFilterUi.rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/-100%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Top'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Top'));
             filter.set(textFilterUi.rectProperty, ':-1.0=0%/0%:100%x100%; -1=0%/100%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animOut'), qsTr('Slide Out Bottom'));
+            filter.savePreset(presetParams.concat('snapflow:animOut'), qsTr('Slide Out Bottom'));
             filter.animateOut = 0;
             filter.animateIn = filter.duration;
             filter.set(textFilterUi.rectProperty, '0=0%/0%:100%x100%; -1=-5%/-5%:110%x110%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom In'));
             filter.set(textFilterUi.rectProperty, '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%');
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom Out'));
             filter.set(textFilterUi.rectProperty, '0=-5%/-5%:110%x110%; -1=-10%/-5%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Left'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Left'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Move Left'));
             filter.set(textFilterUi.rectProperty, '0=-5%/-5%:110%x110%; -1=0%/-5%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Right'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Right'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Move Right'));
             filter.set(textFilterUi.rectProperty, '0=-5%/-5%:110%x110%; -1=-5%/-10%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Up'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Up'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Move Up'));
             filter.set(textFilterUi.rectProperty, '0=-5%/-5%:110%x110%; -1=-5%/0%:110%x110%');
             filter.deletePreset(qsTr('Slow Pan Down'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Down'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Move Down'));
             filter.set(textFilterUi.rectProperty, '0=0%/0%:100%x100%; -1=-10%/-10%:110%x110%');
             filter.deletePreset(qsTr('Slow Zoom In, Pan Up Left'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Up Left'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom In, Move Up Left'));
             filter.set(textFilterUi.rectProperty, '0=0%/0%:100%x100%; -1=0%/0%:110%x110%');
             filter.deletePreset(qsTr('Slow Zoom In, Pan Down Right'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Down Right'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom In, Move Down Right'));
             filter.set(textFilterUi.rectProperty, '0=-10%/0%:110%x110%; -1=0%/0%:100%x100%');
             filter.deletePreset(qsTr('Slow Zoom Out, Pan Up Right'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Up Right'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Move Up Right'));
             filter.set(textFilterUi.rectProperty, '0=0%/-10%:110%x110%; -1=0%/0%:100%x100%');
             filter.deletePreset(qsTr('Slow Zoom Out, Pan Down Left'));
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Down Left'));
+            filter.savePreset(presetParams.concat('snapflow:animIn'), qsTr('Slow Zoom Out, Move Down Left'));
             filter.animateIn = 0;
             filter.resetProperty(textFilterUi.rectProperty);
             // Add default preset.
@@ -158,7 +158,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: textFilterUi.parameterList.concat(['argument'])
@@ -242,7 +242,7 @@ Shotcut.KeyframableFilter {
                         onClicked: contextMenu.popup()
                     }
 
-                    Shotcut.EditMenu {
+                    Snapflow.EditMenu {
                         id: contextMenu
                     }
 
@@ -253,7 +253,7 @@ Shotcut.KeyframableFilter {
                     // workaround initialization problem
                 }
 
-                ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
+                ScrollBar.horizontal: Snapflow.HorizontalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentWidth > scrollview.width
                     parent: scrollview.parent
@@ -262,7 +262,7 @@ Shotcut.KeyframableFilter {
                     anchors.right: scrollview.right
                 }
 
-                ScrollBar.vertical: Shotcut.VerticalScrollBar {
+                ScrollBar.vertical: Snapflow.VerticalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentHeight > scrollview.height
                     parent: scrollview.parent
@@ -278,7 +278,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: insertCombo
 
             implicitWidth: 180
@@ -342,7 +342,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.TextFilterUi {
+        Snapflow.TextFilterUi {
             id: textFilterUi
             showOpacity: filter.isAtLeastVersion(2)
             Layout.columnSpan: 2

@@ -44,7 +44,7 @@ ScrubBar::ScrubBar(QWidget *parent)
 {
     setMouseTracking(true);
     setMinimumHeight(fontMetrics().height() + selectionSize);
-    setWhatsThis("https://forum.shotcut.org/t/trimming-clips/49216/1");
+    setWhatsThis("https://forum.snapflow.org/t/trimming-clips/49216/1");
 }
 
 void ScrubBar::setScale(int maximum)

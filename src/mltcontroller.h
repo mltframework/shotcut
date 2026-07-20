@@ -102,7 +102,7 @@ public:
     int consumerChanged();
     void setProfile(const QString &profile_name);
     void setAudioChannels(int audioChannels);
-    void setProcessingMode(ShotcutSettings::ProcessingMode mode);
+    void setProcessingMode(SnapflowSettings::ProcessingMode mode);
     QString resource() const;
     bool isSeekable(Mlt::Producer *p = nullptr) const;
     int maxFrameCount() const;
@@ -154,7 +154,7 @@ public:
     QString filtersClipboardXML() { return XML(m_filtersClipboard.get()); }
 
     int audioChannels() const { return m_audioChannels; }
-    ShotcutSettings::ProcessingMode processingMode() const { return m_processingMode; }
+    SnapflowSettings::ProcessingMode processingMode() const { return m_processingMode; }
     QString colorTrc() const;
     void setColorTrc(const QString &trc);
     bool isHDR() const;
@@ -201,7 +201,7 @@ private:
     Mlt::Profile m_profile;
     Mlt::Profile m_previewProfile;
     int m_audioChannels{2};
-    ShotcutSettings::ProcessingMode m_processingMode{ShotcutSettings::Native8Cpu};
+    SnapflowSettings::ProcessingMode m_processingMode{SnapflowSettings::Native8Cpu};
     QString m_colorTrc;
     QScopedPointer<Mlt::Filter> m_jackFilter;
     QString m_url;

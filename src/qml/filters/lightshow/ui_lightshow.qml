@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string rectProperty: "rect"
@@ -80,7 +80,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: defaultParameters
@@ -97,7 +97,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.GradientControl {
+        Snapflow.GradientControl {
             id: fgGradient
 
             Layout.columnSpan: 4
@@ -116,7 +116,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 value: filterRect.x
@@ -135,7 +135,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCente
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 value: filterRect.y
@@ -157,7 +157,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 value: filterRect.width
@@ -176,7 +176,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCente
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 value: filterRect.height
@@ -194,12 +194,12 @@ Item {
             text: qsTr('Oscillation')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: oscSlider
 
             Layout.columnSpan: 3
@@ -210,7 +210,7 @@ Item {
             onValueChanged: filter.set("osc", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: oscSlider.value = 5
         }
 
@@ -218,12 +218,12 @@ Item {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The low end of the frequency range to be used to influence the light.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: freqLowSlider
 
             Layout.columnSpan: 3
@@ -238,7 +238,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
@@ -246,12 +246,12 @@ Item {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The high end of the frequency range to be used to influence the light.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: freqHighSlider
 
             Layout.columnSpan: 3
@@ -266,7 +266,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
@@ -274,12 +274,12 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             Layout.columnSpan: 3
@@ -290,7 +290,7 @@ Item {
             onValueChanged: filter.set("threshold", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
 

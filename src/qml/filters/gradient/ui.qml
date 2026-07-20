@@ -17,10 +17,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
-    property string rectProperty: 'shotcut:rect'
+    property string rectProperty: 'snapflow:rect'
     property string patternProperty: '0'
     property string startColorProperty: '1'
     property string startOpacityProperty: '2'
@@ -33,9 +33,9 @@ Item {
     property string offsetProperty: '9'
     property string blendProperty: '10'
     property rect filterRect
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
     property bool _disableUpdate: true
 
     function getPosition() {
@@ -197,7 +197,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [patternProperty, rectProperty, startColorProperty, startOpacityProperty, endColorProperty, endOpacityProperty, blendProperty]
@@ -247,7 +247,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 linearRadioButton.checked = true;
                 filter.set(patternProperty, 'gradient_linear');
@@ -259,7 +259,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: offsetSlider
 
             minimumValue: 0
@@ -269,7 +269,7 @@ Item {
             onValueChanged: filter.set(offsetProperty, value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: offsetSlider.value = 0
         }
 
@@ -278,7 +278,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.GradientControl {
+        Snapflow.GradientControl {
             id: gradient
 
             function cssColor(color) {
@@ -302,7 +302,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 gradient.colors = ['#ff000000', '#ffffffff'];
                 gradient.gradientChanged();
@@ -317,7 +317,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -340,7 +340,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCente
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -358,7 +358,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filterRect.x = rectX.value = profile.width / 2;
                 filterRect.y = rectY.value = 0;
@@ -374,7 +374,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -397,7 +397,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCente
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -415,7 +415,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filterRect.width = rectW.value = profile.width * 0.01;
                 filterRect.height = rectH.value = profile.height;
@@ -427,7 +427,7 @@ Item {
             text: qsTr('Blend mode')
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: blendCombo
 
             textRole: 'text'
@@ -530,7 +530,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(blendProperty, comboItems.get(0).value);
                 blendCombo.currentIndex = 0;

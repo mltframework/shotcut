@@ -1,10 +1,10 @@
-name: sign-shotcut-windows-from-s3
+name: sign-snapflow-windows-from-s3
 
 on:
   workflow_dispatch:
     inputs:
       version-manual:
-        description: Optional Shotcut version (for example 26.6.18). If empty, use today's date.
+        description: Optional Snapflow version (for example 26.6.18). If empty, use today's date.
         required: false
         type: string
 
@@ -43,13 +43,13 @@ jobs:
             VERSION="$(date +"%y.%-m.%-d")"
           fi
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          echo "PORTABLE_ZIP=shotcut-win64-$VERSION.zip" >> "$GITHUB_ENV"
+          echo "PORTABLE_ZIP=snapflow-win64-$VERSION.zip" >> "$GITHUB_ENV"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "portable_zip=shotcut-win64-$VERSION.zip" >> "$GITHUB_OUTPUT"
+          echo "portable_zip=snapflow-win64-$VERSION.zip" >> "$GITHUB_OUTPUT"
 
       - name: Download portable from S3
         shell: bash
-        run: aws s3 cp "s3://builds.us.meltytech/shotcut/$PORTABLE_ZIP" . --no-progress
+        run: aws s3 cp "s3://builds.us.meltytech/snapflow/$PORTABLE_ZIP" . --no-progress
 
       - name: Extract portable zip
         shell: msys2 {0}
@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           smctl healthcheck
-          for EXE in Shotcut/*.exe; do
+          for EXE in Snapflow/*.exe; do
             echo Signing ${EXE}
             smctl sign --simple --keypair-alias key_1464644718 --input ${EXE}
           done
@@ -78,7 +78,7 @@ jobs:
         shell: msys2 {0}
         run: |
           rm "$PORTABLE_ZIP"
-          zip -gr "$PORTABLE_ZIP" Shotcut
+          zip -gr "$PORTABLE_ZIP" Snapflow
 
       - name: Upload signed portable artifact
         uses: actions/upload-artifact@v7
@@ -91,7 +91,7 @@ jobs:
         run: |
           mkdir -p "$HOME/bin"
           pushd "$HOME/bin"
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/snapflow-build/iscc632.txz
           tar -xJf iscc632.txz
           popd
 
@@ -99,32 +99,32 @@ jobs:
         shell: msys2 {0}
         run: |
           PATH="$HOME/bin:$PATH"
-          cp packaging/windows/shotcut.iss .
-          sed -i "s/YY.MM.DD/$VERSION/" shotcut.iss
+          cp packaging/windows/snapflow.iss .
+          sed -i "s/YY.MM.DD/$VERSION/" snapflow.iss
           echo Extracting installer dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/snapflow-build/innosetup-opera-1.txz
           tar -xJf innosetup-opera-1.txz
           rm innosetup-opera-1.txz
           echo Running Inno Setup Compiler
-          ISCC -Q -O. shotcut.iss
+          ISCC -Q -O. snapflow.iss
 
       - name: Sign installer
         shell: bash
         run: |
           smctl healthcheck
-          smctl sign --simple --keypair-alias key_1464644718 --input shotcut-setup.exe
-          mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+          smctl sign --simple --keypair-alias key_1464644718 --input snapflow-setup.exe
+          mv snapflow-setup.exe snapflow-win64-$VERSION.exe
 
       - name: Upload signed installer artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-x64-installer-signed
-          path: ./shotcut-win64-${{ steps.set_version.outputs.version }}.exe
+          path: ./snapflow-win64-${{ steps.set_version.outputs.version }}.exe
 
       - name: Upload signed packages to S3
         shell: bash
         run: |
-          for file in "$PORTABLE_ZIP" shotcut-win64-$VERSION.exe; do
+          for file in "$PORTABLE_ZIP" snapflow-win64-$VERSION.exe; do
             echo Uploading "$file" to S3
-            aws s3 cp "$file" s3://builds.us.meltytech/shotcut/ --no-progress
+            aws s3 cp "$file" s3://builds.us.meltytech/snapflow/ --no-progress
           done

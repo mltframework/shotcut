@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: []
@@ -65,7 +65,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: presetItem
 
             Layout.columnSpan: 2
@@ -82,7 +82,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: colorPicker
 
             property bool isReady: false
@@ -101,7 +101,7 @@ Item {
             onPickCancelled: filter.set('disable', 0)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: colorPicker.value = defaultNeutral
         }
 
@@ -172,7 +172,7 @@ Item {
                 }
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: tempspinner
 
                 Layout.minimumWidth: 150
@@ -185,7 +185,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: tempslider.value = defaultTemp
         }
 

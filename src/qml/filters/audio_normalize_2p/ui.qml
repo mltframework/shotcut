@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setStatus(inProgress) {
@@ -67,7 +67,7 @@ Item {
             text: qsTr('Target Loudness')
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: programSlider
 
             minimumValue: -50
@@ -84,13 +84,13 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: programSlider.value = -23
         }
 
         Label {}
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: button
 
             Layout.columnSpan: 2
@@ -128,7 +128,7 @@ Item {
             text: qsTr('Detected Loudness:')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The loudness calculated by the analysis.')
             }
         }
@@ -143,7 +143,7 @@ Item {
             text: qsTr('Normalization Gain:')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The gain applied to normalize to the Target Loudness.')
             }
         }

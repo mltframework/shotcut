@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string amount: 'av.frames'
@@ -43,7 +43,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [amount]
@@ -56,7 +56,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 2
@@ -67,7 +67,7 @@ Item {
             onValueChanged: filter.set(amount, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
 

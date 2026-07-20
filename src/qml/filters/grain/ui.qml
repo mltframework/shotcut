@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -49,7 +49,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['noise', 'brightness']
@@ -62,7 +62,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: noiseSlider
 
             minimumValue: 1
@@ -72,7 +72,7 @@ Item {
             onValueChanged: filter.set('noise', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: noiseSlider.value = 40
         }
 
@@ -81,7 +81,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: brightnessSlider
 
             minimumValue: 0
@@ -90,7 +90,7 @@ Item {
             onValueChanged: filter.set('brightness', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: brightnessSlider.value = 83
         }
 

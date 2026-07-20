@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     mlt_service: "avfilter.gblur"
     qml: "ui_av.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/blur-gaussian/12830/1'
+    help: 'https://forum.snapflow.org/t/blur-gaussian/12830/1'
 
     keyframes {
         allowAnimateIn: true

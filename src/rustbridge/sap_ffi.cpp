@@ -18,7 +18,7 @@
 #include "models/markersmodel.h"
 #include "models/subtitlesmodel.h"
 #include "models/subtitles.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
@@ -487,7 +487,7 @@ int sap_set_track_height(void *mainWindowHandle, int height)
             if (!model)
                 return;
             // Real MultitrackModel::setTrackHeight() clamps to [10, 150]
-            // and stores it as the single project-wide `shotcut:trackHeight`
+            // and stores it as the single project-wide `snapflow:trackHeight`
             // tractor property (not per-track), matching the Timeline
             // panel's row-height control (see multitrackmodel.cpp).
             model->setTrackHeight(height);
@@ -570,9 +570,9 @@ void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
 // Enumerates a real, attached Mlt::Filter's user-visible properties for
 // filter.list, live off the actual MLT property store (not an echo of
 // whatever filter.add/filter.setProperty happened to be called with) --
-// skips MLT/Shotcut's own internal bookkeeping keys (mlt_type,
+// skips MLT/Snapflow's own internal bookkeeping keys (mlt_type,
 // mlt_service, in/out/disable/version, anything "_"-prefixed like
-// _unique_id, "shotcut:"-prefixed, or "meta."-prefixed metadata) since
+// _unique_id, "snapflow:"-prefixed, or "meta."-prefixed metadata) since
 // those are never a filter's own tunable parameters. Values come back as
 // real MLT property strings; each is smart-typed to a JSON number when it
 // parses cleanly as one (matching how filter.setProperty/anim_set already
@@ -595,7 +595,7 @@ QJsonObject filterUserPropertiesToJson(Mlt::Filter &filter)
             continue;
         const QString name = QString::fromUtf8(rawName);
         if (kReservedKeys.contains(name) || name.startsWith(QLatin1Char('_'))
-            || name.startsWith(QLatin1String("shotcut:")) || name.startsWith(QLatin1String("meta.")))
+            || name.startsWith(QLatin1String("snapflow:")) || name.startsWith(QLatin1String("meta.")))
             continue;
         const char *rawValue = filter.get(rawName);
         if (!rawValue)
@@ -613,7 +613,7 @@ QJsonObject filterUserPropertiesToJson(Mlt::Filter &filter)
 
 // Builds the standard playlist-entry JSON object for row `index` from a
 // live Mlt::ClipInfo, matching PlaylistModel::data()'s COLUMN_RESOURCE
-// display logic (prefer the real shotcut:caption property, else the
+// display logic (prefer the real snapflow:caption property, else the
 // resource's file basename) -- see playlistmodel.cpp.
 QJsonObject playlistEntryToJson(int index, Mlt::ClipInfo *info)
 {
@@ -621,7 +621,7 @@ QJsonObject playlistEntryToJson(int index, Mlt::ClipInfo *info)
     entry["index"] = index;
     QString name;
     if (info->producer && info->producer->is_valid()) {
-        name = QString::fromUtf8(info->producer->get("shotcut:caption"));
+        name = QString::fromUtf8(info->producer->get("snapflow:caption"));
     }
     const QString resource = QString::fromUtf8(info->resource ? info->resource : "");
     if (name.isEmpty())
@@ -2032,7 +2032,7 @@ unsigned char *sap_get_frame(void *mainWindowHandle,
             }
             // Renders off the same live Mlt::Producer/tractor that drives
             // the app's own preview (Controller::producer()), via the same
-            // Controller::image() primitive Shotcut's own timeline/property
+            // Controller::image() primitive Snapflow's own timeline/property
             // thumbnails already use (mltcontroller.cpp) -- a real decode
             // of the actual composited project, not a mock.
             Mlt::Producer *producer = MLT.producer();
@@ -2492,7 +2492,7 @@ char *sap_generator_create_title(void *mainWindowHandle,
             producer.set("resource", bg.toUtf8().constData());
             producer.set("mlt_image_format", "rgba");
             const QString caption = QStringLiteral("Title: %1").arg(textStr);
-            producer.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            producer.set(kSnapflowCaptionProperty, caption.toUtf8().constData());
             MLT.setDurationFromDefault(&producer);
             const bool rich = (modeStr == QLatin1String("rich"));
             Mlt::Filter filter(MLT.profile(), rich ? "qtext" : "dynamictext");
@@ -2562,7 +2562,7 @@ char *sap_generator_create_color(void *mainWindowHandle, const char *hexColor)
             producer.set("resource", hex.toUtf8().constData());
             producer.set("mlt_image_format", "rgba");
             const QString caption = QStringLiteral("Color: %1").arg(hex);
-            producer.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            producer.set(kSnapflowCaptionProperty, caption.toUtf8().constData());
             MLT.setDurationFromDefault(&producer);
             model->append(producer);
             auto *playlist = model->playlist();
@@ -2808,14 +2808,14 @@ int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex)
             // of routed through MainWindow::onCreateOrEditFilterOnOutput
             // (which needs a live FiltersDock/selection to run headlessly).
             Mlt::Filter filter(MLT.profile(), "subtitle");
-            filter.set(kShotcutFilterProperty, "subtitles");
+            filter.set(kSnapflowFilterProperty, "subtitles");
             filter.set("fgcolour", "#ffffffff");
             filter.set("bgcolour", "#00000000");
             filter.set("olcolour", "#aa000000");
             filter.set("outline", 3);
             filter.set("weight", QFont::Bold);
             filter.set("style", "normal");
-            filter.set("shotcut:usePointSize", 1);
+            filter.set("snapflow:usePointSize", 1);
             filter.set("size", MLT.profile().height() / 20);
             filter.set("geometry", "20%/75%:60%x20%");
             filter.set("valign", "bottom");

@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     keywords: qsTr('dynamics range loudness', 'search keywords for the Limiter audio filter') + ' limiter'
     mlt_service: 'ladspa.1913'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/limiter-audio-filter/12908/1'
+    help: 'https://forum.snapflow.org/t/limiter-audio-filter/12908/1'
 }

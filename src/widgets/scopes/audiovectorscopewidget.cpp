@@ -38,7 +38,7 @@ AudioVectorScopeWidget::AudioVectorScopeWidget()
 {
     LOG_DEBUG() << "begin";
     setMinimumSize(100, 100);
-    setWhatsThis("https://forum.shotcut.org/t/audio-vector-scope/43817/1");
+    setWhatsThis("https://forum.snapflow.org/t/audio-vector-scope/43817/1");
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -63,7 +63,7 @@ AudioVectorScopeWidget::AudioVectorScopeWidget()
 
     setLayout(vlayout);
 
-    connect(&Settings, &ShotcutSettings::playerAudioChannelsChanged, this, [&]() {
+    connect(&Settings, &SnapflowSettings::playerAudioChannelsChanged, this, [&]() {
         setComboBoxOptions();
         requestRefresh();
     });

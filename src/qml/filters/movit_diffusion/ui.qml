@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     width: 350
@@ -34,7 +34,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: radiusSlider
 
             minimumValue: 0
@@ -46,7 +46,7 @@ Item {
             onValueChanged: filter.set('radius', value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: radiusSlider.value = 300
         }
 
@@ -55,7 +55,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: mixSlider
 
             minimumValue: 0
@@ -65,7 +65,7 @@ Item {
             onValueChanged: filter.set('mix', value / 100)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: mixSlider.value = 30
         }
 

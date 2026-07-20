@@ -18,7 +18,7 @@ import QtQml.Models
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string paramOperation: '2'
@@ -59,7 +59,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: modeCombo
 
             implicitWidth: 180
@@ -125,7 +125,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(paramOperation, operationModel.get(0).value);
                 modeCombo.currentIndex = 0;
@@ -137,7 +137,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderAmount
 
             enabled: operationModel.get(modeCombo.currentIndex).value !== -1
@@ -152,7 +152,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderAmount.value = 50
         }
 
@@ -165,7 +165,7 @@ Item {
             onCheckedChanged: filter.set(paramInvert, checked)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: invertCheckbox.checked = false
         }
 

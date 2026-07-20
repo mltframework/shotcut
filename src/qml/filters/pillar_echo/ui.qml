@@ -17,14 +17,14 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string rectProperty: 'rect'
     property rect filterRect
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
 
     function defaultRect() {
         var result;
@@ -130,7 +130,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [rectProperty]
@@ -158,7 +158,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -181,7 +181,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -199,7 +199,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 var rect = defaultRect();
                 filterRect.x = rectX.value = rect.x;
@@ -208,7 +208,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: positionKeyframesButton
 
             Layout.rowSpan: 2
@@ -233,7 +233,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -256,7 +256,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -274,7 +274,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 var rect = defaultRect();
                 filterRect.width = rectW.value = rect.width;
@@ -288,7 +288,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 0
@@ -299,7 +299,7 @@ Item {
             onValueChanged: filter.set("blur", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = 4
         }
 

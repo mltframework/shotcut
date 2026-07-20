@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string threshold: 'midpoint'
     property double thresholdDefault: 128
 
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [threshold, 'invert', 'use_alpha']
@@ -90,7 +90,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             minimumValue: 0
@@ -101,11 +101,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255, thresholdKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = thresholdDefault / 255 * thresholdSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: thresholdKeyframesButton
 
             onToggled: {
@@ -125,7 +125,7 @@ Shotcut.KeyframableFilter {
             onCheckedChanged: filter.set('invert', checked)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: invertCheckbox.checked = false
         }
 
@@ -142,7 +142,7 @@ Shotcut.KeyframableFilter {
             onCheckedChanged: filter.set('use_alpha', checked)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: useAlphaCheckbox.checked = false
         }
 

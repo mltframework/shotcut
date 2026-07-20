@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,7 @@ Metadata {
     icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.opacity"
-    help: 'https://forum.shotcut.org/t/brightness/12832/1'
+    help: 'https://forum.snapflow.org/t/brightness/12832/1'
 
     keyframes {
         allowAnimateIn: true

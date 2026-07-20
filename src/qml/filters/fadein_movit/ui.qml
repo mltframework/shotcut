@@ -17,8 +17,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml
 
 Item {
     property alias duration: timeSpinner.value
@@ -62,7 +62,7 @@ Item {
                 text: qsTr('Duration')
             }
 
-            Shotcut.TimeSpinner {
+            Snapflow.TimeSpinner {
                 id: timeSpinner
 
                 minimumValue: 2

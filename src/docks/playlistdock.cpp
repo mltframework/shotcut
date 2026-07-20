@@ -29,7 +29,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "ui_playlistdock.h"
 #include "util.h"
 #include "widgets/docktoolbar.h"
@@ -215,7 +215,7 @@ public:
         m_functors.push_back([this](int row, const QModelIndex &index) {
             auto clip = MAIN.playlist()->get_clip(row);
             if (clip && clip->is_valid()) {
-                return QString::fromUtf8(clip->parent().get(kShotcutBinsProperty)).isEmpty();
+                return QString::fromUtf8(clip->parent().get(kSnapflowBinsProperty)).isEmpty();
             }
             return false;
         });
@@ -1288,7 +1288,7 @@ Mlt::Playlist *PlaylistDock::binPlaylist()
         Mlt::ClipInfo info;
         m_model.playlist()->clip_info(i, &info);
         if (info.producer && info.producer->is_valid()
-            && (isAll || bin == info.producer->get(kShotcutBinsProperty)))
+            && (isAll || bin == info.producer->get(kSnapflowBinsProperty)))
             m_binPlaylist.append(*info.producer, info.frame_in, info.frame_out);
         longTask.reportProgress(tr("Appending"), i, count);
     }
@@ -1367,7 +1367,7 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
                 first = false;
                 if (!MLT.producer() || !MLT.producer()->is_valid()) {
                     Mlt::Properties properties;
-                    properties.set(kShotcutSkipConvertProperty, 1);
+                    properties.set(kSnapflowSkipConvertProperty, 1);
                     MAIN.open(path, &properties, false);
                     if (MLT.producer() && MLT.producer()->is_valid()) {
                         producer = MLT.producer();
@@ -1376,16 +1376,16 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
                 }
             }
             producer = MLT.setupNewProducer(producer);
-            producer->set(kShotcutSkipConvertProperty, 1);
+            producer->set(kSnapflowSkipConvertProperty, 1);
             if (ui->treeWidget->topLevelItemCount() > SmartBinCount) {
                 auto items = ui->treeWidget->selectedItems();
                 // Skip if a smart bin is selected
                 if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).isNull()) {
                     auto bin = items.first()->text(0);
-                    producer->set(kShotcutBinsProperty, bin.toUtf8().constData());
+                    producer->set(kSnapflowBinsProperty, bin.toUtf8().constData());
                 }
             }
-            if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
+            if (!MLT.isLiveProducer(producer) || producer->get_int(kSnapflowVirtualClip)) {
                 ProxyManager::generateIfNotExists(*producer);
                 assignToBin(*producer);
                 if (row == -1)
@@ -1442,7 +1442,7 @@ void PlaylistDock::loadBins()
     while (ui->treeWidget->topLevelItemCount() > SmartBinCount)
         delete ui->treeWidget->takeTopLevelItem(SmartBinCount);
 
-    auto props = m_model.playlist()->get_props(kShotcutBinsProperty);
+    auto props = m_model.playlist()->get_props(kSnapflowBinsProperty);
     if (props && props->is_valid()) {
         for (int i = 0; i < props->count(); ++i) {
             auto name = QString::fromUtf8(props->get_name(i));
@@ -1488,7 +1488,7 @@ void PlaylistDock::assignToBin(Mlt::Properties &properties, QString bin)
             return;
         bin = items.first()->text(0);
     }
-    properties.set(kShotcutBinsProperty, bin.toUtf8().constData());
+    properties.set(kSnapflowBinsProperty, bin.toUtf8().constData());
 }
 
 void PlaylistDock::onInsertCutActionTriggered()
@@ -1709,7 +1709,7 @@ void PlaylistDock::onOpenActionTriggered()
         Mlt::Producer *p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
         setPlaylistIndex(p, index.row());
-        bool isNonSequenceImage = MLT.isImageProducer(p) && !p->get_int(kShotcutSequenceProperty);
+        bool isNonSequenceImage = MLT.isImageProducer(p) && !p->get_int(kSnapflowSequenceProperty);
         emit clipOpened(p, isNonSequenceImage ? false : Settings.playlistAutoplay());
         delete i;
         m_iconsView->resetMultiSelect();
@@ -1748,7 +1748,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             setPlaylistIndex(p, sourceIndex.row());
             setIndex(index.row());
             bool isNonSequenceImage = MLT.isImageProducer(p)
-                                      && !p->get_int(kShotcutSequenceProperty);
+                                      && !p->get_int(kSnapflowSequenceProperty);
             emit clipOpened(p, isNonSequenceImage ? false : Settings.playlistAutoplay());
         }
         delete i;

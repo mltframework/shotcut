@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     keywords: qsTr('frequency tone', 'search keywords for the Pitch audio filter') + ' pitch rubberband'
     qml: "ui.qml"
     isFavorite: false
-    help: 'https://forum.shotcut.org/t/pitch-audio-filter/15649/1'
+    help: 'https://forum.snapflow.org/t/pitch-audio-filter/15649/1'
 
     keyframes {
         allowAnimateIn: true

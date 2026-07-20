@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
 
     // The three band EQ is implemented by using a 3 band parametric
     // EQ with shelves. Many of the parametric EQ parameters are fixed
@@ -113,7 +113,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: keyframableParameters.concat('.dummy', channelMask.channelMaskProperty)
@@ -133,7 +133,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lowSlider
 
             minimumValue: -20
@@ -148,7 +148,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lowSlider.value = 0
         }
 
@@ -167,7 +167,7 @@ Shotcut.KeyframableFilter {
                 Layout.alignment: Qt.AlignHCenter
             }
 
-            Shotcut.KeyframesButton {
+            Snapflow.KeyframesButton {
                 id: keyframesButton
 
                 onToggled: {
@@ -191,7 +191,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: midSlider
 
             minimumValue: -20
@@ -206,7 +206,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: midSlider.value = 0
         }
 
@@ -215,7 +215,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: highSlider
 
             minimumValue: -20
@@ -230,7 +230,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: highSlider.value = 0
         }
 
@@ -239,7 +239,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2

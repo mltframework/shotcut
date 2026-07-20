@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.VuiBase {
+Snapflow.VuiBase {
     property string rectProperty
     property string fillProperty
     property string distortProperty
@@ -27,12 +27,12 @@ Shotcut.VuiBase {
     property real zoom: (video.zoom > 0) ? video.zoom : 1
     property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
-    property string rotationStartValue: '_shotcut:rotationStartValue'
-    property string rotationMiddleValue: '_shotcut:rotationMiddleValue'
-    property string rotationEndValue: '_shotcut:rotationEndValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
+    property string rotationStartValue: '_snapflow:rotationStartValue'
+    property string rotationMiddleValue: '_snapflow:rotationMiddleValue'
+    property string rotationEndValue: '_snapflow:rotationEndValue'
 
     function getAspectRatio() {
         return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0') ? producer.displayAspectRatio : 0;
@@ -243,7 +243,7 @@ Shotcut.VuiBase {
             height: video.rect.height
             scale: zoom
 
-            Shotcut.RectangleControl {
+            Snapflow.RectangleControl {
                 id: rectangle
 
                 withRotation: !!rotationProperty

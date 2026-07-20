@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,16 +10,16 @@ Metadata {
     qml: 'ui.qml'
     vui: 'vui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/mask-simple-shape/12861/1'
+    help: 'https://forum.snapflow.org/t/mask-simple-shape/12861/1'
 
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4', 'filter.5', 'shotcut:rect']
+        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4', 'filter.5', 'snapflow:rect']
         parameters: [
             Parameter {
                 name: qsTr('Size & Position')
-                property: 'shotcut:rect'
+                property: 'snapflow:rect'
                 isRectangle: true
                 gangedProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4']
             },

@@ -30,7 +30,7 @@
 
 /*!
   \class ScopeWidget
-  \brief The ScopeWidget provides a common interface for all scopes in Shotcut.
+  \brief The ScopeWidget provides a common interface for all scopes in Snapflow.
 
   ScopeWidget is a QWidget that provides some additional functionality that is
   common to all scopes. One common function is a queue that can receive and

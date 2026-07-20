@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.VuiBase {
+Snapflow.VuiBase {
 
     // 80/90% Safe Areas
     // EBU R95 Safe Areas
@@ -31,11 +31,11 @@ Shotcut.VuiBase {
     property string corner3yProperty: '5'
     property string corner4xProperty: '6'
     property string corner4yProperty: '7'
-    property var cornerProperties: ['shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+    property var cornerProperties: ['snapflow:corner1', 'snapflow:corner2', 'snapflow:corner3', 'snapflow:corner4']
     property var corners: [Qt.rect(0, 0, 0, 0), Qt.rect(profile.width, 0, 0, 0), Qt.rect(profile.width, profile.height, 0, 0), Qt.rect(0, profile.height, 0, 0)]
-    property var cornerStartValues: ['_shotcut:corner1StartValue', '_shotcut:corner2StartValue', '_shotcut:corner3StartValue', '_shotcut:corner4StartValue']
-    property var cornerMiddleValues: ['_shotcut:corner1MiddleValue', '_shotcut:corner2MiddleValue', '_shotcut:corner3MiddleValue', '_shotcut:corner4MiddleValue']
-    property var cornerEndValues: ['_shotcut:corner1EndValue', '_shotcut:corner2EndValue', '_shotcut:corner3EndValue', '_shotcut:corner4EndValue']
+    property var cornerStartValues: ['_snapflow:corner1StartValue', '_snapflow:corner2StartValue', '_snapflow:corner3StartValue', '_snapflow:corner4StartValue']
+    property var cornerMiddleValues: ['_snapflow:corner1MiddleValue', '_snapflow:corner2MiddleValue', '_snapflow:corner3MiddleValue', '_snapflow:corner4MiddleValue']
+    property var cornerEndValues: ['_snapflow:corner1EndValue', '_snapflow:corner2EndValue', '_snapflow:corner3EndValue', '_snapflow:corner4EndValue']
     property bool blockUpdate: false
     property real zoom: (video.zoom > 0) ? video.zoom : 1
     property int handleSize: Math.max(Math.round(20 / zoom), 8)

@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string dotradius: '0'
     property string cyanangle: '1'
     property string magentaangle: '2'
@@ -83,7 +83,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [dotradius, cyanangle, magentaangle, yellowangle]
@@ -105,7 +105,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: dotradiusSlider
 
             minimumValue: 0
@@ -116,11 +116,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(dotradius, dotradiusSlider.value / dotradiusSlider.maximumValue, dotKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: dotradiusSlider.value = dotradiusDefault * dotradiusSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: dotKeyframesButton
 
             onToggled: {
@@ -134,7 +134,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: cyanangleSlider
 
             minimumValue: 0
@@ -145,11 +145,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(cyanangle, cyanangleSlider.value / cyanangleSlider.maximumValue, cyanKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: cyanangleSlider.value = cyanangleDefault * cyanangleSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: cyanKeyframesButton
 
             onToggled: {
@@ -163,7 +163,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: magentaangleSlider
 
             minimumValue: 0
@@ -174,11 +174,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(magentaangle, magentaangleSlider.value / magentaangleSlider.maximumValue, magentaKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: magentaangleSlider.value = magentaangleDefault * magentaangleSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: magentaKeyframesButton
 
             onToggled: {
@@ -192,7 +192,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: yellowangleSlider
 
             minimumValue: 0
@@ -203,11 +203,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(yellowangle, yellowangleSlider.value / yellowangleSlider.maximumValue, yellowKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: yellowangleSlider.value = yellowangleDefault * yellowangleSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: yellowKeyframesButton
 
             onToggled: {

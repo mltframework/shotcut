@@ -1,5 +1,5 @@
-project     = Shotcut
-description = Shotcut QML Scripting API
+project     = Snapflow
+description = Snapflow QML Scripting API
 version     = 26.x
 
 # Output
@@ -13,9 +13,9 @@ sources.fileextensions  = *.qdoc *.cpp
 # Structural .qdoc files (no C++ counterpart) + all inline-documented .cpp files
 sources = \
     ./src/index.qdoc \
-    ./src/org-shotcut-qml.qdoc \
-    ./src/shotcut-controls.qdoc \
-    ./src/shotcut-controls-types.qdoc \
+    ./src/org-snapflow-qml.qdoc \
+    ./src/snapflow-controls.qdoc \
+    ./src/snapflow-controls-types.qdoc \
     ../src/qmltypes/qmlapplication.cpp \
     ../src/qmltypes/qmlfilter.cpp \
     ../src/qmltypes/qmlproducer.cpp \
@@ -36,13 +36,13 @@ sources = \
     ../src/docks/keyframesdock.cpp
 
 # Custom stylesheet for readability
-HTML.stylesheets = shotcut.css
-HTML.headerstyles = "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style/shotcut.css\">\n"
+HTML.stylesheets = snapflow.css
+HTML.headerstyles = "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style/snapflow.css\">\n"
 
 # Suppress warnings about undocumented symbols while docs are being built incrementally
 # (remove or lower this once all headers are annotated)
 warninglimit = 0
 
 # Do not generate a full Qt-style index; this is a standalone reference
-navigation.landingpage   = "Shotcut QML Scripting API"
+navigation.landingpage   = "Snapflow QML Scripting API"
 navigation.cppclassespage  = "C++ Classes"

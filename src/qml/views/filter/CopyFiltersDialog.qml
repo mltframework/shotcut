@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Window {
     id: nameDialog
@@ -80,12 +80,12 @@ Window {
             Layout.alignment: Qt.AlignRight
             focus: true
 
-            Shotcut.Button {
+            Snapflow.Button {
                 text: qsTr('OK')
                 onClicked: nameDialog.acceptName()
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 text: qsTr('Cancel')
                 onClicked: nameDialog.close()
             }

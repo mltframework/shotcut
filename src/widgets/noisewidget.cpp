@@ -19,7 +19,7 @@
 #include "noisewidget.h"
 #include "ui_noisewidget.h"
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 NoiseWidget::NoiseWidget(QWidget *parent)
@@ -38,7 +38,7 @@ NoiseWidget::~NoiseWidget()
 Mlt::Producer *NoiseWidget::newProducer(Mlt::Profile &profile)
 {
     Mlt::Producer *p = new Mlt::Producer(profile, "noise:");
-    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
-    p->set(kShotcutDetailProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowDetailProperty, ui->nameLabel->text().toUtf8().constData());
     return p;
 }

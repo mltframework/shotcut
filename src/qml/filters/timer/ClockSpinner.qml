@@ -17,8 +17,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml
 
 Item {
     id: root
@@ -109,7 +109,7 @@ Item {
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: decrementButton
 
             icon.name: 'list-remove'
@@ -117,7 +117,7 @@ Item {
             implicitWidth: 20
             implicitHeight: 20
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Decrement')
             }
 
@@ -138,7 +138,7 @@ Item {
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: incrementButton
 
             icon.name: 'list-add'
@@ -146,7 +146,7 @@ Item {
             implicitWidth: 20
             implicitHeight: 20
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Increment')
             }
 
@@ -167,7 +167,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: undoButton
 
             onClicked: root.setDefaultClicked()

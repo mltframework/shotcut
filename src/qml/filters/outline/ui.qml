@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string colorParam: 'color'
     property string colorDefault: Qt.rgba(0, 0, 0, 1)
     property string thicknessParam: 'thickness'
@@ -74,7 +74,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: presetItem
 
             Layout.columnSpan: 3
@@ -93,7 +93,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: colorPicker
 
             property bool isReady: false
@@ -107,11 +107,11 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: colorKeyframesButton
 
             onToggled: {
@@ -126,7 +126,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thicknessSlider
 
             minimumValue: 0
@@ -137,11 +137,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(thicknessParam, value, thicknessKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thicknessSlider.value = thicknessDefault
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: thicknessKeyframesButton
 
             onToggled: {

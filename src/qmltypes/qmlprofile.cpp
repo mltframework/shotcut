@@ -27,7 +27,7 @@ QmlProfile &QmlProfile::singleton()
 
 /*!
     \qmltype Profile
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Describes the current project's \b Video \b Mode, accessed via the \c profile context property.
 
     All properties reflect the active project profile.

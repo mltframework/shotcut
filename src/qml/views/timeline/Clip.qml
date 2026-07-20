@@ -16,7 +16,7 @@
  */
 import QtQuick
 import QtQuick.Controls
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: clipRoot
@@ -48,7 +48,7 @@ Rectangle {
     property int group: -1
     property bool isTrackMute: false
     property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
-    property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
+    property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.snapflowBlue
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -323,8 +323,8 @@ Rectangle {
         source: imagePath(inPoint)
     }
 
-    Shotcut.TimelineTransition {
-        property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
+    Snapflow.TimelineTransition {
+        property var color: isAudio ? 'darkseagreen' : root.snapflowBlue
 
         visible: !elided && isTransition
         anchors.fill: parent
@@ -350,7 +350,7 @@ Rectangle {
 
             model: Math.ceil(clipRoot.width / waveform.maxWidth)
 
-            Shotcut.TimelineWaveform {
+            Snapflow.TimelineWaveform {
                 property int channels: 2
 
                 trackIndex: clipRoot.trackIndex
@@ -500,7 +500,7 @@ Rectangle {
         }
     }
 
-    Shotcut.TimelineTriangle {
+    Snapflow.TimelineTriangle {
         id: fadeInTriangle
 
         visible: !elided && !isBlank && !isTransition
@@ -597,7 +597,7 @@ Rectangle {
         }
     }
 
-    Shotcut.TimelineTriangle {
+    Snapflow.TimelineTriangle {
         id: fadeOutTriangle
 
         visible: !elided && !isBlank && !isTransition

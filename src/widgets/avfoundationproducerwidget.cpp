@@ -21,7 +21,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QAudioDevice>
@@ -104,7 +104,7 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile &profile)
     }
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
-    p->set(kShotcutCaptionProperty, tr("Audio/Video Device").toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, tr("Audio/Video Device").toUtf8().constData());
     if (ui->audioCombo->currentIndex() > 0) {
         Settings.setAudioInput(ui->audioCombo->currentText());
     }

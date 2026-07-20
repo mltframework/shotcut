@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,5 +10,5 @@ Metadata {
     objectName: 'audioSeam'
     qml: "ui.qml"
     isTrackOnly: true
-    help: 'https://forum.shotcut.org/t/track-seam-audio-filter/40783/1'
+    help: 'https://forum.snapflow.org/t/track-seam-audio-filter/40783/1'
 }

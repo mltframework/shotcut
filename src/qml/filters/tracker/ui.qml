@@ -18,8 +18,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     property string rectProperty: 'rect'
@@ -50,7 +50,7 @@ Item {
         }
         algorithmCombo.currentIndex = algorithmCombo.indexOfValue(filter.get('algo'));
         previewCheckBox.checked = parseInt(filter.get('shape_width')) !== 0;
-        name.text = filter.get('shotcut:name');
+        name.text = filter.get('snapflow:name');
         colorPicker.value = filter.get('shape_color');
     }
 
@@ -70,10 +70,10 @@ Item {
             filter.set('shape_color', '#00ff00');
         }
         // Reset the filter if clip was pasted or split
-        if (filter.get('results').length > 0 && filter.get('_shotcut:uuid').length === 0) {
+        if (filter.get('results').length > 0 && filter.get('_snapflow:uuid').length === 0) {
             filter.resetProperty('results');
             const name = motionTrackerModel.nextName();
-            filter.set('shotcut:name', name);
+            filter.set('snapflow:name', name);
             motionTrackerModel.setName(filter, name);
         }
         setStatus(false);
@@ -95,7 +95,7 @@ Item {
         target: filter
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: dasiamFile
         url: settings.appDataLocation + '/opencvmodels/dasiamrpn_model.onnx'
     }
@@ -110,7 +110,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [rectProperty, 'algo']
@@ -130,7 +130,7 @@ Item {
             Layout.columnSpan: 2
             implicitWidth: preset.width
             onEditingFinished: {
-                filter.set('shotcut:name', text);
+                filter.set('snapflow:name', text);
                 motionTrackerModel.setName(filter, text);
             }
         }
@@ -143,7 +143,7 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 id: positionTip
                 text: qsTr('Set the region of interest to track.')
             }
@@ -151,7 +151,7 @@ Item {
 
         RowLayout {
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -174,7 +174,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -192,7 +192,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectX.value = rectY.value = 0;
                 filterRect.x = filterRect.y = 0;
@@ -204,14 +204,14 @@ Item {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: positionTip.text
             }
         }
 
         RowLayout {
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -234,7 +234,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -252,7 +252,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectW.value = profile.width / 10;
                 rectH.value = profile.height / 10;
@@ -266,12 +266,12 @@ Item {
             Layout.alignment: Qt.AlignRight
             text: qsTr('Algorithm')
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Chooses the way (rules) the tracking is calculated.')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: algorithmCombo
 
             function updateFilter(index) {
@@ -330,7 +330,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 algorithmCombo.currentIndex = 0;
                 algorithmCombo.updateFilter(0);
@@ -349,7 +349,7 @@ Item {
                 onClicked: filter.set('shape_width', checked ? visibleShapeWidth() : 0)
             }
 
-            Shotcut.ColorPicker {
+            Snapflow.ColorPicker {
                 id: colorPicker
 
                 property bool isReady: false
@@ -370,7 +370,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 2
 
-            Shotcut.Button {
+            Snapflow.Button {
                 id: button
 
                 text: qsTr('Analyze')

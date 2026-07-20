@@ -17,13 +17,13 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Rectangle {
     id: root
 
-    property int selectedIndex: Shotcut.Filter.NoCurrentFilter
+    property int selectedIndex: Snapflow.Filter.NoCurrentFilter
 
     signal currentFilterRequested(int attachedIndex)
     signal copyFilterRequested
@@ -177,7 +177,7 @@ Rectangle {
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: addButton
 
             implicitWidth: height
@@ -190,51 +190,51 @@ Rectangle {
                     filterMenu.open();
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Add a filter') + application.actionFirstShortcut('filtersAddFilterAction')
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: removeButton
 
             implicitWidth: height
             icon.name: 'list-remove'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            enabled: selectedIndex > Snapflow.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex);
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Remove selected filter') + application.actionFirstShortcut('filtersRemoveFilterAction')
             }
         }
 
         // separator
-        Shotcut.Button {
+        Snapflow.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: copyButton
 
             implicitWidth: height
             icon.name: 'edit-copy'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
-            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            enabled: selectedIndex > Snapflow.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
             onClicked: root.copyFilterRequested()
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Copy filters') + application.actionFirstShortcut('filtersCopyFiltersAction')
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: pasteButton
 
             implicitWidth: height
@@ -244,34 +244,34 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
             onClicked: attachedfiltersmodel.pasteFilters()
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Paste filters') + application.actionFirstShortcut('filtersPasteFiltersAction')
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: filterSetButton
 
             implicitWidth: height
             icon.name: 'server-database'
             icon.source: 'qrc:///icons/oxygen/32x32/places/server-database.png'
-            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            enabled: selectedIndex > Snapflow.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
             onClicked: copyFiltersDialog.show()
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Save a filter set')
             }
         }
 
         // separator
-        Shotcut.Button {
+        Snapflow.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: moveUpButton
 
             implicitWidth: height
@@ -286,12 +286,12 @@ Rectangle {
                 root.currentFilterRequested(newIndex);
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Move filter up')
             }
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: moveDownButton
 
             implicitWidth: height
@@ -306,34 +306,34 @@ Rectangle {
                 root.currentFilterRequested(newIndex);
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Move filter down')
             }
         }
 
         // separator
-        Shotcut.Button {
+        Snapflow.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: deselectButton
 
             implicitWidth: height
             icon.name: 'window-close'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            enabled: selectedIndex > Snapflow.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
             onClicked: {
                 clearCurrentFilter();
-                attachedFilters.setCurrentFilter(Shotcut.Filter.DeselectCurrentFilter);
-                selectedIndex = Shotcut.Filter.NoCurrentFilter;
+                attachedFilters.setCurrentFilter(Snapflow.Filter.DeselectCurrentFilter);
+                selectedIndex = Snapflow.Filter.NoCurrentFilter;
                 filter.deselect();
             }
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Deselect the filter')
             }
         }
@@ -373,7 +373,7 @@ Rectangle {
             }
         }
 
-        ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
+        ScrollBar.horizontal: Snapflow.HorizontalScrollBar {
             policy: ScrollBar.AlwaysOn
             visible: filterConfigScrollView.contentWidth > filterConfigScrollView.width
             parent: filterConfigScrollView.parent
@@ -382,7 +382,7 @@ Rectangle {
             anchors.right: filterConfigScrollView.right
         }
 
-        ScrollBar.vertical: Shotcut.VerticalScrollBar {
+        ScrollBar.vertical: Snapflow.VerticalScrollBar {
             policy: ScrollBar.AlwaysOn
             visible: filterConfigScrollView.contentHeight > filterConfigScrollView.height
             parent: filterConfigScrollView.parent

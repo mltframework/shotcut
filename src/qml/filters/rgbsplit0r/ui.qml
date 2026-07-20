@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string verSplit: '0'
     property string horSplit: '1'
     property double verSplitDefault: 0.4
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [verSplit, horSplit]
@@ -88,7 +88,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: verSplitSlider
 
             minimumValue: 0
@@ -99,11 +99,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(verSplit, value / maximumValue, verKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: verSplitSlider.value = verSplitDefault * verSplitSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: verKeyframesButton
 
             onToggled: {
@@ -117,7 +117,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: horSplitSlider
 
             minimumValue: 0
@@ -128,11 +128,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(horSplit, value / maximumValue, horKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: horKeyframesButton
 
             onToggled: {

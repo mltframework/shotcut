@@ -31,7 +31,7 @@
 #include "models/subtitlesselectionmodel.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 #include "widgets/docktoolbar.h"
 
@@ -156,7 +156,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     QDockWidget::setWindowTitle(tr("Subtitles"));
     QIcon icon = QIcon::fromTheme("subtitle", QIcon(":/icons/oxygen/32x32/actions/subtitle.png"));
     toggleViewAction()->setIcon(icon);
-    setWhatsThis("https://forum.shotcut.org/t/subtitles-panel/45312/1");
+    setWhatsThis("https://forum.snapflow.org/t/subtitles-panel/45312/1");
 
     setupActions();
 
@@ -1163,7 +1163,7 @@ void SubtitlesDock::burnInOnTimeline()
     int trackIndex = m_trackCombo->currentIndex();
     auto track = m_model->getTrack(trackIndex);
     Mlt::Filter filter(MLT.profile(), "subtitle");
-    filter.set(kShotcutFilterProperty, "subtitles");
+    filter.set(kSnapflowFilterProperty, "subtitles");
 #if defined(Q_OS_WIN)
     filter.set("family", "Verdana");
 #elif defined(Q_OS_MAC)
@@ -1175,7 +1175,7 @@ void SubtitlesDock::burnInOnTimeline()
     filter.set("outline", 3);
     filter.set("weight", QFont::Bold);
     filter.set("style", "normal");
-    filter.set("shotcut:usePointSize", 1);
+    filter.set("snapflow:usePointSize", 1);
     filter.set("size", MLT.profile().height() / 20);
     filter.set("geometry", "20%/75%:60%x20%");
     filter.set("valign", "bottom");
@@ -1255,13 +1255,13 @@ void SubtitlesDock::generateTextOnTimeline()
         filterProperties.set("outline", 3);
         filterProperties.set("weight", QFont::Bold);
         filterProperties.set("style", "normal");
-        filterProperties.set("shotcut:usePointSize", 1);
+        filterProperties.set("snapflow:usePointSize", 1);
         filterProperties.set("size", MLT.profile().height() / 20);
         filterProperties.set("geometry", "20%/75%:60%x20%");
         filterProperties.set("valign", "bottom");
         filterProperties.set("halign", "center");
     }
-    filterProperties.set(kShotcutFilterProperty, "dynamicText");
+    filterProperties.set(kSnapflowFilterProperty, "dynamicText");
 
     Mlt::Playlist playlist(MLT.profile());
     int lastItemFrameEnd = 0;
@@ -1335,7 +1335,7 @@ void SubtitlesDock::speechToText()
     QString wavXml = MLT.XML(tempProducer.get());
 
     // Create a temporary wav file
-    QTemporaryFile *tmpWav = Util::writableTemporaryFile(tmpLocation, "shotcut-XXXXXX.wav");
+    QTemporaryFile *tmpWav = Util::writableTemporaryFile(tmpLocation, "snapflow-XXXXXX.wav");
     if (!tmpWav->open()) {
         LOG_ERROR() << "Failed to open temporary file" << tmpWav->fileName();
         return;
@@ -1358,7 +1358,7 @@ void SubtitlesDock::speechToText()
     JOBS.add(wavJob);
 
     // Create a temporary srt file
-    QTemporaryFile *tmpSrt = Util::writableTemporaryFile(tmpLocation, "shotcut-XXXXXX.srt");
+    QTemporaryFile *tmpSrt = Util::writableTemporaryFile(tmpLocation, "snapflow-XXXXXX.srt");
     if (!tmpSrt->open()) {
         LOG_ERROR() << "Failed to open temporary file" << tmpSrt->fileName();
         return;

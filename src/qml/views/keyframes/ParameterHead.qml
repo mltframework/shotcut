@@ -18,7 +18,7 @@ import "Keyframes.js" as Logic
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: paramHeadRoot
@@ -46,7 +46,7 @@ Rectangle {
 
             PropertyChanges {
                 target: paramHeadRoot
-                color: root.shotcutBlue
+                color: root.snapflowBlue
             }
         },
         State {
@@ -110,7 +110,7 @@ Rectangle {
 
             width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30 ? toolButtonsLayout.width : 0)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: trackName
             }
 
@@ -147,7 +147,7 @@ Rectangle {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: ((delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt+') + '[)'
                 }
             }
@@ -167,7 +167,7 @@ Rectangle {
                     root.selection = [parameters.keyframeIndex(delegateIndex, producer.position)];
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Add a keyframe at play head') + ' (;)'
                 }
             }
@@ -195,7 +195,7 @@ Rectangle {
                     root.selection = [];
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Delete the selected keyframe')
                 }
             }
@@ -224,7 +224,7 @@ Rectangle {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: ((delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt+') + '])'
                 }
             }
@@ -241,18 +241,18 @@ Rectangle {
                 focusPolicy: Qt.NoFocus
 
                 //                onClicked: timeline.setTrackLock(index, !isLocked)
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: isLocked ? qsTr('Unlock track') : qsTr('Lock track')
                 }
             }
 
-            Shotcut.ToolButton {
+            Snapflow.ToolButton {
                 focusPolicy: Qt.NoFocus
                 visible: delegateIndex >= 0 && paramHeadRoot.isCurve
                 checkable: true
                 checked: zoomHeight
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Zoom keyframe values')
                 }
 

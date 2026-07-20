@@ -19,7 +19,7 @@
 #include "pulseaudiowidget.h"
 #include "ui_pulseaudiowidget.h"
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 PulseAudioWidget::PulseAudioWidget(QWidget *parent)
@@ -37,8 +37,8 @@ PulseAudioWidget::~PulseAudioWidget()
 
 Mlt::Producer *PulseAudioWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer *p = new Mlt::Producer(profile, "pulse:default?name=Shotcut");
+    Mlt::Producer *p = new Mlt::Producer(profile, "pulse:default?name=Snapflow");
     p->set(kBackgroundCaptureProperty, 1);
-    p->set(kShotcutCaptionProperty, "PulseAudio");
+    p->set(kSnapflowCaptionProperty, "PulseAudio");
     return p;
 }

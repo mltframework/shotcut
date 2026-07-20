@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string saturationParameter: 'saturation'
@@ -99,7 +99,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 3
@@ -121,7 +121,7 @@ Item {
             text: qsTr('Level')
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider
 
             minimumValue: 0
@@ -130,11 +130,11 @@ Item {
             onValueChanged: updateFilter(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: keyframesButton
 
             onToggled: {

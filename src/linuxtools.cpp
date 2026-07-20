@@ -21,7 +21,7 @@
 #include <QDBusMessage>
 #include <QVariantMap>
 
-static const QLatin1String kDesktopFile("application://org.shotcut.Shotcut.desktop");
+static const QLatin1String kDesktopFile("application://org.snapflow.Snapflow.desktop");
 static const QLatin1String kDbusPath("/com/canonical/unity/launcherentry/1");
 static const QLatin1String kDbusInterface("com.canonical.Unity.LauncherEntry");
 

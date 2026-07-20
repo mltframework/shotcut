@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -11,7 +11,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     allowMultiple: false
-    help: 'https://forum.shotcut.org/t/fade-in-audio/12904/1'
+    help: 'https://forum.snapflow.org/t/fade-in-audio/12904/1'
 
     keyframes {
         allowTrim: false

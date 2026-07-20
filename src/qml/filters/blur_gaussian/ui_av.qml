@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string amountH: 'av.sigma'
     property string amountV: 'av.sigmaV'
     property double amountSliderMin: 0
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: keyframableParameters.concat('av.planes')
@@ -90,7 +90,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: amountSliderMin
@@ -104,11 +104,11 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = amountSliderDefault
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: amountKeyframesButton
 
             onToggled: {
@@ -133,7 +133,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
 
             onClicked: {
                 alphaCheckBox.checked = true;

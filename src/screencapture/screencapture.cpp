@@ -45,7 +45,7 @@ ScreenCapture::ScreenCapture(const QString &outputFile, CaptureMode mode, QObjec
     , m_outputFile(outputFile)
     , m_mode(mode)
     , m_isImageMode(false)
-    , m_minimizeShotcut(false)
+    , m_minimizeSnapflow(false)
     , m_recordAudio(false)
 {}
 
@@ -69,9 +69,9 @@ void ScreenCapture::startRecording()
         connect(m_toolbar.get(),
                 &ScreenCaptureToolbar::captureModeSelected,
                 this,
-                [this](int mode, bool minimizeShotcut, bool recordAudio) {
+                [this](int mode, bool minimizeSnapflow, bool recordAudio) {
                     this->onCaptureModeSelected(static_cast<CaptureMode>(mode),
-                                                minimizeShotcut,
+                                                minimizeSnapflow,
                                                 recordAudio);
                 });
         m_toolbar->show();
@@ -99,9 +99,9 @@ void ScreenCapture::startSnapshot()
         connect(m_toolbar.get(),
                 &ScreenCaptureToolbar::captureModeSelected,
                 this,
-                [this](int mode, bool minimizeShotcut, bool recordAudio) {
+                [this](int mode, bool minimizeSnapflow, bool recordAudio) {
                     this->onCaptureModeSelected(static_cast<CaptureMode>(mode),
-                                                minimizeShotcut,
+                                                minimizeSnapflow,
                                                 recordAudio);
                 });
         m_toolbar->show();
@@ -109,7 +109,7 @@ void ScreenCapture::startSnapshot()
     }
 }
 
-void ScreenCapture::onCaptureModeSelected(CaptureMode mode, bool minimizeShotcut, bool recordAudio)
+void ScreenCapture::onCaptureModeSelected(CaptureMode mode, bool minimizeSnapflow, bool recordAudio)
 {
     // Close the toolbar safely after signal processing completes
     if (m_toolbar) {
@@ -119,12 +119,12 @@ void ScreenCapture::onCaptureModeSelected(CaptureMode mode, bool minimizeShotcut
     }
 
     m_mode = mode;
-    m_minimizeShotcut = minimizeShotcut;
+    m_minimizeSnapflow = minimizeSnapflow;
     m_recordAudio = recordAudio;
 
     // Emit minimize signal if requested
-    if (m_minimizeShotcut) {
-        emit this->minimizeShotcut();
+    if (m_minimizeSnapflow) {
+        emit this->minimizeSnapflow();
     }
 
     // Continue with the selected mode, respecting image vs video

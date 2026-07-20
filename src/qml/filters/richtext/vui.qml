@@ -18,23 +18,23 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml
 
-Shotcut.VuiBase {
+Snapflow.VuiBase {
     id: vui
 
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
-    property string useFontSizeProperty: 'shotcut:usePointSize'
+    property string useFontSizeProperty: 'snapflow:usePointSize'
     property real zoom: (video.zoom > 0) ? video.zoom : 1
     property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
-    property string sizeProperty: '_shotcut:size'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
+    property string sizeProperty: '_snapflow:size'
     property bool smallIcons: settings.smallIcons || toolbar.maxWidth >= videoItem.width
     property int smallIconSize: 22
 
@@ -118,7 +118,7 @@ Shotcut.VuiBase {
         setTextAreaHeight();
         textArea.text = filter.get('html');
         fontSizeSpinBox.value = document.fontSize;
-        toolbar.expanded = filter.get('_shotcut:toolbarCollapsed') !== '1';
+        toolbar.expanded = filter.get('_snapflow:toolbarCollapsed') !== '1';
         document.reset();
     }
 
@@ -234,7 +234,7 @@ Shotcut.VuiBase {
             ToolBar {
                 id: toolbar
 
-                property bool expanded: filter.get('_shotcut:toolbarCollapsed') !== '1'
+                property bool expanded: filter.get('_snapflow:toolbarCollapsed') !== '1'
                 property real maxWidth: 500
 
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), scrollView.x + rectangle.handleSize))
@@ -261,7 +261,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: qsTr('Menu')
                         }
 
@@ -279,7 +279,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -291,7 +291,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -303,7 +303,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -322,7 +322,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: qsTr('Font')
                         }
 
@@ -340,7 +340,7 @@ Shotcut.VuiBase {
                         }
                     }
 
-                    Shotcut.DoubleSpinBox {
+                    Snapflow.DoubleSpinBox {
                         id: fontSizeSpinBox
 
                         property bool blockValue: false
@@ -360,7 +360,7 @@ Shotcut.VuiBase {
                             }
                         }
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: qsTr('Text size')
                         }
                     }
@@ -379,7 +379,7 @@ Shotcut.VuiBase {
                             colorDialog.open();
                         }
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: qsTr('Text color')
                         }
 
@@ -409,7 +409,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -421,7 +421,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -433,7 +433,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -445,7 +445,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -457,7 +457,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -469,7 +469,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: parent.action.text
                         }
                     }
@@ -481,7 +481,7 @@ Shotcut.VuiBase {
                         implicitHeight: implicitWidth
                         focusPolicy: Qt.NoFocus
 
-                        Shotcut.HoverTip {
+                        Snapflow.HoverTip {
                             text: toolbar.expanded ? qsTr('Collapse Toolbar') : qsTr('Expand Toolbar')
                         }
 
@@ -490,7 +490,7 @@ Shotcut.VuiBase {
                             icon.source: toolbar.expanded ? 'qrc:///icons/oxygen/32x32/actions/media-seek-backward.png' : 'qrc:///icons/oxygen/32x32/actions/media-seek-backward.png'
                             onTriggered: {
                                 toolbar.expanded = !toolbar.expanded;
-                                filter.set('_shotcut:toolbarCollapsed', !toolbar.expanded);
+                                filter.set('_snapflow:toolbarCollapsed', !toolbar.expanded);
                             }
                         }
                     }
@@ -503,7 +503,7 @@ Shotcut.VuiBase {
                 }
             }
 
-            Shotcut.RectangleControl {
+            Snapflow.RectangleControl {
                 id: rectangle
 
                 widthScale: video.rect.width / profile.width
@@ -517,7 +517,7 @@ Shotcut.VuiBase {
         }
     }
 
-    Shotcut.EditContextMenu {
+    Snapflow.EditContextMenu {
         id: contextMenu
 
         showPastePlain: true
@@ -551,15 +551,15 @@ Shotcut.VuiBase {
         }
     }
 
-    Shotcut.RichTextMenu {
+    Snapflow.RichTextMenu {
         id: menu
 
         onOpenTriggered: {
-            fileDialog.fileMode = Shotcut.FileDialog.OpenFile;
+            fileDialog.fileMode = Snapflow.FileDialog.OpenFile;
             fileDialog.open();
         }
         onSaveAsTriggered: {
-            fileDialog.fileMode = Shotcut.FileDialog.SaveFile;
+            fileDialog.fileMode = Snapflow.FileDialog.SaveFile;
             fileDialog.open();
         }
         onUndoTriggered: {
@@ -699,19 +699,19 @@ Shotcut.VuiBase {
         onTriggered: document.indentMore()
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: fileDialog
 
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
-            if (fileMode === Shotcut.FileDialog.OpenFile)
+            if (fileMode === Snapflow.FileDialog.OpenFile)
                 document.fileUrl = 'file:///' + selectedFile;
             else
                 document.saveAs('file:///' + selectedFile);
         }
     }
 
-    Shotcut.FontDialog {
+    Snapflow.FontDialog {
         id: fontDialog
 
         onAccepted: {
@@ -723,12 +723,12 @@ Shotcut.VuiBase {
         }
     }
 
-    Shotcut.ColorDialog {
+    Snapflow.ColorDialog {
         id: colorDialog
         selectedColor: 'black'
     }
 
-    Shotcut.MessageDialog {
+    Snapflow.MessageDialog {
         id: errorDialog
     }
 
@@ -753,7 +753,7 @@ Shotcut.VuiBase {
                 Layout.alignment: Qt.AlignRight
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rowsSpinner
 
                 implicitWidth: 75
@@ -770,7 +770,7 @@ Shotcut.VuiBase {
                 Layout.alignment: Qt.AlignRight
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: columnsSpinner
 
                 implicitWidth: 75
@@ -786,7 +786,7 @@ Shotcut.VuiBase {
                 Layout.alignment: Qt.AlignRight
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: borderSpinner
 
                 implicitWidth: 75
@@ -802,7 +802,7 @@ Shotcut.VuiBase {
                 Layout.columnSpan: 2
                 focus: true
 
-                Shotcut.Button {
+                Snapflow.Button {
                     text: qsTr('OK')
                     onClicked: {
                         tableDialog.accept();
@@ -810,7 +810,7 @@ Shotcut.VuiBase {
                     }
                 }
 
-                Shotcut.Button {
+                Snapflow.Button {
                     text: qsTr('Cancel')
                     onClicked: tableDialog.close()
                 }

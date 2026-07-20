@@ -106,7 +106,7 @@ RecentDock::~RecentDock()
 void RecentDock::add(const QString &s)
 {
     // Block anything big that can cause a performance problem
-    if (s.size() > ShotcutSettings::MaxPath)
+    if (s.size() > SnapflowSettings::MaxPath)
         return;
 
     QString filePath = QDir::fromNativeSeparators(s);

@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string paramAmount: '0'
@@ -131,7 +131,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -149,7 +149,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: amountSlider
 
             minimumValue: 0
@@ -159,11 +159,11 @@ Item {
             onValueChanged: updateFilter(paramAmount, value / 100, getPosition(), amountKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: amountSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: amountKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, paramAmount, amountSlider.value / 100)
@@ -174,7 +174,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sizeSlider
 
             minimumValue: 0
@@ -184,11 +184,11 @@ Item {
             onValueChanged: updateFilter(paramSize, value / 100, getPosition(), sizeKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sizeSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: sizeKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, paramSize, sizeSlider.value / 100)

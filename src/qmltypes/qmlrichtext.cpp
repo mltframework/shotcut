@@ -46,7 +46,7 @@
 
 /*!
     \qmltype RichText
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Provides rich-text editing helpers for the Text: Rich filter panel.
 
     \c RichText is available as a context property in the Text: Rich filter QML panel.

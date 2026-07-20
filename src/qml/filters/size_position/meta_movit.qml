@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -13,7 +13,7 @@ Metadata {
     icon: 'icon.webp'
     allowMultiple: false
     isFavorite: true
-    help: 'https://forum.shotcut.org/t/size-position-rotate/12881/1'
+    help: 'https://forum.snapflow.org/t/size-position-rotate/12881/1'
 
     keyframes {
         allowTrim: false

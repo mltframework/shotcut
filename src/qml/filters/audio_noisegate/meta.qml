@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     keywords: qsTr('hum hiss distortion clean', 'search keywords for the Noise Gate audio filter') + ' noise gate'
     mlt_service: 'ladspa.1410'
     qml: 'ui.qml'
-    help: 'https://forum.shotcut.org/t/noise-gate-audio-filter/14179/1'
+    help: 'https://forum.snapflow.org/t/noise-gate-audio-filter/14179/1'
 
     keyframes {
         allowAnimateIn: true

@@ -19,7 +19,7 @@
 #include "ui_decklinkproducerwidget.h"
 
 #include "mltcontroller.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent)
@@ -82,7 +82,7 @@ Mlt::Producer *DecklinkProducerWidget::newProducer(Mlt::Profile &profile)
                    .toLatin1()
                    .constData());
         p->set(kBackgroundCaptureProperty, 2);
-        p->set(kShotcutCaptionProperty, tr("SDI/HDMI").toUtf8().constData());
+        p->set(kSnapflowCaptionProperty, tr("SDI/HDMI").toUtf8().constData());
     }
     return p;
 }

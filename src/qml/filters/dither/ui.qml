@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string levels: '0'
     property string matrixid: '1'
     property double levelsDefault: 0.1
@@ -68,7 +68,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [levels, matrixid]
@@ -87,7 +87,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: levelsSlider
 
             minimumValue: 0
@@ -98,11 +98,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: levelsSlider.value = levelsDefault * levelsSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: levelKeyframesButton
 
             onToggled: {
@@ -116,7 +116,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: matrixCombo
 
             implicitWidth: 180
@@ -128,7 +128,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: matrixCombo.currentIndex = matrixidDefault * 9
             Layout.columnSpan: 2
         }

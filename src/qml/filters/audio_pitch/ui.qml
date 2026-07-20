@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -139,7 +139,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
@@ -161,12 +161,12 @@ Item {
             text: qsTr('Octave Shift')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Specify the pitch shift in octaves.\n-1 shifts down an octave.\n+1 shifts up an octave.\n0 is unchanged.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: octaveSlider
 
             minimumValue: -2
@@ -177,11 +177,11 @@ Item {
             onValueChanged: updateFilter(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: octaveSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: octaveKeyframesButton
 
             onToggled: {
@@ -201,12 +201,12 @@ Item {
             text: qsTr('Speed Compensation')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Specify the speed change that should be compensated for.\n2x will halve the pitch to compensate for the speed being doubled.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: frequencySlider
 
             minimumValue: 0.25

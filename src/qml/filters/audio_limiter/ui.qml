@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -62,7 +62,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['0', '1', '2', channelMask.channelMaskProperty]
@@ -74,12 +74,12 @@ Item {
             text: qsTr('Input gain')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderInput
 
             minimumValue: -20
@@ -92,7 +92,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderInput.value = 0
         }
 
@@ -100,12 +100,12 @@ Item {
             text: qsTr('Limit')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderLimit
 
             minimumValue: -20
@@ -118,7 +118,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderLimit.value = 0
         }
 
@@ -126,12 +126,12 @@ Item {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRelease
 
             minimumValue: 0.01
@@ -144,7 +144,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRelease.value = 0.51
         }
 
@@ -153,7 +153,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2
@@ -178,12 +178,12 @@ Item {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing the gain reduction applied by the compressor.')
             }
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: grGauge
 
             Layout.columnSpan: 2

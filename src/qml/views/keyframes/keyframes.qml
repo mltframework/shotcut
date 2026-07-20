@@ -18,8 +18,8 @@ import "Keyframes.js" as Logic
 import QtQml.Models
 import QtQuick
 import QtQuick.Controls
-import org.shotcut.qml as Shotcut
-import Shotcut.Controls as Shotcut
+import org.snapflow.qml as Snapflow
+import Snapflow.Controls as Snapflow
 
 Rectangle {
     id: root
@@ -29,7 +29,7 @@ Rectangle {
     property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property bool stopScrolling: false
-    property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
+    property color snapflowBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
     property double timeScale: keyframes.timeScale
     property var selection: []
     property alias paramRepeater: parametersRepeater
@@ -39,7 +39,7 @@ Rectangle {
     signal clipRightClicked
 
     function redrawWaveforms() {
-        Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead);
+        Logic.scrollIfNeeded(settings.timelineScrolling === Snapflow.Settings.CenterPlayhead);
         beforeClip.generateWaveform();
         activeClip.generateWaveform();
         afterClip.generateWaveform();
@@ -55,7 +55,7 @@ Rectangle {
         var playheadVisualX = producer.position * before - tracksFlickable.contentX;
         var playheadWasVisible = playheadVisualX >= 0 && playheadVisualX <= tracksFlickable.width;
         keyframes.timeScale = Math.pow(value, 3) + 0.01;
-        if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead) {
+        if (settings.timelineScrolling !== Snapflow.Settings.CenterPlayhead) {
             if (settings.timelineScrollZoom) {
                 if (playheadWasVisible)
                     tracksFlickable.contentX = Logic.clamp(producer.position * timeScale - playheadVisualX, 0, Logic.scrollMax().x);
@@ -305,7 +305,7 @@ Rectangle {
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
-                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
+                    // workaround to fix https://github.com/mltframework/snapflow/issues/777
                     onContentXChanged: {
                         if (contentX === 0)
                             contentX = tracksFlickable.contentX;
@@ -325,7 +325,7 @@ Rectangle {
                     width: root.width - headerWidth - 16
                     height: root.height - ruler.height - 16
                     clip: true
-                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
+                    // workaround to fix https://github.com/mltframework/snapflow/issues/777
                     onContentXChanged: rulerFlickable.contentX = contentX
                     interactive: false
                     contentWidth: tracksContainer.width + headerWidth
@@ -457,7 +457,7 @@ Rectangle {
                         }
                     }
 
-                    ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
+                    ScrollBar.horizontal: Snapflow.HorizontalScrollBar {
                         id: horizontalScrollBar
 
                         policy: ScrollBar.AlwaysOn
@@ -468,7 +468,7 @@ Rectangle {
                         anchors.right: tracksFlickable.right
                     }
 
-                    ScrollBar.vertical: Shotcut.VerticalScrollBar {
+                    ScrollBar.vertical: Snapflow.VerticalScrollBar {
                         policy: ScrollBar.AlwaysOn
                         visible: tracksFlickable.contentHeight > tracksFlickable.height
                         parent: tracksFlickable.parent
@@ -491,7 +491,7 @@ Rectangle {
                 y: 0
             }
 
-            Shotcut.TimelinePlayhead {
+            Snapflow.TimelinePlayhead {
                 id: playhead
 
                 visible: producer.position > -1 && metadata !== null
@@ -599,9 +599,9 @@ Rectangle {
 
     Connections {
         function onPositionChanged() {
-            if (!stopScrolling && settings.timelineScrolling !== Shotcut.Settings.NoScrolling) {
-                var smooth = settings.timelineScrolling === Shotcut.Settings.SmoothScrolling || tracksAreaMouse.containsPress || tracksAreaMouse.skim;
-                Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead, smooth);
+            if (!stopScrolling && settings.timelineScrolling !== Snapflow.Settings.NoScrolling) {
+                var smooth = settings.timelineScrolling === Snapflow.Settings.SmoothScrolling || tracksAreaMouse.containsPress || tracksAreaMouse.skim;
+                Logic.scrollIfNeeded(settings.timelineScrolling === Snapflow.Settings.CenterPlayhead, smooth);
             }
         }
 

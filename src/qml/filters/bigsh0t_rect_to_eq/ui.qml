@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -151,7 +151,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ["hfov", "vfov", "interpolation"]
@@ -182,7 +182,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: interpolationComboBox
 
             currentIndex: 0
@@ -190,7 +190,7 @@ Item {
             onCurrentIndexChanged: updateProperty_interpolation()
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: interpolationUndo
 
             onClicked: interpolationComboBox.currentIndex = 0
@@ -205,7 +205,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hfovSlider
 
             minimumValue: 0
@@ -217,13 +217,13 @@ Item {
             onValueChanged: updateProperty_hfov(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: hfovUndo
 
             onClicked: hfovSlider.value = 90
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: hfovKeyframesButton
 
             onToggled: {
@@ -249,7 +249,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vfovSlider
 
             minimumValue: 0
@@ -261,13 +261,13 @@ Item {
             onValueChanged: updateProperty_vfov(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: vfovUndo
 
             onClicked: vfovSlider.value = 60
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: vfovKeyframesButton
 
             onToggled: {

@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     // Keyframable parameter identifiers
     property string sharpeningParam: '1'
     property string compNoiseIntParam: '4'
@@ -243,7 +243,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
             parameters: ['36', '30', '46', '38', '0', '1', '52', '4', '53', '54',
                          '6', '34', '2', '3', '33', '45', '11', '12', '13', '14',
@@ -280,7 +280,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Random seed')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: randomSeedSlider
             minimumValue: 0
             maximumValue: 9999
@@ -292,7 +292,7 @@ Shotcut.KeyframableFilter {
                 filter.set('36', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: randomSeedSlider.value = 0
         }
         Item {}
@@ -301,7 +301,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Use field')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: useFieldCombo
             implicitWidth: 200
             textRole: 'text'
@@ -320,7 +320,7 @@ Shotcut.KeyframableFilter {
                 filter.set('30', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 useFieldCombo.currentIndex = useFieldCombo.indexOfValue('Interleaved (upper first)');
                 filter.set('30', useFieldCombo.currentValue);
@@ -332,7 +332,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Lowpass filter type')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: lowpassTypeCombo
             implicitWidth: 200
             textRole: 'text'
@@ -347,7 +347,7 @@ Shotcut.KeyframableFilter {
                 filter.set('46', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 lowpassTypeCombo.currentIndex = lowpassTypeCombo.indexOfValue('Butterworth (sharper)');
                 filter.set('46', lowpassTypeCombo.currentValue);
@@ -359,7 +359,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Input luma filter')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: inputLumaCombo
             implicitWidth: 200
             textRole: 'text'
@@ -375,7 +375,7 @@ Shotcut.KeyframableFilter {
                 filter.set('38', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 inputLumaCombo.currentIndex = inputLumaCombo.indexOfValue('Notch');
                 filter.set('38', inputLumaCombo.currentValue);
@@ -387,7 +387,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma low-pass in')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: chromaLowPassInCombo
             implicitWidth: 200
             textRole: 'text'
@@ -403,7 +403,7 @@ Shotcut.KeyframableFilter {
                 filter.set('0', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 chromaLowPassInCombo.currentIndex = chromaLowPassInCombo.indexOfValue('Full');
                 filter.set('0', chromaLowPassInCombo.currentValue);
@@ -415,7 +415,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Signal sharpening')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sharpeningSlider
             minimumValue: -1
             maximumValue: 2
@@ -423,10 +423,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.01
             onValueChanged: updateFilter(sharpeningParam, value, sharpeningKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sharpeningSlider.value = sharpeningDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: sharpeningKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -438,7 +438,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Snow')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: snowSlider
             minimumValue: 0
             maximumValue: 100
@@ -446,10 +446,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.00001
             onValueChanged: updateFilter(snowParam, value, snowKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: snowSlider.value = snowDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: snowKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -461,7 +461,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Snow anisotropy')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: snowAnisotropySlider
             minimumValue: 0
             maximumValue: 1
@@ -473,7 +473,7 @@ Shotcut.KeyframableFilter {
                 filter.set('34', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: snowAnisotropySlider.value = 0.5
         }
         Item {}
@@ -482,7 +482,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Scanline phase shift')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: scanlinePhaseShiftCombo
             implicitWidth: 200
             textRole: 'text'
@@ -499,7 +499,7 @@ Shotcut.KeyframableFilter {
                 filter.set('2', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 scanlinePhaseShiftCombo.currentIndex = scanlinePhaseShiftCombo.indexOfValue('180 degrees');
                 filter.set('2', scanlinePhaseShiftCombo.currentValue);
@@ -511,7 +511,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Phase shift offset')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: scanlinePhaseOffsetSlider
             minimumValue: 0
             maximumValue: 3
@@ -523,7 +523,7 @@ Shotcut.KeyframableFilter {
                 filter.set('3', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: scanlinePhaseOffsetSlider.value = 0
         }
         Item {}
@@ -532,7 +532,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma demod filter')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: chromaDemodCombo
             implicitWidth: 200
             textRole: 'text'
@@ -549,7 +549,7 @@ Shotcut.KeyframableFilter {
                 filter.set('33', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 chromaDemodCombo.currentIndex = chromaDemodCombo.indexOfValue('Notch');
                 filter.set('33', chromaDemodCombo.currentValue);
@@ -561,7 +561,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Luma smear')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lumaSmearSlider
             minimumValue: 0
             maximumValue: 1
@@ -573,7 +573,7 @@ Shotcut.KeyframableFilter {
                 filter.set('45', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lumaSmearSlider.value = 0.5
         }
         Item {}
@@ -582,7 +582,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma low-pass out')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: chromaLowPassOutCombo
             implicitWidth: 200
             textRole: 'text'
@@ -598,7 +598,7 @@ Shotcut.KeyframableFilter {
                 filter.set('10', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 chromaLowPassOutCombo.currentIndex = chromaLowPassOutCombo.indexOfValue('Full');
                 filter.set('10', chromaLowPassOutCombo.currentValue);
@@ -610,7 +610,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma phase error')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaPhaseErrorSlider
             minimumValue: 0
             maximumValue: 1
@@ -622,7 +622,7 @@ Shotcut.KeyframableFilter {
                 filter.set('37', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaPhaseErrorSlider.value = 0
         }
         Item {}
@@ -631,7 +631,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma phase noise')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaPhaseNoiseSlider
             minimumValue: 0
             maximumValue: 1
@@ -643,7 +643,7 @@ Shotcut.KeyframableFilter {
                 filter.set('7', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaPhaseNoiseSlider.value = 0.001
         }
         Item {}
@@ -652,7 +652,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma delay (H)')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaDelayHSlider
             minimumValue: -40
             maximumValue: 40
@@ -664,7 +664,7 @@ Shotcut.KeyframableFilter {
                 filter.set('8', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaDelayHSlider.value = 0
         }
         Item {}
@@ -673,7 +673,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma delay (V)')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaDelayVSlider
             minimumValue: -20
             maximumValue: 20
@@ -685,7 +685,7 @@ Shotcut.KeyframableFilter {
                 filter.set('9', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaDelayVSlider.value = 0
         }
         Item {}
@@ -742,7 +742,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: compNoiseIntSlider
             minimumValue: 0
             maximumValue: 1
@@ -750,10 +750,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.001
             onValueChanged: updateFilter(compNoiseIntParam, value, compNoiseIntKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: compNoiseIntSlider.value = compNoiseIntDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: compNoiseIntKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -765,7 +765,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: compNoiseFreqSlider
             minimumValue: 0
             maximumValue: 1
@@ -777,7 +777,7 @@ Shotcut.KeyframableFilter {
                 filter.set('53', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: compNoiseFreqSlider.value = 0.5
         }
         Item {}
@@ -786,7 +786,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Detail')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: compNoiseDetailSlider
             minimumValue: 1
             maximumValue: 5
@@ -798,7 +798,7 @@ Shotcut.KeyframableFilter {
                 filter.set('54', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: compNoiseDetailSlider.value = 1
         }
         Item {}
@@ -829,7 +829,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: headSwitchHeightSlider
             minimumValue: 0
             maximumValue: 24
@@ -841,7 +841,7 @@ Shotcut.KeyframableFilter {
                 filter.set('12', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: headSwitchHeightSlider.value = 8
         }
         Item {}
@@ -850,7 +850,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: headSwitchOffsetSlider
             minimumValue: 0
             maximumValue: 24
@@ -862,7 +862,7 @@ Shotcut.KeyframableFilter {
                 filter.set('13', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: headSwitchOffsetSlider.value = 3
         }
         Item {}
@@ -871,7 +871,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Horizontal shift')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: headSwitchShiftSlider
             minimumValue: -100
             maximumValue: 100
@@ -879,10 +879,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             onValueChanged: updateFilter(headSwitchShiftParam, value, headSwitchShiftKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: headSwitchShiftSlider.value = headSwitchShiftDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: headSwitchShiftKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -915,7 +915,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: startMidLinePosSlider
             minimumValue: 0
             maximumValue: 1
@@ -927,7 +927,7 @@ Shotcut.KeyframableFilter {
                 filter.set('50', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: startMidLinePosSlider.value = 0.95
         }
         Item {}
@@ -936,7 +936,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Jitter')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: startMidLineJitterSlider
             minimumValue: 0
             maximumValue: 1
@@ -948,7 +948,7 @@ Shotcut.KeyframableFilter {
                 filter.set('51', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: startMidLineJitterSlider.value = 0.03
         }
         Item {}
@@ -979,7 +979,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: trackingNoiseHeightSlider
             minimumValue: 0
             maximumValue: 120
@@ -991,7 +991,7 @@ Shotcut.KeyframableFilter {
                 filter.set('16', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: trackingNoiseHeightSlider.value = 12
         }
         Item {}
@@ -1000,7 +1000,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Wave intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: trackingWaveSlider
             minimumValue: -50
             maximumValue: 50
@@ -1008,10 +1008,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             onValueChanged: updateFilter(trackingWaveParam, value, trackingWaveKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: trackingWaveSlider.value = trackingWaveDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: trackingWaveKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -1023,7 +1023,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Snow intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: trackingSnowIntSlider
             minimumValue: 0
             maximumValue: 1
@@ -1035,7 +1035,7 @@ Shotcut.KeyframableFilter {
                 filter.set('18', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: trackingSnowIntSlider.value = 0.025
         }
         Item {}
@@ -1044,7 +1044,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Snow anisotropy')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: trackingSnowAnisoSlider
             minimumValue: 0
             maximumValue: 1
@@ -1056,7 +1056,7 @@ Shotcut.KeyframableFilter {
                 filter.set('35', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: trackingSnowAnisoSlider.value = 0.25
         }
         Item {}
@@ -1065,7 +1065,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Noise intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: trackingNoiseIntSlider
             minimumValue: 0
             maximumValue: 1
@@ -1077,7 +1077,7 @@ Shotcut.KeyframableFilter {
                 filter.set('31', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: trackingNoiseIntSlider.value = 0.25
         }
         Item {}
@@ -1108,7 +1108,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: ringingFreqSlider
             minimumValue: 0
             maximumValue: 1
@@ -1120,7 +1120,7 @@ Shotcut.KeyframableFilter {
                 filter.set('20', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: ringingFreqSlider.value = 0.45
         }
         Item {}
@@ -1129,7 +1129,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Power')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: ringingPowerSlider
             minimumValue: 1
             maximumValue: 10
@@ -1141,7 +1141,7 @@ Shotcut.KeyframableFilter {
                 filter.set('21', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: ringingPowerSlider.value = 4.0
         }
         Item {}
@@ -1150,7 +1150,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: ringingScaleSlider
             minimumValue: 0
             maximumValue: 10
@@ -1158,10 +1158,10 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             onValueChanged: updateFilter(ringingScaleParam, value, ringingScaleKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: ringingScaleSlider.value = ringingScaleDefault
         }
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: ringingScaleKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -1195,7 +1195,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lumaNoiseIntSlider
             minimumValue: 0
             maximumValue: 1
@@ -1207,7 +1207,7 @@ Shotcut.KeyframableFilter {
                 filter.set('57', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lumaNoiseIntSlider.value = 0.01
         }
         Item {}
@@ -1216,7 +1216,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lumaNoiseFreqSlider
             minimumValue: 0
             maximumValue: 1
@@ -1228,7 +1228,7 @@ Shotcut.KeyframableFilter {
                 filter.set('56', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lumaNoiseFreqSlider.value = 0.5
         }
         Item {}
@@ -1237,7 +1237,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Detail')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: lumaNoiseDetailSlider
             minimumValue: 1
             maximumValue: 5
@@ -1249,7 +1249,7 @@ Shotcut.KeyframableFilter {
                 filter.set('58', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: lumaNoiseDetailSlider.value = 1
         }
         Item {}
@@ -1280,7 +1280,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaNoiseIntSlider
             minimumValue: 0
             maximumValue: 1
@@ -1292,7 +1292,7 @@ Shotcut.KeyframableFilter {
                 filter.set('5', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaNoiseIntSlider.value = 0.1
         }
         Item {}
@@ -1301,7 +1301,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaNoiseFreqSlider
             minimumValue: 0
             maximumValue: 0.5
@@ -1313,7 +1313,7 @@ Shotcut.KeyframableFilter {
                 filter.set('43', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaNoiseFreqSlider.value = 0.05
         }
         Item {}
@@ -1322,7 +1322,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Detail')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: chromaNoiseDetailSlider
             minimumValue: 1
             maximumValue: 5
@@ -1334,7 +1334,7 @@ Shotcut.KeyframableFilter {
                 filter.set('44', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: chromaNoiseDetailSlider.value = 2
         }
         Item {}
@@ -1365,7 +1365,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Tape speed')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: vhsTapeSpeedCombo
             implicitWidth: 200
             textRole: 'text'
@@ -1382,7 +1382,7 @@ Shotcut.KeyframableFilter {
                 filter.set('24', currentValue);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 vhsTapeSpeedCombo.currentIndex = vhsTapeSpeedCombo.indexOfValue('LP (Long Play)');
                 filter.set('24', vhsTapeSpeedCombo.currentValue);
@@ -1394,7 +1394,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Chroma loss')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vhsChromaLossSlider
             minimumValue: 0
             maximumValue: 1
@@ -1406,7 +1406,7 @@ Shotcut.KeyframableFilter {
                 filter.set('26', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: vhsChromaLossSlider.value = 2.5e-05
         }
         Item {}
@@ -1436,7 +1436,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vhsSharpenIntSlider
             minimumValue: 0
             maximumValue: 5
@@ -1448,7 +1448,7 @@ Shotcut.KeyframableFilter {
                 filter.set('27', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: vhsSharpenIntSlider.value = 0.25
         }
         Item {}
@@ -1457,7 +1457,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vhsSharpenFreqSlider
             minimumValue: 0.5
             maximumValue: 4
@@ -1469,7 +1469,7 @@ Shotcut.KeyframableFilter {
                 filter.set('48', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: vhsSharpenFreqSlider.value = 1.0
         }
         Item {}
@@ -1499,7 +1499,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Intensity')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: edgeWaveIntSlider
             minimumValue: 0
             maximumValue: 20
@@ -1511,7 +1511,7 @@ Shotcut.KeyframableFilter {
                 filter.set('28', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: edgeWaveIntSlider.value = 0.5
         }
         Item {}
@@ -1520,7 +1520,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: edgeWaveSpeedSlider
             minimumValue: 0
             maximumValue: 10
@@ -1532,7 +1532,7 @@ Shotcut.KeyframableFilter {
                 filter.set('29', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: edgeWaveSpeedSlider.value = 4.0
         }
         Item {}
@@ -1541,7 +1541,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: edgeWaveFreqSlider
             minimumValue: 0
             maximumValue: 0.5
@@ -1553,7 +1553,7 @@ Shotcut.KeyframableFilter {
                 filter.set('40', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: edgeWaveFreqSlider.value = 0.05
         }
         Item {}
@@ -1562,7 +1562,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Detail')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: edgeWaveDetailSlider
             minimumValue: 1
             maximumValue: 5
@@ -1574,7 +1574,7 @@ Shotcut.KeyframableFilter {
                 filter.set('41', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: edgeWaveDetailSlider.value = 2
         }
         Item {}
@@ -1605,7 +1605,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Horizontal scale')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: horizScaleSlider
             minimumValue: 0.125
             maximumValue: 8
@@ -1617,7 +1617,7 @@ Shotcut.KeyframableFilter {
                 filter.set('32', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: horizScaleSlider.value = 1.0
         }
         Item {}
@@ -1626,7 +1626,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Vertical scale')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: vertScaleSlider
             minimumValue: 0.125
             maximumValue: 8.8
@@ -1638,7 +1638,7 @@ Shotcut.KeyframableFilter {
                 filter.set('59', value);
             }
         }
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: vertScaleSlider.value = 1.0
         }
         Item {}

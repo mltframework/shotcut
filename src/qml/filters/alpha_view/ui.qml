@@ -18,7 +18,7 @@ import QtQml.Models
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string paramDisplay: '0'
@@ -50,7 +50,7 @@ Item {
                 text: qsTr('Display')
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: displayCombo
 
                 implicitWidth: 200

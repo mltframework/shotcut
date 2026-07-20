@@ -1,8 +1,8 @@
-name: shotcut
+name: snapflow
 version: '$VERSION'
 summary: Free, cross-platform, open source video editor
 description: >
-  Shotcut is a free, open source, cross-platform video editor for Windows,
+  Snapflow is a free, open source, cross-platform video editor for Windows,
   Mac and Linux. Major features include support for a wide range of formats;
   no import required meaning native timeline editing; Blackmagic Design
   support for input and preview monitoring; and resolution support to 4k.
@@ -12,8 +12,8 @@ grade: stable
 confinement: classic
 
 apps:
-  shotcut:
-    command: ./shotcut
+  snapflow:
+    command: ./snapflow
   ffmpeg:
     command: ./ffmpeg
   ffplay:
@@ -24,7 +24,7 @@ apps:
     command: ./melt
 
 parts:
-  shotcut:
+  snapflow:
     plugin: dump
     source: '$FILENAME'
     source-type: tar

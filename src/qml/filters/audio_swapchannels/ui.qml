@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string fromParameter: 'from'
@@ -57,7 +57,7 @@ Item {
                 text: qsTr('Swap')
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: fromCombo
 
                 model: [qsTr('Left'), qsTr('Right')]
@@ -68,7 +68,7 @@ Item {
                 text: qsTr('with')
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: toCombo
 
                 model: fromCombo.model

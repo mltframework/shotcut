@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     keywords: qsTr('volume loudness gain dynamics', 'search keywords for the Normalize: One Pass audio filter') + ' normalize: one pass'
     mlt_service: "dynamic_loudness"
     qml: "ui.qml"
-    help: 'https://forum.shotcut.org/t/normalize-one-pass-audio-filter/12911/1'
+    help: 'https://forum.snapflow.org/t/normalize-one-pass-audio-filter/12911/1'
 }

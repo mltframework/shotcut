@@ -2,7 +2,7 @@
 applyTo: "src/qml/**"
 ---
 
-# Shotcut QML Conventions
+# Snapflow QML Conventions
 
 ## Imports
 
@@ -12,9 +12,9 @@ applyTo: "src/qml/**"
   import QtQuick
   import QtQuick.Controls
   import QtQuick.Layouts
-  import Shotcut.Controls as Shotcut
+  import Snapflow.Controls as Snapflow
   ```
-- Add `import org.shotcut.qml` (also aliased as `Shotcut`) when C++ QML types or enums are needed.
+- Add `import org.snapflow.qml` (also aliased as `Snapflow`) when C++ QML types or enums are needed.
 - `VuiBase.qml` only needs `import QtQuick`.
 
 ## Variable Declarations
@@ -32,10 +32,10 @@ Declare in this order at the top of each component:
 4. `function` definitions
 5. Child items and `Connections`
 
-**Filter parameter UIs** (`ui.qml`): top-level `Item` or `Shotcut.KeyframableFilter`.  
-**Filter VUIs** (`vui.qml`): top-level `Shotcut.VuiBase` (a `DropArea`).  
+**Filter parameter UIs** (`ui.qml`): top-level `Item` or `Snapflow.KeyframableFilter`.  
+**Filter VUIs** (`vui.qml`): top-level `Snapflow.VuiBase` (a `DropArea`).  
 **Views**: top-level `Rectangle` or `Item`.  
-**Meta files** (`meta.qml`): use `Metadata` from `org.shotcut.qml`; no copyright header.
+**Meta files** (`meta.qml`): use `Metadata` from `org.snapflow.qml`; no copyright header.
 
 ## Properties
 
@@ -85,7 +85,7 @@ Declare in this order at the top of each component:
 - Private properties and functions: `_camelCase` with leading underscore
 - Top-level root items: `id: root` or `id: <role>Root`
 - Handle sub-items: descriptive role names (`corner1Handle`, `positionHandle`)
-- MLT parameter key strings: single-quoted (`'level'`, `'shotcut:rect'`)
+- MLT parameter key strings: single-quoted (`'level'`, `'snapflow:rect'`)
 
 ## Code Conventions
 - Follow the QML Coding Conventions in the Qt documentation: https://doc.qt.io/qt-6/qtqml-coding-conventions.html
@@ -103,7 +103,7 @@ These are C++ context properties injected into the QML engine — never imported
 | `profile` | MLT profile — `profile.width`, `profile.height`, `profile.fps` |
 | `video` | Video preview widget — `video.rect`, `video.zoom`, `video.grid`, `video.snapToGrid` |
 | `application` | App helper — `application.showStatusMessage()`, `application.mousePos` |
-| `settings` | `ShotcutSettings` — `settings.timelineRipple`, etc. |
+| `settings` | `SnapflowSettings` — `settings.timelineRipple`, etc. |
 | `multitrack` | Timeline model |
 | `metadata` | Filter metadata for the current filter UI |
 
@@ -112,7 +112,7 @@ These are C++ context properties injected into the QML engine — never imported
 **Reading** (in `setControls()` / `setRectangleControl()`):
 ```qml
 filter.getDouble('level', position)
-filter.getRect('shotcut:rect', position)
+filter.getRect('snapflow:rect', position)
 filter.get('background')           // returns string
 filter.animateIn / filter.animateOut / filter.duration
 filter.isNew                       // check on Component.onCompleted

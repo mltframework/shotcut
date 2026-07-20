@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -281,15 +281,15 @@ Item {
         setControls();
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: analysisFile
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: selectAnalysisFile
 
         title: qsTr("File for motion analysis")
-        fileMode: Shotcut.FileDialog.SaveFile
+        fileMode: Snapflow.FileDialog.SaveFile
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
             analysisFile.url = selectAnalysisFile.selectedFile;
@@ -309,7 +309,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ["sampleRadius", "searchRadius", "offset", "interpolation", "stabilizeYaw", "stabilizePitch", "stabilizeRoll", "smoothYaw", "smoothPitch", "smoothRoll", "timeBiasYaw", "timeBiasPitch", "timeBiasRoll"]
@@ -379,14 +379,14 @@ Item {
             onEditingFinished: updateProperty_analysisFile()
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             icon.name: 'document-open'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
             implicitWidth: 20
             implicitHeight: 20
             onClicked: selectAnalysisFile.open()
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Browse...')
             }
         }
@@ -408,7 +408,7 @@ Item {
             Layout.fillWidth: true
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: clipOffsetUndo
 
             onClicked: onClipOffsetUndo()
@@ -419,7 +419,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: interpolationComboBox
 
             currentIndex: 0
@@ -428,7 +428,7 @@ Item {
             onCurrentIndexChanged: updateProperty_interpolation()
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: interpolationUndo
 
             onClicked: interpolationComboBox.currentIndex = 0
@@ -455,7 +455,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sampleRadiusSlider
 
             minimumValue: 1
@@ -467,7 +467,7 @@ Item {
             onValueChanged: updateProperty_sampleRadius(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: sampleRadiusUndo
 
             onClicked: sampleRadiusSlider.value = 16
@@ -478,7 +478,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: searchRadiusSlider
 
             minimumValue: 1
@@ -490,7 +490,7 @@ Item {
             onValueChanged: updateProperty_searchRadius(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: searchRadiusUndo
 
             onClicked: searchRadiusSlider.value = 24
@@ -501,7 +501,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: offsetSlider
 
             minimumValue: 1
@@ -513,7 +513,7 @@ Item {
             onValueChanged: updateProperty_offset(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: offsetUndo
 
             onClicked: offsetSlider.value = 64
@@ -544,7 +544,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stabilizeYawSlider
 
             minimumValue: 0
@@ -556,7 +556,7 @@ Item {
             onValueChanged: updateProperty_stabilizeYaw(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: stabilizeYawUndo
 
             onClicked: stabilizeYawSlider.value = 100
@@ -567,7 +567,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: smoothYawSlider
 
             minimumValue: 1
@@ -579,7 +579,7 @@ Item {
             onValueChanged: updateProperty_smoothYaw(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: smoothYawUndo
 
             onClicked: smoothYawSlider.value = 120
@@ -590,7 +590,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: timeBiasYawSlider
 
             minimumValue: -100
@@ -602,7 +602,7 @@ Item {
             onValueChanged: updateProperty_timeBiasYaw(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: timeBiasYawUndo
 
             onClicked: timeBiasYawSlider.value = 0
@@ -619,7 +619,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stabilizePitchSlider
 
             minimumValue: 0
@@ -631,7 +631,7 @@ Item {
             onValueChanged: updateProperty_stabilizePitch(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: stabilizePitchUndo
 
             onClicked: stabilizePitchSlider.value = 100
@@ -642,7 +642,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: smoothPitchSlider
 
             minimumValue: 1
@@ -654,7 +654,7 @@ Item {
             onValueChanged: updateProperty_smoothPitch(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: smoothPitchUndo
 
             onClicked: smoothPitchSlider.value = 120
@@ -665,7 +665,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: timeBiasPitchSlider
 
             minimumValue: -100
@@ -677,7 +677,7 @@ Item {
             onValueChanged: updateProperty_timeBiasPitch(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: timeBiasPitchUndo
 
             onClicked: timeBiasPitchSlider.value = 0
@@ -694,7 +694,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stabilizeRollSlider
 
             minimumValue: 0
@@ -706,7 +706,7 @@ Item {
             onValueChanged: updateProperty_stabilizeRoll(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: stabilizeRollUndo
 
             onClicked: stabilizeRollSlider.value = 100
@@ -717,7 +717,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: smoothRollSlider
 
             minimumValue: 1
@@ -729,7 +729,7 @@ Item {
             onValueChanged: updateProperty_smoothRoll(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: smoothRollUndo
 
             onClicked: smoothRollSlider.value = 120
@@ -740,7 +740,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: timeBiasRollSlider
 
             minimumValue: -100
@@ -752,7 +752,7 @@ Item {
             onValueChanged: updateProperty_timeBiasRoll(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: timeBiasRollUndo
 
             onClicked: timeBiasRollSlider.value = 0

@@ -58,8 +58,8 @@ FfmpegJob::~FfmpegJob()
 
 void FfmpegJob::start()
 {
-    QString shotcutPath = qApp->applicationDirPath();
-    QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
+    QString snapflowPath = qApp->applicationDirPath();
+    QFileInfo ffmpegPath(snapflowPath, "ffmpeg");
     setReadChannel(QProcess::StandardError);
     LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + m_args.join(' ');
     AbstractJob::start(ffmpegPath.absoluteFilePath(), m_args);

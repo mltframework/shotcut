@@ -16,7 +16,7 @@
  */
 import QtQml.Models
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Item {
     id: parameterRoot

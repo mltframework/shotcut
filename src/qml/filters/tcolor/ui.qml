@@ -18,7 +18,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -48,7 +48,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['oversaturate_cr', 'oversaturate_cb']
@@ -61,7 +61,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: bySlider
 
             minimumValue: -300
@@ -71,7 +71,7 @@ Item {
             onValueChanged: filter.set('oversaturate_cr', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: bySlider.value = 190
         }
 
@@ -80,7 +80,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rgSlider
 
             minimumValue: -300
@@ -90,7 +90,7 @@ Item {
             onValueChanged: filter.set('oversaturate_cb', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: rgSlider.value = 190
         }
 

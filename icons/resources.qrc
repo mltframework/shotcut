@@ -588,7 +588,7 @@
         <file>oxygen-dark/32x32/status/task-complete.png</file>
         <file>oxygen-dark/32x32/status/task-reject.png</file>
         <file>oxygen-dark/index.theme</file>
-        <file>shotcut-logo-320x320.png</file>
-        <file>shotcut-logo-64.png</file>
+        <file>snapflow-logo-320x320.png</file>
+        <file>snapflow-logo-64.png</file>
     </qresource>
 </RCC>

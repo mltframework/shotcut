@@ -19,7 +19,7 @@
 #include "plasmawidget.h"
 #include "ui_plasmawidget.h"
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 static const char *kParamSpeed1 = "0";
@@ -137,8 +137,8 @@ Mlt::Producer *PlasmaWidget::newProducer(Mlt::Profile &profile)
     p->set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
     p->set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
     p->set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
-    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
-    p->set(kShotcutDetailProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowDetailProperty, ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

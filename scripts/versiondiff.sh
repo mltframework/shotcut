@@ -10,13 +10,13 @@ printVersions() {
     VERSIONFILEPATH=$1
     if [ $(basename $VERSIONFILEPATH) = "versions" ]; then
         cat $VERSIONFILEPATH
-    elif catIfValid $VERSIONFILEPATH/Shotcut.app/versions; then
+    elif catIfValid $VERSIONFILEPATH/Snapflow.app/versions; then
         return 0
-    elif catIfValid $VERSIONFILEPATH/Shotcut/Shotcut.app/versions; then
+    elif catIfValid $VERSIONFILEPATH/Snapflow/Snapflow.app/versions; then
         return 0
     elif file $VERSIONFILEPATH | grep -q "compressed data"; then
         >&2 echo "Reading version from $VERSIONFILEPATH"...
-        tar xOf $VERSIONFILEPATH Shotcut/Shotcut.app/versions
+        tar xOf $VERSIONFILEPATH Snapflow/Snapflow.app/versions
         if [ "$?" -ne "0" ]; then
             >&2 echo No versions file found in $VERSIONFILEPATH
             return 1

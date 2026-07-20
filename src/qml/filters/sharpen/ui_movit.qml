@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['circle_radius', 'gaussian_radius', 'correlation', 'noise']
@@ -137,7 +137,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -156,7 +156,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: circleSlider
 
             minimumValue: 0
@@ -166,11 +166,11 @@ Item {
             onValueChanged: updateFilter('circle_radius', value, getPosition(), circleKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: circleSlider.value = 2
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: circleKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'circle_radius', circleSlider.value)
@@ -182,7 +182,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: gaussianSlider
 
             minimumValue: 0
@@ -192,11 +192,11 @@ Item {
             onValueChanged: updateFilter('gaussian_radius', value, getPosition(), gaussianKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: gaussianSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: gaussianKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'gaussian_radius', gaussianSlider.value)
@@ -208,7 +208,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: correlationSlider
 
             minimumValue: 0
@@ -217,11 +217,11 @@ Item {
             onValueChanged: updateFilter('correlation', value, getPosition(), correlationKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: correlationSlider.value = 0.95
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: correlationKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'correlation', correlationSlider.value)
@@ -233,7 +233,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: noiseSlider
 
             minimumValue: 0.01
@@ -242,11 +242,11 @@ Item {
             onValueChanged: updateFilter('noise', value, getPosition(), noiseKeyframesButton)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: noiseSlider.value = 0.01
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: noiseKeyframesButton
 
             onToggled: onKeyframesButtonClicked(checked, 'noise', noiseSlider.value)

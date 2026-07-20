@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,7 @@ Metadata {
     mlt_service: 'avfilter.hue'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/hue-lightness-saturation/12852/1'
+    help: 'https://forum.snapflow.org/t/hue-lightness-saturation/12852/1'
 
     keyframes {
         allowAnimateIn: true

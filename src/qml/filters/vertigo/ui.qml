@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string phaseincrement: '0'
     property string zoomrate: '1'
     property double phaseincrementDefault: 0.02
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [phaseincrement, zoomrate]
@@ -90,7 +90,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: phaseincrementSlider
 
             minimumValue: 0
@@ -101,11 +101,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: phaseincrementSlider.value = phaseincrementDefault * phaseincrementSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: phaseKeyframesButton
 
             onToggled: {
@@ -119,7 +119,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: zoomrateSlider
 
             minimumValue: 0
@@ -130,11 +130,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: zoomrateSlider.value = zoomrateDefault * zoomrateSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: zoomKeyframesButton
 
             onToggled: {

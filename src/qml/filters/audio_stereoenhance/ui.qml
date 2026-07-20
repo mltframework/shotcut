@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockControls: false
@@ -73,7 +73,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['av.level_in', 'av.level_out', 'av.side_gain', 'av.middle_source', 'av.middle_phase', 'av.left_delay', 'av.left_balance', 'av.left_gain', 'av.left_phase', 'av.right_delay', 'av.right_balance', 'av.right_gain', 'av.right_phase']
@@ -88,7 +88,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: sourceCombo
 
             property var values: ['left', 'right', 'mid', 'side']
@@ -118,7 +118,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderLeftDelay
 
             minimumValue: 0
@@ -135,7 +135,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderLeftDelay.value = 0
         }
 
@@ -144,7 +144,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderLeftLevel
 
             minimumValue: -16
@@ -161,7 +161,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderLeftLevel.value = 0
         }
 
@@ -170,7 +170,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRightDelay
 
             minimumValue: 0
@@ -187,7 +187,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRightDelay.value = 10
         }
 
@@ -196,7 +196,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderRightLevel
 
             minimumValue: -16
@@ -213,7 +213,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderRightLevel.value = 0
         }
 
@@ -222,7 +222,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderOutputLevel
 
             minimumValue: -16
@@ -239,7 +239,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderOutputLevel.value = -3
         }
 

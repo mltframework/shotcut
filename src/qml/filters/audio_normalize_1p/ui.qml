@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -88,7 +88,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['target_loudness', 'window', 'max_gain', 'min_gain', 'max_rate']
@@ -100,12 +100,12 @@ Item {
             text: qsTr('Target Loudness')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The target loudness of the output in LUFS.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: programSlider
 
             minimumValue: -50
@@ -117,7 +117,7 @@ Item {
             onValueChanged: filter.set('target_loudness', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: programSlider.value = -23
         }
 
@@ -125,12 +125,12 @@ Item {
             text: qsTr('Analysis Window')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount of history to use to calculate the input loudness.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: windowSlider
 
             minimumValue: 2
@@ -142,7 +142,7 @@ Item {
             onValueChanged: filter.set('window', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: windowSlider.value = 20
         }
 
@@ -150,12 +150,12 @@ Item {
             text: qsTr('Maximum Gain')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The maximum that the gain can be increased.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: maxgainSlider
 
             minimumValue: 0
@@ -167,7 +167,7 @@ Item {
             onValueChanged: filter.set('max_gain', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: maxgainSlider.value = 15
         }
 
@@ -175,12 +175,12 @@ Item {
             text: qsTr('Minimum Gain')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The maximum that the gain can be decreased.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: mingainSlider
 
             minimumValue: -30
@@ -192,7 +192,7 @@ Item {
             onValueChanged: filter.set('min_gain', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: mingainSlider.value = -15
         }
 
@@ -200,12 +200,12 @@ Item {
             text: qsTr('Maximum Rate')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The maximum rate that the gain can be changed.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: maxrateSlider
 
             minimumValue: 0.5
@@ -218,7 +218,7 @@ Item {
             onValueChanged: filter.set('max_rate', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: maxrateSlider.value = 3
         }
 
@@ -230,12 +230,12 @@ Item {
             text: qsTr('Reset on discontinuity')
             onCheckedChanged: filter.set('discontinuity_reset', checked)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Reset the measurement if a discontinuity is detected - such as seeking or clip change.')
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: discResetUndo
 
             onClicked: discResetCheckbox.checked = true
@@ -260,12 +260,12 @@ Item {
             text: qsTr('Input Loudness')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing the loudness measured on the input.')
             }
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: loudnessGauge
 
             Layout.columnSpan: 2
@@ -283,12 +283,12 @@ Item {
             text: qsTr('Output Gain')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing the gain being applied.')
             }
         }
 
-        Shotcut.Gauge {
+        Snapflow.Gauge {
             id: gainGauge
 
             Layout.columnSpan: 2
@@ -304,7 +304,7 @@ Item {
             text: qsTr('Reset')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing when the loudness measurement is reset.')
             }
         }

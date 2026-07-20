@@ -25,7 +25,7 @@
 
 /*!
     \qmltype File
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief A file URL wrapper with optional filesystem change watching.
 
     Use \c File in filter panels to manage paths to auxiliary files

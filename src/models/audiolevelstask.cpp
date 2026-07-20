@@ -21,7 +21,7 @@
 #include "database.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QByteArray>
@@ -154,8 +154,8 @@ QString AudioLevelsTask::cacheKey()
 {
     QString key = QStringLiteral("%1 audiolevels");
     Mlt::Producer *producer = m_producers.first().first;
-    if (producer->get(kShotcutHashProperty)) {
-        key = key.arg(producer->get(kShotcutHashProperty));
+    if (producer->get(kSnapflowHashProperty)) {
+        key = key.arg(producer->get(kSnapflowHashProperty));
     } else {
         key = key.arg(producer->get("resource"));
         QCryptographicHash hash(QCryptographicHash::Sha1);

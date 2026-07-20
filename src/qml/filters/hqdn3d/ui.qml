@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string spatial: '0'
     property string temporal: '1'
     property double spatialDefault: 0.04
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [spatial, temporal]
@@ -90,7 +90,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: spatialSlider
 
             minimumValue: 0
@@ -101,11 +101,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(spatial, spatialSlider.value / spatialSlider.maximumValue, spatialKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: spatialSlider.value = spatialDefault * spatialSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: spatialKeyframesButton
 
             onToggled: {
@@ -119,7 +119,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: temporalSlider
 
             minimumValue: 0
@@ -130,11 +130,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(temporal, temporalSlider.value / temporalSlider.maximumValue, temporalKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: temporalSlider.value = temporalDefault * temporalSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: temporalKeyframesButton
 
             onToggled: {

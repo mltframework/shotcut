@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['strobe_invert', 'interval']
@@ -98,7 +98,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: filter.resetProperty('interval')
@@ -117,7 +117,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: islider
 
             minimumValue: 0
@@ -126,11 +126,11 @@ Item {
             onValueChanged: updateFilter(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: islider.value = 1
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: iKeyframesButton
 
             onToggled: {

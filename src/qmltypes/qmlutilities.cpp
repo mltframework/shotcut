@@ -52,44 +52,44 @@ QmlUtilities::QmlUtilities(QObject *parent)
 
 void QmlUtilities::registerCommonTypes()
 {
-    qmlRegisterType<QmlExtension>("org.shotcut.qml", 1, 0, "Extension");
-    qmlRegisterType<QmlExtensionFile>("org.shotcut.qml", 1, 0, "ExtensionFile");
-    qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
-    qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
-    qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
-    qmlRegisterAnonymousType<QmlKeyframesMetadata>("org.shotcut.qml", 1);
-    qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1, 0, "Parameter");
-    qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
-    qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1, 0, "KeyframesModel");
-    qmlRegisterType<SubtitlesModel>("org.shotcut.qml", 1, 0, "SubtitlesModel");
-    qmlRegisterType<SubtitlesSelectionModel>("org.shotcut.qml", 1, 0, "SubtitlesSelectionModel");
-    qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
+    qmlRegisterType<QmlExtension>("org.snapflow.qml", 1, 0, "Extension");
+    qmlRegisterType<QmlExtensionFile>("org.snapflow.qml", 1, 0, "ExtensionFile");
+    qmlRegisterType<QmlFile>("org.snapflow.qml", 1, 0, "File");
+    qmlRegisterType<QmlFilter>("org.snapflow.qml", 1, 0, "Filter");
+    qmlRegisterType<QmlMetadata>("org.snapflow.qml", 1, 0, "Metadata");
+    qmlRegisterAnonymousType<QmlKeyframesMetadata>("org.snapflow.qml", 1);
+    qmlRegisterType<QmlKeyframesParameter>("org.snapflow.qml", 1, 0, "Parameter");
+    qmlRegisterType<QmlRichText>("org.snapflow.qml", 1, 0, "RichText");
+    qmlRegisterType<KeyframesModel>("org.snapflow.qml", 1, 0, "KeyframesModel");
+    qmlRegisterType<SubtitlesModel>("org.snapflow.qml", 1, 0, "SubtitlesModel");
+    qmlRegisterType<SubtitlesSelectionModel>("org.snapflow.qml", 1, 0, "SubtitlesSelectionModel");
+    qmlRegisterType<QmlUtilities>("org.snapflow.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
-    qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml",
+    qmlRegisterUncreatableType<MetadataModel>("org.snapflow.qml",
                                               1,
                                               0,
                                               "MetadataModel",
                                               "You cannot create a MetadataModel from QML.");
-    qmlRegisterUncreatableType<ShotcutSettings>("org.shotcut.qml",
+    qmlRegisterUncreatableType<SnapflowSettings>("org.snapflow.qml",
                                                 1,
                                                 0,
                                                 "Settings",
                                                 "You cannot create a Settings from QML.");
-    qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
-    qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
-    qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");
-    qmlRegisterType<QmlEditMenu>("Shotcut.Controls", 1, 0, "EditContextMenu");
-    qmlRegisterType<QmlRichTextMenu>("Shotcut.Controls", 1, 0, "RichTextMenu");
-    qmlRegisterType<ColorDialog>("Shotcut.Controls", 1, 0, "ColorDialog");
-    qmlRegisterType<FontDialog>("Shotcut.Controls", 1, 0, "FontDialog");
-    qmlRegisterType<MessageDialog>("Shotcut.Controls", 1, 0, "MessageDialog");
-    qmlRegisterType<FileDialog>("Shotcut.Controls", 1, 0, "FileDialog");
+    qmlRegisterType<ColorPickerItem>("Snapflow.Controls", 1, 0, "ColorPickerItem");
+    qmlRegisterType<ColorWheelItem>("Snapflow.Controls", 1, 0, "ColorWheelItem");
+    qmlRegisterType<QmlMarkerMenu>("Snapflow.Controls", 1, 0, "MarkerMenu");
+    qmlRegisterType<QmlEditMenu>("Snapflow.Controls", 1, 0, "EditContextMenu");
+    qmlRegisterType<QmlRichTextMenu>("Snapflow.Controls", 1, 0, "RichTextMenu");
+    qmlRegisterType<ColorDialog>("Snapflow.Controls", 1, 0, "ColorDialog");
+    qmlRegisterType<FontDialog>("Snapflow.Controls", 1, 0, "FontDialog");
+    qmlRegisterType<MessageDialog>("Snapflow.Controls", 1, 0, "MessageDialog");
+    qmlRegisterType<FileDialog>("Snapflow.Controls", 1, 0, "FileDialog");
     registerTimelineItems();
 }
 
 void QmlUtilities::setCommonProperties(QQmlContext *context)
 {
-    context->setContextProperty("settings", &ShotcutSettings::singleton());
+    context->setContextProperty("settings", &SnapflowSettings::singleton());
     context->setContextProperty("application", &QmlApplication::singleton());
     context->setContextProperty("profile", &QmlProfile::singleton());
 }
@@ -97,7 +97,7 @@ void QmlUtilities::setCommonProperties(QQmlContext *context)
 QDir QmlUtilities::qmlDir()
 {
     QDir dir = QmlApplication::dataDir();
-    dir.cd("shotcut");
+    dir.cd("snapflow");
     dir.cd("qml");
     return dir;
 }
@@ -114,7 +114,7 @@ QUrl QmlUtilities::blankVui()
 {
     QDir dir = qmlDir();
     dir.cd("modules");
-    dir.cd("Shotcut");
+    dir.cd("Snapflow");
     dir.cd("Controls");
     return QUrl::fromLocalFile(dir.absoluteFilePath("VuiBase.qml"));
 }

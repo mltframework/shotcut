@@ -2,7 +2,7 @@
 applyTo: "src/commands/**"
 ---
 
-# Shotcut Commands Conventions
+# Snapflow Commands Conventions
 
 All files in `src/commands/` implement `QUndoCommand` subclasses that represent reversible operations. Each domain has a paired `.h`/`.cpp` and lives in a named namespace.
 
@@ -180,7 +180,7 @@ In `.cpp` files: own header first, then project headers alphabetically, then Qt/
 #include "Logger.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <QMetaObject>
 ```

@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -255,7 +255,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ["yaw", "pitch", "roll", "zoom"]
@@ -338,7 +338,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.columnSpan: 2
             visible: modeLabel.visible
             onClicked: {
@@ -355,7 +355,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: yawSlider
 
             enabled: !binauralRadioButton.checked
@@ -368,13 +368,13 @@ Item {
             onValueChanged: updateProperty_yaw(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: yawUndo
 
             onClicked: yawSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: yawKeyframesButton
 
             enabled: !binauralRadioButton.checked
@@ -401,7 +401,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: pitchSlider
 
             enabled: !binauralRadioButton.checked
@@ -414,13 +414,13 @@ Item {
             onValueChanged: updateProperty_pitch(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: pitchUndo
 
             onClicked: pitchSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: pitchKeyframesButton
 
             enabled: !binauralRadioButton.checked
@@ -447,7 +447,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rollSlider
 
             enabled: !binauralRadioButton.checked
@@ -460,13 +460,13 @@ Item {
             onValueChanged: updateProperty_roll(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: rollUndo
 
             onClicked: rollSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: rollKeyframesButton
 
             enabled: !binauralRadioButton.checked
@@ -493,7 +493,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: zoomSlider
 
             enabled: !binauralRadioButton.checked
@@ -506,13 +506,13 @@ Item {
             onValueChanged: updateProperty_zoom(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: zoomUndo
 
             onClicked: zoomSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: zoomKeyframesButton
 
             enabled: !binauralRadioButton.checked
@@ -535,7 +535,7 @@ Item {
         }
 
         Label {}
-        Shotcut.Button {
+        Snapflow.Button {
             enabled: !binauralRadioButton.checked
             Layout.columnSpan: 3
             text: qsTr('Paste Parameters')

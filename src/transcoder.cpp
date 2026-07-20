@@ -21,7 +21,7 @@
 #include "jobs/ffmpegjob.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QFileDialog>

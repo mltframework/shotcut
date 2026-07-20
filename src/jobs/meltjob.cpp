@@ -49,7 +49,7 @@ MeltJob::MeltJob(const QString &name,
         action->setToolTip(tr("View the MLT XML for this job"));
         connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
         m_standardActions << action;
-        m_xml.reset(Util::writableTemporaryFile(name, "shotcut-XXXXXX.mlt"));
+        m_xml.reset(Util::writableTemporaryFile(name, "snapflow-XXXXXX.mlt"));
         if (m_xml->open()) {
             m_xml->write(xml.toUtf8());
             m_xml->close();
@@ -58,7 +58,7 @@ MeltJob::MeltJob(const QString &name,
         // Not an EncodeJob
         QAction *action = new QAction(tr("Open"), this);
         action->setData("Open");
-        action->setToolTip(tr("Open the output file in the Shotcut player"));
+        action->setToolTip(tr("Open the output file in the Snapflow player"));
         connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
         m_successActions << action;
 
@@ -121,11 +121,11 @@ void MeltJob::start()
         QTimer::singleShot(0, this, [=]() { emit finished(this, false); });
         return;
     }
-    QString shotcutPath = qApp->applicationDirPath();
+    QString snapflowPath = qApp->applicationDirPath();
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QFileInfo meltPath(shotcutPath, "melt-7");
+    QFileInfo meltPath(snapflowPath, "melt-7");
 #else
-    QFileInfo meltPath(shotcutPath, "melt");
+    QFileInfo meltPath(snapflowPath, "melt");
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;

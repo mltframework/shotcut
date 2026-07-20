@@ -18,10 +18,10 @@ import QtQml.Models
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
     property string _defaultOffset: '00:00:00.000'
@@ -118,7 +118,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: textFilterUi.parameterList.concat(['format', 'direction', 'start', 'duration'])
@@ -148,7 +148,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: formatCombo
 
             textRole: 'text'
@@ -209,7 +209,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: directionCombo
 
             textRole: 'text'
@@ -249,19 +249,19 @@ Shotcut.KeyframableFilter {
                     startSpinner.timeStr = _defaultStart;
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.')
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'insert'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: startSpinner.setValueSeconds((producer.position - (filter.in - producer.in)) / profile.fps)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Set start to begin at the current position')
                 }
             }
@@ -286,12 +286,12 @@ Shotcut.KeyframableFilter {
                     durationSpinner.timeStr = _defaultDuration;
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('The timer will be frozen after the Duration has elapsed.') + '\n' + qsTr('A value of 0 will run the timer to the end of the filter')
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'insert'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
                 implicitWidth: 20
@@ -303,7 +303,7 @@ Shotcut.KeyframableFilter {
                         durationSpinner.setValueSeconds(endTime - startTime);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Set duration to end at the current position')
                 }
             }
@@ -328,7 +328,7 @@ Shotcut.KeyframableFilter {
                     offsetSpinner.timeStr = _defaultOffset;
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the direction is Up, the timer will count up starting from Offset.')
                 }
             }
@@ -342,7 +342,7 @@ Shotcut.KeyframableFilter {
         RowLayout {
             spacing: 0
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: speedSpinner
 
                 horizontalAlignment: Qt.AlignRight
@@ -355,13 +355,13 @@ Shotcut.KeyframableFilter {
                     filter.set("speed", speedSpinner.value);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.')
                 }
             }
         }
 
-        Shotcut.TextFilterUi {
+        Snapflow.TextFilterUi {
             id: textFilterUi
             showOpacity: filter.isAtLeastVersion(2)
             Layout.columnSpan: 2

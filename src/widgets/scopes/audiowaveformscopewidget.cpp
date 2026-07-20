@@ -66,7 +66,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     setAutoFillBackground(true);
     setMinimumSize(100, 100);
     setMouseTracking(true);
-    setWhatsThis("https://forum.shotcut.org/t/audio-waveform-scope/12920/1");
+    setWhatsThis("https://forum.snapflow.org/t/audio-waveform-scope/12920/1");
     LOG_DEBUG() << "end";
 }
 

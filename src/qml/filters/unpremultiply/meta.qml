@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     mlt_service: 'frei0r.premultiply'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/unpremultiply-alpha/12891/1'
+    help: 'https://forum.snapflow.org/t/unpremultiply-alpha/12891/1'
 }

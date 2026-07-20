@@ -20,7 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <QScopedPointer>
 #include <QUuid>
@@ -68,8 +68,8 @@ void UndoHelper::recordBeforeState()
             info.oldTrackIndex = i;
             info.oldClipIndex = j;
             info.isBlank = playlist.is_blank(j);
-            if (clipInfo.cut && clipInfo.cut->property_exists(kShotcutGroupProperty)) {
-                info.group = clipInfo.cut->get_int(kShotcutGroupProperty);
+            if (clipInfo.cut && clipInfo.cut->property_exists(kSnapflowGroupProperty)) {
+                info.group = clipInfo.cut->get_int(kSnapflowGroupProperty);
             }
         }
     }
@@ -242,7 +242,7 @@ void UndoHelper::undoChanges()
                 MLT.setUuid(clip->parent(), uid);
             }
             if (info.group >= 0) {
-                clip->set(kShotcutGroupProperty, info.group);
+                clip->set(kSnapflowGroupProperty, info.group);
             }
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
             indexAdjustment[trackIndex]++;
@@ -277,7 +277,7 @@ void UndoHelper::undoChanges()
                     MLT.setUuid(clip->parent(), uid);
                     // Restore grouping metadata on the clip, if any was recorded.
                     if (info.group >= 0) {
-                        clip->set(kShotcutGroupProperty, info.group);
+                        clip->set(kSnapflowGroupProperty, info.group);
                     }
                     AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
                 }
@@ -435,7 +435,7 @@ void UndoHelper::restoreAffectedTracks()
                 playlist.append(restoredClip, info.frame_in, info.frame_out);
                 if (info.group >= 0) {
                     QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
-                    clip->set(kShotcutGroupProperty, info.group);
+                    clip->set(kSnapflowGroupProperty, info.group);
                 }
             }
             m_model.endInsertRows();
@@ -475,7 +475,7 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
     for (auto currentIndex : {clipIndex + 1, clipIndex - 1}) {
         // Connect a transition on the right/left to the new producer.
         Mlt::Producer producer(playlist.get_clip(currentIndex));
-        if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
+        if (producer.is_valid() && producer.parent().get(kSnapflowTransitionProperty)) {
             Mlt::Tractor transition(producer.parent());
             if (transition.is_valid()) {
                 QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));

@@ -34,7 +34,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "spatialmedia/spatialmedia.h"
 #include "transcoder.h"
 #include "util.h"
@@ -107,7 +107,7 @@ Mlt::Producer *AvformatProducerWidget::newProducer(Mlt::Profile &profile)
         QString filename = Util::GetFilenameFromProducer(producer(), false);
         QString s = QStringLiteral("%1:%2:%3").arg("timewarp", warpspeed, filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
-        p->set(kShotcutProducerProperty, "avformat");
+        p->set(kSnapflowProducerProperty, "avformat");
     }
     if (p->is_valid()) {
         p->set("video_delay", double(ui->syncSlider->value()) / 1000);
@@ -148,7 +148,7 @@ void AvformatProducerWidget::rename()
 
 void AvformatProducerWidget::offerConvert(QString message, bool set709Convert, bool setSubClip)
 {
-    m_producer->set(kShotcutSkipConvertProperty, true);
+    m_producer->set(kSnapflowSkipConvertProperty, true);
     LongUiTask::cancel();
     MLT.pause();
     TranscodeDialog
@@ -1393,10 +1393,10 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
             QString caption = Util::baseName(resource, true);
             if (warpSpeed != 1.0)
                 caption = QStringLiteral("%1 (%2x)").arg(caption).arg(warpSpeed);
-            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
             ui->filenameLabel->setText(caption);
         } else {
-            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            m_producer->set(kSnapflowCaptionProperty, caption.toUtf8().constData());
         }
         emit modified();
     }

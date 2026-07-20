@@ -302,12 +302,12 @@ private:
 
 void registerTimelineItems()
 {
-    qmlRegisterType<TimelineTransition>("Shotcut.Controls", 1, 0, "TimelineTransition");
-    qmlRegisterType<TimelinePlayhead>("Shotcut.Controls", 1, 0, "TimelinePlayhead");
-    qmlRegisterType<TimelineTriangle>("Shotcut.Controls", 1, 0, "TimelineTriangle");
-    qmlRegisterType<TimelineWaveform>("Shotcut.Controls", 1, 0, "TimelineWaveform");
-    qmlRegisterType<MarkerStart>("Shotcut.Controls", 1, 0, "MarkerStart");
-    qmlRegisterType<MarkerEnd>("Shotcut.Controls", 1, 0, "MarkerEnd");
+    qmlRegisterType<TimelineTransition>("Snapflow.Controls", 1, 0, "TimelineTransition");
+    qmlRegisterType<TimelinePlayhead>("Snapflow.Controls", 1, 0, "TimelinePlayhead");
+    qmlRegisterType<TimelineTriangle>("Snapflow.Controls", 1, 0, "TimelineTriangle");
+    qmlRegisterType<TimelineWaveform>("Snapflow.Controls", 1, 0, "TimelineWaveform");
+    qmlRegisterType<MarkerStart>("Snapflow.Controls", 1, 0, "MarkerStart");
+    qmlRegisterType<MarkerEnd>("Snapflow.Controls", 1, 0, "MarkerEnd");
 }
 
 #include "timelineitems.moc"

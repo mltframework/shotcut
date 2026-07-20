@@ -20,7 +20,7 @@
 
 #include "mltcontroller.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 AlsaWidget::AlsaWidget(QWidget *parent)
@@ -51,7 +51,7 @@ Mlt::Producer *AlsaWidget::newProducer(Mlt::Profile &profile)
         s += QStringLiteral("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
     Mlt::Producer *p = new Mlt::Producer(profile, s.toUtf8().constData());
     p->set(kBackgroundCaptureProperty, 1);
-    p->set(kShotcutCaptionProperty, "ALSA");
+    p->set(kSnapflowCaptionProperty, "ALSA");
     Settings.setAudioInput(ui->lineEdit->text());
     return p;
 }

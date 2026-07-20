@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -26,7 +26,7 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     allowMultiple: true
-    help: 'https://forum.shotcut.org/t/gps-graphic-video-filter/35893/1'
+    help: 'https://forum.snapflow.org/t/gps-graphic-video-filter/35893/1'
 
     keyframes {
         allowAnimateIn: true

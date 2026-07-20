@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "models/extensionmodel.h"
 #include "qmltypes/qmlapplication.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <MltProducer.h>
@@ -44,7 +44,7 @@
 #include <QTreeView>
 
 static const QString WHISPER_MODEL_EXTENSION_URL = QStringLiteral(
-    "https://check.shotcut.org/whispermodel.qml");
+    "https://check.snapflow.org/whispermodel.qml");
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {

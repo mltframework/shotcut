@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
 
     function setControls() {
@@ -137,7 +137,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.ox', 'transition.oy', 'background']
@@ -159,7 +159,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rotationSlider
 
             minimumValue: -360
@@ -170,11 +170,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('transition.fix_rotate_x', value, rotationKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: rotationSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: rotationKeyframesButton
 
             onToggled: {
@@ -188,7 +188,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: scaleSlider
 
             minimumValue: 0.1
@@ -199,11 +199,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilterScale(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: scaleSlider.value = 100
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: scaleKeyframesButton
 
             onToggled: {
@@ -235,7 +235,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: xOffsetSlider
 
             minimumValue: -5000
@@ -251,11 +251,11 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: xOffsetSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: xOffsetKeyframesButton
 
             onToggled: {
@@ -273,7 +273,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: yOffsetSlider
 
             minimumValue: -5000
@@ -289,11 +289,11 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: yOffsetSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: yOffsetKeyframesButton
 
             onToggled: {
@@ -311,7 +311,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             eyedropper: true
@@ -319,7 +319,7 @@ Shotcut.KeyframableFilter {
             onValueChanged: filter.set('background', 'color:' + value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: bgColor.visible
             onClicked: bgColor.value = '#00000000'
         }

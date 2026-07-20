@@ -1,15 +1,15 @@
 /*!
     \page index.html
-    \title Shotcut QML Scripting API
+    \title Snapflow QML Scripting API
 
     \brief Reference for all QML types and context properties available when
-    writing filter panels, VUIs, and timeline extensions for Shotcut.
+    writing filter panels, VUIs, and timeline extensions for Snapflow.
 
     \section1 Overview
 
-    \warning This API is subject to change and may not be stable across Shotcut versions.
+    \warning This API is subject to change and may not be stable across Snapflow versions.
 
-    Shotcut exposes its internal state to QML views through two mechanisms:
+    Snapflow exposes its internal state to QML views through two mechanisms:
 
     \list
         \li \b{Registered types} — classes you can instantiate directly in QML
@@ -25,7 +25,7 @@
 
     \section1 Context Properties (Singletons)
 
-    These objects are available in every Shotcut QML view without import statements:
+    These objects are available in every Snapflow QML view without import statements:
 
     \table
         \header

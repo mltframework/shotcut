@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string vertical: '0'
     property double verticalDefault: 0.2
     property string horizontal: '1'
@@ -72,7 +72,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [vertical, horizontal]
@@ -92,7 +92,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: verticalSlider
 
             minimumValue: 0
@@ -103,11 +103,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(vertical, verticalSlider.value / verticalSlider.maximumValue, verticalKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: verticalSlider.value = verticalDefault * verticalSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: verticalKeyframesButton
 
             onToggled: {
@@ -121,7 +121,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: horizontalSlider
 
             minimumValue: 0
@@ -132,11 +132,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(horizontal, horizontalSlider.value / horizontalSlider.maximumValue, horizontalKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: horizontalSlider.value = horizontalDefault * horizontalSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: horizontalKeyframesButton
 
             onToggled: {

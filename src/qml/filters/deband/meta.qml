@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021-2022 Meltytech, LLC
- * Written by Austin Brooks <ab.shotcut@outlook.com>
+ * Written by Austin Brooks <ab.snapflow@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -26,5 +26,5 @@ Metadata {
     mlt_service: 'avfilter.deband'
     qml: 'ui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/deband-video-filter/29277/1'
+    help: 'https://forum.snapflow.org/t/deband-video-filter/29277/1'
 }

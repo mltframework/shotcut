@@ -20,7 +20,7 @@
 
 #include "mltcontroller.h"
 #include "qmltypes/colordialog.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QFileInfo>
@@ -83,8 +83,8 @@ void TextProducerWidget::on_colorButton_clicked()
         if (m_producer) {
             m_producer->set("resource",
                             colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-            m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+            m_producer->set(kSnapflowCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+            m_producer->set(kSnapflowDetailProperty, ui->colorLabel->text().toLatin1().constData());
             emit producerChanged(m_producer.data());
         }
     }
@@ -96,8 +96,8 @@ Mlt::Producer *TextProducerWidget::newProducer(Mlt::Profile &profile)
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
     p->set("mlt_image_format", "rgba");
     MLT.setDurationFromDefault(p);
-    p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-    p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+    p->set(kSnapflowCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    p->set(kSnapflowDetailProperty, ui->colorLabel->text().toLatin1().constData());
     QScopedPointer<Mlt::Filter> filter(createFilter(profile, p));
     p->attach(*filter);
     return p;
@@ -132,8 +132,8 @@ void TextProducerWidget::loadPreset(Mlt::Properties &p)
     if (m_producer) {
         m_producer->set("resource",
                         colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-        m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-        m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+        m_producer->set(kSnapflowCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+        m_producer->set(kSnapflowDetailProperty, ui->colorLabel->text().toLatin1().constData());
         QScopedPointer<Mlt::Filter> filter;
         filter.reset(MLT.getFilter(kSimpleFilterName, m_producer.data()));
         if (filter && filter->is_valid())
@@ -165,7 +165,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
     auto fgcolor = "#ffffffff";
     if (ui->richRadioButton->isChecked()) {
         filter = new Mlt::Filter(profile, "qtext");
-        filter->set(kShotcutFilterProperty, kRichFilterName);
+        filter->set(kSnapflowFilterProperty, kRichFilterName);
         QString text = ui->plainTextEdit->toPlainText();
         if (text.isEmpty())
             text = tr("Edit your text using the Filters panel.");
@@ -196,7 +196,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
         filter->set("html", html.toUtf8().constData());
     } else if (ui->typeWriterRadioButton->isChecked()) {
         filter = new Mlt::Filter(profile, "qtext");
-        filter->set(kShotcutFilterProperty, kTypewriterFilterName);
+        filter->set(kSnapflowFilterProperty, kTypewriterFilterName);
         fgcolor = "#ff00ff00";
         if (!ui->plainTextEdit->toPlainText().isEmpty())
             filter->set("argument", ui->plainTextEdit->toPlainText().toUtf8().constData());
@@ -212,7 +212,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
         filter->set("typewriter.cursor_char", "|");
     } else {
         filter = new Mlt::Filter(profile, "dynamictext");
-        filter->set(kShotcutFilterProperty, kSimpleFilterName);
+        filter->set(kSnapflowFilterProperty, kSimpleFilterName);
         if (!ui->plainTextEdit->toPlainText().isEmpty())
             filter->set("argument", ui->plainTextEdit->toPlainText().toUtf8().constData());
         else
@@ -243,8 +243,8 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
     filter->set("bgcolour", "#00000000");
     filter->set("olcolour", "#aa000000");
     filter->set("style", "normal");
-    filter->set("shotcut:usePointSize", 1);
-    filter->set("shotcut:pointSize", kPointSize);
+    filter->set("snapflow:usePointSize", 1);
+    filter->set("snapflow:pointSize", kPointSize);
     QFont font(filter->get("family"), kPointSize, filter->get_int("weight"));
     filter->set("size", QFontInfo(font).pixelSize());
     filter->set("geometry",

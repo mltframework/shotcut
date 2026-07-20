@@ -35,7 +35,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     LOG_DEBUG() << "begin";
     qRegisterMetaType<QVector<double>>("QVector<double>");
     setAutoFillBackground(true);
-    setWhatsThis("https://forum.shotcut.org/t/audio-peak-meter-scope/12918/1");
+    setWhatsThis("https://forum.snapflow.org/t/audio-peak-meter-scope/12918/1");
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
     m_audioMeter = new AudioMeterWidget(this);

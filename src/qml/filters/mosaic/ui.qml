@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string xsize: '0'
     property string ysize: '1'
     property real maxFilterPercent: 50
@@ -72,7 +72,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [xsize, ysize]
@@ -91,7 +91,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: xsizeSlider
 
             minimumValue: 0
@@ -102,11 +102,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: xsizeSlider.value = defaultValue * maxFilterPercent
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: xsizeKeyframesButton
 
             onToggled: {
@@ -120,7 +120,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: ysizeSlider
 
             minimumValue: 0
@@ -131,11 +131,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: ysizeSlider.value = defaultValue * maxFilterPercent
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: ysizeKeyframesButton
 
             onToggled: {

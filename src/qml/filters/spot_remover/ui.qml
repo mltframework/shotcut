@@ -17,15 +17,15 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     property string rectProperty: 'rect'
     property rect filterRect
-    property string startValue: '_shotcut:startValue'
-    property string middleValue: '_shotcut:middleValue'
-    property string endValue: '_shotcut:endValue'
+    property string startValue: '_snapflow:startValue'
+    property string middleValue: '_snapflow:middleValue'
+    property string endValue: '_snapflow:endValue'
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
@@ -87,7 +87,7 @@ Item {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
             let current = filter.getRect(rectProperty, frame);
@@ -109,14 +109,14 @@ Item {
             case 'absPos':
                 current.x = i.x + i.width / 2 - current.width / 2;
                 current.y = i.y + i.height / 2 - current.height / 2;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             case 'absSizePos':
                 current.x = i.x;
                 current.y = i.y;
                 current.width = i.width;
                 current.height = i.height;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             }
             previous = i;
@@ -162,7 +162,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [rectProperty]
@@ -192,7 +192,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -215,7 +215,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -233,7 +233,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectX.value = rectY.value = 0;
                 filterRect.x = filterRect.y = 0;
@@ -241,7 +241,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: positionKeyframesButton
 
             Layout.rowSpan: 2
@@ -269,7 +269,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 3
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -292,7 +292,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -310,7 +310,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectW.value = profile.width / 10;
                 rectH.value = profile.height / 10;
@@ -324,7 +324,7 @@ Item {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
             onClicked: motionTrackerDialog.show()
@@ -335,7 +335,7 @@ Item {
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
         onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {

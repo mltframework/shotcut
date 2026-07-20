@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -11,7 +11,7 @@ Metadata {
     qml: "ui.qml"
     vui: "vui.qml"
     icon: "icon.webp"
-    help: 'https://forum.shotcut.org/t/360-equirectangular-to-stereographic-video-filter/48131/1'
+    help: 'https://forum.snapflow.org/t/360-equirectangular-to-stereographic-video-filter/48131/1'
 
     keyframes {
         allowAnimateIn: true

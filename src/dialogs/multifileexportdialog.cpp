@@ -20,7 +20,7 @@
 #include "mainwindow.h"
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <MltPlaylist.h>
@@ -160,7 +160,7 @@ QString MultiFileExportDialog::appendField(QString text, QComboBox *combo, int c
     case NAME_FIELD_NAME: {
         QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
-            field = info->producer->get(kShotcutCaptionProperty);
+            field = info->producer->get(kSnapflowCaptionProperty);
             if (field.isEmpty()) {
                 field = ProxyManager::resource(*info->producer);
                 field = QFileInfo(field).completeBaseName();

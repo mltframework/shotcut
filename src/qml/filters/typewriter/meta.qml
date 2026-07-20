@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -27,7 +27,7 @@ Metadata {
     vui: 'vui.qml'
     minimumVersion: '5'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/text-typewriter-video-filter/50224/1'
+    help: 'https://forum.snapflow.org/t/text-typewriter-video-filter/50224/1'
 
     keyframes {
         allowAnimateIn: true

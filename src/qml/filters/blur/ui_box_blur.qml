@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
@@ -71,7 +71,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
@@ -91,7 +91,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: wslider
 
             minimumValue: 0
@@ -102,11 +102,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('hradius', wslider.value, widthKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: wslider.value = 5
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: widthKeyframesButton
 
             onToggled: {
@@ -120,7 +120,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: hslider
 
             minimumValue: 0
@@ -131,11 +131,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('vradius', hslider.value, heightKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: hslider.value = 5
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: heightKeyframesButton
 
             onToggled: {
@@ -156,7 +156,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
 
             visible: alphaCheckBox.visible
             onClicked: {

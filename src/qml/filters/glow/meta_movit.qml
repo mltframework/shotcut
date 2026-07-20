@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     needsGPU: true
     qml: "ui_movit.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/glow-video-filter/12849/1'
+    help: 'https://forum.snapflow.org/t/glow-video-filter/12849/1'
 
     keyframes {
         allowAnimateIn: true

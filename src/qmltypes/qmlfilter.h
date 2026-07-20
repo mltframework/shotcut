@@ -19,7 +19,7 @@
 #define FILTER_H
 
 #include "qmlmetadata.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 
 #include <MltAnimation.h>
 #include <MltProducer.h>

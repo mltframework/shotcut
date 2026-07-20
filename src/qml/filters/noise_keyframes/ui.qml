@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string noise: '0'
     property double noiseDefault: 0.2
 
@@ -66,7 +66,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [noise]
@@ -85,7 +85,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: noiseSlider
 
             minimumValue: 0
@@ -96,11 +96,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: noiseSlider.value = noiseDefault * noiseSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: noiseKeyframesButton
 
             onToggled: {

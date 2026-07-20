@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -153,7 +153,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ["azimuth", "elevation"]
@@ -182,7 +182,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: azimuthSlider
 
             minimumValue: -360
@@ -194,13 +194,13 @@ Item {
             onValueChanged: updateProperty_azimuth(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: azimuthUndo
 
             onClicked: azimuthSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: azimuthKeyframesButton
 
             onToggled: {
@@ -226,7 +226,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: elevationSlider
 
             minimumValue: -360
@@ -238,13 +238,13 @@ Item {
             onValueChanged: updateProperty_elevation(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: elevationUndo
 
             onClicked: elevationSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: elevationKeyframesButton
 
             onToggled: {

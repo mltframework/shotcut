@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string widthProperty: '0'
     property string wetnessProperty: 'wetness'
 
@@ -69,7 +69,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [widthProperty, wetnessProperty]
@@ -88,7 +88,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: widthSlider
 
             minimumValue: 0
@@ -97,11 +97,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(widthProperty, value / 50, widthKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: widthSlider.value = 50
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: widthKeyframesButton
 
             onToggled: {
@@ -115,7 +115,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderWetness
 
             minimumValue: 0
@@ -126,11 +126,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(wetnessProperty, value / maximumValue, wetnessKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: wetnessKeyframesButton
 
             onToggled: {

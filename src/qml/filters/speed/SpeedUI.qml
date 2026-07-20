@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     id: root
@@ -109,7 +109,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['speed_map', 'image_mode', 'pitch']
@@ -130,12 +130,12 @@ Item {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Map the specified speed to the current time. Use keyframes to vary the speed mappings over time.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: speedSpinner
             minimumValue: root.min
             maximumValue: root.max
@@ -148,7 +148,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 speedSpinner.value = 1.0;
             }
@@ -158,12 +158,12 @@ Item {
             text: qsTr('Image mode')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: modeCombo
             Layout.columnSpan: parent.columns - 2
             implicitWidth: 180
@@ -189,7 +189,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: modeCombo.currentIndex = 0
         }
 
@@ -206,7 +206,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: pitchCheckbox.checked = false
         }
 

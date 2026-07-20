@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     id: background
@@ -175,7 +175,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
             }
 
-            Shotcut.Preset {
+            Snapflow.Preset {
                 id: preset
 
                 parameters: ['0', '1', '2']
@@ -204,7 +204,7 @@ Item {
                 value: filter.getDouble('0')
                 onValueChanged: filter.set('0', value)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
             }
@@ -215,7 +215,7 @@ Item {
                 text: qsTr('Bass')
                 Layout.alignment: Qt.AlignHCenter
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '100 Hz'
                 }
             }
@@ -236,7 +236,7 @@ Item {
                 value: filter.getDouble('1')
                 onValueChanged: filter.set('1', value)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
             }
@@ -245,7 +245,7 @@ Item {
                 text: qsTr('Middle', 'Bass & Treble audio filter')
                 Layout.alignment: Qt.AlignHCenter
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '1000 Hz'
                 }
             }
@@ -266,7 +266,7 @@ Item {
                 value: filter.getDouble('2')
                 onValueChanged: filter.set('2', value)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
             }
@@ -275,7 +275,7 @@ Item {
                 text: qsTr('Treble')
                 Layout.alignment: Qt.AlignHCenter
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: '10000 Hz'
                 }
             }

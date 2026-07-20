@@ -17,7 +17,7 @@
 
 #include "blipproducerwidget.h"
 
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "ui_blipproducerwidget.h"
 #include "util.h"
 
@@ -44,8 +44,8 @@ Mlt::Producer *BlipProducerWidget::newProducer(Mlt::Profile &profile)
     Mlt::Producer *p = new Mlt::Producer(profile, "blipflash:");
     p->set("period", ui->periodSpinBox->value());
     p->set("force_seekable", 1);
-    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
-    p->set(kShotcutDetailProperty, detail().toUtf8().constData());
+    p->set(kSnapflowCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kSnapflowDetailProperty, detail().toUtf8().constData());
     return p;
 }
 
@@ -59,7 +59,7 @@ Mlt::Properties BlipProducerWidget::getPreset() const
 void BlipProducerWidget::loadPreset(Mlt::Properties &p)
 {
     ui->periodSpinBox->setValue(p.get_int("period"));
-    p.set(kShotcutDetailProperty, detail().toUtf8().constData());
+    p.set(kSnapflowDetailProperty, detail().toUtf8().constData());
 }
 
 void BlipProducerWidget::on_periodSpinBox_valueChanged(int value)
@@ -67,7 +67,7 @@ void BlipProducerWidget::on_periodSpinBox_valueChanged(int value)
     ui->periodSpinBox->setSuffix(tr(" second(s)", nullptr, value));
     if (m_producer) {
         m_producer->set("period", value);
-        m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
+        m_producer->set(kSnapflowDetailProperty, detail().toUtf8().constData());
         emit producerChanged(producer());
     }
 }

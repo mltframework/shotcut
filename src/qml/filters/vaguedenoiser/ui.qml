@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020-2022 Meltytech, LLC
- * Written by Austin Brooks <ab.shotcut@outlook.com>
+ * Written by Austin Brooks <ab.snapflow@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string methodParam: 'av.method'
@@ -109,7 +109,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: idPreset
 
             Layout.columnSpan: 2
@@ -122,7 +122,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: idMethod
 
             implicitWidth: 180
@@ -130,7 +130,7 @@ Item {
             onActivated: filter.set(methodParam, methodValues[currentIndex])
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 idMethod.currentIndex = getComboIndex(methodDefault, methodValues);
                 filter.set(methodParam, methodValues[idMethod.currentIndex]);
@@ -142,7 +142,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idNsteps
 
             minimumValue: 1
@@ -150,7 +150,7 @@ Item {
             onValueChanged: filter.set(nstepsParam, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idNsteps.value = nstepsDefault
         }
 
@@ -159,7 +159,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idThreshold
 
             minimumValue: 0
@@ -167,7 +167,7 @@ Item {
             onValueChanged: filter.set(thresholdParam, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idThreshold.value = thresholdDefault
         }
 
@@ -176,7 +176,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: idPercent
 
             minimumValue: 0
@@ -185,7 +185,7 @@ Item {
             onValueChanged: filter.set(percentParam, value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: idPercent.value = percentDefault
         }
 

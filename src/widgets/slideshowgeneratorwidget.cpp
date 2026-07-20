@@ -21,7 +21,7 @@
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "widgets/producerpreviewwidget.h"
 
 #include <QComboBox>
@@ -262,7 +262,7 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
             if (producer.isNull()) {
                 break;
             }
-            producer->parent().set(kShotcutTransitionProperty, "lumaMix");
+            producer->parent().set(kSnapflowTransitionProperty, "lumaMix");
 
             // Add mix transition
             Mlt::Transition crossFade(MLT.profile(), "mix:-2");
@@ -401,7 +401,7 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config,
         filter.set("distort", 0);
         filter.set("valign", "middle");
         filter.set("halign", "center");
-        filter.set(kShotcutFilterProperty, "movitSizePosition");
+        filter.set(kSnapflowFilterProperty, "movitSizePosition");
     } else {
         filter.anim_set("transition.rect", beginRect, 0);
         filter.anim_set("transition.rect", endRect, endPosition);
@@ -411,10 +411,10 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config,
         filter.set("transition.halign", "center");
         filter.set("transition.threads", 0);
         filter.set("background", "color:#000000");
-        filter.set(kShotcutFilterProperty, "affineSizePosition");
+        filter.set(kSnapflowFilterProperty, "affineSizePosition");
     }
-    filter.set(kShotcutAnimInProperty, producer->frames_to_time(endPosition + 1, mlt_time_clock));
-    filter.set(kShotcutAnimOutProperty, producer->frames_to_time(0, mlt_time_clock));
+    filter.set(kSnapflowAnimInProperty, producer->frames_to_time(endPosition + 1, mlt_time_clock));
+    filter.set(kSnapflowAnimOutProperty, producer->frames_to_time(0, mlt_time_clock));
     producer->attach(filter);
 }
 
@@ -459,7 +459,7 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig &config, Mlt::Pr
     Mlt::Filter filter(MLT.profile(), "pillar_echo");
     filter.set("rect", rect);
     filter.set("blur", 4);
-    filter.set(kShotcutFilterProperty, "blur_pad");
+    filter.set(kSnapflowFilterProperty, "blur_pad");
     producer->attach(filter);
 }
 

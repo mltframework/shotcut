@@ -17,10 +17,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     function setComboIndex(combo, current) {
         for (let i = 0; i < combo.model.count; ++i) {
             if (combo.model.get(i).value === current) {
@@ -143,7 +143,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: 3
@@ -236,7 +236,7 @@ Shotcut.KeyframableFilter {
                         color: textArea.palette.base
                     }
 
-                    Shotcut.EditMenu {
+                    Snapflow.EditMenu {
                         id: contextMenu
                     }
                 }
@@ -246,12 +246,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Typewriter rate')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Number of frames between each character, word, or line appearance.')
             }
         }
 
-        Shotcut.DoubleSpinBox {
+        Snapflow.DoubleSpinBox {
             id: stepLengthSpinner
             Layout.minimumWidth: 50
             from: 1
@@ -259,7 +259,7 @@ Shotcut.KeyframableFilter {
             onValueModified: filter.set('typewriter.step_length', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.step_length', 8);
                 stepLengthSpinner.value = 8;
@@ -273,12 +273,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Rate variation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Random variation in timing (0 = no variation).')
             }
         }
 
-        Shotcut.DoubleSpinBox {
+        Snapflow.DoubleSpinBox {
             id: stepSigmaSpinner
             Layout.minimumWidth: 50
             from: 0
@@ -286,7 +286,7 @@ Shotcut.KeyframableFilter {
             onValueModified: filter.set('typewriter.step_sigma', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.step_sigma', 2);
                 stepSigmaSpinner.value = 2;
@@ -300,12 +300,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Animation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('How text appears: character by character, word by word, or line by line.')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: macroTypeCombo
             Layout.minimumWidth: 200
             model: ListModel {
@@ -327,7 +327,7 @@ Shotcut.KeyframableFilter {
             onActivated: filter.set('typewriter.macro_type', model.get(currentIndex).value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.macro_type', 1);
                 macroTypeCombo.currentIndex = 0;
@@ -342,12 +342,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Cursor visibility')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('When to show the blinking cursor.')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: cursorCombo
             Layout.minimumWidth: 150
             model: ListModel {
@@ -369,7 +369,7 @@ Shotcut.KeyframableFilter {
             onActivated: filter.set('typewriter.cursor', currentValue)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.cursor', 1);
                 cursorCombo.currentIndex = 1;
@@ -383,12 +383,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Cursor shape')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Character to use for the blinking cursor.')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: cursorCharCombo
             Layout.minimumWidth: 150
             editable: true
@@ -437,7 +437,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.cursor_char', '|');
                 cursorCharCombo.currentIndex = 0;
@@ -451,12 +451,12 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Blink rate')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Number of frames for cursor blink cycle.')
             }
         }
 
-        Shotcut.DoubleSpinBox {
+        Snapflow.DoubleSpinBox {
             id: cursorBlinkRateSpinner
             Layout.minimumWidth: 150
             from: 0
@@ -465,7 +465,7 @@ Shotcut.KeyframableFilter {
             onValueModified: filter.set('typewriter.cursor_blink_rate', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set('typewriter.cursor_blink_rate', 25);
                 cursorBlinkRateSpinner.value = 25;
@@ -476,7 +476,7 @@ Shotcut.KeyframableFilter {
             Layout.fillWidth: true
         }
 
-        Shotcut.TextFilterUi {
+        Snapflow.TextFilterUi {
             id: textFilterUi
             Layout.columnSpan: 4
         }

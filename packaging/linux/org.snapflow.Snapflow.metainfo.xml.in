@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>org.snapflow.Snapflow</id>
+  <launchable type="desktop-id">org.snapflow.Snapflow.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>Snapflow</name>
+  <summary>Video editor</summary>
+  <description>
+    <p>
+      Snapflow is a free and open-source cross-platform video editing application for
+      Windows, macOS, and Linux.
+    </p>
+    <p>
+      Snapflow supports many video, audio, and image formats via FFmpeg and screen,
+      webcam, and audio capture. It uses a time-line for non-linear video editing of
+      multiple tracks that may be composed of various file formats. Scrubbing and
+      transport control are assisted by OpenGL GPU-based processing and a number of
+      video and audio filters are available.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.snapflow.org/assets/img/pro-formats.png</image>
+      <caption>Wide Format Support</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://www.snapflow.org/assets/img/waveforms.png</image>
+      <caption>Audio Features</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://www.snapflow.org/assets/img/snapflow_mac_monitor.png</image>
+      <caption>Video Effects</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://www.snapflow.org/assets/img/editing-group.jpg</image>
+      <caption>Editing Features</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://www.snapflow.org/assets/img/external-monitoring.png</image>
+      <caption>Display and Monitoring</caption>
+    </screenshot>
+  </screenshots>
+  <developer_name>Meltytech, LLC</developer_name>
+  <update_contact>dan_AT_dennedy.org</update_contact>
+  <url type="homepage">https://www.snapflow.org/</url>
+  <url type="bugtracker">https://github.com/mltframework/snapflow/issues/</url>
+  <url type="faq">https://www.snapflow.org/FAQ/</url>
+  <url type="help">https://www.snapflow.org/tutorials/</url>
+  <url type="translate">https://explore.transifex.com/ddennedy/snapflow/</url>
+  <url type="vcs-browser">https://github.com/mltframework/snapflow</url>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="@SNAPFLOW_VERSION@" date="@SNAPFLOW_DATE@"></release>
+  </releases>
+</component>

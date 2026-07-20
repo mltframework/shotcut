@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -147,7 +147,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
@@ -171,7 +171,7 @@ Item {
             visible: application.audioChannels() > 3
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: operationCombo
 
             visible: application.audioChannels() > 3
@@ -208,7 +208,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: application.audioChannels() > 3
             onClicked: operationCombo.currentIndex = 0
         }
@@ -219,7 +219,7 @@ Item {
             text: qsTr('Left')
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider
 
             minimumValue: 0
@@ -230,11 +230,11 @@ Item {
             onValueChanged: updateFilter(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider.value = 500
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: keyframesButton
 
             onToggled: {

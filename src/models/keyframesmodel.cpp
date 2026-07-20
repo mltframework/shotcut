@@ -30,7 +30,7 @@ static const quintptr NO_PARENT_ID = quintptr(-1);
 
 /*!
     \qmltype KeyframesModel
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief A two-level item model describing a filter's keyframeable parameters and their keyframes.
 
     \c KeyframesModel is available as the \c parameters context property in the Keyframes panel.
@@ -728,7 +728,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 // such that changing the parameter value causes the addition of a
                 // keyframe just after this one. MLT.refreshConsumer() with
                 // frame-dropping enabled may have dropped video of the most recent
-                // frame from the producer, but Shotcut does not know about it
+                // frame from the producer, but Snapflow does not know about it
                 // because it did not receive a "consumer-frame-show" event for it.
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);

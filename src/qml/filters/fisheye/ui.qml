@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     //Action
@@ -433,7 +433,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: defaultParameters
@@ -450,7 +450,7 @@ Item {
             text: qsTr('Fisheye')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Add or remove fisheye effect')
             }
         }
@@ -489,7 +489,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 fisheyeRemoveButton.checked = deFishDefault;
                 fisheyeAddButton.checked = !deFishDefault;
@@ -502,12 +502,12 @@ Item {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The amount of lens distortion')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: focalRatioSlider
 
             minimumValue: 0
@@ -522,7 +522,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: focalRatioSlider.value = focalRatioDefault
         }
 
@@ -531,12 +531,12 @@ Item {
             text: qsTr('Quality')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Resample quality')
             }
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: qualityCombo
 
             implicitWidth: 150
@@ -585,7 +585,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(qualityParam, qualityDefault);
                 qualityCombo.currentIndex = setDefaultIndex(qualityDefault, qualityCombo.count) - 1;
@@ -597,13 +597,13 @@ Item {
             text: qsTr('Lens')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Select a lens distortion pattern that best matches your camera')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: lensCombo
 
                 implicitWidth: 150
@@ -653,13 +653,13 @@ Item {
                     setScollbarHeight();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('The image will be stretched/squished to fix camera scaling between 4:3 and 16:9\n' + 'Like used in GoPro\'s superview')
                 }
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(lensTypeParam, lensTypeDefault);
                 lensCombo.currentIndex = setDefaultIndex(lensTypeDefault, lensCombo.count) - 1;
@@ -673,12 +673,12 @@ Item {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Use negative values for up-scaled videos\n' + 'Use positive values for down-scaled videos')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stretchSlider
 
             visible: stretchShowSlider
@@ -694,7 +694,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: stretchShowSlider
             onClicked: stretchSlider.value = stretchDefault - 0.5
         }
@@ -720,13 +720,13 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Preset scale methods\n' + 'Lock pixels at specific locations')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: scaleCombo
 
                 implicitWidth: 150
@@ -778,7 +778,7 @@ Item {
                     setScollbarHeight();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Scale Y separately\nThis changes video aspect ratio')
                 }
             }
@@ -797,13 +797,13 @@ Item {
                     filter.set(cropParam, checked);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Remove distorted edges')
                 }
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(scaePresetParam, scalePresetDefault);
                 scaleCombo.currentIndex = setDefaultIndex(scalePresetDefault, scaleCombo.count) - 1;
@@ -821,12 +821,12 @@ Item {
             Layout.alignment: Qt.AlignRight
             visible: scaleShowSlider
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('User set zoom/scale\nSides of image are not fixed')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: scaleManualSlider
 
             visible: scaleShowSlider
@@ -842,7 +842,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: scaleShowSlider
             onClicked: scaleManualSlider.value = 0
         }
@@ -853,12 +853,12 @@ Item {
             Layout.alignment: Qt.AlignRight
             visible: scaleYShowSlider
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Separate Y scale')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: scaleYSlider
 
             visible: scaleYShowSlider
@@ -874,7 +874,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: scaleYShowSlider
             onClicked: scaleYSlider.value = 0
         }
@@ -900,13 +900,13 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Preset pixel aspect ratio')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: aspectCombo
 
                 implicitWidth: 150
@@ -948,7 +948,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 filter.set(aspectPresetParam, aspectPresetDefault);
                 aspectCombo.currentIndex = setDefaultIndex(aspectPresetDefault, aspectCombo.count) - 1;
@@ -963,12 +963,12 @@ Item {
             Layout.alignment: Qt.AlignRight
             visible: aspectShowSlider
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('User set pixel aspect ratios\n' + 'Change top/side distortion bias')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: aspectManualSlider
 
             minimumValue: -0.5
@@ -984,7 +984,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             visible: aspectShowSlider
             onClicked: aspectManualSlider.value = 0
         }
@@ -1013,7 +1013,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: cameraCombo
 
             visible: cameraShowNew
@@ -1034,7 +1034,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: camModeCombo
 
             visible: cameraShowNew
@@ -1058,7 +1058,7 @@ Item {
             visible: cameraShowNew
             Layout.columnSpan: 2
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: resultCombo
 
                 implicitWidth: 150
@@ -1068,7 +1068,7 @@ Item {
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 Layout.alignment: Qt.AlignRight
                 text: qsTr('Apply')
                 implicitWidth: 80

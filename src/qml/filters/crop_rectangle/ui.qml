@@ -17,13 +17,13 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
-    property string startValueRect: '_shotcut:startValue'
-    property string middleValueRect: '_shotcut:middleValue'
-    property string endValueRect: '_shotcut:endValue'
+Snapflow.KeyframableFilter {
+    property string startValueRect: '_snapflow:startValue'
+    property string middleValueRect: '_snapflow:middleValue'
+    property string endValueRect: '_snapflow:endValue'
     property string rectProperty: 'rect'
     property rect filterRect
 
@@ -103,7 +103,7 @@ Shotcut.KeyframableFilter {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
             let current = filter.getRect(rectProperty, frame);
@@ -125,14 +125,14 @@ Shotcut.KeyframableFilter {
             case 'absPos':
                 current.x = i.x + i.width / 2 - current.width / 2;
                 current.y = i.y + i.height / 2 - current.height / 2;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             case 'absSizePos':
                 current.x = i.x;
                 current.y = i.y;
                 current.width = i.width;
                 current.height = i.height;
-                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                interpolation = Snapflow.KeyframesModel.LinearInterpolation;
                 break;
             }
             previous = i;
@@ -186,7 +186,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [rectProperty, 'radius', 'color']
@@ -218,7 +218,7 @@ Shotcut.KeyframableFilter {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 Layout.minimumWidth: 100
@@ -241,7 +241,7 @@ Shotcut.KeyframableFilter {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 Layout.minimumWidth: 100
@@ -259,7 +259,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectX.value = rectY.value = 0;
                 filterRect.x = filterRect.y = 0;
@@ -267,7 +267,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: positionKeyframesButton
 
             Layout.rowSpan: 2
@@ -293,7 +293,7 @@ Shotcut.KeyframableFilter {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 Layout.minimumWidth: 100
@@ -316,7 +316,7 @@ Shotcut.KeyframableFilter {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 Layout.minimumWidth: 100
@@ -334,7 +334,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 rectW.value = profile.width;
                 rectH.value = profile.height;
@@ -348,7 +348,7 @@ Shotcut.KeyframableFilter {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: qsTr('Apply to Source')
             function producerAspectRatio() {
@@ -381,7 +381,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider
 
             minimumValue: 0
@@ -391,11 +391,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('radius', value / 100, radiusKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: slider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: radiusKeyframesButton
 
             onToggled: {
@@ -410,7 +410,7 @@ Shotcut.KeyframableFilter {
         }
 
         RowLayout {
-            Shotcut.ColorPicker {
+            Snapflow.ColorPicker {
                 id: colorSwatch
 
                 property bool isReady: false
@@ -427,17 +427,17 @@ Shotcut.KeyframableFilter {
                 onPickCancelled: filter.set('disable', 0)
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 text: qsTr('Transparent')
                 onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 0)
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 1)
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: colorKeyframesButton
             onToggled: toggleKeyframes(checked, 'color', Qt.color(colorSwatch.value))
         }
@@ -446,7 +446,7 @@ Shotcut.KeyframableFilter {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
             onClicked: motionTrackerDialog.show()
@@ -457,7 +457,7 @@ Shotcut.KeyframableFilter {
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
         onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {

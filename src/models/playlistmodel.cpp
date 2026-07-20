@@ -22,7 +22,7 @@
 #include "mainwindow.h"
 #include "proxymanager.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QApplication>
@@ -106,7 +106,7 @@ public:
         // without much loss of accuracy.
         time = time.left(time.size() - 1);
         QString key;
-        QString resource = m_producer.get(kShotcutHashProperty);
+        QString resource = m_producer.get(kSnapflowHashProperty);
         if (resource.isEmpty()) {
             key = QStringLiteral("%1 %2 %3")
                       .arg(m_producer.get("mlt_service"))
@@ -254,7 +254,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (role == Qt::DisplayRole) {
                 // Prefer caption for display
                 if (info->producer && info->producer->is_valid()) {
-                    result = info->producer->get(kShotcutCaptionProperty);
+                    result = info->producer->get(kSnapflowCaptionProperty);
                     if (result.isEmpty()) {
                         result = Util::baseName(ProxyManager::resource(*info->producer));
                         if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
@@ -272,7 +272,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             } else {
                 // Prefer detail or full path for tooltip
                 if (info->producer && info->producer->is_valid()) {
-                    result = info->producer->get(kShotcutDetailProperty);
+                    result = info->producer->get(kSnapflowDetailProperty);
                     if (result.isEmpty()) {
                         result = ProxyManager::resource(*info->producer);
                         if (!result.isEmpty() && QFileInfo(result).isRelative()) {
@@ -282,14 +282,14 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                         result = QDir::toNativeSeparators(result);
                     }
                     if ((result.isEmpty() || Util::baseName(result) == "<producer>")) {
-                        result = info->producer->get(kShotcutCaptionProperty);
+                        result = info->producer->get(kSnapflowCaptionProperty);
                     }
                     if (result.isEmpty()) {
                         result = QString::fromUtf8(info->producer->get("mlt_service"));
                     }
                 }
             }
-            if (!info->producer->get(kShotcutHashProperty)) {
+            if (!info->producer->get(kSnapflowHashProperty)) {
                 Util::getHash(*info->producer);
             }
             return result;
@@ -424,7 +424,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             break;
         case FIELD_BIN:
             if (info->producer && info->producer->is_valid())
-                return QString::fromUtf8(info->producer->get(kShotcutBinsProperty));
+                return QString::fromUtf8(info->producer->get(kSnapflowBinsProperty));
             break;
         }
     }
@@ -450,7 +450,7 @@ void PlaylistModel::setBin(int row, const QString &name)
 {
     auto producer = m_playlist->get_clip(row);
     if (producer && producer->is_valid()) {
-        producer->parent().set(kShotcutBinsProperty, name.toUtf8().constData());
+        producer->parent().set(kSnapflowBinsProperty, name.toUtf8().constData());
         emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN),
                          createIndex(row, PlaylistModel::COLUMN_BIN));
         emit modified();
@@ -471,11 +471,11 @@ void PlaylistModel::renameBin(const QString &bin, const QString &newName)
     for (int row = 0; row < n; ++row) {
         auto clip = m_playlist->get_clip(row);
         if (clip && clip->is_valid()) {
-            if (bin == clip->parent().get(kShotcutBinsProperty)) {
+            if (bin == clip->parent().get(kSnapflowBinsProperty)) {
                 if (newName.isEmpty())
-                    clip->parent().Mlt::Properties::clear(kShotcutBinsProperty);
+                    clip->parent().Mlt::Properties::clear(kSnapflowBinsProperty);
                 else
-                    clip->parent().set(kShotcutBinsProperty, newName.toUtf8().constData());
+                    clip->parent().set(kSnapflowBinsProperty, newName.toUtf8().constData());
                 emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN),
                                  createIndex(row, PlaylistModel::COLUMN_BIN));
                 modified = true;
@@ -735,8 +735,8 @@ void PlaylistModel::load()
     }
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
-    if (m_playlist->property_exists(kShotcutColorTransfer))
-        MLT.setColorTrc(QString::fromLatin1(m_playlist->get(kShotcutColorTransfer)));
+    if (m_playlist->property_exists(kSnapflowColorTransfer))
+        MLT.setColorTrc(QString::fromLatin1(m_playlist->get(kSnapflowColorTransfer)));
     if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
         refreshThumbnails();
     emit loaded();
@@ -873,7 +873,7 @@ void PlaylistModel::createIfNeeded()
         m_playlist = new Mlt::Playlist(MLT.profile());
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
-        m_playlist->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
+        m_playlist->set(kSnapflowColorTransfer, MLT.colorTrc().toLatin1().constData());
         emit created();
     }
 }
@@ -927,7 +927,7 @@ void PlaylistModel::setPlaylist(Mlt::Playlist &playlist)
         }
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
-        m_playlist->set(kShotcutColorTransfer, MLT.colorTrc().toLatin1().constData());
+        m_playlist->set(kSnapflowColorTransfer, MLT.colorTrc().toLatin1().constData());
         if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
             refreshThumbnails();
         emit loaded();

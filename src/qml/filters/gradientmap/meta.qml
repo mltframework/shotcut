@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,5 +10,5 @@ Metadata {
     qml: 'ui.qml'
     icon: 'icon.webp'
     allowMultiple: true
-    help: 'https://forum.shotcut.org/t/gradient-map-video-filter/47075'
+    help: 'https://forum.snapflow.org/t/gradient-map-video-filter/47075'
 }

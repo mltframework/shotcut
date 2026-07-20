@@ -23,7 +23,7 @@
 #include "models/elementsmodel.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "widgets/playlisticonview.h"
 
 #include <MltConsumer.h>
@@ -83,7 +83,7 @@ ElementsDock::ElementsDock(QWidget *parent)
     setObjectName("ElementsDock");
     QIcon icon = QIcon::fromTheme("fire", QIcon(":/icons/oxygen/32x32/fire.png"));
     toggleViewAction()->setIcon(icon);
-    setWhatsThis("https://shotcut.org");
+    setWhatsThis("https://snapflow.org");
 
     auto *mainWidget = new QWidget(this);
     auto *layout = new QVBoxLayout(mainWidget);
@@ -106,7 +106,7 @@ ElementsDock::ElementsDock(QWidget *parent)
 
     // Locate installed resource directories
     auto dir = QmlApplication::dataDir();
-    dir.cd("shotcut");
+    dir.cd("snapflow");
     dir.cd("elements");
 
     // Set up one page per category
@@ -539,7 +539,7 @@ Mlt::Producer *ElementsDock::copyAndCreateProducer(const QString &sourcePath,
         Mlt::Filter volumeFilter(MLT.profile(), "volume");
         if (volumeFilter.is_valid()) {
             volumeFilter.set("level", 0.0);
-            volumeFilter.set(kShotcutFilterProperty, "audioGain");
+            volumeFilter.set(kSnapflowFilterProperty, "audioGain");
             producer->attach(volumeFilter);
         }
     }
@@ -630,7 +630,7 @@ void ElementsDock::attachSizeFilter(Mlt::Producer *producer, QSize fixedSize)
         f.set("transition.threads", 0);
         f.set("background", "color:#00000000");
     }
-    f.set(kShotcutFilterProperty, filterName);
+    f.set(kSnapflowFilterProperty, filterName);
     producer->attach(f);
 }
 

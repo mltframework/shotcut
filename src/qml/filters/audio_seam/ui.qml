@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     function setControls() {
@@ -76,7 +76,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ['discontinuity_threshold']
@@ -88,12 +88,12 @@ Item {
             text: qsTr('Discontinuity threshold')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The threshold to apply a seam to splices')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             minimumValue: 0
@@ -105,7 +105,7 @@ Item {
             onValueChanged: filter.set('discontinuity_threshold', value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = -2
         }
 
@@ -128,7 +128,7 @@ Item {
             text: qsTr('Seam applied')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Status indicator showing when a splice has been seamed.')
             }
         }

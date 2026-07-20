@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
@@ -148,10 +148,10 @@ Item {
             filter.set("gain_r", 1);
             filter.set("gain_g", 1);
             filter.set("gain_b", 1);
-            filter.set("shotcut:filter_version", 1);
+            filter.set("snapflow:filter_version", 1);
             filter.savePreset(defaultParameters);
         }
-        _filterVersion = filter.getDouble("shotcut:filter_version");
+        _filterVersion = filter.getDouble("snapflow:filter_version");
         loadValues();
         // The color wheel widgets' colorChanged signals are queued between
         // threads and trigger after loadValues() has set blockUpdate false.
@@ -178,7 +178,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             Layout.columnSpan: 8
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -203,7 +203,7 @@ Item {
             text: qsTr('Shadows (Lift)')
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -214,7 +214,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: liftKeyframesButton
 
             Layout.alignment: Qt.AlignLeft
@@ -241,7 +241,7 @@ Item {
             text: qsTr('Midtones (Gamma)')
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -252,7 +252,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: gammaKeyframesButton
 
             Layout.alignment: Qt.AlignLeft
@@ -279,7 +279,7 @@ Item {
             text: qsTr('Highlights (Gain)')
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -290,7 +290,7 @@ Item {
             }
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: gainKeyframesButton
 
             Layout.alignment: Qt.AlignLeft
@@ -313,7 +313,7 @@ Item {
         }
 
         // Row 3
-        Shotcut.ColorWheelItem {
+        Snapflow.ColorWheelItem {
             id: liftwheel
 
             Layout.columnSpan: 3
@@ -350,7 +350,7 @@ Item {
             }
         }
 
-        Shotcut.ColorWheelItem {
+        Snapflow.ColorWheelItem {
             id: gammawheel
 
             Layout.columnSpan: 3
@@ -387,7 +387,7 @@ Item {
             }
         }
 
-        Shotcut.ColorWheelItem {
+        Snapflow.ColorWheelItem {
             id: gainwheel
 
             Layout.columnSpan: 3
@@ -433,7 +433,7 @@ Item {
                 text: 'R'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: liftRedSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -458,7 +458,7 @@ Item {
                 text: 'R'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gammaRedSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -483,7 +483,7 @@ Item {
                 text: 'R'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gainRedSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -509,7 +509,7 @@ Item {
                 text: 'G'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: liftGreenSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -534,7 +534,7 @@ Item {
                 text: 'G'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gammaGreenSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -559,7 +559,7 @@ Item {
                 text: 'G'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gainGreenSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -585,7 +585,7 @@ Item {
                 text: 'B'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: liftBlueSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -610,7 +610,7 @@ Item {
                 text: 'B'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gammaBlueSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -635,7 +635,7 @@ Item {
                 text: 'B'
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: gainBlueSpinner
 
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter

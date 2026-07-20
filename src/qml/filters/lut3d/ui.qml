@@ -19,8 +19,8 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     id: lut3dRoot
@@ -52,11 +52,11 @@ Item {
         colorGroup: SystemPalette.Active
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: lutFile
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: fileDialog
 
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
@@ -75,7 +75,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: openButton
 
             text: qsTr('Open...')
@@ -92,7 +92,7 @@ Item {
             Layout.columnSpan: 2
             Layout.fillWidth: true
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 id: fileLabelTip
             }
         }
@@ -102,7 +102,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: interpolationCombo
 
             property var values: ['nearest', 'trilinear', 'tetrahedral']
@@ -123,7 +123,7 @@ Item {
             onActivated: filter.set('av.interp', values[currentIndex])
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: {
                 interpolationCombo.currentIndex = 1;
                 filter.set('av.interp', interpolationCombo.values[1]);

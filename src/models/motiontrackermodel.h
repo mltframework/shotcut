@@ -66,11 +66,11 @@ public:
                                  const QString &propertyName = QString());
     static QString trackerNameProperty()
     {
-        return QString::fromLatin1("shotcut:motionTracker.name");
+        return QString::fromLatin1("snapflow:motionTracker.name");
     }
     static QString trackerOperationProperty()
     {
-        return QString::fromLatin1("shotcut:motionTracker.operation");
+        return QString::fromLatin1("snapflow:motionTracker.operation");
     }
 
 public slots:

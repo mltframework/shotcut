@@ -17,7 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property string rectProperty: "rect"
@@ -104,7 +104,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: defaultParameters
@@ -121,7 +121,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: typeCombo
 
             property var values: ['line', 'bar', 'segment']
@@ -150,7 +150,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.GradientControl {
+        Snapflow.GradientControl {
             id: fgGradient
 
             Layout.columnSpan: 4
@@ -166,7 +166,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ColorPicker {
+        Snapflow.ColorPicker {
             id: bgColor
 
             Layout.columnSpan: 4
@@ -180,7 +180,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thicknessSlider
 
             Layout.columnSpan: 3
@@ -191,7 +191,7 @@ Item {
             onValueChanged: filter.set("thickness", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
 
@@ -203,7 +203,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 value: filterRect.x
@@ -225,7 +225,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 value: filterRect.y
@@ -250,7 +250,7 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 value: filterRect.width
@@ -272,7 +272,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 value: filterRect.height
@@ -330,7 +330,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: tensionSlider
 
             Layout.columnSpan: 3
@@ -340,7 +340,7 @@ Item {
             onValueChanged: filter.set("tension", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: tensionSlider.value = 0.4
         }
 
@@ -349,7 +349,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: segmentsSlider
 
             Layout.columnSpan: 3
@@ -358,12 +358,12 @@ Item {
             decimals: 0
             onValueChanged: filter.set("segments", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'The number of segments in the segment graph'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
 
@@ -372,7 +372,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: segmentGapSlider
 
             Layout.columnSpan: 3
@@ -381,12 +381,12 @@ Item {
             decimals: 0
             onValueChanged: filter.set("segment_gap", value)
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: 'Space between segments in the segment graph (in pixels)'
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
 
@@ -395,7 +395,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: bandsSlider
 
             Layout.columnSpan: 3
@@ -405,7 +405,7 @@ Item {
             onValueChanged: filter.set("bands", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: bandsSlider.value = 31
         }
 
@@ -413,12 +413,12 @@ Item {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The low end of the frequency range of the spectrum.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: freqLowSlider
 
             Layout.columnSpan: 3
@@ -433,7 +433,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
@@ -441,12 +441,12 @@ Item {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('The high end of the frequency range of the spectrum.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: freqHighSlider
 
             Layout.columnSpan: 3
@@ -461,7 +461,7 @@ Item {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
@@ -470,7 +470,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: thresholdSlider
 
             Layout.columnSpan: 3
@@ -481,7 +481,7 @@ Item {
             onValueChanged: filter.set("threshold", value)
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
 

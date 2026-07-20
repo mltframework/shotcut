@@ -17,10 +17,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string corner1xProperty: '0'
     property string corner1yProperty: '1'
     property string corner2xProperty: '2'
@@ -49,11 +49,11 @@ Shotcut.KeyframableFilter {
     property double interpolatorDefault: 2 / 6
     property double featheralphaDefault: 0.01
     property double alphaoperationDefault: 0
-    property var cornerProperties: ['shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+    property var cornerProperties: ['snapflow:corner1', 'snapflow:corner2', 'snapflow:corner3', 'snapflow:corner4']
     property var corners: [Qt.rect(corner1xDefault, corner1yDefault, 0, 0), Qt.rect(corner2xDefault, corner2yDefault, 0, 0), Qt.rect(corner3xDefault, corner3yDefault, 0, 0), Qt.rect(corner4xDefault, corner4yDefault, 0, 0)]
-    property var cornerStartValues: ['_shotcut:corner1StartValue', '_shotcut:corner2StartValue', '_shotcut:corner3StartValue', '_shotcut:corner4StartValue']
-    property var cornerMiddleValues: ['_shotcut:corner1MiddleValue', '_shotcut:corner2MiddleValue', '_shotcut:corner3MiddleValue', '_shotcut:corner4MiddleValue']
-    property var cornerEndValues: ['_shotcut:corner1EndValue', '_shotcut:corner2EndValue', '_shotcut:corner3EndValue', '_shotcut:corner4EndValue']
+    property var cornerStartValues: ['_snapflow:corner1StartValue', '_snapflow:corner2StartValue', '_snapflow:corner3StartValue', '_snapflow:corner4StartValue']
+    property var cornerMiddleValues: ['_snapflow:corner1MiddleValue', '_snapflow:corner2MiddleValue', '_snapflow:corner3MiddleValue', '_snapflow:corner4MiddleValue']
+    property var cornerEndValues: ['_snapflow:corner1EndValue', '_snapflow:corner2EndValue', '_snapflow:corner3EndValue', '_snapflow:corner4EndValue']
 
     function sliderValue(slider) {
         return (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
@@ -175,21 +175,21 @@ Shotcut.KeyframableFilter {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
+        let interpolation = Snapflow.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
 
         // reset
         if (data.length > 0) {
             let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
-            // Use a shotcut property to backup current values
-            if (filter.get('shotcut:backup.' + params[0]).length === 0) {
+            // Use a snapflow property to backup current values
+            if (filter.get('snapflow:backup.' + params[0]).length === 0) {
                 params.forEach(param => {
-                    filter.set('shotcut:backup.' + param, filter.getDouble(param));
+                    filter.set('snapflow:backup.' + param, filter.getDouble(param));
                 });
             } else {
                 params.forEach(param => {
                     filter.resetProperty(param);
-                    filter.set(param, filter.get('shotcut:backup.' + param));
+                    filter.set(param, filter.get('snapflow:backup.' + param));
                 });
             }
         }
@@ -305,7 +305,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchxProperty, stretchyProperty, interpolatorProperty, transparentProperty, featherProperty, alphaOpProperty, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[3]]
@@ -337,7 +337,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner1xSlider
 
             minimumValue: -100
@@ -354,7 +354,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner1xSlider, corner1xDefault)
         }
 
@@ -373,7 +373,7 @@ Shotcut.KeyframableFilter {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
-            Shotcut.KeyframesButton {
+            Snapflow.KeyframesButton {
                 id: corner1KeyframesButton
 
                 onToggled: {
@@ -406,7 +406,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner1ySlider
 
             minimumValue: -100
@@ -423,7 +423,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner1ySlider, corner1yDefault)
         }
 
@@ -432,7 +432,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner2xSlider
 
             minimumValue: -100
@@ -449,7 +449,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner2xSlider, corner2xDefault)
         }
 
@@ -458,7 +458,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner2ySlider
 
             minimumValue: -100
@@ -475,7 +475,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner2ySlider, corner2yDefault)
         }
 
@@ -484,7 +484,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner3xSlider
 
             minimumValue: -100
@@ -501,7 +501,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner3xSlider, corner3xDefault)
         }
 
@@ -510,7 +510,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner3ySlider
 
             minimumValue: -100
@@ -527,7 +527,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner3ySlider, corner3yDefault)
         }
 
@@ -536,7 +536,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner4xSlider
 
             minimumValue: -100
@@ -553,7 +553,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner4xSlider, corner4xDefault)
         }
 
@@ -562,7 +562,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: corner4ySlider
 
             minimumValue: -100
@@ -579,7 +579,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: setSliderValue(corner4ySlider, corner4yDefault)
         }
 
@@ -588,7 +588,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stretchxSlider
 
             minimumValue: 0
@@ -599,11 +599,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(stretchxProperty, 1 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: stretchxSlider.value = stretchxDefault * stretchxSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: stretchxKeyframesButton
 
             onToggled: {
@@ -617,7 +617,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: stretchySlider
 
             minimumValue: 0
@@ -628,11 +628,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(stretchyProperty, 1 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: stretchySlider.value = stretchyDefault * stretchySlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: stretchyKeyframesButton
 
             onToggled: {
@@ -646,7 +646,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: interpolatorCombo
 
             implicitWidth: 180
@@ -658,7 +658,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: filter.set(interpolatorProperty, interpolatorDefault)
             Layout.columnSpan: 2
         }
@@ -668,7 +668,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: alphaoperationCombo
 
             implicitWidth: 180
@@ -681,7 +681,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             Layout.columnSpan: 2
             onClicked: {
                 alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1' ? Math.round(alphaoperationDefault * 4) + 1 : 0;
@@ -695,7 +695,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: featheralphaSlider
 
             enabled: alphaoperationCombo.currentIndex > 0
@@ -707,11 +707,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: featheralphaSlider.value = featheralphaDefault * featheralphaSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: featheralphaKeyframesButton
 
             onToggled: {
@@ -724,7 +724,7 @@ Shotcut.KeyframableFilter {
             width: 1
         }
 
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
             onClicked: motionTrackerDialog.show()
@@ -735,7 +735,7 @@ Shotcut.KeyframableFilter {
         }
     }
 
-    Shotcut.MotionTrackerDialog {
+    Snapflow.MotionTrackerDialog {
         id: motionTrackerDialog
         operationVisible: false
         onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, startFrame)
@@ -745,8 +745,8 @@ Shotcut.KeyframableFilter {
             let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
             params.forEach(param => {
                 filter.resetProperty(param);
-                filter.set(param, filter.getDouble('shotcut:backup.' + param));
-                filter.resetProperty('shotcut:backup.' + param);
+                filter.set(param, filter.getDouble('snapflow:backup.' + param));
+                filter.resetProperty('snapflow:backup.' + param);
             });
             filter.blockSignals = false;
             filter.changed();

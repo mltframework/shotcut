@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -9,7 +9,7 @@ Metadata {
     qml: 'ui.qml'
     icon: 'icon.webp'
     isGpuCompatible: false
-    help: 'https://forum.shotcut.org/t/choppy-video-filter/14174/1'
+    help: 'https://forum.snapflow.org/t/choppy-video-filter/14174/1'
 
     keyframes {
         allowAnimateIn: true

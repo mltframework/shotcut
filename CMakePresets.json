@@ -65,13 +65,13 @@
             },
             "environment": {
                 "HOME": "C:/msys64/home/$penv{USERNAME}",
-                "PKG_CONFIG_PATH": "$env{HOME}/build/Shotcut/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;C:/msys64/clangarm64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
+                "PKG_CONFIG_PATH": "$env{HOME}/build/Snapflow/lib/pkgconfig;C:/msys64/mingw64/lib/pkgconfig;C:/msys64/clangarm64/lib/pkgconfig;$penv{PKG_CONFIG_PATH}",
                 "Path": "C:/msys64/usr/local/bin;C:/msys64/mingw64/bin;C:/msys64/clangarm64/bin;C:/msys64/usr/bin;$penv{Path}"
             },
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_PREFIX_PATH": "C:/msys64/mingw64;C:/msys64/clangarm64",
-                "CMAKE_INSTALL_PREFIX": "$env{HOME}/build/Shotcut"
+                "CMAKE_INSTALL_PREFIX": "$env{HOME}/build/Snapflow"
             }
         }
     ],

@@ -1,9 +1,9 @@
 ---
 agent: agent
-description: Scaffold all QML files for a new MLT filter UI in Shotcut.
+description: Scaffold all QML files for a new MLT filter UI in Snapflow.
 ---
 
-Add a new MLT filter UI to Shotcut for the filter named **${input:filterName}** (display name) with MLT service identifier **${input:mltService}**.
+Add a new MLT filter UI to Snapflow for the filter named **${input:filterName}** (display name) with MLT service identifier **${input:mltService}**.
 
 ## What to create
 
@@ -14,7 +14,7 @@ Create the directory `src/qml/filters/${input:mltService}/` and populate it with
 **`meta.qml`** — filter metadata, discovered automatically at runtime:
 ```qml
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -47,15 +47,15 @@ Metadata {
 
 **`ui.qml`** — filter parameter controls:
 
-Use `Shotcut.KeyframableFilter` as the root whenever any parameter is keyframable. It provides `blockUpdate`, `getPosition()`, `isSimpleKeyframesActive()`, `updateFilter(parameter, value, button, position)`, `toggleKeyframes(checked, parameter, value)`, and manages `startValues`/`middleValues`/`endValues` automatically. List every keyframable parameter in `keyframableParameters` in the same order as `startValues`/`middleValues`/`endValues`.
+Use `Snapflow.KeyframableFilter` as the root whenever any parameter is keyframable. It provides `blockUpdate`, `getPosition()`, `isSimpleKeyframesActive()`, `updateFilter(parameter, value, button, position)`, `toggleKeyframes(checked, parameter, value)`, and manages `startValues`/`middleValues`/`endValues` automatically. List every keyframable parameter in `keyframableParameters` in the same order as `startValues`/`middleValues`/`endValues`.
 
 ```qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string levelParam: 'level'
     property double levelDefault: 1.0
 
@@ -101,7 +101,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 100
@@ -109,8 +109,8 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(levelParam, value / maximumValue, levelKeyframesButton, getPosition())
         }
-        Shotcut.UndoButton { onClicked: slider.value = levelDefault * slider.maximumValue }
-        Shotcut.KeyframesButton {
+        Snapflow.UndoButton { onClicked: slider.value = levelDefault * slider.maximumValue }
+        Snapflow.KeyframesButton {
             id: levelKeyframesButton
             onToggled: {
                 enableControls(true);
@@ -119,7 +119,7 @@ Shotcut.KeyframableFilter {
         }
 
         Item { Layout.fillHeight: true }
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
             parameters: [levelParam]
             onPresetSelected: setControls()
@@ -151,14 +151,14 @@ Only add a VUI if the filter needs interactive handles drawn on the canvas (e.g.
 
 For a rectangle-based VUI, delegate to the shared component:
 ```qml
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.TextFilterVui {
+Snapflow.TextFilterVui {
     rectProperty: 'rect'
 }
 ```
 
-For a custom VUI with interactive handles, use `Shotcut.VuiBase` as the root and place a `Shotcut.RectangleControl` (or custom handles) inside a `Flickable`. See `src/qml/filters/mask_shape/vui.qml` or `src/qml/filters/corners/vui.qml` for reference.
+For a custom VUI with interactive handles, use `Snapflow.VuiBase` as the root and place a `Snapflow.RectangleControl` (or custom handles) inside a `Flickable`. See `src/qml/filters/mask_shape/vui.qml` or `src/qml/filters/corners/vui.qml` for reference.
 
 Also declare the rectangle parameter in `meta.qml`:
 ```qml
@@ -171,7 +171,7 @@ Parameter {
 
 ## After creating the files
 
-Run the install step so Shotcut can find the new folder at runtime:
+Run the install step so Snapflow can find the new folder at runtime:
 ```bash
 cmake --install build/cc-debug
 ```

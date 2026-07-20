@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
 Item {
     property bool blockUpdate: true
@@ -295,7 +295,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: ["yaw", "pitch", "roll", "fov", "interpolation", "fisheye"]
@@ -344,7 +344,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ComboBox {
+        Snapflow.ComboBox {
             id: interpolationComboBox
 
             currentIndex: 0
@@ -352,7 +352,7 @@ Item {
             onCurrentIndexChanged: updateProperty_interpolation()
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: interpolationUndo
 
             onClicked: interpolationComboBox.currentIndex = 0
@@ -367,7 +367,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: yawSlider
 
             minimumValue: -360
@@ -379,13 +379,13 @@ Item {
             onValueChanged: updateProperty_yaw(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: yawUndo
 
             onClicked: yawSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: yawKeyframesButton
 
             onToggled: {
@@ -411,7 +411,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: pitchSlider
 
             minimumValue: -180
@@ -423,13 +423,13 @@ Item {
             onValueChanged: updateProperty_pitch(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: pitchUndo
 
             onClicked: pitchSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: pitchKeyframesButton
 
             onToggled: {
@@ -455,7 +455,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: rollSlider
 
             minimumValue: -180
@@ -467,13 +467,13 @@ Item {
             onValueChanged: updateProperty_roll(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: rollUndo
 
             onClicked: rollSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: rollKeyframesButton
 
             onToggled: {
@@ -497,12 +497,12 @@ Item {
         Label {
             text: qsTr('FOV', 'field of view')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Field of view')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: fovSlider
 
             minimumValue: 0
@@ -514,13 +514,13 @@ Item {
             onValueChanged: updateProperty_fov(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: fovUndo
 
             onClicked: fovSlider.value = 90
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: fovKeyframesButton
 
             onToggled: {
@@ -546,7 +546,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: fisheyeSlider
 
             minimumValue: 0
@@ -557,13 +557,13 @@ Item {
             onValueChanged: updateProperty_fisheye(getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             id: fisheyeUndo
 
             onClicked: fisheyeSlider.value = 0
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: fisheyeKeyframesButton
 
             onToggled: {
@@ -585,7 +585,7 @@ Item {
         }
 
         Label {}
-        Shotcut.Button {
+        Snapflow.Button {
             Layout.columnSpan: 3
             text: qsTr('Copy Parameters')
             onClicked: filter.copyParameters()

@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string center: '0'
     property string linearwidth: '1'
     property string linearscalefactor: '2'
@@ -84,7 +84,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [center, linearwidth, linearscalefactor, nonlinearscalefactor]
@@ -102,12 +102,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Center')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Horizontal center position of the linear area.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: centerSlider
 
             minimumValue: 0
@@ -118,11 +118,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: centerSlider.value = centerDefault * centerSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: centerKeyframesButton
 
             onToggled: {
@@ -135,12 +135,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Linear width')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Width of the linear area.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: linearwidthSlider
 
             minimumValue: 0
@@ -151,11 +151,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: linearwidthSlider.value = linearwidthDefault * linearwidthSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: linwKeyframesButton
 
             onToggled: {
@@ -168,12 +168,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Linear scale factor')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Amount the linear area is scaled.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: linearscalefactorSlider
 
             minimumValue: 0
@@ -184,11 +184,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: linearscalefactorSlider.value = linearscalefactorDefault * linearscalefactorSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: lsfKeyframesButton
 
             onToggled: {
@@ -201,12 +201,12 @@ Shotcut.KeyframableFilter {
             text: qsTr('Non-Linear scale factor')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Amount the outer left and outer right areas are scaled non linearly.')
             }
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: nonlinearscalefactorSlider
 
             minimumValue: 0
@@ -217,11 +217,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue, nlsfKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: nonlinearscalefactorSlider.value = nonlinearscalefactorDefault * nonlinearscalefactorSlider.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: nlsfKeyframesButton
 
             onToggled: {

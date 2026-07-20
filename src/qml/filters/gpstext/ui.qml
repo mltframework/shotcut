@@ -20,10 +20,10 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     id: gpsTextRoot
 
     property int js_tz_offset: 0
@@ -155,11 +155,11 @@ Shotcut.KeyframableFilter {
         setControls();
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: gpsFile
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: fileDialog
 
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
@@ -212,7 +212,7 @@ Shotcut.KeyframableFilter {
         anchors.margins: 8
         width: 300
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: openButton
 
             text: qsTr('Open file')
@@ -228,7 +228,7 @@ Shotcut.KeyframableFilter {
 
             Layout.fillWidth: true
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 id: fileLabelTip
             }
         }
@@ -245,13 +245,13 @@ Shotcut.KeyframableFilter {
             text: qsTr('GPS offset')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This is added to video time to sync with gps time.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_majoroffset_sign
 
                 implicitWidth: 39
@@ -262,7 +262,7 @@ Shotcut.KeyframableFilter {
                     recompute_time_offset();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('+ : Adds time to video (use if GPS is ahead).\n - : Subtracts time from video (use if video is ahead).')
                 }
 
@@ -303,7 +303,7 @@ Shotcut.KeyframableFilter {
                     onClicked: offset_days.forceActiveFocus()
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of days to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -342,7 +342,7 @@ Shotcut.KeyframableFilter {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of hours to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -381,7 +381,7 @@ Shotcut.KeyframableFilter {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of minutes to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -420,7 +420,7 @@ Shotcut.KeyframableFilter {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of seconds to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -431,7 +431,7 @@ Shotcut.KeyframableFilter {
             }
 
             //buttons:
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'media-skip-backward'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -439,12 +439,12 @@ Shotcut.KeyframableFilter {
                     set_sec_offset_to_textfields(filter.get('auto_gps_offset_start'));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Sync start of GPS to start of video file.\nTip: use this if you started GPS and video recording at the same time.')
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'document-open-recent'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -452,12 +452,12 @@ Shotcut.KeyframableFilter {
                     set_sec_offset_to_textfields(parseInt(Number(filter.get('time_offset'))) + parseInt(Number(js_tz_offset)));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Remove timezone (%1 seconds) time from video file (convert to UTC).\nTip: use this if your video camera doesn\'t have timezone settings as it will set local time as UTC.'.arg(js_tz_offset))
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'format-indent-less'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -465,12 +465,12 @@ Shotcut.KeyframableFilter {
                     set_sec_offset_to_textfields(parseInt(Number(filter.get('time_offset')) - producer.length / profile.fps));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Fix video start time: if file time is actually end time, press this button to subtract file length (%1 seconds) from GPS offset.'.arg(parseInt(producer.length / profile.fps)))
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'media-playback-pause'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -478,12 +478,12 @@ Shotcut.KeyframableFilter {
                     set_sec_offset_to_textfields(filter.get('auto_gps_offset_now'));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Sync start of GPS to current video time.\nTip: use this if you recorded the moment of the first GPS fix.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: set_sec_offset_to_textfields(0)
             }
         }
@@ -492,13 +492,13 @@ Shotcut.KeyframableFilter {
             text: qsTr('GPS smoothing')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Average nearby GPS points to smooth out errors.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_smoothing
 
                 function get_smooth_index_from_val(val) {
@@ -572,7 +572,7 @@ Shotcut.KeyframableFilter {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     combo_smoothing.currentIndex = 3;
                     filter.set('smoothing_value', 5);
@@ -585,7 +585,7 @@ Shotcut.KeyframableFilter {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Distances are calculated since the start of the gps file, use this field to reset them (GPS time).')
             }
         }
@@ -602,12 +602,12 @@ Shotcut.KeyframableFilter {
                 persistentSelection: true
                 onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).')
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.source: 'qrc:///icons/dark/32x32/media-playback-pause'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -617,12 +617,12 @@ Shotcut.KeyframableFilter {
                     filter.set('gps_processing_start_time', gps_time_now);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Set start of GPS processing to current video time.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     gps_processing_start.text = filter.get('gps_start_text');
                     filter.set('gps_processing_start_time', filter.get('gps_start_text'));
@@ -635,13 +635,13 @@ Shotcut.KeyframableFilter {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.')
             }
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: speed_multiplier
 
                 value: 1
@@ -656,12 +656,12 @@ Shotcut.KeyframableFilter {
                     filter.set('speed_multiplier', value);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     filter.set('speed_multiplier', 1);
                     speed_multiplier.value = 1;
@@ -680,7 +680,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: textFilterUi.parameterList.concat(['argument'])
@@ -758,7 +758,7 @@ Shotcut.KeyframableFilter {
                         onClicked: contextMenu.popup()
                     }
 
-                    Shotcut.EditMenu {
+                    Snapflow.EditMenu {
                         id: contextMenu
                     }
 
@@ -768,7 +768,7 @@ Shotcut.KeyframableFilter {
                     }
                 }
 
-                ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
+                ScrollBar.horizontal: Snapflow.HorizontalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentWidth > scrollview.width
                     parent: scrollview.parent
@@ -777,7 +777,7 @@ Shotcut.KeyframableFilter {
                     anchors.right: scrollview.right
                 }
 
-                ScrollBar.vertical: Shotcut.VerticalScrollBar {
+                ScrollBar.vertical: Snapflow.VerticalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentHeight > scrollview.height
                     parent: scrollview.parent
@@ -795,7 +795,7 @@ Shotcut.KeyframableFilter {
 
         RowLayout {
             Layout.bottomMargin: 5
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 implicitWidth: 300
 
                 property var gps_cbox_strings_v0: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)')]
@@ -877,13 +877,13 @@ Shotcut.KeyframableFilter {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Extra arguments can be added inside keywords:\nDistance units: m [km|ft|mi].\nSpeed units: km/h [mi/h|m/s|ft/s].\nTime default: %Y-%m-%d %H:%M:%S, extra offset can be added as +/-seconds (+3600).\nExtra keyword: RAW (prints only values from file).')
                 }
             }
         }
 
-        Shotcut.TextFilterUi {
+        Snapflow.TextFilterUi {
             id: textFilterUi
             showOpacity: filter.isAtLeastVersion(4)
             Layout.leftMargin: 10
@@ -901,7 +901,7 @@ Shotcut.KeyframableFilter {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).')
             }
         }
@@ -919,7 +919,7 @@ Shotcut.KeyframableFilter {
                 }
                 onEditingFinished: filter.set('updates_per_second', updates_per_second.text)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).')
                 }
 
@@ -933,7 +933,7 @@ Shotcut.KeyframableFilter {
                 text: qsTr(' per second')
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     filter.set('updates_per_second', 1);
                     updates_per_second.text = '1';
@@ -961,7 +961,7 @@ Shotcut.KeyframableFilter {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Detected date-time for the video file.')
             }
         }
@@ -972,7 +972,7 @@ Shotcut.KeyframableFilter {
             text: filter.get('video_start_text')
             Layout.alignment: Qt.AlignLeft
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: "This time will be used for synchronization."
             }
         }
@@ -984,7 +984,7 @@ Shotcut.KeyframableFilter {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Detected date-time for the GPS file.')
             }
         }
@@ -995,7 +995,7 @@ Shotcut.KeyframableFilter {
             text: filter.get('gps_start_text')
             Layout.alignment: Qt.AlignLeft
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This time will be used for synchronization.')
             }
         }

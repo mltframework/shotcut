@@ -1,4 +1,4 @@
-app: Shotcut
+app: Snapflow
 verbose: true
 
 #ingredients:
@@ -9,8 +9,8 @@ verbose: true
 #    - echo "multiarch-support" >> excludedeblist
                                                                                                                                          
 script:
-  - tar -xJ -C usr/bin --strip=1 -f ../../../../scripts/shotcut-linux-x86_64-*.txz
-  - cp -p ../../../../icons/shotcut-logo-64.png shotcut.png
-  - cp -p ../../../../icons/shotcut-logo-64.png org.shotcut.Shotcut.png
-  - cp -p ../../../../packaging/linux/org.shotcut.Shotcut.desktop shotcut.desktop
-  - desktop-file-edit --set-key=Exec --set-value=shotcut shotcut.desktop
+  - tar -xJ -C usr/bin --strip=1 -f ../../../../scripts/snapflow-linux-x86_64-*.txz
+  - cp -p ../../../../icons/snapflow-logo-64.png snapflow.png
+  - cp -p ../../../../icons/snapflow-logo-64.png org.snapflow.Snapflow.png
+  - cp -p ../../../../packaging/linux/org.snapflow.Snapflow.desktop snapflow.desktop
+  - desktop-file-edit --set-key=Exec --set-value=snapflow snapflow.desktop

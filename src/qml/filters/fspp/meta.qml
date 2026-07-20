@@ -1,5 +1,5 @@
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,5 +8,5 @@ Metadata {
     mlt_service: "avfilter.fspp"
     qml: "ui.qml"
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/reduce-noise-quantization-video-filter/50881/1'
+    help: 'https://forum.snapflow.org/t/reduce-noise-quantization-video-filter/50881/1'
 }

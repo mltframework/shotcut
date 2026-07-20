@@ -34,9 +34,9 @@
 #include <qdesktopservices.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
-static const QString SHOTCUT_INI_FILENAME("/shotcut.ini");
+static const QString SNAPFLOW_INI_FILENAME("/snapflow.ini");
 static const QString RECENT_INI_FILENAME("recent.ini");
-static QScopedPointer<ShotcutSettings> instance;
+static QScopedPointer<SnapflowSettings> instance;
 static QString appDataForSession;
 static const int kMaximumTrackHeight = 125;
 static const QString kRecentKey("recent");
@@ -45,30 +45,30 @@ static const QString kProjectsKey("projects");
 namespace {
 struct ModeMap
 {
-    ShotcutSettings::ProcessingMode id;
+    SnapflowSettings::ProcessingMode id;
     const char *name;
 };
 static constexpr ModeMap kModeMap[] = {
-    {ShotcutSettings::Native8Cpu, "Native8Cpu"},
-    {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
-    {ShotcutSettings::Native10Cpu, "Native10Cpu"},
-    {ShotcutSettings::Linear10Cpu, "Linear10Cpu"},
-    {ShotcutSettings::Linear10GpuCpu, "Linear10GpuCpu"},
+    {SnapflowSettings::Native8Cpu, "Native8Cpu"},
+    {SnapflowSettings::Linear8Cpu, "Linear8Cpu"},
+    {SnapflowSettings::Native10Cpu, "Native10Cpu"},
+    {SnapflowSettings::Linear10Cpu, "Linear10Cpu"},
+    {SnapflowSettings::Linear10GpuCpu, "Linear10GpuCpu"},
 };
 } // anonymous namespace
 
-ShotcutSettings &ShotcutSettings::singleton()
+SnapflowSettings &SnapflowSettings::singleton()
 {
     if (!instance) {
         if (appDataForSession.isEmpty()) {
-            instance.reset(new ShotcutSettings);
+            instance.reset(new SnapflowSettings);
             if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
                 && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString()
-                                 + SHOTCUT_INI_FILENAME))
+                                 + SNAPFLOW_INI_FILENAME))
                 instance.reset(
-                    new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
+                    new SnapflowSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
         } else {
-            instance.reset(new ShotcutSettings(appDataForSession));
+            instance.reset(new SnapflowSettings(appDataForSession));
         }
     }
     return *instance;
@@ -76,11 +76,11 @@ ShotcutSettings &ShotcutSettings::singleton()
 
 /*!
     \qmltype Settings
-    \inqmlmodule org.shotcut.qml
+    \inqmlmodule org.snapflow.qml
     \brief Persistent application settings, accessed via the \c settings context property.
 
     \c settings is an uncreatable QML type — use the global \c settings identifier
-    available in every Shotcut QML view. Settings are backed by QSettings and persist
+    available in every Snapflow QML view. Settings are backed by QSettings and persist
     across sessions.
 
     \code
@@ -95,7 +95,7 @@ ShotcutSettings &ShotcutSettings::singleton()
     One of \c NoScrolling, \c CenterPlayhead, \c PageScrolling, or \c SmoothScrolling.
 */
 
-ShotcutSettings::ShotcutSettings()
+SnapflowSettings::SnapflowSettings()
     : QObject()
     , m_recent(QDir(appDataLocation()).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
 {
@@ -103,9 +103,9 @@ ShotcutSettings::ShotcutSettings()
     migrateRecent();
 }
 
-ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
+SnapflowSettings::SnapflowSettings(const QString &appDataLocation)
     : QObject()
-    , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
+    , settings(appDataLocation + SNAPFLOW_INI_FILENAME, QSettings::IniFormat)
     , m_appDataLocation(appDataLocation)
     , m_recent(QDir(appDataLocation).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
 {
@@ -113,14 +113,14 @@ ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
     migrateRecent();
 }
 
-void ShotcutSettings::migrateRecent()
+void SnapflowSettings::migrateRecent()
 {
     // Migrate recent to separate INI file
     auto oldRecents = settings.value(kRecentKey).toStringList();
     if (recent().isEmpty() && !oldRecents.isEmpty()) {
         auto newRecents = recent();
         for (const auto &a : oldRecents) {
-            if (a.size() < ShotcutSettings::MaxPath && !newRecents.contains(a)) {
+            if (a.size() < SnapflowSettings::MaxPath && !newRecents.contains(a)) {
                 while (newRecents.size() > 100) {
                     newRecents.removeFirst();
                 }
@@ -134,7 +134,7 @@ void ShotcutSettings::migrateRecent()
     }
 }
 
-void ShotcutSettings::migrateLayout()
+void SnapflowSettings::migrateLayout()
 {
     // Migrate old startup layout to a custom layout and start fresh
     if (!settings.contains("geometry2")) {
@@ -146,7 +146,7 @@ void ShotcutSettings::migrateLayout()
     }
 }
 
-void ShotcutSettings::log()
+void SnapflowSettings::log()
 {
     LOG_INFO() << "language" << language();
     LOG_INFO() << "deinterlacer" << playerDeinterlacer();
@@ -165,7 +165,7 @@ void ShotcutSettings::log()
 #endif
 }
 
-QString ShotcutSettings::language() const
+QString SnapflowSettings::language() const
 {
     QString language = settings.value("language", QLocale().name()).toString();
     if (language == "en")
@@ -173,17 +173,17 @@ QString ShotcutSettings::language() const
     return language;
 }
 
-void ShotcutSettings::setLanguage(const QString &s)
+void SnapflowSettings::setLanguage(const QString &s)
 {
     settings.setValue("language", s);
 }
 
-double ShotcutSettings::imageDuration() const
+double SnapflowSettings::imageDuration() const
 {
     return settings.value("imageDuration", 4.0).toDouble();
 }
 
-void ShotcutSettings::setImageDuration(double d)
+void SnapflowSettings::setImageDuration(double d)
 {
     settings.setValue("imageDuration", d);
 }
@@ -193,14 +193,14 @@ void ShotcutSettings::setImageDuration(double d)
     \brief The last directory used for opening files.
 */
 
-QString ShotcutSettings::openPath() const
+QString SnapflowSettings::openPath() const
 {
     return settings
         .value("openPath", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
         .toString();
 }
 
-void ShotcutSettings::setOpenPath(const QString &s)
+void SnapflowSettings::setOpenPath(const QString &s)
 {
     settings.setValue("openPath", s);
     emit savePathChanged();
@@ -211,25 +211,25 @@ void ShotcutSettings::setOpenPath(const QString &s)
     \brief The last directory used for saving files.
 */
 
-QString ShotcutSettings::savePath() const
+QString SnapflowSettings::savePath() const
 {
     return settings
         .value("savePath", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation))
         .toString();
 }
 
-void ShotcutSettings::setSavePath(const QString &s)
+void SnapflowSettings::setSavePath(const QString &s)
 {
     settings.setValue("savePath", s);
     emit savePathChanged();
 }
 
-QStringList ShotcutSettings::recent() const
+QStringList SnapflowSettings::recent() const
 {
     return m_recent.value(kRecentKey).toStringList();
 }
 
-void ShotcutSettings::setRecent(const QStringList &ls)
+void SnapflowSettings::setRecent(const QStringList &ls)
 {
     if (ls.isEmpty())
         m_recent.remove(kRecentKey);
@@ -237,7 +237,7 @@ void ShotcutSettings::setRecent(const QStringList &ls)
         m_recent.setValue(kRecentKey, ls);
 }
 
-QStringList ShotcutSettings::projects()
+QStringList SnapflowSettings::projects()
 {
     auto ls = m_recent.value(kProjectsKey).toStringList();
     if (ls.isEmpty()) {
@@ -253,7 +253,7 @@ QStringList ShotcutSettings::projects()
     return ls;
 }
 
-void ShotcutSettings::setProjects(const QStringList &ls)
+void SnapflowSettings::setProjects(const QStringList &ls)
 {
     if (ls.isEmpty())
         m_recent.remove(kProjectsKey);
@@ -261,17 +261,17 @@ void ShotcutSettings::setProjects(const QStringList &ls)
         m_recent.setValue(kProjectsKey, ls);
 }
 
-QString ShotcutSettings::theme() const
+QString SnapflowSettings::theme() const
 {
     return settings.value("theme", "dark").toString();
 }
 
-void ShotcutSettings::setTheme(const QString &s)
+void SnapflowSettings::setTheme(const QString &s)
 {
     settings.setValue("theme", s);
 }
 
-QThread::Priority ShotcutSettings::jobPriority() const
+QThread::Priority SnapflowSettings::jobPriority() const
 {
     const auto priority = settings.value("jobPriority", "low").toString();
     if (priority == "low") {
@@ -280,37 +280,37 @@ QThread::Priority ShotcutSettings::jobPriority() const
     return QThread::NormalPriority;
 }
 
-void ShotcutSettings::setJobPriority(const QString &s)
+void SnapflowSettings::setJobPriority(const QString &s)
 {
     settings.setValue("jobPriority", s);
 }
 
-bool ShotcutSettings::showTitleBars() const
+bool SnapflowSettings::showTitleBars() const
 {
     return settings.value("titleBars", true).toBool();
 }
 
-void ShotcutSettings::setShowTitleBars(bool b)
+void SnapflowSettings::setShowTitleBars(bool b)
 {
     settings.setValue("titleBars", b);
 }
 
-bool ShotcutSettings::showToolBar() const
+bool SnapflowSettings::showToolBar() const
 {
     return settings.value("toolBar", true).toBool();
 }
 
-void ShotcutSettings::setShowToolBar(bool b)
+void SnapflowSettings::setShowToolBar(bool b)
 {
     settings.setValue("toolBar", b);
 }
 
-bool ShotcutSettings::textUnderIcons() const
+bool SnapflowSettings::textUnderIcons() const
 {
     return settings.value("textUnderIcons", true).toBool();
 }
 
-void ShotcutSettings::setTextUnderIcons(bool b)
+void SnapflowSettings::setTextUnderIcons(bool b)
 {
     settings.setValue("textUnderIcons", b);
 }
@@ -320,63 +320,63 @@ void ShotcutSettings::setTextUnderIcons(bool b)
     \brief Whether the toolbar uses small icons.
 */
 
-bool ShotcutSettings::smallIcons() const
+bool SnapflowSettings::smallIcons() const
 {
     return settings.value("smallIcons", false).toBool();
 }
 
-void ShotcutSettings::setSmallIcons(bool b)
+void SnapflowSettings::setSmallIcons(bool b)
 {
     settings.setValue("smallIcons", b);
     emit smallIconsChanged();
 }
 
-QByteArray ShotcutSettings::windowGeometry() const
+QByteArray SnapflowSettings::windowGeometry() const
 {
     return settings.value("geometry2").toByteArray();
 }
 
-void ShotcutSettings::setWindowGeometry(const QByteArray &a)
+void SnapflowSettings::setWindowGeometry(const QByteArray &a)
 {
     settings.setValue("geometry2", a);
 }
 
-QByteArray ShotcutSettings::windowGeometryDefault() const
+QByteArray SnapflowSettings::windowGeometryDefault() const
 {
     return settings.value("geometryDefault").toByteArray();
 }
 
-void ShotcutSettings::setWindowGeometryDefault(const QByteArray &a)
+void SnapflowSettings::setWindowGeometryDefault(const QByteArray &a)
 {
     settings.setValue("geometryDefault", a);
 }
 
-QByteArray ShotcutSettings::windowState() const
+QByteArray SnapflowSettings::windowState() const
 {
     return settings.value("windowState2").toByteArray();
 }
 
-void ShotcutSettings::setWindowState(const QByteArray &a)
+void SnapflowSettings::setWindowState(const QByteArray &a)
 {
     settings.setValue("windowState2", a);
 }
 
-QByteArray ShotcutSettings::windowStateDefault() const
+QByteArray SnapflowSettings::windowStateDefault() const
 {
     return settings.value("windowStateDefault").toByteArray();
 }
 
-void ShotcutSettings::setWindowStateDefault(const QByteArray &a)
+void SnapflowSettings::setWindowStateDefault(const QByteArray &a)
 {
     settings.setValue("windowStateDefault", a);
 }
 
-int ShotcutSettings::dockLayoutVersion() const
+int SnapflowSettings::dockLayoutVersion() const
 {
     return settings.value("dockLayoutVersion", 0).toInt();
 }
 
-void ShotcutSettings::setDockLayoutVersion(int v)
+void SnapflowSettings::setDockLayoutVersion(int v)
 {
     settings.setValue("dockLayoutVersion", v);
 }
@@ -386,29 +386,29 @@ void ShotcutSettings::setDockLayoutVersion(int v)
     \brief The current view mode of the Playlist panel (e.g. \c "details", \c "icons").
 */
 
-QString ShotcutSettings::viewMode() const
+QString SnapflowSettings::viewMode() const
 {
     return settings.value("playlist/viewMode").toString();
 }
 
-void ShotcutSettings::setViewMode(const QString &viewMode)
+void SnapflowSettings::setViewMode(const QString &viewMode)
 {
     settings.setValue("playlist/viewMode", viewMode);
     emit viewModeChanged();
 }
 
-QString ShotcutSettings::filesViewMode() const
+QString SnapflowSettings::filesViewMode() const
 {
     return settings.value("files/viewMode", QLatin1String("tiled")).toString();
 }
 
-void ShotcutSettings::setFilesViewMode(const QString &viewMode)
+void SnapflowSettings::setFilesViewMode(const QString &viewMode)
 {
     settings.setValue("files/viewMode", viewMode);
     emit filesViewModeChanged();
 }
 
-QStringList ShotcutSettings::filesLocations() const
+QStringList SnapflowSettings::filesLocations() const
 {
     QStringList result;
     for (const auto &s : settings.value("files/locations").toStringList()) {
@@ -418,13 +418,13 @@ QStringList ShotcutSettings::filesLocations() const
     return result;
 }
 
-QString ShotcutSettings::filesLocationPath(const QString &name) const
+QString SnapflowSettings::filesLocationPath(const QString &name) const
 {
     QString key = QStringLiteral("files/location/%1").arg(name);
     return settings.value(key).toString();
 }
 
-bool ShotcutSettings::setFilesLocation(const QString &name, const QString &path)
+bool SnapflowSettings::setFilesLocation(const QString &name, const QString &path)
 {
     bool isNew = false;
     QStringList locations = filesLocations();
@@ -437,7 +437,7 @@ bool ShotcutSettings::setFilesLocation(const QString &name, const QString &path)
     return isNew;
 }
 
-bool ShotcutSettings::removeFilesLocation(const QString &name)
+bool SnapflowSettings::removeFilesLocation(const QString &name)
 {
     QStringList list = filesLocations();
     int index = list.indexOf(name);
@@ -453,12 +453,12 @@ bool ShotcutSettings::removeFilesLocation(const QString &name)
     return false;
 }
 
-QStringList ShotcutSettings::filesOpenOther(const QString &type) const
+QStringList SnapflowSettings::filesOpenOther(const QString &type) const
 {
     return settings.value("files/openOther/" + type).toStringList();
 }
 
-void ShotcutSettings::setFilesOpenOther(const QString &type, const QString &filePath)
+void SnapflowSettings::setFilesOpenOther(const QString &type, const QString &filePath)
 {
     QStringList filePaths = filesOpenOther(type);
     filePaths.removeAll(filePath);
@@ -466,7 +466,7 @@ void ShotcutSettings::setFilesOpenOther(const QString &type, const QString &file
     settings.setValue("files/openOther/" + type, filePaths);
 }
 
-bool ShotcutSettings::removeFilesOpenOther(const QString &type, const QString &filePath)
+bool SnapflowSettings::removeFilesOpenOther(const QString &type, const QString &filePath)
 {
     QStringList list = filesOpenOther(type);
     int index = list.indexOf(filePath);
@@ -481,7 +481,7 @@ bool ShotcutSettings::removeFilesOpenOther(const QString &type, const QString &f
     return false;
 }
 
-QString ShotcutSettings::filesCurrentDir() const
+QString SnapflowSettings::filesCurrentDir() const
 {
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     auto path = settings.value("files/currentDir", ls.first()).toString();
@@ -492,69 +492,69 @@ QString ShotcutSettings::filesCurrentDir() const
     return path;
 }
 
-void ShotcutSettings::setFilesCurrentDir(const QString &s)
+void SnapflowSettings::setFilesCurrentDir(const QString &s)
 {
     settings.setValue("files/currentDir", s);
 }
 
-bool ShotcutSettings::filesFoldersOpen() const
+bool SnapflowSettings::filesFoldersOpen() const
 {
     return settings.value("files/foldersOpen", true).toBool();
 }
 
-void ShotcutSettings::setFilesFoldersOpen(bool b)
+void SnapflowSettings::setFilesFoldersOpen(bool b)
 {
     settings.setValue("files/foldersOpen", b);
 }
 
-QString ShotcutSettings::exportFrameSuffix() const
+QString SnapflowSettings::exportFrameSuffix() const
 {
     return settings.value("exportFrameSuffix", ".png").toString();
 }
 
-void ShotcutSettings::setExportFrameSuffix(const QString &exportFrameSuffix)
+void SnapflowSettings::setExportFrameSuffix(const QString &exportFrameSuffix)
 {
     settings.setValue("exportFrameSuffix", exportFrameSuffix);
 }
 
-QString ShotcutSettings::encodePath() const
+QString SnapflowSettings::encodePath() const
 {
     return settings
         .value("encode/path", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
         .toString();
 }
 
-void ShotcutSettings::setEncodePath(const QString &s)
+void SnapflowSettings::setEncodePath(const QString &s)
 {
     settings.setValue("encode/path", s);
 }
 
-bool ShotcutSettings::encodeFreeSpaceCheck() const
+bool SnapflowSettings::encodeFreeSpaceCheck() const
 {
     return settings.value("encode/freeSpaceCheck", true).toBool();
 }
 
-void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
+void SnapflowSettings::setEncodeFreeSpaceCheck(bool b)
 {
     settings.setValue("encode/freeSpaceCheck", b);
 }
 
-bool ShotcutSettings::encodeUseHardware() const
+bool SnapflowSettings::encodeUseHardware() const
 {
     return settings.value("encode/useHardware").toBool();
 }
 
-void ShotcutSettings::setEncodeUseHardware(bool b)
+void SnapflowSettings::setEncodeUseHardware(bool b)
 {
     settings.setValue("encode/useHardware", b);
 }
 
-QStringList ShotcutSettings::encodeHardware() const
+QStringList SnapflowSettings::encodeHardware() const
 {
     return settings.value("encode/hardware").toStringList();
 }
 
-void ShotcutSettings::setEncodeHardware(const QStringList &ls)
+void SnapflowSettings::setEncodeHardware(const QStringList &ls)
 {
     if (ls.isEmpty())
         settings.remove("encode/hardware");
@@ -562,40 +562,40 @@ void ShotcutSettings::setEncodeHardware(const QStringList &ls)
         settings.setValue("encode/hardware", ls);
 }
 
-bool ShotcutSettings::encodeHardwareDecoder() const
+bool SnapflowSettings::encodeHardwareDecoder() const
 {
     return settings.value("encode/hardwareDecoder", false).toBool();
 }
 
-void ShotcutSettings::setEncodeHardwareDecoder(bool b)
+void SnapflowSettings::setEncodeHardwareDecoder(bool b)
 {
     settings.setValue("encode/hardwareDecoder", b);
 }
 
-bool ShotcutSettings::encodeAdvanced() const
+bool SnapflowSettings::encodeAdvanced() const
 {
     return settings.value("encode/advanced", false).toBool();
 }
 
-void ShotcutSettings::setEncodeAdvanced(bool b)
+void SnapflowSettings::setEncodeAdvanced(bool b)
 {
     settings.setValue("encode/advanced", b);
 }
 
-bool ShotcutSettings::convertAdvanced() const
+bool SnapflowSettings::convertAdvanced() const
 {
     return settings.value("convertAdvanced", false).toBool();
 }
 
-void ShotcutSettings::setConvertAdvanced(bool b)
+void SnapflowSettings::setConvertAdvanced(bool b)
 {
     settings.setValue("convertAdvanced", b);
 }
 
-ShotcutSettings::ProcessingMode ShotcutSettings::processingMode()
+SnapflowSettings::ProcessingMode SnapflowSettings::processingMode()
 {
     if (settings.contains("processingMode")) {
-        auto result = (ShotcutSettings::ProcessingMode) settings.value("processingMode").toInt();
+        auto result = (SnapflowSettings::ProcessingMode) settings.value("processingMode").toInt();
         if (result == Linear8Cpu) {
             // No longer supported but kept to prevent unexpected processing behavior going from
             // beta to release
@@ -605,19 +605,19 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingMode()
     } else if (settings.contains("player/gpu2")) {
         // Legacy GPU Mode
         if (settings.value("player/gpu2").toBool()) {
-            return ShotcutSettings::Linear10GpuCpu;
+            return SnapflowSettings::Linear10GpuCpu;
         }
     }
-    return ShotcutSettings::Native8Cpu;
+    return SnapflowSettings::Native8Cpu;
 }
 
-void ShotcutSettings::setProcessingMode(ProcessingMode mode)
+void SnapflowSettings::setProcessingMode(ProcessingMode mode)
 {
     settings.setValue("processingMode", mode);
     emit playerGpuChanged();
 }
 
-QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
+QString SnapflowSettings::processingModeStr(SnapflowSettings::ProcessingMode mode)
 {
     for (const auto &m : kModeMap) {
         if (m.id == mode)
@@ -627,7 +627,7 @@ QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
     return QStringLiteral("Native8Cpu");
 }
 
-ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString &mode)
+SnapflowSettings::ProcessingMode SnapflowSettings::processingModeId(const QString &mode)
 {
     for (const auto &m : kModeMap) {
         if (mode == QLatin1String(m.name))
@@ -637,38 +637,38 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString 
     return Native8Cpu;
 }
 
-bool ShotcutSettings::isHdrCompatibleProcessingMode()
+bool SnapflowSettings::isHdrCompatibleProcessingMode()
 {
     const auto mode = processingMode();
     return mode == Native10Cpu || mode == Linear10GpuCpu;
 }
 
-bool ShotcutSettings::showConvertClipDialog() const
+bool SnapflowSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();
 }
 
-void ShotcutSettings::setShowConvertClipDialog(bool b)
+void SnapflowSettings::setShowConvertClipDialog(bool b)
 {
     settings.setValue("showConvertClipDialog", b);
 }
 
-bool ShotcutSettings::showHdrPlayerWarning() const
+bool SnapflowSettings::showHdrPlayerWarning() const
 {
     return settings.value("showHdrPlayerWarning", true).toBool();
 }
 
-void ShotcutSettings::setShowHdrPlayerWarning(bool b)
+void SnapflowSettings::setShowHdrPlayerWarning(bool b)
 {
     settings.setValue("showHdrPlayerWarning", b);
 }
 
-bool ShotcutSettings::encodeParallelProcessing() const
+bool SnapflowSettings::encodeParallelProcessing() const
 {
     return settings.value("encode/parallelProcessing", false).toBool();
 }
 
-void ShotcutSettings::setEncodeParallelProcessing(bool b)
+void SnapflowSettings::setEncodeParallelProcessing(bool b)
 {
     settings.setValue("encode/parallelProcessing", b);
 }
@@ -678,18 +678,18 @@ void ShotcutSettings::setEncodeParallelProcessing(bool b)
     \brief The number of audio channels used by the player (e.g. 2 or 6).
 */
 
-int ShotcutSettings::playerAudioChannels() const
+int SnapflowSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();
 }
 
-void ShotcutSettings::setPlayerAudioChannels(int i)
+void SnapflowSettings::setPlayerAudioChannels(int i)
 {
     settings.setValue("player/audioChannels", i);
     emit playerAudioChannelsChanged(i);
 }
 
-QString ShotcutSettings::playerDeinterlacer() const
+QString SnapflowSettings::playerDeinterlacer() const
 {
     QString result = settings.value("player/deinterlacer", "onefield").toString();
     //XXX workaround yadif crashing with mlt_transition
@@ -698,34 +698,34 @@ QString ShotcutSettings::playerDeinterlacer() const
     return result;
 }
 
-void ShotcutSettings::setPlayerDeinterlacer(const QString &s)
+void SnapflowSettings::setPlayerDeinterlacer(const QString &s)
 {
     settings.setValue("player/deinterlacer", s);
 }
 
-QString ShotcutSettings::playerExternal() const
+QString SnapflowSettings::playerExternal() const
 {
     auto result = settings.value("player/external", "").toString();
     // "sdi" is no longer supported DVEO VidPort
     return result == "sdi" ? "" : result;
 }
 
-void ShotcutSettings::setPlayerExternal(const QString &s)
+void SnapflowSettings::setPlayerExternal(const QString &s)
 {
     settings.setValue("player/external", s);
 }
 
-bool ShotcutSettings::playerJACK() const
+bool SnapflowSettings::playerJACK() const
 {
     return settings.value("player/jack", false).toBool();
 }
 
-QString ShotcutSettings::playerInterpolation() const
+QString SnapflowSettings::playerInterpolation() const
 {
     return settings.value("player/interpolation", "bilinear").toString();
 }
 
-void ShotcutSettings::setPlayerInterpolation(const QString &s)
+void SnapflowSettings::setPlayerInterpolation(const QString &s)
 {
     settings.setValue("player/interpolation", s);
 }
@@ -735,7 +735,7 @@ void ShotcutSettings::setPlayerInterpolation(const QString &s)
     \brief Whether GPU processing (GLSL) is enabled for the video player.
 */
 
-bool ShotcutSettings::playerGPU() const
+bool SnapflowSettings::playerGPU() const
 {
     // This is the legacy function for the old GPU mode.
     if (settings.contains("processingMode")) {
@@ -748,192 +748,192 @@ bool ShotcutSettings::playerGPU() const
     return false;
 }
 
-bool ShotcutSettings::playerWarnGPU() const
+bool SnapflowSettings::playerWarnGPU() const
 {
     return false; //settings.value("player/warnGPU", false).toBool();
 }
 
-void ShotcutSettings::setPlayerJACK(bool b)
+void SnapflowSettings::setPlayerJACK(bool b)
 {
     settings.setValue("player/jack", b);
 }
 
-int ShotcutSettings::playerDecklinkHdrMaxCll() const
+int SnapflowSettings::playerDecklinkHdrMaxCll() const
 {
     return settings.value("player/decklinkHdrMaxCll", 1000).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkHdrMaxCll(int nits)
+void SnapflowSettings::setPlayerDecklinkHdrMaxCll(int nits)
 {
     settings.setValue("player/decklinkHdrMaxCll", nits);
 }
 
-int ShotcutSettings::playerDecklinkHdrMaxFall() const
+int SnapflowSettings::playerDecklinkHdrMaxFall() const
 {
     return settings.value("player/decklinkHdrMaxFall", 400).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkHdrMaxFall(int nits)
+void SnapflowSettings::setPlayerDecklinkHdrMaxFall(int nits)
 {
     settings.setValue("player/decklinkHdrMaxFall", nits);
 }
 
-int ShotcutSettings::playerDecklinkHdrMasterPreset() const
+int SnapflowSettings::playerDecklinkHdrMasterPreset() const
 {
     return settings.value("player/decklinkHdrMasterPreset", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkHdrMasterPreset(int preset)
+void SnapflowSettings::setPlayerDecklinkHdrMasterPreset(int preset)
 {
     settings.setValue("player/decklinkHdrMasterPreset", preset);
 }
 
-int ShotcutSettings::playerDecklinkHdrMaxLuminance() const
+int SnapflowSettings::playerDecklinkHdrMaxLuminance() const
 {
     return settings.value("player/decklinkHdrMaxLuminance", 1000).toInt();
 }
 
-void ShotcutSettings::setPlayerDecklinkHdrMaxLuminance(int nits)
+void SnapflowSettings::setPlayerDecklinkHdrMaxLuminance(int nits)
 {
     settings.setValue("player/decklinkHdrMaxLuminance", nits);
 }
 
-double ShotcutSettings::playerDecklinkHdrMinLuminance() const
+double SnapflowSettings::playerDecklinkHdrMinLuminance() const
 {
     return settings.value("player/decklinkHdrMinLuminance", 0.01).toDouble();
 }
 
-void ShotcutSettings::setPlayerDecklinkHdrMinLuminance(double nits)
+void SnapflowSettings::setPlayerDecklinkHdrMinLuminance(double nits)
 {
     settings.setValue("player/decklinkHdrMinLuminance", nits);
 }
 
-int ShotcutSettings::playerKeyerMode() const
+int SnapflowSettings::playerKeyerMode() const
 {
     return settings.value("player/keyer", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerKeyerMode(int i)
+void SnapflowSettings::setPlayerKeyerMode(int i)
 {
     settings.setValue("player/keyer", i);
 }
 
-bool ShotcutSettings::playerMuted() const
+bool SnapflowSettings::playerMuted() const
 {
     return settings.value("player/muted", false).toBool();
 }
 
-void ShotcutSettings::setPlayerMuted(bool b)
+void SnapflowSettings::setPlayerMuted(bool b)
 {
     settings.setValue("player/muted", b);
 }
 
-QString ShotcutSettings::playerProfile() const
+QString SnapflowSettings::playerProfile() const
 {
     return settings.value("player/profile", "").toString();
 }
 
-void ShotcutSettings::setPlayerProfile(const QString &s)
+void SnapflowSettings::setPlayerProfile(const QString &s)
 {
     settings.setValue("player/profile", s);
 }
 
-bool ShotcutSettings::playerProgressive() const
+bool SnapflowSettings::playerProgressive() const
 {
     return settings.value("player/progressive", true).toBool();
 }
 
-void ShotcutSettings::setPlayerProgressive(bool b)
+void SnapflowSettings::setPlayerProgressive(bool b)
 {
     settings.setValue("player/progressive", b);
 }
 
-bool ShotcutSettings::playerRealtime() const
+bool SnapflowSettings::playerRealtime() const
 {
     return settings.value("player/realtime", true).toBool();
 }
 
-void ShotcutSettings::setPlayerRealtime(bool b)
+void SnapflowSettings::setPlayerRealtime(bool b)
 {
     settings.setValue("player/realtime", b);
 }
 
-bool ShotcutSettings::playerScrubAudio() const
+bool SnapflowSettings::playerScrubAudio() const
 {
     return settings.value("player/scrubAudio", true).toBool();
 }
 
-void ShotcutSettings::setPlayerScrubAudio(bool b)
+void SnapflowSettings::setPlayerScrubAudio(bool b)
 {
     settings.setValue("player/scrubAudio", b);
 }
 
-int ShotcutSettings::playerVolume() const
+int SnapflowSettings::playerVolume() const
 {
     return settings.value("player/volume", 88).toInt();
 }
 
-void ShotcutSettings::setPlayerVolume(int i)
+void SnapflowSettings::setPlayerVolume(int i)
 {
     settings.setValue("player/volume", i);
 }
 
-float ShotcutSettings::playerZoom() const
+float SnapflowSettings::playerZoom() const
 {
     return settings.value("player/zoom", 0.0f).toFloat();
 }
 
-void ShotcutSettings::setPlayerZoom(float f)
+void SnapflowSettings::setPlayerZoom(float f)
 {
     settings.setValue("player/zoom", f);
 }
 
-int ShotcutSettings::playerPreviewScale() const
+int SnapflowSettings::playerPreviewScale() const
 {
     return settings.value("player/previewScale", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerPreviewScale(int i)
+void SnapflowSettings::setPlayerPreviewScale(int i)
 {
     settings.setValue("player/previewScale", i);
 }
 
-bool ShotcutSettings::playerPreviewHardwareDecoder() const
+bool SnapflowSettings::playerPreviewHardwareDecoder() const
 {
     return settings.value("player/previewHardwareDecoder", true).toBool();
 }
 
-bool ShotcutSettings::playerPreviewHardwareDecoderIsSet() const
+bool SnapflowSettings::playerPreviewHardwareDecoderIsSet() const
 {
     return settings.contains("player/previewHardwareDecoder");
 }
 
-void ShotcutSettings::setPlayerPreviewHardwareDecoder(bool b)
+void SnapflowSettings::setPlayerPreviewHardwareDecoder(bool b)
 {
     settings.setValue("player/previewHardwareDecoder", b);
 }
 
-int ShotcutSettings::playerVideoDelayMs() const
+int SnapflowSettings::playerVideoDelayMs() const
 {
     return settings.value("player/videoDelayMs", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerVideoDelayMs(int i)
+void SnapflowSettings::setPlayerVideoDelayMs(int i)
 {
     settings.setValue("player/videoDelayMs", i);
 }
 
-double ShotcutSettings::playerJumpSeconds() const
+double SnapflowSettings::playerJumpSeconds() const
 {
     return settings.value("player/jumpSeconds", 60.0).toDouble();
 }
 
-void ShotcutSettings::setPlayerJumpSeconds(double i)
+void SnapflowSettings::setPlayerJumpSeconds(double i)
 {
     settings.setValue("player/jumpSeconds", i);
 }
 
-QString ShotcutSettings::playerAudioDriver() const
+QString SnapflowSettings::playerAudioDriver() const
 {
 #if defined(Q_OS_WIN)
     auto s = playerAudioChannels() > 2 ? "directsound" : "winmm";
@@ -947,87 +947,87 @@ QString ShotcutSettings::playerAudioDriver() const
     }
 }
 
-void ShotcutSettings::setPlayerAudioDriver(const QString &s)
+void SnapflowSettings::setPlayerAudioDriver(const QString &s)
 {
     settings.setValue("player/audioDriver", s);
 }
 
-bool ShotcutSettings::playerPauseAfterSeek() const
+bool SnapflowSettings::playerPauseAfterSeek() const
 {
     return settings.value("player/pauseAfterSeek", true).toBool();
 }
 
-void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
+void SnapflowSettings::setPlayerPauseAfterSeek(bool b)
 {
     settings.setValue("player/pauseAfterSeek", b);
 }
 
-bool ShotcutSettings::playerOldVideoOutput() const
+bool SnapflowSettings::playerOldVideoOutput() const
 {
     return settings.value("player/oldVideoOutput", false).toBool();
 }
 
-void ShotcutSettings::setPlayerOldVideoOutput(bool b)
+void SnapflowSettings::setPlayerOldVideoOutput(bool b)
 {
     settings.setValue("player/oldVideoOutput", b);
 }
 
-bool ShotcutSettings::playerHdrPreview() const
+bool SnapflowSettings::playerHdrPreview() const
 {
     return settings.value("player/hdrPreview", false).toBool();
 }
 
-void ShotcutSettings::setPlayerHdrPreview(bool b)
+void SnapflowSettings::setPlayerHdrPreview(bool b)
 {
     settings.setValue("player/hdrPreview", b);
 }
 
-QRect ShotcutSettings::playerHdrPreviewGeometry() const
+QRect SnapflowSettings::playerHdrPreviewGeometry() const
 {
     return settings.value("player/hdrPreviewGeometry").toRect();
 }
 
-void ShotcutSettings::setPlayerHdrPreviewGeometry(const QRect &r)
+void SnapflowSettings::setPlayerHdrPreviewGeometry(const QRect &r)
 {
     settings.setValue("player/hdrPreviewGeometry", r);
 }
 
-bool ShotcutSettings::playerHdrPreviewFullScreen() const
+bool SnapflowSettings::playerHdrPreviewFullScreen() const
 {
     return settings.value("player/hdrPreviewFullScreen", false).toBool();
 }
 
-void ShotcutSettings::setPlayerHdrPreviewFullScreen(bool b)
+void SnapflowSettings::setPlayerHdrPreviewFullScreen(bool b)
 {
     settings.setValue("player/hdrPreviewFullScreen", b);
 }
 
-int ShotcutSettings::playerHdrDisplayPeakNits() const
+int SnapflowSettings::playerHdrDisplayPeakNits() const
 {
     return settings.value("player/hdrDisplayPeakNits", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerHdrDisplayPeakNits(int nits)
+void SnapflowSettings::setPlayerHdrDisplayPeakNits(int nits)
 {
     settings.setValue("player/hdrDisplayPeakNits", nits);
 }
 
-int ShotcutSettings::playerHdrContentPeakNits() const
+int SnapflowSettings::playerHdrContentPeakNits() const
 {
     return settings.value("player/hdrContentPeakNits", 0).toInt();
 }
 
-void ShotcutSettings::setPlayerHdrContentPeakNits(int nits)
+void SnapflowSettings::setPlayerHdrContentPeakNits(int nits)
 {
     settings.setValue("player/hdrContentPeakNits", nits);
 }
 
-bool ShotcutSettings::playerHdrToneMapping() const
+bool SnapflowSettings::playerHdrToneMapping() const
 {
     return settings.value("player/hdrToneMapping", true).toBool();
 }
 
-void ShotcutSettings::setPlayerHdrToneMapping(bool b)
+void SnapflowSettings::setPlayerHdrToneMapping(bool b)
 {
     settings.setValue("player/hdrToneMapping", b);
 }
@@ -1037,33 +1037,33 @@ void ShotcutSettings::setPlayerHdrToneMapping(bool b)
     \brief The thumbnail display mode for the Playlist panel.
 */
 
-QString ShotcutSettings::playlistThumbnails() const
+QString SnapflowSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();
 }
 
-void ShotcutSettings::setPlaylistThumbnails(const QString &s)
+void SnapflowSettings::setPlaylistThumbnails(const QString &s)
 {
     settings.setValue("playlist/thumbnails", s);
     emit playlistThumbnailsChanged();
 }
 
-bool ShotcutSettings::playlistAutoplay() const
+bool SnapflowSettings::playlistAutoplay() const
 {
     return settings.value("playlist/autoplay", true).toBool();
 }
 
-void ShotcutSettings::setPlaylistAutoplay(bool b)
+void SnapflowSettings::setPlaylistAutoplay(bool b)
 {
     settings.setValue("playlist/autoplay", b);
 }
 
-bool ShotcutSettings::playlistShowColumn(const QString &column)
+bool SnapflowSettings::playlistShowColumn(const QString &column)
 {
     return settings.value("playlist/columns/" + column, true).toBool();
 }
 
-void ShotcutSettings::setPlaylistShowColumn(const QString &column, bool b)
+void SnapflowSettings::setPlaylistShowColumn(const QString &column, bool b)
 {
     settings.setValue("playlist/columns/" + column, b);
 }
@@ -1073,12 +1073,12 @@ void ShotcutSettings::setPlaylistShowColumn(const QString &column, bool b)
     \brief Whether scrubbing occurs while dragging clips on the timeline.
 */
 
-bool ShotcutSettings::timelineDragScrub() const
+bool SnapflowSettings::timelineDragScrub() const
 {
     return settings.value("timeline/dragScrub", false).toBool();
 }
 
-void ShotcutSettings::setTimelineDragScrub(bool b)
+void SnapflowSettings::setTimelineDragScrub(bool b)
 {
     settings.setValue("timeline/dragScrub", b);
     emit timelineDragScrubChanged();
@@ -1089,12 +1089,12 @@ void ShotcutSettings::setTimelineDragScrub(bool b)
     \brief Whether audio waveforms are shown on timeline clips.
 */
 
-bool ShotcutSettings::timelineShowWaveforms() const
+bool SnapflowSettings::timelineShowWaveforms() const
 {
     return settings.value("timeline/waveforms", true).toBool();
 }
 
-void ShotcutSettings::setTimelineShowWaveforms(bool b)
+void SnapflowSettings::setTimelineShowWaveforms(bool b)
 {
     settings.setValue("timeline/waveforms", b);
     emit timelineShowWaveformsChanged();
@@ -1105,12 +1105,12 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
     \brief Whether video thumbnails are shown on timeline clips.
 */
 
-bool ShotcutSettings::timelineShowThumbnails() const
+bool SnapflowSettings::timelineShowThumbnails() const
 {
     return settings.value("timeline/thumbnails", true).toBool();
 }
 
-void ShotcutSettings::setTimelineShowThumbnails(bool b)
+void SnapflowSettings::setTimelineShowThumbnails(bool b)
 {
     settings.setValue("timeline/thumbnails", b);
     emit timelineShowThumbnailsChanged();
@@ -1121,12 +1121,12 @@ void ShotcutSettings::setTimelineShowThumbnails(bool b)
     \brief Whether ripple editing is enabled on the timeline.
 */
 
-bool ShotcutSettings::timelineRipple() const
+bool SnapflowSettings::timelineRipple() const
 {
     return settings.value("timeline/ripple", false).toBool();
 }
 
-void ShotcutSettings::setTimelineRipple(bool b)
+void SnapflowSettings::setTimelineRipple(bool b)
 {
     settings.setValue("timeline/ripple", b);
     emit timelineRippleChanged();
@@ -1137,12 +1137,12 @@ void ShotcutSettings::setTimelineRipple(bool b)
     \brief Whether ripple editing affects all tracks simultaneously.
 */
 
-bool ShotcutSettings::timelineRippleAllTracks() const
+bool SnapflowSettings::timelineRippleAllTracks() const
 {
     return settings.value("timeline/rippleAllTracks", false).toBool();
 }
 
-void ShotcutSettings::setTimelineRippleAllTracks(bool b)
+void SnapflowSettings::setTimelineRippleAllTracks(bool b)
 {
     settings.setValue("timeline/rippleAllTracks", b);
     emit timelineRippleAllTracksChanged();
@@ -1153,12 +1153,12 @@ void ShotcutSettings::setTimelineRippleAllTracks(bool b)
     \brief Whether markers are moved along with ripple edits.
 */
 
-bool ShotcutSettings::timelineRippleMarkers() const
+bool SnapflowSettings::timelineRippleMarkers() const
 {
     return settings.value("timeline/rippleMarkers", false).toBool();
 }
 
-void ShotcutSettings::setTimelineRippleMarkers(bool b)
+void SnapflowSettings::setTimelineRippleMarkers(bool b)
 {
     settings.setValue("timeline/rippleMarkers", b);
     emit timelineRippleMarkersChanged();
@@ -1169,23 +1169,23 @@ void ShotcutSettings::setTimelineRippleMarkers(bool b)
     \brief Whether clip snapping is enabled on the timeline.
 */
 
-bool ShotcutSettings::timelineSnap() const
+bool SnapflowSettings::timelineSnap() const
 {
     return settings.value("timeline/snap", true).toBool();
 }
 
-void ShotcutSettings::setTimelineSnap(bool b)
+void SnapflowSettings::setTimelineSnap(bool b)
 {
     settings.setValue("timeline/snap", b);
     emit timelineSnapChanged();
 }
 
-int ShotcutSettings::timelineTrackHeight() const
+int SnapflowSettings::timelineTrackHeight() const
 {
     return qMin(settings.value("timeline/trackHeight", 50).toInt(), kMaximumTrackHeight);
 }
 
-void ShotcutSettings::setTimelineTrackHeight(int n)
+void SnapflowSettings::setTimelineTrackHeight(int n)
 {
     settings.setValue("timeline/trackHeight", qMin(n, kMaximumTrackHeight));
 }
@@ -1195,12 +1195,12 @@ void ShotcutSettings::setTimelineTrackHeight(int n)
     \brief Whether the scroll wheel zooms the timeline (instead of scrolling).
 */
 
-bool ShotcutSettings::timelineScrollZoom() const
+bool SnapflowSettings::timelineScrollZoom() const
 {
     return settings.value("timeline/scrollZoom", true).toBool();
 }
 
-void ShotcutSettings::setTimelineScrollZoom(bool b)
+void SnapflowSettings::setTimelineScrollZoom(bool b)
 {
     settings.setValue("timeline/scrollZoom", b);
     emit timelineScrollZoomChanged();
@@ -1211,68 +1211,68 @@ void ShotcutSettings::setTimelineScrollZoom(bool b)
     \brief Whether waveforms are rendered using a framebuffer (GPU) path.
 */
 
-bool ShotcutSettings::timelineFramebufferWaveform() const
+bool SnapflowSettings::timelineFramebufferWaveform() const
 {
     return settings.value("timeline/framebufferWaveform", true).toBool();
 }
 
-void ShotcutSettings::setTimelineFramebufferWaveform(bool b)
+void SnapflowSettings::setTimelineFramebufferWaveform(bool b)
 {
     settings.setValue("timeline/framebufferWaveform", b);
     emit timelineFramebufferWaveformChanged();
 }
 
-int ShotcutSettings::audioReferenceTrack() const
+int SnapflowSettings::audioReferenceTrack() const
 {
     return settings.value("timeline/audioReferenceTrack", 0).toInt();
 }
-void ShotcutSettings::setAudioReferenceTrack(int track)
+void SnapflowSettings::setAudioReferenceTrack(int track)
 {
     settings.setValue("timeline/audioReferenceTrack", track);
 }
 
-double ShotcutSettings::audioReferenceSpeedRange() const
+double SnapflowSettings::audioReferenceSpeedRange() const
 {
     return settings.value("timeline/audioReferenceSpeedRange", 0).toDouble();
 }
-void ShotcutSettings::setAudioReferenceSpeedRange(double range)
+void SnapflowSettings::setAudioReferenceSpeedRange(double range)
 {
     settings.setValue("timeline/audioReferenceSpeedRange", range);
 }
 
-bool ShotcutSettings::timelinePreviewTransition() const
+bool SnapflowSettings::timelinePreviewTransition() const
 {
     return settings.value("timeline/previewTransition", true).toBool();
 }
 
-void ShotcutSettings::setTimelinePreviewTransition(bool b)
+void SnapflowSettings::setTimelinePreviewTransition(bool b)
 {
     settings.setValue("timeline/previewTransition", b);
 }
 
-void ShotcutSettings::setTimelineScrolling(ShotcutSettings::TimelineScrolling value)
+void SnapflowSettings::setTimelineScrolling(SnapflowSettings::TimelineScrolling value)
 {
     settings.remove("timeline/centerPlayhead");
     settings.setValue("timeline/scrolling", value);
     emit timelineScrollingChanged();
 }
 
-ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
+SnapflowSettings::TimelineScrolling SnapflowSettings::timelineScrolling() const
 {
     if (settings.contains("timeline/centerPlayhead")
         && settings.value("timeline/centerPlayhead").toBool())
-        return ShotcutSettings::TimelineScrolling::CenterPlayhead;
+        return SnapflowSettings::TimelineScrolling::CenterPlayhead;
     else
-        return ShotcutSettings::TimelineScrolling(
+        return SnapflowSettings::TimelineScrolling(
             settings.value("timeline/scrolling", PageScrolling).toInt());
 }
 
-bool ShotcutSettings::timelineAutoAddTracks() const
+bool SnapflowSettings::timelineAutoAddTracks() const
 {
     return settings.value("timeline/autoAddTracks", false).toBool();
 }
 
-void ShotcutSettings::setTimelineAutoAddTracks(bool b)
+void SnapflowSettings::setTimelineAutoAddTracks(bool b)
 {
     if (b != timelineAutoAddTracks()) {
         settings.setValue("timeline/autoAddTracks", b);
@@ -1285,12 +1285,12 @@ void ShotcutSettings::setTimelineAutoAddTracks(bool b)
     \brief Whether rectangle (rubber-band) selection is enabled on the timeline.
 */
 
-bool ShotcutSettings::timelineRectangleSelect() const
+bool SnapflowSettings::timelineRectangleSelect() const
 {
     return settings.value("timeline/rectangleSelect", true).toBool();
 }
 
-void ShotcutSettings::setTimelineRectangleSelect(bool b)
+void SnapflowSettings::setTimelineRectangleSelect(bool b)
 {
     settings.setValue("timeline/rectangleSelect", b);
     emit timelineRectangleSelectChanged();
@@ -1301,12 +1301,12 @@ void ShotcutSettings::setTimelineRectangleSelect(bool b)
     \brief Whether dragging the gain handle on audio clips adjusts volume inline.
 */
 
-bool ShotcutSettings::timelineAdjustGain() const
+bool SnapflowSettings::timelineAdjustGain() const
 {
     return settings.value("timeline/adjustGain", false).toBool();
 }
 
-void ShotcutSettings::setTimelineAdjustGain(bool b)
+void SnapflowSettings::setTimelineAdjustGain(bool b)
 {
     settings.setValue("timeline/adjustGain", b);
     emit timelineAdjustGainChanged();
@@ -1317,12 +1317,12 @@ void ShotcutSettings::setTimelineAdjustGain(bool b)
     \brief Whether overlapping clips on the timeline automatically create transitions.
 */
 
-bool ShotcutSettings::timelineAllowTransitions() const
+bool SnapflowSettings::timelineAllowTransitions() const
 {
     return settings.value("timeline/allowTransitions", true).toBool();
 }
 
-void ShotcutSettings::setTimelineAllowTransitions(bool b)
+void SnapflowSettings::setTimelineAllowTransitions(bool b)
 {
     if (b != timelineAllowTransitions()) {
         settings.setValue("timeline/allowTransitions", b);
@@ -1330,22 +1330,22 @@ void ShotcutSettings::setTimelineAllowTransitions(bool b)
     }
 }
 
-QString ShotcutSettings::filterFavorite(const QString &filterName)
+QString SnapflowSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
 }
 
-void ShotcutSettings::setFilterFavorite(const QString &filterName, const QString &value)
+void SnapflowSettings::setFilterFavorite(const QString &filterName, const QString &value)
 {
     settings.setValue("filter/favorite/" + filterName, value);
 }
 
-QStringList ShotcutSettings::addOnFilterServices() const
+QStringList SnapflowSettings::addOnFilterServices() const
 {
     return settings.value("filter/addOnServices").toStringList();
 }
 
-void ShotcutSettings::setAddOnFilterServices(const QStringList &services)
+void SnapflowSettings::setAddOnFilterServices(const QStringList &services)
 {
     settings.setValue("filter/addOnServices", services);
 }
@@ -1355,12 +1355,12 @@ void ShotcutSettings::setAddOnFilterServices(const QStringList &services)
     \brief The default duration in seconds for audio fade-in transitions.
 */
 
-double ShotcutSettings::audioInDuration() const
+double SnapflowSettings::audioInDuration() const
 {
     return settings.value("filter/audioInDuration", 1.0).toDouble();
 }
 
-void ShotcutSettings::setAudioInDuration(double d)
+void SnapflowSettings::setAudioInDuration(double d)
 {
     settings.setValue("filter/audioInDuration", d);
     emit audioInDurationChanged();
@@ -1371,12 +1371,12 @@ void ShotcutSettings::setAudioInDuration(double d)
     \brief The default duration in seconds for audio fade-out transitions.
 */
 
-double ShotcutSettings::audioOutDuration() const
+double SnapflowSettings::audioOutDuration() const
 {
     return settings.value("filter/audioOutDuration", 1.0).toDouble();
 }
 
-void ShotcutSettings::setAudioOutDuration(double d)
+void SnapflowSettings::setAudioOutDuration(double d)
 {
     settings.setValue("filter/audioOutDuration", d);
     emit audioOutDurationChanged();
@@ -1387,12 +1387,12 @@ void ShotcutSettings::setAudioOutDuration(double d)
     \brief The default duration in seconds for video fade-in transitions.
 */
 
-double ShotcutSettings::videoInDuration() const
+double SnapflowSettings::videoInDuration() const
 {
     return settings.value("filter/videoInDuration", 1.0).toDouble();
 }
 
-void ShotcutSettings::setVideoInDuration(double d)
+void SnapflowSettings::setVideoInDuration(double d)
 {
     settings.setValue("filter/videoInDuration", d);
     emit videoInDurationChanged();
@@ -1403,12 +1403,12 @@ void ShotcutSettings::setVideoInDuration(double d)
     \brief The default duration in seconds for video fade-out transitions.
 */
 
-double ShotcutSettings::videoOutDuration() const
+double SnapflowSettings::videoOutDuration() const
 {
     return settings.value("filter/videoOutDuration", 1.0).toDouble();
 }
 
-void ShotcutSettings::setVideoOutDuration(double d)
+void SnapflowSettings::setVideoOutDuration(double d)
 {
     settings.setValue("filter/videoOutDuration", d);
     emit videoOutDurationChanged();
@@ -1419,12 +1419,12 @@ void ShotcutSettings::setVideoOutDuration(double d)
     \brief The curve type for audio fade-in (0 = linear, higher = more exponential).
 */
 
-int ShotcutSettings::audioInCurve() const
+int SnapflowSettings::audioInCurve() const
 {
     return settings.value("filter/audioInCurve", mlt_keyframe_linear).toInt();
 }
 
-void ShotcutSettings::setAudioInCurve(int c)
+void SnapflowSettings::setAudioInCurve(int c)
 {
     settings.setValue("filter/audioInCurve", c);
     emit audioInCurveChanged();
@@ -1435,12 +1435,12 @@ void ShotcutSettings::setAudioInCurve(int c)
     \brief The curve type for audio fade-out (0 = linear, higher = more exponential).
 */
 
-int ShotcutSettings::audioOutCurve() const
+int SnapflowSettings::audioOutCurve() const
 {
     return settings.value("filter/audioOutCurve", mlt_keyframe_linear).toInt();
 }
 
-void ShotcutSettings::setAudioOutCurve(int c)
+void SnapflowSettings::setAudioOutCurve(int c)
 {
     settings.setValue("filter/audioOutCurve", c);
     emit audioOutCurveChanged();
@@ -1448,67 +1448,67 @@ void ShotcutSettings::setAudioOutCurve(int c)
 
 /*!
     \qmlproperty bool Settings::askOutputFilter
-    \brief Whether Shotcut should prompt before applying a filter to the output node.
+    \brief Whether Snapflow should prompt before applying a filter to the output node.
 */
 
-bool ShotcutSettings::askOutputFilter() const
+bool SnapflowSettings::askOutputFilter() const
 {
     return settings.value("filter/askOutput", true).toBool();
 }
 
-void ShotcutSettings::setAskOutputFilter(bool b)
+void SnapflowSettings::setAskOutputFilter(bool b)
 {
     settings.setValue("filter/askOutput", b);
     emit askOutputFilterChanged();
 }
 
-bool ShotcutSettings::loudnessScopeShowMeter(const QString &meter) const
+bool SnapflowSettings::loudnessScopeShowMeter(const QString &meter) const
 {
     return settings.value("scope/loudness/" + meter, true).toBool();
 }
 
-void ShotcutSettings::setLoudnessScopeShowMeter(const QString &meter, bool b)
+void SnapflowSettings::setLoudnessScopeShowMeter(const QString &meter, bool b)
 {
     settings.setValue("scope/loudness/" + meter, b);
 }
 
-void ShotcutSettings::setMarkerColor(const QColor &color)
+void SnapflowSettings::setMarkerColor(const QColor &color)
 {
     settings.setValue("markers/color", color.name());
 }
 
-QColor ShotcutSettings::markerColor() const
+QColor SnapflowSettings::markerColor() const
 {
     return QColor(settings.value("markers/color", "green").toString());
 }
 
-void ShotcutSettings::setMarkersShowColumn(const QString &column, bool b)
+void SnapflowSettings::setMarkersShowColumn(const QString &column, bool b)
 {
     settings.setValue("markers/columns/" + column, b);
 }
 
-bool ShotcutSettings::markersShowColumn(const QString &column) const
+bool SnapflowSettings::markersShowColumn(const QString &column) const
 {
     return settings.value("markers/columns/" + column, true).toBool();
 }
 
-void ShotcutSettings::setMarkerSort(int column, Qt::SortOrder order)
+void SnapflowSettings::setMarkerSort(int column, Qt::SortOrder order)
 {
     settings.setValue("markers/sortColumn", column);
     settings.setValue("markers/sortOrder", order);
 }
 
-int ShotcutSettings::getMarkerSortColumn()
+int SnapflowSettings::getMarkerSortColumn()
 {
     return settings.value("markers/sortColumn", -1).toInt();
 }
 
-Qt::SortOrder ShotcutSettings::getMarkerSortOrder()
+Qt::SortOrder SnapflowSettings::getMarkerSortOrder()
 {
     return (Qt::SortOrder) settings.value("markers/sortOrder", Qt::AscendingOrder).toInt();
 }
 
-int ShotcutSettings::drawMethod() const
+int SnapflowSettings::drawMethod() const
 {
 #ifdef Q_OS_WIN
     return settings.value("opengl", Qt::AA_UseOpenGLES).toInt();
@@ -1517,12 +1517,12 @@ int ShotcutSettings::drawMethod() const
 #endif
 }
 
-void ShotcutSettings::setDrawMethod(int i)
+void SnapflowSettings::setDrawMethod(int i)
 {
     settings.setValue("opengl", i);
 }
 
-uint ShotcutSettings::gpuAdapterVendorId() const
+uint SnapflowSettings::gpuAdapterVendorId() const
 {
     // PCI vendor id of the selected GPU (0x10DE NVIDIA, 0x1002 AMD, 0x8086 Intel).
     // 0 means Automatic / system default. The vendor+device pair is the stable identity
@@ -1530,73 +1530,73 @@ uint ShotcutSettings::gpuAdapterVendorId() const
     return settings.value("player/gpuAdapterVendorId", 0).toUInt();
 }
 
-void ShotcutSettings::setGpuAdapterVendorId(uint id)
+void SnapflowSettings::setGpuAdapterVendorId(uint id)
 {
     settings.setValue("player/gpuAdapterVendorId", id);
 }
 
-uint ShotcutSettings::gpuAdapterDeviceId() const
+uint SnapflowSettings::gpuAdapterDeviceId() const
 {
     // PCI device id of the selected GPU; pairs with the vendor id to identify it.
     return settings.value("player/gpuAdapterDeviceId", 0).toUInt();
 }
 
-void ShotcutSettings::setGpuAdapterDeviceId(uint id)
+void SnapflowSettings::setGpuAdapterDeviceId(uint id)
 {
     settings.setValue("player/gpuAdapterDeviceId", id);
 }
 
-bool ShotcutSettings::safeMode() const
+bool SnapflowSettings::safeMode() const
 {
     return settings.value("safeMode", false).toBool();
 }
 
-void ShotcutSettings::setSafeMode(bool value)
+void SnapflowSettings::setSafeMode(bool value)
 {
     settings.setValue("safeMode", value);
 }
 
-bool ShotcutSettings::noUpgrade() const
+bool SnapflowSettings::noUpgrade() const
 {
     return settings.value("noupgrade", false).toBool();
 }
 
-void ShotcutSettings::setNoUpgrade(bool value)
+void SnapflowSettings::setNoUpgrade(bool value)
 {
     settings.setValue("noupgrade", value);
 }
 
-bool ShotcutSettings::checkUpgradeAutomatic()
+bool SnapflowSettings::checkUpgradeAutomatic()
 {
     return settings.value("checkUpgradeAutomatic", false).toBool();
 }
 
-void ShotcutSettings::setCheckUpgradeAutomatic(bool b)
+void SnapflowSettings::setCheckUpgradeAutomatic(bool b)
 {
     settings.setValue("checkUpgradeAutomatic", b);
 }
 
-bool ShotcutSettings::askUpgradeAutomatic()
+bool SnapflowSettings::askUpgradeAutomatic()
 {
     return settings.value("askUpgradeAutmatic", true).toBool();
 }
 
-void ShotcutSettings::setAskUpgradeAutomatic(bool b)
+void SnapflowSettings::setAskUpgradeAutomatic(bool b)
 {
     settings.setValue("askUpgradeAutmatic", b);
 }
 
-bool ShotcutSettings::askChangeVideoMode()
+bool SnapflowSettings::askChangeVideoMode()
 {
     return settings.value("askChangeVideoMode", true).toBool();
 }
 
-void ShotcutSettings::setAskChangeVideoMode(bool b)
+void SnapflowSettings::setAskChangeVideoMode(bool b)
 {
     settings.setValue("askChangeVideoMode", b);
 }
 
-void ShotcutSettings::sync()
+void SnapflowSettings::sync()
 {
     settings.sync();
 }
@@ -1606,7 +1606,7 @@ void ShotcutSettings::sync()
     \brief The path to the application data directory (read-only).
 */
 
-QString ShotcutSettings::appDataLocation() const
+QString SnapflowSettings::appDataLocation() const
 {
     if (!m_appDataLocation.isEmpty())
         return m_appDataLocation;
@@ -1614,23 +1614,23 @@ QString ShotcutSettings::appDataLocation() const
         return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 }
 
-void ShotcutSettings::setAppDataForSession(const QString &location)
+void SnapflowSettings::setAppDataForSession(const QString &location)
 {
     // This is intended to be called when using a command line option
     // to set the AppData location.
     appDataForSession = location;
     if (instance)
-        instance.reset(new ShotcutSettings(location));
+        instance.reset(new SnapflowSettings(location));
 }
 
-void ShotcutSettings::setAppDataLocally(const QString &location)
+void SnapflowSettings::setAppDataLocally(const QString &location)
 {
     // This is intended to be called when using a GUI action to set the
     // the new AppData location.
 
     // Copy the existing settings if they exist.
-    if (!QFile::exists(location + SHOTCUT_INI_FILENAME)) {
-        QSettings newSettings(location + SHOTCUT_INI_FILENAME, QSettings::IniFormat);
+    if (!QFile::exists(location + SNAPFLOW_INI_FILENAME)) {
+        QSettings newSettings(location + SNAPFLOW_INI_FILENAME, QSettings::IniFormat);
         foreach (const QString &key, settings.allKeys())
             newSettings.setValue(key, settings.value(key));
         newSettings.sync();
@@ -1642,7 +1642,7 @@ void ShotcutSettings::setAppDataLocally(const QString &location)
     localSettings.sync();
 }
 
-QStringList ShotcutSettings::layouts() const
+QStringList SnapflowSettings::layouts() const
 {
     QStringList result;
     for (const auto &s : settings.value("layout/layouts").toStringList()) {
@@ -1652,7 +1652,7 @@ QStringList ShotcutSettings::layouts() const
     return result;
 }
 
-bool ShotcutSettings::setLayout(const QString &name,
+bool SnapflowSettings::setLayout(const QString &name,
                                 const QByteArray &geometry,
                                 const QByteArray &state)
 {
@@ -1668,19 +1668,19 @@ bool ShotcutSettings::setLayout(const QString &name,
     return isNew;
 }
 
-QByteArray ShotcutSettings::layoutGeometry(const QString &name)
+QByteArray SnapflowSettings::layoutGeometry(const QString &name)
 {
     QString key = QStringLiteral("layout/%1_geometry").arg(name);
     return settings.value(key).toByteArray();
 }
 
-QByteArray ShotcutSettings::layoutState(const QString &name)
+QByteArray SnapflowSettings::layoutState(const QString &name)
 {
     QString key = QStringLiteral("layout/%1_state").arg(name);
     return settings.value(key).toByteArray();
 }
 
-bool ShotcutSettings::removeLayout(const QString &name)
+bool SnapflowSettings::removeLayout(const QString &name)
 {
     QStringList list = layouts();
     int index = list.indexOf(name);
@@ -1697,39 +1697,39 @@ bool ShotcutSettings::removeLayout(const QString &name)
     return false;
 }
 
-int ShotcutSettings::layoutMode() const
+int SnapflowSettings::layoutMode() const
 {
     return settings.value("layout/mode", -1).toInt();
 }
 
-void ShotcutSettings::setLayoutMode(int mode)
+void SnapflowSettings::setLayoutMode(int mode)
 {
     settings.setValue("layout/mode", mode);
 }
 
-bool ShotcutSettings::clearRecent() const
+bool SnapflowSettings::clearRecent() const
 {
     return settings.value("clearRecent", false).toBool();
 }
 
-void ShotcutSettings::setClearRecent(bool b)
+void SnapflowSettings::setClearRecent(bool b)
 {
     settings.setValue("clearRecent", b);
 }
 
-QString ShotcutSettings::projectsFolder() const
+QString SnapflowSettings::projectsFolder() const
 {
     return settings
         .value("projectsFolder", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
         .toString();
 }
 
-void ShotcutSettings::setProjectsFolder(const QString &path)
+void SnapflowSettings::setProjectsFolder(const QString &path)
 {
     settings.setValue("projectsFolder", path);
 }
 
-QString ShotcutSettings::audioInput() const
+QString SnapflowSettings::audioInput() const
 {
     QString defaultValue = "default";
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
@@ -1740,58 +1740,58 @@ QString ShotcutSettings::audioInput() const
     return settings.value("audioInput", defaultValue).toString();
 }
 
-void ShotcutSettings::setAudioInput(const QString &name)
+void SnapflowSettings::setAudioInput(const QString &name)
 {
     settings.setValue("audioInput", name);
 }
 
-QString ShotcutSettings::videoInput() const
+QString SnapflowSettings::videoInput() const
 {
     return settings.value("videoInput").toString();
 }
 
-void ShotcutSettings::setVideoInput(const QString &name)
+void SnapflowSettings::setVideoInput(const QString &name)
 {
     settings.setValue("videoInput", name);
 }
 
-QString ShotcutSettings::glaxnimatePath() const
+QString SnapflowSettings::glaxnimatePath() const
 {
     QDir dir(qApp->applicationDirPath());
     return settings.value("glaxnimatePath", dir.absoluteFilePath("glaxnimate")).toString();
 }
 
-void ShotcutSettings::setGlaxnimatePath(const QString &path)
+void SnapflowSettings::setGlaxnimatePath(const QString &path)
 {
     settings.setValue("glaxnimatePath", path);
 }
 
-void ShotcutSettings::resetGlaxnimatePath()
+void SnapflowSettings::resetGlaxnimatePath()
 {
     settings.remove("glaxnimatePath");
 }
 
-bool ShotcutSettings::exportRangeMarkers() const
+bool SnapflowSettings::exportRangeMarkers() const
 {
     return settings.value("exportRangeMarkers", true).toBool();
 }
 
-void ShotcutSettings::setExportRangeMarkers(bool b)
+void SnapflowSettings::setExportRangeMarkers(bool b)
 {
     settings.setValue("exportRangeMarkers", b);
 }
 
-bool ShotcutSettings::proxyEnabled() const
+bool SnapflowSettings::proxyEnabled() const
 {
     return settings.value("proxy/enabled", false).toBool();
 }
 
-void ShotcutSettings::setProxyEnabled(bool b)
+void SnapflowSettings::setProxyEnabled(bool b)
 {
     settings.setValue("proxy/enabled", b);
 }
 
-QString ShotcutSettings::proxyFolder() const
+QString SnapflowSettings::proxyFolder() const
 {
     QDir dir(appDataLocation());
     const char *subfolder = "proxies";
@@ -1802,38 +1802,38 @@ QString ShotcutSettings::proxyFolder() const
     return settings.value("proxy/folder", dir.path()).toString();
 }
 
-void ShotcutSettings::setProxyFolder(const QString &path)
+void SnapflowSettings::setProxyFolder(const QString &path)
 {
     settings.setValue("proxy/folder", path);
 }
 
-bool ShotcutSettings::proxyUseProjectFolder() const
+bool SnapflowSettings::proxyUseProjectFolder() const
 {
     return settings.value("proxy/useProjectFolder", true).toBool();
 }
 
-void ShotcutSettings::setProxyUseProjectFolder(bool b)
+void SnapflowSettings::setProxyUseProjectFolder(bool b)
 {
     settings.setValue("proxy/useProjectFolder", b);
 }
 
-bool ShotcutSettings::proxyUseHardware() const
+bool SnapflowSettings::proxyUseHardware() const
 {
     return settings.value("proxy/useHardware", false).toBool();
 }
 
-void ShotcutSettings::setProxyUseHardware(bool b)
+void SnapflowSettings::setProxyUseHardware(bool b)
 {
     settings.setValue("proxy/useHardware", b);
 }
 
-void ShotcutSettings::clearShortcuts(const QString &name)
+void SnapflowSettings::clearShortcuts(const QString &name)
 {
     QString key = "shortcuts/" + name;
     settings.remove(key);
 }
 
-void ShotcutSettings::setShortcuts(const QString &name, const QList<QKeySequence> &shortcuts)
+void SnapflowSettings::setShortcuts(const QString &name, const QList<QKeySequence> &shortcuts)
 {
     QString key = "shortcuts/" + name;
     QString shortcutSetting;
@@ -1845,7 +1845,7 @@ void ShotcutSettings::setShortcuts(const QString &name, const QList<QKeySequence
     settings.setValue(key, shortcutSetting);
 }
 
-QList<QKeySequence> ShotcutSettings::shortcuts(const QString &name)
+QList<QKeySequence> SnapflowSettings::shortcuts(const QString &name)
 {
     QString key = "shortcuts/" + name;
     QList<QKeySequence> shortcuts;
@@ -1857,72 +1857,72 @@ QList<QKeySequence> ShotcutSettings::shortcuts(const QString &name)
     return shortcuts;
 }
 
-double ShotcutSettings::slideshowImageDuration(double defaultSeconds) const
+double SnapflowSettings::slideshowImageDuration(double defaultSeconds) const
 {
     return settings.value("slideshow/clipDuration", defaultSeconds).toDouble();
 }
 
-void ShotcutSettings::setSlideshowImageDuration(double seconds)
+void SnapflowSettings::setSlideshowImageDuration(double seconds)
 {
     settings.setValue("slideshow/clipDuration", seconds);
 }
 
-double ShotcutSettings::slideshowAudioVideoDuration(double defaultSeconds) const
+double SnapflowSettings::slideshowAudioVideoDuration(double defaultSeconds) const
 {
     return settings.value("slideshow/audioVideoDuration", defaultSeconds).toDouble();
 }
 
-void ShotcutSettings::setSlideshowAudioVideoDuration(double seconds)
+void SnapflowSettings::setSlideshowAudioVideoDuration(double seconds)
 {
     settings.setValue("slideshow/audioVideoDuration", seconds);
 }
 
-int ShotcutSettings::slideshowAspectConversion(int defaultAspectConversion) const
+int SnapflowSettings::slideshowAspectConversion(int defaultAspectConversion) const
 {
     return settings.value("slideshow/aspectConversion", defaultAspectConversion).toInt();
 }
 
-void ShotcutSettings::setSlideshowAspectConversion(int aspectConversion)
+void SnapflowSettings::setSlideshowAspectConversion(int aspectConversion)
 {
     settings.setValue("slideshow/aspectConversion", aspectConversion);
 }
 
-int ShotcutSettings::slideshowZoomPercent(int defaultZoomPercent) const
+int SnapflowSettings::slideshowZoomPercent(int defaultZoomPercent) const
 {
     return settings.value("slideshow/zoomPercent", defaultZoomPercent).toInt();
 }
 
-void ShotcutSettings::setSlideshowZoomPercent(int zoomPercent)
+void SnapflowSettings::setSlideshowZoomPercent(int zoomPercent)
 {
     settings.setValue("slideshow/zoomPercent", zoomPercent);
 }
 
-double ShotcutSettings::slideshowTransitionDuration(double defaultTransitionDuration) const
+double SnapflowSettings::slideshowTransitionDuration(double defaultTransitionDuration) const
 {
     return settings.value("slideshow/transitionDuration", defaultTransitionDuration).toDouble();
 }
 
-void ShotcutSettings::setSlideshowTransitionDuration(double transitionDuration)
+void SnapflowSettings::setSlideshowTransitionDuration(double transitionDuration)
 {
     settings.setValue("slideshow/transitionDuration", transitionDuration);
 }
 
-int ShotcutSettings::slideshowTransitionStyle(int defaultTransitionStyle) const
+int SnapflowSettings::slideshowTransitionStyle(int defaultTransitionStyle) const
 {
     return settings.value("slideshow/transitionStyle", defaultTransitionStyle).toInt();
 }
 
-void ShotcutSettings::setSlideshowTransitionStyle(int transitionStyle)
+void SnapflowSettings::setSlideshowTransitionStyle(int transitionStyle)
 {
     settings.setValue("slideshow/transitionStyle", transitionStyle);
 }
 
-int ShotcutSettings::slideshowTransitionSoftness(int defaultTransitionStyle) const
+int SnapflowSettings::slideshowTransitionSoftness(int defaultTransitionStyle) const
 {
     return settings.value("slideshow/transitionSoftness", defaultTransitionStyle).toInt();
 }
 
-void ShotcutSettings::setSlideshowTransitionSoftness(int transitionSoftness)
+void SnapflowSettings::setSlideshowTransitionSoftness(int transitionSoftness)
 {
     settings.setValue("slideshow/transitionSoftness", transitionSoftness);
 }
@@ -1932,78 +1932,78 @@ void ShotcutSettings::setSlideshowTransitionSoftness(int transitionSoftness)
     \brief Whether scrubbing occurs while dragging keyframes.
 */
 
-bool ShotcutSettings::keyframesDragScrub() const
+bool SnapflowSettings::keyframesDragScrub() const
 {
     return settings.value("keyframes/dragScrub", false).toBool();
 }
 
-void ShotcutSettings::setKeyframesDragScrub(bool b)
+void SnapflowSettings::setKeyframesDragScrub(bool b)
 {
     settings.setValue("keyframes/dragScrub", b);
     emit keyframesDragScrubChanged();
 }
 
-void ShotcutSettings::setSubtitlesShowColumn(const QString &column, bool b)
+void SnapflowSettings::setSubtitlesShowColumn(const QString &column, bool b)
 {
     settings.setValue("subtitles/columns/" + column, b);
 }
 
-bool ShotcutSettings::subtitlesShowColumn(const QString &column) const
+bool SnapflowSettings::subtitlesShowColumn(const QString &column) const
 {
     return settings.value("subtitles/columns/" + column, true).toBool();
 }
 
-void ShotcutSettings::setSubtitlesTrackTimeline(bool b)
+void SnapflowSettings::setSubtitlesTrackTimeline(bool b)
 {
     settings.setValue("subtitles/trackTimeline", b);
 }
 
-bool ShotcutSettings::subtitlesTrackTimeline() const
+bool SnapflowSettings::subtitlesTrackTimeline() const
 {
     return settings.value("subtitles/trackTimeline", true).toBool();
 }
 
-void ShotcutSettings::setSubtitlesShowPrevNext(bool b)
+void SnapflowSettings::setSubtitlesShowPrevNext(bool b)
 {
     settings.setValue("subtitles/showPrevNext", b);
 }
 
-bool ShotcutSettings::subtitlesShowPrevNext() const
+bool SnapflowSettings::subtitlesShowPrevNext() const
 {
     return settings.value("subtitles/showPrevNext", true).toBool();
 }
 
-QString ShotcutSettings::speechLanguage() const
+QString SnapflowSettings::speechLanguage() const
 {
     return settings.value("speech/language", QStringLiteral("a")).toString();
 }
 
-void ShotcutSettings::setSpeechLanguage(const QString &code)
+void SnapflowSettings::setSpeechLanguage(const QString &code)
 {
     settings.setValue("speech/language", code);
 }
 
-QString ShotcutSettings::speechVoice() const
+QString SnapflowSettings::speechVoice() const
 {
     return settings.value("speech/voice", QString()).toString();
 }
 
-void ShotcutSettings::setSpeechVoice(const QString &voiceId)
+void SnapflowSettings::setSpeechVoice(const QString &voiceId)
 {
     settings.setValue("speech/voice", voiceId);
 }
 
-double ShotcutSettings::speechSpeed() const
+double SnapflowSettings::speechSpeed() const
 {
     return settings.value("speech/speed", 1.0).toDouble();
 }
 
-void ShotcutSettings::setSpeechSpeed(double speed)
+void SnapflowSettings::setSpeechSpeed(double speed)
 {
     settings.setValue("speech/speed", speed);
 }
 
-void ShotcutSettings::saveCustomColors()
+void SnapflowSettings::saveCustomColors()
 {
     // QColorDialog supports up to 48 custom colors (16 in older versions)
     QStringList colorList;
@@ -2018,7 +2018,7 @@ void ShotcutSettings::saveCustomColors()
     settings.setValue("colorDialog/customColors", colorList);
 }
 
-void ShotcutSettings::restoreCustomColors()
+void SnapflowSettings::restoreCustomColors()
 {
     QStringList colorList = settings.value("colorDialog/customColors").toStringList();
     for (int i = 0; i < colorList.size() && i < QColorDialog::customCount(); ++i) {
@@ -2033,12 +2033,12 @@ void ShotcutSettings::restoreCustomColors()
     }
 }
 
-void ShotcutSettings::setWhisperExe(const QString &path)
+void SnapflowSettings::setWhisperExe(const QString &path)
 {
     settings.setValue("subtitles/whisperExe", path);
 }
 
-QString ShotcutSettings::whisperExe()
+QString SnapflowSettings::whisperExe()
 {
     QDir dir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
@@ -2049,71 +2049,71 @@ QString ShotcutSettings::whisperExe()
     return settings.value("subtitles/whisperExe", dir.absoluteFilePath(exe)).toString();
 }
 
-void ShotcutSettings::setWhisperModel(const QString &path)
+void SnapflowSettings::setWhisperModel(const QString &path)
 {
     settings.setValue("subtitles/whisperModel", path);
 }
 
-QString ShotcutSettings::whisperModel()
+QString SnapflowSettings::whisperModel()
 {
     QDir dataPath = QmlApplication::dataDir();
-    dataPath.cd("shotcut/whisper_models");
+    dataPath.cd("snapflow/whisper_models");
     return settings.value("subtitles/whisperModel", "").toString();
 }
 
-void ShotcutSettings::setWhisperUseGpu(bool b)
+void SnapflowSettings::setWhisperUseGpu(bool b)
 {
     settings.setValue("subtitles/whisperUseGpu", b);
 }
 
-bool ShotcutSettings::whisperUseGpu() const
+bool SnapflowSettings::whisperUseGpu() const
 {
     return settings.value("subtitles/whisperUseGpu", true).toBool();
 }
 
-void ShotcutSettings::setNotesZoom(int zoom)
+void SnapflowSettings::setNotesZoom(int zoom)
 {
     settings.setValue("notes/zoom", zoom);
 }
 
-int ShotcutSettings::notesZoom() const
+int SnapflowSettings::notesZoom() const
 {
     return settings.value("notes/zoom", 0).toInt();
 }
 
-void ShotcutSettings::reset()
+void SnapflowSettings::reset()
 {
     for (auto &key : settings.allKeys()) {
         settings.remove(key);
     }
 }
 
-int ShotcutSettings::undoLimit() const
+int SnapflowSettings::undoLimit() const
 {
     return settings.value("undoLimit", 50).toInt();
 }
 
-bool ShotcutSettings::warnLowMemory() const
+bool SnapflowSettings::warnLowMemory() const
 {
     return settings.value("warnLowMemory", true).toBool();
 }
 
-int ShotcutSettings::backupPeriod() const
+int SnapflowSettings::backupPeriod() const
 {
     return settings.value("backupPeriod", 24 * 60).toInt();
 }
 
-void ShotcutSettings::setBackupPeriod(int minutes)
+void SnapflowSettings::setBackupPeriod(int minutes)
 {
     settings.setValue("backupPeriod", minutes);
 }
 
-QDateTime ShotcutSettings::lastBackupDateTime(const QString &filePath) const
+QDateTime SnapflowSettings::lastBackupDateTime(const QString &filePath) const
 {
     return settings.value("lastBackupDateTimeMap").toMap().value(filePath).toDateTime();
 }
 
-void ShotcutSettings::setLastBackupDateTime(const QString &filePath, const QDateTime &dt)
+void SnapflowSettings::setLastBackupDateTime(const QString &filePath, const QDateTime &dt)
 {
     static const int kMaxBackupEntries = 100;
     auto map = settings.value("lastBackupDateTimeMap").toMap();
@@ -2134,28 +2134,28 @@ void ShotcutSettings::setLastBackupDateTime(const QString &filePath, const QDate
     settings.setValue("lastBackupDateTimeMap", map);
 }
 
-mlt_time_format ShotcutSettings::timeFormat() const
+mlt_time_format SnapflowSettings::timeFormat() const
 {
     return (mlt_time_format) settings.value("timeFormat", mlt_time_clock).toInt();
 }
 
-void ShotcutSettings::setTimeFormat(int format)
+void SnapflowSettings::setTimeFormat(int format)
 {
     settings.setValue("timeFormat", format);
     emit timeFormatChanged();
 }
 
-bool ShotcutSettings::askFlatpakWrappers()
+bool SnapflowSettings::askFlatpakWrappers()
 {
     return settings.value("flatpakWrappers", true).toBool();
 }
 
-void ShotcutSettings::setAskFlatpakWrappers(bool b)
+void SnapflowSettings::setAskFlatpakWrappers(bool b)
 {
     settings.setValue("flatpakWrappers", b);
 }
 
-QString ShotcutSettings::dockerPath() const
+QString SnapflowSettings::dockerPath() const
 {
 #if defined(Q_OS_MAC)
     return settings.value("dockerPath", "/usr/local/bin/docker").toString();
@@ -2167,12 +2167,12 @@ QString ShotcutSettings::dockerPath() const
 #endif
 }
 
-void ShotcutSettings::setDockerPath(const QString &path)
+void SnapflowSettings::setDockerPath(const QString &path)
 {
     settings.setValue("dockerPath", path);
 }
 
-QString ShotcutSettings::chromiumPath() const
+QString SnapflowSettings::chromiumPath() const
 {
 #if defined(Q_OS_MAC)
     return settings.value("chromiumPath", "/Applications/Google Chrome.app").toString();
@@ -2184,17 +2184,17 @@ QString ShotcutSettings::chromiumPath() const
 #endif
 }
 
-void ShotcutSettings::setChromiumPath(const QString &path)
+void SnapflowSettings::setChromiumPath(const QString &path)
 {
     settings.setValue("chromiumPath", path);
 }
 
-QString ShotcutSettings::screenRecorderPath() const
+QString SnapflowSettings::screenRecorderPath() const
 {
     return settings.value("screenRecorderPath", "obs").toString();
 }
 
-void ShotcutSettings::setScreenRecorderPath(const QString &path)
+void SnapflowSettings::setScreenRecorderPath(const QString &path)
 {
     settings.setValue("screenRecorderPath", path);
 }

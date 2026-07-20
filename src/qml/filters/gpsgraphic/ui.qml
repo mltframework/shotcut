@@ -20,8 +20,8 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtQuick.Window
-import Shotcut.Controls as Shotcut
-import org.shotcut.qml as Shotcut
+import Snapflow.Controls as Snapflow
+import org.snapflow.qml as Snapflow
 
 Item {
     //keep in UI order for sanity!
@@ -386,16 +386,16 @@ Item {
         setControls();
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: gpsFile
     }
 
-    Shotcut.File {
+    Snapflow.File {
         id: bgFile
     }
 
     //gps funcs
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: fileDialog
 
         title: qsTr("Select GPS File")
@@ -437,7 +437,7 @@ Item {
         }
     }
 
-    Shotcut.FileDialog {
+    Snapflow.FileDialog {
         id: selectBgImage
 
         title: qsTr("Select Background Image")
@@ -457,7 +457,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Shotcut.Button {
+        Snapflow.Button {
             id: openButton
 
             text: qsTr('Open file')
@@ -472,7 +472,7 @@ Item {
 
             Layout.fillWidth: true
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 id: fileLabelTip
             }
         }
@@ -483,7 +483,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             Layout.topMargin: 10
@@ -510,13 +510,13 @@ Item {
             text: qsTr('GPS offset')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This is added to video time to sync with gps time.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_majoroffset_sign
 
                 implicitWidth: 39
@@ -529,7 +529,7 @@ Item {
                     recompute_time_offset();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('+ : Adds time to video (use if GPS is ahead).\n - : Subtracts time from video (use if video is ahead).')
                 }
 
@@ -570,7 +570,7 @@ Item {
                     onClicked: offset_days.forceActiveFocus()
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of days to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -609,7 +609,7 @@ Item {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of hours to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -648,7 +648,7 @@ Item {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of minutes to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -687,7 +687,7 @@ Item {
                     }
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Number of seconds to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.')
                 }
 
@@ -698,7 +698,7 @@ Item {
             }
 
             //buttons:
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'media-skip-backward'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -706,12 +706,12 @@ Item {
                     set_sec_offset_to_textfields(filter.get('auto_gps_offset_start'));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Sync start of GPS to start of video file.\nTip: use this if you started GPS and video recording at the same time.')
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'document-open-recent'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -719,12 +719,12 @@ Item {
                     set_sec_offset_to_textfields(parseInt(Number(filter.get('time_offset'))) + parseInt(Number(js_tz_offset)));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Remove timezone (%1 seconds) time from video file (convert to UTC).\nTip: use this if your video camera doesn\'t have timezone settings as it will set local time as UTC.'.arg(js_tz_offset))
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'format-indent-less'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -732,12 +732,12 @@ Item {
                     set_sec_offset_to_textfields(parseInt(Number(filter.get('time_offset')) - producer.length / profile.fps));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Fix video start time: if file time is actually end time, press this button to subtract file length (%1 seconds) from GPS offset.'.arg(parseInt(producer.length / profile.fps)))
                 }
             }
 
-            Shotcut.Button {
+            Snapflow.Button {
                 icon.name: 'media-playback-pause'
                 implicitWidth: 20
                 implicitHeight: 20
@@ -745,12 +745,12 @@ Item {
                     set_sec_offset_to_textfields(filter.get('auto_gps_offset_now'));
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Sync start of GPS to current video time.\nTip: use this if you recorded the moment of the first GPS fix.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: set_sec_offset_to_textfields(0)
             }
         }
@@ -759,13 +759,13 @@ Item {
             text: qsTr('GPS smoothing')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Average nearby GPS points to smooth out errors.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_smoothing
 
                 function get_smooth_index_from_val(val) {
@@ -836,7 +836,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     combo_smoothing.currentIndex = 2;
                     filter.set('smoothing_value', 5);
@@ -848,13 +848,13 @@ Item {
             text: qsTr('Video speed')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.')
             }
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: speed_multiplier
 
                 value: 1
@@ -871,12 +871,12 @@ Item {
                     filter.set('speed_multiplier', speed_multiplier.value);
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     filter.set('speed_multiplier', 1);
                     speed_multiplier.value = 1;
@@ -894,13 +894,13 @@ Item {
             text: qsTr('Data source')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Choose which data type is used for graph drawing.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_data_source
 
                 implicitWidth: 300
@@ -919,13 +919,13 @@ Item {
             text: qsTr('Graph type')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Graph types can add advanced interactions.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_graph_type
 
                 implicitWidth: 300
@@ -937,7 +937,7 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Standard = just a static map.\nFollow dot = centers on the current location.\nSpeedometer = draws a simple speedometer.')
                 }
             }
@@ -947,7 +947,7 @@ Item {
             text: qsTr('Trim time')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Hides part of the graph at beginning or end.\nThis does not recompute min/max for any field.')
             }
         }
@@ -956,7 +956,7 @@ Item {
             columns: 2
 
             RowLayout {
-                Shotcut.DoubleSpinBox {
+                Snapflow.DoubleSpinBox {
                     id: spin_start
 
                     value: 0
@@ -974,7 +974,7 @@ Item {
                         setControls();
                     }
 
-                    Shotcut.HoverTip {
+                    Snapflow.HoverTip {
                         text: qsTr('Hides part of the beginning of the graph.')
                     }
                 }
@@ -1000,7 +1000,7 @@ Item {
                     }
                 }
 
-                Shotcut.DoubleSpinBox {
+                Snapflow.DoubleSpinBox {
                     id: spin_end
 
                     value: 100
@@ -1018,13 +1018,13 @@ Item {
                         setControls();
                     }
 
-                    Shotcut.HoverTip {
+                    Snapflow.HoverTip {
                         text: qsTr('Hides part of the end of the graph.')
                     }
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1039,13 +1039,13 @@ Item {
             text: qsTr('Crop horizontal')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Zooms in on the graph on the horizontal axis (longitude if map, time if simple graph).\nThe number is either a percentage or a numeric value interpreted as the legend type.\nThis field is not applicable for Speedometer type.')
             }
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: spin_left
 
                 horizontalAlignment: Qt.AlignRight
@@ -1061,7 +1061,7 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Crops the graph from the left side.')
                 }
             }
@@ -1087,7 +1087,7 @@ Item {
                 }
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: spin_right
 
                 value: 100
@@ -1104,12 +1104,12 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Crops the graph from the right side. This value is ignored if mode is Follow dot.')
                 }
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_cropmode_h
 
                 implicitWidth: 40
@@ -1122,16 +1122,16 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('The crop values are interpreted as a percentage of total or as an absolute value (in legend unit).')
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Input for horizontal crops can be a percentage or an absolute value.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1147,13 +1147,13 @@ Item {
             text: qsTr('Crop vertical')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Zooms in on the graph on the vertical axis (latitude if map, value if simple graph).\nThe number is either a percentage or a numeric value interpreted as the legend type.\nThis field affects min/max values on the Speedometer type.')
             }
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: spin_bot
 
                 value: 0
@@ -1170,7 +1170,7 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Crops the graph from the bottom side.')
                 }
             }
@@ -1196,7 +1196,7 @@ Item {
                 }
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: spin_top
 
                 value: 100
@@ -1213,12 +1213,12 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Crops the graph from the top side. This value is ignored if mode is Follow dot.')
                 }
             }
 
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_cropmode_v
 
                 implicitWidth: 40
@@ -1231,16 +1231,16 @@ Item {
                     setControls();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('The crop values are interpreted as a percentage of total or as an absolute value (in legend unit).')
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Input for vertical crops can be a percentage or an absolute value.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1262,13 +1262,13 @@ Item {
             text: qsTr('Color style')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Choose how you want to color the graph line.')
             }
         }
 
         RowLayout {
-            Shotcut.ComboBox {
+            Snapflow.ComboBox {
                 id: combo_color_style
 
                 function get_combo_gradient_nr_colors() {
@@ -1302,13 +1302,13 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Color by Altitude/HR only work if there are recorded values in the gps file.\nFor speedometer type, only first 2 colors are used.')
             }
         }
 
         RowLayout {
-            Shotcut.GradientControl {
+            Snapflow.GradientControl {
                 id: colGradient
 
                 function set_defcolors_in_gradient_control() {
@@ -1333,7 +1333,7 @@ Item {
                     filter.setGradient('color', colors);
                 }
 
-                Shotcut.UndoButton {
+                Snapflow.UndoButton {
                     onClicked: {
                         if (_disableUpdate)
                             return;
@@ -1348,7 +1348,7 @@ Item {
             text: qsTr('Now dot')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Draw a dot showing current position on the graph.\nFor speedometer type, this is the needle.')
             }
         }
@@ -1366,12 +1366,12 @@ Item {
                 text: qsTr('Color')
                 Layout.alignment: Qt.AlignRight
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Set the color of the inside of the now dot (or needle).')
                 }
             }
 
-            Shotcut.ColorPicker {
+            Snapflow.ColorPicker {
                 id: now_dot_color
 
                 eyedropper: true
@@ -1383,7 +1383,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     now_dot_color.value = default_now_dot;
                     filter.set('now_dot_color', default_now_dot);
@@ -1395,7 +1395,7 @@ Item {
                 leftPadding: 5
                 Layout.alignment: Qt.AlignRight
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Draw a large white text showing the current value.\nThe legend unit (if present) will be appended at the end.')
                 }
             }
@@ -1413,13 +1413,13 @@ Item {
             text: qsTr('Rotation')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Rotate the entire graph. Speedometer also rotates internal text.')
             }
         }
 
         RowLayout {
-            Shotcut.SliderSpinner {
+            Snapflow.SliderSpinner {
                 id: graph_rotation
 
                 minimumValue: -360
@@ -1433,7 +1433,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1447,13 +1447,13 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Set the thickness of the graph line. Does not affect speedometer.')
             }
         }
 
         RowLayout {
-            Shotcut.SliderSpinner {
+            Snapflow.SliderSpinner {
                 id: thicknessSlider
 
                 minimumValue: 1
@@ -1467,7 +1467,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1481,7 +1481,7 @@ Item {
             text: qsTr('Draw legend')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Draw 5 horizontal white lines with individual values for graph readability. 2D map also draws vertical (longitude) lines.\nFor speedometer this draws text for divisions.')
             }
         }
@@ -1498,7 +1498,7 @@ Item {
                 text: qsTr('Unit')
                 Layout.alignment: Qt.AlignRight
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('This will be used in legend text if active and in absolute value math.')
                 }
             }
@@ -1510,12 +1510,12 @@ Item {
                 implicitWidth: 80
                 onEditingFinished: filter.set('legend_unit', legend_unit.text)
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Defaults are km/h (speed) and meters (altitude).\n Available options: km/h, mi/h, nm/h (kn), m/s, ft/s.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
                         return;
@@ -1531,7 +1531,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectX
 
                 value: filterRect.x
@@ -1554,7 +1554,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectY
 
                 value: filterRect.y
@@ -1571,7 +1571,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     rectX.value = profile.width * 0.1;
                     rectY.value = profile.height * 0.1;
@@ -1586,7 +1586,7 @@ Item {
         }
 
         RowLayout {
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectW
 
                 value: filterRect.width
@@ -1609,7 +1609,7 @@ Item {
                 horizontalAlignment: Qt.AlignHCenter
             }
 
-            Shotcut.DoubleSpinBox {
+            Snapflow.DoubleSpinBox {
                 id: rectH
 
                 value: filterRect.height
@@ -1626,7 +1626,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     //for map, try to compute height from width using map_aspect_ratio and the crop values
                     if (combo_data_source.currentIndex === 0) {
@@ -1644,7 +1644,7 @@ Item {
                     setFilter();
                 }
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Sets the height to the correct map aspect ratio or 1:1.')
                 }
             }
@@ -1660,7 +1660,7 @@ Item {
             text: qsTr('Image path')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Choose an image to overlay behind the graph. Tip: you can use an actual map image to make the GPS track more interesting.')
             }
         }
@@ -1684,7 +1684,7 @@ Item {
                     onClicked: contextMenu.popup()
                 }
 
-                Shotcut.EditMenu {
+                Snapflow.EditMenu {
                     id: contextMenu
                 }
             }
@@ -1695,7 +1695,7 @@ Item {
                 implicitHeight: 20
                 onClicked: bg_img_path.text = "! " + qsTr("GPS file center is: ") + filter.get("map_coords_hint")
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Get the center coordinate of GPS map. This does not change with trim or crop.\nTIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).\nGoogle Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.')
                 }
             }
@@ -1706,12 +1706,12 @@ Item {
                 implicitHeight: 20
                 onClicked: selectBgImage.open()
 
-                Shotcut.HoverTip {
+                Snapflow.HoverTip {
                     text: qsTr('Browse for an image file to be assigned as graph background.')
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     bg_img_path.text = "";
                     filter.set("bg_img_path", "");
@@ -1723,13 +1723,13 @@ Item {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Increase or decrease the size of the background image.\nValues smaller than 1 will zoom into image.')
             }
         }
 
         RowLayout {
-            Shotcut.SliderSpinner {
+            Snapflow.SliderSpinner {
                 id: slider_scaleW
 
                 minimumValue: 0
@@ -1743,7 +1743,7 @@ Item {
                 }
             }
 
-            Shotcut.UndoButton {
+            Snapflow.UndoButton {
                 onClicked: {
                     slider_scaleW.value = 1;
                     filter.set('bg_scale_w', 1);
@@ -1771,7 +1771,7 @@ Item {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Detected date-time for the video file.')
             }
         }
@@ -1782,7 +1782,7 @@ Item {
             text: filter.get('video_start_text')
             Layout.alignment: Qt.AlignLeft
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: "This time will be used for synchronization."
             }
         }
@@ -1794,7 +1794,7 @@ Item {
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('Detected date-time for the GPS file.')
             }
         }
@@ -1805,7 +1805,7 @@ Item {
             text: filter.get('gps_start_text')
             Layout.alignment: Qt.AlignLeft
 
-            Shotcut.HoverTip {
+            Snapflow.HoverTip {
                 text: qsTr('This time will be used for synchronization.')
             }
         }

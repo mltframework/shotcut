@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import QtQuick
-import org.shotcut.qml
+import org.snapflow.qml
 
 Metadata {
     type: Metadata.Filter
@@ -25,18 +25,18 @@ Metadata {
     qml: 'ui.qml'
     vui: 'vui.qml'
     icon: 'icon.webp'
-    help: 'https://forum.shotcut.org/t/corner-pin-video-filter/17413/1'
+    help: 'https://forum.snapflow.org/t/corner-pin-video-filter/17413/1'
 
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['0', '1', '2', '3', '4', '5', '6', '7', '9', '10', '13', 'shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+        simpleProperties: ['0', '1', '2', '3', '4', '5', '6', '7', '9', '10', '13', 'snapflow:corner1', 'snapflow:corner2', 'snapflow:corner3', 'snapflow:corner4']
         parameters: [
             Parameter {
                 name: qsTr('Corners')
-                property: 'shotcut:corner1'
+                property: 'snapflow:corner1'
                 gangedProperties: ['0', '1', '2', '3', '4', '5', '6', '7']
-                gangedRectProperties: ['shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+                gangedRectProperties: ['snapflow:corner1', 'snapflow:corner2', 'snapflow:corner3', 'snapflow:corner4']
             },
             Parameter {
                 name: qsTr('Stretch X')

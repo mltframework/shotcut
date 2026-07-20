@@ -17,9 +17,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Shotcut.Controls as Shotcut
+import Snapflow.Controls as Snapflow
 
-Shotcut.KeyframableFilter {
+Snapflow.KeyframableFilter {
     property string cutoffProperty: '0'
     property string stagesProperty: '1'
     property string wetnessProperty: 'wetness'
@@ -75,7 +75,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.Preset {
+        Snapflow.Preset {
             id: preset
 
             parameters: [cutoffProperty, stagesProperty, wetnessProperty, channelMask.channelMaskProperty]
@@ -95,7 +95,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderCutoff
 
             minimumValue: 5
@@ -104,11 +104,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(cutoffProperty, value, cutoffKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderCutoff.value = 2637
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: cutoffKeyframesButton
 
             onToggled: {
@@ -122,7 +122,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderStages
 
             minimumValue: 1
@@ -130,11 +130,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(stagesProperty, value, stagesKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderStages.value = 1
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: stagesKeyframesButton
 
             onToggled: {
@@ -148,7 +148,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
+        Snapflow.SliderSpinner {
             id: sliderWetness
 
             minimumValue: 0
@@ -159,11 +159,11 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(wetnessProperty, value / maximumValue, wetnessKeyframesButton, getPosition())
         }
 
-        Shotcut.UndoButton {
+        Snapflow.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
-        Shotcut.KeyframesButton {
+        Snapflow.KeyframesButton {
             id: wetnessKeyframesButton
 
             onToggled: {
@@ -177,7 +177,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.ChannelMask {
+        Snapflow.ChannelMask {
             id: channelMask
 
             Layout.columnSpan: 2

@@ -27,7 +27,7 @@
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-#include "shotcut_mlt_properties.h"
+#include "snapflow_mlt_properties.h"
 #include "util.h"
 
 #include <QApplication>
@@ -338,7 +338,7 @@ void AlignAudioDialog::rebuildClipList()
         auto info = m_model->findClipByUuid(uuid, trackIndex, clipIndex);
         if (info && info->cut && info->cut->is_valid()) {
             QString error;
-            QString clipName = info->producer->get(kShotcutCaptionProperty);
+            QString clipName = info->producer->get(kSnapflowCaptionProperty);
             if (clipName.isNull() || clipName.isEmpty())
                 clipName = Util::baseName(ProxyManager::resource(*info->producer));
             if (clipName == "<producer>" || clipName.isNull() || clipName.isEmpty())
@@ -347,9 +347,9 @@ void AlignAudioDialog::rebuildClipList()
                 error = tr("This clip will be skipped because it is on the reference track.");
             } else {
                 // Only support avformat clips
-                QString shotcutProducer(info->producer->get(kShotcutProducerProperty));
+                QString snapflowProducer(info->producer->get(kSnapflowProducerProperty));
                 QString service(info->producer->get("mlt_service"));
-                if (!service.startsWith("avformat") && !shotcutProducer.startsWith("avformat"))
+                if (!service.startsWith("avformat") && !snapflowProducer.startsWith("avformat"))
                     error = tr("This item can not be aligned.");
             }
             m_alignClipsModel.addClip(clipName,
@@ -381,9 +381,9 @@ void AlignAudioDialog::process()
         if (!info || !info->cut || !info->cut->is_valid()) {
             continue;
         }
-        QString shotcutProducer(info->producer->get(kShotcutProducerProperty));
+        QString snapflowProducer(info->producer->get(kSnapflowProducerProperty));
         QString service(info->producer->get("mlt_service"));
-        if (!service.startsWith("avformat") && !shotcutProducer.startsWith("avformat")) {
+        if (!service.startsWith("avformat") && !snapflowProducer.startsWith("avformat")) {
             m_clipReaders.append(nullptr);
         } else if (trackIndex == referenceTrackIndex) {
             m_clipReaders.append(nullptr);
