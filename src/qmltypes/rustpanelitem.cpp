@@ -7,6 +7,7 @@
 #include <QHoverEvent>
 #include <QPainter>
 #include <QCursor>
+#include <QEvent>
 #include <QDebug>
 
 RustPanelItem::RustPanelItem(QQuickItem *parent)
@@ -37,6 +38,22 @@ RustPanelItem::~RustPanelItem()
 {
     if (m_handle)
         panel_rust_destroy(m_handle);
+}
+
+bool RustPanelItem::event(QEvent *event)
+{
+    // See the declaration's doc comment in rustpanelitem.h: while this
+    // item has focus, claim every ShortcutOverride so global single-key
+    // app shortcuts (timeline's Backspace/Delete/Z/X) never win over
+    // typing/editing in a focused Slint TextInput -- the actual key still
+    // reaches keyPressEvent() and Slint's own focused element right
+    // afterward exactly as before; this only stops Qt's shortcut system
+    // from intercepting it first.
+    if (event->type() == QEvent::ShortcutOverride && hasFocus()) {
+        event->accept();
+        return true;
+    }
+    return QQuickPaintedItem::event(event);
 }
 
 void RustPanelItem::ensureHandle()

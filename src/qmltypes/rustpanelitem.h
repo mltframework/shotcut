@@ -29,6 +29,17 @@ public slots:
     void setProjectPath(const QString &path);
 
 protected:
+    // Qt's shortcut dispatch sends every focused item a ShortcutOverride
+    // event before delivering the real key press; a standard QWidget text
+    // input (QLineEdit et al.) accepts it so single-key global shortcuts
+    // elsewhere in the app (timeline's Backspace/Delete/Z/X = Lift/Ripple
+    // Delete) don't steal the keystroke instead of it reaching the field.
+    // RustPanelItem never participated in that protocol, so those global
+    // shortcuts silently won over every text field in the chat panel
+    // (thread rename, agent profile fields, etc.) whenever this item held
+    // focus -- accepting it here while focused restores normal typing/
+    // editing precedence, matching how those built-in widgets behave.
+    bool event(QEvent *event) override;
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
