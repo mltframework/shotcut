@@ -34,6 +34,14 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+    // tasks/v2/enhance.yaml#task-4: hover-only mouse movement (no button
+    // held) was never forwarded to Slint at all -- setAcceptHoverEvents(true)
+    // in the constructor plus these two overrides close that gap, so
+    // has-hover-driven state (hover-tinted backgrounds, mouse-cursor
+    // bindings) can update the way it does under Slint's own built-in
+    // windowing backends.
+    void hoverMoveEvent(QHoverEvent *event) override;
+    void hoverLeaveEvent(QHoverEvent *event) override;
 
 private:
     void ensureHandle();

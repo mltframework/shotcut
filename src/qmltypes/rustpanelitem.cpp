@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QHoverEvent>
 #include <QPainter>
 #include <QDebug>
 
@@ -11,6 +12,11 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     : QQuickPaintedItem(parent)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
+    // tasks/v2/enhance.yaml#task-4: without this, Qt never delivers
+    // hoverMoveEvent/hoverLeaveEvent at all, so has-hover-driven state
+    // inside the Slint scene (hover-tinted backgrounds, mouse-cursor
+    // bindings) could never update outside of an actual click.
+    setAcceptHoverEvents(true);
     setFlag(QQuickItem::ItemHasContents, true);
     // Needed so the chat compose box (a Slint TextInput) can actually
     // receive keyPressEvent()s once clicked -- see mousePressEvent().
@@ -82,6 +88,28 @@ void RustPanelItem::mousePressEvent(QMouseEvent *event)
 
 void RustPanelItem::mouseReleaseEvent(QMouseEvent *event)
 {
+    event->accept();
+}
+
+void RustPanelItem::hoverMoveEvent(QHoverEvent *event)
+{
+    ensureHandle();
+    if (m_handle) {
+        const QPointF pos = event->position();
+        if (panel_rust_input_hover(m_handle,
+                                    static_cast<unsigned int>(qMax(0.0, pos.x())),
+                                    static_cast<unsigned int>(qMax(0.0, pos.y()))))
+            update();
+    }
+    event->accept();
+}
+
+void RustPanelItem::hoverLeaveEvent(QHoverEvent *event)
+{
+    if (m_handle) {
+        if (panel_rust_input_hover_exit(m_handle))
+            update();
+    }
     event->accept();
 }
 

@@ -10,6 +10,13 @@ struct PanelHandle;
 PanelHandle *panel_rust_create(unsigned int width, unsigned int height);
 void panel_rust_destroy(PanelHandle *handle);
 bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y);
+// Hover-only pointer movement (no button held) / the pointer leaving the
+// panel's bounds entirely -- tasks/v2/enhance.yaml#task-4. Needed for
+// has-hover-driven state (hover-tinted backgrounds, mouse-cursor bindings)
+// to update at all outside of a click; see RustPanelItem's
+// hoverMoveEvent/hoverLeaveEvent overrides.
+bool panel_rust_input_hover(PanelHandle *handle, unsigned int x, unsigned int y);
+bool panel_rust_input_hover_exit(PanelHandle *handle);
 // qt_key is QKeyEvent::key(); text/text_len is QKeyEvent::text() as UTF-8
 // (may be empty for pure modifier presses). See panel-rust's map_qt_key
 // for the Qt -> Slint key mapping this expects.

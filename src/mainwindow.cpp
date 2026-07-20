@@ -908,6 +908,16 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::producerOpened,
             m_chatRustDock,
             &ChatRustDock::updateProjectPath);
+    // tasks/v2/enhance.yaml#task-3's "AI" native-menu-bar option: a
+    // View-menu toggle for this dock's visibility, same idiom every other
+    // dock in this function uses (m_xxxDock->toggleViewAction() added
+    // straight to menuView) -- toggleViewAction() is Qt's own
+    // always-correct show/hide-in-sync-with-checkstate action, not a
+    // custom hand-rolled one, so there's no separate show()/hide() slot
+    // to keep in sync. Text overridden to "AI" (the dock's own window
+    // title stays the more descriptive "Chat (Rust)" for its title bar).
+    m_chatRustDock->toggleViewAction()->setText(tr("AI"));
+    ui->menuView->addAction(m_chatRustDock->toggleViewAction());
     // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
     // ~20% of the main window's width on a fresh launch/profile, while
     // staying natively resizable afterward -- QDockWidget/QMainWindow's
