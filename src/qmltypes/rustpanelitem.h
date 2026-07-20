@@ -65,6 +65,16 @@ protected:
 private:
     void ensureHandle();
     void poll();
+    // Recomputes m_pollTimer's interval from window()->screen()->
+    // refreshRate(), clamped to [kMinPollFps, kMaxPollFps]. Called on
+    // construction (screen not known yet -> falls back to kMinPollFps),
+    // whenever this item's window changes, and whenever that window's
+    // screen or the screen's reported refresh rate changes (covers
+    // dragging the window to a different-refresh-rate monitor).
+    void updatePollIntervalForRefreshRate();
+
+    static constexpr qreal kMinPollFps = 60.0;
+    static constexpr qreal kMaxPollFps = 90.0;
 
     PanelHandle *m_handle = nullptr;
     QTimer m_pollTimer;

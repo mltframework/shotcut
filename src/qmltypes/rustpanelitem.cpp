@@ -6,6 +6,8 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QQuickWindow>
+#include <QScreen>
 #include <QDebug>
 
 bool RustPanelItem::invokeCommand(Command command)
@@ -54,9 +56,17 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     // Phase 4: nothing else drives this single-threaded render loop to
     // notice background agent activity (see agent_bridge.rs's module
     // docs) -- poll on a plain timer and repaint if anything changed.
-    // 80ms is well under human-perceptible chat latency and nowhere near
-    // a hot loop.
-    m_pollTimer.setInterval(80);
+    // Interval targets the real display refresh rate (60-90fps, see
+    // updatePollIntervalForRefreshRate()) instead of a fixed 80ms
+    // (12.5fps) -- animations (hover fades, the sidebar's `animate
+    // width`, the loading spinner, Flickable momentum) only ever advance
+    // on this tick (see panel_rust_poll's doc comment in lib.rs), so a
+    // fixed low-rate poll was capping every animation's smoothness well
+    // below what the display can actually show, independent of how fast
+    // the panel itself could render a frame.
+    updatePollIntervalForRefreshRate();
+    connect(this, &QQuickItem::windowChanged, this,
+            &RustPanelItem::updatePollIntervalForRefreshRate);
     connect(&m_pollTimer, &QTimer::timeout, this, &RustPanelItem::poll);
     m_pollTimer.start();
 }
@@ -65,6 +75,30 @@ RustPanelItem::~RustPanelItem()
 {
     if (m_handle)
         panel_rust_destroy(m_handle);
+}
+
+void RustPanelItem::updatePollIntervalForRefreshRate()
+{
+    qreal targetFps = kMinPollFps;
+    if (QQuickWindow *win = window()) {
+        if (QScreen *screen = win->screen()) {
+            const qreal refreshRate = screen->refreshRate();
+            // Some platforms/backends (notably under Xvfb, as this repo's
+            // own host-e2e/VNC-dev harnesses run) report 0 or a negative
+            // placeholder rather than a real rate -- fall back to
+            // kMinPollFps rather than let that collapse the poll interval
+            // to something absurd via qBound's lower-clamp-first behavior.
+            if (refreshRate > 0)
+                targetFps = qBound(kMinPollFps, refreshRate, kMaxPollFps);
+            connect(win, &QWindow::screenChanged, this,
+                    &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
+            connect(screen, &QScreen::refreshRateChanged, this,
+                    &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
+        }
+    }
+    const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
+    if (m_pollTimer.interval() != intervalMs)
+        m_pollTimer.setInterval(intervalMs);
 }
 
 void RustPanelItem::ensureHandle()
