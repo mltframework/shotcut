@@ -18,6 +18,13 @@ bool panel_rust_input_scroll(PanelHandle *handle, float x, float y, float delta_
 // QKeyEvent::modifiers() bitmask (Qt::KeyboardModifiers). See panel-rust's
 // map_qt_key for the Qt -> Slint key mapping this expects.
 bool panel_rust_input_key(PanelHandle *handle, int qt_key, const unsigned char *text, size_t text_len, bool pressed, int modifiers);
+// Focus-independent command dispatch for host-global shortcuts (switch
+// thread, open thread search) that must work even when panel_rust_input_key
+// above would drop the event because neither the compose box nor a local
+// terminal owns Slint focus. See panel-rust's panel_rust_invoke_command doc
+// comment for the command ids (0 = previous thread, 1 = next thread,
+// 2 = open thread search).
+bool panel_rust_invoke_command(PanelHandle *handle, int command);
 // theme is "dark"/"light"/etc, per MainWindow::changeTheme()'s resolved
 // theme name.
 bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);

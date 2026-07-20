@@ -2,7 +2,9 @@
 #include "qmltypes/rustpanelitem.h"
 #include "mainwindow.h"
 
+#include <QKeySequence>
 #include <QQuickView>
+#include <QShortcut>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -40,10 +42,36 @@ ChatRustDock::ChatRustDock(QWidget *parent)
     // that doesn't exist in this app (theme switches require a restart,
     // see MainWindow::restartAfterChangeTheme()).
     applyTheme(MainWindow::resolvedTheme());
+
+    // Window-wide so they fire regardless of which widget in the main
+    // window currently has focus -- see the header comment. Checked against
+    // Shotcut's own action shortcut table when this plan was written; none
+    // used Ctrl+Alt+Up/Down or bare Ctrl+K.
+    m_previousThreadShortcut = new QShortcut(QKeySequence("Ctrl+Alt+Up"), this);
+    m_previousThreadShortcut->setContext(Qt::WindowShortcut);
+    connect(m_previousThreadShortcut, &QShortcut::activated, this,
+            [this]() { invokePanelCommand(RustPanelItem::PreviousThread); });
+
+    m_nextThreadShortcut = new QShortcut(QKeySequence("Ctrl+Alt+Down"), this);
+    m_nextThreadShortcut->setContext(Qt::WindowShortcut);
+    connect(m_nextThreadShortcut, &QShortcut::activated, this,
+            [this]() { invokePanelCommand(RustPanelItem::NextThread); });
+
+    m_openSearchShortcut = new QShortcut(QKeySequence("Ctrl+K"), this);
+    m_openSearchShortcut->setContext(Qt::WindowShortcut);
+    connect(m_openSearchShortcut, &QShortcut::activated, this,
+            [this]() { invokePanelCommand(RustPanelItem::OpenThreadSearch); });
 }
 
 void ChatRustDock::applyTheme(const QString &theme)
 {
     if (m_panel)
         m_panel->setTheme(theme);
+}
+
+void ChatRustDock::invokePanelCommand(int command)
+{
+    if (!isVisible() || !m_panel)
+        return;
+    m_panel->invokeCommand(static_cast<RustPanelItem::Command>(command));
 }

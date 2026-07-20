@@ -1,11 +1,46 @@
 #include "rustpanelitem.h"
 #include "panel_ffi.h"
 
+#include <QEvent>
 #include <QImage>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QDebug>
+
+bool RustPanelItem::invokeCommand(Command command)
+{
+    ensureHandle();
+    if (!m_handle)
+        return false;
+    return panel_rust_invoke_command(m_handle, static_cast<int>(command));
+}
+
+namespace {
+bool isThreadCommandChord(const QKeyEvent *event)
+{
+    const Qt::KeyboardModifiers mods = event->modifiers();
+    if (mods.testFlag(Qt::ControlModifier) && mods.testFlag(Qt::AltModifier)
+        && (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down))
+        return true;
+    if (mods.testFlag(Qt::ControlModifier) && !mods.testFlag(Qt::AltModifier)
+        && !mods.testFlag(Qt::ShiftModifier) && event->key() == Qt::Key_K)
+        return true;
+    return false;
+}
+} // namespace
+
+bool RustPanelItem::event(QEvent *e)
+{
+    if (e->type() == QEvent::ShortcutOverride) {
+        auto *keyEvent = static_cast<QKeyEvent *>(e);
+        if (isThreadCommandChord(keyEvent)) {
+            e->accept();
+            return true;
+        }
+    }
+    return QQuickPaintedItem::event(e);
+}
 
 RustPanelItem::RustPanelItem(QQuickItem *parent)
     : QQuickPaintedItem(parent)
@@ -107,6 +142,22 @@ void RustPanelItem::wheelEvent(QWheelEvent *event)
 
 void RustPanelItem::keyPressEvent(QKeyEvent *event)
 {
+    // Thread-switch/search chords must fire even when this item has Qt
+    // focus but no Slint-side text editor does (e.g. the sidebar itself is
+    // focused, nothing is) -- panel_rust_input_key's own focus guard would
+    // silently drop them otherwise (see its doc comment in lib.rs).
+    // ChatRustDock's global QShortcuts cover the remaining case (this item
+    // has no Qt focus at all).
+    if (isThreadCommandChord(event)) {
+        const Qt::KeyboardModifiers mods = event->modifiers();
+        if (mods.testFlag(Qt::AltModifier))
+            invokeCommand(event->key() == Qt::Key_Up ? PreviousThread : NextThread);
+        else
+            invokeCommand(OpenThreadSearch);
+        update();
+        event->accept();
+        return;
+    }
     ensureHandle();
     if (m_handle) {
         const QByteArray text = event->text().toUtf8();

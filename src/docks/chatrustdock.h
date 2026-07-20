@@ -10,6 +10,7 @@
 #include <QDockWidget>
 
 class RustPanelItem;
+class QShortcut;
 
 class ChatRustDock : public QDockWidget
 {
@@ -26,7 +27,19 @@ public slots:
     void applyTheme(const QString &theme);
 
 private:
+    // Global thread-switch/search shortcuts (Ctrl+Alt+Up/Down, Ctrl+K),
+    // active window-wide so they work even when nothing inside this dock
+    // has Qt focus -- RustPanelItem::keyPressEvent already handles the
+    // same chords when this dock (or something in it) does have focus, so
+    // these exist purely to cover the "dock not focused at all" case. Only
+    // dispatch while this dock is actually visible, so a hidden/closed
+    // dock doesn't steal these combos from the rest of Shotcut.
+    void invokePanelCommand(int command);
+
     RustPanelItem *m_panel = nullptr;
+    QShortcut *m_previousThreadShortcut = nullptr;
+    QShortcut *m_nextThreadShortcut = nullptr;
+    QShortcut *m_openSearchShortcut = nullptr;
 };
 
 #endif // CHATRUSTDOCK_H
