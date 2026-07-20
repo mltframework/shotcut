@@ -17,6 +17,13 @@ bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y)
 // hoverMoveEvent/hoverLeaveEvent overrides.
 bool panel_rust_input_hover(PanelHandle *handle, unsigned int x, unsigned int y);
 bool panel_rust_input_hover_exit(PanelHandle *handle);
+// Current OS mouse-cursor kind for whichever interactive Slint component
+// last reported a hover/focus change (ui/tokens/cursor_host.slint's
+// CursorHost global), already mapped to a Qt::CursorShape int value on the
+// Rust side (see panel-rust's qt_cursor_shape_for_kind) -- mirrors
+// map_qt_key's "map Qt-specific values in Rust" convention. Poll alongside
+// panel_rust_poll and feed straight into setCursor(static_cast<Qt::CursorShape>(...)).
+int panel_rust_cursor_shape(PanelHandle *handle);
 // qt_key is QKeyEvent::key(); text/text_len is QKeyEvent::text() as UTF-8
 // (may be empty for pure modifier presses). See panel-rust's map_qt_key
 // for the Qt -> Slint key mapping this expects.

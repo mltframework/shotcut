@@ -59,4 +59,8 @@ private:
     // was never called yet -- distinct from "no project open".
     QString m_pendingProjectPath;
     bool m_hasPendingProjectPath = false;
+    // Last Qt::CursorShape applied via setCursor() -- compared each poll()
+    // tick against panel_rust_cursor_shape() so an unchanged cursor kind
+    // (the common case) doesn't call setCursor() every 80ms.
+    int m_lastCursorShape = -1;
 };

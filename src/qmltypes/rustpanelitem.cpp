@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QPainter>
+#include <QCursor>
 #include <QDebug>
 
 RustPanelItem::RustPanelItem(QQuickItem *parent)
@@ -169,6 +170,17 @@ void RustPanelItem::poll()
         return;
     if (panel_rust_poll(m_handle))
         update();
+
+    // ui/tokens/cursor_host.slint's CursorHost global tracks the desired
+    // cursor kind declaratively (hover/focus change-handlers), already
+    // mapped to a Qt::CursorShape int on the Rust side -- see
+    // panel_rust_cursor_shape's doc comment in panel_ffi.h for why this
+    // indirection exists instead of Slint's own internal cursor tracking.
+    const int shape = panel_rust_cursor_shape(m_handle);
+    if (shape != m_lastCursorShape) {
+        m_lastCursorShape = shape;
+        setCursor(QCursor(static_cast<Qt::CursorShape>(shape)));
+    }
 }
 
 void RustPanelItem::paint(QPainter *painter)
