@@ -2,7 +2,7 @@
 #include "qmltypes/rustpanelitem.h"
 #include "mainwindow.h"
 
-#include <QQuickView>
+#include <QQuickWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -12,8 +12,24 @@ ChatRustDock::ChatRustDock(QWidget *parent)
     setObjectName("chatRustDock");
     setWindowTitle(tr("Chat (Rust)"));
 
-    auto *view = new QQuickView();
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    // QQuickWidget, not QQuickView + createWindowContainer: the latter
+    // embeds a *separate native child window* in the widget tree, which
+    // is a documented Qt flicker source during QMainWindow::restoreState()
+    // dock reflows (the native child's own backing store gets
+    // shown/hidden/resized out of sync with its parent widget). Reported
+    // symptom ("black/white screen for a sub-second time" switching
+    // Logging/Editing/FX/Color layouts) matches exactly: Qt Quick's
+    // default clear color is white, this app's dark theme surface is
+    // pure black (theme.rs's DARK.surface) -- the flash was that white
+    // default briefly showing before real (black-background) content
+    // painted. QQuickWidget renders into an offscreen buffer composited
+    // by the normal widget painting system instead of a separate native
+    // window, and exposes setClearColor() directly so the fallback color
+    // matches the theme instead of Qt's white default.
+    auto *view = new QQuickWidget();
+    view->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    view->setClearColor(MainWindow::resolvedTheme() == "light" ? QColor(0xff, 0xff, 0xff)
+                                                                : QColor(0x00, 0x00, 0x00));
 
     auto *panel = new RustPanelItem();
     // Keep the embedded item's size hint below the fresh-launch target.
@@ -23,15 +39,14 @@ ChatRustDock::ChatRustDock(QWidget *parent)
     panel->setHeight(260);
     view->setContent(QUrl(), nullptr, panel);
 
-    QWidget *container = QWidget::createWindowContainer(view, this);
     // Phase 4 (chat-panel-ui-theme-parity.md): lowered from 280x300 so a
     // ~20%-of-window default width target isn't clamped back up on a
     // smaller monitor -- no maximum size is set (never was), so the dock
     // can still grow past its initial width via the native splitter drag
     // MainWindow::MainWindow's `resizeDocks(...)` call sets up.
-    container->setMinimumSize(240, 260);
+    view->setMinimumSize(240, 260);
 
-    setWidget(container);
+    setWidget(view);
     m_panel = panel;
 
     // changeTheme() already ran (statically, in main.cpp before
