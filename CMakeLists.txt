@@ -95,7 +95,13 @@ corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml 
 # same sibling-crate + corrosion pattern as sap-rust above. Renders into a
 # CPU pixel buffer (no GPU texture sharing yet); composited by
 # src/qmltypes/rustpanelitem.{h,cpp} via QQuickPaintedItem.
-corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml)
+# CRATE_TYPES staticlib: only the panel_rust static library is linked below
+# (src/CMakeLists.txt) -- without this, corrosion also tries to build every
+# [[bin]] in the manifest, including ui-dev-viewer, which is gated behind a
+# required-features = ["ui-dev-viewer"] not enabled here and fails the whole
+# cargo invocation (a real CI break, see build-linux.yml run 29826369548).
+corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml
+  CRATE_TYPES staticlib)
 pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
 
 add_subdirectory(CuteLogger)
