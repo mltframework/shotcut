@@ -30,7 +30,7 @@ FREI0R_REVISION=
 SUBDIRS=
 ENABLE_MOVIT=1
 MOVIT_HEAD=0
-MOVIT_REVISION="origin/snapflow-opengl3"
+MOVIT_REVISION="origin/shotcut-opengl3"
 FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/8.1"
 FFMPEG_ADDITIONAL_OPTIONS=
@@ -61,10 +61,10 @@ OPENCV_CONTRIB_HEAD=0
 OPENCV_CONTRIB_REVISION="4.12.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=0
-LIBSPATIALAUDIO_REVISION="origin/snapflow"
+LIBSPATIALAUDIO_REVISION="origin/shotcut"
 ENABLE_LADSPA=1
 LADSPA_HEAD=0
-LADSPA_REVISION="origin/snapflow"
+LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
@@ -439,7 +439,10 @@ function set_globals {
   REPOLOCS[1]="https://github.com/mltframework/mlt.git"
   REPOLOCS[2]="https://github.com/dyne/frei0r.git"
   REPOLOCS[3]="https://github.com/ddennedy/movit.git"
-  REPOLOCS[4]="https://github.com/mltframework/shotcut.git"
+  # Rebrand fork: build from this project's own fork/branch instead of
+  # upstream mltframework/shotcut, overridable so CI can still target a
+  # PR head. Set SNAPFLOW_REPO in the build config to override.
+  REPOLOCS[4]="${SNAPFLOW_REPO:-https://github.com/Shaik-Sirajuddin/shotcut.git}"
   REPOLOCS[5]="https://github.com/ddennedy/ladspa-swh.git"
   REPOLOCS[6]="https://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
@@ -922,13 +925,13 @@ function get_subproject {
               debug "Found git repo, will update"
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
-              if [ "$1" = "rubberband" ]; then
-                MAIN_GIT_BRANCH=default
-              elif [ "$1" = "bigsh0t" ]; then
-                MAIN_GIT_BRANCH=main
-              else
-                MAIN_GIT_BRANCH=master
-              fi
+              # Ask the remote what its default branch actually is
+              # instead of hardcoding "master" (or a per-repo exception
+              # list) -- upstream repos vary (main, master, default for
+              # rubberband's Mercurial-derived convention, etc), and a
+              # wrong guess here dies with "pathspec ... did not match".
+              MAIN_GIT_BRANCH=$(git remote show origin 2>/dev/null | awk '/HEAD branch/ {print $NF}')
+              [ -n "$MAIN_GIT_BRANCH" ] || MAIN_GIT_BRANCH=master
               cmd git checkout $MAIN_GIT_BRANCH || die "Unable to git checkout $MAIN_GIT_BRANCH"
               cmd git --no-pager pull $REPOLOC $MAIN_GIT_BRANCH || die "Unable to git pull sources for $1"
               cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
@@ -941,7 +944,11 @@ function get_subproject {
           # No git repo
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
-          cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
+          # Explicit target dir ($1, the subproject key): git clone
+          # otherwise names the directory after the URL's basename, which
+          # only matches $1 by coincidence -- breaks for "snapflow"
+          # cloned from a REPOLOC ending in .../shotcut.git.
+          cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC $1 || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout --recurse-submodules $REVISION || die "Unable to git checkout $REVISION"
           [ "$SDK" = "1" -a "snapflow" != "$1" -a "mlt" != "$1" ] && cmd rm -rf .git
