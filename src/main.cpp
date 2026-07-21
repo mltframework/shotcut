@@ -372,6 +372,18 @@ int main(int argc, char **argv)
 #ifndef QT_DEBUG
     ::qputenv("QT_LOGGING_RULES", "*.warning=false");
 #endif
+    // ChatRustDock (panel-rust, Slint) keeps its whole UI state on a single
+    // thread_local singleton -- Qt Quick's default threaded render loop
+    // calls paint() on a different OS thread than input dispatch, which
+    // silently forks that singleton into two never-synchronized copies
+    // (confirmed empirically: clicks updated state but the render thread
+    // never saw it, no crash/error, just a stale screen). Forcing the
+    // basic (single-threaded) render loop app-wide is the deliberate v1
+    // fix, per memory/rui/gen/state/2026-07-12-slint-qt-panel-spike.md's
+    // "render-loop threading" decision -- a real cross-thread
+    // message-passing design is still open future work, not done here.
+    if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP"))
+        ::qputenv("QSG_RENDER_LOOP", "basic");
     for (int i = 1; i + 1 < argc; i++) {
         if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i])
             || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {

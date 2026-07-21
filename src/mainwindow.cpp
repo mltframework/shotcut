@@ -45,6 +45,7 @@
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
 #include "docks/notesdock.h"
+#include "docks/chatrustdock.h"
 #include "docks/playlistdock.h"
 #include "docks/recentdock.h"
 #include "docks/subtitlesdock.h"
@@ -138,7 +139,15 @@ static bool eventDebugCallback(void **data)
 static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 // Bump kDockLayoutVersion whenever a new dock is added to setupAndConnectDocks().
 // This triggers a one-time re-tabification for users upgrading from an older saved state.
-static constexpr int kDockLayoutVersion = 1;
+// v3: ChatRustDock moved from Qt::RightDockWidgetArea to
+// Qt::LeftDockWidgetArea as an independent column (chat-panel-
+// production-ui/execution-plan.md Phase 4 step 6) -- users with a
+// saved layout from version < 3 get ChatRustDock explicitly re-added
+// to the left area in readWindowSettings()'s migration block below,
+// since restoreState() alone would otherwise keep restoring it to its
+// old saved right-side position regardless of what setupAndConnectDocks()
+// requests for a brand-new profile.
+static constexpr int kDockLayoutVersion = 3;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -229,7 +238,19 @@ MainWindow::MainWindow()
     setupMenuFile();
     setupMenuView();
     connectVideoWidgetSignals();
+    const bool hasSavedWindowGeometry = !Settings.windowGeometry().isEmpty();
+    const bool needsChatRustDockDefault =
+        !hasSavedWindowGeometry || Settings.dockLayoutVersion() < kDockLayoutVersion;
     readWindowSettings();
+    if (needsChatRustDockDefault) {
+        // Apply the target after the first event-loop turn, when the window
+        // has its actual on-screen geometry. The layout-version condition
+        // also migrates users upgrading from a profile saved before this
+        // dock existed; later launches preserve the user's manual width.
+        QTimer::singleShot(0, this, [this] {
+            resizeDocks({m_chatRustDock}, {qRound(width() * 0.20)}, Qt::Horizontal);
+        });
+    }
     setupActions();
     setupLayoutSwitcher();
 
@@ -874,6 +895,45 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionNotes, SIGNAL(triggered()), this, SLOT(onNotesDockTriggered()));
     connect(m_notesDock, SIGNAL(modified()), this, SLOT(onNoteModified()));
 
+    // Rust-rendered (Slint) chat panel spike -- additive only, per
+    // memory/head/gen/plans/rust-qt-cross-render-option-b.md. Left visible
+    // (not hidden) and un-tabified so it's directly observable alongside
+    // the rest of the app for this verification pass.
+    m_chatRustDock = new ChatRustDock(this);
+    // active_project_binding phase: keep panel-rust's stored project path
+    // in sync with the currently-open MLT project, the same way every
+    // other dock below tracks producerOpened.
+    connect(this,
+            &MainWindow::producerOpened,
+            m_chatRustDock,
+            &ChatRustDock::updateProjectPath);
+    // tasks/v2/enhance.yaml#task-3's "AI" native-menu-bar option: a
+    // View-menu toggle for this dock's visibility, same idiom every other
+    // dock in this function uses (m_xxxDock->toggleViewAction() added
+    // straight to menuView) -- toggleViewAction() is Qt's own
+    // always-correct show/hide-in-sync-with-checkstate action, not a
+    // custom hand-rolled one, so there's no separate show()/hide() slot
+    // to keep in sync. Text overridden to "AI" (the dock's own window
+    // title stays the more descriptive "Chat (Rust)" for its title bar).
+    // Every other dock in this constructor adds its own toggleViewAction()
+    // to ui->menuView so it can be re-opened after being closed (each
+    // dock's title-bar X button just calls QWidget::hide(), it does not
+    // delete the widget) -- ChatRustDock never got this wired up before
+    // either fix landed, which is exactly why closing it (or a
+    // fresh-vs-migrated Shotcut.conf that happens to have persisted it
+    // hidden) left users with no way to bring it back short of manually
+    // deleting their config. No shortcut assigned (every Ctrl+<digit> slot
+    // 1-0 is already taken by the docks above), matching
+    // m_historyDock/m_jobsDock's own no-shortcut pattern.
+    m_chatRustDock->toggleViewAction()->setText(tr("AI"));
+    ui->menuView->addAction(m_chatRustDock->toggleViewAction());
+    // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
+    // ~20% of the main window's width on a fresh launch/profile, while
+    // staying natively resizable afterward -- QDockWidget/QMainWindow's
+    // own splitter-drag already covers "adjustable going forward" once
+    // the container's minimum-size floor is loosened (see
+    // ChatRustDock::ChatRustDock's `setMinimumSize` call), so no custom
+    // resize handling is added here, only this one-time initial target.
     m_subtitlesDock = new SubtitlesDock(this);
     m_subtitlesDock->hide();
     m_subtitlesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9));
@@ -907,6 +967,19 @@ void MainWindow::setupAndConnectDocks()
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
     // Left area
+    // Phase 4 step 6 (chat-panel-production-ui/execution-plan.md):
+    // ChatRustDock lives in the *left* dock area as its own independent
+    // column (not tabified with the properties/playlist/filters/encode/
+    // notes/subtitles group below) -- per this plan's own Objective
+    // ("Deliver the left-docked Slint chat panel") and the explicit,
+    // repeated user requirement earlier in this project's history.
+    // `resetDockCorners()`'s `BottomLeftCorner -> BottomDockWidgetArea`
+    // assignment (unchanged, already correct) is what makes this
+    // automatically stop above `m_timelineDock` at the bottom rather
+    // than overlapping it, with no further geometry code needed here --
+    // any Left-area dock already spans the full height between the
+    // toolbar/menu (top) and the bottom dock area by construction.
+    addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
@@ -2733,6 +2806,15 @@ void MainWindow::readWindowSettings()
         if (Settings.dockLayoutVersion() < kDockLayoutVersion) {
             tabifyDockWidget(m_recentDock, m_filesDock);
             tabifyDockWidget(m_filesDock, m_elementsDock);
+            // v3 migration: move ChatRustDock from its old saved
+            // right-side position onto the left, independent of the
+            // properties/playlist/etc. tab group -- restoreState()
+            // above already restored the pre-v3 right-side placement
+            // for any user upgrading from an older saved layout, so
+            // this must explicitly re-add it after that restore, not
+            // rely on setupAndConnectDocks()'s own (correct, but
+            // restoreState()-overridden) initial placement.
+            addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
             Settings.setDockLayoutVersion(kDockLayoutVersion);
         }
     } else {
@@ -4300,8 +4382,28 @@ void MainWindow::changeTheme(const QString &theme)
     //    LOG_INFO() << "highlightedText" << pal.highlightedText().color().name();
     //    LOG_INFO() << "link" << pal.link().color().name();
     //    LOG_INFO() << "linkVisited" << pal.linkVisited().color().name();
+
+    // ChatRustDock (panel-rust, Slint) tracks the app's resolved theme
+    // name ("dark"/"light"/etc, per mytheme above) rather than hardcoding
+    // its own palette -- see memory/head/gen/docs/05-ui-theming-extensibility.md's
+    // proposed ThemeDefinition direction; this is the minimal-diff version
+    // of that for the one new dock, not the full ThemeRegistry refactor.
+    // changeTheme() is static and runs once at startup before MainWindow
+    // (and its docks) exist -- this app requires a restart to switch
+    // themes (see restartAfterChangeTheme()), there is no live
+    // theme-changed signal to connect to. So the resolved name is cached
+    // here and read once by ChatRustDock's constructor instead.
+    s_resolvedTheme = mytheme;
+
     LOG_DEBUG() << "end";
 }
+
+QString MainWindow::resolvedTheme()
+{
+    return s_resolvedTheme;
+}
+
+QString MainWindow::s_resolvedTheme = QStringLiteral("dark");
 
 Mlt::Playlist *MainWindow::playlist() const
 {

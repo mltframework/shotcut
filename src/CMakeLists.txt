@@ -1,4 +1,5 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(SQLite3 REQUIRED)
 
 add_executable(snapflow WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
@@ -53,6 +54,7 @@ add_executable(snapflow WIN32 MACOSX_BUNDLE
   docks/encodedock.ui
   docks/filesdock.cpp docks/filesdock.h
   docks/filesdock.ui
+  docks/chatrustdock.cpp docks/chatrustdock.h
   docks/filtersdock.cpp docks/filtersdock.h
   docks/jobsdock.cpp docks/jobsdock.h
   docks/jobsdock.ui
@@ -130,6 +132,7 @@ add_executable(snapflow WIN32 MACOSX_BUNDLE
   qmltypes/qmlrichtextmenu.cpp qmltypes/qmlrichtextmenu.h
   qmltypes/qmlutilities.cpp qmltypes/qmlutilities.h
   qmltypes/qmlview.cpp qmltypes/qmlview.h
+  qmltypes/rustpanelitem.cpp qmltypes/rustpanelitem.h
   qmltypes/thumbnailprovider.cpp qmltypes/thumbnailprovider.h
   qmltypes/timelineitems.cpp qmltypes/timelineitems.h
   resources.qrc
@@ -296,6 +299,10 @@ if(QSB_EXECUTABLE)
   add_dependencies(snapflow hdr_shaders)
 endif()
 
+# panel_rust is a static Rust archive; its rusqlite symbols are encountered
+# after CMake's imported SQLite target in the final link line.
+target_link_options(snapflow PRIVATE "LINKER:--no-as-needed")
+
 target_link_libraries(snapflow
   PRIVATE
   CuteLogger
@@ -311,6 +318,9 @@ target_link_libraries(snapflow
   Qt6::QuickWidgets
   Qt6::Sql
   sap_rust
+  panel_rust
+  SQLite3::SQLite3
+  PkgConfig::Fontconfig
   Qt6::WebSockets
   Qt6::Widgets
   Qt6::Xml
