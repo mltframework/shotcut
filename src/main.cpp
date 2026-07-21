@@ -116,6 +116,7 @@ public:
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
     QStringList resourceArg;
+    QStringList fileOpenEventArgs;
     bool isFullScreen;
     QString appDirArg;
 
@@ -337,15 +338,21 @@ protected:
                 mainWindow->openMultiple(QStringList() << openEvent->file());
             } else {
                 // Running as the watchdog parent — forward to the child via IPC.
-                QLocalSocket socket;
-                socket.connectToServer("shotcut-file-open");
-                if (socket.waitForConnected(500)) {
-                    socket.write(openEvent->file().toUtf8());
-                    socket.waitForBytesWritten(500);
-                    socket.disconnectFromServer();
-                } else {
-                    resourceArg << openEvent->file();
+                // The child may need several seconds to start its IPC server,
+                // so retry the connection with 1-second intervals.
+                bool sent = false;
+                for (int i = 0; i < 15 && !sent; ++i) {
+                    QLocalSocket socket;
+                    socket.connectToServer("shotcut-file-open");
+                    if (socket.waitForConnected(1000)) {
+                        socket.write(openEvent->file().toUtf8());
+                        socket.waitForBytesWritten(500);
+                        socket.disconnectFromServer();
+                        sent = true;
+                    }
                 }
+                if (!sent)
+                    fileOpenEventArgs << openEvent->file();
             }
             return true;
         }
@@ -593,9 +600,11 @@ int main(int argc, char **argv)
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
-        // If a file-open event arrived before IPC was available, include it now.
-        if (!a.resourceArg.isEmpty())
-            args << a.resourceArg;
+        // Process any pending events to catch early QFileOpenEvents from macOS.
+        a.processEvents();
+        // If a file-open event arrived before the child starts, include it now.
+        if (!a.fileOpenEventArgs.isEmpty())
+            args << a.fileOpenEventArgs;
         ::qputenv(kWatchdogEnvVar, "1");
         child.setProcessChannelMode(QProcess::MergedChannels);
         QObject::connect(&child, &QProcess::readyRead, [&child]() {
