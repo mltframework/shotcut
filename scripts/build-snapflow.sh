@@ -32,7 +32,7 @@ FREI0R_REVISION=
 ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
-MOVIT_REVISION="origin/snapflow-opengl3"
+MOVIT_REVISION="origin/shotcut-opengl3"
 X264_HEAD=0
 X264_REVISION="origin/stable"
 X265_HEAD=0
@@ -103,7 +103,7 @@ LIBWEBP_HEAD=0
 LIBWEBP_REVISION="v1.6.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=0
-LIBSPATIALAUDIO_REVISION="origin/snapflow"
+LIBSPATIALAUDIO_REVISION="origin/shotcut"
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.8.3"
@@ -1429,19 +1429,26 @@ function get_subproject {
               # Found git repo
               debug "Found git repo, will update"
 
-              if ! git diff-index --quiet ${REVISION:-master}; then
+              # HEAD, not ${REVISION:-master}: this is just a "does the
+              # working tree have uncommitted changes" check, and
+              # "master" as a literal ref only exists by coincidence --
+              # e.g. rnnoise's default branch is "main", so the old
+              # `${REVISION:-master}` form died with "ambiguous
+              # argument 'master'" on any repo using a different
+              # default branch name.
+              if ! git diff-index --quiet HEAD; then
                   die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET in your build config if you want to compile with these changes"
               fi
 
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
-              if [ "$1" = "rubberband" ]; then
-                MAIN_GIT_BRANCH=default
-              elif [ "$1" = "bigsh0t" ]; then
-                MAIN_GIT_BRANCH=main
-              else
-                MAIN_GIT_BRANCH=master
-              fi
+              # Ask the remote what its default branch actually is
+              # instead of hardcoding "master" (or a per-repo exception
+              # list) -- upstream repos vary (main, master, default for
+              # rubberband's Mercurial-derived convention, etc), and a
+              # wrong guess here dies with "pathspec ... did not match".
+              MAIN_GIT_BRANCH=$(git remote show origin 2>/dev/null | awk '/HEAD branch/ {print $NF}')
+              [ -n "$MAIN_GIT_BRANCH" ] || MAIN_GIT_BRANCH=master
               cmd git checkout $MAIN_GIT_BRANCH || die "Unable to git checkout $MAIN_GIT_BRANCH"
               cmd git --no-pager pull $REPOLOC $MAIN_GIT_BRANCH || die "Unable to git pull sources for $1"
               cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
@@ -1454,7 +1461,11 @@ function get_subproject {
           # No git repo
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
-          cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
+          # Explicit target dir ($1, the subproject key): git clone
+          # otherwise names the directory after the URL's basename, which
+          # only matches $1 by coincidence -- breaks for e.g. "snapflow"
+          # cloned from a REPOLOC ending in .../shotcut.git.
+          cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC $1 || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout --recurse-submodules $REVISION || die "Unable to git checkout $REVISION"
       fi
