@@ -28,8 +28,10 @@
 #include "util.h"
 
 #include <QFile>
+#include <QHash>
 #include <QImageReader>
 #include <QObject>
+#include <QStringList>
 #include <QVector>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -554,33 +556,34 @@ bool ProxyManager::filterXML(QString &xmlString, QString root)
     return false;
 }
 
-bool ProxyManager::fileExists(Mlt::Producer &producer)
+QString ProxyManager::hashProxyFilePath(const QString &fileName, const QDir &projectFolder)
 {
-    QDir proxyDir(Settings.proxyFolder());
-    QDir projectDir(MLT.projectFolder());
-    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    if (fileName.isEmpty())
+        return QString();
+    QDir projectDir(projectFolder);
+    if (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName))
+        return projectDir.filePath(fileName);
+    const QDir proxyDir(Settings.proxyFolder());
+    if (proxyDir.exists(fileName))
+        return proxyDir.filePath(fileName);
+    return QString();
+}
+
+static QString shotcutHashProxyPath(Mlt::Producer &producer)
+{
+    const QString service = QString::fromLatin1(producer.get("mlt_service"));
     QString fileName;
-    if (service.startsWith("avformat")) {
-        if (QFile::exists(GoProProxyFilePath(producer.get("resource")))) {
-            return true;
-        }
-        if (QFile::exists(DJIProxyFilePath(producer.get("resource")))) {
-            return true;
-        }
+    if (service.startsWith("avformat"))
         fileName = Util::getHash(producer) + kProxyVideoExtension;
-    } else if (isValidImage(producer)) {
+    else if (ProxyManager::isValidImage(producer))
         fileName = Util::getHash(producer) + kProxyImageExtension;
-    } else {
-        return false;
-    }
-    return (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName))
-           || proxyDir.exists(fileName);
+    else
+        return QString();
+    return ProxyManager::hashProxyFilePath(fileName, MLT.projectFolder());
 }
 
 bool ProxyManager::filePending(Mlt::Producer &producer)
 {
-    QDir proxyDir(Settings.proxyFolder());
-    QDir projectDir(MLT.projectFolder());
     QString service = QString::fromLatin1(producer.get("mlt_service"));
     QString fileName;
     if (service.startsWith("avformat")) {
@@ -590,8 +593,7 @@ bool ProxyManager::filePending(Mlt::Producer &producer)
     } else {
         return false;
     }
-    return (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName))
-           || proxyDir.exists(fileName);
+    return !hashProxyFilePath(fileName, MLT.projectFolder()).isEmpty();
 }
 
 bool ProxyManager::isValidImage(Mlt::Producer &producer)
@@ -642,47 +644,30 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
 {
     if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty)
         && !producer.get_int(kIsProxyProperty)) {
-        if (ProxyManager::fileExists(producer)) {
-            QString service = QString::fromLatin1(producer.get("mlt_service"));
-            QDir projectDir(MLT.projectFolder());
-            QString fileName = Util::getHash(producer) + kProxyVideoExtension;
-            QDir proxyDir(Settings.proxyFolder());
-
-            if (service.startsWith("avformat")) {
-                auto gopro = GoProProxyFilePath(producer.get("resource"));
-                auto dji = DJIProxyFilePath(producer.get("resource"));
-                if (!projectDir.exists(fileName) && !proxyDir.exists(fileName)) {
-                    if (QFile::exists(gopro)) {
-                        producer.set(kIsProxyProperty, 1);
-                        producer.set(kMetaProxyProperty, 1);
-                        producer.set(kOriginalResourceProperty, producer.get("resource"));
-                        producer.set("resource", gopro.toUtf8().constData());
-                        return true;
-                    } else if (QFile::exists(dji)) {
-                        producer.set(kIsProxyProperty, 1);
-                        producer.set(kMetaProxyProperty, 1);
-                        producer.set(kOriginalResourceProperty, producer.get("resource"));
-                        producer.set("resource", dji.toUtf8().constData());
-                        return true;
-                    }
-                }
-            } else if (isValidImage(producer)) {
-                fileName = Util::getHash(producer) + kProxyImageExtension;
-            } else {
-                return false;
-            }
+        const QString service = QString::fromLatin1(producer.get("mlt_service"));
+        const auto res = QString::fromUtf8(producer.get("resource"));
+        auto setProxy = [&](const QString &proxyPath) {
             producer.set(kIsProxyProperty, 1);
             producer.set(kMetaProxyProperty, 1);
-            producer.set(kOriginalResourceProperty, producer.get("resource"));
-            if (projectDir.exists(fileName)) {
-                ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
-                producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
-            } else {
-                ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
-                producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
-            }
+            producer.set(kOriginalResourceProperty, res.toUtf8().constData());
+            producer.set("resource", proxyPath.toUtf8().constData());
+        };
+
+        // Shotcut's own proxy wins. External files are only used when it is absent.
+        const QString hashProxy = shotcutHashProxyPath(producer);
+        if (!hashProxy.isEmpty()) {
+            ::utime(hashProxy.toUtf8().constData(), nullptr);
+            setProxy(hashProxy);
             return true;
-        } else if (!filePending(producer)) {
+        }
+        if (service.startsWith("avformat")) {
+            const auto externalProxy = existingExternalProxy(res);
+            if (!externalProxy.isEmpty()) {
+                setProxy(externalProxy);
+                return true;
+            }
+        }
+        if (!filePending(producer)) {
             if (isValidVideo(producer)) {
                 // Tag this producer so we do not try to generate proxy again in this session
                 delete producer.get_frame();
@@ -832,4 +817,76 @@ QString ProxyManager::DJIProxyFilePath(const QString &resource)
     auto result = fi.absoluteDir().filePath(base + kDJIProxyVideoExtension);
     LOG_DEBUG() << result;
     return result;
+}
+
+// Containers written by proxy tools. The proxy extension often differs from the source.
+static const char *const kFolderProxyExtensions[] = {"mov", "mp4", "mxf"};
+
+static QString findFileCaseInsensitive(const QHash<QString, QString> &files, const QString &name)
+{
+    const auto it = files.constFind(name.toLower());
+    if (it == files.constEnd())
+        return QString();
+    return *it;
+}
+
+// Proxy or Proxies subfolder, any capitalization. Match the source file name,
+// then "<base>_Proxy.<ext>", then "<base>.<ext>". <ext> may be the source suffix
+// or mov/mp4/mxf.
+static QString folderProxyFilePath(const QString &resource)
+{
+    const QFileInfo fi(resource);
+    if (fi.fileName().isEmpty())
+        return QString();
+
+    const QString base = fi.completeBaseName();
+    const QString suffix = fi.suffix();
+    QStringList candidates;
+    candidates << fi.fileName();
+    if (!suffix.isEmpty())
+        candidates << base + QStringLiteral("_Proxy.") + suffix;
+    for (const char *ext : kFolderProxyExtensions) {
+        if (suffix.compare(QLatin1String(ext), Qt::CaseInsensitive) == 0)
+            continue;
+        candidates << base + QStringLiteral("_Proxy.") + QLatin1String(ext);
+    }
+    for (const char *ext : kFolderProxyExtensions) {
+        if (!suffix.isEmpty() && suffix.compare(QLatin1String(ext), Qt::CaseInsensitive) == 0)
+            continue;
+        candidates << base + QLatin1Char('.') + QLatin1String(ext);
+    }
+
+    const QDir parentDir = fi.absoluteDir();
+    const auto entries = parentDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const auto &entry : entries) {
+        if (entry.compare(QLatin1String("Proxy"), Qt::CaseInsensitive) != 0
+            && entry.compare(QLatin1String("Proxies"), Qt::CaseInsensitive) != 0)
+            continue;
+
+        const QDir subDir(parentDir.filePath(entry));
+        QHash<QString, QString> files;
+        for (const auto &file : subDir.entryList(QDir::Files))
+            files.insert(file.toLower(), file);
+
+        for (const auto &name : candidates) {
+            const auto found = findFileCaseInsensitive(files, name);
+            if (found.isEmpty())
+                continue;
+            const auto result = subDir.filePath(found);
+            LOG_DEBUG() << result;
+            return result;
+        }
+    }
+    return QString();
+}
+
+QString ProxyManager::existingExternalProxy(const QString &resource)
+{
+    const auto gopro = GoProProxyFilePath(resource);
+    if (QFile::exists(gopro))
+        return gopro;
+    const auto dji = DJIProxyFilePath(resource);
+    if (QFile::exists(dji))
+        return dji;
+    return folderProxyFilePath(resource);
 }

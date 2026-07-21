@@ -986,56 +986,19 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
             }
         }
 
-        // Use GoPro LRV if available
-        if (QFile::exists(ProxyManager::GoProProxyFilePath(resource))) {
+        const QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+        QString proxyPath
+            = ProxyManager::hashProxyFilePath(hash + ProxyManager::videoFilenameExtension(),
+                                              projectDir);
+        const bool isHashProxy = !proxyPath.isEmpty();
+        if (proxyPath.isEmpty())
+            proxyPath = ProxyManager::existingExternalProxy(resource);
+        if (!proxyPath.isEmpty()) {
+            if (isHashProxy)
+                ::utime(proxyPath.toUtf8().constData(), nullptr);
             for (auto &p : properties) {
                 if (p.first == "resource") {
-                    p.second = ProxyManager::GoProProxyFilePath(resource);
-                    if (isTimewarp) {
-                        p.second = QStringLiteral("%1:%2").arg(speed, p.second);
-                    }
-                    properties << MltProperty(kIsProxyProperty, "1");
-                    properties << MltProperty(kMetaProxyProperty, "1");
-                    properties << MltProperty(kOriginalResourceProperty, resource);
-                    m_resource.notProxyMeta = !m_resource.isProxy;
-                    m_isUpdated = true;
-                    return;
-                }
-            }
-        }
-
-        // Use DJI LRF if available
-        if (QFile::exists(ProxyManager::DJIProxyFilePath(resource))) {
-            for (auto &p : properties) {
-                if (p.first == "resource") {
-                    p.second = ProxyManager::DJIProxyFilePath(resource);
-                    if (isTimewarp) {
-                        p.second = QStringLiteral("%1:%2").arg(speed, p.second);
-                    }
-                    properties << MltProperty(kIsProxyProperty, "1");
-                    properties << MltProperty(kMetaProxyProperty, "1");
-                    properties << MltProperty(kOriginalResourceProperty, resource);
-                    m_resource.notProxyMeta = !m_resource.isProxy;
-                    m_isUpdated = true;
-                    return;
-                }
-            }
-        }
-
-        QDir proxyDir(Settings.proxyFolder());
-        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
-        QString fileName = hash + ProxyManager::videoFilenameExtension();
-        projectDir.cd("proxies");
-        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
-            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
-            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
-            for (auto &p : properties) {
-                if (p.first == "resource") {
-                    if (projectDir.exists(fileName)) {
-                        p.second = projectDir.filePath(fileName);
-                    } else {
-                        p.second = proxyDir.filePath(fileName);
-                    }
+                    p.second = proxyPath;
                     if (isTimewarp) {
                         p.second = QStringLiteral("%1:%2").arg(speed, p.second);
                     }
@@ -1064,20 +1027,14 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 return;
             }
         }
-        QDir proxyDir(Settings.proxyFolder());
-        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
-        QString fileName = hash + ProxyManager::imageFilenameExtension();
-        projectDir.cd("proxies");
-        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
-            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
-            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
+        const auto proxyPath
+            = ProxyManager::hashProxyFilePath(hash + ProxyManager::imageFilenameExtension(),
+                                              QFileInfo(m_tempFile->fileName()).dir());
+        if (!proxyPath.isEmpty()) {
+            ::utime(proxyPath.toUtf8().constData(), nullptr);
             for (auto &p : properties) {
                 if (p.first == "resource") {
-                    if (projectDir.exists(fileName)) {
-                        p.second = projectDir.filePath(fileName);
-                    } else {
-                        p.second = proxyDir.filePath(fileName);
-                    }
+                    p.second = proxyPath;
                     break;
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ public:
                                    bool replace = true);
     static void generateImageProxy(Mlt::Producer &producer, bool replace = true);
     static bool filterXML(QString &xml, QString root);
-    static bool fileExists(Mlt::Producer &producer);
     static bool filePending(Mlt::Producer &producer);
     static bool isValidImage(Mlt::Producer &producer);
     static bool isValidVideo(Mlt::Producer producer);
@@ -58,6 +57,10 @@ public:
     static bool removePending();
     static QString GoProProxyFilePath(const QString &resource);
     static QString DJIProxyFilePath(const QString &resource);
+    // <project>/proxies/<fileName> if it exists, else the configured proxy folder. Empty if neither.
+    static QString hashProxyFilePath(const QString &fileName, const QDir &projectFolder);
+    // First existing GoPro, DJI, or Proxy/Proxies-folder proxy. Empty if none.
+    static QString existingExternalProxy(const QString &resource);
 };
 
 #endif // PROXYMANAGER_H
