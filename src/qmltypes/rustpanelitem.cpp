@@ -87,7 +87,7 @@ bool RustPanelItem::event(QEvent *event)
         // actually owns focus, so it does nothing when this dock is merely
         // visible but not the thing being typed into.
         if (m_handle && panel_rust_has_text_focus(m_handle)) {
-            e->accept();
+            event->accept();
             return true;
         }
     }
