@@ -544,6 +544,29 @@ function set_globals {
     fi
   fi
 
+  # CI dependency-caching split: SNAPFLOW_DEPS_ONLY builds every vendored
+  # subproject except snapflow itself (cacheable -- these pins rarely
+  # change); SNAPFLOW_ONLY builds just snapflow against an already-built
+  # (possibly cache-restored) INSTALL_DIR (never cached -- this is our own
+  # source, which changes on nearly every commit). Filtered here, once,
+  # right after SUBDIRS is fully assembled, rather than in each of the
+  # several loops below that iterate it.
+  if [ "$SNAPFLOW_DEPS_ONLY" = "1" ]; then
+    SUBDIRS="$(echo $SUBDIRS | tr ' ' '\n' | grep -v '^snapflow$' | tr '\n' ' ')"
+    # Phase 1 has no snapflow binary yet -- don't tar up a premature/
+    # incomplete archive, and don't let the default cleanup delete the
+    # install dir a caller (e.g. CI's actions/cache) needs to persist
+    # across phases.
+    CREATE_STARTUP_SCRIPT=0
+    ACTION_CLEANUP=0
+  elif [ "$SNAPFLOW_ONLY" = "1" ]; then
+    SUBDIRS="snapflow"
+    # Same reasoning as above: the install dir must survive this phase too,
+    # both for a caller's own cache-save step and so a from-cache Snapflow
+    # dir a caller restored isn't wiped out here either.
+    ACTION_CLEANUP=0
+  fi
+
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIGURE_DEBUG_FLAG="--enable-debug"
     QMAKE_DEBUG_FLAG="CONFIG+=debug"
