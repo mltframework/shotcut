@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlproducer.h"
 #include "settings.h"
 
@@ -76,22 +77,58 @@ class TimelinePlayhead : public QQuickPaintedItem
         path.lineTo(width() / 2.0, height());
         path.lineTo(0, 0);
         QPalette p;
-        painter->fillPath(path, p.color(QPalette::WindowText));
+        painter->fillPath(path, QmlApplication::playheadColor());
     }
 };
 
 class TimelineTriangle : public QQuickPaintedItem
 {
+    Q_OBJECT
+    Q_PROPERTY(qreal cornerRadius READ cornerRadius WRITE setCornerRadius NOTIFY cornerRadiusChanged)
+
 public:
     TimelineTriangle() { setAntialiasing(true); }
+
+    qreal cornerRadius() const { return m_cornerRadius; }
+
+    void setCornerRadius(qreal radius)
+    {
+        radius = qMax<qreal>(0.0, radius);
+        if (qFuzzyCompare(m_cornerRadius, radius))
+            return;
+        m_cornerRadius = radius;
+        emit cornerRadiusChanged();
+        update();
+    }
+
     void paint(QPainter *painter)
     {
+        const qreal w = width();
+        const qreal h = height();
+        if (w <= 0.0 || h <= 0.0)
+            return;
+
+        const qreal radius = qMin(m_cornerRadius, qMin(w, h));
         QPainterPath path;
-        path.moveTo(0, 0);
-        path.lineTo(width(), 0);
-        path.lineTo(0, height());
+        if (radius > 0.0) {
+            path.moveTo(0, h);
+            path.lineTo(0, radius);
+            path.quadTo(0, 0, radius, 0);
+            path.lineTo(w, 0);
+        } else {
+            path.moveTo(0, 0);
+            path.lineTo(w, 0);
+            path.lineTo(0, h);
+        }
+        path.closeSubpath();
         painter->fillPath(path, Qt::black);
     }
+
+signals:
+    void cornerRadiusChanged();
+
+private:
+    qreal m_cornerRadius{0.0};
 };
 
 class TimelineWaveform : public QQuickPaintedItem
@@ -180,6 +217,7 @@ public:
 
         QPainterPath path;
         path.moveTo(-1, height());
+        QPainterPath peaksPath;
         int i = 0;
         const int dataSize = data->size();
         for (; i < width(); ++i) {
@@ -190,14 +228,22 @@ public:
             qreal level = qMax(static_cast<quint8>(data->at(idx)),
                                static_cast<quint8>(data->at(idx + 1)))
                           / 256.0;
-            path.lineTo(i, height() - level * height());
+            const qreal y = height() - level * height();
+            path.lineTo(i, y);
+            if (peaksPath.elementCount() == 0) {
+                peaksPath.moveTo(i, y);
+            } else {
+                peaksPath.lineTo(i, y);
+            }
         }
         path.lineTo(i, height());
         painter->fillPath(path, m_color.lighter());
 
+        // Stroke only the peaks outline, not the bottom closing line, so
+        // the dark horizontal edge does not fight the rounded clip corners.
         QPen pen(painter->pen());
         pen.setColor(m_color.darker());
-        painter->strokePath(path, pen);
+        painter->strokePath(peaksPath, pen);
 
         if (qmlProducer)
             qmlProducer->producer().unlock();

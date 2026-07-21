@@ -689,7 +689,7 @@ Rectangle {
                 id: cursor
 
                 visible: timeline.position > -1
-                color: activePalette.text
+                color: application.playheadColor
                 width: 1
                 height: root.height - horizontalScrollBar.height
                 x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX

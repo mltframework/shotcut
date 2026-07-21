@@ -90,22 +90,31 @@ void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
 {
     if (role == QPalette::Base) {
         widget->setStyleSheet("QLineEdit {"
-                              "font-weight: bold;"
-                              "background-color: palette(highlight);"
-                              "color: palette(highlighted-text);"
-                              "selection-background-color: palette(alternate-base);"
-                              "selection-color: palette(text);"
+                              " background-color: palette(highlight);"
+                              " color: palette(highlighted-text);"
+                              " selection-background-color: palette(alternate-base);"
+                              " selection-color: palette(text);"
+                              " font-weight: bold;"
+                              " padding-top: 3px;"
+                              " padding-bottom: 2px;"
+                              " border-radius: 11px;"
                               "}"
                               "QLineEdit:hover {"
-                              "border: 2px solid palette(button-text);"
+                              " border: 2px solid palette(button-text);"
                               "}");
     } else {
-        QPalette palette = QApplication::palette();
-        palette.setColor(role, palette.color(palette.Highlight));
-        palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,
-                         palette.color(palette.HighlightedText));
-        widget->setPalette(palette);
-        widget->setAutoFillBackground(true);
+        const auto highlight = QPalette().color(QPalette::Highlight).name();
+        const auto text = QPalette().color(QPalette::HighlightedText).name();
+        const QString style = QString("QWidget {"
+                                      " background-color: %1;"
+                                      " color: %2;"
+                                      " font-weight: bold;"
+                                      " padding-top: 4px;"
+                                      " padding-bottom: 3px;"
+                                      " border-radius: 11px;"
+                                      "}")
+                                  .arg(highlight, text);
+        widget->setStyleSheet(style);
     }
 }
 

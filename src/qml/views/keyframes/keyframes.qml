@@ -484,7 +484,7 @@ Rectangle {
                 id: cursor
 
                 visible: producer.position > -1 && metadata !== null
-                color: activePalette.text
+                color: application.playheadColor
                 width: 1
                 height: root.height - horizontalScrollBar.height
                 x: producer.position * timeScale - tracksFlickable.contentX

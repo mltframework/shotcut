@@ -18,6 +18,7 @@
 #include "scrubbar.h"
 
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "settings.h"
 
 #include <QToolTip>
@@ -202,7 +203,7 @@ bool ScrubBar::onSeek(int value)
 
 void ScrubBar::paintEvent(QPaintEvent *e)
 {
-    QPen pen(QBrush(palette().text().color()), 2);
+    QPen pen(QBrush(QmlApplication::playheadColor()), 2);
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
@@ -211,12 +212,12 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     if (!isEnabled())
         return;
 
-    // draw pointer
+    // draw playhead
     QPolygon pa(3);
     const int x = selectionSize / 2 - 1;
     int head = m_margin + m_cursorPosition;
     pa.setPoints(3, head - x - 1, 0, head + x, 0, head, x);
-    p.setBrush(palette().text().color());
+    p.setBrush(QmlApplication::playheadColor());
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
     p.setPen(pen);

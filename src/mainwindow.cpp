@@ -6767,6 +6767,10 @@ void MainWindow::updateLayoutSwitcher()
             button->setAutoRaise(true);
             button->setDefaultAction(ui->actionLayoutPlayer);
             layoutGrid->addWidget(button, 1, 2, Qt::AlignCenter);
+            layoutSwitcher->setStyleSheet(
+                "QToolButton { border-radius: 8px; }"
+                "QToolButton:checked { background-color: palette(highlight);"
+                " color: palette(highlighted-text); }");
         }
         ui->mainToolBar->removeAction(ui->actionLayoutLogging);
         ui->mainToolBar->removeAction(ui->actionLayoutEditing);
@@ -6787,6 +6791,20 @@ void MainWindow::updateLayoutSwitcher()
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutColor);
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutAudio);
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutPlayer);
+        }
+        const QString layoutBtnStyle = QStringLiteral(
+            "QToolButton { border-radius: 8px; }"
+            "QToolButton:checked { background-color: palette(highlight);"
+            " color: palette(highlighted-text); }");
+        const QList<QAction *> layoutActions{ui->actionLayoutLogging,
+                                             ui->actionLayoutEditing,
+                                             ui->actionLayoutEffects,
+                                             ui->actionLayoutColor,
+                                             ui->actionLayoutAudio,
+                                             ui->actionLayoutPlayer};
+        for (auto *action : layoutActions) {
+            if (auto *btn = qobject_cast<QToolButton *>(ui->mainToolBar->widgetForAction(action)))
+                btn->setStyleSheet(layoutBtnStyle);
         }
     }
 }
