@@ -6,7 +6,9 @@
 #include <QImage>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QHoverEvent>
 #include <QPainter>
+#include <QCursor>
 #include <QQuickWindow>
 #include <QScreen>
 #include <QDebug>
@@ -46,12 +48,24 @@ bool isThreadCommandChord(const QKeyEvent *event)
 }
 } // namespace
 
-bool RustPanelItem::event(QEvent *e)
+bool RustPanelItem::event(QEvent *event)
 {
-    if (e->type() == QEvent::ShortcutOverride) {
-        auto *keyEvent = static_cast<QKeyEvent *>(e);
+    // Two independent needs share this one override -- see the .h
+    // declaration's doc comment. While this item has Qt focus, claim
+    // every ShortcutOverride so global single-key app shortcuts
+    // (timeline's Backspace/Delete/Z/X) never win over typing/editing in
+    // a focused Slint TextInput; that subsumes the thread-command chords
+    // too when focused. When this item has NO Qt focus, still claim just
+    // the Ctrl+Alt+Up/Down/Ctrl+K chords so they keep working via
+    // ChatRustDock's window-wide QShortcut fallback.
+    if (event->type() == QEvent::ShortcutOverride) {
+        if (hasFocus()) {
+            event->accept();
+            return true;
+        }
+        auto *keyEvent = static_cast<QKeyEvent *>(event);
         if (isThreadCommandChord(keyEvent)) {
-            e->accept();
+            event->accept();
             return true;
         }
         // Shotcut binds many single-key (no-modifier) shortcuts on its main
@@ -77,13 +91,18 @@ bool RustPanelItem::event(QEvent *e)
             return true;
         }
     }
-    return QQuickPaintedItem::event(e);
+    return QQuickPaintedItem::event(event);
 }
 
 RustPanelItem::RustPanelItem(QQuickItem *parent)
     : QQuickPaintedItem(parent)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
+    // tasks/v2/enhance.yaml#task-4: without this, Qt never delivers
+    // hoverMoveEvent/hoverLeaveEvent at all, so has-hover-driven state
+    // inside the Slint scene (hover-tinted backgrounds, mouse-cursor
+    // bindings) could never update outside of an actual click.
+    setAcceptHoverEvents(true);
     setFlag(QQuickItem::ItemHasContents, true);
     // Needed so the chat compose box (a Slint TextInput) can actually
     // receive keyPressEvent()s once clicked -- see mousePressEvent().
@@ -157,6 +176,12 @@ void RustPanelItem::ensureHandle()
         const bool dark = m_pendingTheme != "light";
         panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark);
     }
+    if (m_handle && m_hasPendingProjectPath) {
+        const QByteArray path = m_pendingProjectPath.toUtf8();
+        panel_rust_set_project_path(m_handle,
+                                     reinterpret_cast<const unsigned char *>(path.constData()),
+                                     static_cast<size_t>(path.size()));
+    }
 }
 
 void RustPanelItem::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -181,6 +206,28 @@ void RustPanelItem::mousePressEvent(QMouseEvent *event)
 
 void RustPanelItem::mouseReleaseEvent(QMouseEvent *event)
 {
+    event->accept();
+}
+
+void RustPanelItem::hoverMoveEvent(QHoverEvent *event)
+{
+    ensureHandle();
+    if (m_handle) {
+        const QPointF pos = event->position();
+        if (panel_rust_input_hover(m_handle,
+                                    static_cast<unsigned int>(qMax(0.0, pos.x())),
+                                    static_cast<unsigned int>(qMax(0.0, pos.y()))))
+            update();
+    }
+    event->accept();
+}
+
+void RustPanelItem::hoverLeaveEvent(QHoverEvent *event)
+{
+    if (m_handle) {
+        if (panel_rust_input_hover_exit(m_handle))
+            update();
+    }
     event->accept();
 }
 
@@ -266,12 +313,35 @@ void RustPanelItem::setTheme(const QString &theme)
         requestRepaint();
 }
 
+void RustPanelItem::setProjectPath(const QString &path)
+{
+    m_pendingProjectPath = path;
+    m_hasPendingProjectPath = true;
+    if (!m_handle)
+        return; // applied by ensureHandle() once the panel actually exists
+    const QByteArray bytes = path.toUtf8();
+    panel_rust_set_project_path(m_handle,
+                                 reinterpret_cast<const unsigned char *>(bytes.constData()),
+                                 static_cast<size_t>(bytes.size()));
+}
+
 void RustPanelItem::poll()
 {
     if (!m_handle)
         return;
     if (panel_rust_poll(m_handle))
         requestRepaint();
+
+    // ui/tokens/cursor_host.slint's CursorHost global tracks the desired
+    // cursor kind declaratively (hover/focus change-handlers), already
+    // mapped to a Qt::CursorShape int on the Rust side -- see
+    // panel_rust_cursor_shape's doc comment in panel_ffi.h for why this
+    // indirection exists instead of Slint's own internal cursor tracking.
+    const int shape = panel_rust_cursor_shape(m_handle);
+    if (shape != m_lastCursorShape) {
+        m_lastCursorShape = shape;
+        setCursor(QCursor(static_cast<Qt::CursorShape>(shape)));
+    }
 }
 
 void RustPanelItem::paint(QPainter *painter)
