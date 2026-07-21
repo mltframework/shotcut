@@ -44,8 +44,7 @@
 #include <QSpinBox>
 #include <QTreeView>
 
-static const QString WHISPER_MODEL_EXTENSION_URL = QStringLiteral(
-    Urls::kBaseCheck + QStringLiteral("/whispermodel.qml");
+static const QString WHISPER_MODEL_EXTENSION_URL = Urls::kBaseCheck + QStringLiteral("/whispermodel.qml");
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {
