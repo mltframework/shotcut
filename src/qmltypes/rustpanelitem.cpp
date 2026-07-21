@@ -1,6 +1,7 @@
 #include "rustpanelitem.h"
 #include "panel_ffi.h"
 
+#include <QCoreApplication>
 #include <QEvent>
 #include <QImage>
 #include <QKeyEvent>
@@ -9,6 +10,19 @@
 #include <QQuickWindow>
 #include <QScreen>
 #include <QDebug>
+
+void RustPanelItem::requestRepaint()
+{
+    update();
+    // Flushes whatever's already posted (including the UpdateRequest/
+    // paint-scheduling event `update()` just posted) without entering a
+    // nested event loop the way QCoreApplication::processEvents() would
+    // (this is called from mouse/key handlers and a QTimer callback --
+    // processEvents() there risks reentrant timer/input dispatch). This
+    // only drains the already-queued backlog synchronously; it does not
+    // wait for or process any new incoming events.
+    QCoreApplication::sendPostedEvents();
+}
 
 bool RustPanelItem::invokeCommand(Command command)
 {
@@ -149,7 +163,7 @@ void RustPanelItem::geometryChange(const QRectF &newGeometry, const QRectF &oldG
 {
     QQuickPaintedItem::geometryChange(newGeometry, oldGeometry);
     ensureHandle();
-    update();
+    requestRepaint();
 }
 
 void RustPanelItem::mousePressEvent(QMouseEvent *event)
@@ -160,7 +174,7 @@ void RustPanelItem::mousePressEvent(QMouseEvent *event)
         panel_rust_input_click(m_handle,
                                 static_cast<unsigned int>(event->position().x()),
                                 static_cast<unsigned int>(event->position().y()));
-        update();
+        requestRepaint();
     }
     event->accept();
 }
@@ -191,7 +205,7 @@ void RustPanelItem::wheelEvent(QWheelEvent *event)
                                  static_cast<float>(event->position().y()),
                                  static_cast<float>(delta.x()),
                                  static_cast<float>(delta.y()));
-        update();
+        requestRepaint();
     }
     event->accept();
 }
@@ -210,7 +224,7 @@ void RustPanelItem::keyPressEvent(QKeyEvent *event)
             invokeCommand(event->key() == Qt::Key_Up ? PreviousThread : NextThread);
         else
             invokeCommand(OpenThreadSearch);
-        update();
+        requestRepaint();
         event->accept();
         return;
     }
@@ -223,7 +237,7 @@ void RustPanelItem::keyPressEvent(QKeyEvent *event)
                                   static_cast<size_t>(text.size()),
                                   /*pressed=*/true,
                                   static_cast<int>(event->modifiers())))
-            update();
+            requestRepaint();
     }
     event->accept();
 }
@@ -249,7 +263,7 @@ void RustPanelItem::setTheme(const QString &theme)
         return; // applied by ensureHandle() once the panel actually exists
     const bool dark = theme != "light";
     if (panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark))
-        update();
+        requestRepaint();
 }
 
 void RustPanelItem::poll()
@@ -257,7 +271,7 @@ void RustPanelItem::poll()
     if (!m_handle)
         return;
     if (panel_rust_poll(m_handle))
-        update();
+        requestRepaint();
 }
 
 void RustPanelItem::paint(QPainter *painter)

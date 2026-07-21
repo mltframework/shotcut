@@ -65,6 +65,17 @@ protected:
 private:
     void ensureHandle();
     void poll();
+    // QQuickItem::update() only *schedules* a repaint for whenever Qt's
+    // event loop next gets around to it -- under this app's forced
+    // QSG_RENDER_LOOP=basic (see main.cpp) plus QQuickWidget hosting,
+    // that scheduling reliably only gets flushed by *other* event traffic
+    // (confirmed live: mouse movement flushes it, but a keyboard-only
+    // trigger with zero subsequent mouse activity leaves the repaint
+    // queued indefinitely -- state changes correctly, nothing paints
+    // until some other event nudges the loop). Wraps update() with an
+    // explicit flush of already-posted events so a repaint request is
+    // never silently left waiting on unrelated event traffic to arrive.
+    void requestRepaint();
     // Recomputes m_pollTimer's interval from window()->screen()->
     // refreshRate(), clamped to [kMinPollFps, kMaxPollFps]. Called on
     // construction (screen not known yet -> falls back to kMinPollFps),
