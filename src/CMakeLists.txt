@@ -359,6 +359,13 @@ if(WIN32)
   target_sources(snapflow PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
   target_link_libraries(snapflow PRIVATE d3d11 d3dcompiler dxgi dxguid ole32)
 
+  # sap_rust/panel_rust (via the getrandom crate) call BCryptGenRandom for
+  # secure randomness (uuid v4 generation etc.) -- undefined reference at
+  # final link without this, confirmed on a real windows-latest run
+  # (collect2.exe: undefined reference to `BCryptGenRandom' from
+  # libpanel_rust.a's getrandom object).
+  target_link_libraries(snapflow PRIVATE bcrypt)
+
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
     target_include_directories(snapflow PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
