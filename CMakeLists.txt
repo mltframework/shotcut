@@ -117,26 +117,6 @@ corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml
 # cargo invocation (a real CI break, see build-linux.yml run 29826369548).
 corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml
   CRATE_TYPES staticlib)
-
-if(WIN32)
-  # Both crates pull in the getrandom crate (uuid v4 generation etc.),
-  # which calls BCryptGenRandom on Windows. Corrosion already attaches
-  # each crate's own base-runtime requirements (kernel32/ntdll/dbghelp/...)
-  # as INTERFACE_LINK_LIBRARIES on these targets, which is exactly why
-  # those land correctly positioned right after libsap_rust.a/
-  # libpanel_rust.a in the final link line -- bcrypt needs the same
-  # treatment. Attaching it directly to snapflow's own
-  # target_link_libraries instead (tried first) put -lbcrypt earlier in
-  # CMake's generated link line than the .a archive that references it,
-  # since CMake does not preserve target_link_libraries' textual call
-  # order between plain library names and target-propagated transitive
-  # requirements -- confirmed by dumping the actual link response file on
-  # a real windows-latest run (undefined reference to `BCryptGenRandom'
-  # persisted even with `-lbcrypt` present, because of where it landed).
-  target_link_libraries(sap_rust INTERFACE bcrypt)
-  target_link_libraries(panel_rust INTERFACE bcrypt)
-endif()
-
 pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
 
 add_subdirectory(CuteLogger)

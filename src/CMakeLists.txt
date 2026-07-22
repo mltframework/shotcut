@@ -317,14 +317,31 @@ target_link_libraries(snapflow
   Qt6::QuickControls2
   Qt6::QuickWidgets
   Qt6::Sql
-  sap_rust
-  panel_rust
   SQLite3::SQLite3
   PkgConfig::Fontconfig
   Qt6::WebSockets
   Qt6::Widgets
   Qt6::Xml
 )
+
+# sap_rust/panel_rust link separately (not in the big PRIVATE list above)
+# so Windows can wrap them with bcrypt (needed for getrandom's
+# BCryptGenRandom) in a $<LINK_GROUP:RESCAN,...>. Two prior attempts to
+# just add `bcrypt` as a plain link library -- once directly on snapflow,
+# once as an INTERFACE requirement on the crate targets (mirroring how
+# Corrosion's own kernel32/ntdll/dbghelp land correctly) -- both compiled
+# but still failed at actual link time on a real windows-latest run:
+# CMake's link-line assembly placed `-lbcrypt` before whichever archive
+# actually referenced BCryptGenRandom, and GNU ld's single left-to-right
+# pass never revisited it. LINK_GROUP:RESCAN (CMake >= 3.24) wraps its
+# arguments in `-Wl,--start-group ... --end-group`, which makes the
+# linker rescan the group until every symbol resolves regardless of
+# ordering -- immune to the reordering that broke the first two attempts.
+if(WIN32)
+  target_link_libraries(snapflow PRIVATE "$<LINK_GROUP:RESCAN,sap_rust,panel_rust,bcrypt>")
+else()
+  target_link_libraries(snapflow PRIVATE sap_rust panel_rust)
+endif()
 if(UNIX AND NOT APPLE)
   target_link_libraries(snapflow PRIVATE Qt6::DBus X11::X11)
   target_sources(snapflow PRIVATE linuxtools.cpp linuxtools.h)
