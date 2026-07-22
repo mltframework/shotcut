@@ -317,6 +317,8 @@ target_link_libraries(snapflow
   Qt6::QuickControls2
   Qt6::QuickWidgets
   Qt6::Sql
+  sap_rust
+  panel_rust
   SQLite3::SQLite3
   PkgConfig::Fontconfig
   Qt6::WebSockets
@@ -324,23 +326,26 @@ target_link_libraries(snapflow
   Qt6::Xml
 )
 
-# sap_rust/panel_rust link separately (not in the big PRIVATE list above)
-# so Windows can wrap them with bcrypt (needed for getrandom's
-# BCryptGenRandom) in a $<LINK_GROUP:RESCAN,...>. Two prior attempts to
-# just add `bcrypt` as a plain link library -- once directly on snapflow,
-# once as an INTERFACE requirement on the crate targets (mirroring how
-# Corrosion's own kernel32/ntdll/dbghelp land correctly) -- both compiled
-# but still failed at actual link time on a real windows-latest run:
-# CMake's link-line assembly placed `-lbcrypt` before whichever archive
-# actually referenced BCryptGenRandom, and GNU ld's single left-to-right
-# pass never revisited it. LINK_GROUP:RESCAN (CMake >= 3.24) wraps its
-# arguments in `-Wl,--start-group ... --end-group`, which makes the
-# linker rescan the group until every symbol resolves regardless of
-# ordering -- immune to the reordering that broke the first two attempts.
 if(WIN32)
-  target_link_libraries(snapflow PRIVATE "$<LINK_GROUP:RESCAN,sap_rust,panel_rust,bcrypt>")
-else()
-  target_link_libraries(snapflow PRIVATE sap_rust panel_rust)
+  # panel_rust (via the getrandom crate, uuid v4 generation etc.) calls
+  # BCryptGenRandom on Windows -- confirmed by the actual undefined-
+  # reference error naming libpanel_rust.a's own getrandom object
+  # specifically, not sap_rust's. Attached as an INTERFACE requirement on
+  # panel_rust alone (not also on sap_rust, and not as a plain link
+  # library on snapflow, and not via $<LINK_GROUP:RESCAN,...> wrapping
+  # both crate targets -- all three were tried on real windows-latest
+  # runs and failed): CMake's link-line assembly places a target's own
+  # INTERFACE_LINK_LIBRARIES immediately after that target's own archive,
+  # exactly like it already does correctly for Corrosion's own
+  # auto-attached kernel32/ntdll/dbghelp requirements. Attaching bcrypt to
+  # *both* sap_rust and panel_rust instead (tried previously) deduplicated
+  # down to a single emission at sap_rust's position, landing before
+  # libpanel_rust.a and missing the archive that actually needs it; the
+  # LINK_GROUP:RESCAN generator expression, mixed with real corrosion
+  # targets rather than plain library names, did not wrap them as
+  # documented either -- it left sap_rust/panel_rust to CMake's normal
+  # target-graph placement and only wrapped the plain `bcrypt` string.
+  target_link_libraries(panel_rust INTERFACE bcrypt)
 endif()
 if(UNIX AND NOT APPLE)
   target_link_libraries(snapflow PRIVATE Qt6::DBus X11::X11)
