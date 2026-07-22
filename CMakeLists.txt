@@ -88,7 +88,22 @@ FetchContent_Declare(
   GIT_TAG v0.5.2
 )
 FetchContent_MakeAvailable(Corrosion)
-corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml FEATURES real_ffi)
+# CRATE_TYPES staticlib: same fix as panel-rust below and for the same
+# reason -- without it, corrosion also builds sap-rust's own
+# `[[bin]] name = "sap-rust"` (src/main.rs) as part of this one
+# `cargo build --features real_ffi` invocation. With real_ffi on, that bin
+# statically links the same crate's ffi_backend.rs (its
+# `#[no_mangle] pub extern "C" fn sap_start_server` and friends), which
+# call back into sap_* symbols only defined on this file's own C++ side
+# (src/rustbridge/sap_ffi.cpp) -- undefined at link time for a standalone
+# .exe with no C++ code linked in, breaking the whole cargo invocation
+# (confirmed on a real windows-latest run: `error: could not compile
+# sap-rust (bin "sap-rust")`, ~40 undefined-reference errors). Restricting
+# to the staticlib matches what this CMakeLists.txt actually links below
+# and what panel-rust's own corrosion_import_crate call already does.
+corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml
+  FEATURES real_ffi
+  CRATE_TYPES staticlib)
 
 # panel-rust: Rust-rendered (Slint) chat panel spike, per
 # memory/head/gen/plans/rust-qt-cross-render-option-b.md. Additive only,
