@@ -286,9 +286,7 @@ private slots:
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
     void addGenerator();
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
     void addAdjustmentClip();
-#endif
 };
 
 #endif // TIMELINEDOCK_H
