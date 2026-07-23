@@ -147,7 +147,7 @@ static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 // since restoreState() alone would otherwise keep restoring it to its
 // old saved right-side position regardless of what setupAndConnectDocks()
 // requests for a brand-new profile.
-static constexpr int kDockLayoutVersion = 3;
+static constexpr int kDockLayoutVersion = 4;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -2826,10 +2826,33 @@ void MainWindow::readWindowSettings()
             // rely on setupAndConnectDocks()'s own (correct, but
             // restoreState()-overridden) initial placement.
             addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
+            // v4 migration (consolidation plan phase 12): chat gets its
+            // own full-height left column beside the properties tab
+            // group instead of stacking/tabbing with it.
+            splitDockWidget(m_chatRustDock, m_playlistDock, Qt::Horizontal);
+            tabifyDockWidget(m_playlistDock, m_propertiesDock);
+            tabifyDockWidget(m_propertiesDock, m_filtersDock);
+            tabifyDockWidget(m_filtersDock, m_encodeDock);
+            tabifyDockWidget(m_encodeDock, m_notesDock);
+            tabifyDockWidget(m_notesDock, m_subtitlesDock);
+            m_playlistDock->raise();
             Settings.setDockLayoutVersion(kDockLayoutVersion);
         }
     } else {
         restoreState(kLayoutEditingDefault);
+        // consolidation plan phase 12: kLayoutEditingDefault is a baked
+        // pre-v4 byte-array that re-tabs the chat dock into the
+        // Playlist group (verified live on a fresh sandbox HOME) --
+        // re-apply the full-height left column AFTER the restore, same
+        // as the migration branch above.
+        addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
+        splitDockWidget(m_chatRustDock, m_playlistDock, Qt::Horizontal);
+        tabifyDockWidget(m_playlistDock, m_propertiesDock);
+        tabifyDockWidget(m_propertiesDock, m_filtersDock);
+        tabifyDockWidget(m_filtersDock, m_encodeDock);
+        tabifyDockWidget(m_encodeDock, m_notesDock);
+        tabifyDockWidget(m_notesDock, m_subtitlesDock);
+        m_playlistDock->raise();
     }
     LOG_DEBUG() << "end";
 }
