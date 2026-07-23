@@ -991,6 +991,17 @@ void MainWindow::setupAndConnectDocks()
     tabifyDockWidget(m_filtersDock, m_encodeDock);
     tabifyDockWidget(m_encodeDock, m_notesDock);
     tabifyDockWidget(m_notesDock, m_subtitlesDock);
+    // consolidation plan phase 12 (chat_view_full_left_dock_layout):
+    // sequential addDockWidget calls STACK docks vertically within the
+    // left area, so the chat panel ended up in a short band under the
+    // Playlist group instead of the independent full-height column the
+    // Phase 4 comment above describes. splitDockWidget(...Horizontal)
+    // is the missing primitive: it places the properties/playlist tab
+    // group in its own column to the RIGHT of chat, leaving chat the
+    // full left height by construction. Purely the DEFAULT arrangement
+    // -- Qt's saveState/restoreState still persists whatever the user
+    // drags afterward, so the layout stays fully customizable.
+    splitDockWidget(m_chatRustDock, m_propertiesDock, Qt::Horizontal);
     // Right area
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
