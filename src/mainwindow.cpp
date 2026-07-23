@@ -2817,31 +2817,38 @@ void MainWindow::readWindowSettings()
     if (!Settings.windowGeometry().isEmpty()) {
         restoreState(Settings.windowState());
         restoreGeometry(Settings.windowGeometry());
-        // Re-tabify docks that were added after the user's saved layout version.
-        if (Settings.dockLayoutVersion() < kDockLayoutVersion) {
-            tabifyDockWidget(m_recentDock, m_filesDock);
-            tabifyDockWidget(m_filesDock, m_elementsDock);
-            // v3 migration: move ChatRustDock from its old saved
-            // right-side position onto the left, independent of the
-            // properties/playlist/etc. tab group -- restoreState()
-            // above already restored the pre-v3 right-side placement
-            // for any user upgrading from an older saved layout, so
-            // this must explicitly re-add it after that restore, not
-            // rely on setupAndConnectDocks()'s own (correct, but
-            // restoreState()-overridden) initial placement.
-            addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
-            // v4 migration (consolidation plan phase 12): chat gets its
-            // own full-height left column beside the properties tab
-            // group instead of stacking/tabbing with it.
-            splitDockWidget(m_chatRustDock, m_playlistDock, Qt::Horizontal);
-            tabifyDockWidget(m_playlistDock, m_propertiesDock);
-            tabifyDockWidget(m_propertiesDock, m_filtersDock);
-            tabifyDockWidget(m_filtersDock, m_encodeDock);
-            tabifyDockWidget(m_encodeDock, m_notesDock);
-            tabifyDockWidget(m_notesDock, m_subtitlesDock);
-            m_playlistDock->raise();
-            // phase 29: apply the wider chat-column default in this
-            // migration path too (deferred until real window geometry).
+        // Per-version migration steps: each block runs only for profiles
+        // saved BEFORE that version, so a later bump (e.g. v5's
+        // width-only change) cannot re-run earlier re-dock/tabify steps
+        // and clobber a user's custom dock arrangement (phase-32 review
+        // finding).
+        const int savedDockLayoutVersion = Settings.dockLayoutVersion();
+        if (savedDockLayoutVersion < kDockLayoutVersion) {
+            if (savedDockLayoutVersion < 4) {
+                tabifyDockWidget(m_recentDock, m_filesDock);
+                tabifyDockWidget(m_filesDock, m_elementsDock);
+                // v3 migration: move ChatRustDock from its old saved
+                // right-side position onto the left, independent of the
+                // properties/playlist/etc. tab group -- restoreState()
+                // above already restored the pre-v3 right-side placement
+                // for any user upgrading from an older saved layout, so
+                // this must explicitly re-add it after that restore, not
+                // rely on setupAndConnectDocks()'s own (correct, but
+                // restoreState()-overridden) initial placement.
+                addDockWidget(Qt::LeftDockWidgetArea, m_chatRustDock);
+                // v4 migration (consolidation plan phase 12): chat gets
+                // its own full-height left column beside the properties
+                // tab group instead of stacking/tabbing with it.
+                splitDockWidget(m_chatRustDock, m_playlistDock, Qt::Horizontal);
+                tabifyDockWidget(m_playlistDock, m_propertiesDock);
+                tabifyDockWidget(m_propertiesDock, m_filtersDock);
+                tabifyDockWidget(m_filtersDock, m_encodeDock);
+                tabifyDockWidget(m_encodeDock, m_notesDock);
+                tabifyDockWidget(m_notesDock, m_subtitlesDock);
+                m_playlistDock->raise();
+            }
+            // v5 migration (phase 29): width-only -- apply the wider
+            // chat-column default (deferred until real window geometry).
             QTimer::singleShot(0, this, [this] {
                 resizeDocks({m_chatRustDock}, {qRound(width() * 0.28)}, Qt::Horizontal);
             });
