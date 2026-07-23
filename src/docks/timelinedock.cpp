@@ -1484,6 +1484,13 @@ void TimelineDock::setupActions()
         if (mltProducers->get_data("blipflash")) {
             menu->addAction(tr("Blip Flash"), this, SLOT(addGenerator()))->setObjectName("blipflash");
         }
+#if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
+        if (mltProducers->get_data("color")) {
+            menu->addSeparator();
+            menu->addAction(tr("Adjustment Clip"), this, SLOT(addGenerator()))
+                ->setObjectName("adjustment");
+        }
+#endif
         action->setMenu(menu);
     }
     Actions.add("timelineNewGenerator", action, windowTitle());
@@ -4848,6 +4855,23 @@ void TimelineDock::addGenerator()
         addGenerator(new CountProducerWidget(this));
     else if (sender()->objectName() == "blipflash")
         addGenerator(new BlipProducerWidget(this));
+    else if (sender()->objectName() == "adjustment")
+        addAdjustmentClip();
+}
+
+void TimelineDock::addAdjustmentClip()
+{
+    auto &profile = MLT.profile();
+    Mlt::Producer producer(profile, "color:0");
+    if (!producer.is_valid())
+        return;
+    producer.set("mlt_image_format", "rgba");
+    producer.set("meta.fx_cut", 1);
+    producer.set(kShotcutProducerProperty, "adjustment");
+    producer.set(kShotcutCaptionProperty, tr("Adjustment Clip").toUtf8().constData());
+    MLT.setDurationFromDefault(&producer);
+    auto trackIndex = addTrackIfNeeded(VideoTrackType);
+    overwrite(trackIndex, -1, MLT.XML(&producer), false);
 }
 
 class FindProducersByHashParser : public Mlt::Parser
