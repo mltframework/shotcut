@@ -147,7 +147,11 @@ static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 // since restoreState() alone would otherwise keep restoring it to its
 // old saved right-side position regardless of what setupAndConnectDocks()
 // requests for a brand-new profile.
-static constexpr int kDockLayoutVersion = 4;
+// v5 (consolidation plan phase 29): default chat dock width widened from
+// 20% to 28% of the window -- the 20% column was too narrow for the
+// panel's compose/sidebar layout. The version bump re-applies the width
+// default once for existing profiles; manual resizes persist afterwards.
+static constexpr int kDockLayoutVersion = 5;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
 static QRegularExpression kBackupFileRegex("^(.+) "
@@ -248,7 +252,7 @@ MainWindow::MainWindow()
         // also migrates users upgrading from a profile saved before this
         // dock existed; later launches preserve the user's manual width.
         QTimer::singleShot(0, this, [this] {
-            resizeDocks({m_chatRustDock}, {qRound(width() * 0.20)}, Qt::Horizontal);
+            resizeDocks({m_chatRustDock}, {qRound(width() * 0.28)}, Qt::Horizontal);
         });
     }
     setupActions();
@@ -2836,6 +2840,11 @@ void MainWindow::readWindowSettings()
             tabifyDockWidget(m_encodeDock, m_notesDock);
             tabifyDockWidget(m_notesDock, m_subtitlesDock);
             m_playlistDock->raise();
+            // phase 29: apply the wider chat-column default in this
+            // migration path too (deferred until real window geometry).
+            QTimer::singleShot(0, this, [this] {
+                resizeDocks({m_chatRustDock}, {qRound(width() * 0.28)}, Qt::Horizontal);
+            });
             Settings.setDockLayoutVersion(kDockLayoutVersion);
         }
     } else {
@@ -2853,6 +2862,11 @@ void MainWindow::readWindowSettings()
         tabifyDockWidget(m_encodeDock, m_notesDock);
         tabifyDockWidget(m_notesDock, m_subtitlesDock);
         m_playlistDock->raise();
+        // phase 29: fresh-profile default layout gets the wider chat
+        // column as well.
+        QTimer::singleShot(0, this, [this] {
+            resizeDocks({m_chatRustDock}, {qRound(width() * 0.28)}, Qt::Horizontal);
+        });
     }
     LOG_DEBUG() << "end";
 }
