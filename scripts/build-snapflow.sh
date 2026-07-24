@@ -1175,7 +1175,7 @@ function set_globals {
 
   #####
   # whisper.cpp
-  CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D GGML_AVX2=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF -D WHISPER_BUILD_EXAMPLES=OFF"
+  CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D GGML_AVX2=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
   [ "$TARGET_OS" = "Darwin" ] && CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   if test "$TARGET_OS" = "Darwin" ; then
     CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
@@ -1186,7 +1186,20 @@ function set_globals {
     CFLAGS_[30]=$CFLAGS
     LDFLAGS_[30]=$LDFLAGS
   fi
-  BUILD[30]="ninja -C build -j $MAKEJ"
+  # Only build the whisper-cli target (+ its real deps: common, whisper,
+  # ggml libs) -- NOT whisper-bench/whisper-server/whisper-quantize/etc,
+  # which install_whispercpp doesn't need and which don't ship. This
+  # sidesteps a real, upstream ggml-blas linking bug (confirmed via a real
+  # build-linux CI failure, run 30087367231): ggml/src/ggml-blas/
+  # CMakeLists.txt links OpenBLAS as PRIVATE to the ggml-blas target, so
+  # whisper-bench's own link step fails with "undefined reference to
+  # openblas_set_num_threads" even though libwhisper.so itself (what
+  # whisper-cli and Snapflow's whisperjob.cpp both actually depend on)
+  # links and installs fine. Building the whole "examples" target set was
+  # tried first (WHISPER_BUILD_EXAMPLES=OFF) but that also skips
+  # whisper-cli, which install_whispercpp below does need -- this is the
+  # correct, narrower fix.
+  BUILD[30]="ninja -C build -j $MAKEJ whisper-cli"
   INSTALL[30]="install_whispercpp"
 
   #####
