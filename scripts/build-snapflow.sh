@@ -994,7 +994,28 @@ function set_globals {
 
   #####
   # OpenBLAS
-  CONFIG[9]="cmake -G Ninja -B builddir -D BUILD_SHARED_LIBS=ON -D USE_THREAD=ON -D NUM_THREADS=64 -D USE_OPENMP=ON -D TARGET=CORE2 -D DYNAMIC_ARCH=ON -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  #
+  # USE_OPENMP is deliberately NOT set here (real build-linux CI failure,
+  # run 30087367231/30089002825/30090579305, root-caused by building it
+  # locally with matching flags and inspecting the actual .so with nm -D):
+  # upstream OpenBLAS's driver/others/blas_server_omp.c (the USE_OPENMP=1
+  # threading backend) defines openblas_set_num_threads() without the
+  # OPENBLAS_EXPORT visibility attribute that blas_server.c (the
+  # USE_THREAD-only/pthread backend) has on the same function -- with
+  # -fvisibility=hidden (OpenBLAS's own default), that compiles the OpenMP
+  # variant's symbol as LOCAL/hidden instead of a real dynamic export.
+  # ggml-blas.cpp calls openblas_set_num_threads() unconditionally whenever
+  # GGML_BLAS_VENDOR=OpenBLAS, so ANY executable linking libwhisper.so
+  # (whisper-cli included, not just the unused whisper-bench example)
+  # fails at link time with "undefined reference to
+  # openblas_set_num_threads". Confirmed directly: a local OpenBLAS build
+  # with USE_THREAD=ON + USE_OPENMP=ON has the symbol as hidden ('t' in nm
+  # output); the identical build with USE_OPENMP simply omitted exports it
+  # correctly ('T', global). Dropping USE_OPENMP=ON here uses OpenBLAS's
+  # own pthread-based threading instead -- its default/most common
+  # configuration -- with no functional loss for Snapflow's whisper.cpp
+  # integration.
+  CONFIG[9]="cmake -G Ninja -B builddir -D BUILD_SHARED_LIBS=ON -D USE_THREAD=ON -D NUM_THREADS=64 -D TARGET=CORE2 -D DYNAMIC_ARCH=ON -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   CFLAGS_[9]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[9]="$ASAN_LDFLAGS $LDFLAGS"
   BUILD[9]="ninja -C builddir -j $MAKEJ"
@@ -1186,20 +1207,7 @@ function set_globals {
     CFLAGS_[30]=$CFLAGS
     LDFLAGS_[30]=$LDFLAGS
   fi
-  # Only build the whisper-cli target (+ its real deps: common, whisper,
-  # ggml libs) -- NOT whisper-bench/whisper-server/whisper-quantize/etc,
-  # which install_whispercpp doesn't need and which don't ship. This
-  # sidesteps a real, upstream ggml-blas linking bug (confirmed via a real
-  # build-linux CI failure, run 30087367231): ggml/src/ggml-blas/
-  # CMakeLists.txt links OpenBLAS as PRIVATE to the ggml-blas target, so
-  # whisper-bench's own link step fails with "undefined reference to
-  # openblas_set_num_threads" even though libwhisper.so itself (what
-  # whisper-cli and Snapflow's whisperjob.cpp both actually depend on)
-  # links and installs fine. Building the whole "examples" target set was
-  # tried first (WHISPER_BUILD_EXAMPLES=OFF) but that also skips
-  # whisper-cli, which install_whispercpp below does need -- this is the
-  # correct, narrower fix.
-  BUILD[30]="ninja -C build -j $MAKEJ whisper-cli"
+  BUILD[30]="ninja -C build -j $MAKEJ"
   INSTALL[30]="install_whispercpp"
 
   #####
