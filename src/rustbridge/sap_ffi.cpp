@@ -57,6 +57,35 @@ MainWindow *mainWindowFromHandle(void *handle)
     return reinterpret_cast<MainWindow *>(handle);
 }
 
+// Re-points the live `Controller::producer()` at the timeline tractor after an
+// FFI-driven edit.
+//
+// Why this exists: the FFI edit verbs below mutate through TimelineDock's own
+// real, undoable primitives (so the timeline VIEW and undo stack are correct),
+// but they do not go through `MainWindow::seekTimeline()`, which is the normal
+// UI path that also re-points `Controller::producer()` at the multitrack
+// tractor. Without that, `MLT.producer()` can still be the original
+// blank/untitled producer after a real append/add-track, so the app's PLAYER /
+// PREVIEW keeps showing pre-edit content even though the edit really landed --
+// i.e. part of what the user sees silently lags the project state.
+//
+// This check was previously inlined in `sap_get_frame_png` only, which fixed
+// the screenshot path while leaving the on-screen preview stale (and made a
+// getFrame-based screenshot test pass while the user's own preview was wrong).
+// Factored out here so every mutating verb calls the exact same primitive
+// (`MLT.setProducer` over the multitrack tractor) rather than a third copy of
+// the condition. Must be called on the Qt GUI thread -- every call site below
+// invokes it from inside its own QMetaObject::invokeMethod lambda.
+void syncTimelineProducer(MainWindow *mw)
+{
+    if (!mw || !mw->isMultitrackValid())
+        return;
+    if (!MLT.producer() || !MLT.producer()->is_valid()
+        || (void *) MLT.producer()->get_producer() != (void *) mw->multitrack()->get_producer()) {
+        MLT.setProducer(new Mlt::Producer(*mw->multitrack()));
+    }
+}
+
 QString trackKindString(TrackType type)
 {
     switch (type) {
@@ -142,7 +171,10 @@ int sap_add_video_track(void *mainWindowHandle)
     int result = -1;
     QMetaObject::invokeMethod(
         mw->timelineDock(),
-        [mw, &result]() { result = mw->timelineDock()->addVideoTrack(); },
+        [mw, &result]() {
+            result = mw->timelineDock()->addVideoTrack();
+            syncTimelineProducer(mw);
+        },
         Qt::BlockingQueuedConnection);
     return result;
 }
@@ -155,7 +187,10 @@ int sap_add_audio_track(void *mainWindowHandle)
     int result = -1;
     QMetaObject::invokeMethod(
         mw->timelineDock(),
-        [mw, &result]() { result = mw->timelineDock()->addAudioTrack(); },
+        [mw, &result]() {
+            result = mw->timelineDock()->addAudioTrack();
+            syncTimelineProducer(mw);
+        },
         Qt::BlockingQueuedConnection);
     return result;
 }
@@ -178,6 +213,7 @@ int sap_remove_track(void *mainWindowHandle, int trackIndex)
             // just called after pointing "current" at the requested index.
             dock->setCurrentTrack(trackIndex);
             dock->removeTrack();
+            syncTimelineProducer(mw);
             result = 0;
         },
         Qt::BlockingQueuedConnection);
@@ -290,6 +326,7 @@ int sap_remove_clip(void *mainWindowHandle, int trackIndex, int clipIndex)
             // The real, undoable TimelineDock::remove() primitive (the
             // same one the timeline's Delete/Ripple-Delete action calls).
             dock->remove(trackIndex, clipIndex, false);
+            syncTimelineProducer(mw);
             result = 0;
         },
         Qt::BlockingQueuedConnection);
@@ -372,6 +409,7 @@ char *sap_move_clip(void *mainWindowHandle,
             auto *command = new Timeline::MoveClipCommand(*dock, trackDelta, positionDelta, ripple != 0);
             command->addClip(fromTrackIndex, fromClipIndex);
             mw->undoStack()->push(command);
+            syncTimelineProducer(mw);
 
             // Re-read the real destination playlist to report where the
             // clip actually landed (not an echo of the request) -- the
@@ -1547,6 +1585,7 @@ char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *source
             // delta. The last clip on the track after the push is always
             // the one just appended.
             mw->undoStack()->push(new Timeline::AppendCommand(*model, trackIndex, xml, false));
+            syncTimelineProducer(mw);
             const int index = dock->clipCount(trackIndex) - 1;
             if (index < 0)
                 return;
@@ -2024,12 +2063,7 @@ unsigned char *sap_get_frame(void *mainWindowHandle,
             // getFrame renders the actual composited timeline, using the
             // same real primitive (MLT.setProducer over the multitrack
             // tractor), not a workaround.
-            if (mw->isMultitrackValid()
-                && (!MLT.producer() || !MLT.producer()->is_valid()
-                    || (void *) MLT.producer()->get_producer()
-                           != (void *) mw->multitrack()->get_producer())) {
-                MLT.setProducer(new Mlt::Producer(*mw->multitrack()));
-            }
+            syncTimelineProducer(mw);
             // Renders off the same live Mlt::Producer/tractor that drives
             // the app's own preview (Controller::producer()), via the same
             // Controller::image() primitive Snapflow's own timeline/property
