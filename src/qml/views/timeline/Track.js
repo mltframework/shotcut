@@ -36,53 +36,57 @@ function snapClip(clip, repeater) {
             // Snap to blank
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
                 // Snap right edge to left edge.
-                clip.x = itemLeft - clip.width
+                clip.x = Math.round(itemLeft / timeScale) * timeScale - clip.width
                 return
             } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
                 // Snap left edge to right edge.
-                clip.x = itemRight
+                clip.x = Math.round(itemRight / timeScale) * timeScale
                 return
             } else if (right > itemRight - SNAP && right < itemRight + SNAP) {
                 // Snap right edge to right edge.
-                clip.x = itemRight - clip.width
+                clip.x = Math.round(itemRight / timeScale) * timeScale - clip.width
                 return
             } else if (left > itemLeft - SNAP && left < itemLeft + SNAP) {
                 // Snap left edge to left edge.
-                clip.x = itemLeft
+                clip.x = Math.round(itemLeft / timeScale) * timeScale
                 return
             }
         }
     }
     // Snap to markers
     var leftFrame = Math.round(left / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(leftFrame) * timeScale)
-    if (left < prevMarkerX + SNAP) {
-        clip.x = prevMarkerX
+    var prevMarker = markers.prevMarkerPosition(leftFrame)
+    var prevMarkerX = prevMarker * timeScale
+    if (prevMarker >= 0 && left < prevMarkerX + SNAP) {
+        clip.x = prevMarker * timeScale
         return
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(leftFrame) * timeScale)
-    if (nextMarkerX > 0 && left > nextMarkerX - SNAP) {
-        clip.x = nextMarkerX
+    var nextMarker = markers.nextMarkerPosition(leftFrame)
+    var nextMarkerX = nextMarker * timeScale
+    if (nextMarker > 0 && left > nextMarkerX - SNAP) {
+        clip.x = nextMarker * timeScale
         return
     }
     var rightFrame = Math.round(right / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(rightFrame) * timeScale)
-    if (right < prevMarkerX + SNAP) {
-        clip.x = prevMarkerX - clip.width
+    prevMarker = markers.prevMarkerPosition(rightFrame)
+    prevMarkerX = prevMarker * timeScale
+    if (prevMarker >= 0 && right < prevMarkerX + SNAP) {
+        clip.x = prevMarker * timeScale - clip.width
         return
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(rightFrame) * timeScale)
-    if (nextMarkerX > 0 && right > nextMarkerX - SNAP) {
-        clip.x = nextMarkerX - clip.width
+    nextMarker = markers.nextMarkerPosition(rightFrame)
+    nextMarkerX = nextMarker * timeScale
+    if (nextMarker > 0 && right > nextMarkerX - SNAP) {
+        clip.x = nextMarker * timeScale - clip.width
         return
     }
     if (!settings.timelineDragScrub) {
         var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
-            clip.x = cursorX
+            clip.x = Math.round(cursorX / timeScale) * timeScale
         if (right > cursorX - SNAP && right < cursorX + SNAP)
-            clip.x = cursorX - clip.width
+            clip.x = Math.round(cursorX / timeScale) * timeScale - clip.width
     }
 }
 
@@ -203,10 +207,10 @@ function snapDrop(pos, repeater) {
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
-                dropTarget.x = itemLeft - dropTarget.width + headerWidth - tracksFlickable.contentX
+                dropTarget.x = Math.round(itemLeft / timeScale) * timeScale - dropTarget.width + headerWidth - tracksFlickable.contentX
                 return
             } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
-                dropTarget.x = itemRight + headerWidth - tracksFlickable.contentX
+                dropTarget.x = Math.round(itemRight / timeScale) * timeScale + headerWidth - tracksFlickable.contentX
                 return
             }
         }
@@ -215,9 +219,9 @@ function snapDrop(pos, repeater) {
         var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
-            dropTarget.x = cursorX + headerWidth - tracksFlickable.contentX
+            dropTarget.x = Math.round(cursorX / timeScale) * timeScale + headerWidth - tracksFlickable.contentX
         if (right > cursorX - SNAP && right < cursorX + SNAP)
-            dropTarget.x = cursorX - dropTarget.width + headerWidth - tracksFlickable.contentX
+            dropTarget.x = Math.round(cursorX / timeScale) * timeScale - dropTarget.width + headerWidth - tracksFlickable.contentX
     }
 }
 
