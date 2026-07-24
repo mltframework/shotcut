@@ -222,6 +222,8 @@ Rectangle {
         id: mouseArea
 
         property int startX
+        // drag.active is cleared before onReleased; remember that a real drag happened.
+        property bool dragActivated: false
 
         anchors.fill: parent
         enabled: !isBlank
@@ -238,10 +240,17 @@ Rectangle {
             originalTrackIndex = trackIndex;
             originalClipIndex = index;
             startX = parent.x;
+            dragActivated = false;
             clipRoot.forceActiveFocus();
             clipRoot.clicked(clipRoot, mouse);
         }
         onPositionChanged: mouse => {
+            // Ignore movement below the drag threshold. Otherwise magnet snap can
+            // nudge clip.x during a click-to-select, and at default zoom a sub-pixel
+            // nudge is already 1–2 frames — committing that creates a tiny transition.
+            if (!drag.active)
+                return;
+            dragActivated = true;
             if (mouse.y < 0 && trackIndex > 0)
                 parent.draggedToTrack(clipRoot, -1);
             else if (mouse.y > height && (trackIndex + 1) < root.trackCount)
@@ -259,13 +268,21 @@ Rectangle {
                 doubleClickTimer.isFirstRelease = false;
                 parent.y = 0;
                 var delta = parent.x - startX;
-                if (Math.abs(delta) >= 1 || trackIndex !== originalTrackIndex) {
+                // At low zoom, magnet snap may move by <1px while changing the
+                // frame. Commit when the frame changes, not only when abs(delta)>=1.
+                // Require a real drag so click-to-select cannot commit a frame nudge.
+                var startFrame = Math.round(startX / multitrack.scaleFactor);
+                var frame = Math.round(parent.x / multitrack.scaleFactor);
+                if (trackIndex !== originalTrackIndex || (dragActivated && (Math.abs(delta) >= 1 || frame !== startFrame))) {
                     parent.moved(clipRoot);
                     originalX = parent.x;
                     originalTrackIndex = trackIndex;
-                } else if (mouse.modifiers === Qt.NoModifier) {
-                    parent.dropped(clipRoot);
-                    clipRoot.clicked(clipRoot, mouse);
+                } else {
+                    parent.x = startX;
+                    if (mouse.modifiers === Qt.NoModifier) {
+                        parent.dropped(clipRoot);
+                        clipRoot.clicked(clipRoot, mouse);
+                    }
                 }
             }
         }
