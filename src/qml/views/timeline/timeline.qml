@@ -873,8 +873,24 @@ Rectangle {
                 clip.trackIndex = track.DelegateModel.itemsIndex;
             }
             onCheckSnap: clip => {
-                for (let i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).snapClip(clip);
+                // Prefer the clip's own track. Fall back to other tracks only
+                // when home has nothing in range and no nearby join — otherwise
+                // a playhead or edge on another track can steal the drag and
+                // create a false "half snap" while closing a small same-track gap.
+                var home = clip.trackIndex;
+                if (home >= 0 && home < tracksRepeater.count) {
+                    var homeTrack = tracksRepeater.itemAt(home);
+                    if (homeTrack.snapClip(clip))
+                        return;
+                    if (homeTrack.hasNearbyJoin(clip))
+                        return;
+                }
+                for (let i = 0; i < tracksRepeater.count; i++) {
+                    if (i === home)
+                        continue;
+                    if (tracksRepeater.itemAt(i).snapClip(clip))
+                        return;
+                }
             }
 
             Image {

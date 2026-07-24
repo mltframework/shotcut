@@ -54,7 +54,13 @@ Rectangle {
     }
 
     function snapClip(clip) {
-        Logic.snapClip(clip, repeater);
+        return Logic.snapClip(clip, repeater);
+    }
+
+    // True when a non-blank edge on this track is close enough that we should
+    // not fall back to cross-track / playhead magnets yet.
+    function hasNearbyJoin(clip) {
+        return Logic.hasNearbyJoin(clip, repeater, clip.x, clip.x + clip.width);
     }
 
     function snapDrop(clip) {
