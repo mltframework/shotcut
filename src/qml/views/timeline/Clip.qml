@@ -259,11 +259,7 @@ Rectangle {
                 doubleClickTimer.isFirstRelease = false;
                 parent.y = 0;
                 var delta = parent.x - startX;
-                // At low zoom, magnet snap may move by <1px while changing the
-                // frame. Commit when the frame changes, not only when abs(delta)>=1.
-                var startFrame = Math.round(startX / multitrack.scaleFactor);
-                var frame = Math.round(parent.x / multitrack.scaleFactor);
-                if (Math.abs(delta) >= 1 || frame !== startFrame || trackIndex !== originalTrackIndex) {
+                if (Math.abs(delta) >= 1 || trackIndex !== originalTrackIndex) {
                     parent.moved(clipRoot);
                     originalX = parent.x;
                     originalTrackIndex = trackIndex;
