@@ -385,42 +385,66 @@ Rectangle {
         id: audioPeakLine
 
         width: parent.width - parent.border.width * 2
-        visible: !elided && waveform.visible && !isTransition && parent.height > 25
-        height: audioPeakMouseArea.drag.active ? 2 : 1
+        visible: !elided && waveform.visible && !isTransition && parent.height > 35
+        height: audioPeakMouseArea.dragging ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
-        property real yOffset: 0
-        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1) + yOffset
-        color: audioPeakMouseArea.enabled ? audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
+        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1)
+        color: audioPeakMouseArea.enabled ? audioPeakMouseArea.dragging ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
         opacity: waveform.opacity
 
         MouseArea {
             id: audioPeakMouseArea
 
+            property bool dragging: false
+            property real lastMappedY: 0
+
             enabled: adjustGainEnabled && settings.timelineAdjustGain
+            hoverEnabled: true
             anchors.fill: parent
             anchors.topMargin: -2
             anchors.bottomMargin: -2
             cursorShape: enabled ? Qt.SizeVerCursor : mouseArea.cursorShape
-            drag.axis: Drag.YAxis
-            drag.target: parent
-            drag.minimumY: clipRoot.height - waveform.height
-            drag.maximumY: clipRoot.height
-            onPositionChanged: {
+            onPressed: mouse => {
+                if (!(mouse.modifiers & Qt.ControlModifier) || !(mouse.modifiers & Qt.AltModifier)) {
+                    mouse.accepted = false;
+                    return;
+                }
+                root.stopScrolling = true;
+                dragging = true;
+                lastMappedY = mapToItem(clipRoot, mouse.x, mouse.y).y;
+                parent.y = parent.y; // break binding for manual positioning
+            }
+            onReleased: {
+                root.stopScrolling = false;
+                dragging = false;
+                parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
+            }
+            onPositionChanged: mouse => {
                 if (clipRoot.updateSkim(audioPeakMouseArea, mouse))
                     return;
                 clipRoot.clearSkim();
-                let y = parent.y - (clipRoot.height - waveform.height);
-                let value = (waveform.height - Math.max(0, Math.min(y, waveform.height))) / waveform.height;
-                let gain = -80 /* dB */ * (1 - value) + 10;
-                if (!timeline.changeGain(trackIndex, index, gain)) {
-                    // force y's expression to re-evaluate
-                    parent.yOffset = 0.1;
-                    parent.yOffset = 0;
-                }
+                if (!dragging)
+                    return;
+                let currentY = mapToItem(clipRoot, mouse.x, mouse.y).y;
+                let delta = currentY - lastMappedY;
+                lastMappedY = currentY;
+                let newY = Math.max(clipRoot.height - waveform.height, Math.min(clipRoot.height, parent.y + delta));
+                parent.y = newY;
+                let relY = newY - (clipRoot.height - waveform.height);
+                let value = (waveform.height - Math.max(0, Math.min(relY, waveform.height))) / waveform.height;
+                let gainVal = -80 /* dB */ * (1 - value) + 10;
+                if (!timeline.changeGain(trackIndex, index, gainVal))
+                    parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
             }
             onExited: clipRoot.clearSkim()
             onDoubleClicked: timeline.changeGain(trackIndex, index, 0)
+
+            ToolTip {
+                visible: adjustGainEnabled && (parent.containsMouse || parent.dragging)
+                text: clipRoot.gain.toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
+                    qsTr('Hold %1 to adjust\n%1 double-click to reset').arg(application.OS === 'macOS' ? '⌥⌘' : 'Ctrl+Alt'))
+            }
         }
     }
 
