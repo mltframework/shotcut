@@ -47,6 +47,21 @@ bool panel_rust_invoke_command(PanelHandle *handle, int command);
 // theme name.
 bool panel_rust_set_theme(PanelHandle *handle, const unsigned char *theme, size_t theme_len);
 bool panel_rust_apply_appearance(PanelHandle *handle, uint64_t generation, bool dark);
+// Full appearance snapshot, including density (the panel's window scale
+// factor -- see RustPanelItem::ensureHandle()'s devicePixelRatio push). A
+// null/zero-length language/font pointer means "leave it unset"; C++ never
+// sources language/font from Qt today, only density, so those are always
+// passed null here. font_scale and density are clamped [0.5,3.0]/[0.5,4.0]
+// Rust-side.
+bool panel_rust_apply_host_appearance(PanelHandle *handle,
+                                       uint64_t generation,
+                                       bool dark,
+                                       const unsigned char *language,
+                                       size_t language_len,
+                                       const unsigned char *font,
+                                       size_t font_len,
+                                       float font_scale,
+                                       float density);
 // active_project_binding phase: the currently-open MLT project's path
 // (MainWindow::fileName()), pushed whenever MainWindow::producerOpened
 // fires. Empty buffer (zero length) means no project open -- always

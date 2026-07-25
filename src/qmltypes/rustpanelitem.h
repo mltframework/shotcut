@@ -111,6 +111,11 @@ private:
     // was called (e.g. at dock construction, to match the app's current
     // theme) before the handle existed yet.
     QString m_pendingTheme;
+    // Mirrors setTheme()'s dark/light decision so ensureHandle() can push a
+    // density-only appearance update (see m_lastDevicePixelRatio below)
+    // without needing a fresh theme string. Defaults to the dark theme this
+    // app opens in before setTheme() is ever called from ChatRustDock.
+    bool m_isDark = true;
     uint64_t m_appearanceGeneration = 0;
     // Applied once ensureHandle() creates the panel, same reasoning as
     // m_pendingTheme above. Null (not just empty) means setProjectPath()
@@ -121,4 +126,9 @@ private:
     // tick against panel_rust_cursor_shape() so an unchanged cursor kind
     // (the common case) doesn't call setCursor() every 80ms.
     int m_lastCursorShape = -1;
+    // Last devicePixelRatio the Rust panel was told about, so ensureHandle()
+    // only re-pushes appearance/resizes the buffer when it actually changed
+    // (moved to a different-DPI screen), not on every geometryChange.
+    // -1 forces the first ensureHandle() call to always apply it.
+    qreal m_lastDevicePixelRatio = -1.0;
 };

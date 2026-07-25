@@ -154,29 +154,59 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
     const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
     if (m_pollTimer.interval() != intervalMs)
         m_pollTimer.setInterval(intervalMs);
+
+    // This function is already wired to fire on windowChanged/screenChanged
+    // (see constructor/below) -- exactly the cases where devicePixelRatio
+    // can change (dragged to a different-DPI monitor) without width()/
+    // height() themselves changing, so geometryChange() alone would never
+    // notice. ensureHandle() no-ops unless dpr or size actually changed.
+    ensureHandle();
+    update();
 }
 
 void RustPanelItem::ensureHandle()
 {
-    const unsigned int w = static_cast<unsigned int>(qMax(1.0, width()));
-    const unsigned int h = static_cast<unsigned int>(qMax(1.0, height()));
+    // QQuickPaintedItem::width()/height() are logical (CSS) pixels; on a
+    // HiDPI screen those are smaller than the physical pixel grid Qt will
+    // actually composite into. Without accounting for devicePixelRatio here,
+    // panel_rust_create() was handed the *logical* size, so the Slint
+    // software renderer produced a buffer at 1x resolution that Qt then
+    // upscaled to fill the physical area in paint() -- visibly blurry on
+    // any scaled display. Physical-pixel sizing plus the density push below
+    // (Slint's own scale_factor, see dispatch.rs's ScaleFactorChanged) fixes
+    // both the buffer resolution and the on-screen layout math together.
+    const qreal dpr = window() ? window()->devicePixelRatio() : 1.0;
+    const unsigned int w = static_cast<unsigned int>(qMax(1.0, width() * dpr));
+    const unsigned int h = static_cast<unsigned int>(qMax(1.0, height() * dpr));
+    const bool dprChanged = !qFuzzyCompare(dpr, m_lastDevicePixelRatio);
     if (m_handle) {
-        if (panel_rust_width(m_handle) == w && panel_rust_height(m_handle) == h)
-            return;
-        // panel_rust_create resizes the existing singleton in place. Do not
-        // destroy/recreate it for every Qt geometry change, because Slint's
-        // process-global software platform is installed only once.
-        panel_rust_create(w, h);
+        const bool sizeChanged = panel_rust_width(m_handle) != w || panel_rust_height(m_handle) != h;
+        if (sizeChanged) {
+            // panel_rust_create resizes the existing singleton in place. Do
+            // not destroy/recreate it for every Qt geometry change, because
+            // Slint's process-global software platform is installed only
+            // once.
+            panel_rust_create(w, h);
+        }
+        if (dprChanged) {
+            panel_rust_apply_host_appearance(m_handle, ++m_appearanceGeneration, m_isDark,
+                                              nullptr, 0, nullptr, 0, 1.0f,
+                                              static_cast<float>(dpr));
+            m_lastDevicePixelRatio = dpr;
+        }
         return;
     }
     m_handle = panel_rust_create(w, h);
-    if (!m_handle)
+    if (!m_handle) {
         qWarning() << "RustPanelItem: panel_rust_create failed";
-    if (m_handle && !m_pendingTheme.isEmpty()) {
-        const bool dark = m_pendingTheme != "light";
-        panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark);
+        return;
     }
-    if (m_handle && m_hasPendingProjectPath) {
+    if (!m_pendingTheme.isEmpty())
+        m_isDark = m_pendingTheme != "light";
+    panel_rust_apply_host_appearance(m_handle, ++m_appearanceGeneration, m_isDark, nullptr, 0,
+                                      nullptr, 0, 1.0f, static_cast<float>(dpr));
+    m_lastDevicePixelRatio = dpr;
+    if (m_hasPendingProjectPath) {
         const QByteArray path = m_pendingProjectPath.toUtf8();
         panel_rust_set_project_path(m_handle,
                                      reinterpret_cast<const unsigned char *>(path.constData()),
@@ -306,10 +336,10 @@ void RustPanelItem::keyReleaseEvent(QKeyEvent *event)
 void RustPanelItem::setTheme(const QString &theme)
 {
     m_pendingTheme = theme;
+    m_isDark = theme != "light";
     if (!m_handle)
         return; // applied by ensureHandle() once the panel actually exists
-    const bool dark = theme != "light";
-    if (panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, dark))
+    if (panel_rust_apply_appearance(m_handle, ++m_appearanceGeneration, m_isDark))
         requestRepaint();
 }
 
@@ -384,5 +414,12 @@ void RustPanelItem::paint(QPainter *painter)
     // match for QImage::Format_RGBA8888_Premultiplied, no conversion needed.
     QImage image(buf, static_cast<int>(w), static_cast<int>(h),
                  static_cast<int>(w) * 4, QImage::Format_RGBA8888_Premultiplied);
+    // w/h are physical pixels (ensureHandle() sizes the buffer at
+    // width()*devicePixelRatio); telling QPainter that via
+    // setDevicePixelRatio makes drawImage(0, 0, ...) place it at this
+    // item's logical (0,0)-(width(),height()) rect at full physical
+    // resolution instead of stretching a 1x buffer across more physical
+    // pixels than it has data for.
+    image.setDevicePixelRatio(m_lastDevicePixelRatio > 0.0 ? m_lastDevicePixelRatio : 1.0);
     painter->drawImage(0, 0, image);
 }
