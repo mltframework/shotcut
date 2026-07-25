@@ -325,6 +325,27 @@ void RustPanelItem::setProjectPath(const QString &path)
                                  static_cast<size_t>(bytes.size()));
 }
 
+void RustPanelItem::renameProjectPath(const QString &oldPath, const QString &newPath)
+{
+    // Keep the pending path coherent even with no panel yet: whatever the
+    // panel is eventually told the project is, it must be the NEW path.
+    // The rename itself only means anything to a LIVE panel, since its
+    // whole job is rebinding threads that already exist -- with no handle
+    // there is nothing to rebind, and threads created later are simply
+    // created under the new path.
+    m_pendingProjectPath = newPath;
+    m_hasPendingProjectPath = true;
+    if (!m_handle)
+        return;
+    const QByteArray oldBytes = oldPath.toUtf8();
+    const QByteArray newBytes = newPath.toUtf8();
+    panel_rust_rename_project_path(m_handle,
+                                   reinterpret_cast<const unsigned char *>(oldBytes.constData()),
+                                   static_cast<size_t>(oldBytes.size()),
+                                   reinterpret_cast<const unsigned char *>(newBytes.constData()),
+                                   static_cast<size_t>(newBytes.size()));
+}
+
 void RustPanelItem::poll()
 {
     if (!m_handle)

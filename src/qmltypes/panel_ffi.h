@@ -53,6 +53,19 @@ bool panel_rust_apply_appearance(PanelHandle *handle, uint64_t generation, bool 
 // call this on producerOpened, even when closing, so panel-rust's
 // stored path can't go stale.
 bool panel_rust_set_project_path(PanelHandle *handle, const unsigned char *path, size_t path_len);
+// Save-As specifically: the project KEPT ITS IDENTITY but changed path.
+// Distinct from panel_rust_set_project_path because the panel cannot tell
+// "Save-As A->B" from "closed A, opened B" by watching the path alone --
+// both look like one path replacing another -- and rebinding threads on
+// the latter would merge two different projects' chat histories. Only the
+// host knows which happened, so only the host can say. An empty old path
+// (an Untitled project saved for the first time) is deliberately NOT a
+// rename: those threads were created unscoped and must stay that way.
+bool panel_rust_rename_project_path(PanelHandle *handle,
+                                    const unsigned char *old_path,
+                                    size_t old_path_len,
+                                    const unsigned char *new_path,
+                                    size_t new_path_len);
 // Drains queued agent-bridge events (phase 4, rui-acp-client) into the
 // Slint model. Must be polled periodically (see RustPanelItem's QTimer) --
 // nothing else notices background agent activity on this single-threaded

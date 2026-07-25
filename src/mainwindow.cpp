@@ -3421,6 +3421,15 @@ void MainWindow::buildVideoModeMenu(QMenu *topMenu,
 
 void MainWindow::newProject(const QString &filename, bool isProjectFolder)
 {
+    // PISO-7 (project-isolation-mlt-binding): capture the OUTGOING path
+    // before setCurrentFile() below overwrites it. newProject() has exactly
+    // one caller -- on_actionSave_As_triggered() -- so reaching here means
+    // the project kept its identity and changed path, which is the one case
+    // the panel cannot detect for itself: "Save-As A->B" and "closed A,
+    // opened B" are indistinguishable from the path alone, and rebinding
+    // threads on the latter would merge two different projects' chat
+    // histories. Only the host knows which happened.
+    const QString previousFile = m_currentFile;
     if (isProjectFolder) {
         QFileInfo info(filename);
         MLT.setProjectFolder(info.absolutePath());
@@ -3432,6 +3441,15 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
         else
             m_autosaveFile.reset(new AutoSaveFile(filename));
         setCurrentFile(filename);
+        // Order matters: setCurrentFile() has already pushed the NEW path to
+        // the panel (see its own PISO-1 comment), so the panel's notion of
+        // the active project is current before we ask it to move the threads
+        // that were bound to the old one. An empty previousFile means an
+        // Untitled project saved for the first time -- deliberately NOT a
+        // rename, since those threads were created unscoped and must stay
+        // unscoped rather than being retro-bound to this new file.
+        if (m_chatRustDock && !previousFile.isEmpty() && previousFile != m_currentFile)
+            m_chatRustDock->renameProjectPath(previousFile, m_currentFile);
         setWindowModified(false);
         resetSourceUpdated();
         if (MLT.producer())

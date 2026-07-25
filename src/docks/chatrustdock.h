@@ -31,6 +31,7 @@ public slots:
     // matches MainWindow::producerOpened(bool)'s signal signature so a
     // direct connect() works without a lambda.
     void updateProjectPath(bool withReopen = true);
+    void renameProjectPath(const QString &oldPath, const QString &newPath);
 
 private:
     // Global thread-switch/search shortcuts (Ctrl+Alt+Up/Down, Ctrl+K),

@@ -45,6 +45,7 @@ public slots:
     // MainWindow::producerOpened() -- see chatrustdock.cpp. Empty string
     // means no project currently open.
     void setProjectPath(const QString &path);
+    void renameProjectPath(const QString &oldPath, const QString &newPath);
 
 protected:
     // Qt's shortcut dispatch sends every focused item a ShortcutOverride
