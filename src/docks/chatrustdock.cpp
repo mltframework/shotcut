@@ -91,6 +91,12 @@ void ChatRustDock::updateProjectPath(bool withReopen)
         m_panel->setProjectPath(MainWindow::singleton().fileName());
 }
 
+void ChatRustDock::setProjectPath(const QString &path)
+{
+    if (m_panel)
+        m_panel->setProjectPath(path);
+}
+
 void ChatRustDock::renameProjectPath(const QString &oldPath, const QString &newPath)
 {
     if (m_panel)

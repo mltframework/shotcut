@@ -31,6 +31,21 @@ public slots:
     // matches MainWindow::producerOpened(bool)'s signal signature so a
     // direct connect() works without a lambda.
     void updateProjectPath(bool withReopen = true);
+    // PISO-6 deadlock fix: pushes an already-known path straight to the
+    // embedded panel with NO callback into MainWindow::singleton(). Added
+    // because updateProjectPath() above calls MainWindow::singleton() to
+    // re-read the path itself, which self-deadlocks (via the C++ magic-
+    // static guard, __cxa_guard_acquire) when invoked from code that is
+    // itself running during MainWindow's OWN constructor -- singleton()'s
+    // function-local static isn't finished constructing yet, so the
+    // nested call blocks forever waiting on a guard the outer call can
+    // never release. MainWindow::setCurrentFile() uses this instead of
+    // updateProjectPath() because it already has the path in hand
+    // (m_currentFile) and is reachable from inside the constructor
+    // (MainWindow::MainWindow() -> setCurrentFile() -> here), unlike the
+    // producerOpened signal this dock also listens to, which only ever
+    // fires after construction has fully completed.
+    void setProjectPath(const QString &path);
     void renameProjectPath(const QString &oldPath, const QString &newPath);
 
 private:

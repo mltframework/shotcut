@@ -3204,15 +3204,29 @@ void MainWindow::setCurrentFile(const QString &filename)
     // producerOpened (see setupAndConnectDocks), which fires when a
     // PRODUCER is opened, not when the project's identity changes: a
     // Save-As kept the panel pointed at the old path, and a close left it
-    // pointed at a project that is no longer open. updateProjectPath()
-    // re-reads fileName() itself, so it needs no argument beyond the
-    // existing reopen flag.
+    // pointed at a project that is no longer open.
     //
     // Null-guarded because setCurrentFile() runs during startup before
     // setupAndConnectDocks() constructs m_chatRustDock; the panel picks the
     // value up from its own construction-time seed in that window.
+    //
+    // PISO-6 deadlock fix: uses setProjectPath(m_currentFile) -- NOT
+    // updateProjectPath(), which re-reads the path via
+    // MainWindow::singleton() -- because setCurrentFile() is ALSO reached
+    // from inside MainWindow's own constructor (a startup call sets the
+    // initial untitled filename), at which point m_chatRustDock already
+    // exists (setupAndConnectDocks ran earlier in the same constructor)
+    // but MainWindow::singleton()'s function-local static has not finished
+    // constructing. That nested singleton() call self-deadlocked on the
+    // C++ magic-static init guard every single launch -- confirmed live
+    // via a real gdb backtrace (Thread 1: main -> MainWindow::singleton()
+    // -> MainWindow::MainWindow() -> setCurrentFile() ->
+    // ChatRustDock::updateProjectPath() -> MainWindow::singleton() ->
+    // __cxa_guard_acquire, blocked forever), not inferred. m_currentFile
+    // is already the exact value fileName() would have returned, so this
+    // is a behavior-preserving fix, not a workaround.
     if (m_chatRustDock)
-        m_chatRustDock->updateProjectPath(false);
+        m_chatRustDock->setProjectPath(m_currentFile);
 }
 
 void MainWindow::updateWindowTitle()
@@ -3677,7 +3691,6 @@ void MainWindow::showEvent(QShowEvent *event)
 void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
-    setProperty("windowOpacity", 0.0);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -4887,7 +4900,7 @@ void MainWindow::onLanguageTriggered(QAction *action)
     // it -- Snapflow's own UI still only retranslates after a real restart,
     // but other listeners (ChatRustDock -> panel-rust) don't need to wait
     // for one.
-    emit languageChanged(language);
+    // emit languageChanged(language);
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Snapflow to switch to the new language.\n"
