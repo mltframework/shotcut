@@ -3196,6 +3196,23 @@ void MainWindow::setCurrentFile(const QString &filename)
     m_currentFile = newFile;
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
+    // PISO-1 (project-isolation-mlt-binding): this is the ONE choke point
+    // every project-identity change passes through -- open, Save-As,
+    // New/newProject, and close all land here -- so notifying from here is
+    // what makes the chat panel track the project it is actually bound to.
+    // Previously the panel only learned about a new project via
+    // producerOpened (see setupAndConnectDocks), which fires when a
+    // PRODUCER is opened, not when the project's identity changes: a
+    // Save-As kept the panel pointed at the old path, and a close left it
+    // pointed at a project that is no longer open. updateProjectPath()
+    // re-reads fileName() itself, so it needs no argument beyond the
+    // existing reopen flag.
+    //
+    // Null-guarded because setCurrentFile() runs during startup before
+    // setupAndConnectDocks() constructs m_chatRustDock; the panel picks the
+    // value up from its own construction-time seed in that window.
+    if (m_chatRustDock)
+        m_chatRustDock->updateProjectPath(false);
 }
 
 void MainWindow::updateWindowTitle()
@@ -4845,7 +4862,14 @@ void MainWindow::processSingleFile()
 
 void MainWindow::onLanguageTriggered(QAction *action)
 {
-    Settings.setLanguage(action->data().toString());
+    const QString language = action->data().toString();
+    Settings.setLanguage(language);
+    // language-switch-sync plan: additive live notification, fired before
+    // the restart prompt below and regardless of whether the user accepts
+    // it -- Snapflow's own UI still only retranslates after a real restart,
+    // but other listeners (ChatRustDock -> panel-rust) don't need to wait
+    // for one.
+    emit languageChanged(language);
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Snapflow to switch to the new language.\n"
