@@ -34,6 +34,8 @@ class DoubleSliderSpinner : public QWidget
     Q_PROPERTY(QString prefix READ prefix WRITE setPrefix)
     Q_PROPERTY(QString suffix READ suffix WRITE setSuffix)
     Q_PROPERTY(QString specialValueText READ specialValueText WRITE setSpecialValueText)
+    Q_PROPERTY(double defaultValue READ defaultValue WRITE setDefaultValue)
+    Q_PROPERTY(bool showResetButton READ showResetButton WRITE setShowResetButton)
 
 public:
     explicit DoubleSliderSpinner(QWidget *parent = nullptr);
@@ -46,6 +48,8 @@ public:
     QString prefix() const;
     QString suffix() const;
     QString specialValueText() const;
+    double defaultValue() const;
+    bool showResetButton() const;
 
 public slots:
     void setValue(double value);
@@ -57,6 +61,8 @@ public slots:
     void setPrefix(const QString &prefix);
     void setSuffix(const QString &suffix);
     void setSpecialValueText(const QString &text);
+    void setDefaultValue(double value);
+    void setShowResetButton(bool show);
 
 signals:
     void valueChanged(double value);
@@ -64,16 +70,21 @@ signals:
 private slots:
     void onSliderValueChanged(int value);
     void onSpinValueChanged(double value);
+    void onResetButtonClicked();
 
 private:
     int toSliderValue(double value) const;
     double toSpinValue(int value) const;
     void updateScale();
     void updateSliderRange();
+    void updateResetButtonState();
 
     QSlider *m_slider;
     QDoubleSpinBox *m_spinBox;
+    class QToolButton *m_resetButton;
     int m_scale;
+    double m_defaultValue;
+    bool m_showResetButton;
 };
 
 #endif // DOUBLESLIDERSPINNER_H

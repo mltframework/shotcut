@@ -75,6 +75,9 @@
          </item>
          <item row="3" column="0">
       <widget class="QLabel" name="duckThresholdLabel">
+             <property name="toolTip">
+              <string>When the level of tracks above this one rises above this threshold, ducking is applied to this track. Off at 0 dB.</string>
+             </property>
        <property name="text">
         <string>Threshold</string>
        </property>
@@ -85,6 +88,9 @@
      </item>
    <item row="3" column="1">
       <widget class="DoubleSliderSpinner" name="duckThresholdSpinBox">
+       <property name="toolTip">
+        <string>When the level of tracks above this one rises above this threshold, ducking is applied to this track. Off at 0 dB.</string>
+       </property>
        <property name="decimals">
         <number>1</number>
        </property>
@@ -106,12 +112,21 @@
        <property name="value">
         <double>0.000000000000000</double>
        </property>
+          <property name="defaultValue">
+            <double>0.000000000000000</double>
+          </property>
+          <property name="showResetButton">
+            <bool>true</bool>
+          </property>
       </widget>
      </item>
    <item row="4" column="0">
       <widget class="QLabel" name="duckAttenuationLabel">
+       <property name="toolTip">
+      <string>Maximum gain reduction applied to this track while ducking is active.</string>
+       </property>
        <property name="text">
-        <string>Attenuation</string>
+        <string>Max Reduction</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -120,6 +135,9 @@
      </item>
    <item row="4" column="1">
       <widget class="DoubleSliderSpinner" name="duckAttenuationSpinBox">
+       <property name="toolTip">
+      <string>Maximum gain reduction applied to this track while ducking is active.</string>
+       </property>
        <property name="decimals">
         <number>1</number>
        </property>
@@ -138,10 +156,19 @@
        <property name="value">
         <double>-12.000000000000000</double>
        </property>
+          <property name="defaultValue">
+            <double>-12.000000000000000</double>
+          </property>
+          <property name="showResetButton">
+            <bool>true</bool>
+          </property>
       </widget>
      </item>
    <item row="5" column="0">
       <widget class="QLabel" name="duckFadeOutLabel">
+       <property name="toolTip">
+      <string>How quickly gain reduction is applied after the threshold is exceeded.</string>
+       </property>
        <property name="text">
         <string>Fade out</string>
        </property>
@@ -152,6 +179,9 @@
      </item>
    <item row="5" column="1">
       <widget class="DoubleSliderSpinner" name="duckFadeOutSpinBox">
+       <property name="toolTip">
+      <string>How quickly gain reduction is applied after the threshold is exceeded.</string>
+       </property>
        <property name="decimals">
         <number>0</number>
        </property>
@@ -159,7 +189,7 @@
         <double>0.000000000000000</double>
        </property>
        <property name="maximum">
-        <double>2000.000000000000000</double>
+         <double>5000.000000000000000</double>
        </property>
        <property name="singleStep">
         <double>10.000000000000000</double>
@@ -168,12 +198,21 @@
         <string> ms</string>
        </property>
        <property name="value">
-        <double>1000.000000000000000</double>
+            <double>250.000000000000000</double>
        </property>
+          <property name="defaultValue">
+            <double>250.000000000000000</double>
+          </property>
+          <property name="showResetButton">
+            <bool>true</bool>
+          </property>
       </widget>
      </item>
    <item row="6" column="0">
       <widget class="QLabel" name="duckFadeInLabel">
+       <property name="toolTip">
+      <string>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</string>
+       </property>
        <property name="text">
         <string>Fade in</string>
        </property>
@@ -184,6 +223,9 @@
      </item>
    <item row="6" column="1">
       <widget class="DoubleSliderSpinner" name="duckFadeInSpinBox">
+       <property name="toolTip">
+      <string>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</string>
+       </property>
        <property name="decimals">
         <number>0</number>
        </property>
@@ -200,14 +242,23 @@
         <string> ms</string>
        </property>
        <property name="value">
-        <double>250.000000000000000</double>
+            <double>1500.000000000000000</double>
        </property>
+          <property name="defaultValue">
+            <double>1500.000000000000000</double>
+          </property>
+          <property name="showResetButton">
+            <bool>true</bool>
+          </property>
       </widget>
      </item>
    <item row="7" column="0">
       <widget class="QLabel" name="duckStatusLabel">
+     <property name="toolTip">
+      <string>Current gain reduction being applied to this track.</string>
+     </property>
        <property name="text">
-        <string>Attenuation</string>
+      <string>Gain Reduction</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -216,6 +267,9 @@
      </item>
    <item row="7" column="1">
       <widget class="QProgressBar" name="duckStatusValueLabel">
+       <property name="toolTip">
+      <string>Current gain reduction being applied to this track. Higher values mean stronger ducking.</string>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>
