@@ -143,6 +143,7 @@ signals:
     void renameRequested();
     void serviceInChanged(int delta, Mlt::Service *);
     void serviceOutChanged(int delta, Mlt::Service *);
+    void languageChanged(const QString &language);
 
 protected:
     MainWindow();
