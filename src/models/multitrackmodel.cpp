@@ -23,6 +23,7 @@
 #include "dialogs/longuitask.h"
 #include "docks/playlistdock.h"
 #include "mainwindow.h"
+#include "mixtransitionorder.h"
 #include "mltcontroller.h"
 #include "proxymanager.h"
 #include "qmltypes/qmlmetadata.h"
@@ -3012,6 +3013,19 @@ void MultitrackModel::refreshVideoBlendTransitions()
     }
 }
 
+void MultitrackModel::reorderMixTransitions()
+{
+    if (!m_tractor)
+        return;
+
+    QList<int> orderedTrackMltIndexes;
+    orderedTrackMltIndexes.reserve(m_trackList.count());
+    for (const auto &track : std::as_const(m_trackList))
+        orderedTrackMltIndexes.append(track.mlt_index);
+
+    Timeline::reorderMixTransitions(*m_tractor, orderedTrackMltIndexes, MLT.profile());
+}
+
 int MultitrackModel::bottomVideoTrackIndex() const
 {
     int track = -1;
@@ -3181,6 +3195,7 @@ int MultitrackModel::addAudioTrack()
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
+    reorderMixTransitions();
     endInsertRows();
     emit modified();
     return m_trackList.count() - 1;
@@ -3245,6 +3260,7 @@ int MultitrackModel::addVideoTrack()
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), 0, 0);
     m_trackList.prepend(t);
+    reorderMixTransitions();
     endInsertRows();
     emit modified();
     return 0;
@@ -3316,6 +3332,7 @@ void MultitrackModel::removeTrack(int trackIndex)
             }
             ++row;
         }
+        reorderMixTransitions();
         endRemoveRows();
         MLT.updateAvformatCaching(m_tractor->count());
         //        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
@@ -3557,6 +3574,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     beginInsertRows(QModelIndex(), trackIndex, trackIndex);
     m_trackList.insert(trackIndex, t);
     refreshVideoBlendTransitions();
+    reorderMixTransitions();
     endInsertRows();
     emit modified();
     //    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
@@ -3674,6 +3692,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
 
     m_trackList.clear();
     refreshTrackList();
+    reorderMixTransitions();
 
     endMoveRows();
     emit dataChanged(index(0),
