@@ -88,6 +88,18 @@ FetchContent_Declare(
   GIT_TAG v0.5.2
 )
 FetchContent_MakeAvailable(Corrosion)
+# SAP_RUST_MANIFEST_PATH / PANEL_RUST_MANIFEST_PATH (below): which sibling
+# checkout's sap-rust/panel-rust this build links, as cache variables
+# instead of hardcoded paths -- so switching which git worktree's Rust
+# sources feed this one shared C++ build is a `cmake -D...` reconfigure,
+# not a hand-edit of this file that every worktree/session collides on
+# (memory/team/testing/vnc_worktree.sh drives this). Default preserves
+# the original sibling-directory convention for anyone building this repo
+# checkout directly, unparameterized.
+set(SAP_RUST_MANIFEST_PATH "${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml" CACHE FILEPATH
+  "Path to the sap-rust Cargo.toml this build links (defaults to the sibling checkout)")
+set(PANEL_RUST_MANIFEST_PATH "${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml" CACHE FILEPATH
+  "Path to the panel-rust Cargo.toml this build links (defaults to the sibling checkout)")
 # CRATE_TYPES staticlib: same fix as panel-rust below and for the same
 # reason -- without it, corrosion also builds sap-rust's own
 # `[[bin]] name = "sap-rust"` (src/main.rs) as part of this one
@@ -101,7 +113,7 @@ FetchContent_MakeAvailable(Corrosion)
 # sap-rust (bin "sap-rust")`, ~40 undefined-reference errors). Restricting
 # to the staticlib matches what this CMakeLists.txt actually links below
 # and what panel-rust's own corrosion_import_crate call already does.
-corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml
+corrosion_import_crate(MANIFEST_PATH ${SAP_RUST_MANIFEST_PATH}
   FEATURES real_ffi
   CRATE_TYPES staticlib)
 
@@ -115,7 +127,7 @@ corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../sap-rust/Cargo.toml
 # [[bin]] in the manifest, including ui-dev-viewer, which is gated behind a
 # required-features = ["ui-dev-viewer"] not enabled here and fails the whole
 # cargo invocation (a real CI break, see build-linux.yml run 29826369548).
-corrosion_import_crate(MANIFEST_PATH ${CMAKE_SOURCE_DIR}/../panel-rust/Cargo.toml
+corrosion_import_crate(MANIFEST_PATH ${PANEL_RUST_MANIFEST_PATH}
   CRATE_TYPES staticlib)
 pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
 
