@@ -33,21 +33,206 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="blendModeLayout">
-     <item>
-      <widget class="QLabel" name="blendModeLabel">
+    <layout class="QGridLayout" name="duckGridLayout">
+         <item row="0" column="0">
+            <widget class="QLabel" name="blendModeLabel">
+             <property name="text">
+                <string>Blend mode</string>
+             </property>
+             <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+         </item>
+         <item row="0" column="1">
+            <widget class="QComboBox" name="blendModeCombo">
+             <property name="maxVisibleItems">
+                <number>20</number>
+             </property>
+            </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QLabel" name="duckingHeadingLabel">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Automatic Ducking</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QLabel" name="duckingTipLabel">
+           <property name="text">
+            <string>Reduce audio volume based on the tracks above this one.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+      <widget class="QLabel" name="duckThresholdLabel">
        <property name="text">
-        <string>Blend mode</string>
+        <string>Threshold</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QComboBox" name="blendModeCombo">
-       <property name="maxVisibleItems">
-        <number>20</number>
+   <item row="3" column="1">
+      <widget class="DoubleSliderSpinner" name="duckThresholdSpinBox">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="minimum">
+        <double>-70.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="suffix">
+        <string> dB</string>
+       </property>
+       <property name="specialValueText">
+        <string>Off</string>
+       </property>
+       <property name="value">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+   <item row="4" column="0">
+      <widget class="QLabel" name="duckAttenuationLabel">
+       <property name="text">
+        <string>Attenuation</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+   <item row="4" column="1">
+      <widget class="DoubleSliderSpinner" name="duckAttenuationSpinBox">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="minimum">
+        <double>-70.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="suffix">
+        <string> dB</string>
+       </property>
+       <property name="value">
+        <double>-12.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+   <item row="5" column="0">
+      <widget class="QLabel" name="duckFadeOutLabel">
+       <property name="text">
+        <string>Fade out</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+   <item row="5" column="1">
+      <widget class="DoubleSliderSpinner" name="duckFadeOutSpinBox">
+       <property name="decimals">
+        <number>0</number>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>2000.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+       <property name="suffix">
+        <string> ms</string>
+       </property>
+       <property name="value">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+   <item row="6" column="0">
+      <widget class="QLabel" name="duckFadeInLabel">
+       <property name="text">
+        <string>Fade in</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+   <item row="6" column="1">
+      <widget class="DoubleSliderSpinner" name="duckFadeInSpinBox">
+       <property name="decimals">
+        <number>0</number>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>5000.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+       <property name="suffix">
+        <string> ms</string>
+       </property>
+       <property name="value">
+        <double>250.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+   <item row="7" column="0">
+      <widget class="QLabel" name="duckStatusLabel">
+       <property name="text">
+        <string>Attenuation</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+   <item row="7" column="1">
+      <widget class="QProgressBar" name="duckStatusValueLabel">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>700</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="format">
+        <string>0.0 dB</string>
+       </property>
+       <property name="textVisible">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -68,6 +253,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DoubleSliderSpinner</class>
+   <extends>QWidget</extends>
+   <header>widgets/doublesliderspinner.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

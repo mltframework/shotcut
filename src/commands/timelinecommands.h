@@ -47,6 +47,7 @@ enum {
     UndoIdUpdate,
     UndoIdMoveClip,
     UndoIdChangeGain,
+    UndoIdChangeTransitionProperty,
 };
 
 struct ClipPosition
@@ -778,6 +779,32 @@ private:
     QString m_propertyName;
     QString m_newMode;
     QString m_oldMode;
+};
+
+class ChangeTransitionPropertyCommand : public QObject, public QUndoCommand
+{
+    Q_OBJECT
+public:
+    ChangeTransitionPropertyCommand(int trackIndex,
+                                    const QString &propertyName,
+                                    double value,
+                                    const QString &text,
+                                    QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+protected:
+    int id() const { return UndoIdChangeTransitionProperty; }
+    bool mergeWith(const QUndoCommand *other);
+
+signals:
+    void valueChanged(double value);
+
+private:
+    int m_trackIndex;
+    QString m_propertyName;
+    double m_newValue;
+    double m_oldValue;
 };
 
 class UpdateCommand : public QUndoCommand

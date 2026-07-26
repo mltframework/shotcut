@@ -177,6 +177,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/directshowvideowidget.cpp widgets/directshowvideowidget.h
   widgets/directshowvideowidget.ui
   widgets/docktoolbar.cpp widgets/docktoolbar.h
+  widgets/doublesliderspinner.cpp widgets/doublesliderspinner.h
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
   widgets/flowlayout.cpp widgets/flowlayout.h

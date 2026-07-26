@@ -80,6 +80,30 @@ int getUniqueGroupNumber(MultitrackModel &model)
     return 0;
 }
 
+Mlt::Transition *getMixTransitionByTrackIndex(int trackIndex)
+{
+    if (!MLT.isMultitrack() || !MLT.producer() || !MLT.producer()->is_valid())
+        return nullptr;
+
+    Mlt::Tractor tractor(*MLT.producer());
+    if (!tractor.is_valid())
+        return nullptr;
+
+    QScopedPointer<Mlt::Service> service(tractor.producer());
+    while (service && service->is_valid()) {
+        if (service->type() == mlt_service_transition_type) {
+            Mlt::Transition transition((mlt_transition) service->get_service());
+            if (QString::fromLatin1(transition.get("mlt_service")) == QStringLiteral("mix")
+                && transition.get_b_track() == trackIndex) {
+                return new Mlt::Transition(transition);
+            }
+        }
+        service.reset(service->producer());
+    }
+
+    return nullptr;
+}
+
 AppendCommand::AppendCommand(MultitrackModel &model,
                              int trackIndex,
                              const QString &xml,
@@ -1934,6 +1958,62 @@ void ChangeBlendModeCommand::undo()
     }
     MLT.refreshConsumer();
     emit modeChanged(m_oldMode);
+}
+
+ChangeTransitionPropertyCommand::ChangeTransitionPropertyCommand(int trackIndex,
+                                                                 const QString &propertyName,
+                                                                 double value,
+                                                                 const QString &text,
+                                                                 QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_trackIndex(trackIndex)
+    , m_propertyName(propertyName)
+    , m_newValue(value)
+    , m_oldValue(value)
+{
+    setText(text);
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (transition && transition->is_valid()) {
+        m_oldValue = transition->get_double(m_propertyName.toLatin1().constData());
+    }
+}
+
+void ChangeTransitionPropertyCommand::redo()
+{
+    LOG_DEBUG() << "property" << m_propertyName << m_newValue;
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid()) {
+        LOG_WARNING() << "Could not find mix transition for track" << m_trackIndex;
+        return;
+    }
+    transition->set(m_propertyName.toLatin1().constData(), m_newValue);
+    MLT.refreshConsumer();
+    emit valueChanged(m_newValue);
+}
+
+void ChangeTransitionPropertyCommand::undo()
+{
+    LOG_DEBUG() << "property" << m_propertyName << m_oldValue;
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid()) {
+        LOG_WARNING() << "Could not find mix transition for track" << m_trackIndex;
+        return;
+    }
+    transition->set(m_propertyName.toLatin1().constData(), m_oldValue);
+    MLT.refreshConsumer();
+    emit valueChanged(m_oldValue);
+}
+
+bool ChangeTransitionPropertyCommand::mergeWith(const QUndoCommand *other)
+{
+    const ChangeTransitionPropertyCommand *that
+        = static_cast<const ChangeTransitionPropertyCommand *>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex
+        || that->m_propertyName != m_propertyName) {
+        return false;
+    }
+    m_newValue = that->m_newValue;
+    return true;
 }
 
 UpdateCommand::UpdateCommand(
