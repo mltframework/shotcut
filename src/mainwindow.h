@@ -142,6 +142,11 @@ signals:
     void audioChannelsChanged();
     void processingModeChanged();
     void producerOpened(bool withReopen = true);
+    // Project identity signals deliberately carry lifecycle intent instead
+    // of overloading producerOpened(bool)'s unrelated reopen hint.
+    void projectOpened(const QString &path);
+    void projectCreatedUntitled();
+    void projectClosed();
     void profileChanged();
     void openFailed(QString);
     void aboutToShutDown();

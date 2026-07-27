@@ -196,7 +196,18 @@ void RustPanelItem::ensureHandle()
         }
         return;
     }
-    m_handle = panel_rust_create(w, h);
+    const bool initialIdentityApplied = m_hasPendingProjectPath && !m_pendingProjectClosed;
+    if (initialIdentityApplied) {
+        const QByteArray path = m_pendingProjectPath.toUtf8();
+        m_handle = panel_rust_create_with_identity(
+            w,
+            h,
+            reinterpret_cast<const unsigned char *>(path.constData()),
+            static_cast<size_t>(path.size()),
+            m_pendingUntitledProject);
+    } else {
+        m_handle = panel_rust_create(w, h);
+    }
     if (!m_handle) {
         qWarning() << "RustPanelItem: panel_rust_create failed";
         return;
@@ -206,11 +217,18 @@ void RustPanelItem::ensureHandle()
     panel_rust_apply_host_appearance(m_handle, ++m_appearanceGeneration, m_isDark, nullptr, 0,
                                       nullptr, 0, 1.0f, static_cast<float>(dpr));
     m_lastDevicePixelRatio = dpr;
-    if (m_hasPendingProjectPath) {
-        const QByteArray path = m_pendingProjectPath.toUtf8();
-        panel_rust_set_project_path(m_handle,
-                                     reinterpret_cast<const unsigned char *>(path.constData()),
-                                     static_cast<size_t>(path.size()));
+    if (m_hasPendingProjectPath && !initialIdentityApplied) {
+        if (m_pendingUntitledProject)
+            panel_rust_project_created_untitled(m_handle);
+        else if (m_pendingProjectClosed)
+            panel_rust_project_closed(m_handle);
+        else {
+            const QByteArray path = m_pendingProjectPath.toUtf8();
+            panel_rust_set_project_path(
+                m_handle,
+                reinterpret_cast<const unsigned char *>(path.constData()),
+                static_cast<size_t>(path.size()));
+        }
     }
 }
 
@@ -347,12 +365,51 @@ void RustPanelItem::setProjectPath(const QString &path)
 {
     m_pendingProjectPath = path;
     m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = false;
+    m_pendingProjectClosed = false;
     if (!m_handle)
         return; // applied by ensureHandle() once the panel actually exists
-    const QByteArray bytes = path.toUtf8();
-    panel_rust_set_project_path(m_handle,
-                                 reinterpret_cast<const unsigned char *>(bytes.constData()),
-                                 static_cast<size_t>(bytes.size()));
+    recreateForPendingProject();
+}
+
+void RustPanelItem::projectCreatedUntitled()
+{
+    m_pendingProjectPath.clear();
+    m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = true;
+    m_pendingProjectClosed = false;
+    if (m_handle)
+        recreateForPendingProject();
+}
+
+void RustPanelItem::projectClosed()
+{
+    m_pendingProjectPath.clear();
+    m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = false;
+    m_pendingProjectClosed = true;
+    if (m_handle) {
+        // Closing the document must release all project-owned thread actors
+        // immediately. The next paint recreates a display-only panel with
+        // no identity, so no ACP session can capture the host cwd between
+        // close and the next project-open lifecycle event.
+        panel_rust_destroy(m_handle);
+        m_handle = nullptr;
+        m_lastDevicePixelRatio = -1.0;
+    }
+}
+
+void RustPanelItem::recreateForPendingProject()
+{
+    // A project switch changes the bridge's thread set and its cold-start
+    // records, so forwarding only a path would leave the old project's
+    // model alive. Recreate the process-local Rust singleton; ensureHandle()
+    // immediately seeds it with the pending identity and hydrates that
+    // project's physical store.
+    panel_rust_destroy(m_handle);
+    m_handle = nullptr;
+    m_lastDevicePixelRatio = -1.0;
+    ensureHandle();
 }
 
 void RustPanelItem::renameProjectPath(const QString &oldPath, const QString &newPath)

@@ -910,7 +910,24 @@ void MainWindow::setupAndConnectDocks()
     connect(this,
             &MainWindow::producerOpened,
             m_chatRustDock,
-            &ChatRustDock::updateProjectPath);
+            [this](bool) {
+                const auto path = fileName();
+                if (path.isEmpty())
+                    m_chatRustDock->projectCreatedUntitled();
+                else
+                    m_chatRustDock->projectOpened(path);
+            });
+    connect(this, &MainWindow::projectOpened, m_chatRustDock, &ChatRustDock::projectOpened);
+    connect(this,
+            &MainWindow::projectCreatedUntitled,
+            m_chatRustDock,
+            &ChatRustDock::projectCreatedUntitled);
+    connect(this, &MainWindow::projectClosed, m_chatRustDock, &ChatRustDock::projectClosed);
+    // The dock is created after the initial untitled document is initialized.
+    if (fileName().isEmpty())
+        m_chatRustDock->projectCreatedUntitled();
+    else
+        m_chatRustDock->projectOpened(fileName());
     // tasks/v2/enhance.yaml#task-3's "AI" native-menu-bar option: a
     // View-menu toggle for this dock's visibility, same idiom every other
     // dock in this function uses (m_xxxDock->toggleViewAction() added
@@ -2672,6 +2689,7 @@ void MainWindow::closeProducer()
     m_filterController->motionTrackerModel()->load();
     MLT.close();
     MLT.setSavedProducer(nullptr);
+    emit projectClosed();
 }
 
 void MainWindow::showStatusMessage(QAction *action, int timeoutSeconds)
@@ -3237,6 +3255,8 @@ void MainWindow::setCurrentFile(const QString &filename)
             m_lastBackupDateTime = QFileInfo(newFile).lastModified();
     }
     m_currentFile = newFile;
+    if (!m_currentFile.isEmpty())
+        emit projectOpened(m_currentFile);
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
     // PISO-1 (project-isolation-mlt-binding): this is the ONE choke point
@@ -3497,16 +3517,13 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
             m_autosaveFile->changeManagedFile(filename);
         else
             m_autosaveFile.reset(new AutoSaveFile(filename));
+        // Tell the panel while the OUTGOING identity is still active. An
+        // empty previousFile is the first save of an Untitled UUID; Rust
+        // resolves that empty marker to the UUID it assigned when the
+        // project was created. The rename effect moves the physical store.
+        if (m_chatRustDock && previousFile != filename)
+            m_chatRustDock->renameProjectPath(previousFile, filename);
         setCurrentFile(filename);
-        // Order matters: setCurrentFile() has already pushed the NEW path to
-        // the panel (see its own PISO-1 comment), so the panel's notion of
-        // the active project is current before we ask it to move the threads
-        // that were bound to the old one. An empty previousFile means an
-        // Untitled project saved for the first time -- deliberately NOT a
-        // rename, since those threads were created unscoped and must stay
-        // unscoped rather than being retro-bound to this new file.
-        if (m_chatRustDock && !previousFile.isEmpty() && previousFile != m_currentFile)
-            m_chatRustDock->renameProjectPath(previousFile, m_currentFile);
         setWindowModified(false);
         resetSourceUpdated();
         if (MLT.producer())
