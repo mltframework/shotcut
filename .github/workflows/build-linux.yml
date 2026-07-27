@@ -2,8 +2,6 @@ name: build-shotcut-linux
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, reopened]
   schedule:
     # nightly
     - cron: '0 8 * * *'
@@ -14,6 +12,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'mltframework' }}
 
     steps:
       - uses: actions/checkout@v6
