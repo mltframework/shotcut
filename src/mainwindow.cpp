@@ -1942,6 +1942,11 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
     converted = false;
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
+        if (m_suppressOpenDialogs) {
+            // Fail closed under SAP headless rather than blocking on a dialog.
+            LOG_WARNING() << "sap open: refusing GPU project without conversion prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(
             QMessageBox::Question,
             qApp->applicationName(),
@@ -1960,6 +1965,10 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
             result = false;
     } else if (checker.needsCPU() && Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU incompatible filters but GPU processing is enabled";
+        if (m_suppressOpenDialogs) {
+            LOG_WARNING() << "sap open: refusing CPU project without conversion prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("The file you opened uses CPU processing, which is not enabled.\n"
@@ -2080,6 +2089,11 @@ bool MainWindow::isXmlRepaired(MltXmlChecker &checker, QString &fileName)
     bool result = true;
     if (checker.isCorrected()) {
         LOG_WARNING() << fileName;
+        if (m_suppressOpenDialogs) {
+            // Fail closed under SAP headless rather than hang on repair dialog.
+            LOG_WARNING() << "sap open: refusing project that needs repair prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("Snapflow noticed some problems in your project.\n"
@@ -2095,6 +2109,10 @@ bool MainWindow::isXmlRepaired(MltXmlChecker &checker, QString &fileName)
         if (r == QMessageBox::Yes)
             result = saveRepairedXmlFile(checker, fileName);
     } else if (checker.unlinkedFilesModel().rowCount() > 0) {
+        if (m_suppressOpenDialogs) {
+            LOG_WARNING() << "sap open: refusing project with unlinked files" << fileName;
+            return false;
+        }
         UnlinkedFilesDialog dialog(this);
         dialog.setModel(checker.unlinkedFilesModel());
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -2115,22 +2133,28 @@ bool MainWindow::checkAutoSave(QString &url)
     // check whether autosave files exist:
     QSharedPointer<AutoSaveFile> stale(AutoSaveFile::getFile(url));
     if (stale) {
-        QMessageBox dialog(QMessageBox::Question,
-                           qApp->applicationName(),
-                           tr("Auto-saved files exist. Do you want to recover them now?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::No);
-        int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            if (!stale->open(QIODevice::ReadWrite)) {
-                LOG_WARNING() << "failed to recover autosave file" << url;
-            } else {
-                m_autosaveFile = stale;
-                url = stale->fileName();
-                return true;
+        if (m_suppressOpenDialogs) {
+            // SAP headless: ignore stale autosave recovery (would hang on
+            // QMessageBox in offscreen SNAPSHOT_HEADLESS launches).
+            LOG_INFO() << "sap open: skipping autosave recovery for" << url;
+        } else {
+            QMessageBox dialog(QMessageBox::Question,
+                               qApp->applicationName(),
+                               tr("Auto-saved files exist. Do you want to recover them now?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            int r = dialog.exec();
+            if (r == QMessageBox::Yes) {
+                if (!stale->open(QIODevice::ReadWrite)) {
+                    LOG_WARNING() << "failed to recover autosave file" << url;
+                } else {
+                    m_autosaveFile = stale;
+                    url = stale->fileName();
+                    return true;
+                }
             }
         }
     }
@@ -2348,6 +2372,11 @@ void MainWindow::resetDockCorners()
 void MainWindow::showIncompatibleProjectMessage(const QString &snapflowVersion)
 {
     LOG_INFO() << snapflowVersion;
+    if (m_suppressOpenDialogs) {
+        LOG_WARNING() << "sap open: incompatible project requires newer version"
+                      << snapflowVersion;
+        return;
+    }
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("This project file requires a newer version!\n\n"
@@ -2413,6 +2442,20 @@ void MainWindow::onAutosaveTimeout()
             JOBS.resumeCurrent();
         }
     }
+}
+
+bool MainWindow::openForSap(const QString &url)
+{
+    // Fresh SAP child has no real unsaved user work; force-clean so
+    // continueModified is a pure no-op even if startup noise set dirty.
+    setWindowModified(false);
+    const bool prev = m_suppressOpenDialogs;
+    m_suppressOpenDialogs = true;
+    // play=false: headless/offscreen should not start transport.
+    // skipConvert=true: avoid proxy/convert side paths that prompt.
+    const bool ok = open(url, nullptr, /*play=*/false, /*skipConvert=*/true);
+    m_suppressOpenDialogs = prev;
+    return ok;
 }
 
 bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play, bool skipConvert)
@@ -3945,6 +3988,13 @@ void MainWindow::turnOffHardwareDecoder()
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
+        if (m_suppressOpenDialogs) {
+            // SAP headless open: discard dirty state without prompting.
+            QMutexLocker locker(&m_autosaveMutex);
+            m_autosaveFile.reset();
+            setWindowModified(false);
+            return true;
+        }
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("The project has been modified.\n"

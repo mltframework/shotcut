@@ -366,6 +366,30 @@ int sap_save_project(void *mainWindowHandle);
  * -1 if mainWindowHandle/filename is invalid. */
 int sap_set_project_file(void *mainWindowHandle, const char *filename);
 
+/* Loads an existing MLT XML project from disk via MainWindow::openForSap(),
+ * replacing whatever playlist/multitrack is currently live, and binds
+ * fileName() to path. Only safe on a freshly launched, unmodified session
+ * -- openForSap skips continueModified()/checkAutoSave() modal dialogs.
+ * Returns 0 on success, -1 on failure. */
+int sap_open_project(void *mainWindowHandle, const char *path);
+
+/* Resets the live session to an untitled/empty project without quitting
+ * the process. Returns 0 on success, -1 on invalid handle. Not wired to
+ * MCP project.close in the current plan (session Unbind only); kept as a
+ * primitive for a later idle-process reset path. */
+int sap_close_project(void *mainWindowHandle);
+
+/* Returns 1 if MLT.projectFolder() is non-empty (folder-type project),
+ * 0 if empty (file-type / no project folder), -1 on invalid handle.
+ * Mirrors the live kSnapflowProjectFolder flag after open/save. */
+int sap_is_project_folder(void *mainWindowHandle);
+
+/* Sets MLT.setProjectFolder(folder). Pass empty/NULL to clear (file-type).
+ * Used before the first project.save of a brand-new folder-type project so
+ * saveXML writes kSnapflowProjectFolder=1. Returns 0 on success, -1 on
+ * invalid handle. */
+int sap_set_project_folder(void *mainWindowHandle, const char *folder);
+
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already

@@ -101,6 +101,11 @@ public:
     // instead of `untitledFileName()`'s scratch default. `setCurrentFile`
     // itself is private; this just exposes it for that one FFI call site.
     void setSapProjectFile(const QString &filename) { setCurrentFile(filename); }
+    // Headless SAP path only (sap_ffi.cpp's sap_open_project): load an
+    // existing .mlt without continueModified()/checkAutoSave()/repair/
+    // GPU-conversion modal dialogs. Safe for a freshly-launched child
+    // that has no prior unsaved user edits. Returns the same bool as open().
+    bool openForSap(const QString &url);
     bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
     Player *player() const { return m_player; }
@@ -249,6 +254,9 @@ private:
     ElementsDock *m_elementsDock;
     ScreenCapture *m_screenCapture;
     HdrPreviewWindow *m_hdrPreviewWindow{nullptr};
+    // When true, open-path helpers skip QMessageBox/QDialog prompts so
+    // sap_open_project cannot hang a SNAPSHOT_HEADLESS offscreen process.
+    bool m_suppressOpenDialogs{false};
 
 public slots:
     bool isCompatibleWithProcessingMode(MltXmlChecker &checker, QString &fileName, bool &converted);

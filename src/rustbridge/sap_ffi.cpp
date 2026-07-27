@@ -1438,6 +1438,60 @@ int sap_set_project_file(void *mainWindowHandle, const char *filename)
     return 0;
 }
 
+int sap_open_project(void *mainWindowHandle, const char *path)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !path || !*path)
+        return -1;
+    const QString url = QString::fromUtf8(path);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, url, &result]() { result = mw->openForSap(url) ? 0 : -1; },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_close_project(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw]() {
+            // Same teardown open() performs before loading a new file:
+            // reset to untitled without quitting the Qt process.
+            mw->openForSap(mw->untitledFileName());
+        },
+        Qt::BlockingQueuedConnection);
+    return 0;
+}
+
+int sap_is_project_folder(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    int result = 0;
+    QMetaObject::invokeMethod(
+        mw,
+        [&result]() { result = MLT.projectFolder().isEmpty() ? 0 : 1; },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_project_folder(void *mainWindowHandle, const char *folder)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    const QString path = folder ? QString::fromUtf8(folder) : QString();
+    QMetaObject::invokeMethod(
+        mw, [path]() { MLT.setProjectFolder(path); }, Qt::BlockingQueuedConnection);
+    return 0;
+}
+
 int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
