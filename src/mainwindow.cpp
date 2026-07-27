@@ -923,11 +923,15 @@ void MainWindow::setupAndConnectDocks()
             m_chatRustDock,
             &ChatRustDock::projectCreatedUntitled);
     connect(this, &MainWindow::projectClosed, m_chatRustDock, &ChatRustDock::projectClosed);
-    // The dock is created after the initial untitled document is initialized.
-    if (fileName().isEmpty())
-        m_chatRustDock->projectCreatedUntitled();
-    else
-        m_chatRustDock->projectOpened(fileName());
+    // Do NOT seed project identity here. MainWindow construction finishes
+    // before main() opens the CLI resource / untitled document; an early
+    // projectCreatedUntitled() here forces a staging-store ACP attach that
+    // is immediately torn down and recreated when the real open lands,
+    // which races the shared acpx gateway WebSocket and leaves the chat
+    // stuck without a session (found live: session/new under
+    // .snapflow-staging, then open_session failures with cwd=".").
+    // setCurrentFile() / projectOpened / projectCreatedUntitled after the
+    // real open is the single identity source of truth.
     // tasks/v2/enhance.yaml#task-3's "AI" native-menu-bar option: a
     // View-menu toggle for this dock's visibility, same idiom every other
     // dock in this function uses (m_xxxDock->toggleViewAction() added
@@ -3255,41 +3259,24 @@ void MainWindow::setCurrentFile(const QString &filename)
             m_lastBackupDateTime = QFileInfo(newFile).lastModified();
     }
     m_currentFile = newFile;
-    if (!m_currentFile.isEmpty())
+    if (!m_currentFile.isEmpty()) {
+        // Single notify path: projectOpened is connected to
+        // ChatRustDock::projectOpened -> setProjectPath. Do not ALSO call
+        // setProjectPath here -- that double-recreated the Rust panel on
+        // every open (two ACP attaches back-to-back), racing the shared
+        // gateway and stranding send on a failed second open_session.
         emit projectOpened(m_currentFile);
+    }
+    // Empty m_currentFile (bootstrap setCurrentFile(""), close, or
+    // untitledFileName() mapped to empty): stay silent here.
+    // - Untitled is signaled by producerOpened(empty) -> projectCreatedUntitled
+    //   and by explicit New/untitled open paths.
+    // - Close is signaled by projectClosed().
+    // Emitting Untitled for every empty setCurrentFile forced a staging
+    // ACP attach during MainWindow construction that was immediately
+    // torn down when CLI open landed — the live attach race.
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
-    // PISO-1 (project-isolation-mlt-binding): this is the ONE choke point
-    // every project-identity change passes through -- open, Save-As,
-    // New/newProject, and close all land here -- so notifying from here is
-    // what makes the chat panel track the project it is actually bound to.
-    // Previously the panel only learned about a new project via
-    // producerOpened (see setupAndConnectDocks), which fires when a
-    // PRODUCER is opened, not when the project's identity changes: a
-    // Save-As kept the panel pointed at the old path, and a close left it
-    // pointed at a project that is no longer open.
-    //
-    // Null-guarded because setCurrentFile() runs during startup before
-    // setupAndConnectDocks() constructs m_chatRustDock; the panel picks the
-    // value up from its own construction-time seed in that window.
-    //
-    // PISO-6 deadlock fix: uses setProjectPath(m_currentFile) -- NOT
-    // updateProjectPath(), which re-reads the path via
-    // MainWindow::singleton() -- because setCurrentFile() is ALSO reached
-    // from inside MainWindow's own constructor (a startup call sets the
-    // initial untitled filename), at which point m_chatRustDock already
-    // exists (setupAndConnectDocks ran earlier in the same constructor)
-    // but MainWindow::singleton()'s function-local static has not finished
-    // constructing. That nested singleton() call self-deadlocked on the
-    // C++ magic-static init guard every single launch -- confirmed live
-    // via a real gdb backtrace (Thread 1: main -> MainWindow::singleton()
-    // -> MainWindow::MainWindow() -> setCurrentFile() ->
-    // ChatRustDock::updateProjectPath() -> MainWindow::singleton() ->
-    // __cxa_guard_acquire, blocked forever), not inferred. m_currentFile
-    // is already the exact value fileName() would have returned, so this
-    // is a behavior-preserving fix, not a workaround.
-    if (m_chatRustDock)
-        m_chatRustDock->setProjectPath(m_currentFile);
 }
 
 void MainWindow::updateWindowTitle()

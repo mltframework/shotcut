@@ -363,6 +363,14 @@ void RustPanelItem::setTheme(const QString &theme)
 
 void RustPanelItem::setProjectPath(const QString &path)
 {
+    // Idempotent: setCurrentFile used to call this twice per open (signal +
+    // direct). Even after that was fixed, producerOpened can re-emit the
+    // same path; recreating the Rust singleton again would re-attach ACP
+    // and race the shared gateway.
+    if (m_handle && m_hasPendingProjectPath && !m_pendingUntitledProject
+        && !m_pendingProjectClosed && m_pendingProjectPath == path && !path.isEmpty()) {
+        return;
+    }
     m_pendingProjectPath = path;
     m_hasPendingProjectPath = true;
     m_pendingUntitledProject = false;
@@ -374,6 +382,10 @@ void RustPanelItem::setProjectPath(const QString &path)
 
 void RustPanelItem::projectCreatedUntitled()
 {
+    if (m_handle && m_hasPendingProjectPath && m_pendingUntitledProject
+        && !m_pendingProjectClosed) {
+        return;
+    }
     m_pendingProjectPath.clear();
     m_hasPendingProjectPath = true;
     m_pendingUntitledProject = true;
