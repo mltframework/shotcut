@@ -260,6 +260,9 @@ MainWindow::MainWindow()
 
     setFocus();
     setCurrentFile("");
+    // Bootstrap empty path above must not attach ACP. Real opens after this
+    // (CLI resource, File>Open, New untitled) are allowed to notify the panel.
+    m_projectLifecyclePrimed = true;
 
     connect(&m_network,
             SIGNAL(finished(QNetworkReply *)),
@@ -911,11 +914,15 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::producerOpened,
             m_chatRustDock,
             [this](bool) {
+                if (!m_projectLifecyclePrimed)
+                    return;
                 const auto path = fileName();
+                // Empty path is common mid-open (hideProducer color clips) and
+                // must not force Untitled staging attach. Untitled is owned by
+                // setCurrentFile(untitledFileName()) only.
                 if (path.isEmpty())
-                    m_chatRustDock->projectCreatedUntitled();
-                else
-                    m_chatRustDock->projectOpened(path);
+                    return;
+                m_chatRustDock->projectOpened(path);
             });
     connect(this, &MainWindow::projectOpened, m_chatRustDock, &ChatRustDock::projectOpened);
     connect(this,
@@ -3252,7 +3259,10 @@ void MainWindow::configureVideoWidget()
 
 void MainWindow::setCurrentFile(const QString &filename)
 {
-    QString newFile = (filename == untitledFileName()) ? QString() : filename;
+    // Distinguish real Untitled open from intermediate clears (open() resets
+    // path to "" before loading a file; close uses projectClosed()).
+    const bool openingUntitled = (filename == untitledFileName());
+    QString newFile = openingUntitled ? QString() : filename;
     if (newFile != m_currentFile) {
         m_lastBackupDateTime = Settings.lastBackupDateTime(newFile);
         if (!m_lastBackupDateTime.isValid())
@@ -3260,21 +3270,14 @@ void MainWindow::setCurrentFile(const QString &filename)
     }
     m_currentFile = newFile;
     if (!m_currentFile.isEmpty()) {
-        // Single notify path: projectOpened is connected to
-        // ChatRustDock::projectOpened -> setProjectPath. Do not ALSO call
-        // setProjectPath here -- that double-recreated the Rust panel on
-        // every open (two ACP attaches back-to-back), racing the shared
-        // gateway and stranding send on a failed second open_session.
+        // Single notify: projectOpened -> ChatRustDock::setProjectPath.
         emit projectOpened(m_currentFile);
+    } else if (m_chatRustDock && m_projectLifecyclePrimed && openingUntitled) {
+        // Only when the host opens the real untitled document path — not for
+        // setCurrentFile("") mid-open/close, which was forcing a staging ACP
+        // attach then immediately recreating on the real project (send race).
+        m_chatRustDock->projectCreatedUntitled();
     }
-    // Empty m_currentFile (bootstrap setCurrentFile(""), close, or
-    // untitledFileName() mapped to empty): stay silent here.
-    // - Untitled is signaled by producerOpened(empty) -> projectCreatedUntitled
-    //   and by explicit New/untitled open paths.
-    // - Close is signaled by projectClosed().
-    // Emitting Untitled for every empty setCurrentFile forced a staging
-    // ACP attach during MainWindow construction that was immediately
-    // torn down when CLI open landed — the live attach race.
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
 }

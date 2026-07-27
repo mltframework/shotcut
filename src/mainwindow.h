@@ -252,6 +252,10 @@ private:
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
     ChatRustDock *m_chatRustDock;
+    /// False until MainWindow construction finishes bootstrap setCurrentFile("").
+    /// While false, empty project-path notifies are ignored so the first real
+    /// open (CLI file or user New) is the first ACP identity attach.
+    bool m_projectLifecyclePrimed{false};
     static QString s_resolvedTheme;
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
