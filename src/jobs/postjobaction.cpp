@@ -97,7 +97,9 @@ void ProxyReplacePostJobAction::doAction()
         QString ffmpegExe = QDir(shotcutPath).filePath("ffmpeg");
         QString tempFile = m_dstFile + ".rot.mp4";
         QStringList args;
-        args << QStringLiteral("-display_rotation:v:0") << QString::number(m_rotation)
+        // -display_rotation is counter-clockwise, while m_rotation is the clockwise
+        // "rotate" convention, so negate it (equivalently, 360 - m_rotation).
+        args << QStringLiteral("-display_rotation:v:0") << QString::number(360 - m_rotation)
              << QStringLiteral("-i") << m_dstFile << QStringLiteral("-c") << QStringLiteral("copy")
              << QStringLiteral("-y") << tempFile;
         if (QProcess::execute(ffmpegExe, args) == 0) {
@@ -138,7 +140,9 @@ void ProxyFinalizePostJobAction::doAction()
         QString ffmpegExe = QDir(shotcutPath).filePath("ffmpeg");
         QString tempFile = m_dstFile + ".rot.mp4";
         QStringList args;
-        args << QStringLiteral("-display_rotation:v:0") << QString::number(m_rotation)
+        // -display_rotation is counter-clockwise, while m_rotation is the clockwise
+        // "rotate" convention, so negate it (equivalently, 360 - m_rotation).
+        args << QStringLiteral("-display_rotation:v:0") << QString::number(360 - m_rotation)
              << QStringLiteral("-i") << m_dstFile << QStringLiteral("-c") << QStringLiteral("copy")
              << QStringLiteral("-y") << tempFile;
         if (QProcess::execute(ffmpegExe, args) == 0) {
