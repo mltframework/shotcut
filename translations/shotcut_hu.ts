@@ -850,7 +850,7 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1143"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1300"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1301"/>
         <source>Extract Subtitles...</source>
         <translation>Feliratok kivonása...</translation>
     </message>
@@ -952,13 +952,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1067"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="930"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="931"/>
         <source>Reverse...</source>
         <translation>Megfordítás…</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1138"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1202"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1203"/>
         <source>Extract Sub-clip...</source>
         <translation>Al-klip kiemelése...</translation>
     </message>
@@ -1006,96 +1006,96 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="850"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="925"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="926"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Válasszon egyet az alábbi szerkesztés-barát formátumok közül és kattintsonaz OK-re fájlnév választásához. Ezután egy feladat jön létre. Amint az elkészül dupla kattintással megnyithatja a feladatot.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1045"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1046"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1090"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1091"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1107"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1108"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1160"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1161"/>
         <source>Convert %1</source>
         <translation>%1 konvertálása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1111"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1112"/>
         <source>Reversed</source>
         <translation>Megfordítva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1141"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1142"/>
         <source>Reverse canceled</source>
         <translation>Visszamenőleg törölve</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1170"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1171"/>
         <source>Reverse %1</source>
         <translation>%1 megfordítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1539"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1540"/>
         <source>Choose the Other Video</source>
         <translation>Válassza ki a másik videót</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1592"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1593"/>
         <source>Measure %1</source>
         <translation>Mérés %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1201"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1202"/>
         <source>Sub-clip</source>
         <translation>Al-klip</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1203"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1204"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1275"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1276"/>
         <source>Extract sub-clip %1</source>
         <translation>%1 al-klip kiemelése</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1294"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1344"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1295"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1345"/>
         <source>Track %1</source>
         <translation>Sáv %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1296"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1346"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1297"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1347"/>
         <source>Track %1 (%2)</source>
         <translation>Sáv %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1302"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1303"/>
         <source>No subtitles found</source>
         <translation>Nem található felirat</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1361"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1362"/>
         <source>Extract subtitles %1</source>
         <translation>Feliratok kibontása %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1474"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1475"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -1104,32 +1104,32 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1518"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1519"/>
         <source>Set Equirectangular Projection</source>
         <translation>Hossztartó hengervetület alkalmazása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1530"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1531"/>
         <source>Successfully wrote %1</source>
         <translation>%1 sikeresen kiírva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1532"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1533"/>
         <source>An error occurred saving the projection.</source>
         <translation>A vetület mentésekor hiba lépett fel.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1626"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1627"/>
         <source>Open LUT File</source>
         <translation>LUT fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1628"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1629"/>
         <source>3D-LUT Files (*.3dl *.cube *.dat *.m3d);;AfterEffects (*.3dl);;Iridas (*.cube);;DaVinci (*.dat);;Pandora (*.m3d);;All Files (*)</source>
         <translation>3D-LUT fájlok (*.3dl *.cube *.dat *.m3d);;AfterEffects (*.3dl);;Iridas (*.cube);;DaVinci (*.dat);;Pandora (*.m3d);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1658"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1659"/>
         <source>The clipboard does not contain a valid LUT file path:
 
 %1</source>
@@ -1138,27 +1138,27 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
 %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1737"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1738"/>
         <source>Bitrate %1</source>
         <translation>Bitsebesség %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1750"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1751"/>
         <source>System Default</source>
         <translation>Rendszer alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1787"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1788"/>
         <source>Other...</source>
         <translation>Egyéb...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1791"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1792"/>
         <source>Remove...</source>
         <translation>Eltávolít…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1830"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1831"/>
         <source>Remove From Open With</source>
         <translation>Eltávolítás a Megnyitás menüből</translation>
     </message>
@@ -1828,6 +1828,79 @@ A vágólap használatához hagyja üresen a következőt:</translation>
     </message>
 </context>
 <context>
+    <name>ElementsDock</name>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="80"/>
+        <source>Elements</source>
+        <translation>Elemek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="114"/>
+        <source>Emojis</source>
+        <translation>Emojik</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="119"/>
+        <source>Sounds</source>
+        <translation>Hangok</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="124"/>
+        <source>Text</source>
+        <translation>Szöveg</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="129"/>
+        <source>Transitions</source>
+        <translation>Átmenetek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="134"/>
+        <source>Graphics</source>
+        <translation>Grafika</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="231"/>
+        <source>Smileys &amp; Emotion</source>
+        <translation>Smiley-k és érzelmek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="232"/>
+        <source>People &amp; Body</source>
+        <translation>Emberek és test</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="233"/>
+        <source>Animals &amp; Nature</source>
+        <translation>Állatok és természet</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="234"/>
+        <source>Food &amp; Drink</source>
+        <translation>Étel és ital</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="235"/>
+        <source>Travel &amp; Places</source>
+        <translation>Utazás és helyek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="236"/>
+        <source>Activities</source>
+        <translation>Tevékenységek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="237"/>
+        <source>Objects</source>
+        <translation>Objektumok</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/elementsdock.cpp" line="238"/>
+        <source>Symbols</source>
+        <translation>Szimbólumok</translation>
+    </message>
+</context>
+<context>
     <name>EncodeDock</name>
     <message>
         <location filename="../src/docks/encodedock.ui" line="17"/>
@@ -2326,9 +2399,9 @@ időbeni tömörítésnél</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2158"/>
-        <location filename="../src/docks/encodedock.cpp" line="1526"/>
-        <location filename="../src/docks/encodedock.cpp" line="2066"/>
-        <location filename="../src/docks/encodedock.cpp" line="2541"/>
+        <location filename="../src/docks/encodedock.cpp" line="1529"/>
+        <location filename="../src/docks/encodedock.cpp" line="2069"/>
+        <location filename="../src/docks/encodedock.cpp" line="2544"/>
         <source>Export Video/Audio</source>
         <translation>Videó/Audió exportálása</translation>
     </message>
@@ -2354,168 +2427,168 @@ időbeni tömörítésnél</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2198"/>
-        <location filename="../src/docks/encodedock.cpp" line="2240"/>
-        <location filename="../src/docks/encodedock.cpp" line="2247"/>
-        <location filename="../src/docks/encodedock.cpp" line="2365"/>
+        <location filename="../src/docks/encodedock.cpp" line="2243"/>
+        <location filename="../src/docks/encodedock.cpp" line="2250"/>
+        <location filename="../src/docks/encodedock.cpp" line="2368"/>
         <source>Stream</source>
         <translation>Adatfolyam</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2225"/>
-        <location filename="../src/docks/encodedock.cpp" line="2049"/>
-        <location filename="../src/docks/encodedock.cpp" line="2150"/>
-        <location filename="../src/docks/encodedock.cpp" line="2160"/>
+        <location filename="../src/docks/encodedock.cpp" line="2052"/>
+        <location filename="../src/docks/encodedock.cpp" line="2153"/>
+        <location filename="../src/docks/encodedock.cpp" line="2163"/>
         <source>Stop Capture</source>
         <translation>Felvétel leállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="157"/>
+        <location filename="../src/docks/encodedock.cpp" line="158"/>
         <source>Automatic from extension</source>
         <translation>Automatikusan a kiterjesztésből</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="165"/>
-        <location filename="../src/docks/encodedock.cpp" line="175"/>
+        <location filename="../src/docks/encodedock.cpp" line="166"/>
+        <location filename="../src/docks/encodedock.cpp" line="176"/>
         <source>Default for format</source>
         <translation>Alapértelmezett formátum</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="510"/>
+        <location filename="../src/docks/encodedock.cpp" line="513"/>
         <source>Timeline</source>
         <translation>Idővonal</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="517"/>
-        <location filename="../src/docks/encodedock.cpp" line="523"/>
+        <location filename="../src/docks/encodedock.cpp" line="520"/>
+        <location filename="../src/docks/encodedock.cpp" line="526"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="528"/>
-        <location filename="../src/docks/encodedock.cpp" line="535"/>
+        <location filename="../src/docks/encodedock.cpp" line="531"/>
+        <location filename="../src/docks/encodedock.cpp" line="538"/>
         <source>Marker</source>
         <translation>Jelző</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="546"/>
+        <location filename="../src/docks/encodedock.cpp" line="549"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>A számszerű értékeknél tizedesvesszőként ezt kell használni: &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="556"/>
-        <location filename="../src/docks/encodedock.cpp" line="1996"/>
-        <location filename="../src/docks/encodedock.cpp" line="1997"/>
+        <location filename="../src/docks/encodedock.cpp" line="559"/>
+        <location filename="../src/docks/encodedock.cpp" line="1999"/>
+        <location filename="../src/docks/encodedock.cpp" line="2000"/>
         <source>Custom</source>
         <translation>Egyéni</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="592"/>
+        <location filename="../src/docks/encodedock.cpp" line="595"/>
         <source>Stock</source>
         <translation>Készlet</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="595"/>
+        <location filename="../src/docks/encodedock.cpp" line="598"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1600"/>
+        <location filename="../src/docks/encodedock.cpp" line="1603"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Nem írhat a projektben található egyik fájlba.
 Próbálkozzék újra egy másik mappa- vagy fájlnévvel.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1698"/>
+        <location filename="../src/docks/encodedock.cpp" line="1701"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>A Shotcut olyan szűrőket talált, amelyek még le nem futtatott elemzési feladatokat igényelnek.
 Szeretné ezeket az elemzési feladatokat most lefuttatni?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2066"/>
-        <location filename="../src/docks/encodedock.cpp" line="2543"/>
+        <location filename="../src/docks/encodedock.cpp" line="2069"/>
+        <location filename="../src/docks/encodedock.cpp" line="2546"/>
         <source>Capture File</source>
         <translation>Fájl felvétele</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2068"/>
+        <location filename="../src/docks/encodedock.cpp" line="2071"/>
         <source>Export Files</source>
         <translation>Fájlok exportálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2083"/>
+        <location filename="../src/docks/encodedock.cpp" line="2086"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2085"/>
+        <location filename="../src/docks/encodedock.cpp" line="2088"/>
         <source>Determined by Export (*)</source>
         <translation>Exportálás által meghatározva (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2235"/>
-        <location filename="../src/docks/encodedock.cpp" line="2257"/>
+        <location filename="../src/docks/encodedock.cpp" line="2238"/>
+        <location filename="../src/docks/encodedock.cpp" line="2260"/>
         <source>Stop Stream</source>
         <translation>Adatfolyam leállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2249"/>
+        <location filename="../src/docks/encodedock.cpp" line="2252"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Adja meg URL formátumban a hálózati protokoll sémát, a címet, portszámot, útvonalat és a paramétereket:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2298"/>
+        <location filename="../src/docks/encodedock.cpp" line="2301"/>
         <source>Add Export Preset</source>
         <translation>Exportálási előbeállítás hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2342"/>
+        <location filename="../src/docks/encodedock.cpp" line="2345"/>
         <source>Delete Preset</source>
         <translation>Előbeállítás törlése</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2343"/>
+        <location filename="../src/docks/encodedock.cpp" line="2346"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Biztosan törölni akarod a(z) %1-t?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2471"/>
+        <location filename="../src/docks/encodedock.cpp" line="2474"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2525"/>
+        <location filename="../src/docks/encodedock.cpp" line="2528"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2678"/>
+        <location filename="../src/docks/encodedock.cpp" line="2681"/>
         <source>Detect</source>
         <translation>Észlelés</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2735"/>
+        <location filename="../src/docks/encodedock.cpp" line="2738"/>
         <source>(auto)</source>
         <translation>(automatikus)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2781"/>
+        <location filename="../src/docks/encodedock.cpp" line="2784"/>
         <source>Detecting hardware encoders...</source>
         <translation>Hardveres kódolók észlelése…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2838"/>
+        <location filename="../src/docks/encodedock.cpp" line="2841"/>
         <source>Nothing found</source>
         <translation>Nincs találat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2840"/>
+        <location filename="../src/docks/encodedock.cpp" line="2843"/>
         <source>Found %1</source>
         <translation>%1 találat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3066"/>
+        <location filename="../src/docks/encodedock.cpp" line="3069"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2526,127 +2599,127 @@ Mentse el a projektet, zárja be és nyissa meg újra.
 A Shotcut megpróbálja majd kijavítani a projektet.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3115"/>
+        <location filename="../src/docks/encodedock.cpp" line="3118"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>A képarány nem egyezik meg a projekt videó módjával, ami fekete sávokat okoz.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3128"/>
+        <location filename="../src/docks/encodedock.cpp" line="3131"/>
         <source>Open Cover Art</source>
         <translation>Borító megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3130"/>
+        <location filename="../src/docks/encodedock.cpp" line="3133"/>
         <source>Images (*.png *.jpg *.jpeg);;All Files (*)</source>
         <translation>Képek (*.png *.jpg *.jpeg);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3142"/>
+        <location filename="../src/docks/encodedock.cpp" line="3145"/>
         <source>HDR Metadata</source>
         <translation>HDR metaadatok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3150"/>
-        <location filename="../src/docks/encodedock.cpp" line="3159"/>
+        <location filename="../src/docks/encodedock.cpp" line="3153"/>
+        <location filename="../src/docks/encodedock.cpp" line="3162"/>
         <source>Not set</source>
         <translation>Nincs beállítva</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3151"/>
-        <location filename="../src/docks/encodedock.cpp" line="3160"/>
-        <location filename="../src/docks/encodedock.cpp" line="3174"/>
-        <location filename="../src/docks/encodedock.cpp" line="3183"/>
+        <location filename="../src/docks/encodedock.cpp" line="3154"/>
+        <location filename="../src/docks/encodedock.cpp" line="3163"/>
+        <location filename="../src/docks/encodedock.cpp" line="3177"/>
+        <location filename="../src/docks/encodedock.cpp" line="3186"/>
         <source> nits</source>
         <comment>a measure of brightness</comment>
         <translation> nit</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3153"/>
+        <location filename="../src/docks/encodedock.cpp" line="3156"/>
         <source>Maximum Content Light Level (MaxCLL): the brightest single pixel in the entire clip</source>
         <translation>Maximális tartalmi fényerőszint (MaxCLL): a legfényesebb egyetlen pixel az egész klipben</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3154"/>
+        <location filename="../src/docks/encodedock.cpp" line="3157"/>
         <source>MaxCLL</source>
         <translation>MaxCLL</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3161"/>
+        <location filename="../src/docks/encodedock.cpp" line="3164"/>
         <source>Maximum Frame-Average Light Level (MaxFALL): the highest average brightness of any single frame</source>
         <translation>Maximum Frame-Average Light Level (MaxFALL): bármely egyes képkocka legmagasabb átlagos fényerőssége</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3163"/>
+        <location filename="../src/docks/encodedock.cpp" line="3166"/>
         <source>MaxFALL</source>
         <translation>MaxFALL</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3166"/>
+        <location filename="../src/docks/encodedock.cpp" line="3169"/>
         <source>BT.2020 / Rec.2020</source>
         <translation>BT.2020 / Rec.2020</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3167"/>
+        <location filename="../src/docks/encodedock.cpp" line="3170"/>
         <source>Display P3 (D65)</source>
         <translation>P3 kijelző (D65)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3169"/>
+        <location filename="../src/docks/encodedock.cpp" line="3172"/>
         <source>Color primaries</source>
         <translation>Elsődleges színek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3175"/>
+        <location filename="../src/docks/encodedock.cpp" line="3178"/>
         <source>Display mastering maximum luminance</source>
         <translation>Maximális fénysűrűség megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3176"/>
+        <location filename="../src/docks/encodedock.cpp" line="3179"/>
         <source>Display max luminance</source>
         <translation>A kijelző maximális fénysűrűsége</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3184"/>
+        <location filename="../src/docks/encodedock.cpp" line="3187"/>
         <source>Display mastering minimum luminance</source>
         <translation>Kijelző mastering minimális fénysűrűség</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3185"/>
+        <location filename="../src/docks/encodedock.cpp" line="3188"/>
         <source>Display min luminance</source>
         <translation>Kijelző minimális fénysűrűsége</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="3233"/>
+        <location filename="../src/docks/encodedock.cpp" line="3236"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>A képkockasebesség nagyobb, mint a vetített videó mód, ami a képkockák ismétlődését okozza.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2676"/>
+        <location filename="../src/docks/encodedock.cpp" line="2679"/>
         <source>Configure Hardware Encoding</source>
         <translation>Hardveres kódolás konfigurálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="513"/>
+        <location filename="../src/docks/encodedock.cpp" line="516"/>
         <source>Current Playlist Bin</source>
         <translation>Jelenlegi lejátszási lista tárolója</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="517"/>
         <source>Each Playlist Bin Item</source>
         <translation>Minden lejátszási lista tároló elem</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2069"/>
+        <location filename="../src/docks/encodedock.cpp" line="2072"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Minden lejátszási lista tároló elem exportálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2114"/>
+        <location filename="../src/docks/encodedock.cpp" line="2117"/>
         <source>Export canceled</source>
         <translation>Exportálás megszakítva</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2700"/>
+        <location filename="../src/docks/encodedock.cpp" line="2703"/>
         <source>Export Frames/sec</source>
         <translation>Exportálása képkocka/mp</translation>
     </message>
@@ -2767,12 +2840,12 @@ A Shotcut megpróbálja majd kijavítani a projektet.</translation>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="48"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="49"/>
         <source>Check %1</source>
         <translation>%1 vizsgálata</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="78"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="79"/>
         <source>FFmpeg Log</source>
         <translation>FFmpeg napló</translation>
     </message>
@@ -3181,12 +3254,12 @@ A Shotcut megpróbálja majd kijavítani a projektet.</translation>
         <translation>(TÚLHALADOTT)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="494"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="515"/>
         <source>Failed to prepare add-on filter user interface.</source>
         <translation>Nem sikerült előkészíteni a kiegészítő szűrő felhasználói felületét.</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="592"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="613"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Csak egy %1 szűrő engedélyezett.</translation>
     </message>
@@ -4962,12 +5035,12 @@ A klip hangját (0%) vagy csak a B klip hangját (100%).</translation>
         <translation>Hangcsatornák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="268"/>
+        <location filename="../src/mainwindow.ui" line="273"/>
         <source>Deinterlacer</source>
         <translation>Váltottsorosság megszüntető</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="277"/>
+        <location filename="../src/mainwindow.ui" line="282"/>
         <source>Interpolation</source>
         <translation>Interpoláció</translation>
     </message>
@@ -4997,365 +5070,366 @@ A klip hangját (0%) vagy csak a B klip hangját (100%).</translation>
         <translation>Megjelenítési módszer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="218"/>
+        <location filename="../src/mainwindow.ui" line="223"/>
         <source>App Data Directory</source>
         <translation>Alkalmazásadatok mappája</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="225"/>
+        <location filename="../src/mainwindow.ui" line="230"/>
         <source>Preview Scaling</source>
         <translation>Előnézet skálázása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="246"/>
+        <location filename="../src/mainwindow.ui" line="251"/>
         <source>Proxy</source>
         <translation>Közvetítő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="250"/>
+        <location filename="../src/mainwindow.ui" line="255"/>
         <source>Storage</source>
         <translation>Tárhely</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="334"/>
+        <location filename="../src/mainwindow.ui" line="340"/>
         <source>Toolbar</source>
         <translation>Eszköztár</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="392"/>
+        <location filename="../src/mainwindow.ui" line="398"/>
         <source>&amp;Open File...</source>
         <translation>Fájl &amp;megnyitása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="406"/>
+        <location filename="../src/mainwindow.ui" line="412"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="409"/>
+        <location filename="../src/mainwindow.ui" line="415"/>
         <source>Quit the application</source>
         <translation>Kilépés a programból</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="417"/>
+        <location filename="../src/mainwindow.ui" line="423"/>
         <source>&amp;About Shotcut</source>
         <translation>Shotcut &amp;névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="425"/>
+        <location filename="../src/mainwindow.ui" line="431"/>
         <source>About Qt</source>
         <translation>Qt névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="433"/>
+        <location filename="../src/mainwindow.ui" line="439"/>
         <source>Open Other...</source>
         <translation>Egyéb megnyitása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="436"/>
+        <location filename="../src/mainwindow.ui" line="442"/>
         <source>Open a device, stream or generator</source>
         <translation>Eszköz, adatfolyam vagy generáló megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="451"/>
+        <location filename="../src/mainwindow.ui" line="457"/>
         <source>&amp;Save</source>
         <translation>Me&amp;ntés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="454"/>
+        <location filename="../src/mainwindow.ui" line="460"/>
         <source>Save project as a MLT XML file</source>
         <translation>Projekt mentése mint MLT XML fájl</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="468"/>
+        <location filename="../src/mainwindow.ui" line="474"/>
         <source>Save &amp;As...</source>
         <translation>Me&amp;ntés másként…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="471"/>
+        <location filename="../src/mainwindow.ui" line="477"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Projekt mentése másik MLT XML fájlba</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="486"/>
-        <location filename="../src/mainwindow.ui" line="489"/>
+        <location filename="../src/mainwindow.ui" line="492"/>
+        <location filename="../src/mainwindow.ui" line="495"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="201"/>
+        <location filename="../src/mainwindow.ui" line="206"/>
         <source>Job Priority</source>
         <translation>Feladat prioritás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="497"/>
+        <location filename="../src/mainwindow.ui" line="503"/>
         <source>Forum...</source>
         <translation>Fórum…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="502"/>
+        <location filename="../src/mainwindow.ui" line="508"/>
         <source>FAQ...</source>
         <translation>GYIK…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="511"/>
-        <location filename="../src/mainwindow.cpp" line="4397"/>
+        <location filename="../src/mainwindow.ui" line="517"/>
+        <location filename="../src/mainwindow.cpp" line="4504"/>
         <source>Enter Full Screen</source>
         <translation>Teljes képernyós mód</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="523"/>
+        <location filename="../src/mainwindow.ui" line="529"/>
         <source>Peak Meter</source>
         <translation>Jelszintmérő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="538"/>
-        <location filename="../src/mainwindow.cpp" line="426"/>
-        <location filename="../src/mainwindow.cpp" line="2713"/>
+        <location filename="../src/mainwindow.ui" line="544"/>
+        <location filename="../src/mainwindow.cpp" line="431"/>
+        <location filename="../src/mainwindow.cpp" line="2778"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="550"/>
-        <location filename="../src/mainwindow.cpp" line="2722"/>
+        <location filename="../src/mainwindow.ui" line="556"/>
+        <location filename="../src/mainwindow.cpp" line="2787"/>
         <source>Recent</source>
         <translation>Előzmények</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="213"/>
-        <location filename="../src/mainwindow.ui" line="562"/>
+        <location filename="../src/mainwindow.ui" line="218"/>
+        <location filename="../src/mainwindow.ui" line="568"/>
         <source>Playlist</source>
         <translation>Lejátszási lista</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="574"/>
-        <location filename="../src/mainwindow.cpp" line="758"/>
+        <location filename="../src/mainwindow.ui" line="580"/>
+        <location filename="../src/mainwindow.cpp" line="763"/>
         <source>History</source>
         <translation>Történet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="588"/>
+        <location filename="../src/mainwindow.ui" line="594"/>
         <source>Realtime (frame dropping)</source>
         <translation>Valósidejű (képkocka eldobás)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="599"/>
+        <location filename="../src/mainwindow.ui" line="605"/>
         <source>Progressive</source>
         <translation>Progresszív</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="607"/>
+        <location filename="../src/mainwindow.ui" line="613"/>
         <source>Native 8-bit CPU (fast, flexible)</source>
         <translation>Natív 8 bites CPU (gyors, rugalmas)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="615"/>
+        <location filename="../src/mainwindow.ui" line="621"/>
         <source>Native 10-bit CPU (slower, better)</source>
         <translation>Natív 10 bites CPU (lassabb, jobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/mainwindow.ui" line="645"/>
         <source>1 (mono)</source>
         <translation>1 (monó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="647"/>
+        <location filename="../src/mainwindow.ui" line="653"/>
         <source>2 (stereo)</source>
         <translation>2 (sztereó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="674"/>
+        <location filename="../src/mainwindow.ui" line="680"/>
         <source>One Field (fast)</source>
         <translation>Egy mező (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="682"/>
+        <location filename="../src/mainwindow.ui" line="688"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - csak időbeli (jó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="709"/>
+        <location filename="../src/mainwindow.ui" line="715"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Legközelebbi szomszéd (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="717"/>
+        <location filename="../src/mainwindow.ui" line="723"/>
         <source>Bilinear (good)</source>
         <translation>Bilinear (jó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="725"/>
+        <location filename="../src/mainwindow.ui" line="731"/>
         <source>Bicubic (better)</source>
         <translation>Bicubic (jobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="744"/>
-        <location filename="../src/mainwindow.ui" line="891"/>
-        <location filename="../src/mainwindow.cpp" line="3013"/>
+        <location filename="../src/mainwindow.ui" line="750"/>
+        <location filename="../src/mainwindow.ui" line="897"/>
+        <location filename="../src/mainwindow.cpp" line="1659"/>
+        <location filename="../src/mainwindow.cpp" line="3078"/>
         <source>Automatic</source>
         <translation>Automatikus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="755"/>
-        <location filename="../src/mainwindow.ui" line="1267"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="1273"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="763"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Use JACK Audio</source>
         <translation>Audió JACK használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="772"/>
-        <location filename="../src/mainwindow.ui" line="775"/>
+        <location filename="../src/mainwindow.ui" line="778"/>
+        <location filename="../src/mainwindow.ui" line="781"/>
         <source>Filters</source>
         <translation>Szűrők</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="783"/>
-        <location filename="../src/mainwindow.ui" line="1132"/>
+        <location filename="../src/mainwindow.ui" line="789"/>
+        <location filename="../src/mainwindow.ui" line="1138"/>
         <source>Add...</source>
         <translation>Hozzáadás…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.ui" line="797"/>
         <source>System</source>
         <translation>Rendszer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="794"/>
+        <location filename="../src/mainwindow.ui" line="800"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Használja a felhasználói vagy platform stílusát, színeit és ikonjait.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="810"/>
+        <location filename="../src/mainwindow.ui" line="816"/>
         <source>Fusion Dark</source>
         <translation>Sötét fúzió</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="818"/>
+        <location filename="../src/mainwindow.ui" line="824"/>
         <source>Fusion Light</source>
         <translation>Világos fúzió</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="823"/>
+        <location filename="../src/mainwindow.ui" line="829"/>
         <source>Tutorials...</source>
         <translation>Oktatóanyagok…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="208"/>
-        <location filename="../src/mainwindow.ui" line="832"/>
-        <location filename="../src/mainwindow.cpp" line="2732"/>
+        <location filename="../src/mainwindow.ui" line="213"/>
+        <location filename="../src/mainwindow.ui" line="838"/>
+        <location filename="../src/mainwindow.cpp" line="2797"/>
         <source>Timeline</source>
         <translation>Idővonal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="840"/>
-        <location filename="../src/mainwindow.ui" line="843"/>
+        <location filename="../src/mainwindow.ui" line="846"/>
+        <location filename="../src/mainwindow.ui" line="849"/>
         <source>Restore Default Layout</source>
         <translation>Alapértelmezett elrendezés visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="851"/>
+        <location filename="../src/mainwindow.ui" line="857"/>
         <source>Show Title Bars</source>
         <translation>Címsorok megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="859"/>
+        <location filename="../src/mainwindow.ui" line="865"/>
         <source>Show Toolbar</source>
         <translation>Eszköztár megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="870"/>
         <source>Upgrade...</source>
         <translation>Frissítés…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="869"/>
+        <location filename="../src/mainwindow.ui" line="875"/>
         <source>Open MLT XML As Clip...</source>
         <translation>MLT XML megnyitása klipként…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="878"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>MLT XML projekt megnyitása virtuális klipként</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="880"/>
+        <location filename="../src/mainwindow.ui" line="886"/>
         <source>Scrub Audio</source>
         <translation>Hangsúrolás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
+        <location filename="../src/mainwindow.ui" line="921"/>
         <source>Low</source>
         <translation>Alacsony</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="923"/>
+        <location filename="../src/mainwindow.ui" line="929"/>
         <source>Normal</source>
         <translation>Normál</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="933"/>
+        <location filename="../src/mainwindow.ui" line="939"/>
         <source>Application Log...</source>
         <translation>Alkalmazásnapló…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="941"/>
-        <location filename="../src/mainwindow.ui" line="1035"/>
-        <location filename="../src/mainwindow.ui" line="1038"/>
+        <location filename="../src/mainwindow.ui" line="947"/>
+        <location filename="../src/mainwindow.ui" line="1041"/>
+        <location filename="../src/mainwindow.ui" line="1044"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="264"/>
-        <location filename="../src/mainwindow.ui" line="1413"/>
-        <location filename="../src/mainwindow.cpp" line="1310"/>
+        <location filename="../src/mainwindow.ui" line="269"/>
+        <location filename="../src/mainwindow.ui" line="1419"/>
+        <location filename="../src/mainwindow.cpp" line="1328"/>
         <source>Player</source>
         <translation>Lejátszó</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.ui" line="955"/>
         <source>User Interface</source>
         <translation>Felhasználó felület</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="963"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1151"/>
+        <location filename="../src/mainwindow.ui" line="1157"/>
         <source>Generate</source>
         <translation>Generál</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1214"/>
+        <location filename="../src/mainwindow.ui" line="1220"/>
         <source>Notes</source>
         <translation>Megjegyzések</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1452"/>
+        <location filename="../src/mainwindow.ui" line="1458"/>
         <source>Markers as Chapters...</source>
         <translation>Jelzők fejezetekként...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1455"/>
-        <location filename="../src/mainwindow.ui" line="1458"/>
-        <location filename="../src/mainwindow.cpp" line="6731"/>
+        <location filename="../src/mainwindow.ui" line="1461"/>
+        <location filename="../src/mainwindow.ui" line="1464"/>
+        <location filename="../src/mainwindow.cpp" line="6867"/>
         <source>Export Chapters</source>
         <translation>Fejezetek exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1463"/>
+        <location filename="../src/mainwindow.ui" line="1469"/>
         <source>Audio/Video Device...</source>
         <translation>Audió/videó eszköz...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1007"/>
-        <location filename="../src/mainwindow.ui" line="1345"/>
+        <location filename="../src/mainwindow.ui" line="1013"/>
+        <location filename="../src/mainwindow.ui" line="1351"/>
         <source>Set...</source>
         <translation>Beállít…</translation>
     </message>
@@ -5375,69 +5449,69 @@ A klip hangját (0%) vagy csak a B klip hangját (100%).</translation>
         <translation>&amp;Beállítások</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="237"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
         <source>Time Format</source>
         <translation>Idő formátum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="295"/>
+        <location filename="../src/mainwindow.ui" line="300"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="395"/>
+        <location filename="../src/mainwindow.ui" line="401"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Videó, hang, kép vagy projektfájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="526"/>
+        <location filename="../src/mainwindow.ui" line="532"/>
         <source>Audio Peak Meter</source>
         <translation>Audio jelszintmérő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="655"/>
+        <location filename="../src/mainwindow.ui" line="661"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (négyes/Ambiszonikus)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="663"/>
+        <location filename="../src/mainwindow.ui" line="669"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 térhangzás)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="690"/>
+        <location filename="../src/mainwindow.ui" line="696"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - időbeli + térbeli (jobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="698"/>
+        <location filename="../src/mainwindow.ui" line="704"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="733"/>
+        <location filename="../src/mainwindow.ui" line="739"/>
         <source>Lanczos (best)</source>
         <translation>Lanczos (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="928"/>
+        <location filename="../src/mainwindow.ui" line="934"/>
         <source>Resources...</source>
         <translation>Erőforrások...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
-        <location filename="../src/mainwindow.ui" line="1353"/>
+        <location filename="../src/mainwindow.ui" line="1018"/>
+        <location filename="../src/mainwindow.ui" line="1359"/>
         <source>Show...</source>
         <translation>Megjelenítés…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1021"/>
         <source>Show</source>
         <translation>Megjelenítés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1024"/>
-        <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.ui" line="1030"/>
+        <location filename="../src/mainwindow.ui" line="1033"/>
         <source>Keyframes</source>
         <translation>Kulcsképkockák</translation>
     </message>
@@ -5452,372 +5526,377 @@ A klip hangját (0%) vagy csak a B klip hangját (100%).</translation>
         <translation>Feldolgozási mód</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="623"/>
+        <location filename="../src/mainwindow.ui" line="201"/>
+        <source>Graphics Adapter</source>
+        <translation>Grafikus adapter</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="629"/>
         <source>Linear 10-bit CPU (slowest, best)</source>
         <translation>Lineáris 10 bites CPU (leglassabb, legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="631"/>
+        <location filename="../src/mainwindow.ui" line="637"/>
         <source>Linear 10-bit GPU/CPU (Experimental)</source>
         <translation>Lineáris 10 bites GPU/CPU (kísérleti)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="802"/>
+        <location filename="../src/mainwindow.ui" line="808"/>
         <source>System Fusion</source>
         <translation>Rendszer egyesítés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="993"/>
+        <location filename="../src/mainwindow.ui" line="999"/>
         <source>Video/Audio...</source>
         <translation>Videó/Audió...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="996"/>
-        <location filename="../src/mainwindow.ui" line="999"/>
+        <location filename="../src/mainwindow.ui" line="1002"/>
+        <location filename="../src/mainwindow.ui" line="1005"/>
         <source>Export Video/Audio</source>
         <translation>Videó/hang exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1041"/>
+        <location filename="../src/mainwindow.ui" line="1047"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1046"/>
-        <location filename="../src/mainwindow.cpp" line="1728"/>
-        <location filename="../src/mainwindow.cpp" line="5681"/>
+        <location filename="../src/mainwindow.ui" line="1052"/>
+        <location filename="../src/mainwindow.cpp" line="1787"/>
+        <location filename="../src/mainwindow.cpp" line="5807"/>
         <source>Screen Snapshot</source>
         <translation>Képernyő pillanatkép</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1049"/>
+        <location filename="../src/mainwindow.ui" line="1055"/>
         <source>Capture a screenshot</source>
         <translation>Képernyőkép készítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1057"/>
-        <location filename="../src/mainwindow.cpp" line="1735"/>
-        <location filename="../src/mainwindow.cpp" line="5739"/>
-        <location filename="../src/mainwindow.cpp" line="5755"/>
-        <location filename="../src/mainwindow.cpp" line="5795"/>
+        <location filename="../src/mainwindow.ui" line="1063"/>
+        <location filename="../src/mainwindow.cpp" line="1794"/>
+        <location filename="../src/mainwindow.cpp" line="5865"/>
+        <location filename="../src/mainwindow.cpp" line="5881"/>
+        <location filename="../src/mainwindow.cpp" line="5921"/>
         <source>Screen Recording</source>
         <translation>Képernyőfelvétel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1060"/>
+        <location filename="../src/mainwindow.ui" line="1066"/>
         <source>Record the screen</source>
         <translation>Rögzítse a képernyőt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1079"/>
+        <location filename="../src/mainwindow.ui" line="1085"/>
         <source>Audio</source>
         <translation>Hang</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1082"/>
+        <location filename="../src/mainwindow.ui" line="1088"/>
         <source>Switch to the audio layout</source>
         <translation>Audio elrendezére váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1085"/>
+        <location filename="../src/mainwindow.ui" line="1091"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1093"/>
+        <location filename="../src/mainwindow.ui" line="1099"/>
         <source>Logging</source>
         <translation>Naplózás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1096"/>
+        <location filename="../src/mainwindow.ui" line="1102"/>
         <source>Switch to the logging layout</source>
         <translation>Napló elrendezésre váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1099"/>
+        <location filename="../src/mainwindow.ui" line="1105"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1107"/>
+        <location filename="../src/mainwindow.ui" line="1113"/>
         <source>Editing</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1110"/>
+        <location filename="../src/mainwindow.ui" line="1116"/>
         <source>Switch to the editing layout</source>
         <translation>Szerkesztési elrendezésre váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1113"/>
+        <location filename="../src/mainwindow.ui" line="1119"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1121"/>
+        <location filename="../src/mainwindow.ui" line="1127"/>
         <source>FX</source>
         <translation>FX</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1124"/>
+        <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Switch to the effects layout</source>
         <translation>Effekt elrendezésre váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1127"/>
+        <location filename="../src/mainwindow.ui" line="1133"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1202"/>
+        <location filename="../src/mainwindow.ui" line="1208"/>
         <source>Markers</source>
         <translation>Jelzők</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1226"/>
+        <location filename="../src/mainwindow.ui" line="1232"/>
         <source>Subtitles</source>
         <translation>Feliratok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1259"/>
+        <location filename="../src/mainwindow.ui" line="1265"/>
         <source>1080p</source>
         <translation>1080p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1289"/>
+        <location filename="../src/mainwindow.ui" line="1295"/>
         <source>Timecode (Drop-Frame)</source>
         <translation>Időkód (eldobott képkocka)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1297"/>
+        <location filename="../src/mainwindow.ui" line="1303"/>
         <source>Frames</source>
         <translation>Képkockák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1305"/>
+        <location filename="../src/mainwindow.ui" line="1311"/>
         <source>Clock</source>
         <translation>Óra</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1313"/>
+        <location filename="../src/mainwindow.ui" line="1319"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation>Időkód (nem eldobott képkocka)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1318"/>
+        <location filename="../src/mainwindow.ui" line="1324"/>
         <source>Topics</source>
         <translation>Témák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1326"/>
+        <location filename="../src/mainwindow.ui" line="1332"/>
         <source>Synchronization...</source>
         <translation>Szinkronizálás…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1329"/>
+        <location filename="../src/mainwindow.ui" line="1335"/>
         <source>Synchronization</source>
         <translation>Szinkronizálás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1337"/>
+        <location filename="../src/mainwindow.ui" line="1343"/>
         <source>Use Proxy</source>
         <translation>Közvetítő használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1348"/>
+        <location filename="../src/mainwindow.ui" line="1354"/>
         <source>Set the proxy storage folder</source>
         <translation>Közvetítő tárhely mappa beállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1356"/>
+        <location filename="../src/mainwindow.ui" line="1362"/>
         <source>Show the proxy storage folder</source>
         <translation>Közvetítő tárhely mappa megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1367"/>
+        <location filename="../src/mainwindow.ui" line="1373"/>
         <source>Use Project Folder</source>
         <translation>Projekt mappa használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1370"/>
+        <location filename="../src/mainwindow.ui" line="1376"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>A közvetítők projekt mappában tárolása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1378"/>
+        <location filename="../src/mainwindow.ui" line="1384"/>
         <source>Use Hardware Encoder</source>
         <translation>Hardveres kódoló használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1386"/>
+        <location filename="../src/mainwindow.ui" line="1392"/>
         <source>Use Hardware Decoder</source>
         <translation>Hardveres dekóder használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1391"/>
+        <location filename="../src/mainwindow.ui" line="1397"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Hardveres kódoló beállítása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1402"/>
+        <location filename="../src/mainwindow.ui" line="1408"/>
         <source>Switch to the color layout</source>
         <translation>Színkeverő elrendezésre váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1405"/>
+        <location filename="../src/mainwindow.ui" line="1411"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1416"/>
+        <location filename="../src/mainwindow.ui" line="1422"/>
         <source>Switch to the player only layout</source>
         <translation>Lejátszás fókusz elrendezésre váltás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1419"/>
+        <location filename="../src/mainwindow.ui" line="1425"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1442"/>
+        <location filename="../src/mainwindow.ui" line="1448"/>
         <source>Playlist Project</source>
         <translation>Lejátszási listás projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1447"/>
+        <location filename="../src/mainwindow.ui" line="1453"/>
         <source>Clip-only Project</source>
         <translation>Csak-klip projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1468"/>
+        <location filename="../src/mainwindow.ui" line="1474"/>
         <source>Reset...</source>
         <translation>Visszaállítás...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1473"/>
-        <location filename="../src/mainwindow.ui" line="1476"/>
+        <location filename="../src/mainwindow.ui" line="1479"/>
+        <location filename="../src/mainwindow.ui" line="1482"/>
         <source>Backup and Save</source>
         <translation>Biztonsági mentés és mentés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1479"/>
+        <location filename="../src/mainwindow.ui" line="1485"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1487"/>
+        <location filename="../src/mainwindow.ui" line="1493"/>
         <source>Manually</source>
         <translation>Kézi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1495"/>
+        <location filename="../src/mainwindow.ui" line="1501"/>
         <source>Hourly</source>
         <translation>Óránként</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1503"/>
+        <location filename="../src/mainwindow.ui" line="1509"/>
         <source>Daily</source>
         <translation>Naponként</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1514"/>
+        <location filename="../src/mainwindow.ui" line="1520"/>
         <source>Weekly</source>
         <translation>Hetenként</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1519"/>
+        <location filename="../src/mainwindow.ui" line="1525"/>
         <source>Show Project in Folder</source>
         <translation>Projekt megjelenítése mappában</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1530"/>
+        <location filename="../src/mainwindow.ui" line="1536"/>
         <source>Pause After Seek</source>
         <translation>Szünet keresés után</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1539"/>
-        <location filename="../src/mainwindow.cpp" line="5743"/>
+        <location filename="../src/mainwindow.ui" line="1545"/>
+        <location filename="../src/mainwindow.cpp" line="5869"/>
         <source>Files</source>
         <translation>Fájlok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1548"/>
+        <location filename="../src/mainwindow.ui" line="1554"/>
         <source>What&apos;s This?</source>
         <translation>Mi ez?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1551"/>
+        <location filename="../src/mainwindow.ui" line="1557"/>
         <source>Get help about something by clicking it</source>
         <translation>Ha rákattint, segítséget kaphat valamivel kapcsolatban</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1573"/>
+        <location filename="../src/mainwindow.ui" line="1579"/>
         <source>Leave Safe Mode</source>
         <translation>Lépjen ki a Biztonságos módból</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1137"/>
-        <location filename="../src/mainwindow.ui" line="1142"/>
+        <location filename="../src/mainwindow.ui" line="1143"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>Remove...</source>
         <translation>Eltávolítás…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="514"/>
+        <location filename="../src/mainwindow.ui" line="520"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="968"/>
+        <location filename="../src/mainwindow.ui" line="974"/>
         <source>EDL...</source>
         <translation>EDL…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="979"/>
+        <location filename="../src/mainwindow.ui" line="985"/>
         <source>Frame...</source>
         <translation>Képkocka…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1068"/>
+        <location filename="../src/mainwindow.ui" line="1074"/>
         <source>Actions and Shortcuts...</source>
         <translation>Műveletek és parancsikonok...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1165"/>
+        <location filename="../src/mainwindow.ui" line="1171"/>
         <source>Clear Recent on Exit</source>
         <translation>Kilépéskor a legutóbbi törlése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1173"/>
+        <location filename="../src/mainwindow.ui" line="1179"/>
         <source>Show Text Under Icons</source>
         <translation>Szöveg megjelenítése az ikonok alatt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1181"/>
+        <location filename="../src/mainwindow.ui" line="1187"/>
         <source>Show Small Icons</source>
         <translation>Kis ikonok megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1190"/>
+        <location filename="../src/mainwindow.ui" line="1196"/>
         <source>Jobs</source>
         <translation>Feladatok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1237"/>
+        <location filename="../src/mainwindow.ui" line="1243"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1248"/>
+        <location filename="../src/mainwindow.ui" line="1254"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1278"/>
+        <location filename="../src/mainwindow.ui" line="1284"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="161"/>
+        <location filename="../src/mainwindow.cpp" line="166"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -5826,81 +5905,86 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Telepítse a csomagkezelővel. Olyan néven is megjelenhet, mint: libsdl2-2.0-0, SDL2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1337"/>
+        <location filename="../src/mainwindow.cpp" line="1355"/>
         <source>Off</source>
         <translation>Ki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1340"/>
+        <location filename="../src/mainwindow.cpp" line="1358"/>
         <source>Internal</source>
         <translation>Belső</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1343"/>
+        <location filename="../src/mainwindow.cpp" line="1361"/>
         <source>External</source>
         <translation>Külső</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1357"/>
+        <location filename="../src/mainwindow.cpp" line="1375"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink kulcskép kereső</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1399"/>
-        <location filename="../src/mainwindow.cpp" line="1682"/>
+        <location filename="../src/mainwindow.ui" line="1405"/>
+        <location filename="../src/mainwindow.cpp" line="1737"/>
         <source>Color</source>
         <translation>Szín</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1741"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1697"/>
+        <location filename="../src/mainwindow.cpp" line="1752"/>
+        <source>Elements</source>
+        <translation>Elemek</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1756"/>
         <source>Image/Video from HTML</source>
         <translation>Kép/videó HTML-ből</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1702"/>
+        <location filename="../src/mainwindow.cpp" line="1761"/>
         <source>Noise</source>
         <translation>Zaj</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1707"/>
+        <location filename="../src/mainwindow.cpp" line="1766"/>
         <source>Color Bars</source>
         <translation>Színsávok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1712"/>
+        <location filename="../src/mainwindow.cpp" line="1771"/>
         <source>Audio Tone</source>
         <translation>Hangszín</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1717"/>
+        <location filename="../src/mainwindow.cpp" line="1776"/>
         <source>Count</source>
         <translation>Mennyiség</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1722"/>
+        <location filename="../src/mainwindow.cpp" line="1781"/>
         <source>Blip Flash</source>
         <translation>Hangvillanás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1761"/>
-        <location filename="../src/mainwindow.cpp" line="1763"/>
-        <location filename="../src/mainwindow.cpp" line="2294"/>
-        <location filename="../src/mainwindow.cpp" line="2302"/>
-        <location filename="../src/mainwindow.cpp" line="2325"/>
-        <location filename="../src/mainwindow.cpp" line="2392"/>
-        <location filename="../src/mainwindow.cpp" line="5329"/>
-        <location filename="../src/mainwindow.cpp" line="5342"/>
-        <location filename="../src/mainwindow.cpp" line="6507"/>
+        <location filename="../src/mainwindow.cpp" line="1820"/>
+        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="2353"/>
+        <location filename="../src/mainwindow.cpp" line="2361"/>
+        <location filename="../src/mainwindow.cpp" line="2384"/>
+        <location filename="../src/mainwindow.cpp" line="2451"/>
+        <location filename="../src/mainwindow.cpp" line="5436"/>
+        <location filename="../src/mainwindow.cpp" line="5449"/>
+        <location filename="../src/mainwindow.cpp" line="6643"/>
         <source>Failed to open </source>
         <translation>Nem lehet megnyitni </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1802"/>
+        <location filename="../src/mainwindow.cpp" line="1861"/>
         <source>The file you opened uses GPU processing, which is not enabled.
 Do you want Shotcut to convert it for CPU? Conversion is an approximation.
 
@@ -5913,7 +5997,7 @@ Ha az Igen lehetőséget választja, a Shotcut létrehoz egy másolatot
 a projektjéről „- CPU-ra konvertálva” névvel, és megnyitja azt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1819"/>
+        <location filename="../src/mainwindow.cpp" line="1878"/>
         <source>The file you opened uses CPU processing, which is not enabled.
 Do you want Shotcut to convert it for GPU?
 
@@ -5926,42 +6010,42 @@ Ha az Igen lehetőséget választja, a Shotcut létrehoz egy másolatot
 a projektjéről „- GPU-ra konvertálva” névvel, és megnyitja azt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1839"/>
+        <location filename="../src/mainwindow.cpp" line="1898"/>
         <source>Converted for GPU</source>
         <translation>GPU-val konvertálva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1840"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
         <source>Converted for CPU</source>
         <translation>CPU-val konvertálva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1843"/>
+        <location filename="../src/mainwindow.cpp" line="1902"/>
         <source>Save Converted XML</source>
         <translation>Konvertált XML mentése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1879"/>
+        <location filename="../src/mainwindow.cpp" line="1938"/>
         <source>Converting the project failed.</source>
         <translation>A projekt átalakítása sikertelen volt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1889"/>
+        <location filename="../src/mainwindow.cpp" line="1948"/>
         <source>Repaired</source>
         <translation>Javítva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1890"/>
+        <location filename="../src/mainwindow.cpp" line="1949"/>
         <source>Save Repaired XML</source>
         <translation>Kijavított XML mentése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1926"/>
+        <location filename="../src/mainwindow.cpp" line="1985"/>
         <source>Repairing the project failed.</source>
         <translation>A projekt javítása sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1939"/>
+        <location filename="../src/mainwindow.cpp" line="1998"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5974,33 +6058,33 @@ Amennyiben az Igen-t választja, a Shotcut egy másolatot készít a projektről
 &quot;- Repaired&quot; kiegészítéssel a névben és azt nyitja majd meg.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1974"/>
+        <location filename="../src/mainwindow.cpp" line="2033"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Egy automatikusan mentett fájl már létezik. Vissza szeretné most állítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2046"/>
+        <location filename="../src/mainwindow.cpp" line="2105"/>
         <source>You cannot add a project to itself!</source>
         <translation>Nem adhat egy projektet saját magához!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2110"/>
+        <location filename="../src/mainwindow.cpp" line="2169"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Hiba történt a mentéskor. Kérjük, próbálja meg újra.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2151"/>
+        <location filename="../src/mainwindow.cpp" line="2210"/>
         <source>Change Preview Scaling</source>
         <translation>Előnézeti méretezés módosítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2157"/>
-        <location filename="../src/mainwindow.cpp" line="6343"/>
+        <location filename="../src/mainwindow.cpp" line="2216"/>
+        <location filename="../src/mainwindow.cpp" line="6479"/>
         <source>Reloading</source>
         <translation>Újratöltés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2207"/>
+        <location filename="../src/mainwindow.cpp" line="2266"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -6009,7 +6093,7 @@ It was made with version </source>
 A következő verzióval készült </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2235"/>
+        <location filename="../src/mainwindow.cpp" line="2294"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -6020,85 +6104,92 @@ Zárjon be egyéb programokat vagy böngészőfüleket és próbálja újra.
 Vagy mentsen és indítsa újra a Shotcut-ot.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2288"/>
+        <location filename="../src/mainwindow.cpp" line="2347"/>
         <source>Opening %1</source>
         <translation>%1 megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2434"/>
-        <location filename="../src/mainwindow.cpp" line="5312"/>
+        <location filename="../src/mainwindow.cpp" line="2493"/>
+        <location filename="../src/mainwindow.cpp" line="5419"/>
         <source>Open File</source>
         <translation>Fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2436"/>
+        <location filename="../src/mainwindow.cpp" line="2495"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Minden fájl (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2696"/>
+        <location filename="../src/mainwindow.cpp" line="2761"/>
         <source>Preferences</source>
         <translation>Preferenciák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2706"/>
+        <location filename="../src/mainwindow.cpp" line="2771"/>
         <source>Rename Clip</source>
         <translation>Klip átnevezése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2715"/>
+        <location filename="../src/mainwindow.cpp" line="2780"/>
         <source>Find</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2724"/>
+        <location filename="../src/mainwindow.cpp" line="2789"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2734"/>
+        <location filename="../src/mainwindow.cpp" line="2799"/>
         <source>Rerun Filter Analysis</source>
         <translation>Szűrőelemzés újrafuttatása</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2748"/>
+        <location filename="../src/mainwindow.cpp" line="2813"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Ez elindítja %n elemzési feladato(ka)t. Folytassuk?</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2766"/>
+        <location filename="../src/mainwindow.cpp" line="2831"/>
         <source>No filters to analyze.</source>
         <translation>Nincsenek elemezendő szűrők.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3002"/>
+        <location filename="../src/mainwindow.cpp" line="3067"/>
         <source>Untitled</source>
         <translation>Névtelen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3007"/>
+        <location filename="../src/mainwindow.cpp" line="3072"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3fps %4ch</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3034"/>
+        <location filename="../src/mainwindow.cpp" line="3099"/>
         <source>About %1</source>
         <translation>%1 névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3161"/>
+        <location filename="../src/mainwindow.cpp" line="3226"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Szélesvásznú NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3162"/>
+        <location filename="../src/mainwindow.cpp" line="3227"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Szélesvásznú PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6867"/>
+        <location filename="../src/mainwindow.cpp" line="5499"/>
+        <source>You must restart Shotcut to change the graphics adapter.
+Do you want to restart now?</source>
+        <translation>Újra kell indítania a Shotcutot a grafikus adapter megváltoztatásához.
+Szeretné most újraindítani?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="7003"/>
         <source>Safe mode was enabled because Shotcut crashed during startup.
 Safe mode disables external plugins.
 
@@ -6109,84 +6200,84 @@ A biztonsági mód letiltja a külső bővítményeket.
 Szeretné kikapcsolni a biztonságos módot és most újraindítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3154"/>
+        <location filename="../src/mainwindow.cpp" line="3219"/>
         <source>Square 1080p 30 fps</source>
         <translation>Négyzet 1080 pont 30 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3155"/>
+        <location filename="../src/mainwindow.cpp" line="3220"/>
         <source>Square 1080p 60 fps</source>
         <translation>Négyzet 1080 pont 60 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3156"/>
+        <location filename="../src/mainwindow.cpp" line="3221"/>
         <source>Vertical HD 30 fps</source>
         <translation>Függőleges HD 30 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3157"/>
+        <location filename="../src/mainwindow.cpp" line="3222"/>
         <source>Vertical HD 60 fps</source>
         <translation>Függőleges HD 60 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3189"/>
+        <location filename="../src/mainwindow.cpp" line="3254"/>
         <source>Custom</source>
         <translation>Egyedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3220"/>
-        <location filename="../src/mainwindow.cpp" line="3529"/>
+        <location filename="../src/mainwindow.cpp" line="3285"/>
+        <location filename="../src/mainwindow.cpp" line="3600"/>
         <source>Saved %1</source>
         <translation>%1 elmentve</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3520"/>
-        <location filename="../src/mainwindow.cpp" line="3543"/>
-        <location filename="../src/mainwindow.cpp" line="5082"/>
+        <location filename="../src/mainwindow.cpp" line="3591"/>
+        <location filename="../src/mainwindow.cpp" line="3614"/>
+        <location filename="../src/mainwindow.cpp" line="5189"/>
         <source>Save XML</source>
         <translation>XML mentés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3640"/>
+        <location filename="../src/mainwindow.cpp" line="3711"/>
         <source>Timeline is not loaded</source>
         <translation>Az idővonal nem töltődik be</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3650"/>
+        <location filename="../src/mainwindow.cpp" line="3721"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>A tartományjelölő nem található az idővonal kurzora alatt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3722"/>
+        <location filename="../src/mainwindow.cpp" line="3793"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Vannak befejezetlen munkák.
 Még mindig ki akarsz lépni?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3734"/>
+        <location filename="../src/mainwindow.cpp" line="3805"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>Exportálás van folyamatban.
 Még mindig ki akarsz lépni?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4412"/>
+        <location filename="../src/mainwindow.cpp" line="4519"/>
         <source>GPU processing is not supported</source>
         <translation>A GPU feldolgozás nem támogatott</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5084"/>
+        <location filename="../src/mainwindow.cpp" line="5191"/>
         <source>Saved backup %1</source>
         <translation>Mentett biztonsági mentés %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3605"/>
+        <location filename="../src/mainwindow.cpp" line="3676"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Szeretné a Videó módot is %1 x %2-re módosítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1120"/>
+        <location filename="../src/mainwindow.cpp" line="1138"/>
         <source>GPU processing is experimental and does not work on all computers. Plan to do some testing after turning this on.
 
 Do you want to enable GPU processing and restart Shotcut?</source>
@@ -6195,27 +6286,27 @@ Do you want to enable GPU processing and restart Shotcut?</source>
 Szeretné engedélyezni a GPU feldolgozást és újraindítani a Shotcutot?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4571"/>
+        <location filename="../src/mainwindow.cpp" line="4678"/>
         <source>Opened Files</source>
         <translation>Megnyitott fájlok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5781"/>
+        <location filename="../src/mainwindow.cpp" line="5907"/>
         <source>Screen recorder launched</source>
         <translation>A képernyőrögzítő elindult</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5783"/>
+        <location filename="../src/mainwindow.cpp" line="5909"/>
         <source>Failed to launch screen recorder</source>
         <translation>Nem sikerült elindítani a képernyőrögzítőt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6092"/>
+        <location filename="../src/mainwindow.cpp" line="6218"/>
         <source>Add To Timeline</source>
         <translation>Hozzáadás az idővonalhoz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6236"/>
+        <location filename="../src/mainwindow.cpp" line="6362"/>
         <source>GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU processing and restart Shotcut?</source>
@@ -6224,420 +6315,420 @@ Do you want to disable GPU processing and restart Shotcut?</source>
 Le akarod kapcsolni a GPU feldolgozást és újraindítani a Shotcutot?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6489"/>
+        <location filename="../src/mainwindow.cpp" line="6625"/>
         <source>Do you want to create missing proxies for every file in this project?</source>
         <translation>Szeretné létrehozni a hiányzó proxykat az összes fájlhoz ebben a projektben?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6707"/>
+        <location filename="../src/mainwindow.cpp" line="6843"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Tartalmazza a tartományokat (időtartam &gt; 1 képkocka)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6718"/>
+        <location filename="../src/mainwindow.cpp" line="6854"/>
         <source>Choose Markers</source>
         <translation>Jelölők kiválasztása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6735"/>
+        <location filename="../src/mainwindow.cpp" line="6871"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Szöveg (*.txt);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6791"/>
+        <location filename="../src/mainwindow.cpp" line="6927"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Az export-chapters.js megnyitása sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6832"/>
+        <location filename="../src/mainwindow.cpp" line="6968"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Ezzel visszaállítja az &lt;b&gt;mind&lt;/b&gt; beállításokat, és a Shotcut-ot újra kell indítani.
 Most szeretné visszaállítani és újraindítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1847"/>
-        <location filename="../src/mainwindow.cpp" line="1894"/>
-        <location filename="../src/mainwindow.cpp" line="3547"/>
+        <location filename="../src/mainwindow.cpp" line="1906"/>
+        <location filename="../src/mainwindow.cpp" line="1953"/>
+        <location filename="../src/mainwindow.cpp" line="3618"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="296"/>
+        <location filename="../src/mainwindow.cpp" line="301"/>
         <source>Undo</source>
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="297"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Redo</source>
         <translation>Újból</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="494"/>
+        <location filename="../src/mainwindow.cpp" line="499"/>
         <source>View Mode</source>
         <translation>Nézet mód</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1291"/>
+        <location filename="../src/mainwindow.cpp" line="1309"/>
         <source>Screen %1 %2 (%3x%4 @ %5Hz)</source>
         <translation>Képernyő %1 %2 (%3x%4 @ %5Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1303"/>
+        <location filename="../src/mainwindow.cpp" line="1321"/>
         <source>Preview Window (HDR)</source>
         <translation>Előnézeti ablak (HDR)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1334"/>
+        <location filename="../src/mainwindow.cpp" line="1352"/>
         <source>DeckLink PQ HDR Metadata...</source>
         <translation>DeckLink PQ HDR metaadatok...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1378"/>
+        <location filename="../src/mainwindow.cpp" line="1396"/>
         <source>Use Old Video Output</source>
         <translation>Régi videokimenet használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1389"/>
+        <location filename="../src/mainwindow.cpp" line="1407"/>
         <source>Shotcut must restart to change the video output.
 Restart now?</source>
         <translation>A Shotcutnak újra kell indulnia a videokimenet megváltoztatásához.
 Most újraindítja?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3695"/>
+        <location filename="../src/mainwindow.cpp" line="3766"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>A projekt módosult.
 Kívánja menteni a változásokat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4400"/>
+        <location filename="../src/mainwindow.cpp" line="4507"/>
         <source>Exit Full Screen</source>
         <translation>Kilépés a teljes képernyőből</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4687"/>
+        <location filename="../src/mainwindow.cpp" line="4794"/>
         <source>Moving the preview window from an SDR to HDR screen requires a restart.
 Do you want to restart now?</source>
         <translation>Az előnézeti ablak SDR-ről HDR-képernyőre való áthelyezéséhez újra kell indítani.
 Szeretné most újraindítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4876"/>
+        <location filename="../src/mainwindow.cpp" line="4983"/>
         <source>DeckLink HDR Metadata</source>
         <translation>DeckLink HDR metaadatok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4885"/>
-        <location filename="../src/mainwindow.cpp" line="4893"/>
-        <location filename="../src/mainwindow.cpp" line="4907"/>
-        <location filename="../src/mainwindow.cpp" line="4916"/>
+        <location filename="../src/mainwindow.cpp" line="4992"/>
+        <location filename="../src/mainwindow.cpp" line="5000"/>
+        <location filename="../src/mainwindow.cpp" line="5014"/>
+        <location filename="../src/mainwindow.cpp" line="5023"/>
         <source> nits</source>
         <comment>a measure of brightness</comment>
         <translation>nit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4887"/>
+        <location filename="../src/mainwindow.cpp" line="4994"/>
         <source>Maximum Content Light Level (MaxCLL): the brightest single pixel in the signal</source>
         <translation>Maximum Content Light Level (MaxCLL): a jel legfényesebb egyedi pixele</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4888"/>
+        <location filename="../src/mainwindow.cpp" line="4995"/>
         <source>MaxCLL</source>
         <translation>MaxCLL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4895"/>
+        <location filename="../src/mainwindow.cpp" line="5002"/>
         <source>Maximum Frame-Average Light Level (MaxFALL): the brightest average frame</source>
         <translation>Maximális képkocka-átlagos fényerőszint (MaxFALL): a legfényesebb átlagos képkocka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4896"/>
+        <location filename="../src/mainwindow.cpp" line="5003"/>
         <source>MaxFALL</source>
         <translation>MaxFALL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4899"/>
+        <location filename="../src/mainwindow.cpp" line="5006"/>
         <source>BT.2020 / Rec.2020</source>
         <translation>BT.2020 / Rec.2020</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4900"/>
+        <location filename="../src/mainwindow.cpp" line="5007"/>
         <source>Display P3 (D65)</source>
         <translation>P3 kijelző (D65)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4902"/>
+        <location filename="../src/mainwindow.cpp" line="5009"/>
         <source>Color primaries</source>
         <translation>Elsődleges színek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4908"/>
+        <location filename="../src/mainwindow.cpp" line="5015"/>
         <source>Display mastering maximum luminance</source>
         <translation>Maximális fénysűrűség megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4909"/>
+        <location filename="../src/mainwindow.cpp" line="5016"/>
         <source>Display max luminance</source>
         <translation>Maximális fénysűrűség megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4917"/>
+        <location filename="../src/mainwindow.cpp" line="5024"/>
         <source>Display mastering minimum luminance</source>
         <translation>Kijelző mesterelésének minimális fénysűrűsége</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4918"/>
+        <location filename="../src/mainwindow.cpp" line="5025"/>
         <source>Display min luminance</source>
         <translation>Kijelző minimális fénysűrűsége</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5133"/>
+        <location filename="../src/mainwindow.cpp" line="5240"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>A Shotcut-nak újra kell indulnia a külső felügyelet megváltoztatásához.
 Most szeretné újraindítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5682"/>
+        <location filename="../src/mainwindow.cpp" line="5808"/>
         <source>screenshot</source>
         <translation>képernyőkép</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5683"/>
+        <location filename="../src/mainwindow.cpp" line="5809"/>
         <source>PNG Files (*.png)</source>
         <translation>PNG fájlok (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5740"/>
+        <location filename="../src/mainwindow.cpp" line="5866"/>
         <source>screen</source>
         <translation>képernyő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6337"/>
+        <location filename="../src/mainwindow.cpp" line="6473"/>
         <source>Turn Hardware Decoder On</source>
         <translation>Hardveres dekóder bekapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6337"/>
+        <location filename="../src/mainwindow.cpp" line="6473"/>
         <source>Turn Hardware Decoder Off</source>
         <translation>Hardveres dekóder kikapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6468"/>
+        <location filename="../src/mainwindow.cpp" line="6604"/>
         <source>Turn Proxy On</source>
         <translation>Közvetítő bekapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6468"/>
+        <location filename="../src/mainwindow.cpp" line="6604"/>
         <source>Turn Proxy Off</source>
         <translation>Közvetítő kikapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6473"/>
+        <location filename="../src/mainwindow.cpp" line="6609"/>
         <source>Converting</source>
         <translation>Átalakítás folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6525"/>
+        <location filename="../src/mainwindow.cpp" line="6661"/>
         <source>Proxy Folder</source>
         <translation>Közvetítők mappája</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6543"/>
+        <location filename="../src/mainwindow.cpp" line="6679"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Szeretné az összes fájlt átmozgatni a régi mappából az újba?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6551"/>
+        <location filename="../src/mainwindow.cpp" line="6687"/>
         <source>Moving Files</source>
         <translation>Fájlok mozgatása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="333"/>
+        <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Set Loop Range</source>
         <translation>Huroktartomány beállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="498"/>
+        <location filename="../src/mainwindow.cpp" line="503"/>
         <source>Thumbnails</source>
         <translation>Bélyegképek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="591"/>
+        <location filename="../src/mainwindow.cpp" line="596"/>
         <source>Scrolling</source>
         <translation>Görgetés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
+        <location filename="../src/mainwindow.cpp" line="1161"/>
         <source>Shotcut must restart to disable GPU processing.
 Disable GPU processing and restart?</source>
         <translation>A Shotcutnak újraindulnia kell, hogy letiltsa a GPU feldolgozását.
 Letiltsuk a GPU feldolgozást és újraindítsuk?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1192"/>
         <source>Audio API</source>
         <translation>Audió API</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1213"/>
         <source>default</source>
         <translation>alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1202"/>
+        <location filename="../src/mainwindow.cpp" line="1220"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Az audió API megváltoztatásához újra kell indítania a Shotcutot.
 Most szeretné újraindítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1692"/>
+        <location filename="../src/mainwindow.cpp" line="1747"/>
         <source>Drawing/Animation</source>
         <translation>Rajzolás/Animáció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3153"/>
+        <location filename="../src/mainwindow.cpp" line="3218"/>
         <source>Social Media</source>
         <translation>Közösségi média</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3158"/>
+        <location filename="../src/mainwindow.cpp" line="3223"/>
         <source>Other</source>
         <translation>Egyéb</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3177"/>
+        <location filename="../src/mainwindow.cpp" line="3242"/>
         <source>Legacy</source>
         <translation>Örökölt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4432"/>
+        <location filename="../src/mainwindow.cpp" line="4539"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Kattintson ide a Shotcut új verziójának ellenőrzéséhez.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4542"/>
+        <location filename="../src/mainwindow.cpp" line="4649"/>
         <source>Open Files</source>
         <translation>Fájlok megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4601"/>
+        <location filename="../src/mainwindow.cpp" line="4708"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Nyelvváltáshoz újra kell indítani a Shotcut-ot.
 Újra akarja indítani most?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4644"/>
+        <location filename="../src/mainwindow.cpp" line="4751"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nem lehet a JACK-hez kapcsolódni.
 Vizsgálja meg, hogy a JACK telepítve van-e és fut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5061"/>
+        <location filename="../src/mainwindow.cpp" line="5168"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Újra kell indítani a %1-t hogy egy új téma érvényre jusson.
 Újra akarja indítani most?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5108"/>
+        <location filename="../src/mainwindow.cpp" line="5215"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Kérjük, tekintse át a teljes projektet a módosítás után.&lt;/p&gt;&lt;p&gt;A Shotcut nem állítja be automatikusan a méretre és pozícióra érzékeny dolgokat, ha módosítja a felbontást vagy a képarányt.&lt;/p&lt;br&gt;A szerkesztések és a kulcskockák időzítése némileg eltérhet, ha módosítja a képkockasebességet.&lt;/p&gt;&lt;p&gt;Jó ötlet a &lt;b&gt;Fájl &gt; Biztonsági mentés&lt;/p&gt; használata&lt;/p&gt;a művelet előtt vagy után&lt;/p&gt;. &lt;b&gt;Videómód&lt;/b&gt; most?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5122"/>
+        <location filename="../src/mainwindow.cpp" line="5229"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Ne jelenjék meg többé.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5289"/>
+        <location filename="../src/mainwindow.cpp" line="5396"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Szeretné a frissítéseket automatikusan ellenőrizni a jövőben?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5296"/>
+        <location filename="../src/mainwindow.cpp" line="5403"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Ne jelenjék meg többé.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5314"/>
+        <location filename="../src/mainwindow.cpp" line="5421"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5323"/>
+        <location filename="../src/mainwindow.cpp" line="5430"/>
         <source>Incompatible processing mode: </source>
         <translation>Nem kompatibilis feldolgozási mód: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5372"/>
+        <location filename="../src/mainwindow.cpp" line="5479"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>A megjelenítés megváltoztatásához újra kell indítani a Shotcut-ot.
 Újra akarja indítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5403"/>
+        <location filename="../src/mainwindow.cpp" line="5529"/>
         <source>Application Log</source>
         <translation>Program napló</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5406"/>
+        <location filename="../src/mainwindow.cpp" line="5532"/>
         <source>Previous</source>
         <translation>Előző</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5469"/>
+        <location filename="../src/mainwindow.cpp" line="5595"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 verzió élerhető! Kattintson ide, hogy megszerezze.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5475"/>
+        <location filename="../src/mainwindow.cpp" line="5601"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Ön a Shotcut legfrissebb verzióját használja.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5489"/>
+        <location filename="../src/mainwindow.cpp" line="5615"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>A version.json fájl olvasása hibára futott. Kattintson ide a weboldal eléréséhez.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="971"/>
-        <location filename="../src/mainwindow.ui" line="974"/>
-        <location filename="../src/mainwindow.cpp" line="5509"/>
+        <location filename="../src/mainwindow.ui" line="977"/>
+        <location filename="../src/mainwindow.ui" line="980"/>
+        <location filename="../src/mainwindow.cpp" line="5635"/>
         <source>Export EDL</source>
         <translation>EDL exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5513"/>
+        <location filename="../src/mainwindow.cpp" line="5639"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5561"/>
-        <location filename="../src/mainwindow.cpp" line="6788"/>
+        <location filename="../src/mainwindow.cpp" line="5687"/>
+        <location filename="../src/mainwindow.cpp" line="6924"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>JavaScript hiba történt az exportálás során.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5564"/>
+        <location filename="../src/mainwindow.cpp" line="5690"/>
         <source>Failed to open export-edl.js</source>
         <translation>Nem sikerült megnyitni az export-edl.js fájlt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5595"/>
+        <location filename="../src/mainwindow.cpp" line="5721"/>
         <source>Export frame from proxy?</source>
         <translation>Képkocka exportálása a közvetítőből?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5596"/>
+        <location filename="../src/mainwindow.cpp" line="5722"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6646,46 +6737,46 @@ Do you still want to continue?</source>
 Ennek ellenére folytati szeretné?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="985"/>
-        <location filename="../src/mainwindow.cpp" line="5608"/>
+        <location filename="../src/mainwindow.ui" line="988"/>
+        <location filename="../src/mainwindow.ui" line="991"/>
+        <location filename="../src/mainwindow.cpp" line="5734"/>
         <source>Export Frame</source>
         <translation>Képkocka exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5614"/>
+        <location filename="../src/mainwindow.cpp" line="5740"/>
         <source>Unable to export frame.</source>
         <translation>Nem lehet exportálni a képkockát.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5622"/>
+        <location filename="../src/mainwindow.cpp" line="5748"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>A Shotcut-ot újra kell indítani, hogy az adatmappa változás életbe lépjen.
 Folytatni akarja?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5633"/>
+        <location filename="../src/mainwindow.cpp" line="5759"/>
         <source>Data Directory</source>
         <translation>Adatmappa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5980"/>
+        <location filename="../src/mainwindow.cpp" line="6106"/>
         <source>Add Custom Layout</source>
         <translation>Egyedi elrendezés hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5981"/>
+        <location filename="../src/mainwindow.cpp" line="6107"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6021"/>
+        <location filename="../src/mainwindow.cpp" line="6147"/>
         <source>Remove Video Mode</source>
         <translation>Videomód eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6038"/>
+        <location filename="../src/mainwindow.cpp" line="6164"/>
         <source>Remove Layout</source>
         <translation>Elrendezés törlése</translation>
     </message>
@@ -8462,7 +8553,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistIconView</name>
     <message>
-        <location filename="../src/widgets/playlisticonview.cpp" line="175"/>
+        <location filename="../src/widgets/playlisticonview.cpp" line="237"/>
         <source>P</source>
         <comment>The first letter or symbol of &quot;proxy&quot;</comment>
         <translation>A &quot;közvetítő&quot; első karaktere</translation>
@@ -8973,7 +9064,7 @@ p, li { white-space: pre-wrap; }
         <translation>Erősítés/hangerő beállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4554"/>
+        <location filename="../src/mainwindow.cpp" line="4661"/>
         <source>You cannot add a project to itself!</source>
         <translation>Nem adhat egy projektet saját magához!</translation>
     </message>
@@ -8985,8 +9076,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="154"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1125"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1215"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1126"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1216"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -9074,12 +9165,12 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
 </translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="890"/>
+        <location filename="../src/util.cpp" line="891"/>
         <source>&lt;p&gt;The embedded player does not accurately display HDR.&lt;/p&gt;&lt;p&gt;Use &lt;b&gt;Player &gt; External Monitor &gt; Preview Window (HDR)&lt;/b&gt; or DeckLink on an HDR screen.&lt;/p&gt;</source>
         <translation>&lt;p&gt;A beágyazott lejátszó nem jeleníti meg pontosan a HDR-t.&lt;/p&gt;&lt;p&gt;Használja a Lejátszó &gt; Külső monitor &gt; Előnézeti ablak (HDR)&lt;/b&gt; vagy használja a DeckLink-et egy HDR-képernyőn.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="897"/>
+        <location filename="../src/util.cpp" line="898"/>
         <source>Do not show this anymore.</source>
         <translation>Ne mutassa ezt többet.</translation>
     </message>
@@ -9091,17 +9182,17 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
         <translation>Nyissa meg az Egyéb &gt; színt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3552"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3553"/>
         <source>Drop Files</source>
         <translation>Fájlok dobása</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3559"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3560"/>
         <source>Failed to open </source>
         <translation>Nem lehet megnyitni </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3575"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3576"/>
         <source>Not adding non-seekable file: </source>
         <translation>A nem csévélhető fájl nincs hozzáadva: </translation>
     </message>
@@ -9116,12 +9207,12 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
         <translation>Diavetítés generálása</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="367"/>
+        <location filename="../src/proxymanager.cpp" line="378"/>
         <source>Make proxy for %1</source>
         <translation>Közvetítő készítése %1 számára</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="775"/>
+        <location filename="../src/proxymanager.cpp" line="787"/>
         <source>Generating Proxies</source>
         <translation>Proxy-k generálása</translation>
     </message>
@@ -9327,47 +9418,21 @@ Ha igen, válasszon egyet az alábbi formátumok közül és kattintsonaz OK-re 
         <source>Move subtitle</source>
         <translation>Felirat áthelyezése</translation>
     </message>
-    <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="557"/>
-        <source>Imported %1 subtitle item(s)</source>
-        <translation>
-            <numerusform>%1 importált feliratelemek</numerusform>
-        </translation>
-    </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="659"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="677"/>
-        <source>Importing subtitles...</source>
-        <translation>Feliratok importálása...</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="698"/>
-        <source>Imported %n subtitle item(s)</source>
-        <translation>
-            <numerusform>%n importált feliratelemek</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="547"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="693"/>
-        <source>No subtitles found to import</source>
-        <translation>Nem található importálható felirat</translation>
-    </message>
-    <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="360"/>
-        <location filename="../src/models/subtitlesmodel.cpp" line="375"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="361"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="376"/>
         <source>Import %1 subtitle items</source>
         <translation>%1 feliratelemek importálása</translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="415"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="416"/>
         <source>Append subtitle</source>
         <translation>Felirat hozzáfűzése</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1533"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1134"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1224"/>
+        <location filename="../src/docks/encodedock.cpp" line="1536"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1135"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1225"/>
         <source>A job already exists for %1</source>
         <translation>%1 esetében már létezik egy feladat</translation>
     </message>
@@ -10565,350 +10630,375 @@ Ha a hossz 0, akkor nem lesz áttűnés.</translation>
 <context>
     <name>SubtitlesDock</name>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="156"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="201"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="151"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="196"/>
         <source>Subtitles</source>
         <translation>Feliratok</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="171"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="166"/>
         <source>Add clips to the Timeline to begin editing subtitles.</source>
         <translation>Adjon hozzá klipeket az idővonalhoz a feliratok szerkesztésének megkezdéséhez.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="202"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="197"/>
         <source>Tracks</source>
         <translation>Sávok</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="225"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="220"/>
         <source>Columns</source>
         <translation>Oszlopok</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="226"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="221"/>
         <source>Start</source>
         <translation>Kezdés</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="229"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="224"/>
         <source>End</source>
         <translation>Vég</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="232"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="227"/>
         <source>Duration</source>
         <translation>Időtartam</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="238"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="233"/>
         <source>Subtitle Controls</source>
         <translation>Felirat vezérlés</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="244"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="239"/>
         <source>Subtitles Menu</source>
         <translation>Feliratok menü</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="298"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="293"/>
         <source>search</source>
         <translation>keresés</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="312"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="307"/>
         <source>Previous</source>
         <translation>Előző</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="314"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="309"/>
         <source>Current</source>
         <translation>Aktuális</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="316"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="311"/>
         <source>Next</source>
         <translation>Következő</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="348"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="343"/>
         <source>Add Subtitle Track</source>
         <translation>Feliratsáv hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="351"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="346"/>
         <source>Add a subtitle track</source>
         <translation>Egy feliratsáv hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="359"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="598"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="354"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="593"/>
         <source>Remove Subtitle Track</source>
         <translation>Távolítsa el a feliratsávot</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="362"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="357"/>
         <source>Remove this subtitle track</source>
         <translation>Távolítsa el ezt a feliratsávot</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="370"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="365"/>
         <source>Edit Subtitle Track</source>
         <translation>Feliratsáv szerkesztése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="373"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="368"/>
         <source>Edit this subtitle track</source>
         <translation>Szerkessze ezt a feliratsávot</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="381"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="376"/>
         <source>Import Subtitles From File</source>
         <translation>Feliratok importálása fájlból</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="384"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
         <source>Import subtitles from an srt file at the current position</source>
         <translation>Feliratok importálása egy srt fájlból az aktuális pozícióban</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="387"/>
         <source>Export Subtitles To File</source>
         <translation>Feliratok exportálása fájlba</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="395"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="390"/>
         <source>Export the current subtitle track to an SRT file</source>
         <translation>Az aktuális feliratsáv exportálása SRT-fájlba</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="403"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="398"/>
         <source>Create/Edit Subtitle</source>
         <translation>Felirat létrehozása/szerkesztése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="407"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="402"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
         <translation>Hozzon létre vagy szerkesszen feliratot a kurzor helyén.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="411"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="406"/>
         <source>Add Subtitle Item</source>
         <translation>Feliratelem hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="415"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
         <source>Add a subtitle at the cursor position</source>
         <translation>Felirat hozzáadása a kurzor pozíciójához</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="419"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="414"/>
         <source>Remove Subtitle Item</source>
         <translation>Feliratelem eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="418"/>
         <source>Remove the selected subtitle item</source>
         <translation>A kijelölt feliratelem eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
         <source>Set Subtitle Start</source>
         <translation>Felirat kezdetének beállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="432"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="427"/>
         <source>Set the selected subtitle to start at the cursor position</source>
         <translation>A kiválasztott felirat beállítása a kurzor pozíciójában</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="436"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="431"/>
         <source>Set Subtitle End</source>
         <translation>Felirat végének beállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="441"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="436"/>
         <source>Set the selected subtitle to end at the cursor position</source>
         <translation>A kiválasztott felirat beállítása a kurzor pozíciójában végződve</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="445"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="440"/>
         <source>Move Subtitles</source>
         <translation>Feliratok áthelyezése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="449"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="444"/>
         <source>Move the selected subtitles to the cursor position</source>
         <translation>A kijelölt feliratok mozgatása a kurzor pozíciójába</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="453"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="448"/>
         <source>Burn In Subtitles on Output</source>
         <translation>Feliratok beírása a kimeneten</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="454"/>
         <source>Generate Text on Timeline</source>
         <translation>Szöveg generálása az idővonalon</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="461"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="456"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
         <translation>Hozzon létre egy új videósávot az idővonalon a feliratokat bemutató szöveggel.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="465"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="460"/>
         <source>Speech to Text...</source>
         <translation>Beszéd szöveggé...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="466"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="461"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
         <translation>Beszédfelismerés és átírás új feliratsávra.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="473"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="468"/>
         <source>Text to Speech...</source>
         <translation>Szövegfelolvasás...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="474"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="469"/>
         <source>Convert the current subtitle track to spoken audio.</source>
         <translation>Konvertálja az aktuális feliratsávot beszélt hanggá.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="481"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="476"/>
         <source>Track Timeline Cursor</source>
         <translation>Idővonal sáv kurzor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="482"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="477"/>
         <source>Track the timeline cursor</source>
         <translation>Az idővonal sáv kurzor</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="490"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="485"/>
         <source>Show Previous/Next</source>
         <translation>Előző/Következő megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="491"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="486"/>
         <source>Show the previous and next subtitles</source>
         <translation>Az előző és a következő felirat megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="564"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="542"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="695"/>
+        <source>No subtitles found to import</source>
+        <translation>Nem található importálható felirat</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/docks/subtitlesdock.cpp" line="552"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="700"/>
+        <source>Imported %n subtitle item(s)</source>
+        <translation>
+            <numerusform>%n importált feliratelemek</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="559"/>
         <source>Add a clip to the timeline to create subtitles.</source>
         <translation>Adjon hozzá egy klipet az idővonalhoz feliratok létrehozásához.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1133"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="654"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="676"/>
+        <source>Importing subtitles...</source>
+        <translation>Feliratok importálása...</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="668"/>
+        <source>ffmpeg not found. Cannot import subtitles.</source>
+        <translation>ffmpeg nem található. Nem lehet feliratot importálni.</translation>
+    </message>
+    <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1135"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1155"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1137"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1157"/>
         <source>Subtitle Track %1</source>
         <translation>Felirat sáv: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1205"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1207"/>
         <source>Generate subtitle text on timeline</source>
         <translation>Feliratszöveg generálása az idővonalon</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1206"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1208"/>
         <source>Text style preset</source>
         <translation>Szövegstílus-készlet</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1208"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1210"/>
         <source>Default subtitle style</source>
         <translation>Alapértelmezett feliratstílus</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1351"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1353"/>
         <source>Extracting Audio</source>
         <translation>Hang kinyerése</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1369"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1371"/>
         <source>Speech to Text</source>
         <translation>Beszédből szöveggé alakítás</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="575"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="628"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1300"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="570"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1302"/>
         <source>Subtitle track already exists: %1</source>
         <translation>Feliratsáv már létezik: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="454"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="449"/>
         <source>Create or edit a Subtitle Burn In filter on the timeline output.</source>
         <translation>Hozzon létre vagy szerkesszen egy felirat beégetési szűrőt az idővonal kimenetén.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="599"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="594"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
         <translation>Ezt a sávot egy feliratszűrő használja.
 A szám eltávolítása előtt távolítsa el a feliratszűrőt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="645"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="640"/>
         <source>Import Subtitle File</source>
         <translation>Feliratfájl importálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="647"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
         <translation>Feliratfájlok (*.srt *. SRT *.vtt *. VTT *.ass *. ASS *.ssa *. SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="655"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="650"/>
         <source>Unable to find subtitle file.</source>
         <translation>Nem található a feliratfájl.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="706"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="708"/>
         <source>Export SRT File</source>
         <translation>SRT fájl exportálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="708"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="710"/>
         <source>SRT Files (*.srt *.SRT)</source>
         <translation>SRT fájlok (*.srt *. SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="773"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="775"/>
         <source>A subtitle already exists at this time.</source>
         <translation>Jelenleg már létezik egy felirat.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="783"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="785"/>
         <source>Not enough space to add subtitle.</source>
         <translation>Nincs elég hely a felirat hozzáadásához.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="820"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="822"/>
         <source>Start time can not be after end time.</source>
         <translation>A kezdési idő nem lehet a befejezési idő után.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="826"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="828"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation>A kezdési időpont nem lehet az előző felirat előtt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="844"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="846"/>
         <source>End time can not be before start time.</source>
         <translation>A befejezési időpont nem lehet a kezdési időpont előtt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="851"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="853"/>
         <source>End time can not be after next subtitle.</source>
         <translation>A befejezési idő nem lehet a következő felirat után.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="873"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="875"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation>Nem tudja mozgatni. A feliratok már léteznek.</translation>
     </message>
@@ -10916,22 +11006,22 @@ A szám eltávolítása előtt távolítsa el a feliratszűrőt.</translation>
 <context>
     <name>SubtitlesModel</name>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="878"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="876"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="880"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="878"/>
         <source>Start</source>
         <translation>Kezdés</translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="882"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="880"/>
         <source>End</source>
         <translation>Vég</translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="884"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="882"/>
         <source>Duration</source>
         <translation>Időtartam</translation>
     </message>
@@ -11231,34 +11321,34 @@ A szám eltávolítása előtt távolítsa el a feliratszűrőt.</translation>
         <translation>Rajzolás/Animáció</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1864"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1865"/>
         <source>This track is locked</source>
         <translation>A sáv zárolva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1869"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1870"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Nem adhat hozzá nem kereshető forrást.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2340"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2341"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2380"/>
         <source>Track %1 was not moved</source>
         <translation>A (z) %1 sáv nem lett áthelyezve</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2345"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2346"/>
         <source>Can not move audio track above video track</source>
         <translation>Nem lehet a hangsávot a videó sáv fölé mozgatni</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2366"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2367"/>
         <source>Can not move video track below audio track</source>
         <translation>Nem lehet a videó sávot a hangsáv alá mozgatni</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1589"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2545"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1590"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2546"/>
         <source>Align To Reference Track</source>
         <translation>Igazítás a referenciasávhoz</translation>
     </message>
@@ -11658,192 +11748,197 @@ A szám eltávolítása előtt távolítsa el a feliratszűrőt.</translation>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1471"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1469"/>
+        <source>Elements</source>
+        <translation>Elemek</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1472"/>
         <source>Noise</source>
         <translation>Zaj</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1474"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1475"/>
         <source>Color Bars</source>
         <translation>Színsávok</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1478"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1479"/>
         <source>Audio Tone</source>
         <translation>Hangszín</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1481"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1482"/>
         <source>Count</source>
         <translation>Számoló</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1484"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1485"/>
         <source>Blip Flash</source>
         <translation>Hangvillanás</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1508"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1509"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1515"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1516"/>
         <source>Rejoin With Next Clip</source>
         <translation>Csatlakozás újra a következő kliphez</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1531"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1532"/>
         <source>Detach Audio</source>
         <translation>Hang leválasztása</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1559"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1560"/>
         <source>Freeze Frame</source>
         <translation>Kimerevített képkocka</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1609"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1610"/>
         <source>Apply Copied Filters</source>
         <translation>Másolt szűrők alkalmazása</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1633"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1634"/>
         <source>Update Thumbnails</source>
         <translation>Bélyegképek frissítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1657"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1658"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Hullámrajz újraépítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1681"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1682"/>
         <source>Ripple Trim Clip In</source>
         <translation>Hatás vágása klipen belül</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1688"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1689"/>
         <source>Ripple Trim Clip Out</source>
         <translation>Hatás vágása klipen kívül</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1695"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1696"/>
         <source>Group/Ungroup</source>
         <translation>Csoportosítás/csoportbontás</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1876"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1877"/>
         <source>Not enough space to extend the clip</source>
         <translation>Nincs elég hely a klip meghosszabbításához</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1878"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1879"/>
         <source>Not enough space; clip extended as far as possible</source>
         <translation>Nincs elég hely; a klip a lehető legnagyobb mértékben meghosszabbodott</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2650"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2651"/>
         <source>Append multiple to timeline</source>
         <translation>Többminden hozzáfűzése az idővonalhoz</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2739"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2740"/>
         <source>Ripple delete transition</source>
         <translation>Átmenet hatás törláse</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2795"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2796"/>
         <source>Lift transition</source>
         <translation>Átmenet emelése</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2876"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2877"/>
         <source>Cut %1 from timeline</source>
         <translation>%1 kivágása az idővonalból</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2878"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2879"/>
         <source>Remove %1 from timeline</source>
         <translation>%1 törlése az idővonalról</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2906"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2907"/>
         <source>Lift %1 from timeline</source>
         <translation>%1 felemelése az idővonalról</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3318"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3319"/>
         <source>There is nothing in the Source player.</source>
         <translation>Nincs semmi a forrás lejátszóban.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3333"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3334"/>
         <source>You cannot replace a transition.</source>
         <translation>Egy áttűnést nem lehet kicserélni.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3373"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3374"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Válasszon egy klipet az ütemtervben, hogy hozzon létre egy jelölőt körülötte</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3394"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3395"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Hozzáadott jelölő: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3419"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3420"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>&quot;%1&quot; jelző hozzáadva. Tartsa lenyomva és húzza a %2-t egy tartomány létrehozásához</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3567"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3568"/>
         <source>Failed to open </source>
         <translation>Nem lehet megnyitni </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3602"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3603"/>
         <source>Dropped Files</source>
         <translation>Eldobott fájlok</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3650"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3651"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation>Egy átmenet képkockáját nem lehet lefagyasztani.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3669"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3670"/>
         <source>Freeze Frame is not available.</source>
         <translation>Az állókép nem elérhető.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3704"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3705"/>
         <source>Insert Freeze Frame</source>
         <translation>Állókép beillesztése</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3708"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3709"/>
         <source>The play head is not over the selected clip.</source>
         <translation>A lejátszófej nincs a kiválasztott klip felett.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3755"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3756"/>
         <source>Toggle other tracks mute</source>
         <translation>Más sávok némítása ki/be</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3785"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3786"/>
         <source>Toggle other tracks hidden</source>
         <translation>Más sávok elrejtése be/ki</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4195"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4196"/>
         <source>Insert multiple into timeline</source>
         <translation>Többminden beszúrása az idővonalra</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4380"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4381"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Többminden felülírása az idővonalon</translation>
     </message>
@@ -11854,51 +11949,51 @@ A szám eltávolítása előtt távolítsa el a feliratszűrőt.</translation>
         <translation>Áttűnést nem lehet szétvágni.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="4897"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4898"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>%n idővonal-klip cseréje</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4956"/>
         <source>voiceover</source>
         <translation>Hangalámondás</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1490"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4958"/>
-        <location filename="../src/docks/timelinedock.cpp" line="5079"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1491"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4959"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5080"/>
         <source>Record Audio</source>
         <translation>Hang rögzítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4956"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4957"/>
         <source>All Files (*)</source>
         <translation>Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4972"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4973"/>
         <source>Record Audio: %1</source>
         <translation>Hangfelvétel: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5040"/>
         <source>Audio Recording In Progress</source>
         <translation>Hangfelvétel folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5049"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5050"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Hangfelvételi hiba: ellenőrizze a PulseAudio beállításokat</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5053"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5054"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Hang rögzítése hiba: válassza a Fájl &gt; Más &gt; audio/videoeszköz megnyitása lehetőséget</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5085"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5086"/>
         <source>Saving audio recording...</source>
         <translation>Hangfelvétel mentése...</translation>
     </message>
@@ -12416,7 +12511,7 @@ Mozgás kompenzáció: Új képkockák interpolálása mozgásdetektálással. E
         <translation>Kötes: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="153"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="155"/>
         <source>Lossless: %1</source>
         <translation>Veszteségmentes: %1</translation>
     </message>
@@ -12462,7 +12557,7 @@ Mozgás kompenzáció: Új képkockák interpolálása mozgásdetektálással. E
         <translation>Konvertálás törölve</translation>
     </message>
     <message>
-        <location filename="../src/transcoder.cpp" line="355"/>
+        <location filename="../src/transcoder.cpp" line="384"/>
         <source>Convert %1</source>
         <translation>%1 konvertálása</translation>
     </message>
@@ -13193,95 +13288,95 @@ IRE: %2</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="159"/>
+        <location filename="../src/main.cpp" line="161"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Töltse ki a képernyőt a Shotcut ablakával.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="163"/>
+        <location filename="../src/main.cpp" line="165"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>A frissítés figyelmeztetés és menüpont elrejtése.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="167"/>
+        <location filename="../src/main.cpp" line="169"/>
         <source>Run Glaxnimate instead of Shotcut.</source>
         <translation>Futtassa a Glaxnimate-et a Shotcut helyett.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="171"/>
+        <location filename="../src/main.cpp" line="173"/>
         <source>Use GPU processing.</source>
         <translation>GPU feldolgozás használata.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="175"/>
+        <location filename="../src/main.cpp" line="177"/>
         <source>Enable experimental features (add-on filters menu).</source>
         <translation>Kísérleti funkciók engedélyezése (bővítmény szűrők menü).</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="179"/>
+        <location filename="../src/main.cpp" line="181"/>
         <source>Clear Recent on Exit</source>
         <translation>Kilépéskor a legutóbbi törlése</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="184"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>The directory for app configuration and data.</source>
         <translation>Az alkalmazás konfigurálásának és adatainak könyvtára.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="185"/>
+        <location filename="../src/main.cpp" line="187"/>
         <source>directory</source>
         <translation>mappa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="189"/>
+        <location filename="../src/main.cpp" line="191"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation>A skálázási érték nagy pontsűrűségű képernyőkhöz</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="191"/>
+        <location filename="../src/main.cpp" line="193"/>
         <source>number</source>
         <translation>szám</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="195"/>
+        <location filename="../src/main.cpp" line="197"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation>A skálázási értékek pontosvesszővel elválasztott listája képernyőnként</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="198"/>
+        <location filename="../src/main.cpp" line="200"/>
         <source>list</source>
         <translation>lista</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="202"/>
+        <location filename="../src/main.cpp" line="204"/>
         <source>How to handle a fractional display scale: %1</source>
         <translation>Hogyan kezelje a &apos;%1&apos; tört megjelenítéséi skálázást</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="204"/>
-        <location filename="../src/main.cpp" line="212"/>
-        <location filename="../src/main.cpp" line="220"/>
+        <location filename="../src/main.cpp" line="206"/>
+        <location filename="../src/main.cpp" line="214"/>
+        <location filename="../src/main.cpp" line="222"/>
         <source>string</source>
         <translation>karakterlánc</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="210"/>
-        <location filename="../src/main.cpp" line="218"/>
+        <location filename="../src/main.cpp" line="212"/>
+        <location filename="../src/main.cpp" line="220"/>
         <source>Which operating system audio API to use: %1</source>
         <translation>Melyik operációs rendszer audio API-ját kell használni: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="226"/>
+        <location filename="../src/main.cpp" line="228"/>
         <source>Zero or more files or folders to open</source>
         <translation>Valahány megnyitandó fájl vagy mappa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="499"/>
+        <location filename="../src/main.cpp" line="539"/>
         <source>Loading plugins...</source>
         <translation>Kiegészítők betöltése…</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="476"/>
+        <location filename="../src/main.cpp" line="516"/>
         <source>Expiring cache...</source>
         <translation>Gyorsítótár lejáratása…</translation>
     </message>
@@ -13988,6 +14083,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="44"/>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="59"/>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/shake/meta.qml" line="54"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="45"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="44"/>
         <location filename="../src/qml/filters/typewriter/meta.qml" line="67"/>
@@ -14019,6 +14115,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="27"/>
         <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/shake/meta.qml" line="33"/>
         <source>Rotation</source>
         <translation>Forgatás</translation>
     </message>
@@ -14712,12 +14809,40 @@ IRE: %2</translation>
         <translation>időbeli keverék szédítő pszichedelikus</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="7"/>
+        <source>Shake</source>
+        <translation>Rázás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="8"/>
+        <source>hand-held camera tremble vibrate</source>
+        <comment>search keywords for the Shake video filter</comment>
+        <translation>kézi kamera remeg vibrál</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="19"/>
+        <source>Amplitude X</source>
+        <translation>X amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="26"/>
+        <source>Amplitude Y</source>
+        <translation>Y amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="47"/>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="20"/>
         <source>Speed</source>
         <translation>Sebesség</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/shake/meta.qml" line="61"/>
+        <source>Blur</source>
+        <translation>Elmosódás</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/shake/meta.qml" line="40"/>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="27"/>
         <source>Zoom</source>
         <translation>Nagyítás</translation>
@@ -14932,6 +15057,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="27"/>
+        <location filename="../src/qml/filters/shake/meta.qml" line="68"/>
         <source>Background color</source>
         <translation>Háttérszín</translation>
     </message>
@@ -16420,6 +16546,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="521"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="35"/>
         <source>Blur</source>
         <translation>Elmosás</translation>
     </message>
@@ -16652,6 +16779,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/rotate/ui.qml" line="136"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="105"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="37"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="335"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="52"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="55"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="161"/>
@@ -18414,6 +18542,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <location filename="../src/qml/filters/mask/ui.qml" line="315"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="530"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="31"/>
         <source>Rotation</source>
         <translation>Forgatás</translation>
     </message>
@@ -18821,6 +18950,7 @@ A felső/oldalsó torzítás torzítás előfeszítésének módosítása</trans
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="529"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="310"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="36"/>
         <source>Background color</source>
         <translation>Háttérszín</translation>
     </message>
@@ -19389,6 +19519,7 @@ A felső/oldalsó torzítás torzítás előfeszítésének módosítása</trans
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="492"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="32"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="189"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="118"/>
         <source>Zoom</source>
@@ -19689,6 +19820,7 @@ A &quot;Jelenlegi hozzárendelés zárolása&quot; zárolja a forrásidőt a jel
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1520"/>
+        <location filename="../src/qml/filters/shake/ui.qml" line="33"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="338"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="89"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="78"/>
@@ -21859,6 +21991,66 @@ Kattintson a kijelöléshez, húzza a pozíció megváltoztatásához</translati
         <location filename="../src/qml/filters/vst2.1934451059/ui.qml" line="468"/>
         <source>Wet/Dry</source>
         <translation>Nedves/Száraz</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="29"/>
+        <source>Amplitude X</source>
+        <translation>X amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="30"/>
+        <source>Amplitude Y</source>
+        <translation>Y amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="34"/>
+        <source>Opacity</source>
+        <translation>Átlátszatlanság</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="95"/>
+        <source>Maximum horizontal shake amplitude</source>
+        <translation>Maximális vízszintes rezgési amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="96"/>
+        <source>Maximum vertical shake amplitude</source>
+        <translation>Maximális függőleges rezgési amplitúdó</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="97"/>
+        <source>Maximum rotation shake</source>
+        <translation>Maximális forgási rázkódás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="98"/>
+        <source>Zoom factor to hide black borders</source>
+        <translation>Nagyítási tényező a fekete keretek elrejtéséhez</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="99"/>
+        <source>Speed or frequency of the shake</source>
+        <translation>A rázás sebessége vagy gyakorisága</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="100"/>
+        <source>Opacity of the effect</source>
+        <translation>Az effekt átlátszósága</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="101"/>
+        <source>Amount of motion blur</source>
+        <translation>Mozgáselmosódás mértéke</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="102"/>
+        <source>Background color for exposed borders</source>
+        <translation>Háttérszín a látható határokhoz</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/shake/ui.qml" line="921"/>
+        <source>No properties were discovered for this filter service.</source>
+        <translation>Nem találhatók tulajdonságok ehhez a szűrőszolgáltatáshoz.</translation>
     </message>
 </context>
 <context>
