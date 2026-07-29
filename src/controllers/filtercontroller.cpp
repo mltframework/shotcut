@@ -318,8 +318,18 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
     if (!ensureAddOnTempDir())
         return false;
 
-    const QDir tempDir(m_addOnTempDir->path());
-    const QString cachedFileName = service + QStringLiteral("_ui.qml");
+    // The QML type loader caches the directory listing of every folder it loads from and never
+    // invalidates it. Writing a new file into a folder it has already scanned makes it report
+    // "File name case mismatch" and the filter UI stays blank. Give each service its own folder
+    // so a generated file is always written before that folder is first scanned.
+    QDir tempDir(m_addOnTempDir->path());
+    if (!tempDir.exists(service) && !tempDir.mkpath(service)) {
+        LOG_WARNING() << "Failed to create add-on temporary directory for" << service;
+        return false;
+    }
+    tempDir = QDir(tempDir.absoluteFilePath(service));
+
+    const QString cachedFileName = QStringLiteral("ui.qml");
     if (QFileInfo::exists(tempDir.filePath(cachedFileName))) {
         meta->setPath(tempDir);
         meta->setQmlFileName(cachedFileName);
@@ -353,7 +363,7 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
         LOG_INFO() << "Generated add-on UI QML file:" << tempDir.filePath(cachedFileName);
     }
 
-    const QString cachedMetaFileName = service + QStringLiteral("_meta.qml");
+    const QString cachedMetaFileName = QStringLiteral("meta.qml");
     if (!m_addOnQmlGenerator.generateMetaQml(descriptor,
                                              tempDir,
                                              cachedFileName,
