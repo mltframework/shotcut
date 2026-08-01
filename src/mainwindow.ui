@@ -379,6 +379,7 @@
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
    <addaction name="actionSubtitles"/>
+   <addaction name="actionAI"/>
    <addaction name="actionWhatsThis"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
@@ -1233,6 +1234,18 @@
    </property>
    <property name="whatsThis">
     <string notr="true">https://forum.shotcut.org/t/subtitles-panel/45312/1</string>
+   </property>
+  </action>
+  <action name="actionAI">
+   <property name="icon">
+    <iconset theme="ai-assistant" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/ai-assistant.png</normaloff>:/icons/oxygen/32x32/actions/ai-assistant.png</iconset>
+   </property>
+   <property name="text">
+    <string>AI</string>
+   </property>
+   <property name="toolTip">
+    <string>AI</string>
    </property>
   </action>
   <action name="actionPreview540">
