@@ -21,6 +21,9 @@
 #include <MltService.h>
 #include <MltTransition.h>
 #include <QScopedPointer>
+#include <QString>
+
+#include <utility>
 
 namespace {
 Mlt::Transition *getMixTransition(Mlt::Tractor &tractor, int trackIndex)
