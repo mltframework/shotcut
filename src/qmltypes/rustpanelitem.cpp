@@ -122,8 +122,48 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     updatePollIntervalForRefreshRate();
     connect(this, &QQuickItem::windowChanged, this,
             &RustPanelItem::updatePollIntervalForRefreshRate);
+    // Candidate fix (source-level investigation only, unconfirmed on a
+    // real machine) for a reported real-desktop bug where most input into
+    // this panel silently never arrived until an unrelated OS-level
+    // window-activate cycle "fixed" it: Slint's own internal window-active
+    // notion (see panel-rust's panel_rust_set_window_active) was never
+    // being told about the host window's activation state at all. This
+    // item's window() can become non-null before or after
+    // componentComplete() runs, so both call handleWindowChanged().
+    connect(this, &QQuickItem::windowChanged, this, &RustPanelItem::handleWindowChanged);
     connect(&m_pollTimer, &QTimer::timeout, this, &RustPanelItem::poll);
     m_pollTimer.start();
+}
+
+void RustPanelItem::componentComplete()
+{
+    QQuickPaintedItem::componentComplete();
+    // Proactively claim focus once this item finishes construction/QML
+    // property binding, instead of relying purely on mousePressEvent's
+    // reactive forceActiveFocus() -- see the .h declaration's doc comment.
+    forceActiveFocus(Qt::OtherFocusReason);
+    // In case this item was already attached to a window before
+    // componentComplete() ran (windowChanged's connection above would have
+    // fired before this override could run this same tick).
+    handleWindowChanged(window());
+}
+
+void RustPanelItem::handleWindowChanged(QQuickWindow *win)
+{
+    if (!win)
+        return;
+    connect(win, &QQuickWindow::activeChanged, this, &RustPanelItem::pushWindowActiveState,
+            Qt::UniqueConnection);
+    pushWindowActiveState();
+}
+
+void RustPanelItem::pushWindowActiveState()
+{
+    ensureHandle();
+    if (!m_handle)
+        return;
+    if (QQuickWindow *win = window())
+        panel_rust_set_window_active(m_handle, win->isActive());
 }
 
 RustPanelItem::~RustPanelItem()

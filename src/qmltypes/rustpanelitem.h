@@ -10,6 +10,7 @@
 #include <QWheelEvent>
 
 struct PanelHandle;
+class QQuickWindow;
 
 class RustPanelItem : public QQuickPaintedItem
 {
@@ -63,6 +64,17 @@ protected:
     // own doc comment. See the .cpp implementation for how both are
     // combined without either one dropping the other's case.
     bool event(QEvent *event) override;
+    // QQuickItem's QQmlParserStatus hook: fires once this item finishes
+    // construction/QML property binding, whether or not it has ever been
+    // clicked. Proactively claims focus here instead of relying solely on
+    // mousePressEvent's reactive forceActiveFocus() -- candidate fix for a
+    // reported real-desktop bug (source-level only, unconfirmed without a
+    // real machine) where most input into this panel silently never
+    // arrived until an unrelated OS-level window-activate cycle (alt-tab
+    // away and back) started working. See the .cpp implementation for why
+    // this alone isn't assumed sufficient (it also wires up window-active
+    // forwarding below).
+    void componentComplete() override;
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -86,6 +98,17 @@ private:
     void ensureHandle();
     void recreateForPendingProject();
     void poll();
+    // Connects to the new QQuickWindow's activeChanged signal (once this
+    // item is actually attached to one -- windowChanged can fire before or
+    // after componentComplete()) and immediately pushes its current active
+    // state, so panel-rust's Slint-side WindowActiveChanged tracking is
+    // never left stale from the moment a window first exists.
+    void handleWindowChanged(QQuickWindow *win);
+    // Forwards window()->isActive() to panel_rust_set_window_active().
+    // Wired to QQuickWindow::activeChanged by handleWindowChanged() above;
+    // also called once up front so the panel learns the window's initial
+    // active state without waiting for the first activeChanged signal.
+    void pushWindowActiveState();
     // QQuickItem::update() only *schedules* a repaint for whenever Qt's
     // event loop next gets around to it -- under this app's forced
     // QSG_RENDER_LOOP=basic (see main.cpp) plus QQuickWidget hosting,
