@@ -191,9 +191,16 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
                     &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
         }
     }
-    const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
-    if (m_pollTimer.interval() != intervalMs)
-        m_pollTimer.setInterval(intervalMs);
+    m_activePollIntervalMs = qMax(1, qRound(1000.0 / targetFps));
+    // Only push the new interval onto the live timer immediately if it's
+    // currently running at the active cadence -- if it's idle-backed-off
+    // (see applyPollCadence()), the next poll() tick that finds real
+    // activity will pick up the freshly-computed m_activePollIntervalMs
+    // then. Forcing it here unconditionally would undo the idle backoff
+    // every time this slot fires (e.g. a spurious screenChanged while
+    // fully idle).
+    if (!m_pollTimerIdle && m_pollTimer.interval() != m_activePollIntervalMs)
+        m_pollTimer.setInterval(m_activePollIntervalMs);
 
     // This function is already wired to fire on windowChanged/screenChanged
     // (see constructor/below) -- exactly the cases where devicePixelRatio
@@ -202,6 +209,22 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
     // notice. ensureHandle() no-ops unless dpr or size actually changed.
     ensureHandle();
     update();
+}
+
+void RustPanelItem::applyPollCadence(bool active)
+{
+    if (active) {
+        if (m_pollTimerIdle || m_pollTimer.interval() != m_activePollIntervalMs) {
+            m_pollTimer.setInterval(m_activePollIntervalMs);
+            m_pollTimerIdle = false;
+        }
+        return;
+    }
+    if (m_pollTimerIdle)
+        return;
+    const int idleIntervalMs = qMax(1, qRound(1000.0 / kIdlePollFps));
+    m_pollTimer.setInterval(idleIntervalMs);
+    m_pollTimerIdle = true;
 }
 
 void RustPanelItem::ensureHandle()
@@ -489,8 +512,14 @@ void RustPanelItem::poll()
 {
     if (!m_handle)
         return;
-    if (panel_rust_poll(m_handle))
+    const bool needsPaint = panel_rust_poll(m_handle);
+    if (needsPaint)
         requestRepaint();
+    // idle_poll_backoff: back this timer off to kIdlePollFps whenever the
+    // panel had nothing to repaint this tick, and restore/keep the full
+    // display-refresh cadence whenever it did -- see applyPollCadence()'s
+    // doc comment in the header.
+    applyPollCadence(needsPaint);
 
     // ui/tokens/cursor_host.slint's CursorHost global tracks the desired
     // cursor kind declaratively (hover/focus change-handlers), already

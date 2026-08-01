@@ -120,19 +120,62 @@ private:
     // explicit flush of already-posted events so a repaint request is
     // never silently left waiting on unrelated event traffic to arrive.
     void requestRepaint();
-    // Recomputes m_pollTimer's interval from window()->screen()->
+    // Recomputes m_activePollIntervalMs from window()->screen()->
     // refreshRate(), clamped to [kMinPollFps, kMaxPollFps]. Called on
     // construction (screen not known yet -> falls back to kMinPollFps),
     // whenever this item's window changes, and whenever that window's
     // screen or the screen's reported refresh rate changes (covers
-    // dragging the window to a different-refresh-rate monitor).
+    // dragging the window to a different-refresh-rate monitor). Does not
+    // itself touch m_pollTimer's live interval -- see applyPollCadence().
     void updatePollIntervalForRefreshRate();
+    // idle_poll_backoff: panel_rust_poll's return value already tells us
+    // whether anything needed a repaint this tick (streamed content,
+    // Slint `animate`/`animation-tick()` motion, a busy spinner/pulse --
+    // see panel_rust_poll's doc comment in lib.rs for the full list).
+    // Nothing about m_pollTimer itself ever used that signal: it ran
+    // unconditionally at the full display-refresh cadence (60-90fps)
+    // forever, from construction to destruction, even with the panel
+    // fully idle (no threads, nothing streaming, no animation) -- pure
+    // wasted wakeups (Slint animation-clock update, an FFI call, a full
+    // frame-input snapshot/dispatch, N thread/MCP-row scans) many times a
+    // second doing nothing. Mouse/key/wheel input handlers already call
+    // requestRepaint() directly (see their call sites in the .cpp), so
+    // they stay instant regardless of this timer's cadence -- only
+    // *background* activity (a streamed token arriving, an animation
+    // starting) needs this timer to notice it, and it can afford to
+    // notice that a little later while idle. `active` mirrors the most
+    // recent panel_rust_poll() result: true keeps/restores the full
+    // refresh-rate cadence, false backs the timer off to kIdlePollFps so
+    // it still wakes up often enough to notice new background activity
+    // promptly (worst case one idle tick of latency, then it snaps back
+    // to full cadence) without spinning at 60-90Hz for nothing.
+    void applyPollCadence(bool active);
 
     static constexpr qreal kMinPollFps = 60.0;
     static constexpr qreal kMaxPollFps = 90.0;
+    // Idle-backoff cadence used whenever the previous poll tick found
+    // nothing to repaint (no stream activity, no active animation, no
+    // busy spinner/pulse -- see applyPollCadence()'s doc comment). Fast
+    // enough that a background agent event or a newly-started animation
+    // is noticed within a single frame time most users won't perceive as
+    // latency; slow enough to cut this timer's idle wakeup rate by
+    // roughly an order of magnitude versus the 60-90fps active cadence.
+    static constexpr qreal kIdlePollFps = 8.0;
 
     PanelHandle *m_handle = nullptr;
     QTimer m_pollTimer;
+    // Interval (ms) for the active/full cadence, last computed by
+    // updatePollIntervalForRefreshRate() from the real display refresh
+    // rate. Stored separately from m_pollTimer's live interval because
+    // the timer may currently be sitting at the slower idle cadence
+    // instead -- see applyPollCadence().
+    int m_activePollIntervalMs = qRound(1000.0 / kMinPollFps);
+    // Whether m_pollTimer is currently at the idle-backoff cadence
+    // (true) or the active/full cadence (false). Starts false so the
+    // very first poll() tick after construction runs at full cadence
+    // (matches prior behavior) until it establishes the panel is
+    // actually idle.
+    bool m_pollTimerIdle = false;
     // Applied once ensureHandle() creates the panel, in case setTheme()
     // was called (e.g. at dock construction, to match the app's current
     // theme) before the handle existed yet.
