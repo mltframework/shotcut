@@ -45,6 +45,8 @@ public slots:
     // MainWindow::producerOpened() -- see chatrustdock.cpp. Empty string
     // means no project currently open.
     void setProjectPath(const QString &path);
+    void projectCreatedUntitled();
+    void projectClosed();
     void renameProjectPath(const QString &oldPath, const QString &newPath);
 
 protected:
@@ -82,6 +84,7 @@ protected:
 
 private:
     void ensureHandle();
+    void recreateForPendingProject();
     void poll();
     // QQuickItem::update() only *schedules* a repaint for whenever Qt's
     // event loop next gets around to it -- under this app's forced
@@ -122,6 +125,8 @@ private:
     // was never called yet -- distinct from "no project open".
     QString m_pendingProjectPath;
     bool m_hasPendingProjectPath = false;
+    bool m_pendingUntitledProject = false;
+    bool m_pendingProjectClosed = false;
     // Last Qt::CursorShape applied via setCursor() -- compared each poll()
     // tick against panel_rust_cursor_shape() so an unchanged cursor kind
     // (the common case) doesn't call setCursor() every 80ms.

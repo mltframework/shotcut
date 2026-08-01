@@ -101,6 +101,11 @@ public:
     // instead of `untitledFileName()`'s scratch default. `setCurrentFile`
     // itself is private; this just exposes it for that one FFI call site.
     void setSapProjectFile(const QString &filename) { setCurrentFile(filename); }
+    // Headless SAP path only (sap_ffi.cpp's sap_open_project): load an
+    // existing .mlt without continueModified()/checkAutoSave()/repair/
+    // GPU-conversion modal dialogs. Safe for a freshly-launched child
+    // that has no prior unsaved user edits. Returns the same bool as open().
+    bool openForSap(const QString &url);
     bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
     Player *player() const { return m_player; }
@@ -137,6 +142,11 @@ signals:
     void audioChannelsChanged();
     void processingModeChanged();
     void producerOpened(bool withReopen = true);
+    // Project identity signals deliberately carry lifecycle intent instead
+    // of overloading producerOpened(bool)'s unrelated reopen hint.
+    void projectOpened(const QString &path);
+    void projectCreatedUntitled();
+    void projectClosed();
     void profileChanged();
     void openFailed(QString);
     void aboutToShutDown();
@@ -242,6 +252,10 @@ private:
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
     ChatRustDock *m_chatRustDock;
+    /// False until MainWindow construction finishes bootstrap setCurrentFile("").
+    /// While false, empty project-path notifies are ignored so the first real
+    /// open (CLI file or user New) is the first ACP identity attach.
+    bool m_projectLifecyclePrimed{false};
     static QString s_resolvedTheme;
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
@@ -249,6 +263,9 @@ private:
     ElementsDock *m_elementsDock;
     ScreenCapture *m_screenCapture;
     HdrPreviewWindow *m_hdrPreviewWindow{nullptr};
+    // When true, open-path helpers skip QMessageBox/QDialog prompts so
+    // sap_open_project cannot hang a SNAPSHOT_HEADLESS offscreen process.
+    bool m_suppressOpenDialogs{false};
 
 public slots:
     bool isCompatibleWithProcessingMode(MltXmlChecker &checker, QString &fileName, bool &converted);

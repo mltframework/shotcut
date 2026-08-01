@@ -129,6 +129,30 @@ corrosion_import_crate(MANIFEST_PATH ${SAP_RUST_MANIFEST_PATH}
 # cargo invocation (a real CI break, see build-linux.yml run 29826369548).
 corrosion_import_crate(MANIFEST_PATH ${PANEL_RUST_MANIFEST_PATH}
   CRATE_TYPES staticlib)
+
+# acpx-server: the ACP gateway binary panel-rust's AgentBridge spawns (see
+# agent_bridge.rs's resolve_acpx_server_bin_from/provision_gateway) to talk
+# to CLI coding agents. Previously this repo never built or packaged it --
+# RUI_ACPX_SERVER_BIN below was opt-in and no build/CI script ever set it,
+# so a real .deb/AppImage install shipped a Shotcut binary whose panel-rust
+# chat dock could never find or spawn acpx-server:
+# AgentBridge::new_with_thread_specs_and_initial_identity failed,
+# bridge_available became false, gateway-ready went false, and panel-rust's
+# "+ New Thread" button (ui/components/sidebar.slint's
+# `enabled: root.gateway-ready`) was rendered but permanently disabled --
+# clicks were silently swallowed by Slint's TouchArea. Dev/CI environments
+# never hit this because they always had a `cargo build -p acpx-server`
+# dev-tree artifact on disk already, which resolve_acpx_server_bin_from's
+# CARGO_MANIFEST_DIR-relative fallback happened to find.
+# Building acpx-server here, the same sibling-crate + corrosion pattern as
+# sap-rust/panel-rust above, makes every build package a real gateway
+# binary instead of relying on an opt-in nothing ever exercised.
+set(ACPX_SERVER_MANIFEST_PATH "${CMAKE_SOURCE_DIR}/../acpx/acpx-server/Cargo.toml" CACHE FILEPATH
+  "Path to the acpx-server Cargo.toml this build links (defaults to the sibling checkout)")
+if(EXISTS "${ACPX_SERVER_MANIFEST_PATH}")
+  corrosion_import_crate(MANIFEST_PATH ${ACPX_SERVER_MANIFEST_PATH}
+    CRATES acpx-server)
+endif()
 pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
 
 add_subdirectory(CuteLogger)
@@ -146,10 +170,14 @@ endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
-if(RUI_ACPX_SERVER_BIN)
-  # panel-rust resolves an installed gateway beside the Shotcut executable,
-  # while RUI_ACPX_SERVER_BIN remains available as an explicit runtime
-  # override for non-standard deployments.
+if(RUI_ACPX_SERVER_BIN OR TARGET acpx-server)
+  # panel-rust resolves an installed gateway beside the Shotcut executable.
+  # RUI_ACPX_SERVER_BIN, when explicitly set, overrides with a caller-
+  # supplied binary (e.g. a separately cross-compiled one); otherwise, if
+  # the corrosion_import_crate(...) above produced an `acpx-server` target
+  # for this platform, install that build's own output so every ordinary
+  # build packages a working gateway without requiring a packager to
+  # remember to set anything.
   if(APPLE)
     set(RUI_ACPX_INSTALL_DIR
         "${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/MacOS")
@@ -158,9 +186,14 @@ if(RUI_ACPX_SERVER_BIN)
   else()
     set(RUI_ACPX_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
   endif()
-  install(PROGRAMS "${RUI_ACPX_SERVER_BIN}"
-          DESTINATION "${RUI_ACPX_INSTALL_DIR}"
-          RENAME acpx-server)
+  if(RUI_ACPX_SERVER_BIN)
+    install(PROGRAMS "${RUI_ACPX_SERVER_BIN}"
+            DESTINATION "${RUI_ACPX_INSTALL_DIR}"
+            RENAME acpx-server)
+  else()
+    install(PROGRAMS $<TARGET_FILE:acpx-server>
+            DESTINATION "${RUI_ACPX_INSTALL_DIR}")
+  endif()
 endif()
 
 add_custom_target(codespell COMMAND

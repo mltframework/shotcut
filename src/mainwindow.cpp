@@ -260,6 +260,9 @@ MainWindow::MainWindow()
 
     setFocus();
     setCurrentFile("");
+    // Bootstrap empty path above must not attach ACP. Real opens after this
+    // (CLI resource, File>Open, New untitled) are allowed to notify the panel.
+    m_projectLifecyclePrimed = true;
 
     connect(&m_network,
             SIGNAL(finished(QNetworkReply *)),
@@ -910,7 +913,32 @@ void MainWindow::setupAndConnectDocks()
     connect(this,
             &MainWindow::producerOpened,
             m_chatRustDock,
-            &ChatRustDock::updateProjectPath);
+            [this](bool) {
+                if (!m_projectLifecyclePrimed)
+                    return;
+                const auto path = fileName();
+                // Empty path is common mid-open (hideProducer color clips) and
+                // must not force Untitled staging attach. Untitled is owned by
+                // setCurrentFile(untitledFileName()) only.
+                if (path.isEmpty())
+                    return;
+                m_chatRustDock->projectOpened(path);
+            });
+    connect(this, &MainWindow::projectOpened, m_chatRustDock, &ChatRustDock::projectOpened);
+    connect(this,
+            &MainWindow::projectCreatedUntitled,
+            m_chatRustDock,
+            &ChatRustDock::projectCreatedUntitled);
+    connect(this, &MainWindow::projectClosed, m_chatRustDock, &ChatRustDock::projectClosed);
+    // Do NOT seed project identity here. MainWindow construction finishes
+    // before main() opens the CLI resource / untitled document; an early
+    // projectCreatedUntitled() here forces a staging-store ACP attach that
+    // is immediately torn down and recreated when the real open lands,
+    // which races the shared acpx gateway WebSocket and leaves the chat
+    // stuck without a session (found live: session/new under
+    // .snapflow-staging, then open_session failures with cwd=".").
+    // setCurrentFile() / projectOpened / projectCreatedUntitled after the
+    // real open is the single identity source of truth.
     // tasks/v2/enhance.yaml#task-3's "AI" native-menu-bar option: a
     // View-menu toggle for this dock's visibility, same idiom every other
     // dock in this function uses (m_xxxDock->toggleViewAction() added
@@ -1953,6 +1981,11 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
     converted = false;
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
+        if (m_suppressOpenDialogs) {
+            // Fail closed under SAP headless rather than blocking on a dialog.
+            LOG_WARNING() << "sap open: refusing GPU project without conversion prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(
             QMessageBox::Question,
             qApp->applicationName(),
@@ -1971,6 +2004,10 @@ bool MainWindow::isCompatibleWithProcessingMode(MltXmlChecker &checker,
             result = false;
     } else if (checker.needsCPU() && Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU incompatible filters but GPU processing is enabled";
+        if (m_suppressOpenDialogs) {
+            LOG_WARNING() << "sap open: refusing CPU project without conversion prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("The file you opened uses CPU processing, which is not enabled.\n"
@@ -2091,6 +2128,11 @@ bool MainWindow::isXmlRepaired(MltXmlChecker &checker, QString &fileName)
     bool result = true;
     if (checker.isCorrected()) {
         LOG_WARNING() << fileName;
+        if (m_suppressOpenDialogs) {
+            // Fail closed under SAP headless rather than hang on repair dialog.
+            LOG_WARNING() << "sap open: refusing project that needs repair prompt" << fileName;
+            return false;
+        }
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("Snapflow noticed some problems in your project.\n"
@@ -2106,6 +2148,10 @@ bool MainWindow::isXmlRepaired(MltXmlChecker &checker, QString &fileName)
         if (r == QMessageBox::Yes)
             result = saveRepairedXmlFile(checker, fileName);
     } else if (checker.unlinkedFilesModel().rowCount() > 0) {
+        if (m_suppressOpenDialogs) {
+            LOG_WARNING() << "sap open: refusing project with unlinked files" << fileName;
+            return false;
+        }
         UnlinkedFilesDialog dialog(this);
         dialog.setModel(checker.unlinkedFilesModel());
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -2126,22 +2172,28 @@ bool MainWindow::checkAutoSave(QString &url)
     // check whether autosave files exist:
     QSharedPointer<AutoSaveFile> stale(AutoSaveFile::getFile(url));
     if (stale) {
-        QMessageBox dialog(QMessageBox::Question,
-                           qApp->applicationName(),
-                           tr("Auto-saved files exist. Do you want to recover them now?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::No);
-        int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            if (!stale->open(QIODevice::ReadWrite)) {
-                LOG_WARNING() << "failed to recover autosave file" << url;
-            } else {
-                m_autosaveFile = stale;
-                url = stale->fileName();
-                return true;
+        if (m_suppressOpenDialogs) {
+            // SAP headless: ignore stale autosave recovery (would hang on
+            // QMessageBox in offscreen SNAPSHOT_HEADLESS launches).
+            LOG_INFO() << "sap open: skipping autosave recovery for" << url;
+        } else {
+            QMessageBox dialog(QMessageBox::Question,
+                               qApp->applicationName(),
+                               tr("Auto-saved files exist. Do you want to recover them now?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            int r = dialog.exec();
+            if (r == QMessageBox::Yes) {
+                if (!stale->open(QIODevice::ReadWrite)) {
+                    LOG_WARNING() << "failed to recover autosave file" << url;
+                } else {
+                    m_autosaveFile = stale;
+                    url = stale->fileName();
+                    return true;
+                }
             }
         }
     }
@@ -2359,6 +2411,11 @@ void MainWindow::resetDockCorners()
 void MainWindow::showIncompatibleProjectMessage(const QString &snapflowVersion)
 {
     LOG_INFO() << snapflowVersion;
+    if (m_suppressOpenDialogs) {
+        LOG_WARNING() << "sap open: incompatible project requires newer version"
+                      << snapflowVersion;
+        return;
+    }
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("This project file requires a newer version!\n\n"
@@ -2424,6 +2481,20 @@ void MainWindow::onAutosaveTimeout()
             JOBS.resumeCurrent();
         }
     }
+}
+
+bool MainWindow::openForSap(const QString &url)
+{
+    // Fresh SAP child has no real unsaved user work; force-clean so
+    // continueModified is a pure no-op even if startup noise set dirty.
+    setWindowModified(false);
+    const bool prev = m_suppressOpenDialogs;
+    m_suppressOpenDialogs = true;
+    // play=false: headless/offscreen should not start transport.
+    // skipConvert=true: avoid proxy/convert side paths that prompt.
+    const bool ok = open(url, nullptr, /*play=*/false, /*skipConvert=*/true);
+    m_suppressOpenDialogs = prev;
+    return ok;
 }
 
 bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play, bool skipConvert)
@@ -2640,6 +2711,7 @@ void MainWindow::closeProducer()
     m_filterController->motionTrackerModel()->load();
     MLT.close();
     MLT.setSavedProducer(nullptr);
+    emit projectClosed();
 }
 
 void MainWindow::showStatusMessage(QAction *action, int timeoutSeconds)
@@ -3199,46 +3271,27 @@ void MainWindow::configureVideoWidget()
 
 void MainWindow::setCurrentFile(const QString &filename)
 {
-    QString newFile = (filename == untitledFileName()) ? QString() : filename;
+    // Distinguish real Untitled open from intermediate clears (open() resets
+    // path to "" before loading a file; close uses projectClosed()).
+    const bool openingUntitled = (filename == untitledFileName());
+    QString newFile = openingUntitled ? QString() : filename;
     if (newFile != m_currentFile) {
         m_lastBackupDateTime = Settings.lastBackupDateTime(newFile);
         if (!m_lastBackupDateTime.isValid())
             m_lastBackupDateTime = QFileInfo(newFile).lastModified();
     }
     m_currentFile = newFile;
+    if (!m_currentFile.isEmpty()) {
+        // Single notify: projectOpened -> ChatRustDock::setProjectPath.
+        emit projectOpened(m_currentFile);
+    } else if (m_chatRustDock && m_projectLifecyclePrimed && openingUntitled) {
+        // Only when the host opens the real untitled document path — not for
+        // setCurrentFile("") mid-open/close, which was forcing a staging ACP
+        // attach then immediately recreating on the real project (send race).
+        m_chatRustDock->projectCreatedUntitled();
+    }
     updateWindowTitle();
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
-    // PISO-1 (project-isolation-mlt-binding): this is the ONE choke point
-    // every project-identity change passes through -- open, Save-As,
-    // New/newProject, and close all land here -- so notifying from here is
-    // what makes the chat panel track the project it is actually bound to.
-    // Previously the panel only learned about a new project via
-    // producerOpened (see setupAndConnectDocks), which fires when a
-    // PRODUCER is opened, not when the project's identity changes: a
-    // Save-As kept the panel pointed at the old path, and a close left it
-    // pointed at a project that is no longer open.
-    //
-    // Null-guarded because setCurrentFile() runs during startup before
-    // setupAndConnectDocks() constructs m_chatRustDock; the panel picks the
-    // value up from its own construction-time seed in that window.
-    //
-    // PISO-6 deadlock fix: uses setProjectPath(m_currentFile) -- NOT
-    // updateProjectPath(), which re-reads the path via
-    // MainWindow::singleton() -- because setCurrentFile() is ALSO reached
-    // from inside MainWindow's own constructor (a startup call sets the
-    // initial untitled filename), at which point m_chatRustDock already
-    // exists (setupAndConnectDocks ran earlier in the same constructor)
-    // but MainWindow::singleton()'s function-local static has not finished
-    // constructing. That nested singleton() call self-deadlocked on the
-    // C++ magic-static init guard every single launch -- confirmed live
-    // via a real gdb backtrace (Thread 1: main -> MainWindow::singleton()
-    // -> MainWindow::MainWindow() -> setCurrentFile() ->
-    // ChatRustDock::updateProjectPath() -> MainWindow::singleton() ->
-    // __cxa_guard_acquire, blocked forever), not inferred. m_currentFile
-    // is already the exact value fileName() would have returned, so this
-    // is a behavior-preserving fix, not a workaround.
-    if (m_chatRustDock)
-        m_chatRustDock->setProjectPath(m_currentFile);
 }
 
 void MainWindow::updateWindowTitle()
@@ -3466,16 +3519,13 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
             m_autosaveFile->changeManagedFile(filename);
         else
             m_autosaveFile.reset(new AutoSaveFile(filename));
+        // Tell the panel while the OUTGOING identity is still active. An
+        // empty previousFile is the first save of an Untitled UUID; Rust
+        // resolves that empty marker to the UUID it assigned when the
+        // project was created. The rename effect moves the physical store.
+        if (m_chatRustDock && previousFile != filename)
+            m_chatRustDock->renameProjectPath(previousFile, filename);
         setCurrentFile(filename);
-        // Order matters: setCurrentFile() has already pushed the NEW path to
-        // the panel (see its own PISO-1 comment), so the panel's notion of
-        // the active project is current before we ask it to move the threads
-        // that were bound to the old one. An empty previousFile means an
-        // Untitled project saved for the first time -- deliberately NOT a
-        // rename, since those threads were created unscoped and must stay
-        // unscoped rather than being retro-bound to this new file.
-        if (m_chatRustDock && !previousFile.isEmpty() && previousFile != m_currentFile)
-            m_chatRustDock->renameProjectPath(previousFile, m_currentFile);
         setWindowModified(false);
         resetSourceUpdated();
         if (MLT.producer())
@@ -3957,6 +4007,13 @@ void MainWindow::turnOffHardwareDecoder()
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
+        if (m_suppressOpenDialogs) {
+            // SAP headless open: discard dirty state without prompting.
+            QMutexLocker locker(&m_autosaveMutex);
+            m_autosaveFile.reset();
+            setWindowModified(false);
+            return true;
+        }
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("The project has been modified.\n"
