@@ -43,6 +43,7 @@
 #include <QString>
 #include <QUndoStack>
 #include <algorithm>
+#include <atomic>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -52,8 +53,22 @@
 
 namespace {
 
+// See sap_ffi.h's sap_ffi_begin_project_teardown()/sap_ffi_end_project_teardown()
+// doc comment for the full rationale. Plain atomic, not a mutex: readers
+// (mainWindowFromHandle(), called from any ACP tokio worker thread) only
+// need a fast, non-blocking, eventually-consistent view of "is Close/New
+// Project's MLT teardown running right now" -- it does not gate access to
+// any data the atomic itself owns.
+std::atomic<bool> g_projectTeardownInProgress{false};
+
 MainWindow *mainWindowFromHandle(void *handle)
 {
+    // During Close/New Project's MLT teardown (mainwindow.cpp), reject any
+    // sap_* call that has not yet been dispatched rather than let it queue
+    // against partially-torn-down Mlt::Producer/Consumer/model state; see
+    // sap_ffi.h.
+    if (g_projectTeardownInProgress.load(std::memory_order_acquire))
+        return nullptr;
     return reinterpret_cast<MainWindow *>(handle);
 }
 
@@ -160,6 +175,17 @@ Mlt::Transition *findAnyTrackBlendTransition(Mlt::Producer &trackProducer, bool 
 }
 
 } // namespace
+
+// C++-linkage, not part of the extern "C" Rust ABI below -- see sap_ffi.h.
+void sap_ffi_begin_project_teardown()
+{
+    g_projectTeardownInProgress.store(true, std::memory_order_release);
+}
+
+void sap_ffi_end_project_teardown()
+{
+    g_projectTeardownInProgress.store(false, std::memory_order_release);
+}
 
 extern "C" {
 

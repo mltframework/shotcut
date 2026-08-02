@@ -60,6 +60,7 @@
 #include "openotherdialog.h"
 #include "player.h"
 #include "proxymanager.h"
+#include "rustbridge/sap_ffi.h"
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
@@ -2939,6 +2940,10 @@ void MainWindow::readWindowSettings()
         }
     } else {
         restoreState(kLayoutEditingDefault);
+        // A fresh install should use the full available desktop while still
+        // retaining the normal title bar/menu chrome. Later launches restore
+        // the user's saved normal/maximized state from QSettings instead.
+        setWindowState(windowState() | Qt::WindowMaximized);
         // consolidation plan phase 12: kLayoutEditingDefault is a baked
         // pre-v4 byte-array that re-tabs the chat dock into the
         // Playlist group (verified live on a fresh sandbox HOME) --
@@ -5822,6 +5827,15 @@ void MainWindow::on_actionClose_triggered()
     m_timelineDock->stopRecording();
     if (continueModified()) {
         LOG_DEBUG() << "";
+        // Reject (rather than let queue against partially-torn-down MLT
+        // state) any panel-rust/ACP-driven sap_* FFI call that has not yet
+        // been dispatched into this teardown -- see sap_ffi.h's
+        // sap_ffi_begin_project_teardown() doc comment. This body is
+        // otherwise unmodified stock upstream Shotcut code; it reenters the
+        // Qt event loop via processEvents() below while MLT state is only
+        // partially closed, which this fork's own background FFI dispatch
+        // thread (unlike anything upstream) can race.
+        sap_ffi_begin_project_teardown();
         QMutexLocker locker(&m_autosaveMutex);
         m_autosaveFile.reset();
         locker.unlock();
@@ -5843,6 +5857,7 @@ void MainWindow::on_actionClose_triggered()
         m_notesDock->setText("");
         m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
+        sap_ffi_end_project_teardown();
     }
 }
 

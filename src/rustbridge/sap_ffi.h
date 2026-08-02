@@ -19,6 +19,35 @@
 #define SAP_FFI_H
 
 #ifdef __cplusplus
+/* Internal, C++-linkage only -- NOT part of the Rust-facing ABI below, so
+ * deliberately kept outside the extern "C" block. Called from
+ * MainWindow::on_actionClose_triggered() (mainwindow.cpp) to bracket the
+ * Close/New Project MLT teardown window.
+ *
+ * Why this exists: every sap_* entry point below crosses to the Qt main
+ * thread via QMetaObject::invokeMethod(..., Qt::BlockingQueuedConnection)
+ * from an ACP-driven tokio worker thread (sap-rust's runtime), and that
+ * dispatch is funneled through mainWindowFromHandle() in sap_ffi.cpp.
+ * Close/New Project's own teardown (on_actionClose_triggered,
+ * closeProducer()) is stock upstream Shotcut code that reenters the Qt
+ * event loop via QCoreApplication::processEvents() partway through tearing
+ * down MLT's Producer/Consumer/model state -- a window that did not exist
+ * before this fork added a background thread capable of queuing blocking
+ * calls into that same state. Any sap_* call still in flight (already past
+ * its mainWindowFromHandle() check) when that reentrant processEvents()
+ * pumps the queue can end up touching a Mlt::Producer/Consumer mid-teardown.
+ * Setting this flag for the duration of the close/new sequence makes
+ * mainWindowFromHandle() reject (return nullptr for) any call that has not
+ * yet been dispatched, closing the vast majority of that window. This does
+ * NOT close the narrower race where a call is dispatched (past the
+ * mainWindowFromHandle() check) in the brief interval before this flag is
+ * set; fully closing that would require a check inside every sap_*
+ * lambda's BlockingQueuedConnection body, not just at entry. */
+void sap_ffi_begin_project_teardown();
+void sap_ffi_end_project_teardown();
+#endif
+
+#ifdef __cplusplus
 extern "C" {
 #endif
 
