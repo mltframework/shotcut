@@ -554,8 +554,6 @@ int main(int argc, char **argv)
             }
         }
 
-        splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."),
-                           Qt::AlignRight | Qt::AlignVCenter);
         a.processEvents();
 
         a.setProperty("system-style", a.style()->objectName());
