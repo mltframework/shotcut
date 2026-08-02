@@ -2940,10 +2940,6 @@ void MainWindow::readWindowSettings()
         }
     } else {
         restoreState(kLayoutEditingDefault);
-        // A fresh install should use the full available desktop while still
-        // retaining the normal title bar/menu chrome. Later launches restore
-        // the user's saved normal/maximized state from QSettings instead.
-        setWindowState(windowState() | Qt::WindowMaximized);
         // consolidation plan phase 12: kLayoutEditingDefault is a baked
         // pre-v4 byte-array that re-tabs the chat dock into the
         // Playlist group (verified live on a fresh sandbox HOME) --
