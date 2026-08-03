@@ -1242,6 +1242,20 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Remove parts of environment variables that our launch script has set
     auto env = QProcessEnvironment::systemEnvironment();
+    // MLT::Controller::resetLocale() sets LC_ALL=C in the environment so that MLT's
+    // numeric parsing is not affected by the system locale. However, this also gets
+    // inherited by child processes we launch, which can break tools that expect a
+    // UTF-8 locale to correctly handle non-ASCII characters (e.g. xdg-open calling
+    // the Perl-based mimetype helper on file paths with non-ASCII characters).
+    // We cannot simply remove it and rely on LANG because LANG is not guaranteed to
+    // be set (or to be a UTF-8 locale) in the environment we inherited. "C.UTF-8" is
+    // a locale-independent UTF-8 locale available on all modern Linux distros.
+    if (!env.value("LANG").contains("UTF-8", Qt::CaseInsensitive)
+        && !env.value("LANG").contains("utf8", Qt::CaseInsensitive)) {
+        env.insert("LC_ALL", "C.UTF-8");
+    } else {
+        env.remove("LC_ALL");
+    }
     // Get the parent of bin/shotcut
     QString appDir = QFileInfo(QCoreApplication::applicationDirPath()).dir().absolutePath();
 
@@ -1275,15 +1289,23 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
     process.setProcessEnvironment(env);
 #endif
 
-    return process.startDetached(program, arguments);
+    // Use the instance-based overload (not the static QProcess::startDetached)
+    process.setProgram(program);
+    process.setArguments(arguments);
+    return process.startDetached();
 }
 
 bool Util::openUrl(const QUrl &url)
 {
-    auto success = QDesktopServices::openUrl(url);
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // Prefer launching xdg-open ourselves via startDetached() so that we can strip
+    // LC_ALL=C from its environment (see startDetached()). QDesktopServices::openUrl()
+    // does not provide a way to control the child process environment.
+    auto success = startDetached("xdg-open", {url.toString()});
     if (!success)
-        success = startDetached("xdg-open", {url.toString()});
+        success = QDesktopServices::openUrl(url);
+#else
+    auto success = QDesktopServices::openUrl(url);
 #endif
     return success;
 }
