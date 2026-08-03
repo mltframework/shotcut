@@ -14,3 +14,4 @@ script:
   - cp -p ../../../../icons/shotcut-logo-64.png org.shotcut.Shotcut.png
   - cp -p ../../../../packaging/linux/org.shotcut.Shotcut.desktop shotcut.desktop
   - desktop-file-edit --set-key=Exec --set-value=shotcut shotcut.desktop
+  - rm -rf usr/bin/python* usr/bin/lib/python* usr/lib/python*
