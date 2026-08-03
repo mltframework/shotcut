@@ -251,6 +251,9 @@ Rectangle {
                             property var trackIndex: index
 
                             trackName: model.name
+                            trackGain: typeof model.gain !== 'undefined' ? model.gain : 0
+                            trackAudioLevel: typeof model.audioLevel !== 'undefined' ? model.audioLevel : -100
+                            trackAudioLevelSupported: multitrack.trackLevelIndicatorSupported
                             isMute: model.mute
                             isHidden: model.hidden
                             isComposite: model.composite

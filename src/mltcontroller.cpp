@@ -1129,7 +1129,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
             int i = 0;
             QScopedPointer<Mlt::Filter> filter(newProducer->filter(i));
             while (filter && filter->is_valid()) {
-                if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+                if (Util::isUserFilter(filter.data())) {
                     newProducer->detach(*filter);
                     chain->Service::attach(*filter);
                 } else {
@@ -1167,8 +1167,7 @@ static int indexOfFirstNonGpu(Producer &toProducer)
 {
     for (int i = 0; i < toProducer.filter_count(); i++) {
         QScopedPointer<Mlt::Filter> filter(toProducer.filter(i));
-        if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty) && filter->get("mlt_service")) {
+        if (Util::isUserFilter(filter.data()) && filter->get("mlt_service")) {
             if (!QString::fromLatin1(filter->get("mlt_service")).startsWith("movit."))
                 return i;
         }
@@ -1176,8 +1175,7 @@ static int indexOfFirstNonGpu(Producer &toProducer)
     Mlt::Chain toChain(toProducer);
     for (int i = 0; i < toChain.link_count(); i++) {
         QScopedPointer<Mlt::Link> link(toChain.link(i));
-        if (link && link->is_valid() && !link->get_int("_loader")
-            && !link->get_int(kShotcutHiddenProperty) && link->get("mlt_service")) {
+        if (Util::isUserLink(link.data()) && link->get("mlt_service")) {
             if (!QString::fromLatin1(link->get("mlt_service")).startsWith("movit."))
                 return i;
         }
@@ -1202,8 +1200,7 @@ void Controller::copyFilters(Producer &fromProducer,
 
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
-        if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader")
-            && !fromFilter->get_int(kShotcutHiddenProperty) && fromFilter->get("mlt_service")) {
+        if (Util::isUserFilter(fromFilter.data()) && fromFilter->get("mlt_service")) {
             filterCount++;
             if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
                 continue;
@@ -1222,7 +1219,7 @@ void Controller::copyFilters(Producer &fromProducer,
                 if (!metadata->allowMultiple()) {
                     std::unique_ptr<Mlt::Filter> existing(
                         getFilter(metadata->uniqueId(), &toProducer));
-                    if (existing && !existing->get_int("_loader")) {
+                    if (Util::isUserFilter(existing.get())) {
                         continue;
                     }
                 }
@@ -1259,7 +1256,7 @@ void Controller::copyFilters(Producer &fromProducer,
         for (int i = 0; i < count; i++) {
             QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
             if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")
-                && !fromLink->get_int("_loader")) {
+                && Util::isUserLink(fromLink.data())) {
                 filterCount++;
                 if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
                     continue;
@@ -1329,7 +1326,7 @@ void Controller::adjustFilters(Producer &producer, int index)
                 // Convert legacy fadeIn filters.
                 filter->set(kShotcutAnimOutProperty, filter->get_length());
             }
-            if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+            if (Util::isUserFilter(filter.data())) {
                 int filterIn = in;
                 int filterOut = out;
                 if (filter->get(kFilterInProperty))
@@ -1536,8 +1533,7 @@ void Controller::adjustFilter(
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceInChanged(inDelta, filter);
-        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
-                   && filter->get_in() <= in) {
+        } else if (Util::isUserFilter(filter) && filter->get_in() <= in) {
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
         }
@@ -1576,8 +1572,7 @@ void Controller::adjustFilter(
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceOutChanged(outDelta, filter);
-        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
-                   && filter->get_out() >= out) {
+        } else if (Util::isUserFilter(filter) && filter->get_out() >= out) {
             filter->set_in_and_out(filter->get_in(), out - outDelta);
             emit MAIN.serviceOutChanged(outDelta, filter);
 

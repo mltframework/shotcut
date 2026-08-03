@@ -48,6 +48,7 @@ enum {
     UndoIdMoveClip,
     UndoIdChangeGain,
     UndoIdChangeTransitionProperty,
+    UndoIdChangeTrackGain,
 };
 
 struct ClipPosition
@@ -936,6 +937,27 @@ private:
     MultitrackModel &m_model;
     int m_trackIndex;
     int m_clipIndex;
+    double m_gain;
+    double m_previous;
+};
+
+class ChangeTrackGainCommand : public QUndoCommand
+{
+public:
+    ChangeTrackGainCommand(MultitrackModel &model,
+                           int trackIndex,
+                           double gain,
+                           QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+protected:
+    int id() const { return UndoIdChangeTrackGain; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    MultitrackModel &m_model;
+    int m_trackIndex;
     double m_gain;
     double m_previous;
 };

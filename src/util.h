@@ -32,8 +32,10 @@ class QDoubleSpinBox;
 class QTemporaryFile;
 
 namespace Mlt {
+class Filter;
+class Link;
 class Producer;
-}
+} // namespace Mlt
 
 class Util
 {
@@ -111,6 +113,10 @@ public:
     static bool openUrl(const QUrl &url);
     static bool cpuHasAVX2();
     static int msToPosition(int64_t ms);
+    static bool isPostUserFilter(Mlt::Filter *filter);
+    static bool isPreUserFilter(Mlt::Filter *filter);
+    static bool isUserFilter(Mlt::Filter *filter);
+    static bool isUserLink(Mlt::Link *link);
 };
 
 #endif // UTIL_H

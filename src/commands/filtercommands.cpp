@@ -22,6 +22,7 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
+#include "util.h"
 
 class FindProducerParser : public Mlt::Parser
 {
@@ -327,8 +328,7 @@ void PasteCommand::undo()
     // Remove all filters
     for (int i = 0; i < producer.filter_count(); i++) {
         Mlt::Filter *filter = producer.filter(i);
-        if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty)) {
+        if (Util::isUserFilter(filter)) {
             producer.detach(*filter);
             i--;
         }

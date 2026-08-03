@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,36 +54,60 @@ static int sortOrder(const QmlMetadata *meta)
     return 2;
 }
 
-static int normalFilterCount(Mlt::Producer *producer)
+static int firstUserFilterIndex(Mlt::Producer *producer)
+{
+    if (producer && producer->is_valid()) {
+        for (int i = 0; i < producer->filter_count(); i++) {
+            Mlt::Filter *filter = producer->filter(i);
+            bool preUser = Util::isPreUserFilter(filter);
+            delete filter;
+            if (!preUser)
+                return i;
+        }
+        return producer->filter_count();
+    }
+    return 0;
+}
+
+static int userFilterCount(Mlt::Producer *producer)
 {
     int count = 0;
     if (producer && producer->is_valid()) {
         for (int i = 0; i < producer->filter_count(); i++) {
             Mlt::Filter *filter = producer->filter(i);
-            if (filter->is_valid()
-                && (filter->get_int("_loader") || filter->get_int(kShotcutHiddenProperty))) {
+            if (Util::isUserFilter(filter))
                 count++;
-            } else {
-                i = producer->filter_count();
-            }
             delete filter;
         }
     }
     return count;
 }
 
-static int normalLinkCount(Mlt::Producer *producer)
+static int firstUserLinkIndex(Mlt::Producer *producer)
+{
+    if (producer && producer->is_valid() && producer->type() == mlt_service_chain_type) {
+        Mlt::Chain chain(*producer);
+        for (int i = 0; i < chain.link_count(); i++) {
+            Mlt::Link *link = chain.link(i);
+            bool userLink = Util::isUserLink(link);
+            delete link;
+            if (userLink)
+                return i;
+        }
+        return chain.link_count();
+    }
+    return 0;
+}
+
+static int userLinkCount(Mlt::Producer *producer)
 {
     int count = 0;
     if (producer && producer->is_valid() && producer->type() == mlt_service_chain_type) {
         Mlt::Chain chain(*producer);
         for (int i = 0; i < chain.link_count(); i++) {
             Mlt::Link *link = chain.link(i);
-            if (link->is_valid() && link->get_int("_loader")) {
+            if (Util::isUserLink(link))
                 count++;
-            } else {
-                i = chain.link_count();
-            }
             delete link;
         }
     }
@@ -95,15 +119,16 @@ static int mltFilterIndex(Mlt::Producer *producer, int row)
     if (row >= 0 && producer && producer->is_valid()) {
         int linkCount = 0;
         if (producer->type() == mlt_service_chain_type) {
-            Mlt::Chain chain(*producer);
-            linkCount = chain.link_count() - normalLinkCount(producer);
+            linkCount = userLinkCount(producer);
             if (row < linkCount) {
                 // This row refers to an MLT link, not a filter
                 return -1;
             }
         }
-        int mltIndex = normalFilterCount(producer) + row - linkCount;
-        if (mltIndex >= 0 && mltIndex < producer->filter_count()) {
+        int userRow = row - linkCount;
+        int mltIndex = firstUserFilterIndex(producer) + userRow;
+        if (userRow >= 0 && userRow < userFilterCount(producer) && mltIndex >= 0
+            && mltIndex < producer->filter_count()) {
             return mltIndex;
         }
     }
@@ -113,9 +138,8 @@ static int mltFilterIndex(Mlt::Producer *producer, int row)
 static int mltLinkIndex(Mlt::Producer *producer, int row)
 {
     if (row >= 0 && producer && producer->is_valid() && producer->type() == mlt_service_chain_type) {
-        Mlt::Chain chain(*producer);
-        int mltIndex = normalLinkCount(producer) + row;
-        if (mltIndex >= 0 && mltIndex < chain.link_count()) {
+        int mltIndex = firstUserLinkIndex(producer) + row;
+        if (row >= 0 && row < userLinkCount(producer) && mltIndex >= 0) {
             return mltIndex;
         }
     }
@@ -563,8 +587,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
         int adjustFrom = m_producer->filter_count();
         for (int i = 0; i < filterSetProducer.filter_count(); i++) {
             Mlt::Filter *filter = filterSetProducer.filter(i);
-            if (filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+            if (Util::isUserFilter(filter)) {
                 QmlMetadata *tmpMeta = MAIN.filterController()->metadataForService(filter);
                 insertRow = findInsertRow(tmpMeta);
                 if (!meta->objectName().isEmpty())
@@ -648,11 +671,9 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
     case mlt_service_filter_type: {
         int linkRows = 0;
         if (producer.type() == mlt_service_chain_type) {
-            Mlt::Chain chain(producer);
-            linkRows = chain.link_count() - normalLinkCount(&producer);
+            linkRows = userLinkCount(&producer);
         }
-        int normFilterCount = normalFilterCount(&producer);
-        int mltIndex = normFilterCount + row - linkRows;
+        int mltIndex = firstUserFilterIndex(&producer) + row - linkRows;
         if (mltIndex < 0) {
             LOG_ERROR() << "Invalid MLT index" << row;
             return;
@@ -681,8 +702,7 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
             return;
         }
         Mlt::Chain chain(producer);
-        int normLinkCount = normalLinkCount(&producer);
-        int mltIndex = normLinkCount + row;
+        int mltIndex = firstUserLinkIndex(&producer) + row;
         Mlt::Link link(service);
         if (isProducerLoaded(producer)) {
             beginInsertRows(QModelIndex(), row, row);
@@ -830,7 +850,7 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
             for (int i = 0; i < count; i++) {
                 Mlt::Link *link = chain.link(i);
                 if (link && link->is_valid()) {
-                    if (!link->get_int("_loader")) {
+                    if (Util::isUserLink(link)) {
                         QmlMetadata *newMeta = MAIN.filterController()->metadataForService(link);
                         m_metaList.append(newMeta);
                     }
@@ -841,8 +861,7 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
         count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter *filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+            if (Util::isUserFilter(filter)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 m_metaList.append(newMeta);
             }

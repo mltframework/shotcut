@@ -155,6 +155,7 @@ public slots:
     void toggleOtherTracksHidden(int trackIndex);
     void setTrackComposite(int trackIndex, bool composite);
     void setTrackLock(int trackIndex, bool lock);
+    bool setTrackGain(int trackIndex, double gain);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     bool trimClipIn(
