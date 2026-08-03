@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'frei0r.camerashake'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    help: 'https://forum.shotcut.org/t/shake-video-filter/51802/1'
 
     keyframes {
         allowAnimateIn: true
