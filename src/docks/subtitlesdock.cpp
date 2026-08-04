@@ -663,7 +663,12 @@ void SubtitlesDock::importSubtitles()
     QString tmpFileName = tmp->fileName();
     tmp->close();
     QProcess proc;
-    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+#if defined(Q_OS_WIN)
+    QString ffmpegExe = "ffmpeg.exe";
+#else
+    QString ffmpegExe = "ffmpeg";
+#endif
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), ffmpegExe);
     if (!ffmpegPath.exists()) {
         MAIN.showStatusMessage(tr("ffmpeg not found. Cannot import subtitles."));
         return;
