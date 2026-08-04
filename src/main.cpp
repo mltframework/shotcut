@@ -71,7 +71,9 @@ static QString prepareSelfHostedSapEndpoint()
         || qEnvironmentVariable("SNAPSHOTD_MANAGED") == QStringLiteral("1"))
         return {};
 
-    const QString nonce = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    // Keep Unix socket names bounded: SNAPSHOTD_HOME may be a long
+    // worktree-scoped path and AF_UNIX has a small total pathname limit.
+    const QString nonce = QUuid::createUuid().toString(QUuid::WithoutBraces).remove('-').left(12);
 #ifdef Q_OS_WIN
     const QString endpoint = QStringLiteral("\\\\.\\pipe\\snapflow-gui-%1-%2")
                                  .arg(QCoreApplication::applicationPid())
