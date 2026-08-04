@@ -1517,7 +1517,6 @@ int sap_set_project_folder(void *mainWindowHandle, const char *folder)
         mw, [path]() { MLT.setProjectFolder(path); }, Qt::BlockingQueuedConnection);
     return 0;
 }
-
 int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);

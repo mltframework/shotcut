@@ -418,7 +418,6 @@ int sap_is_project_folder(void *mainWindowHandle);
  * saveXML writes kSnapflowProjectFolder=1. Returns 0 on success, -1 on
  * invalid handle. */
 int sap_set_project_folder(void *mainWindowHandle, const char *folder);
-
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already
