@@ -366,6 +366,15 @@ int sap_save_project(void *mainWindowHandle);
  * -1 if mainWindowHandle/filename is invalid. */
 int sap_set_project_file(void *mainWindowHandle, const char *filename);
 
+/* Opens an existing project through MainWindow::open(). */
+int sap_open_project(void *mainWindowHandle, const char *path);
+
+/* Returns 1 when the current MLT controller has a project-folder binding. */
+int sap_is_project_folder(void *mainWindowHandle);
+
+/* Sets or clears the current project-folder binding. */
+int sap_set_project_folder(void *mainWindowHandle, const char *folder);
+
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already
