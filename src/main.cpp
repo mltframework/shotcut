@@ -66,10 +66,16 @@ constexpr const auto kWatchdogEnvVar = "SNAPFLOW_WATCHDOG";
 // the endpoint supplied by snapshotd; only an unmanaged GUI self-allocates.
 static QString prepareSelfHostedSapEndpoint()
 {
-    if (!qEnvironmentVariable("SNAPSHOT_SAP_ENDPOINT").isEmpty()
-        || !qEnvironmentVariable("SNAPSHOT_SAP_SOCKET").isEmpty()
-        || qEnvironmentVariable("SNAPSHOTD_MANAGED") == QStringLiteral("1"))
+    // Only a daemon-managed child may inherit an authoritative SAP endpoint.
+    // An unmanaged GUI can be started from a shell that still carries stale
+    // SAP variables from a dead instance; trusting those would suppress
+    // self-allocation and either attach to the wrong process or leave panel
+    // registration with an unresponsive endpoint.
+    if (qEnvironmentVariable("SNAPSHOTD_MANAGED") == QStringLiteral("1"))
         return {};
+    qunsetenv("SNAPSHOT_SAP_ENDPOINT");
+    qunsetenv("SNAPSHOT_SAP_SOCKET");
+    qunsetenv("SNAPSHOT_SAP_TOKEN");
 
     // Keep Unix socket names bounded: SNAPSHOTD_HOME may be a long
     // worktree-scoped path and AF_UNIX has a small total pathname limit.
