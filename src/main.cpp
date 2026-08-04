@@ -35,6 +35,7 @@
 #include <QSysInfo>
 #include <QtGlobal>
 #include <QtWidgets>
+#include <QUuid>
 #include <string>
 #include <thread>
 
@@ -57,6 +58,41 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 static constexpr int kMaxCacheCount = 5000;
 constexpr const auto kWatchdogTimeoutMs = 30000;
 constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
+
+// Prepare the SAP endpoint before MainWindow is constructed.  The embedded
+// panel registers with snapshotd during its own construction, so publishing
+// the endpoint afterwards races registration and leaves the daemon with an
+// external owner that has no SAP socket.  Daemon-launched children always keep
+// the endpoint supplied by snapshotd; only an unmanaged GUI self-allocates.
+static QString prepareSelfHostedSapEndpoint()
+{
+    if (!qEnvironmentVariable("SNAPSHOT_SAP_ENDPOINT").isEmpty()
+        || !qEnvironmentVariable("SNAPSHOT_SAP_SOCKET").isEmpty()
+        || qEnvironmentVariable("SNAPSHOTD_MANAGED") == QStringLiteral("1"))
+        return {};
+
+    const QString nonce = QUuid::createUuid().toString(QUuid::WithoutBraces);
+#ifdef Q_OS_WIN
+    const QString endpoint = QStringLiteral("\\\\.\\pipe\\snapflow-gui-%1-%2")
+                                 .arg(QCoreApplication::applicationPid())
+                                 .arg(nonce);
+#else
+    const QString home = qEnvironmentVariable("SNAPSHOTD_HOME",
+                                               QDir::homePath() + QStringLiteral("/.snapshotd"));
+    const QString runDir = QDir(home).filePath(QStringLiteral("run"));
+    if (!QDir().mkpath(runDir)) {
+        LOG_WARNING() << "unable to create SAP runtime directory" << runDir;
+        return {};
+    }
+    const QString endpoint = QDir(runDir).filePath(
+        QStringLiteral("gui-%1-%2.sock").arg(QCoreApplication::applicationPid()).arg(nonce));
+#endif
+    const QString token = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    qputenv("SNAPSHOT_SAP_ENDPOINT", endpoint.toUtf8());
+    qputenv("SNAPSHOT_SAP_SOCKET", endpoint.toUtf8());
+    qputenv("SNAPSHOT_SAP_TOKEN", token.toUtf8());
+    return endpoint;
+}
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
@@ -562,6 +598,8 @@ int main(int argc, char **argv)
         MainWindow::changeTheme(Settings.theme());
         QQuickStyle::setStyle("Fusion");
 
+        const QString selfHostedSapEndpoint = prepareSelfHostedSapEndpoint();
+
         a.mainWindow = &MAIN;
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
@@ -596,17 +634,16 @@ int main(int argc, char **argv)
             a.mainWindow->open(a.mainWindow->untitledFileName());
         }
 
-        // SAP (Snapshot App Protocol): opt-in only, per
-        // memory/head/gen/rust-fork/{02-rust-embedding,08-lifecycle-and-cli}.md.
-        // Absent SNAPSHOT_SAP_SOCKET, this process behaves exactly like
-        // stock Shotcut -- no socket is opened, nothing below runs. This is
-        // the actual "Rust layer runs inside the Qt process" integration
-        // point: the sap-rust server is spawned on its own background
-        // std::thread (never the Qt main thread, since sap_start_server
-        // blocks running a tokio runtime for the server's lifetime) only
-        // once MainWindow exists and is usable.
-        if (qEnvironmentVariableIsSet("SNAPSHOT_SAP_SOCKET")) {
-            const std::string sapSocketPath = qgetenv("SNAPSHOT_SAP_SOCKET").toStdString();
+        // SAP (Snapshot App Protocol): daemon-launched children use the
+        // endpoint supplied by snapshotd; a direct GUI uses the endpoint
+        // prepared above before panel construction.  The Rust server is
+        // always started only after MainWindow exists and on a background
+        // thread because sap_start_server owns a blocking tokio runtime.
+        if (!qEnvironmentVariable("SNAPSHOT_SAP_ENDPOINT").isEmpty()
+            || !qEnvironmentVariable("SNAPSHOT_SAP_SOCKET").isEmpty()) {
+            const std::string sapSocketPath = !qEnvironmentVariable("SNAPSHOT_SAP_ENDPOINT").isEmpty()
+                                                   ? qgetenv("SNAPSHOT_SAP_ENDPOINT").toStdString()
+                                                   : qgetenv("SNAPSHOT_SAP_SOCKET").toStdString();
             const std::string sapToken = qgetenv("SNAPSHOT_SAP_TOKEN").toStdString();
             // Must run on the Qt main thread (plain QObject::connect, not a
             // cross-thread call) -- so this happens here, before handing
@@ -620,6 +657,11 @@ int main(int argc, char **argv)
         }
 
         result = a.exec();
+
+#ifndef Q_OS_WIN
+        if (!selfHostedSapEndpoint.isEmpty())
+            QFile::remove(selfHostedSapEndpoint);
+#endif
 
         if (EXIT_RESTART == result || EXIT_RESET == result) {
             LOG_DEBUG() << "restarting app";
