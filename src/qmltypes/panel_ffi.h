@@ -26,6 +26,13 @@ bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y)
 // hoverMoveEvent/hoverLeaveEvent overrides.
 bool panel_rust_input_hover(PanelHandle *handle, unsigned int x, unsigned int y);
 bool panel_rust_input_hover_exit(PanelHandle *handle);
+// Forwards the host OS window's activation state (QQuickWindow::
+// activeChanged, wired from RustPanelItem's constructor once its window()
+// becomes available) into Slint's own WindowEvent::WindowActiveChanged --
+// see panel-rust's panel_rust_set_window_active doc comment for why this
+// exists (candidate fix for a reported real-desktop input bug, unconfirmed
+// without a real machine).
+bool panel_rust_set_window_active(PanelHandle *handle, bool active);
 // Current OS mouse-cursor kind for whichever interactive Slint component
 // last reported a hover/focus change (ui/tokens/cursor_host.slint's
 // CursorHost global), already mapped to a Qt::CursorShape int value on the

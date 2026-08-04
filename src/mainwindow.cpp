@@ -60,6 +60,7 @@
 #include "openotherdialog.h"
 #include "player.h"
 #include "proxymanager.h"
+#include "rustbridge/sap_ffi.h"
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
@@ -959,6 +960,17 @@ void MainWindow::setupAndConnectDocks()
     // m_historyDock/m_jobsDock's own no-shortcut pattern.
     m_chatRustDock->toggleViewAction()->setText(tr("AI"));
     ui->menuView->addAction(m_chatRustDock->toggleViewAction());
+    // Top-level toolbar entry (ui->actionAI, mainToolBar in mainwindow.ui):
+    // gives the AI panel the same always-visible, one-click toggle every
+    // other dock (Notes, Subtitles, etc.) already has on the header,
+    // instead of only being reachable via the View menu above. Reuses
+    // this same toggleViewAction()-driven show()/raise() idiom rather
+    // than inventing new show/hide logic.
+    connect(m_chatRustDock->toggleViewAction(),
+            SIGNAL(triggered(bool)),
+            this,
+            SLOT(onChatRustDockTriggered(bool)));
+    connect(ui->actionAI, SIGNAL(triggered()), this, SLOT(onChatRustDockTriggered()));
     // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
     // ~20% of the main window's width on a fresh launch/profile, while
     // staying natively resizable afterward -- QDockWidget/QMainWindow's
@@ -3124,6 +3136,7 @@ void MainWindow::mirrorViewActionShortcuts()
     mirroredActions.insert(m_encodeDock->toggleViewAction(), ui->actionEncode);
     mirroredActions.insert(m_jobsDock->toggleViewAction(), ui->actionJobs);
     mirroredActions.insert(m_subtitlesDock->toggleViewAction(), ui->actionSubtitles);
+    mirroredActions.insert(m_chatRustDock->toggleViewAction(), ui->actionAI);
 
     for (auto i = mirroredActions.cbegin(); i != mirroredActions.cend(); ++i) {
         const QAction *sourceAction = i.key();
@@ -4160,6 +4173,14 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
     if (checked) {
         m_subtitlesDock->show();
         m_subtitlesDock->raise();
+    }
+}
+
+void MainWindow::onChatRustDockTriggered(bool checked)
+{
+    if (checked) {
+        m_chatRustDock->show();
+        m_chatRustDock->raise();
     }
 }
 
@@ -5802,6 +5823,15 @@ void MainWindow::on_actionClose_triggered()
     m_timelineDock->stopRecording();
     if (continueModified()) {
         LOG_DEBUG() << "";
+        // Reject (rather than let queue against partially-torn-down MLT
+        // state) any panel-rust/ACP-driven sap_* FFI call that has not yet
+        // been dispatched into this teardown -- see sap_ffi.h's
+        // sap_ffi_begin_project_teardown() doc comment. This body is
+        // otherwise unmodified stock upstream Shotcut code; it reenters the
+        // Qt event loop via processEvents() below while MLT state is only
+        // partially closed, which this fork's own background FFI dispatch
+        // thread (unlike anything upstream) can race.
+        sap_ffi_begin_project_teardown();
         QMutexLocker locker(&m_autosaveMutex);
         m_autosaveFile.reset();
         locker.unlock();
@@ -5823,6 +5853,7 @@ void MainWindow::on_actionClose_triggered()
         m_notesDock->setText("");
         m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
+        sap_ffi_end_project_teardown();
     }
 }
 

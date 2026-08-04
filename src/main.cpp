@@ -554,8 +554,6 @@ int main(int argc, char **argv)
             }
         }
 
-        splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."),
-                           Qt::AlignRight | Qt::AlignVCenter);
         a.processEvents();
 
         a.setProperty("system-style", a.style()->objectName());
@@ -567,6 +565,24 @@ int main(int argc, char **argv)
             a.mainWindow->hideSetDataDirectory();
         a.mainWindow->setProperty("windowOpacity", 0.0);
         a.mainWindow->show();
+        // Deterministically OS-activate the main window at startup instead
+        // of relying on the window manager's auto-focus-on-map heuristic --
+        // mirrors the same raise()+activateWindow() precedent already used
+        // for dialogs elsewhere in this codebase (see e.g.
+        // MainWindow::eventFilter's Save dialog handling and
+        // FiltersDock::addOnMetadataDialog). Candidate fix (source-level
+        // investigation only, unconfirmed on a real machine) for a reported
+        // real-desktop bug where the embedded chat panel (RustPanelItem)
+        // received almost no input until the whole app window was alt-tabbed
+        // away and back -- plausibly because nothing here previously forced
+        // an OS-level window-activate at all, and VNC's fluxbox window
+        // manager auto-focusing new windows papered over that in dev/test.
+        // This runs independently of MainWindow::showEvent's 400ms
+        // windowOpacity fade-in (mainwindow.cpp) -- window activation is a
+        // window-manager-level property, not tied to paint/opacity, so it
+        // does not race or interfere with that fade timer.
+        a.mainWindow->raise();
+        a.mainWindow->activateWindow();
         a.processEvents();
         a.mainWindow->setFullScreen(a.isFullScreen);
         splash.finish(a.mainWindow);

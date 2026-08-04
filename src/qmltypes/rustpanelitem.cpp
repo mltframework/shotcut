@@ -122,8 +122,48 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     updatePollIntervalForRefreshRate();
     connect(this, &QQuickItem::windowChanged, this,
             &RustPanelItem::updatePollIntervalForRefreshRate);
+    // Candidate fix (source-level investigation only, unconfirmed on a
+    // real machine) for a reported real-desktop bug where most input into
+    // this panel silently never arrived until an unrelated OS-level
+    // window-activate cycle "fixed" it: Slint's own internal window-active
+    // notion (see panel-rust's panel_rust_set_window_active) was never
+    // being told about the host window's activation state at all. This
+    // item's window() can become non-null before or after
+    // componentComplete() runs, so both call handleWindowChanged().
+    connect(this, &QQuickItem::windowChanged, this, &RustPanelItem::handleWindowChanged);
     connect(&m_pollTimer, &QTimer::timeout, this, &RustPanelItem::poll);
     m_pollTimer.start();
+}
+
+void RustPanelItem::componentComplete()
+{
+    QQuickPaintedItem::componentComplete();
+    // Proactively claim focus once this item finishes construction/QML
+    // property binding, instead of relying purely on mousePressEvent's
+    // reactive forceActiveFocus() -- see the .h declaration's doc comment.
+    forceActiveFocus(Qt::OtherFocusReason);
+    // In case this item was already attached to a window before
+    // componentComplete() ran (windowChanged's connection above would have
+    // fired before this override could run this same tick).
+    handleWindowChanged(window());
+}
+
+void RustPanelItem::handleWindowChanged(QQuickWindow *win)
+{
+    if (!win)
+        return;
+    connect(win, &QQuickWindow::activeChanged, this, &RustPanelItem::pushWindowActiveState,
+            Qt::UniqueConnection);
+    pushWindowActiveState();
+}
+
+void RustPanelItem::pushWindowActiveState()
+{
+    ensureHandle();
+    if (!m_handle)
+        return;
+    if (QQuickWindow *win = window())
+        panel_rust_set_window_active(m_handle, win->isActive());
 }
 
 RustPanelItem::~RustPanelItem()
@@ -151,9 +191,16 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
                     &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
         }
     }
-    const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
-    if (m_pollTimer.interval() != intervalMs)
-        m_pollTimer.setInterval(intervalMs);
+    m_activePollIntervalMs = qMax(1, qRound(1000.0 / targetFps));
+    // Only push the new interval onto the live timer immediately if it's
+    // currently running at the active cadence -- if it's idle-backed-off
+    // (see applyPollCadence()), the next poll() tick that finds real
+    // activity will pick up the freshly-computed m_activePollIntervalMs
+    // then. Forcing it here unconditionally would undo the idle backoff
+    // every time this slot fires (e.g. a spurious screenChanged while
+    // fully idle).
+    if (!m_pollTimerIdle && m_pollTimer.interval() != m_activePollIntervalMs)
+        m_pollTimer.setInterval(m_activePollIntervalMs);
 
     // This function is already wired to fire on windowChanged/screenChanged
     // (see constructor/below) -- exactly the cases where devicePixelRatio
@@ -162,6 +209,22 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
     // notice. ensureHandle() no-ops unless dpr or size actually changed.
     ensureHandle();
     update();
+}
+
+void RustPanelItem::applyPollCadence(bool active)
+{
+    if (active) {
+        if (m_pollTimerIdle || m_pollTimer.interval() != m_activePollIntervalMs) {
+            m_pollTimer.setInterval(m_activePollIntervalMs);
+            m_pollTimerIdle = false;
+        }
+        return;
+    }
+    if (m_pollTimerIdle)
+        return;
+    const int idleIntervalMs = qMax(1, qRound(1000.0 / kIdlePollFps));
+    m_pollTimer.setInterval(idleIntervalMs);
+    m_pollTimerIdle = true;
 }
 
 void RustPanelItem::ensureHandle()
@@ -449,8 +512,14 @@ void RustPanelItem::poll()
 {
     if (!m_handle)
         return;
-    if (panel_rust_poll(m_handle))
+    const bool needsPaint = panel_rust_poll(m_handle);
+    if (needsPaint)
         requestRepaint();
+    // idle_poll_backoff: back this timer off to kIdlePollFps whenever the
+    // panel had nothing to repaint this tick, and restore/keep the full
+    // display-refresh cadence whenever it did -- see applyPollCadence()'s
+    // doc comment in the header.
+    applyPollCadence(needsPaint);
 
     // ui/tokens/cursor_host.slint's CursorHost global tracks the desired
     // cursor kind declaratively (hover/focus change-handlers), already

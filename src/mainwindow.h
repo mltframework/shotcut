@@ -298,6 +298,11 @@ public slots:
     bool on_actionSave_triggered();
     void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
     void showSettingsMenu() const;
+    // Called directly from src/rustbridge/sap_ffi.cpp's sap_close_project
+    // (the Rust/Slint panel's "close project" FFI entry point), so it must
+    // be reachable from outside MainWindow -- moved out of `private slots:`
+    // below, which a QMetaObject::invokeMethod call cannot access.
+    void on_actionClose_triggered();
 
 private slots:
     void showUpgradePrompt();
@@ -316,6 +321,7 @@ private slots:
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
     void onSubtitlesDockTriggered(bool = true);
+    void onChatRustDockTriggered(bool = true);
     void onFilesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
@@ -389,7 +395,6 @@ private slots:
     void onGpuAdapterTriggered(QAction *);
     void on_actionResources_triggered();
     void on_actionApplicationLog_triggered();
-    void on_actionClose_triggered();
     void onPlayerTabIndexChanged(int index);
     void onUpgradeCheckFinished(QNetworkReply *reply);
     void onUpgradeTriggered();

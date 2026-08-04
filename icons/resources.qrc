@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
+        <file>dark/32x32/ai-assistant.png</file>
         <file>dark/32x32/4-direction.png</file>
         <file>dark/32x32/audio-input-microphone.png</file>
         <file>dark/32x32/audio-meter.png</file>
@@ -146,6 +147,7 @@
         <file>dark/32x32/zoom-select.png</file>
         <file>dark/index.theme</file>
         <file>light/16x16/track-locked.png</file>
+        <file>light/32x32/ai-assistant.png</file>
         <file>light/32x32/4-direction.png</file>
         <file>light/32x32/audio-input-microphone.png</file>
         <file>light/32x32/audio-meter.png</file>
@@ -291,6 +293,7 @@
         <file>light/32x32/zoom-out.png</file>
         <file>light/32x32/zoom-select.png</file>
         <file>light/index.theme</file>
+        <file>oxygen/32x32/actions/ai-assistant.png</file>
         <file>oxygen/32x32/actions/4-direction.png</file>
         <file>oxygen/32x32/actions/chronometer.png</file>
         <file>oxygen/32x32/actions/color-picker.png</file>
@@ -439,6 +442,7 @@
         <file>oxygen/32x32/status/task-complete.png</file>
         <file>oxygen/32x32/status/task-reject.png</file>
         <file>oxygen/index.theme</file>
+        <file>oxygen-dark/32x32/actions/ai-assistant.png</file>
         <file>oxygen-dark/32x32/actions/4-direction.png</file>
         <file>oxygen-dark/32x32/actions/audio-meter.png</file>
         <file>oxygen-dark/32x32/actions/chronometer.png</file>
