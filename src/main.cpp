@@ -88,6 +88,14 @@ static QString prepareSelfHostedSapEndpoint()
     }
     const QString endpoint = QDir(runDir).filePath(
         QStringLiteral("gui-%1-%2.sock").arg(QCoreApplication::applicationPid()).arg(nonce));
+    // Linux/macOS Unix-domain sockets carry the pathname in a fixed-size
+    // sockaddr field (roughly 108 bytes on Linux).  Refuse an endpoint that
+    // cannot be bound instead of exporting a path that would make SAP start
+    // fail asynchronously and leave snapshotd with an unusable registration.
+    if (endpoint.toLocal8Bit().size() >= 100) {
+        LOG_WARNING() << "SAP runtime path is too long for AF_UNIX" << endpoint;
+        return {};
+    }
 #endif
     const QString token = QUuid::createUuid().toString(QUuid::WithoutBraces);
     qputenv("SNAPSHOT_SAP_ENDPOINT", endpoint.toUtf8());
