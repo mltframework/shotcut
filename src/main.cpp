@@ -57,7 +57,7 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 
 static constexpr int kMaxCacheCount = 5000;
 constexpr const auto kWatchdogTimeoutMs = 30000;
-constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
+constexpr const auto kWatchdogEnvVar = "SNAPFLOW_WATCHDOG";
 
 // Prepare the SAP endpoint before MainWindow is constructed.  The embedded
 // panel registers with snapshotd during its own construction, so publishing
