@@ -1744,6 +1744,8 @@ char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, 
             if (!model || trackIndex < 0 || clipIndex < 0
                 || trackIndex >= model->trackList().size())
                 return;
+            if (mw->timelineDock()->isTrackLocked(trackIndex))
+                return;
             auto info = model->getClipInfo(trackIndex, clipIndex);
             if (!info || !info->producer || !info->producer->is_valid() || !info->cut
                 || !info->cut->is_valid())
