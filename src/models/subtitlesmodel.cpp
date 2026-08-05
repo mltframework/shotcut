@@ -828,10 +828,11 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
             result = QString(
                 m_producer->frames_to_time(Util::msToPosition(item.end), Settings.timeFormat()));
             break;
-        case COLUMN_DURATION:
-            result = QString(
-                m_producer->frames_to_time(item.end - item.start, Settings.timeFormat()));
+        case COLUMN_DURATION: {
+            auto frames = qRound(double(item.end - item.start) * MLT.profile().fps() / 1000.0);
+            result = QString(m_producer->frames_to_time(frames, Settings.timeFormat()));
             break;
+        }
         default:
             LOG_ERROR() << "Invalid Column" << index.column() << role;
             break;
