@@ -972,6 +972,7 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex)
                 entry["path"] = QString::fromUtf8(info->resource ? info->resource : "");
                 entry["inFrame"] = info->frame_in;
                 entry["outFrame"] = info->frame_out;
+                entry["speed"] = Util::GetSpeedFromProducer(info->producer);
                 result.append(entry);
             }
             ok = true;
@@ -1775,6 +1776,7 @@ char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, 
             result["index"] = clipIndex;
             result["inFrame"] = updated->frame_in;
             result["outFrame"] = updated->frame_out;
+            result["speed"] = Util::GetSpeedFromProducer(updated->producer);
             ok = true;
         },
         Qt::BlockingQueuedConnection);
