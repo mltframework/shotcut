@@ -122,8 +122,48 @@ RustPanelItem::RustPanelItem(QQuickItem *parent)
     updatePollIntervalForRefreshRate();
     connect(this, &QQuickItem::windowChanged, this,
             &RustPanelItem::updatePollIntervalForRefreshRate);
+    // Candidate fix (source-level investigation only, unconfirmed on a
+    // real machine) for a reported real-desktop bug where most input into
+    // this panel silently never arrived until an unrelated OS-level
+    // window-activate cycle "fixed" it: Slint's own internal window-active
+    // notion (see panel-rust's panel_rust_set_window_active) was never
+    // being told about the host window's activation state at all. This
+    // item's window() can become non-null before or after
+    // componentComplete() runs, so both call handleWindowChanged().
+    connect(this, &QQuickItem::windowChanged, this, &RustPanelItem::handleWindowChanged);
     connect(&m_pollTimer, &QTimer::timeout, this, &RustPanelItem::poll);
     m_pollTimer.start();
+}
+
+void RustPanelItem::componentComplete()
+{
+    QQuickPaintedItem::componentComplete();
+    // Proactively claim focus once this item finishes construction/QML
+    // property binding, instead of relying purely on mousePressEvent's
+    // reactive forceActiveFocus() -- see the .h declaration's doc comment.
+    forceActiveFocus(Qt::OtherFocusReason);
+    // In case this item was already attached to a window before
+    // componentComplete() ran (windowChanged's connection above would have
+    // fired before this override could run this same tick).
+    handleWindowChanged(window());
+}
+
+void RustPanelItem::handleWindowChanged(QQuickWindow *win)
+{
+    if (!win)
+        return;
+    connect(win, &QQuickWindow::activeChanged, this, &RustPanelItem::pushWindowActiveState,
+            Qt::UniqueConnection);
+    pushWindowActiveState();
+}
+
+void RustPanelItem::pushWindowActiveState()
+{
+    ensureHandle();
+    if (!m_handle)
+        return;
+    if (QQuickWindow *win = window())
+        panel_rust_set_window_active(m_handle, win->isActive());
 }
 
 RustPanelItem::~RustPanelItem()
@@ -151,9 +191,16 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
                     &RustPanelItem::updatePollIntervalForRefreshRate, Qt::UniqueConnection);
         }
     }
-    const int intervalMs = qMax(1, qRound(1000.0 / targetFps));
-    if (m_pollTimer.interval() != intervalMs)
-        m_pollTimer.setInterval(intervalMs);
+    m_activePollIntervalMs = qMax(1, qRound(1000.0 / targetFps));
+    // Only push the new interval onto the live timer immediately if it's
+    // currently running at the active cadence -- if it's idle-backed-off
+    // (see applyPollCadence()), the next poll() tick that finds real
+    // activity will pick up the freshly-computed m_activePollIntervalMs
+    // then. Forcing it here unconditionally would undo the idle backoff
+    // every time this slot fires (e.g. a spurious screenChanged while
+    // fully idle).
+    if (!m_pollTimerIdle && m_pollTimer.interval() != m_activePollIntervalMs)
+        m_pollTimer.setInterval(m_activePollIntervalMs);
 
     // This function is already wired to fire on windowChanged/screenChanged
     // (see constructor/below) -- exactly the cases where devicePixelRatio
@@ -162,6 +209,22 @@ void RustPanelItem::updatePollIntervalForRefreshRate()
     // notice. ensureHandle() no-ops unless dpr or size actually changed.
     ensureHandle();
     update();
+}
+
+void RustPanelItem::applyPollCadence(bool active)
+{
+    if (active) {
+        if (m_pollTimerIdle || m_pollTimer.interval() != m_activePollIntervalMs) {
+            m_pollTimer.setInterval(m_activePollIntervalMs);
+            m_pollTimerIdle = false;
+        }
+        return;
+    }
+    if (m_pollTimerIdle)
+        return;
+    const int idleIntervalMs = qMax(1, qRound(1000.0 / kIdlePollFps));
+    m_pollTimer.setInterval(idleIntervalMs);
+    m_pollTimerIdle = true;
 }
 
 void RustPanelItem::ensureHandle()
@@ -196,7 +259,18 @@ void RustPanelItem::ensureHandle()
         }
         return;
     }
-    m_handle = panel_rust_create(w, h);
+    const bool initialIdentityApplied = m_hasPendingProjectPath && !m_pendingProjectClosed;
+    if (initialIdentityApplied) {
+        const QByteArray path = m_pendingProjectPath.toUtf8();
+        m_handle = panel_rust_create_with_identity(
+            w,
+            h,
+            reinterpret_cast<const unsigned char *>(path.constData()),
+            static_cast<size_t>(path.size()),
+            m_pendingUntitledProject);
+    } else {
+        m_handle = panel_rust_create(w, h);
+    }
     if (!m_handle) {
         qWarning() << "RustPanelItem: panel_rust_create failed";
         return;
@@ -206,11 +280,18 @@ void RustPanelItem::ensureHandle()
     panel_rust_apply_host_appearance(m_handle, ++m_appearanceGeneration, m_isDark, nullptr, 0,
                                       nullptr, 0, 1.0f, static_cast<float>(dpr));
     m_lastDevicePixelRatio = dpr;
-    if (m_hasPendingProjectPath) {
-        const QByteArray path = m_pendingProjectPath.toUtf8();
-        panel_rust_set_project_path(m_handle,
-                                     reinterpret_cast<const unsigned char *>(path.constData()),
-                                     static_cast<size_t>(path.size()));
+    if (m_hasPendingProjectPath && !initialIdentityApplied) {
+        if (m_pendingUntitledProject)
+            panel_rust_project_created_untitled(m_handle);
+        else if (m_pendingProjectClosed)
+            panel_rust_project_closed(m_handle);
+        else {
+            const QByteArray path = m_pendingProjectPath.toUtf8();
+            panel_rust_set_project_path(
+                m_handle,
+                reinterpret_cast<const unsigned char *>(path.constData()),
+                static_cast<size_t>(path.size()));
+        }
     }
 }
 
@@ -345,14 +426,65 @@ void RustPanelItem::setTheme(const QString &theme)
 
 void RustPanelItem::setProjectPath(const QString &path)
 {
+    // Idempotent: setCurrentFile used to call this twice per open (signal +
+    // direct). Even after that was fixed, producerOpened can re-emit the
+    // same path; recreating the Rust singleton again would re-attach ACP
+    // and race the shared gateway.
+    if (m_handle && m_hasPendingProjectPath && !m_pendingUntitledProject
+        && !m_pendingProjectClosed && m_pendingProjectPath == path && !path.isEmpty()) {
+        return;
+    }
     m_pendingProjectPath = path;
     m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = false;
+    m_pendingProjectClosed = false;
     if (!m_handle)
         return; // applied by ensureHandle() once the panel actually exists
-    const QByteArray bytes = path.toUtf8();
-    panel_rust_set_project_path(m_handle,
-                                 reinterpret_cast<const unsigned char *>(bytes.constData()),
-                                 static_cast<size_t>(bytes.size()));
+    recreateForPendingProject();
+}
+
+void RustPanelItem::projectCreatedUntitled()
+{
+    if (m_handle && m_hasPendingProjectPath && m_pendingUntitledProject
+        && !m_pendingProjectClosed) {
+        return;
+    }
+    m_pendingProjectPath.clear();
+    m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = true;
+    m_pendingProjectClosed = false;
+    if (m_handle)
+        recreateForPendingProject();
+}
+
+void RustPanelItem::projectClosed()
+{
+    m_pendingProjectPath.clear();
+    m_hasPendingProjectPath = true;
+    m_pendingUntitledProject = false;
+    m_pendingProjectClosed = true;
+    if (m_handle) {
+        // Closing the document must release all project-owned thread actors
+        // immediately. The next paint recreates a display-only panel with
+        // no identity, so no ACP session can capture the host cwd between
+        // close and the next project-open lifecycle event.
+        panel_rust_destroy(m_handle);
+        m_handle = nullptr;
+        m_lastDevicePixelRatio = -1.0;
+    }
+}
+
+void RustPanelItem::recreateForPendingProject()
+{
+    // A project switch changes the bridge's thread set and its cold-start
+    // records, so forwarding only a path would leave the old project's
+    // model alive. Recreate the process-local Rust singleton; ensureHandle()
+    // immediately seeds it with the pending identity and hydrates that
+    // project's physical store.
+    panel_rust_destroy(m_handle);
+    m_handle = nullptr;
+    m_lastDevicePixelRatio = -1.0;
+    ensureHandle();
 }
 
 void RustPanelItem::renameProjectPath(const QString &oldPath, const QString &newPath)
@@ -380,8 +512,14 @@ void RustPanelItem::poll()
 {
     if (!m_handle)
         return;
-    if (panel_rust_poll(m_handle))
+    const bool needsPaint = panel_rust_poll(m_handle);
+    if (needsPaint)
         requestRepaint();
+    // idle_poll_backoff: back this timer off to kIdlePollFps whenever the
+    // panel had nothing to repaint this tick, and restore/keep the full
+    // display-refresh cadence whenever it did -- see applyPollCadence()'s
+    // doc comment in the header.
+    applyPollCadence(needsPaint);
 
     // ui/tokens/cursor_host.slint's CursorHost global tracks the desired
     // cursor kind declaratively (hover/focus change-handlers), already

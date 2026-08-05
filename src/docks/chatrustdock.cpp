@@ -84,11 +84,22 @@ void ChatRustDock::applyTheme(const QString &theme)
         m_panel->setTheme(theme);
 }
 
-void ChatRustDock::updateProjectPath(bool withReopen)
+void ChatRustDock::projectOpened(const QString &path)
 {
-    Q_UNUSED(withReopen)
     if (m_panel)
-        m_panel->setProjectPath(MainWindow::singleton().fileName());
+        m_panel->setProjectPath(path);
+}
+
+void ChatRustDock::projectCreatedUntitled()
+{
+    if (m_panel)
+        m_panel->projectCreatedUntitled();
+}
+
+void ChatRustDock::projectClosed()
+{
+    if (m_panel)
+        m_panel->projectClosed();
 }
 
 void ChatRustDock::setProjectPath(const QString &path)

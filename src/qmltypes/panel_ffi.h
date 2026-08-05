@@ -8,6 +8,11 @@ extern "C" {
 struct PanelHandle;
 
 PanelHandle *panel_rust_create(unsigned int width, unsigned int height);
+PanelHandle *panel_rust_create_with_identity(unsigned int width,
+                                               unsigned int height,
+                                               const unsigned char *path_ptr,
+                                               size_t path_len,
+                                               bool untitled);
 void panel_rust_destroy(PanelHandle *handle);
 // Whether the composer/a local terminal/a secondary text input (search
 // boxes, dropdown filters, the mention popup) currently owns focus -- see
@@ -21,6 +26,13 @@ bool panel_rust_input_click(PanelHandle *handle, unsigned int x, unsigned int y)
 // hoverMoveEvent/hoverLeaveEvent overrides.
 bool panel_rust_input_hover(PanelHandle *handle, unsigned int x, unsigned int y);
 bool panel_rust_input_hover_exit(PanelHandle *handle);
+// Forwards the host OS window's activation state (QQuickWindow::
+// activeChanged, wired from RustPanelItem's constructor once its window()
+// becomes available) into Slint's own WindowEvent::WindowActiveChanged --
+// see panel-rust's panel_rust_set_window_active doc comment for why this
+// exists (candidate fix for a reported real-desktop input bug, unconfirmed
+// without a real machine).
+bool panel_rust_set_window_active(PanelHandle *handle, bool active);
 // Current OS mouse-cursor kind for whichever interactive Slint component
 // last reported a hover/focus change (ui/tokens/cursor_host.slint's
 // CursorHost global), already mapped to a Qt::CursorShape int value on the
@@ -68,6 +80,8 @@ bool panel_rust_apply_host_appearance(PanelHandle *handle,
 // call this on producerOpened, even when closing, so panel-rust's
 // stored path can't go stale.
 bool panel_rust_set_project_path(PanelHandle *handle, const unsigned char *path, size_t path_len);
+bool panel_rust_project_created_untitled(PanelHandle *handle);
+bool panel_rust_project_closed(PanelHandle *handle);
 // Save-As specifically: the project KEPT ITS IDENTITY but changed path.
 // Distinct from panel_rust_set_project_path because the panel cannot tell
 // "Save-As A->B" from "closed A, opened B" by watching the path alone --

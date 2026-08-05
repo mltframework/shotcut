@@ -19,6 +19,35 @@
 #define SAP_FFI_H
 
 #ifdef __cplusplus
+/* Internal, C++-linkage only -- NOT part of the Rust-facing ABI below, so
+ * deliberately kept outside the extern "C" block. Called from
+ * MainWindow::on_actionClose_triggered() (mainwindow.cpp) to bracket the
+ * Close/New Project MLT teardown window.
+ *
+ * Why this exists: every sap_* entry point below crosses to the Qt main
+ * thread via QMetaObject::invokeMethod(..., Qt::BlockingQueuedConnection)
+ * from an ACP-driven tokio worker thread (sap-rust's runtime), and that
+ * dispatch is funneled through mainWindowFromHandle() in sap_ffi.cpp.
+ * Close/New Project's own teardown (on_actionClose_triggered,
+ * closeProducer()) is stock upstream Shotcut code that reenters the Qt
+ * event loop via QCoreApplication::processEvents() partway through tearing
+ * down MLT's Producer/Consumer/model state -- a window that did not exist
+ * before this fork added a background thread capable of queuing blocking
+ * calls into that same state. Any sap_* call still in flight (already past
+ * its mainWindowFromHandle() check) when that reentrant processEvents()
+ * pumps the queue can end up touching a Mlt::Producer/Consumer mid-teardown.
+ * Setting this flag for the duration of the close/new sequence makes
+ * mainWindowFromHandle() reject (return nullptr for) any call that has not
+ * yet been dispatched, closing the vast majority of that window. This does
+ * NOT close the narrower race where a call is dispatched (past the
+ * mainWindowFromHandle() check) in the brief interval before this flag is
+ * set; fully closing that would require a check inside every sap_*
+ * lambda's BlockingQueuedConnection body, not just at entry. */
+void sap_ffi_begin_project_teardown();
+void sap_ffi_end_project_teardown();
+#endif
+
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -98,12 +127,35 @@ char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex);
  * error (invalid handle/index, or no blend transition on that track). */
 int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode);
 
+/* Enables/disables video-track compositing over lower tracks via the real
+ * MultitrackModel::setTrackComposite() (qtblend/movit/cairoblend
+ * transition's `disable` bit -- the Track Properties "Composite" toggle).
+ * Returns 0 on success, -1 on error (invalid handle/index). */
+int sap_set_track_composite(void *mainWindowHandle, int trackIndex, int composite);
+
 /* Sets the project-wide timeline row height in pixels via the real
  * MultitrackModel::setTrackHeight() (a single `snapflow:trackHeight`
  * property on the tractor, not per-track -- same primitive the Timeline
  * panel's zoom/height slider uses). Value is clamped to [10, 150] by the
  * real setter itself. Returns 0 on success, -1 on error (invalid handle). */
 int sap_set_track_height(void *mainWindowHandle, int height);
+
+/* Sets the project video mode / canvas. When profileName is non-NULL and
+ * non-empty, calls MainWindow::setProfile(name) (MLT built-in profile).
+ * Otherwise applies width/height (required >0) and optional frame rate
+ * (defaults 25/1) onto MLT.profile() and refreshes the preview profile.
+ * Returns 0 on success, -1 on error. */
+int sap_set_profile(void *mainWindowHandle,
+                    const char *profileName,
+                    int width,
+                    int height,
+                    int frameRateNum,
+                    int frameRateDen);
+
+/* Returns heap-allocated JSON:
+ * {"width":W,"height":H,"frameRateNum":N,"frameRateDen":D} for the live
+ * MLT profile, or NULL on error. Caller frees via sap_free_string. */
+char *sap_get_profile(void *mainWindowHandle);
 
 /* Attaches a new MLT filter of mltService to the clip's real per-instance
  * "cut" producer (per Mlt::ClipInfo::cut -- the same instance-specific
@@ -366,6 +418,29 @@ int sap_save_project(void *mainWindowHandle);
  * -1 if mainWindowHandle/filename is invalid. */
 int sap_set_project_file(void *mainWindowHandle, const char *filename);
 
+/* Loads an existing MLT XML project from disk via MainWindow::openForSap(),
+ * replacing whatever playlist/multitrack is currently live, and binds
+ * fileName() to path. Only safe on a freshly launched, unmodified session
+ * -- openForSap skips continueModified()/checkAutoSave() modal dialogs.
+ * Returns 0 on success, -1 on failure. */
+int sap_open_project(void *mainWindowHandle, const char *path);
+
+/* Resets the live session to an untitled/empty project without quitting
+ * the process. Returns 0 on success, -1 on invalid handle. Not wired to
+ * MCP project.close in the current plan (session Unbind only); kept as a
+ * primitive for a later idle-process reset path. */
+int sap_close_project(void *mainWindowHandle);
+
+/* Returns 1 if MLT.projectFolder() is non-empty (folder-type project),
+ * 0 if empty (file-type / no project folder), -1 on invalid handle.
+ * Mirrors the live kSnapflowProjectFolder flag after open/save. */
+int sap_is_project_folder(void *mainWindowHandle);
+
+/* Sets MLT.setProjectFolder(folder). Pass empty/NULL to clear (file-type).
+ * Used before the first project.save of a brand-new folder-type project so
+ * saveXML writes kSnapflowProjectFolder=1. Returns 0 on success, -1 on
+ * invalid handle. */
+int sap_set_project_folder(void *mainWindowHandle, const char *folder);
 /* Writes the current project to outputXmlPath as a self-contained MLT XML
  * file (absolute clip source paths, not project-relative) via the same
  * real MainWindow::saveXML() primitive "Save As" uses -- it already
@@ -391,6 +466,32 @@ int sap_project_redo(void *mainWindowHandle);
  * runs on the Qt GUI thread, or -1 for an invalid handle/player/frame or
  * failed cross-thread invocation. */
 int sap_playback_seek(void *mainWindowHandle, long long frame);
+int sap_playback_fast_forward(void *mainWindowHandle);
+char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, double speed);
+
+/* Transport controls -- same Player slots the editor Play/Pause/Stop
+ * buttons drive. play uses speed (typically 1.0). pause uses position
+ * (-1 keeps current). Returns 0 on success, -1 on error. */
+int sap_playback_play(void *mainWindowHandle, double speed);
+int sap_playback_pause(void *mainWindowHandle, long long position);
+int sap_playback_stop(void *mainWindowHandle);
+
+/* Returns heap-allocated JSON
+ * {"playing":bool,"position":N,"duration":N} from Player + Controller
+ * isPaused(), or NULL on error. Caller frees via sap_free_string. */
+char *sap_playback_get_state(void *mainWindowHandle);
+
+/* Appends an image-sequence producer to the playlist bin (native
+ * qimage/pixbuf sequence path: printf resource, ttl, begin,
+ * shotcut_sequence -- same as ImageProducerWidget sequence mode).
+ * path is the first frame file; ttl is frames-per-image (default 1 when
+ * <=0); begin may be NULL to auto-detect from the filename digits.
+ * Returns playlist-entry JSON like sap_playlist_append, or NULL on error.
+ * Caller frees via sap_free_string. */
+char *sap_playlist_append_image_sequence(void *mainWindowHandle,
+                                         const char *path,
+                                         int ttl,
+                                         const char *begin);
 
 /* Opens sourcePath as a real Mlt::Producer (the same primitive
  * MainWindow::open()/Controller::open() use for a user-selected file) and

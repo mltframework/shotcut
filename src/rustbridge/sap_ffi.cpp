@@ -24,6 +24,7 @@
 #include "models/multitrackmodel.h"
 #include "settings.h"
 #include "player.h"
+#include "util.h"
 
 #include <Mlt.h>
 #include <QBuffer>
@@ -31,6 +32,7 @@
 #include <QColor>
 #include <QDir>
 #include <QFont>
+#include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
@@ -43,6 +45,7 @@
 #include <QString>
 #include <QUndoStack>
 #include <algorithm>
+#include <atomic>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -52,8 +55,22 @@
 
 namespace {
 
+// See sap_ffi.h's sap_ffi_begin_project_teardown()/sap_ffi_end_project_teardown()
+// doc comment for the full rationale. Plain atomic, not a mutex: readers
+// (mainWindowFromHandle(), called from any ACP tokio worker thread) only
+// need a fast, non-blocking, eventually-consistent view of "is Close/New
+// Project's MLT teardown running right now" -- it does not gate access to
+// any data the atomic itself owns.
+std::atomic<bool> g_projectTeardownInProgress{false};
+
 MainWindow *mainWindowFromHandle(void *handle)
 {
+    // During Close/New Project's MLT teardown (mainwindow.cpp), reject any
+    // sap_* call that has not yet been dispatched rather than let it queue
+    // against partially-torn-down Mlt::Producer/Consumer/model state; see
+    // sap_ffi.h.
+    if (g_projectTeardownInProgress.load(std::memory_order_acquire))
+        return nullptr;
     return reinterpret_cast<MainWindow *>(handle);
 }
 
@@ -160,6 +177,17 @@ Mlt::Transition *findAnyTrackBlendTransition(Mlt::Producer &trackProducer, bool 
 }
 
 } // namespace
+
+// C++-linkage, not part of the extern "C" Rust ABI below -- see sap_ffi.h.
+void sap_ffi_begin_project_teardown()
+{
+    g_projectTeardownInProgress.store(true, std::memory_order_release);
+}
+
+void sap_ffi_end_project_teardown()
+{
+    g_projectTeardownInProgress.store(false, std::memory_order_release);
+}
 
 extern "C" {
 
@@ -512,6 +540,88 @@ int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char 
     return result;
 }
 
+int sap_set_track_composite(void *mainWindowHandle, int trackIndex, int composite)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, composite, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            // Real MultitrackModel::setTrackComposite -- Track Properties
+            // "Composite" toggle (qtblend transition disable bit).
+            model->setTrackComposite(trackIndex, composite != 0);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_profile(void *mainWindowHandle,
+                    const char *profileName,
+                    int width,
+                    int height,
+                    int frameRateNum,
+                    int frameRateDen)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    const QString name = profileName ? QString::fromUtf8(profileName) : QString();
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, name, width, height, frameRateNum, frameRateDen, &result]() {
+            if (!name.isEmpty()) {
+                mw->setProfile(name);
+                result = 0;
+                return;
+            }
+            if (width <= 0 || height <= 0)
+                return;
+            const int fpsNum = frameRateNum > 0 ? frameRateNum : 25;
+            const int fpsDen = frameRateDen > 0 ? frameRateDen : 1;
+            auto &profile = MLT.profile();
+            profile.set_width(Util::coerceMultiple(width));
+            profile.set_height(Util::coerceMultiple(height));
+            auto gcd = Util::greatestCommonDivisor(fpsNum, fpsDen);
+            profile.set_frame_rate(fpsNum / gcd, fpsDen / gcd);
+            profile.set_explicit(true);
+            MLT.updatePreviewProfile();
+            MLT.consumerChanged();
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_get_profile(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return nullptr;
+    QJsonObject obj;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw,
+        [&obj, &ok]() {
+            auto &profile = MLT.profile();
+            obj["width"] = profile.width();
+            obj["height"] = profile.height();
+            obj["frameRateNum"] = profile.frame_rate_num();
+            obj["frameRateDen"] = profile.frame_rate_den();
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(obj).toJson(QJsonDocument::Compact));
+}
+
 int sap_set_track_height(void *mainWindowHandle, int height)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -862,6 +972,7 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex)
                 entry["path"] = QString::fromUtf8(info->resource ? info->resource : "");
                 entry["inFrame"] = info->frame_in;
                 entry["outFrame"] = info->frame_out;
+                entry["speed"] = Util::GetSpeedFromProducer(info->producer);
                 result.append(entry);
             }
             ok = true;
@@ -1377,6 +1488,9 @@ char *sap_list_tracks(void *mainWindowHandle)
                 obj["muted"] = model->data(modelIndex, MultitrackModel::IsMuteRole).toBool();
                 obj["hidden"] = model->data(modelIndex, MultitrackModel::IsHiddenRole).toBool();
                 obj["locked"] = model->data(modelIndex, MultitrackModel::IsLockedRole).toBool();
+                // IsCompositeRole -- Track Properties "Composite" toggle
+                // (false when qtblend disable=1, e.g. bottom V-track).
+                obj["composite"] = model->data(modelIndex, MultitrackModel::IsCompositeRole).toBool();
                 // Real read-back of the qtblend/movit.overlay/cairoblend
                 // transition's mode property, via the same transition-chain
                 // walk sap_get_track_blend_mode()/findAnyTrackBlendTransition()
@@ -1438,6 +1552,59 @@ int sap_set_project_file(void *mainWindowHandle, const char *filename)
     return 0;
 }
 
+int sap_open_project(void *mainWindowHandle, const char *path)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !path || !*path)
+        return -1;
+    const QString url = QString::fromUtf8(path);
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, url, &result]() { result = mw->openForSap(url) ? 0 : -1; },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_close_project(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw]() {
+            // Same teardown open() performs before loading a new file:
+            // reset to untitled without quitting the Qt process.
+            mw->openForSap(mw->untitledFileName());
+        },
+        Qt::BlockingQueuedConnection);
+    return 0;
+}
+
+int sap_is_project_folder(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    int result = 0;
+    QMetaObject::invokeMethod(
+        mw,
+        [&result]() { result = MLT.projectFolder().isEmpty() ? 0 : 1; },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_project_folder(void *mainWindowHandle, const char *folder)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    const QString path = folder ? QString::fromUtf8(folder) : QString();
+    QMetaObject::invokeMethod(
+        mw, [path]() { MLT.setProjectFolder(path); }, Qt::BlockingQueuedConnection);
+    return 0;
+}
 int sap_export_project_xml(void *mainWindowHandle, const char *outputXmlPath)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);
@@ -1541,6 +1708,177 @@ int sap_playback_seek(void *mainWindowHandle, long long frame)
     if (!QMetaObject::invokeMethod(mw, seek, Qt::BlockingQueuedConnection))
         return -1;
     return result;
+}
+
+int sap_playback_fast_forward(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto fastForward = [player, &result]() {
+        player->fastForward(true);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        fastForward();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, fastForward, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, double speed)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !std::isfinite(speed) || speed <= 0.0)
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, trackIndex, clipIndex, speed, &result, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || clipIndex < 0
+                || trackIndex >= model->trackList().size())
+                return;
+            if (mw->timelineDock()->isTrackLocked(trackIndex))
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info || !info->producer || !info->producer->is_valid() || !info->cut
+                || !info->cut->is_valid())
+                return;
+            const QString filename = Util::GetFilenameFromProducer(info->producer, false);
+            Mlt::Producer replacement;
+            if (qFuzzyCompare(speed, 1.0)) {
+                replacement = Mlt::Producer(info->cut);
+            } else {
+                const QString resource = QStringLiteral("timewarp:%1:%2").arg(speed).arg(filename);
+                replacement = Mlt::Producer(MLT.profile(), resource.toUtf8().constData());
+                if (!replacement.is_valid())
+                    return;
+                Util::passProducerProperties(info->producer, &replacement);
+                Util::updateCaption(&replacement);
+                const int length = qRound(info->producer->get_length() / speed);
+                const int in = qRound(info->cut->get_in() / speed);
+                const int out = qRound(info->cut->get_out() / speed);
+                replacement.set("length", replacement.frames_to_time(length, mlt_time_clock));
+                replacement.set_in_and_out(in, out);
+                MLT.copyFilters(*info->producer, replacement);
+            }
+            const QString xml = MLT.XML(&replacement);
+            mw->undoStack()->push(new Timeline::ReplaceCommand(*model, trackIndex, clipIndex, xml));
+            syncTimelineProducer(mw);
+            auto updated = model->getClipInfo(trackIndex, clipIndex);
+            if (!updated)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(clipIndex);
+            result["index"] = clipIndex;
+            result["inFrame"] = updated->frame_in;
+            result["outFrame"] = updated->frame_out;
+            result["speed"] = Util::GetSpeedFromProducer(updated->producer);
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(result).toJson(QJsonDocument::Compact));
+}
+
+int sap_playback_play(void *mainWindowHandle, double speed)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto play = [player, speed, &result]() {
+        player->play(speed);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        play();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, play, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+int sap_playback_pause(void *mainWindowHandle, long long position)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    const int pos = (position < 0 || position > std::numeric_limits<int>::max())
+                        ? -1
+                        : static_cast<int>(position);
+    int result = -1;
+    auto pause = [player, pos, &result]() {
+        player->pause(pos);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        pause();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, pause, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+int sap_playback_stop(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto stop = [player, &result]() {
+        player->stop();
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        stop();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, stop, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+char *sap_playback_get_state(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return nullptr;
+    QJsonObject obj;
+    bool ok = false;
+    auto readState = [player, &obj, &ok]() {
+        // isPaused() is the Controller transport state; Player::position is
+        // the scrubber/playhead frame.
+        obj["playing"] = !MLT.isPaused();
+        obj["position"] = player->position();
+        // Duration via player position max: onDurationChanged updates
+        // m_duration privately; use producer length when available.
+        int duration = 0;
+        if (MLT.producer() && MLT.producer()->is_valid())
+            duration = MLT.producer()->get_length();
+        obj["duration"] = duration;
+        ok = true;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        readState();
+    } else if (!QMetaObject::invokeMethod(mw, readState, Qt::BlockingQueuedConnection)) {
+        return nullptr;
+    }
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(obj).toJson(QJsonDocument::Compact));
 }
 
 char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath)
@@ -2138,6 +2476,111 @@ char *sap_playlist_append(void *mainWindowHandle, const char *sourcePath)
         return nullptr;
     QJsonDocument doc(result);
     return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_playlist_append_image_sequence(void *mainWindowHandle,
+                                         const char *path,
+                                         int ttl,
+                                         const char *begin)
+{
+    // Mirrors ImageProducerWidget::on_sequenceCheckBox_clicked: open first
+    // frame, convert resource to printf pattern, set ttl/begin/shotcut_sequence,
+    // count consecutive files, reopen producer, append to playlist bin.
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !path || !*path)
+        return nullptr;
+    const QString firstPath = QString::fromUtf8(path);
+    const QString beginOverride = begin ? QString::fromUtf8(begin) : QString();
+    const int ttlFrames = ttl > 0 ? ttl : 1;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, firstPath, beginOverride, ttlFrames, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+
+            Mlt::Producer probe(MLT.profile(), firstPath.toUtf8().constData());
+            if (!probe.is_valid() || probe.get_int("error"))
+                return;
+            if (!MLT.isImageProducer(&probe))
+                return;
+
+            QFileInfo info(firstPath);
+            QString name = info.fileName();
+            QString beginStr = beginOverride;
+            int i = name.length();
+            int digitCount = 0;
+            for (; i && !name[i - 1].isDigit(); i--) {
+            }
+            for (; i && name[i - 1].isDigit(); i--, digitCount++) {
+                if (beginOverride.isEmpty())
+                    beginStr.prepend(name[i - 1]);
+            }
+            if (digitCount <= 0 || beginStr.isEmpty())
+                return;
+
+            QString patternName = name;
+            patternName.replace(i, digitCount, QStringLiteral("0%1d").arg(digitCount).prepend('%'));
+            QString serviceName = QString::fromUtf8(probe.get("mlt_service"));
+            QString resource;
+            if (!serviceName.isEmpty())
+                resource = serviceName + QLatin1Char(':') + info.path() + QLatin1Char('/')
+                           + patternName;
+            else
+                resource = info.path() + QLatin1Char('/') + patternName;
+
+            // Count consecutive frames (allow gaps up to 100 like producer_qimage).
+            QString countTemplate = name;
+            countTemplate.replace(i, digitCount, QStringLiteral("%1"));
+            const QString countPath = info.path() + QLatin1Char('/') + countTemplate;
+            int imageCount = 0;
+            int frameNum = beginStr.toInt();
+            for (int gap = 0; gap < 100;) {
+                if (QFile::exists(countPath.arg(frameNum, digitCount, 10, QChar('0')))) {
+                    imageCount++;
+                    gap = 0;
+                } else {
+                    gap++;
+                }
+                frameNum++;
+            }
+            if (imageCount <= 0)
+                return;
+
+            Mlt::Producer producer(MLT.profile(), resource.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            // ImageProducerWidget uses the local define "shotcut_resource"
+            // (not kOriginalResourceProperty "shotcut:resource").
+            producer.set("shotcut_resource", firstPath.toUtf8().constData());
+            producer.set(kSnapflowSequenceProperty, 1);
+            producer.set("autolength", 1);
+            producer.set("ttl", ttlFrames);
+            producer.set("begin", beginStr.toLatin1().constData());
+            const int lengthFrames = imageCount * ttlFrames;
+            producer.set("length",
+                         producer.frames_to_time(lengthFrames, mlt_time_clock));
+            producer.set_in_and_out(0, lengthFrames - 1);
+
+            model->append(producer);
+            auto *playlist = model->playlist();
+            if (!playlist)
+                return;
+            const int index = playlist->count() - 1;
+            if (index < 0)
+                return;
+            QScopedPointer<Mlt::ClipInfo> clipInfo(playlist->clip_info(index));
+            if (!clipInfo)
+                return;
+            result = playlistEntryToJson(index, clipInfo.data());
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(result).toJson(QJsonDocument::Compact));
 }
 
 char *sap_playlist_insert(void *mainWindowHandle, int index, const char *sourcePath)

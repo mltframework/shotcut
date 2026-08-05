@@ -300,8 +300,15 @@ if(QSB_EXECUTABLE)
 endif()
 
 # panel_rust is a static Rust archive; its rusqlite symbols are encountered
-# after CMake's imported SQLite target in the final link line.
-target_link_options(snapflow PRIVATE "LINKER:--no-as-needed")
+# after CMake's imported SQLite target in the final link line. --no-as-needed
+# is a GNU ld/lld option (disables its default "drop unused shared libs"
+# behavior so symbol resolution isn't order-sensitive) -- Apple's linker
+# (ld64/ld-prime) doesn't support this flag at all ("unknown options:
+# --no-as-needed") and doesn't drop libraries the way GNU ld's --as-needed
+# does, so there is nothing to disable there in the first place.
+if(NOT APPLE)
+  target_link_options(snapflow PRIVATE "LINKER:--no-as-needed")
+endif()
 
 target_link_libraries(snapflow
   PRIVATE
