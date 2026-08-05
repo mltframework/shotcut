@@ -2477,7 +2477,7 @@ char *sap_playlist_append_image_sequence(void *mainWindowHandle,
             // ImageProducerWidget uses the local define "shotcut_resource"
             // (not kOriginalResourceProperty "shotcut:resource").
             producer.set("shotcut_resource", firstPath.toUtf8().constData());
-            producer.set(kShotcutSequenceProperty, 1);
+            producer.set(kSnapflowSequenceProperty, 1);
             producer.set("autolength", 1);
             producer.set("ttl", ttlFrames);
             producer.set("begin", beginStr.toLatin1().constData());
