@@ -277,12 +277,9 @@ Rectangle {
                     parent.moved(clipRoot);
                     originalX = parent.x;
                     originalTrackIndex = trackIndex;
-                } else {
-                    parent.x = startX;
-                    if (mouse.modifiers === Qt.NoModifier) {
-                        parent.dropped(clipRoot);
-                        clipRoot.clicked(clipRoot, mouse);
-                    }
+                } else if (mouse.modifiers === Qt.NoModifier) {
+                    parent.dropped(clipRoot);
+                    clipRoot.clicked(clipRoot, mouse);
                 }
             }
         }
