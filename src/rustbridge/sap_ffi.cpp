@@ -2864,6 +2864,53 @@ int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex)
     return result;
 }
 
+int sap_subtitles_set_style(void *mainWindowHandle, const char *styleJson)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->isMultitrackValid() || !styleJson)
+        return -1;
+    QJsonParseError error;
+    const QJsonDocument document = QJsonDocument::fromJson(QByteArray(styleJson), &error);
+    if (error.error != QJsonParseError::NoError || !document.isObject())
+        return -1;
+    const QJsonObject style = document.object();
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, style, &result]() {
+            Mlt::Producer *output = mw->multitrack();
+            if (!output || !output->is_valid())
+                return;
+            const QSet<QString> allowed{
+                QStringLiteral("fgcolour"), QStringLiteral("bgcolour"),
+                QStringLiteral("olcolour"), QStringLiteral("outline"),
+                QStringLiteral("weight"), QStringLiteral("style"),
+                QStringLiteral("size"), QStringLiteral("geometry"),
+                QStringLiteral("valign"), QStringLiteral("halign")};
+            for (int i = 0; i < output->filter_count(); ++i) {
+                QScopedPointer<Mlt::Filter> filter(output->filter(i));
+                if (!filter || !filter->is_valid()
+                    || QString::fromUtf8(filter->get("mlt_service")) != QStringLiteral("subtitle"))
+                    continue;
+                for (auto it = style.constBegin(); it != style.constEnd(); ++it) {
+                    if (!allowed.contains(it.key()))
+                        continue;
+                    const QByteArray key = it.key().toUtf8();
+                    const QJsonValue value = it.value();
+                    if (value.isString())
+                        filter->set(key.constData(), value.toString().toUtf8().constData());
+                    else if (value.isBool())
+                        filter->set(key.constData(), value.toBool() ? 1 : 0);
+                    else if (value.isDouble())
+                        filter->set(key.constData(), value.toDouble());
+                }
+                result = 0;
+            }
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
 int sap_notes_set_text(void *mainWindowHandle, const char *text)
 {
     auto *mw = mainWindowFromHandle(mainWindowHandle);

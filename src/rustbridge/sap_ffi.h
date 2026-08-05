@@ -623,6 +623,11 @@ char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const cha
  * multitrack producer loaded). */
 int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex);
 
+/* Updates whitelisted style properties on every subtitle filter attached to
+ * the timeline output tractor. Returns 0 on success, -1 if no subtitle
+ * filter is attached or styleJson is invalid. */
+int sap_subtitles_set_style(void *mainWindowHandle, const char *styleJson);
+
 /* Sets/gets the real project Notes free-text field via
  * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
  * as a `snapflow:projectNotes` property, not a QUndoCommand -- matches
