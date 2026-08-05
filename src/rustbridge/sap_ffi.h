@@ -466,6 +466,8 @@ int sap_project_redo(void *mainWindowHandle);
  * runs on the Qt GUI thread, or -1 for an invalid handle/player/frame or
  * failed cross-thread invocation. */
 int sap_playback_seek(void *mainWindowHandle, long long frame);
+int sap_playback_fast_forward(void *mainWindowHandle);
+char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, double speed);
 
 /* Transport controls -- same Player slots the editor Play/Pause/Stop
  * buttons drive. play uses speed (typically 1.0). pause uses position
