@@ -24,6 +24,7 @@
 #include "models/multitrackmodel.h"
 #include "settings.h"
 #include "player.h"
+#include "util.h"
 
 #include <Mlt.h>
 #include <QBuffer>
@@ -31,6 +32,7 @@
 #include <QColor>
 #include <QDir>
 #include <QFont>
+#include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
@@ -536,6 +538,88 @@ int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char 
         },
         Qt::BlockingQueuedConnection);
     return result;
+}
+
+int sap_set_track_composite(void *mainWindowHandle, int trackIndex, int composite)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock())
+        return -1;
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, trackIndex, composite, &result]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || trackIndex >= model->trackList().size())
+                return;
+            // Real MultitrackModel::setTrackComposite -- Track Properties
+            // "Composite" toggle (qtblend transition disable bit).
+            model->setTrackComposite(trackIndex, composite != 0);
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_set_profile(void *mainWindowHandle,
+                    const char *profileName,
+                    int width,
+                    int height,
+                    int frameRateNum,
+                    int frameRateDen)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return -1;
+    const QString name = profileName ? QString::fromUtf8(profileName) : QString();
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, name, width, height, frameRateNum, frameRateDen, &result]() {
+            if (!name.isEmpty()) {
+                mw->setProfile(name);
+                result = 0;
+                return;
+            }
+            if (width <= 0 || height <= 0)
+                return;
+            const int fpsNum = frameRateNum > 0 ? frameRateNum : 25;
+            const int fpsDen = frameRateDen > 0 ? frameRateDen : 1;
+            auto &profile = MLT.profile();
+            profile.set_width(Util::coerceMultiple(width));
+            profile.set_height(Util::coerceMultiple(height));
+            auto gcd = Util::greatestCommonDivisor(fpsNum, fpsDen);
+            profile.set_frame_rate(fpsNum / gcd, fpsDen / gcd);
+            profile.set_explicit(true);
+            MLT.updatePreviewProfile();
+            MLT.consumerChanged();
+            result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+char *sap_get_profile(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw)
+        return nullptr;
+    QJsonObject obj;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw,
+        [&obj, &ok]() {
+            auto &profile = MLT.profile();
+            obj["width"] = profile.width();
+            obj["height"] = profile.height();
+            obj["frameRateNum"] = profile.frame_rate_num();
+            obj["frameRateDen"] = profile.frame_rate_den();
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(obj).toJson(QJsonDocument::Compact));
 }
 
 int sap_set_track_height(void *mainWindowHandle, int height)
@@ -1403,6 +1487,9 @@ char *sap_list_tracks(void *mainWindowHandle)
                 obj["muted"] = model->data(modelIndex, MultitrackModel::IsMuteRole).toBool();
                 obj["hidden"] = model->data(modelIndex, MultitrackModel::IsHiddenRole).toBool();
                 obj["locked"] = model->data(modelIndex, MultitrackModel::IsLockedRole).toBool();
+                // IsCompositeRole -- Track Properties "Composite" toggle
+                // (false when qtblend disable=1, e.g. bottom V-track).
+                obj["composite"] = model->data(modelIndex, MultitrackModel::IsCompositeRole).toBool();
                 // Real read-back of the qtblend/movit.overlay/cairoblend
                 // transition's mode property, via the same transition-chain
                 // walk sap_get_track_blend_mode()/findAnyTrackBlendTransition()
@@ -1620,6 +1707,100 @@ int sap_playback_seek(void *mainWindowHandle, long long frame)
     if (!QMetaObject::invokeMethod(mw, seek, Qt::BlockingQueuedConnection))
         return -1;
     return result;
+}
+
+int sap_playback_play(void *mainWindowHandle, double speed)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto play = [player, speed, &result]() {
+        player->play(speed);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        play();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, play, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+int sap_playback_pause(void *mainWindowHandle, long long position)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    const int pos = (position < 0 || position > std::numeric_limits<int>::max())
+                        ? -1
+                        : static_cast<int>(position);
+    int result = -1;
+    auto pause = [player, pos, &result]() {
+        player->pause(pos);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        pause();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, pause, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+int sap_playback_stop(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto stop = [player, &result]() {
+        player->stop();
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        stop();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, stop, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+char *sap_playback_get_state(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return nullptr;
+    QJsonObject obj;
+    bool ok = false;
+    auto readState = [player, &obj, &ok]() {
+        // isPaused() is the Controller transport state; Player::position is
+        // the scrubber/playhead frame.
+        obj["playing"] = !MLT.isPaused();
+        obj["position"] = player->position();
+        // Duration via player position max: onDurationChanged updates
+        // m_duration privately; use producer length when available.
+        int duration = 0;
+        if (MLT.producer() && MLT.producer()->is_valid())
+            duration = MLT.producer()->get_length();
+        obj["duration"] = duration;
+        ok = true;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        readState();
+    } else if (!QMetaObject::invokeMethod(mw, readState, Qt::BlockingQueuedConnection)) {
+        return nullptr;
+    }
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(obj).toJson(QJsonDocument::Compact));
 }
 
 char *sap_append_clip(void *mainWindowHandle, int trackIndex, const char *sourcePath)
@@ -2217,6 +2398,111 @@ char *sap_playlist_append(void *mainWindowHandle, const char *sourcePath)
         return nullptr;
     QJsonDocument doc(result);
     return newCString(doc.toJson(QJsonDocument::Compact));
+}
+
+char *sap_playlist_append_image_sequence(void *mainWindowHandle,
+                                         const char *path,
+                                         int ttl,
+                                         const char *begin)
+{
+    // Mirrors ImageProducerWidget::on_sequenceCheckBox_clicked: open first
+    // frame, convert resource to printf pattern, set ttl/begin/shotcut_sequence,
+    // count consecutive files, reopen producer, append to playlist bin.
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->playlistDock() || !path || !*path)
+        return nullptr;
+    const QString firstPath = QString::fromUtf8(path);
+    const QString beginOverride = begin ? QString::fromUtf8(begin) : QString();
+    const int ttlFrames = ttl > 0 ? ttl : 1;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw->playlistDock(),
+        [mw, firstPath, beginOverride, ttlFrames, &result, &ok]() {
+            auto *model = mw->playlistDock()->model();
+            if (!model)
+                return;
+
+            Mlt::Producer probe(MLT.profile(), firstPath.toUtf8().constData());
+            if (!probe.is_valid() || probe.get_int("error"))
+                return;
+            if (!MLT.isImageProducer(&probe))
+                return;
+
+            QFileInfo info(firstPath);
+            QString name = info.fileName();
+            QString beginStr = beginOverride;
+            int i = name.length();
+            int digitCount = 0;
+            for (; i && !name[i - 1].isDigit(); i--) {
+            }
+            for (; i && name[i - 1].isDigit(); i--, digitCount++) {
+                if (beginOverride.isEmpty())
+                    beginStr.prepend(name[i - 1]);
+            }
+            if (digitCount <= 0 || beginStr.isEmpty())
+                return;
+
+            QString patternName = name;
+            patternName.replace(i, digitCount, QStringLiteral("0%1d").arg(digitCount).prepend('%'));
+            QString serviceName = QString::fromUtf8(probe.get("mlt_service"));
+            QString resource;
+            if (!serviceName.isEmpty())
+                resource = serviceName + QLatin1Char(':') + info.path() + QLatin1Char('/')
+                           + patternName;
+            else
+                resource = info.path() + QLatin1Char('/') + patternName;
+
+            // Count consecutive frames (allow gaps up to 100 like producer_qimage).
+            QString countTemplate = name;
+            countTemplate.replace(i, digitCount, QStringLiteral("%1"));
+            const QString countPath = info.path() + QLatin1Char('/') + countTemplate;
+            int imageCount = 0;
+            int frameNum = beginStr.toInt();
+            for (int gap = 0; gap < 100;) {
+                if (QFile::exists(countPath.arg(frameNum, digitCount, 10, QChar('0')))) {
+                    imageCount++;
+                    gap = 0;
+                } else {
+                    gap++;
+                }
+                frameNum++;
+            }
+            if (imageCount <= 0)
+                return;
+
+            Mlt::Producer producer(MLT.profile(), resource.toUtf8().constData());
+            if (!producer.is_valid() || producer.get_int("error"))
+                return;
+            // ImageProducerWidget uses the local define "shotcut_resource"
+            // (not kOriginalResourceProperty "shotcut:resource").
+            producer.set("shotcut_resource", firstPath.toUtf8().constData());
+            producer.set(kShotcutSequenceProperty, 1);
+            producer.set("autolength", 1);
+            producer.set("ttl", ttlFrames);
+            producer.set("begin", beginStr.toLatin1().constData());
+            const int lengthFrames = imageCount * ttlFrames;
+            producer.set("length",
+                         producer.frames_to_time(lengthFrames, mlt_time_clock));
+            producer.set_in_and_out(0, lengthFrames - 1);
+
+            model->append(producer);
+            auto *playlist = model->playlist();
+            if (!playlist)
+                return;
+            const int index = playlist->count() - 1;
+            if (index < 0)
+                return;
+            QScopedPointer<Mlt::ClipInfo> clipInfo(playlist->clip_info(index));
+            if (!clipInfo)
+                return;
+            result = playlistEntryToJson(index, clipInfo.data());
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(result).toJson(QJsonDocument::Compact));
 }
 
 char *sap_playlist_insert(void *mainWindowHandle, int index, const char *sourcePath)

@@ -127,12 +127,35 @@ char *sap_get_track_blend_mode(void *mainWindowHandle, int trackIndex);
  * error (invalid handle/index, or no blend transition on that track). */
 int sap_set_track_blend_mode(void *mainWindowHandle, int trackIndex, const char *mode);
 
+/* Enables/disables video-track compositing over lower tracks via the real
+ * MultitrackModel::setTrackComposite() (qtblend/movit/cairoblend
+ * transition's `disable` bit -- the Track Properties "Composite" toggle).
+ * Returns 0 on success, -1 on error (invalid handle/index). */
+int sap_set_track_composite(void *mainWindowHandle, int trackIndex, int composite);
+
 /* Sets the project-wide timeline row height in pixels via the real
  * MultitrackModel::setTrackHeight() (a single `snapflow:trackHeight`
  * property on the tractor, not per-track -- same primitive the Timeline
  * panel's zoom/height slider uses). Value is clamped to [10, 150] by the
  * real setter itself. Returns 0 on success, -1 on error (invalid handle). */
 int sap_set_track_height(void *mainWindowHandle, int height);
+
+/* Sets the project video mode / canvas. When profileName is non-NULL and
+ * non-empty, calls MainWindow::setProfile(name) (MLT built-in profile).
+ * Otherwise applies width/height (required >0) and optional frame rate
+ * (defaults 25/1) onto MLT.profile() and refreshes the preview profile.
+ * Returns 0 on success, -1 on error. */
+int sap_set_profile(void *mainWindowHandle,
+                    const char *profileName,
+                    int width,
+                    int height,
+                    int frameRateNum,
+                    int frameRateDen);
+
+/* Returns heap-allocated JSON:
+ * {"width":W,"height":H,"frameRateNum":N,"frameRateDen":D} for the live
+ * MLT profile, or NULL on error. Caller frees via sap_free_string. */
+char *sap_get_profile(void *mainWindowHandle);
 
 /* Attaches a new MLT filter of mltService to the clip's real per-instance
  * "cut" producer (per Mlt::ClipInfo::cut -- the same instance-specific
@@ -443,6 +466,30 @@ int sap_project_redo(void *mainWindowHandle);
  * runs on the Qt GUI thread, or -1 for an invalid handle/player/frame or
  * failed cross-thread invocation. */
 int sap_playback_seek(void *mainWindowHandle, long long frame);
+
+/* Transport controls -- same Player slots the editor Play/Pause/Stop
+ * buttons drive. play uses speed (typically 1.0). pause uses position
+ * (-1 keeps current). Returns 0 on success, -1 on error. */
+int sap_playback_play(void *mainWindowHandle, double speed);
+int sap_playback_pause(void *mainWindowHandle, long long position);
+int sap_playback_stop(void *mainWindowHandle);
+
+/* Returns heap-allocated JSON
+ * {"playing":bool,"position":N,"duration":N} from Player + Controller
+ * isPaused(), or NULL on error. Caller frees via sap_free_string. */
+char *sap_playback_get_state(void *mainWindowHandle);
+
+/* Appends an image-sequence producer to the playlist bin (native
+ * qimage/pixbuf sequence path: printf resource, ttl, begin,
+ * shotcut_sequence -- same as ImageProducerWidget sequence mode).
+ * path is the first frame file; ttl is frames-per-image (default 1 when
+ * <=0); begin may be NULL to auto-detect from the filename digits.
+ * Returns playlist-entry JSON like sap_playlist_append, or NULL on error.
+ * Caller frees via sap_free_string. */
+char *sap_playlist_append_image_sequence(void *mainWindowHandle,
+                                         const char *path,
+                                         int ttl,
+                                         const char *begin);
 
 /* Opens sourcePath as a real Mlt::Producer (the same primitive
  * MainWindow::open()/Controller::open() use for a user-selected file) and
