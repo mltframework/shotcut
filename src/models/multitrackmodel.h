@@ -227,6 +227,7 @@ private:
     void getAudioLevels();
     void addBlackTrackIfNeeded();
     void convertOldDoc();
+    void reorderMixTransitions();
     Mlt::Transition *getTransition(const QString &name, int trackIndex) const;
     Mlt::Filter *getFilter(const QString &name, int trackIndex) const;
     Mlt::Filter *getFilter(const QString &name, Mlt::Service *service) const;

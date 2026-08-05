@@ -4429,11 +4429,14 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
                                  ->data(m_timelineDock->model()->index(trackIndex),
                                         MultitrackModel::IsBottomVideoRole)
                                  .toBool();
-        if (!isBottomVideo) {
-            w = new TrackPropertiesWidget(*producer, this);
-            scrollArea->setWidget(w);
-            return w;
-        }
+        bool isTopTrack = trackIndex == 0;
+        bool showDucking = false;
+#if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
+        showDucking = !isTopTrack;
+#endif
+        w = new TrackPropertiesWidget(*producer, !isBottomVideo, showDucking, this);
+        scrollArea->setWidget(w);
+        return w;
     } else if (mlt_service_tractor_type == producer->type()) {
         w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);
