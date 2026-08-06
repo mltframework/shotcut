@@ -972,6 +972,7 @@ char *sap_list_clips(void *mainWindowHandle, int trackIndex)
                 entry["path"] = QString::fromUtf8(info->resource ? info->resource : "");
                 entry["inFrame"] = info->frame_in;
                 entry["outFrame"] = info->frame_out;
+                entry["speed"] = Util::GetSpeedFromProducer(info->producer);
                 result.append(entry);
             }
             ok = true;
@@ -1707,6 +1708,83 @@ int sap_playback_seek(void *mainWindowHandle, long long frame)
     if (!QMetaObject::invokeMethod(mw, seek, Qt::BlockingQueuedConnection))
         return -1;
     return result;
+}
+
+int sap_playback_fast_forward(void *mainWindowHandle)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    auto *player = mw ? mw->player() : nullptr;
+    if (!player)
+        return -1;
+    int result = -1;
+    auto fastForward = [player, &result]() {
+        player->fastForward(true);
+        result = 0;
+    };
+    if (QThread::currentThread() == mw->thread()) {
+        fastForward();
+        return result;
+    }
+    if (!QMetaObject::invokeMethod(mw, fastForward, Qt::BlockingQueuedConnection))
+        return -1;
+    return result;
+}
+
+char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, double speed)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !std::isfinite(speed) || speed <= 0.0)
+        return nullptr;
+    QJsonObject result;
+    bool ok = false;
+    QMetaObject::invokeMethod(
+        mw,
+        [mw, trackIndex, clipIndex, speed, &result, &ok]() {
+            auto *model = mw->timelineDock()->model();
+            if (!model || trackIndex < 0 || clipIndex < 0
+                || trackIndex >= model->trackList().size())
+                return;
+            if (mw->timelineDock()->isTrackLocked(trackIndex))
+                return;
+            auto info = model->getClipInfo(trackIndex, clipIndex);
+            if (!info || !info->producer || !info->producer->is_valid() || !info->cut
+                || !info->cut->is_valid())
+                return;
+            const QString filename = Util::GetFilenameFromProducer(info->producer, false);
+            Mlt::Producer replacement;
+            if (qFuzzyCompare(speed, 1.0)) {
+                replacement = Mlt::Producer(info->cut);
+            } else {
+                const QString resource = QStringLiteral("timewarp:%1:%2").arg(speed).arg(filename);
+                replacement = Mlt::Producer(MLT.profile(), resource.toUtf8().constData());
+                if (!replacement.is_valid())
+                    return;
+                Util::passProducerProperties(info->producer, &replacement);
+                Util::updateCaption(&replacement);
+                const int length = qRound(info->producer->get_length() / speed);
+                const int in = qRound(info->cut->get_in() / speed);
+                const int out = qRound(info->cut->get_out() / speed);
+                replacement.set("length", replacement.frames_to_time(length, mlt_time_clock));
+                replacement.set_in_and_out(in, out);
+                MLT.copyFilters(*info->producer, replacement);
+            }
+            const QString xml = MLT.XML(&replacement);
+            mw->undoStack()->push(new Timeline::ReplaceCommand(*model, trackIndex, clipIndex, xml));
+            syncTimelineProducer(mw);
+            auto updated = model->getClipInfo(trackIndex, clipIndex);
+            if (!updated)
+                return;
+            result["clipId"] = QStringLiteral("t%1c%2").arg(trackIndex).arg(clipIndex);
+            result["index"] = clipIndex;
+            result["inFrame"] = updated->frame_in;
+            result["outFrame"] = updated->frame_out;
+            result["speed"] = Util::GetSpeedFromProducer(updated->producer);
+            ok = true;
+        },
+        Qt::BlockingQueuedConnection);
+    if (!ok)
+        return nullptr;
+    return newCString(QJsonDocument(result).toJson(QJsonDocument::Compact));
 }
 
 int sap_playback_play(void *mainWindowHandle, double speed)
@@ -3224,6 +3302,53 @@ int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex)
             if (output->attach(filter) != 0)
                 return;
             result = 0;
+        },
+        Qt::BlockingQueuedConnection);
+    return result;
+}
+
+int sap_subtitles_set_style(void *mainWindowHandle, const char *styleJson)
+{
+    auto *mw = mainWindowFromHandle(mainWindowHandle);
+    if (!mw || !mw->timelineDock() || !mw->isMultitrackValid() || !styleJson)
+        return -1;
+    QJsonParseError error;
+    const QJsonDocument document = QJsonDocument::fromJson(QByteArray(styleJson), &error);
+    if (error.error != QJsonParseError::NoError || !document.isObject())
+        return -1;
+    const QJsonObject style = document.object();
+    int result = -1;
+    QMetaObject::invokeMethod(
+        mw->timelineDock(),
+        [mw, style, &result]() {
+            Mlt::Producer *output = mw->multitrack();
+            if (!output || !output->is_valid())
+                return;
+            const QSet<QString> allowed{
+                QStringLiteral("fgcolour"), QStringLiteral("bgcolour"),
+                QStringLiteral("olcolour"), QStringLiteral("outline"),
+                QStringLiteral("weight"), QStringLiteral("style"),
+                QStringLiteral("size"), QStringLiteral("geometry"),
+                QStringLiteral("valign"), QStringLiteral("halign")};
+            for (int i = 0; i < output->filter_count(); ++i) {
+                QScopedPointer<Mlt::Filter> filter(output->filter(i));
+                if (!filter || !filter->is_valid()
+                    || QString::fromUtf8(filter->get("mlt_service")) != QStringLiteral("subtitle"))
+                    continue;
+                for (auto it = style.constBegin(); it != style.constEnd(); ++it) {
+                    if (!allowed.contains(it.key()))
+                        continue;
+                    const QByteArray key = it.key().toUtf8();
+                    const QJsonValue value = it.value();
+                    if (value.isString())
+                        filter->set(key.constData(), value.toString().toUtf8().constData());
+                    else if (value.isBool())
+                        filter->set(key.constData(), value.toBool() ? 1 : 0);
+                    else if (value.isDouble())
+                        filter->set(key.constData(), value.toDouble());
+                }
+                result = 0;
+            }
         },
         Qt::BlockingQueuedConnection);
     return result;

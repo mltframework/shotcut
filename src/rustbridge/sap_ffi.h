@@ -466,6 +466,8 @@ int sap_project_redo(void *mainWindowHandle);
  * runs on the Qt GUI thread, or -1 for an invalid handle/player/frame or
  * failed cross-thread invocation. */
 int sap_playback_seek(void *mainWindowHandle, long long frame);
+int sap_playback_fast_forward(void *mainWindowHandle);
+char *sap_set_clip_speed(void *mainWindowHandle, int trackIndex, int clipIndex, double speed);
 
 /* Transport controls -- same Player slots the editor Play/Pause/Stop
  * buttons drive. play uses speed (typically 1.0). pause uses position
@@ -721,6 +723,11 @@ char *sap_subtitles_export_srt(void *mainWindowHandle, int trackIndex, const cha
  * Returns 0 on success, -1 on error (invalid handle/trackIndex, or no
  * multitrack producer loaded). */
 int sap_subtitles_burn_in(void *mainWindowHandle, int trackIndex);
+
+/* Updates whitelisted style properties on every subtitle filter attached to
+ * the timeline output tractor. Returns 0 on success, -1 if no subtitle
+ * filter is attached or styleJson is invalid. */
+int sap_subtitles_set_style(void *mainWindowHandle, const char *styleJson);
 
 /* Sets/gets the real project Notes free-text field via
  * `NotesDock::setText()`/`getText()` (saved/restored with the project XML
