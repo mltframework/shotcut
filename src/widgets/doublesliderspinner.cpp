@@ -47,6 +47,7 @@ DoubleSliderSpinner::DoubleSliderSpinner(QWidget *parent)
     m_spinBox->setRange(0.0, 100.0);
     m_spinBox->setSingleStep(1.0);
     m_spinBox->setValue(0.0);
+    m_spinBox->setAlignment(Qt::AlignRight);
 
     m_resetButton->setAutoRaise(true);
     m_resetButton->setIcon(QIcon::fromTheme("edit-undo"));
