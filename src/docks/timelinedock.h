@@ -286,6 +286,7 @@ private slots:
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
     void addGenerator();
+    void addAdjustmentClip();
 };
 
 #endif // TIMELINEDOCK_H
