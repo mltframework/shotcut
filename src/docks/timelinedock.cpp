@@ -69,6 +69,70 @@ static const char *kFileUrlProtocol = "file://";
 static const char *kFilesUrlDelimiter = ",file://";
 static const int kRecordingTimerIntervalMs = 1000;
 
+namespace {
+
+struct PendingTransitionState
+{
+    int duration = 0;
+    int skippedDuration = 0;
+    int rightIn = -1;
+    Mlt::Producer rightClip;
+};
+
+static bool isTransitionClipboardClip(const Mlt::ClipInfo &info)
+{
+    return info.producer && info.producer->is_valid()
+           && info.producer->get(kShotcutTransitionProperty);
+}
+
+static int transitionClipboardDuration(const Mlt::ClipInfo &info)
+{
+    return qMax(1, info.frame_count);
+}
+
+static void clearPendingTransition(PendingTransitionState &state)
+{
+    state.duration = 0;
+    state.rightIn = -1;
+    state.rightClip = Mlt::Producer();
+}
+
+static void beginPendingTransition(PendingTransitionState &state,
+                                   const Mlt::ClipInfo &info,
+                                   bool trackSkippedDuration)
+{
+    state.duration = transitionClipboardDuration(info);
+    if (trackSkippedDuration)
+        state.skippedDuration += state.duration;
+    state.rightIn = -1;
+    state.rightClip = Mlt::Producer();
+    Mlt::Tractor transition(*info.producer);
+    QScopedPointer<Mlt::Producer> transitionRight(transition.track(1));
+    if (transitionRight && transitionRight->is_valid()) {
+        state.rightIn = transitionRight->get_in();
+        state.rightClip = Mlt::Producer(*transitionRight);
+    }
+}
+
+static bool matchesPendingTransitionRight(PendingTransitionState &state, Mlt::Producer &clip)
+{
+    return state.duration > 0 && state.rightIn >= 0 && state.rightClip.is_valid()
+           && clip.same_clip(state.rightClip);
+}
+
+static void applyTransitionAwareInOut(Mlt::Producer &clip,
+                                      const Mlt::ClipInfo &info,
+                                      bool matchesPendingTransition,
+                                      int pendingTransitionRightIn)
+{
+    if (matchesPendingTransition)
+        clip.set_in_and_out(qMin(pendingTransitionRightIn, info.frame_out), info.frame_out);
+    else
+        clip.set_in_and_out(info.frame_in, info.frame_out);
+}
+
+} // namespace
+
 /*!
     \qmltype TimelineDock
     \inqmlmodule org.shotcut.qml
@@ -2659,14 +2723,24 @@ void TimelineDock::append(int trackIndex)
                 if (srcTrack) {
                     const auto trackIndex = currentTrack() + mltTrackIndex;
                     addTrackIfNeeded(trackIndex, srcTrack.get());
+                    PendingTransitionState pendingTransition;
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
                     for (int mltClipIndex = 0; mltClipIndex < playlist.count(); mltClipIndex++) {
                         if (!playlist.is_blank(mltClipIndex)) {
                             playlist.clip_info(mltClipIndex, &info);
+                            if (isTransitionClipboardClip(info)) {
+                                beginPendingTransition(pendingTransition, info, false);
+                                continue;
+                            }
                             Mlt::Producer clip(info.producer);
-                            clip.set_in_and_out(info.frame_in, info.frame_out);
+                            const bool matchesPendingRight
+                                = matchesPendingTransitionRight(pendingTransition, clip);
+                            applyTransitionAwareInOut(clip,
+                                                      info,
+                                                      matchesPendingRight,
+                                                      pendingTransition.rightIn);
                             bool lastClip = mltTrackIndex == tractor.count() - 1
                                             && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(new Timeline::AppendCommand(m_model,
@@ -2674,6 +2748,29 @@ void TimelineDock::append(int trackIndex)
                                                                                MLT.XML(&clip),
                                                                                false,
                                                                                lastClip));
+
+                            if (pendingTransition.duration > 0) {
+                                const int rightClipIndex = clipCount(trackIndex) - 1;
+                                const int leftClipIndex = rightClipIndex - 1;
+                                if (matchesPendingRight && leftClipIndex >= 0 && rightClipIndex >= 0
+                                    && !isBlank(trackIndex, leftClipIndex)
+                                    && !isBlank(trackIndex, rightClipIndex)
+                                    && !isTransition(trackIndex, leftClipIndex)
+                                    && !isTransition(trackIndex, rightClipIndex)
+                                    && m_model.addTransitionByTrimOutValid(trackIndex,
+                                                                           leftClipIndex,
+                                                                           -pendingTransition
+                                                                                .duration)) {
+                                    MAIN.undoStack()->push(
+                                        new Timeline::AddTransitionByTrimOutCommand(m_model,
+                                                                                    trackIndex,
+                                                                                    leftClipIndex,
+                                                                                    -pendingTransition
+                                                                                         .duration,
+                                                                                    0));
+                                }
+                                clearPendingTransition(pendingTransition);
+                            }
                             // AppendCommand executed immediately; record group membership
                             if (info.cut && info.cut->property_exists(kShotcutGroupProperty)) {
                                 int group = info.cut->get_int(kShotcutGroupProperty);
@@ -4202,22 +4299,58 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                 if (srcTrack) {
                     const auto trackIndex = currentTrack() + mltTrackIndex;
                     addTrackIfNeeded(trackIndex, srcTrack.get());
+                    PendingTransitionState pendingTransition;
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
                     for (int mltClipIndex = 0; mltClipIndex < playlist.count(); mltClipIndex++) {
                         if (!playlist.is_blank(mltClipIndex)) {
                             playlist.clip_info(mltClipIndex, &info);
+                            if (isTransitionClipboardClip(info)) {
+                                beginPendingTransition(pendingTransition, info, true);
+                                continue;
+                            }
                             Mlt::Producer clip(info.producer);
-                            clip.set_in_and_out(info.frame_in, info.frame_out);
+                            const bool matchesPendingRight
+                                = matchesPendingTransitionRight(pendingTransition, clip);
+                            applyTransitionAwareInOut(clip,
+                                                      info,
+                                                      matchesPendingRight,
+                                                      pendingTransition.rightIn);
+                            const int insertPosition = position + info.start
+                                                       - pendingTransition.skippedDuration;
                             bool lastClip = mltTrackIndex == tractor.count() - 1
                                             && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(new Timeline::InsertCommand(m_model,
                                                                                m_markersModel,
                                                                                trackIndex,
-                                                                               position + info.start,
+                                                                               insertPosition,
                                                                                MLT.XML(&clip),
                                                                                lastClip));
+
+                            if (pendingTransition.duration > 0) {
+                                const int rightClipIndex = clipIndexAtPosition(trackIndex,
+                                                                               insertPosition);
+                                const int leftClipIndex = rightClipIndex - 1;
+                                if (matchesPendingRight && leftClipIndex >= 0 && rightClipIndex >= 0
+                                    && !isBlank(trackIndex, leftClipIndex)
+                                    && !isBlank(trackIndex, rightClipIndex)
+                                    && !isTransition(trackIndex, leftClipIndex)
+                                    && !isTransition(trackIndex, rightClipIndex)
+                                    && m_model.addTransitionByTrimOutValid(trackIndex,
+                                                                           leftClipIndex,
+                                                                           -pendingTransition
+                                                                                .duration)) {
+                                    MAIN.undoStack()->push(
+                                        new Timeline::AddTransitionByTrimOutCommand(m_model,
+                                                                                    trackIndex,
+                                                                                    leftClipIndex,
+                                                                                    -pendingTransition
+                                                                                         .duration,
+                                                                                    0));
+                                }
+                                clearPendingTransition(pendingTransition);
+                            }
                         }
                     }
                 }
@@ -4231,14 +4364,21 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                     const auto destTrackIndex = currentTrack() + mltTrackIndex;
                     Mlt::Playlist srcPlaylist(*srcTrack);
                     Mlt::ClipInfo clipInfo;
+                    int skippedTransitionDuration = 0;
                     for (int mltClipIndex = 0; mltClipIndex < srcPlaylist.count(); mltClipIndex++) {
                         if (!srcPlaylist.is_blank(mltClipIndex)) {
                             srcPlaylist.clip_info(mltClipIndex, &clipInfo);
+                            if (isTransitionClipboardClip(clipInfo)) {
+                                skippedTransitionDuration += transitionClipboardDuration(clipInfo);
+                                continue;
+                            }
                             if (clipInfo.cut
                                 && clipInfo.cut->property_exists(kShotcutGroupProperty)) {
                                 int group = clipInfo.cut->get_int(kShotcutGroupProperty);
+                                const int destPosition = position + clipInfo.start
+                                                         - skippedTransitionDuration;
                                 int destClipIndex = clipIndexAtPosition(destTrackIndex,
-                                                                        position + clipInfo.start);
+                                                                        destPosition);
                                 if (destClipIndex >= 0 && !isBlank(destTrackIndex, destClipIndex)) {
                                     if (!groupCommands.contains(group))
                                         groupCommands[group] = new Timeline::GroupCommand(m_model);
@@ -4387,20 +4527,55 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                 if (srcTrack) {
                     const auto trackIndex = currentTrack() + mltTrackIndex;
                     addTrackIfNeeded(trackIndex, srcTrack.get());
+                    PendingTransitionState pendingTransition;
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
                     for (int mltClipIndex = 0; mltClipIndex < playlist.count(); mltClipIndex++) {
                         if (!playlist.is_blank(mltClipIndex)) {
                             playlist.clip_info(mltClipIndex, &info);
+                            if (isTransitionClipboardClip(info)) {
+                                beginPendingTransition(pendingTransition, info, true);
+                                continue;
+                            }
                             Mlt::Producer clip(info.producer);
-                            clip.set_in_and_out(info.frame_in, info.frame_out);
-                            MAIN.undoStack()->push(
-                                new Timeline::OverwriteCommand(m_model,
-                                                               trackIndex,
-                                                               position + info.start,
-                                                               MLT.XML(&clip),
-                                                               false));
+                            const bool matchesPendingRight
+                                = matchesPendingTransitionRight(pendingTransition, clip);
+                            applyTransitionAwareInOut(clip,
+                                                      info,
+                                                      matchesPendingRight,
+                                                      pendingTransition.rightIn);
+                            const int overwritePosition = position + info.start
+                                                          - pendingTransition.skippedDuration;
+                            MAIN.undoStack()->push(new Timeline::OverwriteCommand(m_model,
+                                                                                  trackIndex,
+                                                                                  overwritePosition,
+                                                                                  MLT.XML(&clip),
+                                                                                  false));
+
+                            if (pendingTransition.duration > 0) {
+                                const int rightClipIndex = clipIndexAtPosition(trackIndex,
+                                                                               overwritePosition);
+                                const int leftClipIndex = rightClipIndex - 1;
+                                if (matchesPendingRight && leftClipIndex >= 0 && rightClipIndex >= 0
+                                    && !isBlank(trackIndex, leftClipIndex)
+                                    && !isBlank(trackIndex, rightClipIndex)
+                                    && !isTransition(trackIndex, leftClipIndex)
+                                    && !isTransition(trackIndex, rightClipIndex)
+                                    && m_model.addTransitionByTrimOutValid(trackIndex,
+                                                                           leftClipIndex,
+                                                                           -pendingTransition
+                                                                                .duration)) {
+                                    MAIN.undoStack()->push(
+                                        new Timeline::AddTransitionByTrimOutCommand(m_model,
+                                                                                    trackIndex,
+                                                                                    leftClipIndex,
+                                                                                    -pendingTransition
+                                                                                         .duration,
+                                                                                    0));
+                                }
+                                clearPendingTransition(pendingTransition);
+                            }
                         }
                     }
                 }
@@ -4414,14 +4589,21 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                     const auto destTrackIndex = currentTrack() + mltTrackIndex;
                     Mlt::Playlist srcPlaylist(*srcTrack);
                     Mlt::ClipInfo clipInfo;
+                    int skippedTransitionDuration = 0;
                     for (int mltClipIndex = 0; mltClipIndex < srcPlaylist.count(); mltClipIndex++) {
                         if (!srcPlaylist.is_blank(mltClipIndex)) {
                             srcPlaylist.clip_info(mltClipIndex, &clipInfo);
+                            if (isTransitionClipboardClip(clipInfo)) {
+                                skippedTransitionDuration += transitionClipboardDuration(clipInfo);
+                                continue;
+                            }
                             if (clipInfo.cut
                                 && clipInfo.cut->property_exists(kShotcutGroupProperty)) {
                                 int group = clipInfo.cut->get_int(kShotcutGroupProperty);
+                                const int destPosition = position + clipInfo.start
+                                                         - skippedTransitionDuration;
                                 int destClipIndex = clipIndexAtPosition(destTrackIndex,
-                                                                        position + clipInfo.start);
+                                                                        destPosition);
                                 if (destClipIndex >= 0 && !isBlank(destTrackIndex, destClipIndex)) {
                                     if (!groupCommands.contains(group))
                                         groupCommands[group] = new Timeline::GroupCommand(m_model);
