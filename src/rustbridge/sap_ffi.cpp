@@ -701,6 +701,36 @@ QString keyframeTypeToString(mlt_keyframe_type type)
     }
 }
 
+// mlt++'s only const-char*-value anim_set() overload (MltProperties.h) has no
+// keyframe_type parameter at all -- MLT hardcodes mlt_keyframe_discrete
+// (mlt_property.c), so every keyframe set from a string value silently
+// downgrades to discrete/hold: the value stays pinned at the previous keyframe
+// and only snaps to the new one at its exact frame instead of interpolating.
+// Rect-typed properties (qtblend's "rect", affine's "transition.rect", qtcrop)
+// are always strings like "0 0 1920 1080 1", so they always take that path.
+// Animation::key_set_type() can retroactively fix the type of the keyframe
+// anim_set() just created, so look it up by its now-known frame and correct it
+// rather than avoiding the string overload (which is otherwise the only API
+// that accepts a raw geometry/rect string as-is).
+void fixupStringKeyframeType(Mlt::Filter *filter,
+                             const char *key,
+                             int position,
+                             mlt_keyframe_type kfType)
+{
+    auto *anim = filter->get_anim(key);
+    if (!anim || !anim->is_valid())
+        return;
+    const int count = anim->key_count();
+    for (int i = 0; i < count; ++i) {
+        int frame = 0;
+        mlt_keyframe_type existingType = mlt_keyframe_linear;
+        if (anim->key_get(i, frame, existingType) == 0 && frame == position) {
+            anim->key_set_type(i, kfType);
+            break;
+        }
+    }
+}
+
 void applyJsonPropertiesToFilter(Mlt::Filter &filter, const QJsonObject &props)
 {
     for (auto it = props.constBegin(); it != props.constEnd(); ++it) {
@@ -883,17 +913,31 @@ int sap_filter_set_property(void *mainWindowHandle,
                 // interpolation types), via the same anim_set() primitive.
                 int rc = -1;
                 if (value.isBool())
-                    rc = filter->anim_set(key.constData(), value.toBool() ? 1.0 : 0.0, static_cast<int>(position));
+                    rc = filter->anim_set(key.constData(),
+                                          value.toBool() ? 1.0 : 0.0,
+                                          static_cast<int>(position),
+                                          filter->get_length());
                 else if (value.isDouble())
-                    rc = filter->anim_set(key.constData(), value.toDouble(), static_cast<int>(position));
+                    rc = filter->anim_set(key.constData(),
+                                          value.toDouble(),
+                                          static_cast<int>(position),
+                                          filter->get_length());
                 else if (value.isString()) {
                     bool numOk = false;
                     const double asDouble = value.toString().toDouble(&numOk);
-                    rc = numOk
-                             ? filter->anim_set(key.constData(), asDouble, static_cast<int>(position))
-                             : filter->anim_set(key.constData(),
-                                                value.toString().toUtf8().constData(),
-                                                static_cast<int>(position));
+                    rc = numOk ? filter->anim_set(key.constData(),
+                                                  asDouble,
+                                                  static_cast<int>(position),
+                                                  filter->get_length())
+                               : filter->anim_set(key.constData(),
+                                                  value.toString().toUtf8().constData(),
+                                                  static_cast<int>(position),
+                                                  filter->get_length());
+                    if (rc == 0 && !numOk)
+                        fixupStringKeyframeType(filter.data(),
+                                                key.constData(),
+                                                static_cast<int>(position),
+                                                mlt_keyframe_linear);
                 }
                 if (rc == 0)
                     result = 0;
@@ -1312,51 +1356,34 @@ int sap_filter_add_keyframe(void *mainWindowHandle,
             const mlt_keyframe_type kfType = interpolationFromString(interpStr);
             int rc = -1;
             if (value.isBool()) {
-                rc = filter->anim_set(key.constData(), value.toBool() ? 1.0 : 0.0, static_cast<int>(position), 0, kfType);
+                rc = filter->anim_set(key.constData(),
+                                      value.toBool() ? 1.0 : 0.0,
+                                      static_cast<int>(position),
+                                      filter->get_length(),
+                                      kfType);
             } else if (value.isDouble()) {
-                rc = filter->anim_set(key.constData(), value.toDouble(), static_cast<int>(position), 0, kfType);
+                rc = filter->anim_set(key.constData(),
+                                      value.toDouble(),
+                                      static_cast<int>(position),
+                                      filter->get_length(),
+                                      kfType);
             } else if (value.isString()) {
                 bool numOk = false;
                 const double asDouble = value.toString().toDouble(&numOk);
-                rc = numOk ? filter->anim_set(key.constData(), asDouble, static_cast<int>(position), 0, kfType)
+                rc = numOk ? filter->anim_set(key.constData(),
+                                              asDouble,
+                                              static_cast<int>(position),
+                                              filter->get_length(),
+                                              kfType)
                            : filter->anim_set(key.constData(),
                                               value.toString().toUtf8().constData(),
-                                              static_cast<int>(position));
-                if (rc == 0 && !numOk) {
-                    // mlt++'s only const-char*-value anim_set() overload
-                    // (MltProperties.h) has no keyframe_type parameter at
-                    // all -- it silently always creates a discrete/hold
-                    // keyframe regardless of what the caller asked for,
-                    // which for a non-numeric animated property (e.g. this
-                    // filter's own "transition.rect" geometry string, "0%
-                    // 0% 100% 100% 1") meant every requested "linear"/
-                    // "smooth" keyframe silently downgraded to "discrete":
-                    // the value stayed pinned at the previous keyframe and
-                    // only snapped to the new one exactly at its frame,
-                    // instead of interpolating -- confirmed live (a
-                    // "linear" zoom rect keyframe pair rendered as a flat
-                    // corner color for every sampled frame up to, but not
-                    // including, the final keyframe's own exact frame; see
-                    // scripts/debug-zoom-repro.py). Since Animation::
-                    // key_set_type() can retroactively fix the type of the
-                    // keyframe anim_set() just created, look it up by its
-                    // now-known frame and correct it rather than avoiding
-                    // the string overload (which is otherwise the only
-                    // API that accepts a raw geometry/rect string as-is).
-                    auto *anim = filter->get_anim(key.constData());
-                    if (anim && anim->is_valid()) {
-                        const int count = anim->key_count();
-                        for (int i = 0; i < count; ++i) {
-                            int frame = 0;
-                            mlt_keyframe_type existingType = mlt_keyframe_linear;
-                            if (anim->key_get(i, frame, existingType) == 0
-                                && frame == static_cast<int>(position)) {
-                                anim->key_set_type(i, kfType);
-                                break;
-                            }
-                        }
-                    }
-                }
+                                              static_cast<int>(position),
+                                              filter->get_length());
+                if (rc == 0 && !numOk)
+                    fixupStringKeyframeType(filter.data(),
+                                            key.constData(),
+                                            static_cast<int>(position),
+                                            kfType);
             }
             if (rc == 0)
                 result = 0;
@@ -1408,7 +1435,21 @@ char *sap_filter_list_keyframes(void *mainWindowHandle,
                     continue;
                 QJsonObject entry;
                 entry["position"] = frame;
-                entry["value"] = filter->anim_get_double(key.constData(), frame);
+                // anim_get_double() only strtod()s the leading token, which
+                // for a rect ("0 0 1920 1080 1") silently drops y/w/h/opacity.
+                // The string form is authoritative: report it verbatim when it
+                // carries more than one token, and only narrow to a number for
+                // genuinely scalar properties.
+                const char *rawValue = filter->anim_get(key.constData(),
+                                                        frame,
+                                                        filter->get_length());
+                const QString valueStr = QString::fromUtf8(rawValue ? rawValue : "").trimmed();
+                if (valueStr.contains(QLatin1Char(' ')))
+                    entry["value"] = valueStr;
+                else
+                    entry["value"] = filter->anim_get_double(key.constData(),
+                                                             frame,
+                                                             filter->get_length());
                 entry["interpolation"] = keyframeTypeToString(type);
                 result.append(entry);
             }
