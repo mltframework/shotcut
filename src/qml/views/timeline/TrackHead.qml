@@ -38,6 +38,7 @@ Rectangle {
     property bool current: false
     property real trackAudioLevel: -100
     property bool trackAudioLevelSupported: false
+    property int _pendingVolumeClickModifiers: Qt.NoModifier
     property bool _blockTrackGainUpdate: true
     property real _maximumGainDb: 10
     property real _minimumGainDb: -70
@@ -147,20 +148,48 @@ Rectangle {
         _blockTrackGainUpdate = false;
     }
 
-    function _toggleMuteWithPopupState(modifiers) {
+    function _handleVolumeButtonSingleClick(modifiers) {
         if (modifiers & Qt.AltModifier) {
+            if (volumePopup.opened)
+                volumePopup.close();
             timeline.toggleOtherTracksMute(index);
             return;
         }
-        if (volumePopup.opened) {
-            timeline.toggleTrackMute(index);
-        } else {
-            _syncTrackGain();
+
+        _syncTrackGain();
+        if (!volumePopup.opened)
             volumePopup.open();
-        }
+    }
+
+    function _handleVolumeButtonDoubleClick() {
+        if (volumePopup.opened)
+            volumePopup.close();
+        timeline.toggleTrackMute(index);
+    }
+
+    function _positionVolumePopupOverVolumeButton() {
+        if (!volumePopup.opened)
+            return;
+
+        const buttonCenter = volumeButton.mapToItem(trackHeadRoot,
+                                                    volumeButton.width / 2,
+                                                    volumeButton.height / 2);
+        const popupButtonCenter = popupMuteButton.mapToItem(trackHeadRoot,
+                                                            popupMuteButton.width / 2,
+                                                            popupMuteButton.height / 2);
+        volumePopup.x += Math.round(buttonCenter.x - popupButtonCenter.x);
+        volumePopup.y += Math.round(buttonCenter.y - popupButtonCenter.y);
     }
 
     onTrackGainChanged: _syncTrackGain()
+
+    Timer {
+        id: volumeButtonSingleClickTimer
+
+        interval: Qt.styleHints.mouseDoubleClickInterval
+        repeat: false
+        onTriggered: trackHeadRoot._handleVolumeButtonSingleClick(trackHeadRoot._pendingVolumeClickModifiers)
+    }
 
     Component.onCompleted: _syncTrackGain()
 
@@ -373,7 +402,14 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
-                    onClicked: mouse => trackHeadRoot._toggleMuteWithPopupState(mouse.modifiers)
+                    onClicked: mouse => {
+                        trackHeadRoot._pendingVolumeClickModifiers = mouse.modifiers;
+                        volumeButtonSingleClickTimer.restart();
+                    }
+                    onDoubleClicked: mouse => {
+                        volumeButtonSingleClickTimer.stop();
+                        trackHeadRoot._handleVolumeButtonDoubleClick();
+                    }
                 }
 
                 Shotcut.HoverTip {
@@ -384,13 +420,14 @@ Rectangle {
                     id: volumePopup
 
                     parent: trackHeadRoot
-                    x: Math.max(0, volumeButton.x - width + volumeButton.width)
-                    y: Math.min(trackHeadRoot.height - 4, volumeButton.y + volumeButton.height)
+                    x: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).x - padding)
+                    y: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).y - padding)
                     width: 220
                     height: 36
                     padding: 6
                     modal: false
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                    onOpened: trackHeadRoot._positionVolumePopupOverVolumeButton()
 
                     background: Rectangle {
                         radius: 3
@@ -409,9 +446,14 @@ Rectangle {
                             icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
                             icon.width: 16
                             icon.height: 16
-                            padding: 1
+                            width: volumeButton.width
+                            height: volumeButton.height
+                            padding: volumeButton.padding
                             focusPolicy: Qt.NoFocus
-                            onClicked: timeline.toggleTrackMute(index)
+                            onClicked: {
+                                timeline.toggleTrackMute(index);
+                                volumePopup.close();
+                            }
 
                             Shotcut.HoverTip {
                                 text: isMute ? qsTr('Unmute') : qsTr('Mute')
