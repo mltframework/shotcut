@@ -617,6 +617,7 @@ Rectangle {
 
         Rectangle {
             visible: trackHeadRoot.inlineAudioControlsEnabled
+                     && trackHeadRoot.trackAudioLevelSupported
             width: parent.width
             height: trackHeadRoot.stackedHeaderLayout ? 28 : 30
             color: 'transparent'
