@@ -207,6 +207,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     , m_tractor(0)
     , m_isMakingTransition(false)
     , m_trackLevelIndicatorSupported(hasTrackLevelIndicatorSupport())
+    , m_hasAudioTracks(false)
 {
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
     connect(this, SIGNAL(modified()), SLOT(adjustTrackFilters()));
@@ -217,6 +218,11 @@ MultitrackModel::MultitrackModel(QObject *parent)
 bool MultitrackModel::trackLevelIndicatorSupported() const
 {
     return m_trackLevelIndicatorSupported;
+}
+
+bool MultitrackModel::hasAudioTracks() const
+{
+    return m_hasAudioTracks;
 }
 
 MultitrackModel::~MultitrackModel()
@@ -1031,7 +1037,7 @@ int MultitrackModel::trackHeaderWidth() const
 {
     return (m_tractor && m_tractor->property_exists(kTrackHeaderWidthProperty))
                ? m_tractor->get_int(kTrackHeaderWidthProperty)
-               : 150;
+               : 165;
 }
 
 void MultitrackModel::setTrackHeaderWidth(int width)
@@ -4230,6 +4236,7 @@ void MultitrackModel::refreshTrackList()
     int a = 0;
     int v = 0;
     bool isKdenlive = false;
+    bool hasAudioTracks = false;
 
     // Add video tracks in reverse order.
     for (int i = 0; i < n; ++i) {
@@ -4286,6 +4293,7 @@ void MultitrackModel::refreshTrackList()
                 t.mlt_index = i;
                 t.type = AudioTrackType;
                 t.number = a++;
+                hasAudioTracks = true;
                 QString trackName = track->get(kTrackNameProperty);
                 if (trackName.isEmpty())
                     trackName = QStringLiteral("A%1").arg(a);
@@ -4294,6 +4302,11 @@ void MultitrackModel::refreshTrackList()
                 //                LOG_DEBUG() << __FUNCTION__ << QString(track->get("id")) << i;
             }
         }
+    }
+
+    if (m_hasAudioTracks != hasAudioTracks) {
+        m_hasAudioTracks = hasAudioTracks;
+        emit hasAudioTracksChanged();
     }
 
     syncTrackAudioLevelFilterPrefixes();

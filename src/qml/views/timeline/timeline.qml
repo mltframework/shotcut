@@ -33,6 +33,11 @@ Rectangle {
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
     property var dragDelta
+    property int inlineAudioControlsThreshold: 60
+    property int separateTrackHeaderRowsThreshold: 80
+    property int shortestTrackHeight: multitrack.hasAudioTracks ? Logic.trackHeight(true) : Logic.trackHeight(false)
+    property bool inlineAudioControlsEnabled: shortestTrackHeight >= inlineAudioControlsThreshold
+    property bool separateTrackHeaderRows: shortestTrackHeight >= separateTrackHeaderRowsThreshold
 
     signal clipClicked
     signal timelineRightClicked
@@ -254,6 +259,8 @@ Rectangle {
                             trackGain: typeof model.gain !== 'undefined' ? model.gain : 0
                             trackAudioLevel: typeof model.audioLevel !== 'undefined' ? model.audioLevel : -100
                             trackAudioLevelSupported: multitrack.trackLevelIndicatorSupported
+                            inlineAudioControlsEnabled: root.inlineAudioControlsEnabled
+                            stackedHeaderLayout: root.separateTrackHeaderRows
                             isMute: model.mute
                             isHidden: model.hidden
                             isComposite: model.composite

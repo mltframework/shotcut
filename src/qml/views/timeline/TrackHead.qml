@@ -38,13 +38,12 @@ Rectangle {
     property bool current: false
     property real trackAudioLevel: -100
     property bool trackAudioLevelSupported: false
+    property bool inlineAudioControlsEnabled: false
+    property bool stackedHeaderLayout: false
     property int _pendingVolumeClickModifiers: Qt.NoModifier
     property bool _blockTrackGainUpdate: true
     property real _maximumGainDb: 10
     property real _minimumGainDb: -70
-    property bool _showInlineAudioControls: trackHeadRoot.height >= 92
-    property var _inlineScaleTicks: [_minimumGainDb, -60, -50, -40, -30, -20, -12, -6, 0, _maximumGainDb]
-    property var _inlineScaleLabels: [_minimumGainDb, -30, -12, -6, 0, _maximumGainDb]
 
     signal clicked
 
@@ -83,13 +82,6 @@ Rectangle {
     function _formatDb(value) {
         const v = Math.round(value * 10) / 10;
         return (Math.abs(v) < 0.05) ? '0.0 dB' : ((v > 0 ? '+' : '') + v.toFixed(1) + ' dB');
-    }
-
-    function _inlineScaleX(width, dB) {
-        const handleHalf = Math.max(6, inlineVolumeSlider.implicitHandleWidth / 2);
-        const left = handleHalf;
-        const right = Math.max(left, width - handleHalf);
-        return left + trackHeadRoot._gainScalePosition(dB) * (right - left);
     }
 
     function _inlineMeterScalePosition(dB) {
@@ -185,7 +177,7 @@ Rectangle {
             return;
         }
 
-        if (_showInlineAudioControls) {
+        if (inlineAudioControlsEnabled) {
             if (volumePopup.opened)
                 volumePopup.close();
             timeline.toggleTrackMute(index);
@@ -299,24 +291,31 @@ Rectangle {
         }
     }
 
-    Flow {
+    Column {
         id: trackHeadColumn
 
-        flow: (trackHeadRoot.height < 50) ? Flow.LeftToRight : Flow.TopToBottom
-        spacing: (trackHeadRoot.height < 50) ? 0 : 6
+        spacing: trackHeadRoot.stackedHeaderLayout ? 1 : 2
 
         anchors {
             top: parent.top
             left: parent.left
+            right: parent.right
             leftMargin: 8
-            rightMargin: (trackHeadRoot.height < 50) ? 0 : 4
-            topMargin: (trackHeadRoot.height < 50) ? 0 : 4
-            bottomMargin: (trackHeadRoot.height < 50) ? 0 : 4
+            rightMargin: trackHeadRoot.stackedHeaderLayout ? 4 : 0
+            topMargin: trackHeadRoot.stackedHeaderLayout ? 2 : 0
+            bottomMargin: trackHeadRoot.stackedHeaderLayout ? 4 : 0
         }
 
-        Rectangle {
+        Flow {
+            id: trackHeadHeaderFlow
+
+            width: parent.width
+            flow: trackHeadRoot.stackedHeaderLayout ? Flow.TopToBottom : Flow.LeftToRight
+            spacing: trackHeadRoot.stackedHeaderLayout ? 4 : 0
+
+            Rectangle {
             color: 'transparent'
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 50 ? 120 : 0)
+            width: trackHeadHeaderFlow.width - (trackHeadRoot.stackedHeaderLayout ? 0 : trackHeadButtons.implicitWidth)
             radius: 2
             border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse) ? activePalette.shadow : 'transparent'
             height: nameEdit.height
@@ -365,14 +364,15 @@ Rectangle {
             }
         }
 
-        RowLayout {
+            RowLayout {
+            id: trackHeadButtons
             spacing: 8
 
             Item {
                 Layout.alignment: Qt.AlignVCenter
                 width: 14
                 height: 14
-                visible: trackHeadRoot.trackAudioLevelSupported && !trackHeadRoot._showInlineAudioControls
+                visible: trackHeadRoot.trackAudioLevelSupported && !trackHeadRoot.inlineAudioControlsEnabled
 
                 Rectangle {
                     anchors.centerIn: parent
@@ -463,7 +463,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: trackHeadRoot._showInlineAudioControls ? (qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')) : (volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction'))
+                    text: trackHeadRoot.inlineAudioControlsEnabled ? (qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')) : (volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction'))
                 }
 
                 Popup {
@@ -553,77 +553,105 @@ Rectangle {
                 }
             }
 
-            ToolButton {
-                id: hideButton
+            Item {
+                width: 20
+                height: 20
 
-                visible: isVideo
-                icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
-                icon.source: isHidden ? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
-                icon.width: 16
-                icon.height: 16
-                padding: 1
-                focusPolicy: Qt.NoFocus
+                ToolButton {
+                    id: hideButton
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mouse => {
-                        if (mouse.modifiers & Qt.AltModifier) {
-                            timeline.toggleOtherTracksHidden(index);
-                        } else {
-                            timeline.toggleTrackHidden(index);
+                    anchors.centerIn: parent
+                    visible: isVideo
+                    icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
+                    icon.source: isHidden ? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                    icon.width: 16
+                    icon.height: 16
+                    padding: 1
+                    focusPolicy: Qt.NoFocus
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: mouse => {
+                            if (mouse.modifiers & Qt.AltModifier) {
+                                timeline.toggleOtherTracksHidden(index);
+                            } else {
+                                timeline.toggleTrackHidden(index);
+                            }
                         }
                     }
-                }
 
-                Shotcut.HoverTip {
-                    text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + application.actionFirstShortcut('timelineToggleTrackHiddenAction')
+                    Shotcut.HoverTip {
+                        text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + application.actionFirstShortcut('timelineToggleTrackHiddenAction')
+                    }
                 }
             }
 
-            ToolButton {
-                visible: isFiltered
-                icon.name: 'view-filter'
-                icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
-                icon.width: 16
-                icon.height: 16
-                padding: 1
-                focusPolicy: Qt.NoFocus
-                onClicked: {
-                    trackHeadRoot.clicked();
-                    nameEdit.focus = false;
-                    timeline.filteredClicked();
-                }
+            Item {
+                width: 20
+                height: 20
 
-                Shotcut.HoverTip {
-                    text: qsTr('Filters')
+                ToolButton {
+                    id: filterButton
+
+                    anchors.centerIn: parent
+                    visible: isFiltered
+                    icon.name: 'view-filter'
+                    icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                    icon.width: 16
+                    icon.height: 16
+                    padding: 1
+                    focusPolicy: Qt.NoFocus
+                    onClicked: {
+                        trackHeadRoot.clicked();
+                        nameEdit.focus = false;
+                        timeline.filteredClicked();
+                    }
+
+                    Shotcut.HoverTip {
+                        text: qsTr('Filters')
+                    }
                 }
+            }
             }
         }
 
         Rectangle {
-            visible: trackHeadRoot._showInlineAudioControls
-            width: trackHeadRoot.width - trackHeadColumn.anchors.leftMargin - trackHeadColumn.anchors.rightMargin
-            height: 40
+            visible: trackHeadRoot.inlineAudioControlsEnabled
+            width: parent.width
+            height: trackHeadRoot.stackedHeaderLayout ? 28 : 30
             color: 'transparent'
             border.color: 'transparent'
 
             Column {
                 anchors.fill: parent
-                spacing: 1
+                spacing: 2
 
                 Rectangle {
                     id: inlineMeter
 
-                    x: Math.round(trackHeadRoot._inlineScaleX(parent.width,
-                                                              trackHeadRoot._minimumGainDb))
-                    width: Math.max(1,
-                                    Math.round(trackHeadRoot._inlineScaleX(parent.width, 0.0)) - x)
-                    height: 8
+                    width: parent.width
+                    height: trackHeadRoot.stackedHeaderLayout ? 9 : 10
                     radius: 2
                     color: Qt.darker(activePalette.mid, 1.35)
                     border.color: activePalette.shadow
                     border.width: 1
                     clip: true
+
+                    MouseArea {
+                        id: inlineMeterMouseArea
+
+                        anchors.fill: parent
+                        acceptedButtons: Qt.NoButton
+                        hoverEnabled: true
+
+                        ToolTip {
+                            parent: inlineMeterMouseArea
+                            visible: inlineMeterMouseArea.containsMouse
+                            delay: 0
+                            timeout: -1
+                            text: trackHeadRoot._indicatorAudioLevelText()
+                        }
+                    }
 
                     Item {
                         id: inlineMeterFill
@@ -669,46 +697,11 @@ Rectangle {
                     }
                 }
 
-                Item {
-                    id: inlineScale
-
-                    width: parent.width
-                    height: 10
-
-                    Repeater {
-                        model: trackHeadRoot._inlineScaleTicks
-
-                        delegate: Rectangle {
-                            width: 1
-                            height: 4
-                            color: activePalette.mid
-                            x: Math.round(trackHeadRoot._inlineScaleX(inlineScale.width, modelData) - width / 2)
-                            y: 0
-                        }
-                    }
-
-                    Repeater {
-                        model: trackHeadRoot._inlineScaleLabels
-
-                        delegate: Label {
-                            text: modelData > 0 ? ('+' + modelData) : ('' + modelData)
-                            color: activePalette.text
-                            font.pixelSize: 8
-                            x: Math.max(0,
-                                        Math.min(inlineScale.width - width,
-                                                 Math.round(trackHeadRoot._inlineScaleX(inlineScale.width,
-                                                                                        modelData)
-                                                            - width / 2)))
-                            y: 2
-                        }
-                    }
-                }
-
                 Slider {
                     id: inlineVolumeSlider
 
                     width: parent.width
-                    height: 20
+                    height: trackHeadRoot.stackedHeaderLayout ? 16 : 18
                     from: _minimumGainDb
                     to: _maximumGainDb
                     stepSize: 0.1

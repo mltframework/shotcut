@@ -691,7 +691,7 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible())
             return;
-        m_model.setTrackHeight(50);
+        m_model.setTrackHeight(60);
     });
     Actions.add("timelineResetTrackHeightAction", action);
 
