@@ -42,6 +42,9 @@ Rectangle {
     property bool _blockTrackGainUpdate: true
     property real _maximumGainDb: 10
     property real _minimumGainDb: -70
+    property bool _showInlineAudioControls: trackHeadRoot.height >= 92
+    property var _inlineScaleTicks: [_minimumGainDb, -60, -50, -40, -30, -20, -12, -6, 0, _maximumGainDb]
+    property var _inlineScaleLabels: [_minimumGainDb, -30, -12, -6, 0, _maximumGainDb]
 
     signal clicked
 
@@ -69,6 +72,30 @@ Rectangle {
 
     function _iecScaleMax(dB, maxDb) {
         return _iecScale(dB) / _iecScale(maxDb);
+    }
+
+    function _gainScalePosition(dB) {
+        return Math.max(0.0,
+                        Math.min(1.0,
+                                 (dB - _minimumGainDb) / (_maximumGainDb - _minimumGainDb)));
+    }
+
+    function _formatDb(value) {
+        const v = Math.round(value * 10) / 10;
+        return (Math.abs(v) < 0.05) ? '0.0 dB' : ((v > 0 ? '+' : '') + v.toFixed(1) + ' dB');
+    }
+
+    function _inlineScaleX(width, dB) {
+        const handleHalf = Math.max(6, inlineVolumeSlider.implicitHandleWidth / 2);
+        const left = handleHalf;
+        const right = Math.max(left, width - handleHalf);
+        return left + trackHeadRoot._gainScalePosition(dB) * (right - left);
+    }
+
+    function _inlineMeterScalePosition(dB) {
+        return Math.max(0.0,
+                        Math.min(1.0,
+                                 (dB - _minimumGainDb) / (0.0 - _minimumGainDb)));
     }
 
     function _mixColor(a, b, t) {
@@ -133,18 +160,20 @@ Rectangle {
             _syncTrackGain();
             return;
         }
-        if (gain <= volumeSlider.from && !isMute) {
+        if (gain <= _minimumGainDb && !isMute) {
             timeline.toggleTrackMute(index);
-        } else if (gain > volumeSlider.from && isMute) {
+        } else if (gain > _minimumGainDb && isMute) {
             timeline.toggleTrackMute(index);
         }
     }
 
     function _syncTrackGain() {
+        const gain = Math.max(_minimumGainDb,
+                              Math.min(_maximumGainDb,
+                                       Math.round(trackGain * 10) / 10));
         _blockTrackGainUpdate = true;
-        volumeSlider.value = Math.max(volumeSlider.from,
-                                      Math.min(volumeSlider.to,
-                                               Math.round(trackGain * 10) / 10));
+        volumeSlider.value = gain;
+        inlineVolumeSlider.value = gain;
         _blockTrackGainUpdate = false;
     }
 
@@ -153,6 +182,13 @@ Rectangle {
             if (volumePopup.opened)
                 volumePopup.close();
             timeline.toggleOtherTracksMute(index);
+            return;
+        }
+
+        if (_showInlineAudioControls) {
+            if (volumePopup.opened)
+                volumePopup.close();
+            timeline.toggleTrackMute(index);
             return;
         }
 
@@ -189,6 +225,20 @@ Rectangle {
         interval: Qt.styleHints.mouseDoubleClickInterval
         repeat: false
         onTriggered: trackHeadRoot._handleVolumeButtonSingleClick(trackHeadRoot._pendingVolumeClickModifiers)
+    }
+
+    Timer {
+        id: volumeSliderWheelTipTimer
+
+        interval: 800
+        repeat: false
+    }
+
+    Timer {
+        id: inlineSliderWheelTipTimer
+
+        interval: 800
+        repeat: false
     }
 
     Component.onCompleted: _syncTrackGain()
@@ -322,7 +372,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignVCenter
                 width: 14
                 height: 14
-                visible: trackHeadRoot.trackAudioLevelSupported
+                visible: trackHeadRoot.trackAudioLevelSupported && !trackHeadRoot._showInlineAudioControls
 
                 Rectangle {
                     anchors.centerIn: parent
@@ -413,7 +463,7 @@ Rectangle {
                 }
 
                 Shotcut.HoverTip {
-                    text: volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')
+                    text: trackHeadRoot._showInlineAudioControls ? (qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')) : (volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction'))
                 }
 
                 Popup {
@@ -474,6 +524,7 @@ Rectangle {
                             implicitHeight: 24
                             implicitWidth: 120
                             onValueChanged: trackHeadRoot._setTrackGain(value)
+                            ToolTip.visible: false
 
                             MouseArea {
                                 anchors.fill: parent
@@ -545,6 +596,146 @@ Rectangle {
 
                 Shotcut.HoverTip {
                     text: qsTr('Filters')
+                }
+            }
+        }
+
+        Rectangle {
+            visible: trackHeadRoot._showInlineAudioControls
+            width: trackHeadRoot.width - trackHeadColumn.anchors.leftMargin - trackHeadColumn.anchors.rightMargin
+            height: 40
+            color: 'transparent'
+            border.color: 'transparent'
+
+            Column {
+                anchors.fill: parent
+                spacing: 1
+
+                Rectangle {
+                    id: inlineMeter
+
+                    x: Math.round(trackHeadRoot._inlineScaleX(parent.width,
+                                                              trackHeadRoot._minimumGainDb))
+                    width: Math.max(1,
+                                    Math.round(trackHeadRoot._inlineScaleX(parent.width, 0.0)) - x)
+                    height: 8
+                    radius: 2
+                    color: Qt.darker(activePalette.mid, 1.35)
+                    border.color: activePalette.shadow
+                    border.width: 1
+                    clip: true
+
+                    Item {
+                        id: inlineMeterFill
+
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: Math.max(0,
+                                        Math.round(parent.width * trackHeadRoot._inlineMeterScalePosition(Math.max(trackHeadRoot._minimumGainDb,
+                                                                                                            Math.min(0.0,
+                                                                                                              trackHeadRoot._indicatorAudioLevel())))))
+                        height: parent.height - 2
+                        clip: true
+
+                        Rectangle {
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: inlineMeter.width
+                            height: parent.height
+                            radius: 1
+                            gradient: Gradient {
+                                orientation: Gradient.Horizontal
+                                GradientStop {
+                                    position: 0.0
+                                    color: 'darkgreen'
+                                }
+
+                                GradientStop {
+                                    position: trackHeadRoot._inlineMeterScalePosition(-12.0)
+                                    color: 'green'
+                                }
+
+                                GradientStop {
+                                    position: trackHeadRoot._inlineMeterScalePosition(-6.0)
+                                    color: 'yellow'
+                                }
+
+                                GradientStop {
+                                    position: 1.0
+                                    color: 'red'
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Item {
+                    id: inlineScale
+
+                    width: parent.width
+                    height: 10
+
+                    Repeater {
+                        model: trackHeadRoot._inlineScaleTicks
+
+                        delegate: Rectangle {
+                            width: 1
+                            height: 4
+                            color: activePalette.mid
+                            x: Math.round(trackHeadRoot._inlineScaleX(inlineScale.width, modelData) - width / 2)
+                            y: 0
+                        }
+                    }
+
+                    Repeater {
+                        model: trackHeadRoot._inlineScaleLabels
+
+                        delegate: Label {
+                            text: modelData > 0 ? ('+' + modelData) : ('' + modelData)
+                            color: activePalette.text
+                            font.pixelSize: 8
+                            x: Math.max(0,
+                                        Math.min(inlineScale.width - width,
+                                                 Math.round(trackHeadRoot._inlineScaleX(inlineScale.width,
+                                                                                        modelData)
+                                                            - width / 2)))
+                            y: 2
+                        }
+                    }
+                }
+
+                Slider {
+                    id: inlineVolumeSlider
+
+                    width: parent.width
+                    height: 20
+                    from: _minimumGainDb
+                    to: _maximumGainDb
+                    stepSize: 0.1
+                    snapMode: Slider.SnapAlways
+                    live: true
+                    value: 0
+                    onValueChanged: trackHeadRoot._setTrackGain(value)
+                    ToolTip.visible: pressed || inlineSliderWheelTipTimer.running || inlineVolumeSliderMouseArea.containsMouse
+                    ToolTip.text: trackHeadRoot._formatDb(value)
+
+                    MouseArea {
+                        id: inlineVolumeSliderMouseArea
+
+                        anchors.fill: parent
+                        acceptedButtons: Qt.NoButton
+                        hoverEnabled: true
+                        onWheel: wheel => {
+                            const step = 0.1;
+                            const delta = wheel.angleDelta.y > 0 ? step : -step;
+                            inlineVolumeSlider.value = Math.max(inlineVolumeSlider.from,
+                                                                Math.min(inlineVolumeSlider.to,
+                                                                         Math.round((inlineVolumeSlider.value + delta) * 10)
+                                                                         / 10));
+                            inlineSliderWheelTipTimer.restart();
+                            wheel.accepted = true;
+                        }
+                    }
                 }
             }
         }
