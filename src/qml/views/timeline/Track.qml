@@ -123,15 +123,16 @@ Rectangle {
                     if (clipIndexChanged)
                         frame = Math.round((clipAt(clipIndex).x + clip.x - clip.originalX) / timeScale);
                 }
-                // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
                     placeHolderAdded = false;
                     root.resetDrag();
-                    multitrack.reload(true);
+                    // Remove the visual-only placeholder to resync DelegateModel before model mutation
+                    trackModel.items.remove(clip.originalClipIndex);
                 }
                 if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, settings.timelineRipple)) {
                     clip.x = clip.originalX;
                     clip.trackIndex = clip.originalTrackIndex;
+                    multitrack.reload(true);
                 }
             }
             onDragged: (clip, mouse) => {
@@ -280,8 +281,8 @@ Rectangle {
             onDropped: clip => {
                 timeline.selection = [];
                 if (placeHolderAdded) {
-                    multitrack.reload(true);
                     placeHolderAdded = false;
+                    trackModel.items.remove(clip.originalClipIndex);
                 }
             }
             Component.onCompleted: {

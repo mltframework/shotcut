@@ -3373,7 +3373,6 @@ void TimelineDock::onRowsMoved(
     // Clear the selection and reload the model to trigger reset of the selected clips in the UI
     QList<QPoint> newSelection;
     setSelection(newSelection);
-    model()->reload(true);
 }
 
 /*!

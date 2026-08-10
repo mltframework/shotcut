@@ -1287,17 +1287,15 @@ bool MultitrackModel::moveClip(
                     insertClip(toTrack, clip, position, rippleAllTracks, false);
                 }
             } else {
-                // Lift clip
+                // Lift clip — use structural signals so reparented delegates are properly destroyed
+                int liftDuration = playlist.clip_length(clipIndex);
                 emit removing(playlist.get_clip(clipIndex));
-                delete playlist.replace_with_blank(clipIndex);
-
-                QModelIndex index = createIndex(clipIndex, 0, fromTrack);
-                QVector<int> roles;
-                roles << ResourceRole;
-                roles << ServiceRole;
-                roles << IsBlankRole;
-                roles << IsTransitionRole;
-                emit dataChanged(index, index, roles);
+                beginRemoveRows(index(fromTrack), clipIndex, clipIndex);
+                playlist.remove(clipIndex);
+                endRemoveRows();
+                beginInsertRows(index(fromTrack), clipIndex, clipIndex);
+                playlist.insert_blank(clipIndex, liftDuration - 1);
+                endInsertRows();
 
                 consolidateBlanks(playlist, fromTrack);
 
@@ -1719,16 +1717,14 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
+            int duration = playlist.clip_length(clipIndex);
             emit removing(playlist.get_clip(clipIndex));
-            delete playlist.replace_with_blank(clipIndex);
-
-            QModelIndex index = createIndex(clipIndex, 0, trackIndex);
-            QVector<int> roles;
-            roles << ResourceRole;
-            roles << ServiceRole;
-            roles << IsBlankRole;
-            roles << IsTransitionRole;
-            emit dataChanged(index, index, roles);
+            beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
+            playlist.remove(clipIndex);
+            endRemoveRows();
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+            playlist.insert_blank(clipIndex, duration - 1);
+            endInsertRows();
 
             consolidateBlanks(playlist, trackIndex);
 
@@ -3965,6 +3961,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
                      QVector<int>() << IsTopVideoRole << IsBottomVideoRole << IsTopAudioRole
                                     << IsBottomAudioRole << IsCompositeRole << NameRole);
     emit modified();
+    reload(true);
 }
 
 void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int length)
