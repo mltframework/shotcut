@@ -245,16 +245,22 @@ Rectangle {
             clipRoot.clicked(clipRoot, mouse);
         }
         onPositionChanged: mouse => {
-            // Ignore movement below the drag threshold. Otherwise magnet snap can
-            // nudge clip.x during a click-to-select, and at default zoom a sub-pixel
-            // nudge is already 1–2 frames — committing that creates a tiny transition.
+            // Handle vertical drag (track change) regardless of horizontal drag.active,
+            // since drag.axis is XAxis and purely vertical moves never activate drag.
+            if (mouse.y < 0 && trackIndex > 0) {
+                dragActivated = true;
+                parent.draggedToTrack(clipRoot, -1);
+            } else if (mouse.y > height && (trackIndex + 1) < root.trackCount) {
+                dragActivated = true;
+                parent.draggedToTrack(clipRoot, 1);
+            }
+            // Ignore horizontal movement below the drag threshold. Otherwise magnet
+            // snap can nudge clip.x during a click-to-select, and at default zoom a
+            // sub-pixel nudge is already 1–2 frames — committing that creates a tiny
+            // transition.
             if (!drag.active)
                 return;
             dragActivated = true;
-            if (mouse.y < 0 && trackIndex > 0)
-                parent.draggedToTrack(clipRoot, -1);
-            else if (mouse.y > height && (trackIndex + 1) < root.trackCount)
-                parent.draggedToTrack(clipRoot, 1);
             parent.dragged(clipRoot, mouse);
         }
         onReleased: mouse => {
