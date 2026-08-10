@@ -155,6 +155,14 @@ static constexpr int AUTOSAVE_TIMEOUT_MS = 60000;
 static constexpr int kDockLayoutVersion = 5;
 static constexpr char kReservedLayoutPrefix[] = "__%1";
 static constexpr char kLayoutSwitcherName[] = "layoutSwitcherGrid";
+
+// AI is in a staged rollout. Keep the native entry points hidden unless an
+// operator explicitly opts in with SNAPFLOW_DISABLE_AI_MODE=0/false/no.
+static bool aiModeDisabled()
+{
+    const auto value = qEnvironmentVariable("SNAPFLOW_DISABLE_AI_MODE", "1").toLower();
+    return value != "0" && value != "false" && value != "no";
+}
 static QRegularExpression kBackupFileRegex("^(.+) "
                                            "([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2["
                                            "0-3]|[01][0-9])-([0-5][0-9])-([0-5][0-9]).mlt$");
@@ -971,6 +979,11 @@ void MainWindow::setupAndConnectDocks()
             this,
             SLOT(onChatRustDockTriggered(bool)));
     connect(ui->actionAI, SIGNAL(triggered()), this, SLOT(onChatRustDockTriggered()));
+    if (aiModeDisabled()) {
+        m_chatRustDock->hide();
+        m_chatRustDock->toggleViewAction()->setVisible(false);
+        ui->actionAI->setVisible(false);
+    }
     // Phase 4 (chat-panel-ui-theme-parity.md): default the chat dock to
     // ~20% of the main window's width on a fresh launch/profile, while
     // staying natively resizable afterward -- QDockWidget/QMainWindow's
