@@ -3138,8 +3138,35 @@ void MultitrackModel::addBackgroundTrack()
     m_tractor->set_track(playlist, m_tractor->count());
 }
 
+void MultitrackModel::beginBulkUpdate()
+{
+    // Reentrant: supports nested bulk operations (e.g. History dock jumps
+    // triggered from within another bulk operation).
+    ++m_bulkUpdateDepth;
+}
+
+void MultitrackModel::endBulkUpdate()
+{
+    if (m_bulkUpdateDepth > 0 && --m_bulkUpdateDepth == 0) {
+        // Flush any work that was deferred while bulk updates were suppressed,
+        // e.g. when the History dock replays many undo/redo steps at once.
+        if (m_bulkAdjustBackgroundPending) {
+            m_bulkAdjustBackgroundPending = false;
+            adjustBackgroundDuration();
+        }
+        if (m_bulkAdjustTrackFiltersPending) {
+            m_bulkAdjustTrackFiltersPending = false;
+            adjustTrackFilters();
+        }
+    }
+}
+
 void MultitrackModel::adjustBackgroundDuration()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustBackgroundPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();
@@ -3321,6 +3348,10 @@ QString MultitrackModel::trackTransitionService()
 
 void MultitrackModel::adjustTrackFilters()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustTrackFiltersPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();

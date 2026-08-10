@@ -4128,16 +4128,8 @@ bool TimelineDock::trimClipIn(
     } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (ripple) {
-                m_undoHelper->setHints(UndoHelper::RestoreTracks);
-            } else {
-                m_undoHelper->setHints(UndoHelper::SkipXML);
-                // Store XML for only this clip so keyframes deleted during trim can be restored.
-                auto info = m_model.getClipInfo(trackIndex, clipIndex);
-                if (info && info->producer)
-                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(*info->producer));
-            }
-            m_undoHelper->recordBeforeState();
+            m_undoHelper->recordBeforeState(
+                Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
         if (roll && delta < 0
             && m_model.trimClipOutValid(trackIndex, clipIndex - 1, -delta, false)) {
@@ -4234,9 +4226,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     } else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (!ripple)
-                m_undoHelper->setHints(UndoHelper::SkipXML);
-            m_undoHelper->recordBeforeState();
+            m_undoHelper->recordBeforeState(
+                Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
         if (roll && delta < 0 && m_model.trimClipInValid(trackIndex, clipIndex + 1, -delta, false)) {
             m_model.trimClipIn(trackIndex, clipIndex + 1, -delta, false, false);

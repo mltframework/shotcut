@@ -99,6 +99,10 @@ public:
                  bool proxy = false,
                  QString projectNote = QString());
     QString XML(Service *service = nullptr, bool withProfile = false, bool withMetadata = true);
+    // Temporary instrumentation (Phase B of timeline undo/redo optimization) to measure
+    // how many times XML() is called per undo/redo snapshot. Remove once no longer needed.
+    static qint64 xmlCallCount();
+    static void resetXmlCallCount();
     int consumerChanged();
     void setProfile(const QString &profile_name);
     void setAudioChannels(int audioChannels);

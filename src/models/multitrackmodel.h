@@ -144,6 +144,8 @@ public:
     QString trackTransitionService();
     bool trackLevelIndicatorSupported() const;
     bool hasAudioTracks() const;
+    void beginBulkUpdate();
+    void endBulkUpdate();
 
 signals:
     void created();
@@ -223,6 +225,9 @@ private:
     bool m_isMakingTransition;
     bool m_trackLevelIndicatorSupported;
     bool m_hasAudioTracks;
+    int m_bulkUpdateDepth = 0;
+    bool m_bulkAdjustBackgroundPending = false;
+    bool m_bulkAdjustTrackFiltersPending = false;
 
     void moveClipToEnd(Mlt::Playlist &playlist,
                        int trackIndex,
