@@ -2972,6 +2972,14 @@ void MainWindow::readWindowSettings()
             resizeDocks({m_chatRustDock}, {qRound(width() * 0.28)}, Qt::Horizontal);
         });
     }
+    // restoreState() and layout presets can restore a dock that the rollout
+    // gate intentionally disabled during setup. Re-apply the gate after all
+    // persisted/default layout operations have completed.
+    if (aiModeDisabled()) {
+        m_chatRustDock->hide();
+        m_chatRustDock->toggleViewAction()->setVisible(false);
+        ui->actionAI->setVisible(false);
+    }
     LOG_DEBUG() << "end";
 }
 
@@ -4191,6 +4199,10 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
 
 void MainWindow::onChatRustDockTriggered(bool checked)
 {
+    if (aiModeDisabled()) {
+        m_chatRustDock->hide();
+        return;
+    }
     if (checked) {
         m_chatRustDock->show();
         m_chatRustDock->raise();
