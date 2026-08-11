@@ -27,6 +27,7 @@
 #include <QCommandLineParser>
 #include <QElapsedTimer>
 #include <QFile>
+#include <QFileInfo>
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QProcess>
@@ -47,6 +48,24 @@
 #include <windows.h>
 #if defined(QT_DEBUG) && !defined(__ARM_ARCH)
 #include <exchndl.h>
+#endif
+
+#ifdef Q_OS_WIN
+// Keep native Qt launches on the same app-local MLT prefix as daemon-launched
+// children. The Windows bundle places the executable, plugins, data, and
+// profiles below Snapflow/; setting these before any MainWindow/MLT object is
+// constructed prevents MLT from resolving against the daemon install root.
+static void configureBundledMltPaths(const QString &appPath)
+{
+    const QString repository = QDir(appPath).filePath(QStringLiteral("lib/mlt"));
+    const QString data = QDir(appPath).filePath(QStringLiteral("share/mlt"));
+    const QString profiles = QDir(data).filePath(QStringLiteral("profiles"));
+    if (QFileInfo(repository).isDir() && QFileInfo(data).isDir()) {
+        qputenv("MLT_REPOSITORY", repository.toLocal8Bit());
+        qputenv("MLT_DATA", data.toLocal8Bit());
+        qputenv("MLT_PROFILES_PATH", profiles.toLocal8Bit());
+    }
+}
 #endif
 extern "C" {
 // Inform the driver we could make use of the discrete gpu
@@ -196,6 +215,7 @@ public:
 #ifdef Q_OS_WIN
 #include <winbase.h>
         SetDllDirectoryA(appPath.toLocal8Bit());
+        configureBundledMltPaths(appPath);
         CreateMutexA(NULL, FALSE, "Meltytech Snapflow Running Mutex");
 #else
         dir.cdUp();
