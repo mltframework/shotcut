@@ -1182,7 +1182,7 @@ void ShotcutSettings::setTimelineSnap(bool b)
 
 int ShotcutSettings::timelineTrackHeight() const
 {
-    return qMin(settings.value("timeline/trackHeight", 60).toInt(), kMaximumTrackHeight);
+    return qMin(settings.value("timeline/trackHeight", 50).toInt(), kMaximumTrackHeight);
 }
 
 void ShotcutSettings::setTimelineTrackHeight(int n)

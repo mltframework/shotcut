@@ -35,7 +35,7 @@ Rectangle {
     property var dragDelta
     property int inlineAudioControlsThreshold: 60
     property int separateTrackHeaderRowsThreshold: 80
-    property int shortestTrackHeight: multitrack.hasAudioTracks ? Logic.trackHeight(true) : Logic.trackHeight(false)
+    property int shortestTrackHeight: Logic.trackHeight()
     property bool inlineAudioControlsEnabled: shortestTrackHeight >= inlineAudioControlsThreshold
     property bool separateTrackHeaderRows: shortestTrackHeight >= separateTrackHeaderRowsThreshold
 
@@ -272,7 +272,7 @@ Rectangle {
                             isTopAudio: model.isTopAudio
                             isBottomAudio: model.isBottomAudio
                             width: headerWidth
-                            height: Logic.trackHeight(model.audio)
+                            height: Logic.trackHeight()
                             current: index === timeline.currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -587,7 +587,7 @@ Rectangle {
                                 delegate: Rectangle {
                                     width: tracksContainer.width
                                     color: (index === timeline.currentTrack) ? selectedTrackColor : (index % 2) ? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(audio)
+                                    height: Logic.trackHeight()
                                 }
                             }
                         }
@@ -823,7 +823,7 @@ Rectangle {
             //  Clear previous blank selection
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
-            height: Logic.trackHeight(audio)
+            height: Logic.trackHeight()
             isAudio: audio
             isMute: mute
             isCurrentTrack: timeline.currentTrack === index

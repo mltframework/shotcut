@@ -1013,8 +1013,9 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
 
 int MultitrackModel::trackHeight() const
 {
-    int result = m_tractor ? m_tractor->get_int(kTrackHeightProperty)
-                           : Settings.timelineTrackHeight();
+    int result = (m_tractor && m_tractor->property_exists(kTrackHeightProperty))
+                     ? m_tractor->get_int(kTrackHeightProperty)
+                     : Settings.timelineTrackHeight();
     return qBound(10, result ? result : Settings.timelineTrackHeight(), 150);
 }
 
