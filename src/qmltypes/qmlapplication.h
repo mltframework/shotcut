@@ -72,6 +72,7 @@ public:
     Q_INVOKABLE static bool addWipe(const QString &filePath);
     Q_INVOKABLE static bool intersects(const QRectF &a, const QRectF &b);
     Q_INVOKABLE static QString actionFirstShortcut(const QString &actionName);
+    Q_INVOKABLE static void triggerAction(const QString &actionName);
 
 signals:
     void paletteChanged();
