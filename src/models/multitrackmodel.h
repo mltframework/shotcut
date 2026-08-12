@@ -128,6 +128,7 @@ public:
                                                   int &trackIndex,
                                                   int &clipIndex);
     std::unique_ptr<Mlt::ClipInfo> getClipInfo(int trackIndex, int clipIndex);
+    Q_INVOKABLE int clipStart(int trackIndex, int clipIndex);
     QString getTrackName(int trackIndex);
     int bottomVideoTrackIndex() const;
     int mltIndexForTrack(int trackIndex) const;

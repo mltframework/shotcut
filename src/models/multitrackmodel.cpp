@@ -3140,6 +3140,18 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::getClipInfo(int trackIndex, int 
     return std::unique_ptr<Mlt::ClipInfo>(result);
 }
 
+/*!
+    \qmlmethod int MultitrackModel::clipStart(int trackIndex, int clipIndex)
+    \brief Returns the absolute timeline start position (in frames) of the clip
+    at (\a trackIndex, \a clipIndex), or -1 if it does not exist.
+*/
+
+int MultitrackModel::clipStart(int trackIndex, int clipIndex)
+{
+    auto info = getClipInfo(trackIndex, clipIndex);
+    return info ? info->start : -1;
+}
+
 QString MultitrackModel::getTrackName(int trackIndex)
 {
     QString name;
