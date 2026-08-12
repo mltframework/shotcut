@@ -573,7 +573,7 @@ void SubtitlesModel::doInsertTrack(const SubtitlesModel::SubtitleTrack &track, i
         if (!filter || !filter->is_valid()) {
             continue;
         }
-        if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+        if (Util::isUserFilter(filter.data()) || Util::isPostUserFilter(filter.data())) {
             filterIndex = i;
             break;
         }

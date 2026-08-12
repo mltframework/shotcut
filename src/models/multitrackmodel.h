@@ -27,6 +27,8 @@
 
 #include <memory>
 
+class SharedFrame;
+
 typedef enum {
     PlaylistTrackType = 0,
     BlackTrackType,
@@ -40,6 +42,7 @@ typedef struct
     TrackType type;
     int number;
     int mlt_index;
+    double audioLevel = -100.0;
 } Track;
 
 typedef QList<Track> TrackList;
@@ -52,6 +55,8 @@ class MultitrackModel : public QAbstractItemModel
                    trackHeaderWidthChanged FINAL)
     Q_PROPERTY(double scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
     Q_PROPERTY(bool filtered READ isFiltered NOTIFY filteredChanged)
+    Q_PROPERTY(bool trackLevelIndicatorSupported READ trackLevelIndicatorSupported CONSTANT)
+    Q_PROPERTY(bool hasAudioTracks READ hasAudioTracks NOTIFY hasAudioTracksChanged)
 
 public:
     /// Two level model: tracks and clips on track
@@ -69,6 +74,7 @@ public:
         IsMuteRole,    /// track only
         IsHiddenRole,  /// track only
         IsAudioRole,
+        AudioLevelRole,   /// track only
         AudioLevelsRole,  /// clip only
         IsCompositeRole,  /// track only
         IsLockedRole,     /// track only
@@ -84,8 +90,8 @@ public:
         IsBottomAudioRole, /// track only
         AudioIndexRole,    /// clip only
         GroupRole,         /// clip only
-        GainRole,          /// clip only
-        GainEnabledRole,   /// clip only
+        GainRole,          /// track, clip
+        GainEnabledRole,   /// track, clip
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -103,6 +109,8 @@ public:
     QHash<int, QByteArray> roleNames() const;
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     const QByteArray *getAudioLevels(int trackIndex, int clipIndex) const;
+    void updateTrackAudioLevels(const SharedFrame &frame);
+    void clearTrackAudioLevels();
     bool createIfNeeded();
     void addBackgroundTrack();
     int addAudioTrack();
@@ -134,6 +142,8 @@ public:
     int mltIndexForTrack(int trackIndex) const;
     bool checkForEmptyTracks(int trackIndex);
     QString trackTransitionService();
+    bool trackLevelIndicatorSupported() const;
+    bool hasAudioTracks() const;
 
 signals:
     void created();
@@ -147,6 +157,7 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
+    void hasAudioTracksChanged();
     void reloadRequested();
     void appended(int trackIndex, int clipIndex);
     void inserted(int trackIndex, int clipIndex);
@@ -161,6 +172,7 @@ public slots:
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, bool composite);
     void setTrackLock(int row, bool lock);
+    void setTrackGain(int row, double gain);
     int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
     void notifyClipIn(int trackIndex, int clipIndex);
     int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
@@ -209,6 +221,8 @@ private:
     Mlt::Tractor *m_tractor;
     TrackList m_trackList;
     bool m_isMakingTransition;
+    bool m_trackLevelIndicatorSupported;
+    bool m_hasAudioTracks;
 
     void moveClipToEnd(Mlt::Playlist &playlist,
                        int trackIndex,
@@ -245,6 +259,9 @@ private:
     void refreshVideoBlendTransitions();
     int bottomVideoTrackMltIndex() const;
     bool hasEmptyTrack(TrackType trackType) const;
+    Mlt::Filter *ensureTrackAudioLevelFilter(Mlt::Producer *track, int mltTrackIndex) const;
+    void syncTrackAudioLevelFilterPrefixes();
+    void setTrackAudioLevel(int row, double audioLevel);
 
     friend class UndoHelper;
 

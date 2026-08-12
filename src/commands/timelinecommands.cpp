@@ -2125,8 +2125,7 @@ void DetachAudioCommand::redo()
         // Remove audio filters from the video clip.
         for (int i = 0; i < videoClip.filter_count(); i++) {
             Mlt::Filter *filter = videoClip.filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+            if (Util::isUserFilter(filter)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && newMeta->isAudio()) {
                     videoClip.detach(*filter);
@@ -2142,8 +2141,7 @@ void DetachAudioCommand::redo()
         // Remove video filters from the audio clip.
         for (int i = 0; i < audioClip.filter_count(); i++) {
             Mlt::Filter *filter = audioClip.filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+            if (Util::isUserFilter(filter)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && !newMeta->isAudio()) {
                     audioClip.detach(*filter);
@@ -2385,8 +2383,7 @@ void ApplyFiltersCommand::redo()
     QList<QmlMetadata *> m_applyMeta;
     for (int i = 0; i < filtersProducer.filter_count(); i++) {
         Mlt::Filter *filter = filtersProducer.filter(i);
-        if (filter && filter->is_valid() && !filter->get_int("_loader")
-            && !filter->get_int(kShotcutHiddenProperty)) {
+        if (Util::isUserFilter(filter)) {
             m_applyMeta.append(MAIN.filterController()->metadataForService(filter));
         }
         delete filter;
@@ -2398,8 +2395,7 @@ void ApplyFiltersCommand::redo()
             // Remove any filters that would be duplicated by the new filters
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
-                if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                if (Util::isUserFilter(filter)) {
                     QmlMetadata *currentMeta = MAIN.filterController()->metadataForService(filter);
                     for (int j = 0; j < m_applyMeta.size(); j++) {
                         if (m_applyMeta[j] == currentMeta) {
@@ -2430,8 +2426,7 @@ void ApplyFiltersCommand::undo()
             // Remove existing filters
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
-                if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                if (Util::isUserFilter(filter)) {
                     clipInfo->producer->detach(*filter);
                     i--;
                 }
@@ -2486,6 +2481,40 @@ bool ChangeGainCommand::mergeWith(const QUndoCommand *other)
         || (!that->m_gain && m_gain != that->m_gain))
         return false;
     m_gain = static_cast<const ChangeGainCommand *>(other)->m_gain;
+    return true;
+}
+
+ChangeTrackGainCommand::ChangeTrackGainCommand(MultitrackModel &model,
+                                               int trackIndex,
+                                               double gain,
+                                               QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_gain(gain)
+    , m_previous(model.data(model.index(trackIndex), MultitrackModel::GainRole).toDouble())
+{
+    setText(QObject::tr("Adjust track gain/volume"));
+}
+
+void ChangeTrackGainCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "gain" << m_gain;
+    m_model.setTrackGain(m_trackIndex, m_gain);
+}
+
+void ChangeTrackGainCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "gain" << m_previous;
+    m_model.setTrackGain(m_trackIndex, m_previous);
+}
+
+bool ChangeTrackGainCommand::mergeWith(const QUndoCommand *other)
+{
+    const ChangeTrackGainCommand *that = static_cast<const ChangeTrackGainCommand *>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex)
+        return false;
+    m_gain = that->m_gain;
     return true;
 }
 

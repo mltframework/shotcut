@@ -2641,11 +2641,14 @@ void TimelineDock::applyCopiedFiltersToSelectdClips()
 
 void TimelineDock::onShowFrame(const SharedFrame &frame)
 {
-    if (m_ignoreNextPositionChange) {
-        m_ignoreNextPositionChange = false;
-    } else if (MLT.isMultitrack() && m_position != frame.get_position() && m_model.tractor()) {
-        m_position = qMin(frame.get_position(), m_model.tractor()->get_length());
-        emit positionChanged(m_position);
+    if (MLT.isMultitrack() && m_model.tractor()) {
+        m_model.updateTrackAudioLevels(frame);
+        if (m_ignoreNextPositionChange) {
+            m_ignoreNextPositionChange = false;
+        } else if (m_position != frame.get_position()) {
+            m_position = qMin(frame.get_position(), m_model.tractor()->get_length());
+            emit positionChanged(m_position);
+        }
     }
 }
 
@@ -2653,6 +2656,7 @@ void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
         m_position = qMin(position, m_model.tractor()->get_length());
+        m_model.clearTrackAudioLevels();
         emit positionChanged(m_position);
     }
 }
@@ -3894,6 +3898,20 @@ void TimelineDock::toggleOtherTracksMute(int trackIndex)
         }
     }
     MAIN.undoStack()->endMacro();
+}
+
+bool TimelineDock::setTrackGain(int trackIndex, double gain)
+{
+    if (isTrackLocked(trackIndex)) {
+        emit warnTrackLocked(trackIndex);
+        return false;
+    }
+    if (trackIndex < 0 || trackIndex >= m_model.rowCount())
+        return false;
+
+    MAIN.undoStack()->push(new Timeline::ChangeTrackGainCommand(m_model, trackIndex, gain));
+    emit gainChanged(gain);
+    return true;
 }
 
 /*!

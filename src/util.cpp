@@ -27,6 +27,8 @@
 #include "shotcut_mlt_properties.h"
 #include "transcoder.h"
 #include <MltChain.h>
+#include <MltFilter.h>
+#include <MltLink.h>
 #include <MltProducer.h>
 
 #include <QApplication>
@@ -1340,4 +1342,29 @@ bool Util::cpuHasAVX2()
 int Util::msToPosition(int64_t ms)
 {
     return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
+}
+
+bool Util::isPostUserFilter(Mlt::Filter *filter)
+{
+    return filter && filter->is_valid() && filter->get_int(kShotcutHiddenProperty)
+           && !qstrcmp(filter->get(kShotcutHiddenPositionProperty), kShotcutHiddenPositionPost);
+}
+
+bool Util::isPreUserFilter(Mlt::Filter *filter)
+{
+    return filter && filter->is_valid()
+           && (filter->get_int("_loader")
+               || (filter->get_int(kShotcutHiddenProperty) && !isPostUserFilter(filter)));
+}
+
+bool Util::isUserFilter(Mlt::Filter *filter)
+{
+    return filter && filter->is_valid() && !filter->get_int("_loader")
+           && !filter->get_int(kShotcutHiddenProperty);
+}
+
+bool Util::isUserLink(Mlt::Link *link)
+{
+    return link && link->is_valid() && !link->get_int("_loader")
+           && !link->get_int(kShotcutHiddenProperty);
 }
