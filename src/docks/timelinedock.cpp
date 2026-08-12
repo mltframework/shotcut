@@ -1098,7 +1098,7 @@ void TimelineDock::setupActions()
         }
         if (tracks.size() > 0) {
             setSelection(); // Avoid filter views becoming out of sync
-            MAIN.undoStack()->push(new Timeline::SplitCommand(m_model, tracks, clips, m_position));
+            split(tracks[0], clips[0], m_position);
         }
     });
     Actions.add("timelineSplitAction", action);
@@ -2945,6 +2945,36 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
             setSelection();
         }
     }
+}
+
+/*!
+    \qmlmethod bool TimelineDock::split(int trackIndex, int clipIndex, int position)
+    \brief Splits the clip at (\a trackIndex, \a clipIndex) at the absolute timeline
+    frame \a position. Returns \c true if the split was performed.
+*/
+
+bool TimelineDock::split(int trackIndex, int clipIndex, int position)
+{
+    if (!m_model.trackList().count() || trackIndex < 0 || clipIndex < 0)
+        return false;
+    if (isTrackLocked(trackIndex)) {
+        emit warnTrackLocked(trackIndex);
+        return false;
+    }
+    if (isBlank(trackIndex, clipIndex))
+        return false;
+    if (isTransition(trackIndex, clipIndex)) {
+        emit showStatusMessage(tr("You cannot split a transition."));
+        return false;
+    }
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
+    if (!info || position <= info->start || position >= info->start + info->frame_count)
+        return false;
+    setSelection(); // Avoid filter views becoming out of sync
+    std::vector<int> tracks{trackIndex};
+    std::vector<int> clips{clipIndex};
+    MAIN.undoStack()->push(new Timeline::SplitCommand(m_model, tracks, clips, position));
+    return true;
 }
 
 /*!
