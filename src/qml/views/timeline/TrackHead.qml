@@ -169,6 +169,16 @@ Rectangle {
         _blockTrackGainUpdate = false;
     }
 
+    function _resetTrackGain() {
+        _setTrackGain(0);
+    }
+
+    function _setTrackGainFromMouse(slider, mouseX) {
+        const width = Math.max(1, slider.width);
+        const position = Math.max(0.0, Math.min(1.0, mouseX / width));
+        _setTrackGain(slider.from + (slider.to - slider.from) * position);
+    }
+
     function _handleVolumeButtonSingleClick(modifiers) {
         if (modifiers & Qt.AltModifier) {
             if (volumePopup.opened)
@@ -527,9 +537,39 @@ Rectangle {
                             ToolTip.visible: false
 
                             MouseArea {
+                                id: volumeSliderMouseArea
+
                                 anchors.fill: parent
-                                acceptedButtons: Qt.NoButton
+                                acceptedButtons: Qt.LeftButton
                                 hoverEnabled: true
+                                property bool _dragging: false
+                                property real _pressX: 0
+                                property real _pressY: 0
+
+                                onPressed: mouse => {
+                                        _dragging = false;
+                                        _pressX = mouse.x;
+                                        _pressY = mouse.y;
+                                        mouse.accepted = true;
+                                }
+
+                                onDoubleClicked: mouse => {
+                                        _dragging = false;
+                                        trackHeadRoot._resetTrackGain();
+                                        mouse.accepted = true;
+                                }
+
+                                onPositionChanged: mouse => {
+                                    if (!(mouse.buttons & Qt.LeftButton))
+                                        return;
+                                    if (!_dragging) {
+                                        if (Math.abs(mouse.x - _pressX) < 3 && Math.abs(mouse.y - _pressY) < 3)
+                                            return;
+                                        _dragging = true;
+                                    }
+                                    trackHeadRoot._setTrackGainFromMouse(volumeSlider, mouse.x);
+                                }
+
                                 onWheel: wheel => {
                                     const step = 0.1;
                                     const delta = wheel.angleDelta.y > 0 ? step : -step;
@@ -717,8 +757,36 @@ Rectangle {
                         id: inlineVolumeSliderMouseArea
 
                         anchors.fill: parent
-                        acceptedButtons: Qt.NoButton
+                        acceptedButtons: Qt.LeftButton
                         hoverEnabled: true
+                        property bool _dragging: false
+                        property real _pressX: 0
+                        property real _pressY: 0
+
+                        onPressed: mouse => {
+                            _dragging = false;
+                            _pressX = mouse.x;
+                            _pressY = mouse.y;
+                            mouse.accepted = true;
+                        }
+
+                        onDoubleClicked: mouse => {
+                            _dragging = false;
+                            trackHeadRoot._resetTrackGain();
+                            mouse.accepted = true;
+                        }
+
+                        onPositionChanged: mouse => {
+                            if (!(mouse.buttons & Qt.LeftButton))
+                                return;
+                            if (!_dragging) {
+                                if (Math.abs(mouse.x - _pressX) < 3 && Math.abs(mouse.y - _pressY) < 3)
+                                    return;
+                                _dragging = true;
+                            }
+                            trackHeadRoot._setTrackGainFromMouse(inlineVolumeSlider, mouse.x);
+                        }
+
                         onWheel: wheel => {
                             const step = 0.1;
                             const delta = wheel.angleDelta.y > 0 ? step : -step;
