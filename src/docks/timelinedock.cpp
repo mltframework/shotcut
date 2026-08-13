@@ -452,6 +452,10 @@ TimelineDock::TimelineDock(QWidget *parent)
         connect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
         connect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
         connect(&m_model,
+                &MultitrackModel::bulkUpdateFinished,
+                this,
+                &TimelineDock::onBulkUpdateFinished);
+        connect(&m_model,
                 &MultitrackModel::noMoreEmptyTracks,
                 this,
                 &TimelineDock::onNoMoreEmptyTracks,
@@ -471,6 +475,10 @@ TimelineDock::TimelineDock(QWidget *parent)
         disconnect(&m_model, &MultitrackModel::rowsInserted, this, &TimelineDock::onRowsInserted);
         disconnect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
         disconnect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
+        disconnect(&m_model,
+                   &MultitrackModel::bulkUpdateFinished,
+                   this,
+                   &TimelineDock::onBulkUpdateFinished);
         disconnect(&m_model,
                    &MultitrackModel::noMoreEmptyTracks,
                    this,
@@ -2299,6 +2307,13 @@ void TimelineDock::emitSelectedChanged(const QVector<int> &roles)
 
 void TimelineDock::clearSelectionIfInvalid()
 {
+    if (m_model.isBulkUpdating()) {
+        // Defer until the bulk update (e.g. a multi-step History dock jump)
+        // finishes, rather than redoing this on every intermediate step.
+        m_pendingClearSelectionIfInvalid = true;
+        return;
+    }
+    m_pendingClearSelectionIfInvalid = false;
     QList<QPoint> newSelection;
     foreach (auto clip, selection()) {
         if (clip.x() >= clipCount(clip.y()))
@@ -2307,6 +2322,12 @@ void TimelineDock::clearSelectionIfInvalid()
         newSelection << QPoint(clip.x(), clip.y());
     }
     setSelection(newSelection);
+}
+
+void TimelineDock::onBulkUpdateFinished()
+{
+    if (m_pendingClearSelectionIfInvalid)
+        clearSelectionIfInvalid();
 }
 
 /*!

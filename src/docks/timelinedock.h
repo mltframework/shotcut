@@ -272,6 +272,7 @@ private:
     QMenu *m_clipMenu{nullptr};
     int m_loopStart{-1};
     int m_loopEnd{-1};
+    bool m_pendingClearSelectionIfInvalid{false};
 
 private slots:
     void load(bool force);
@@ -289,6 +290,7 @@ private slots:
     void onNoMoreEmptyTracks(bool isAudio);
     void addGenerator();
     void addAdjustmentClip();
+    void onBulkUpdateFinished();
 };
 
 #endif // TIMELINEDOCK_H

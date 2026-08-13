@@ -3143,6 +3143,13 @@ void MultitrackModel::beginBulkUpdate()
     // Reentrant: supports nested bulk operations (e.g. History dock jumps
     // triggered from within another bulk operation).
     ++m_bulkUpdateDepth;
+    if (m_bulkUpdateDepth == 1 && !m_bulkRefreshBlocked) {
+        // Suppress the player/consumer refresh that would otherwise happen
+        // on every intermediate command; a single refresh is triggered once
+        // in endBulkUpdate() below.
+        MLT.blockRefresh(true);
+        m_bulkRefreshBlocked = true;
+    }
 }
 
 void MultitrackModel::endBulkUpdate()
@@ -3158,6 +3165,12 @@ void MultitrackModel::endBulkUpdate()
             m_bulkAdjustTrackFiltersPending = false;
             adjustTrackFilters();
         }
+        if (m_bulkRefreshBlocked) {
+            m_bulkRefreshBlocked = false;
+            MLT.blockRefresh(false);
+            MLT.refreshConsumer();
+        }
+        emit bulkUpdateFinished();
     }
 }
 
