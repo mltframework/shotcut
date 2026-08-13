@@ -34,6 +34,12 @@ packaging/windows/shotcut.rc
 build.ninja
 rules.ninja
 CMakeCache.txt
+CTestTestfile.cmake
+/tests/CTestTestfile.cmake
+/tests/test_gpuinfo
+/tests/test_gpuinfo_autogen/
+/tests/test_mix_transition_order
+/tests/test_mix_transition_order_autogen/
 *CMakeFiles/
 CuteLogger/CuteLogger_autogen/
 install_manifest.txt
