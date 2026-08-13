@@ -18,6 +18,7 @@
 #include "textviewerdialog.h"
 #include "ui_textviewerdialog.h"
 
+#include "Logger.h"
 #include "settings.h"
 #include "util.h"
 
@@ -83,7 +84,9 @@ void TextViewerDialog::on_buttonBox_accepted()
         if (Util::warnIfNotWritable(filename, this, caption))
             return;
         QFile f(filename);
-        f.open(QIODevice::WriteOnly | QIODevice::Text);
+        if (!f.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            LOG_ERROR() << "Unable to open file for writing" << filename;
+        }
         f.write(ui->plainTextEdit->toPlainText().toUtf8());
         f.close();
     }

@@ -234,19 +234,22 @@ public:
 
     void setMediaTypes(QList<PlaylistModel::MediaType> types)
     {
+        beginFilterChange();
         m_mediaTypes = types;
-        invalidateFilter();
+        endFilterChange();
     }
 
     void setBin(const QString &name = QString())
     {
+        beginFilterChange();
         m_bin = name;
         m_smartBin = PlaylistDock::SmartBinNone;
-        invalidateFilter();
+        endFilterChange();
     }
 
     void setSmartBin(int bin)
     {
+        beginFilterChange();
         m_bin.clear();
         m_smartBin = static_cast<enum PlaylistDock::SmartBin>(bin);
         LOG_DEBUG() << m_smartBin;
@@ -284,7 +287,7 @@ public:
             break;
         }
 
-        invalidateFilter();
+        endFilterChange();
     }
 
     enum PlaylistDock::SmartBin smartBin() const { return m_smartBin; }

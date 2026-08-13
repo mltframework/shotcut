@@ -1151,7 +1151,10 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                                       .arg(fi.path(), fi.completeBaseName(), ffmpegSuffix);
             QTemporaryFile tmp(tmpFileName);
             tmp.setAutoRemove(false);
-            tmp.open();
+            if (!tmp.open()) {
+                LOG_ERROR() << "Unable to open temporary file for reverse conversion"
+                            << tmpFileName;
+            }
             tmp.close();
             tmpFileName = tmp.fileName();
 
