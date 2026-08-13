@@ -451,9 +451,8 @@ public:
 
     void setMediaTypes(QList<PlaylistModel::MediaType> types)
     {
-        beginFilterChange();
         m_mediaTypes = types;
-        endFilterChange();
+        invalidateFilter();
     }
 
 protected:

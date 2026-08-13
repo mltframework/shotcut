@@ -196,16 +196,14 @@ void MetadataModel::setFilter(MetadataFilter filter)
 {
     m_filter = filter;
     emit filterChanged();
-    beginFilterChange();
-    endFilterChange();
+    invalidateFilter();
 }
 
 void MetadataModel::setSearch(const QString &search)
 {
     m_search = search;
     emit searchChanged();
-    beginFilterChange();
-    endFilterChange();
+    invalidateFilter();
 }
 
 bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
