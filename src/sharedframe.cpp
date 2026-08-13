@@ -106,10 +106,13 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     data = d->f.get_data("image", size);
     if (image && data) {
         if (!size) {
-            size = mlt_image_format_size(get_image_format(),
-                                         get_image_width(),
-                                         get_image_height(),
-                                         0);
+            mlt_image_s imageInfo = {};
+            mlt_image_set_values(&imageInfo,
+                                 nullptr,
+                                 get_image_format(),
+                                 get_image_width(),
+                                 get_image_height());
+            size = mlt_image_calculate_size(&imageInfo);
         }
         copy = mlt_pool_alloc(size);
         memcpy(copy, data, size);
