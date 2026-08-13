@@ -947,17 +947,16 @@ function get_subproject {
           [ "$SDK" = "1" -a "shotcut" != "$1" -a "mlt" != "$1" ] && cmd rm -rf .git
       fi
 
-      # No longer needed for FFmpeg 9 but keeping for an example patch.
       # Apply FFmpeg patch from the shotcut subproject
-      #if test "shotcut" = "$1" ; then
-      #     PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
-      #     if test -f "$PATCH_FILE" ; then
-      #         feedback_status "Applying FFmpeg patch"
-      #         cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
-      #         cmd patch -p1 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
-      #         feedback_status "Done applying patch for $1"
-      #     fi
-      # fi
+      if test "shotcut" = "$1" ; then
+           PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg9-hwcontext_d3d11va.patch"
+           if test -f "$PATCH_FILE" ; then
+               feedback_status "Applying FFmpeg patch"
+               cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
+               cmd patch -p1 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
+               feedback_status "Done applying patch for $1"
+           fi
+       fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
       if test ! -d "$1" ; then
