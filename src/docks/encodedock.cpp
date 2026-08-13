@@ -1506,7 +1506,7 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service,
             // Parse XML to add consumer element
             QXmlStreamReader xmlReader(consumer.get("string"));
             QDomDocument dom;
-            dom.setContent(&xmlReader, false);
+            dom.setContent(&xmlReader);
 
             auto fps = addConsumerElement(service, dom, target, realtime, pass);
             job = new EncodeJob(QDir::toNativeSeparators(target),
@@ -1592,7 +1592,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
     }
     QXmlStreamReader xmlReader(&f1);
     QDomDocument dom(fileName);
-    dom.setContent(&xmlReader, false);
+    dom.setContent(&xmlReader);
     f1.close();
 
     // Check if the target file is a member of the project.
