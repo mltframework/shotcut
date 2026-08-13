@@ -100,6 +100,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/keyframesmodel.cpp models/keyframesmodel.h
   models/markersmodel.cpp models/markersmodel.h
   models/metadatamodel.cpp models/metadatamodel.h
+  models/mixtransitionorder.cpp models/mixtransitionorder.h
   models/motiontrackermodel.h models/motiontrackermodel.cpp
   models/multitrackmodel.cpp models/multitrackmodel.h
   models/playlistmodel.cpp models/playlistmodel.h
@@ -177,6 +178,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/directshowvideowidget.cpp widgets/directshowvideowidget.h
   widgets/directshowvideowidget.ui
   widgets/docktoolbar.cpp widgets/docktoolbar.h
+  widgets/doublesliderspinner.cpp widgets/doublesliderspinner.h
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
   widgets/flowlayout.cpp widgets/flowlayout.h

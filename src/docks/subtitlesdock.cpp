@@ -67,11 +67,6 @@ static int64_t positionToMs(mlt_position position)
     return 1000 * seconds;
 }
 
-static mlt_position msToPosition(int64_t ms)
-{
-    return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
-}
-
 static QModelIndexList selectedRowsOrCurrentItem(QItemSelectionModel *selectionModel)
 {
     QModelIndexList rows = selectionModel->selectedRows();
@@ -544,7 +539,7 @@ void SubtitlesDock::importSrtFromFile(const QString &srtPath,
 {
     QList<Subtitles::SubtitleItem> items = readSrtFile(srtPath, 0, includeNonspoken);
     if (items.size() == 0) {
-        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        MAIN.showStatusMessage(tr("No subtitles found to import"));
         return;
     }
 
@@ -554,7 +549,7 @@ void SubtitlesDock::importSrtFromFile(const QString &srtPath,
 
     m_model->importSubtitlesToNewTrack(track, items);
 
-    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle item(s)", nullptr, items.size()));
+    MAIN.showStatusMessage(tr("Imported %n subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::addSubtitleTrack()
@@ -656,9 +651,9 @@ void SubtitlesDock::importSubtitles()
         return;
     }
 
-    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+    MAIN.showStatusMessage(tr("Importing subtitles..."));
 
-    // Convert the subtitles to SRT using FFMpeg
+    // Convert the subtitles to SRT using FFmpeg
     QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(tmpLocation, "XXXXXX.srt"));
     if (!tmp->open()) {
@@ -668,13 +663,22 @@ void SubtitlesDock::importSubtitles()
     QString tmpFileName = tmp->fileName();
     tmp->close();
     QProcess proc;
-    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+#if defined(Q_OS_WIN)
+    QString ffmpegExe = "ffmpeg.exe";
+#else
+    QString ffmpegExe = "ffmpeg";
+#endif
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), ffmpegExe);
+    if (!ffmpegPath.exists()) {
+        MAIN.showStatusMessage(tr("ffmpeg not found. Cannot import subtitles."));
+        return;
+    }
     QStringList args;
     args << "-y"
          << "-hide_banner"
          << "-i" << subtitleFi.absoluteFilePath() << tmpFileName;
     LOG_INFO() << ffmpegPath.absoluteFilePath() << args;
-    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+    MAIN.showStatusMessage(tr("Importing subtitles..."));
     proc.setStandardOutputFile(QProcess::nullDevice());
     proc.setReadChannel(QProcess::StandardError);
     proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
@@ -684,18 +688,21 @@ void SubtitlesDock::importSubtitles()
         QString output = proc.readAll();
         foreach (const QString &line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts))
             LOG_INFO() << line;
+    } else {
+        LOG_ERROR() << "converting subtitle file with ffmpeg failed with" << proc.exitCode() << ":"
+                    << proc.readAll();
     }
 
     // Read the subtitles
     int64_t msTime = positionToMs(m_pos);
     QList<Subtitles::SubtitleItem> items = readSrtFile(tmpFileName, msTime, true);
     if (items.size() == 0) {
-        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        MAIN.showStatusMessage(tr("No subtitles found to import"));
         return;
     }
     ensureTrackExists();
     m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
-    MAIN.showStatusMessage(QObject::tr("Imported %n subtitle item(s)", nullptr, items.size()));
+    MAIN.showStatusMessage(tr("Imported %n subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::exportSubtitles()
@@ -915,7 +922,7 @@ void SubtitlesDock::onItemDoubleClicked(const QModelIndex &index)
 {
     if (index.parent().isValid()) {
         const Subtitles::SubtitleItem item = m_model->getItem(index.parent().row(), index.row());
-        int64_t position = msToPosition(item.start);
+        int64_t position = Util::msToPosition(item.start);
         emit seekRequested((int) position);
     }
 }
@@ -1267,8 +1274,8 @@ void SubtitlesDock::generateTextOnTimeline()
     int lastItemFrameEnd = 0;
     for (int itemIndex = 0; itemIndex < itemCount; itemIndex++) {
         auto item = m_model->getItem(trackIndex, itemIndex);
-        int frameStart = msToPosition(item.start);
-        int frameEnd = msToPosition(item.end);
+        int frameStart = Util::msToPosition(item.start);
+        int frameEnd = Util::msToPosition(item.end);
         // Create a transparent color producer
         Mlt::Producer producer(MLT.profile(), "color:");
         producer.set("resource", "#00000000");

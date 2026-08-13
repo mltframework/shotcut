@@ -1,0 +1,43 @@
+name: Check Linux Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: debian:unstable
+
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            build-essential \
+            ca-certificates \
+            cmake \
+            git \
+            libfftw3-dev \
+            libmlt-dev \
+            libmlt++-dev \
+            libx11-dev \
+            ninja-build \
+            pkg-config \
+            qt6-base-dev \
+            qt6-base-private-dev \
+            qt6-charts-dev \
+            qt6-declarative-dev \
+            qt6-l10n-tools \
+            qt6-tools-dev \
+            qt6-multimedia-dev \
+            qt6-websockets-dev
+
+      - uses: actions/checkout@v6
+
+      - name: Configure
+        run: cmake -G Ninja -DCLANG_FORMAT=OFF -DBUILD_DOCS=OFF -B build
+
+      - name: Build
+        run: cmake --build build

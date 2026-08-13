@@ -145,6 +145,17 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
          << "-ignore_unknown";
     args << "-vf";
 
+    // Detect rotation from either an explicit "rotate" property (user override)
+    // or from the stream's codec metadata. If non-zero the rotation will be
+    // injected into the proxy file after transcoding via a fast -c copy pass so
+    // that media players and MLT read it automatically from the proxy.
+    auto videoIndex = producer.get_int("video_index");
+    QString rotateKey = QStringLiteral("meta.media.%1.codec.rotate").arg(videoIndex);
+    int rotation = producer.property_exists("rotate")
+                       ? producer.get_int("rotate")
+                       : producer.get_int(rotateKey.toLatin1().constData());
+    rotation = ((rotation % 360) + 360) % 360;
+
     if (scanMode == Automatic) {
         filters = QStringLiteral("yadif=deint=interlaced,");
     } else if (scanMode != Progressive) {
@@ -367,9 +378,9 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
     job->setTarget(fileName);
     if (replace) {
-        job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+        job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash, rotation));
     } else {
-        job->setPostJobAction(new ProxyFinalizePostJobAction(resource, fileName));
+        job->setPostJobAction(new ProxyFinalizePostJobAction(resource, fileName, rotation));
     }
     JOBS.add(job);
 }
@@ -636,6 +647,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
             QDir projectDir(MLT.projectFolder());
             QString fileName = Util::getHash(producer) + kProxyVideoExtension;
             QDir proxyDir(Settings.proxyFolder());
+
             if (service.startsWith("avformat")) {
                 auto gopro = GoProProxyFilePath(producer.get("resource"));
                 auto dji = DJIProxyFilePath(producer.get("resource"));

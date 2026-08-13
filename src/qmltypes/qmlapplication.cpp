@@ -464,3 +464,16 @@ QString QmlApplication::actionFirstShortcut(const QString &actionName)
                ? QStringLiteral(" (%1)").arg(a->shortcut().toString(QKeySequence::NativeText))
                : QString();
 }
+
+/*!
+    \qmlmethod string Application::triggerAction(string actionName)
+    \brief Executes the action identified by \a actionName.
+    Use \c Actions.keys() to get a list of all available action names.
+*/
+
+void QmlApplication::triggerAction(const QString &actionName)
+{
+    const auto a = Actions[actionName];
+    if (a)
+        a->trigger();
+}

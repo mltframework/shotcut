@@ -171,6 +171,11 @@ MainWindow::MainWindow()
     }
 #endif
 
+    QThreadPool::globalInstance()->setMaxThreadCount(
+        qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
+    QThreadPool::globalInstance()->setThreadPriority(QThread::LowPriority);
+    QImageReader::setAllocationLimit(1024);
+
     connectFocusSignals();
 
     registerDebugCallback();
@@ -242,11 +247,6 @@ MainWindow::MainWindow()
     m_clipboardUpdatedAt.setSecsSinceEpoch(0);
     onClipboardChanged();
     connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
-
-    QThreadPool::globalInstance()->setMaxThreadCount(
-        qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
-    QThreadPool::globalInstance()->setThreadPriority(QThread::LowPriority);
-    QImageReader::setAllocationLimit(1024);
 
     ProxyManager::removePending();
 
@@ -4240,6 +4240,19 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
+        qApp->setStyleSheet(QStringLiteral(
+            "QTabBar::tab { background: #c8c8c8; color: #222222; padding: 4px 8px;"
+            " border: 1px solid #c5c5c5; }"
+            "QTabBar::tab:top { border-bottom: none;"
+            " border-top-left-radius: 4px; border-top-right-radius: 4px; }"
+            "QTabBar::tab:bottom { border-top: none;"
+            " border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }"
+            "QTabBar::tab:selected { background: #e8e8e8; color: #000000; }"
+            "QTabBar::tab:top:selected { background: #f0f0f0; border-top: 2px solid #308cc6; }"
+            "QTabBar::tab:bottom:selected { border-bottom: 2px solid #308cc6; }"
+            "QTabBar::tab:hover:!selected { background: #e0e0e0; }"
+            "QTabBar::tab:top:!selected { margin-top: 2px; }"
+            "QTabBar::tab:bottom:!selected { margin-bottom: 2px; }"));
         QIcon::setThemeName(kThemeLight);
         ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
@@ -4341,8 +4354,13 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
     QString resource = QString::fromUtf8(producer->get("resource"));
     QString shotcutProducer(producer->get(kShotcutProducerProperty));
 
-    if (resource.startsWith("video4linux2:")
-        || QString::fromUtf8(producer->get("resource1")).startsWith("video4linux2:"))
+    if (shotcutProducer == QLatin1String("adjustment")) {
+        w = new QWidget(this);
+        scrollArea->setWidget(w);
+        m_filterController->setProducer(producer);
+        return w;
+    } else if (resource.startsWith("video4linux2:")
+               || QString::fromUtf8(producer->get("resource1")).startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))
         w = new PulseAudioWidget(this);
@@ -4416,11 +4434,14 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
                                  ->data(m_timelineDock->model()->index(trackIndex),
                                         MultitrackModel::IsBottomVideoRole)
                                  .toBool();
-        if (!isBottomVideo) {
-            w = new TrackPropertiesWidget(*producer, this);
-            scrollArea->setWidget(w);
-            return w;
-        }
+        bool isTopTrack = trackIndex == 0;
+        bool showDucking = false;
+#if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
+        showDucking = !isTopTrack;
+#endif
+        w = new TrackPropertiesWidget(*producer, !isBottomVideo, showDucking, this);
+        scrollArea->setWidget(w);
+        return w;
     } else if (mlt_service_tractor_type == producer->type()) {
         w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);

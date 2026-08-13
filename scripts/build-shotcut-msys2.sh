@@ -32,7 +32,7 @@ ENABLE_MOVIT=1
 MOVIT_HEAD=0
 MOVIT_REVISION="origin/shotcut-opengl3"
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/8.1"
+FFMPEG_REVISION="origin/release/9.0"
 FFMPEG_ADDITIONAL_OPTIONS=
 MLT_HEAD=1
 MLT_REVISION=
@@ -589,7 +589,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_GDK=OFF -DMOD_GLAXNIMATE_QT6=ON -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_SDL1=OFF -DUSE_VST2=OFF -DMOD_SPATIALAUDIO=ON"
+  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_GDK=OFF -DMOD_GLAXNIMATE_QT6=ON -DMOD_PLACEBO=OFF -DMOD_SPATIALAUDIO=ON"
   [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[1]="${CONFIG[1]} -DCMAKE_BUILD_TYPE=RelWithDebInfo"
@@ -947,16 +947,17 @@ function get_subproject {
           [ "$SDK" = "1" -a "shotcut" != "$1" -a "mlt" != "$1" ] && cmd rm -rf .git
       fi
 
+      # No longer needed for FFmpeg 9 but keeping for an example patch.
       # Apply FFmpeg patch from the shotcut subproject
-      if test "shotcut" = "$1" ; then
-          PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
-          if test -f "$PATCH_FILE" ; then
-              feedback_status "Applying FFmpeg patch"
-              cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
-              cmd patch -p1 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
-              feedback_status "Done applying patch for $1"
-          fi
-      fi
+      #if test "shotcut" = "$1" ; then
+      #     PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
+      #     if test -f "$PATCH_FILE" ; then
+      #         feedback_status "Applying FFmpeg patch"
+      #         cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
+      #         cmd patch -p1 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
+      #         feedback_status "Done applying patch for $1"
+      #     fi
+      # fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
       if test ! -d "$1" ; then

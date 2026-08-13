@@ -230,7 +230,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
         int n = p->filter_count();
         for (int j = 0; j < n; j++) {
             QScopedPointer<Mlt::Filter> filter(p->filter(j));
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            if (Util::isUserFilter(filter.data())) {
                 in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
                 out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
                 filter->set_in_and_out(in, out);
@@ -1350,7 +1350,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
                     QString path = pathTemplate.arg(subText);
                     if (Util::warnIfNotWritable(path, this, caption))
                         return;
-                    // Make an FFMpeg job
+                    // Make an FFmpeg job
                     QStringList ffmpegArgs;
                     QString streamSelect = QStringLiteral("0:s:%1").arg(subtitleCount - 1);
                     ffmpegArgs << "-loglevel"

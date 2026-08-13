@@ -31,6 +31,7 @@
 #include <QThreadPool>
 
 static const QStringList kElementExtensions{"*.tgs", "*.flac", "*.json", "*.rawr", "*.lot"};
+static QThreadPool *gThreadPool = nullptr;
 
 // ---------------------------------------------------------------------------
 // Background thumbnail task
@@ -77,7 +78,7 @@ public:
                 producer.attach(converter);
                 const auto width = PlaylistModel::THUMBNAIL_WIDTH * 2;
                 const auto height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-                image = MLT.image(producer, 0, width, height);
+                image = MLT.image(producer, producer.get_length() / 2, width, height);
             }
         }
         if (!image.isNull()) {
@@ -150,6 +151,8 @@ ElementsModel::ElementsModel(const QDir &dir, QObject *parent)
     : QAbstractListModel(parent)
     , m_dir(dir)
 {
+    gThreadPool = new QThreadPool(this);
+    gThreadPool->setMaxThreadCount(1);
     m_files = dir.entryInfoList(kElementExtensions,
                                 QDir::Files | QDir::Readable,
                                 QDir::Name | QDir::IgnoreCase);
@@ -160,6 +163,14 @@ int ElementsModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
     return m_files.count();
+}
+
+static void cacheThumbnail(ElementsModel *model,
+                           const QString &filePath,
+                           QImage &image,
+                           const QModelIndex &index)
+{
+    model->updateThumbnail(filePath, image, index);
 }
 
 QVariant ElementsModel::data(const QModelIndex &index, int role) const
@@ -188,10 +199,10 @@ QVariant ElementsModel::data(const QModelIndex &index, int role) const
         const auto key = ElementsThumbnailTask::cacheKey(info.filePath());
         auto image = DB.getThumbnail(key);
         if (image.isNull()) {
-            QThreadPool::globalInstance()->start(
-                new ElementsThumbnailTask(const_cast<ElementsModel *>(this),
-                                          info.filePath(),
-                                          index));
+            ::cacheThumbnail(const_cast<ElementsModel *>(this), info.filePath(), image, index);
+            gThreadPool->start(new ElementsThumbnailTask(const_cast<ElementsModel *>(this),
+                                                         info.filePath(),
+                                                         index));
         }
         return image;
     }
@@ -236,12 +247,16 @@ void ElementsModel::setDir(const QDir &dir)
     endResetModel();
 }
 
-void ElementsModel::updateThumbnail(const QString &filePath,
-                                    QImage &image,
-                                    const QModelIndex &persistentIndex)
+void ElementsModel::updateThumbnail(const QString &filePath, QImage &image, const QModelIndex &index)
 {
-    const auto key = ElementsThumbnailTask::cacheKey(filePath);
+    bool updateModel = !image.isNull();
+
+    if (image.isNull()) {
+        image = QImage(64, 64, QImage::Format_ARGB32);
+        image.fill(Qt::transparent);
+    }
+    auto key = ElementsThumbnailTask::cacheKey(filePath);
     DB.putThumbnail(key, image);
-    if (persistentIndex.isValid())
-        emit dataChanged(persistentIndex, persistentIndex, {ThumbnailRole});
+    if (updateModel)
+        emit dataChanged(index, index);
 }

@@ -55,6 +55,49 @@ static constexpr int kMaxCacheCount = 5000;
 constexpr const auto kWatchdogTimeoutMs = 30000;
 constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+static QString s_qpaPlatformNote;
+
+// Read the stored drawing method before QApplication exists (the QPA platform
+// plugin must be chosen before that). This duplicates the settings file lookup
+// done by ShotcutSettings because that singleton requires QCoreApplication.
+static bool isVulkanDrawMethod(int argc, char **argv, QString *detail)
+{
+    if (::qgetenv("QSG_RHI_BACKEND").toLower() == QByteArrayLiteral("vulkan")) {
+        *detail = QStringLiteral("QSG_RHI_BACKEND=vulkan");
+        return true;
+    }
+    QString appDataDir;
+    for (int i = 1; i < argc; i++) {
+        const QString arg = QString::fromLocal8Bit(argv[i]);
+        if (arg.startsWith(QStringLiteral("--appdata="))) {
+            appDataDir = arg.mid(10);
+            break;
+        } else if (arg == QStringLiteral("--appdata") && i + 1 < argc) {
+            appDataDir = QString::fromLocal8Bit(argv[i + 1]);
+            break;
+        }
+    }
+    if (appDataDir.isEmpty()) {
+        QSettings settings(QSettings::NativeFormat,
+                           QSettings::UserScope,
+                           QStringLiteral("Meltytech"),
+                           QStringLiteral("Shotcut"));
+        appDataDir = settings.value(QStringLiteral("appdatadir")).toString();
+        if (appDataDir.isEmpty() || !QFile::exists(appDataDir + QStringLiteral("/shotcut.ini"))) {
+            const int value
+                = settings.value(QStringLiteral("opengl"), Qt::AA_UseDesktopOpenGL).toInt();
+            *detail = QStringLiteral("opengl=%1 from %2").arg(value).arg(settings.fileName());
+            return value == QSGRendererInterface::Vulkan;
+        }
+    }
+    QSettings settings(appDataDir + QStringLiteral("/shotcut.ini"), QSettings::IniFormat);
+    const int value = settings.value(QStringLiteral("opengl"), Qt::AA_UseDesktopOpenGL).toInt();
+    *detail = QStringLiteral("opengl=%1 from %2").arg(value).arg(settings.fileName());
+    return value == QSGRendererInterface::Vulkan;
+}
+#endif
+
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
     if (mlt_level > mlt_log_get_level())
@@ -116,6 +159,7 @@ public:
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
     QStringList resourceArg;
+    QStringList fileOpenEventArgs;
     bool isFullScreen;
     QString appDirArg;
 
@@ -337,15 +381,21 @@ protected:
                 mainWindow->openMultiple(QStringList() << openEvent->file());
             } else {
                 // Running as the watchdog parent — forward to the child via IPC.
-                QLocalSocket socket;
-                socket.connectToServer("shotcut-file-open");
-                if (socket.waitForConnected(500)) {
-                    socket.write(openEvent->file().toUtf8());
-                    socket.waitForBytesWritten(500);
-                    socket.disconnectFromServer();
-                } else {
-                    resourceArg << openEvent->file();
+                // The child may need several seconds to start its IPC server,
+                // so retry the connection with 1-second intervals.
+                bool sent = false;
+                for (int i = 0; i < 15 && !sent; ++i) {
+                    QLocalSocket socket;
+                    socket.connectToServer("shotcut-file-open");
+                    if (socket.waitForConnected(1000)) {
+                        socket.write(openEvent->file().toUtf8());
+                        socket.waitForBytesWritten(500);
+                        socket.disconnectFromServer();
+                        sent = true;
+                    }
                 }
+                if (!sent)
+                    fileOpenEventArgs << openEvent->file();
             }
             return true;
         }
@@ -430,6 +480,37 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // QtWayland does not draw its client-side window decorations (title bar,
+    // resize borders) on a Vulkan surface, so a Wayland session using the Vulkan
+    // drawing method gets an undecorated window. Use XWayland instead, where the
+    // decorations are drawn by the X11 window manager and Vulkan still works.
+    // This must happen before QApplication is constructed.
+    {
+        const QByteArray platformEnv = ::qgetenv("QT_QPA_PLATFORM").toLower();
+        // QT_QPA_PLATFORM may be a ';'-separated preference list, e.g. "wayland;xcb".
+        const bool isWayland
+            = platformEnv.isEmpty()
+                  ? (::qgetenv("XDG_SESSION_TYPE").toLower() == QByteArrayLiteral("wayland")
+                     || ::qEnvironmentVariableIsSet("WAYLAND_DISPLAY"))
+                  : platformEnv.split(';').constFirst().startsWith(QByteArrayLiteral("wayland"));
+        const bool hasX11 = ::qEnvironmentVariableIsSet("DISPLAY");
+        QString drawMethodDetail;
+        const bool isVulkan = isVulkanDrawMethod(argc, argv, &drawMethodDetail);
+        s_qpaPlatformNote = QStringLiteral("QT_QPA_PLATFORM=\"%1\" wayland=%2 x11=%3 %4")
+                                .arg(QString::fromLocal8Bit(platformEnv))
+                                .arg(isWayland)
+                                .arg(hasX11)
+                                .arg(drawMethodDetail);
+        if (isWayland && isVulkan && hasX11) {
+            ::qputenv("QT_QPA_PLATFORM", "xcb");
+            s_qpaPlatformNote.append(
+                QStringLiteral(" - using XWayland because Wayland has no window decorations "
+                               "with Vulkan"));
+        }
+    }
+#endif
+
     Application a(argc, argv);
     int result = EXIT_SUCCESS;
 #ifdef Q_OS_WIN
@@ -479,6 +560,7 @@ int main(int argc, char **argv)
             QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         }
         LOG_INFO() << "Linux version" << QSysInfo::productVersion();
+        LOG_INFO() << "QPA platform =" << a.platformName() << "-" << s_qpaPlatformNote;
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
@@ -540,10 +622,11 @@ int main(int argc, char **argv)
         a.mainWindow = &MAIN;
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
-        a.mainWindow->setProperty("windowOpacity", 0.0);
+        if (Settings.drawMethod() != QSGRendererInterface::Vulkan)
+            a.mainWindow->setProperty("windowOpacity", 0.0);
         a.mainWindow->show();
         a.processEvents();
-        a.mainWindow->setFullScreen(a.isFullScreen);
+        // a.mainWindow->setFullScreen(a.isFullScreen);
         splash.finish(a.mainWindow);
 
         // Set up a local IPC server so the watchdog parent can forward
@@ -593,9 +676,11 @@ int main(int argc, char **argv)
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
-        // If a file-open event arrived before IPC was available, include it now.
-        if (!a.resourceArg.isEmpty())
-            args << a.resourceArg;
+        // Process any pending events to catch early QFileOpenEvents from macOS.
+        a.processEvents();
+        // If a file-open event arrived before the child starts, include it now.
+        if (!a.fileOpenEventArgs.isEmpty())
+            args << a.fileOpenEventArgs;
         ::qputenv(kWatchdogEnvVar, "1");
         child.setProcessChannelMode(QProcess::MergedChannels);
         QObject::connect(&child, &QProcess::readyRead, [&child]() {

@@ -215,12 +215,13 @@ public:
 
         //        LOG_DEBUG() << "In/out points" << inPoint << "/" << outPoint;
 
-        QPainterPath path;
-        path.moveTo(-1, height());
-        QPainterPath peaksPath;
-        int i = 0;
+        QPainterPath fillPath;
+        fillPath.moveTo(-1, height());
+        QPainterPath strokePath;
+        bool strokeStarted = false;
+        int lastX = -1;
         const int dataSize = data->size();
-        for (; i < width(); ++i) {
+        for (int i = 0; i <= width(); ++i) {
             int idx = inPoint + int(i * indicesPrPixel);
             if ((idx < 0) || (idx + 1 >= dataSize))
                 break;
@@ -228,22 +229,25 @@ public:
             qreal level = qMax(static_cast<quint8>(data->at(idx)),
                                static_cast<quint8>(data->at(idx + 1)))
                           / 256.0;
-            const qreal y = height() - level * height();
-            path.lineTo(i, y);
-            if (peaksPath.elementCount() == 0) {
-                peaksPath.moveTo(i, y);
+            qreal y = height() - level * height();
+            fillPath.lineTo(i, y);
+            if (!strokeStarted) {
+                strokePath.moveTo(i, y);
+                strokeStarted = true;
             } else {
-                peaksPath.lineTo(i, y);
+                strokePath.lineTo(i, y);
             }
+            lastX = i;
         }
-        path.lineTo(i, height());
-        painter->fillPath(path, m_color.lighter());
+        if (lastX >= 0)
+            fillPath.lineTo(lastX, height());
+        painter->fillPath(fillPath, m_color.lighter());
 
         // Stroke only the peaks outline, not the bottom closing line, so
         // the dark horizontal edge does not fight the rounded clip corners.
         QPen pen(painter->pen());
         pen.setColor(m_color.darker());
-        painter->strokePath(peaksPath, pen);
+        painter->strokePath(strokePath, pen);
 
         if (qmlProducer)
             qmlProducer->producer().unlock();

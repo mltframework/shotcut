@@ -196,26 +196,26 @@ int Subtitles::indexForTime(const Subtitles::SubtitleVector &items,
         // Nothing to search
     } else if (count > 0 && (items[0].start - msMargin) > msTime) {
         // No text if before the first item;
-    } else if (count > 1 && items[count - 1].end < msTime) {
-        // No text if after the last item;
+    } else if (count > 1 && items[count - 1].end <= msTime) {
+        // No text if at or after the last item's end;
     } else if (searchStart > -1 && searchStart < count
                && (items[searchStart].start - msMargin) <= msTime
-               && items[searchStart].end >= msTime) {
+               && items[searchStart].end > msTime) {
         // First see if this is the same as the last subtitle
         index = searchStart;
-    } else if (searchStart > -1 && (searchStart + 1) < count && items[searchStart].end < msTime
+    } else if (searchStart > -1 && (searchStart + 1) < count && items[searchStart].end <= msTime
                && (items[searchStart + 1].start - msMargin) > msTime) {
         // No text if between the previous and next subtitle
     } else if (searchStart > -1 && (searchStart + 1) < count
                && (items[searchStart + 1].start - msMargin) <= msTime
-               && items[searchStart + 1].end >= msTime) {
+               && items[searchStart + 1].end > msTime) {
         // See if this is the next subtitle
         index = searchStart + 1;
     } else {
         // Perform a full search from the beginning
         int i = 0;
         for (i = 0; i < count; i++) {
-            if ((items[i].start - msMargin) <= msTime && items[i].end >= msTime) {
+            if ((items[i].start - msMargin) <= msTime && items[i].end > msTime) {
                 index = i;
                 break;
             } else if (items[i].end > msTime) {

@@ -95,11 +95,15 @@ private:
 class ProxyReplacePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ProxyReplacePostJobAction(const QString &srcFile, const QString &dstFile, const QString &srcHash)
+    ProxyReplacePostJobAction(const QString &srcFile,
+                              const QString &dstFile,
+                              const QString &srcHash,
+                              int rotation = 0)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_srcFile(srcFile)
         , m_dstFile(dstFile)
         , m_hash(srcHash)
+        , m_rotation(rotation)
     {}
     void doAction();
 
@@ -107,19 +111,22 @@ private:
     QString m_srcFile;
     QString m_dstFile;
     QString m_hash;
+    int m_rotation;
 };
 
 class ProxyFinalizePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ProxyFinalizePostJobAction(const QString &srcFile, const QString &dstFile)
+    ProxyFinalizePostJobAction(const QString &srcFile, const QString &dstFile, int rotation = 0)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_dstFile(dstFile)
+        , m_rotation(rotation)
     {}
     void doAction();
 
 private:
     QString m_dstFile;
+    int m_rotation;
 };
 
 class SubtitlesDock;

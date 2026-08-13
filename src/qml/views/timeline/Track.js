@@ -33,22 +33,23 @@ function snapClip(clip, repeater) {
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            // Snap to blank
+            // Snap to blank / neighboring clips in frame space so low zoom
+            // (small timeScale) round-trips to integer frames.
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
                 // Snap right edge to left edge.
-                clip.x = itemLeft - clip.width
+                clip.x = Math.round(itemLeft / timeScale) * timeScale - clip.width
                 return
             } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
                 // Snap left edge to right edge.
-                clip.x = itemRight
+                clip.x = Math.round(itemRight / timeScale) * timeScale
                 return
             } else if (right > itemRight - SNAP && right < itemRight + SNAP) {
                 // Snap right edge to right edge.
-                clip.x = itemRight - clip.width
+                clip.x = Math.round(itemRight / timeScale) * timeScale - clip.width
                 return
             } else if (left > itemLeft - SNAP && left < itemLeft + SNAP) {
                 // Snap left edge to left edge.
-                clip.x = itemLeft
+                clip.x = Math.round(itemLeft / timeScale) * timeScale
                 return
             }
         }

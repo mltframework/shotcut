@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2023 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,9 +76,13 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     Mlt::Frame cloneFrame(mlt_frame_init(NULL));
     cloneFrame.inherit(d->f);
     cloneFrame.set("_producer", d->f.get_data("_producer", size), size);
+#if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
+    mlt_frame_copy_convert_image(cloneFrame.get_frame(), d->f.get_frame());
+#else
     cloneFrame.set("movit.convert", d->f.get_data("movit.convert", size), size);
     cloneFrame.set("_movit cpu_convert", d->f.get_data("_movit cpu_convert", size), size);
     cloneFrame.get_frame()->convert_image = d->f.get_frame()->convert_image;
+#endif
     cloneFrame.get_frame()->convert_audio = d->f.get_frame()->convert_audio;
 
     data = d->f.get_data("audio", size);

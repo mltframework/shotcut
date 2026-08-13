@@ -43,7 +43,7 @@ LIBOPUS_HEAD=0
 LIBOPUS_REVISION="v1.5.2"
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/8.1"
+FFMPEG_REVISION="origin/release/9.0"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_JACK=0
@@ -105,6 +105,8 @@ ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=0
 LIBSPATIALAUDIO_REVISION="origin/shotcut"
 ENABLE_WHISPERCPP=1
+OPENBLAS_HEAD=0
+OPENBLAS_REVISION="v0.3.34"
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.8.3"
 ENABLE_RNNOISE=1
@@ -666,6 +668,9 @@ function set_globals {
   fi
   REVISIONS[8]=""
   REVISIONS[9]=""
+  if test 0 = "$OPENBLAS_HEAD" -a "$OPENBLAS_REVISION" ; then
+    REVISIONS[9]="$OPENBLAS_REVISION"
+  fi
   REVISIONS[10]=""
   if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
     REVISIONS[10]="$VIDSTAB_REVISION"
@@ -833,7 +838,7 @@ function set_globals {
     CONFIG[0]="${CONFIG[0]} --enable-libjack"
   fi
   if test 1 = "$FFMPEG_SUPPORT_VULKAN" && test "$TARGET_OS" != "Darwin" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-vulkan --enable-libglslang"
+    CONFIG[0]="${CONFIG[0]} --enable-vulkan"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -852,7 +857,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="cmake -GNinja -B build -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF -DUSE_VST2=OFF -DMOD_SPATIALAUDIO=ON"
+  CONFIG[1]="cmake -GNinja -B build -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_GDK=OFF -DMOD_GLAXNIMATE_QT6=ON -DMOD_PLACEBO=OFF -DMOD_SPATIALAUDIO=ON"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   [ "$MLT_DISABLE_SOX" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
@@ -2164,7 +2169,6 @@ export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt-7/profiles"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
-export PYTHONHOME="\$INSTALL_DIR"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt6"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/$exe" "\$@"
@@ -2193,7 +2197,8 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # LADSPA_PATH set, and Shotcut only needs the supplied SWH plugins.
 # export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
-export PYTHONHOME="\$INSTALL_DIR"
+# The following line should only be used if Glaxnimate is enabled, which sets up a bundled Python environment.
+# export PYTHONHOME="\$INSTALL_DIR"
 sed --help >/dev/null && export XDG_DATA_DIRS="\$(echo "\$XDG_DATA_DIRS" | sed "s|\$(dirname "\$INSTALL_DIR")||")"
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt6"
