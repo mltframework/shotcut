@@ -21,6 +21,7 @@
 #include "database.h"
 #include "mainwindow.h"
 #include "proxymanager.h"
+#include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
@@ -372,7 +373,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     painter.drawImage(rect, *thumb);
                 }
                 if (parent.is_valid() && parent.get_int(kPlaylistIndexProperty) == index.row() + 1) {
-                    QPen pen(Qt::red);
+                    QPen pen(QmlApplication::playheadColor());
                     pen.setWidthF(1.5 * MAIN.devicePixelRatioF());
                     painter.setPen(pen);
                     rect.setX(0);

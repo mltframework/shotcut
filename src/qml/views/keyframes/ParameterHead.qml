@@ -35,7 +35,7 @@ Rectangle {
     signal rightClicked
 
     color: selected ? selectedTrackColor : (delegateIndex % 2) ? activePalette.alternateBase : activePalette.base
-    border.color: selected ? 'red' : 'transparent'
+    border.color: selected ? application.playheadColor : 'transparent'
     border.width: selected ? 1 : 0
     clip: true
     state: 'normal'

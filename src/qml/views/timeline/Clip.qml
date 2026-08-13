@@ -919,7 +919,7 @@ Rectangle {
     Rectangle {
         anchors.fill: parent
         color: 'transparent'
-        border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
+        border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? application.playheadColor : 'white' : 'black'
         border.width: (isBlank && !selected) ? 0 : 1
         topLeftRadius: clipRoot.topLeftRadius
         bottomLeftRadius: clipRoot.bottomLeftRadius

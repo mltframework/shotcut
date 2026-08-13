@@ -189,7 +189,7 @@ Rectangle {
                 width: headerWidth
                 height: rulerFlickable.height
                 color: selected ? shotcutBlue : activePalette.window
-                border.color: selected ? 'red' : 'transparent'
+                border.color: selected ? application.playheadColor : 'transparent'
                 border.width: selected ? 1 : 0
                 visible: trackHeaderRepeater.count
                 z: 1
@@ -621,7 +621,7 @@ Rectangle {
                                     width: clipN ? clipN.width : 0
                                     height: track ? track.height : 0
                                     color: 'transparent'
-                                    border.color: (clipN && clipN.group < 0) ? 'red' : 'white'
+                                    border.color: (clipN && clipN.group < 0) ? application.playheadColor : 'white'
                                     visible: clipN && !clipN.Drag.active && clipN.trackIndex === clipN.originalTrackIndex
                                 }
                             }

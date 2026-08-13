@@ -124,7 +124,7 @@ Item {
             width: subtitle ? subtitle.width : 0
             height: subtitle ? subtitle.height : 0
             color: 'transparent'
-            border.color: 'red'
+            border.color: application.playheadColor
         }
     }
 }

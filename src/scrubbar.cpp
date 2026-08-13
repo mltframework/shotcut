@@ -203,7 +203,8 @@ bool ScrubBar::onSeek(int value)
 
 void ScrubBar::paintEvent(QPaintEvent *e)
 {
-    QPen pen(QBrush(QmlApplication::playheadColor()), 2);
+    QPen pen(QBrush(palette().text().color()), 2);
+    // QPen pen(QBrush(QmlApplication::playheadColor()), 2);
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
@@ -221,6 +222,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
     p.setPen(pen);
+    p.setPen(QPen(QBrush(QmlApplication::playheadColor()), 2));
     if (m_head >= 0) {
         head = m_margin + m_head * m_scale;
         p.drawLine(head, 0, head, height() - 1);
@@ -240,7 +242,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(in, 0, in, selectionSize - 1);
+        p.drawLine(in, 0, in, selectionSize - 2);
     }
 
     // draw out point
@@ -257,7 +259,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(out, 0, out, selectionSize - 1);
+        p.drawLine(out, 0, out, selectionSize - 2);
     }
 }
 
@@ -304,7 +306,7 @@ void ScrubBar::updatePixmap()
     if (m_in > -1 && m_out > m_in) {
         const int in = m_in * m_scale * ratio;
         const int out = m_out * m_scale * ratio;
-        p.fillRect(l_margin + in, 0, out - in, l_selectionSize, Qt::red);
+        p.fillRect(l_margin + in, 0, out - in, l_selectionSize, QmlApplication::playheadColor());
         p.fillRect(l_margin + in + (2 + ratio),
                    ratio, // 2 for the in point line
                    out - in - 2 * (2 + ratio) - qFloor(0.5 * ratio),
