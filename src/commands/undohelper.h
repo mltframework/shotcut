@@ -29,17 +29,25 @@
 // them verbatim on undo. Each affected track is snapshotted/restored as a whole (not clip by
 // clip), so clip content, in/out points, blanks, groups, and transition wiring are all restored
 // together and always consistently, without needing any special-case patch-up code.
+//
+// recordAfterState() does not re-serialize anything: an edit can only ever touch the tracks
+// that were captured by recordBeforeState(), so the affected set is just that capture set.
+// Restoring an untouched track from its own snapshot is a safe no-op, so this is never wrong,
+// merely not minimal when a scoped command turns out to not have modified every track in scope.
 class UndoHelper
 {
 public:
     UndoHelper(MultitrackModel &model);
 
     // trackScope: the set of track indexes that this command can possibly affect. When
-    // non-empty, before/after capture and diffing are restricted to just these tracks,
-    // which avoids the O(total clips in project) cost of scanning every track for
-    // commands that are known in advance to touch only a few of them. Leave empty (the
-    // default) to fall back to scanning every track, e.g. when the affected tracks are
-    // not known until after the command has partially run (see MoveClipCommand).
+    // non-empty, capture is restricted to just these tracks (and none are excluded as
+    // locked, since the caller is asserting it will touch them), which avoids the
+    // O(total clips in project) cost of scanning every track for commands that are known
+    // in advance to touch only a few of them. Leave empty (the default) to fall back to
+    // scanning every unlocked track, e.g. when the affected tracks are not known until
+    // after the command has partially run (see MoveClipCommand). Locked tracks are
+    // skipped in that fallback because every ripple path in MultitrackModel already
+    // refuses to mutate a locked track.
     void recordBeforeState(const QSet<int> &trackScope = QSet<int>());
     void recordAfterState();
     void undoChanges();
@@ -52,6 +60,7 @@ private:
 
     QMap<int, QString> m_beforeXml;
     QSet<int> m_affectedTracks;
+    QSet<int> m_scannedTracks;
     QSet<int> m_trackScope;
     MultitrackModel &m_model;
 };

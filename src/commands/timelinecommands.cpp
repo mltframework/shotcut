@@ -663,7 +663,22 @@ MoveClipCommand::MoveClipCommand(
     , m_earliestStart(-1)
     , m_markersModified(-1)
 {
-    m_undoHelper.recordBeforeState();
+    // recordBeforeState() is deferred to redo(), once addClip() has populated m_clips and a
+    // precise track scope can be computed instead of scanning the whole project.
+}
+
+QSet<int> MoveClipCommand::trackScope() const
+{
+    if (m_ripple && m_rippleAllTracks)
+        return QSet<int>(); // ripple can touch any unlocked track; fall back to all of them
+    QSet<int> scope;
+    int maxTrackIndex = qMax(int(m_model.trackList().size()) - 1, 0);
+    for (auto &clip : m_clips) {
+        scope << clip.trackIndex;
+        if (m_trackDelta)
+            scope << qBound(0, clip.trackIndex + m_trackDelta, maxTrackIndex);
+    }
+    return scope;
 }
 
 void MoveClipCommand::addClip(int trackIndex, int clipIndex)
@@ -692,6 +707,7 @@ void MoveClipCommand::redo()
     LOG_DEBUG() << "track delta" << m_trackDelta << "position delta" << m_positionDelta;
 
     if (!m_redo) {
+        m_undoHelper.recordBeforeState(trackScope());
         if (m_clips.size() > 1)
             setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
@@ -853,7 +869,7 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
     if (that->id() != id() || that->m_clips.size() != m_clips.size() || that->m_ripple != m_ripple
         || that->m_rippleAllTracks != m_rippleAllTracks || that->m_rippleMarkers != m_rippleMarkers)
         return false;
-    if (that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
+    if (that->trackScope() != trackScope()) {
         return false;
     }
     if (that->m_trackDelta || m_trackDelta) {
@@ -2243,7 +2259,9 @@ AlignClipsCommand::AlignClipsCommand(MultitrackModel &model, QUndoCommand *paren
     , m_undoHelper(m_model)
     , m_redo(false)
 {
-    m_undoHelper.recordBeforeState();
+    // recordBeforeState() is deferred to redo(), once addAlignment() has populated
+    // m_alignments and a precise track scope can be computed instead of scanning the
+    // whole project.
     setText(QObject::tr("Align clips to reference track"));
 }
 
@@ -2259,6 +2277,17 @@ void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speed)
 void AlignClipsCommand::redo()
 {
     LOG_DEBUG() << "Alignment Clips:" << m_alignments.size();
+    if (!m_redo) {
+        // Alignment only repositions a clip within its own track, so the scope is just the
+        // tracks the aligned clips currently live on.
+        QSet<int> scope;
+        for (auto &alignment : m_alignments) {
+            int trackIndex, clipIndex;
+            if (m_model.findClipByUuid(alignment.uuid, trackIndex, clipIndex))
+                scope << trackIndex;
+        }
+        m_undoHelper.recordBeforeState(scope);
+    }
     struct ClipItem
     {
         Mlt::Producer *clip;

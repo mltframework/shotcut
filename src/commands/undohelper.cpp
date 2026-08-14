@@ -25,6 +25,7 @@
 #include <QScopedPointer>
 #include <QUuid>
 
+// #define UNDOHELPER_DEBUG
 #ifdef UNDOHELPER_DEBUG
 #define UNDOLOG LOG_DEBUG()
 #else
@@ -46,13 +47,21 @@ void UndoHelper::recordBeforeState(const QSet<int> &trackScope)
     m_trackScope = trackScope;
     m_beforeXml.clear();
     m_affectedTracks.clear();
+    m_scannedTracks.clear();
     for (int i = 0; i < m_model.trackList().count(); ++i) {
         if (!m_trackScope.isEmpty() && !m_trackScope.contains(i))
             continue;
         int mltIndex = m_model.trackList()[i].mlt_index;
         QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
-        Mlt::Playlist playlist(*trackProducer);
+        if (!trackProducer || !trackProducer->is_valid())
+            continue;
+        // An implicit (empty) scope never snapshots a locked track, since every ripple path
+        // in MultitrackModel already refuses to mutate one.
+        if (m_trackScope.isEmpty() && trackProducer->get_int(kTrackLockProperty))
+            continue;
+        m_scannedTracks << i;
 
+        Mlt::Playlist playlist(*trackProducer);
         promoteUuids(playlist);
         m_beforeXml[i] = MLT.XML(trackProducer.data());
         demoteUuids(playlist);
@@ -66,24 +75,9 @@ void UndoHelper::recordAfterState()
 #ifdef UNDOHELPER_DEBUG
     debugPrintState("After state");
 #endif
-    qint64 xmlCallCountBefore = MLT.xmlCallCount();
-    for (int i = 0; i < m_model.trackList().count(); ++i) {
-        if (!m_trackScope.isEmpty() && !m_trackScope.contains(i))
-            continue;
-        int mltIndex = m_model.trackList()[i].mlt_index;
-        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
-        Mlt::Playlist playlist(*trackProducer);
-
-        promoteUuids(playlist);
-        QString afterXml = MLT.XML(trackProducer.data());
-        demoteUuids(playlist);
-        if (!m_beforeXml.contains(i) || m_beforeXml.value(i) != afterXml) {
-            UNDOLOG << "Track" << i << "was modified";
-            m_affectedTracks << i;
-        }
-    }
-    UNDOLOG << "recordAfterState() called Controller::XML()"
-            << (MLT.xmlCallCount() - xmlCallCountBefore) << "times";
+    // An edit can only ever have touched tracks that were captured above, so reuse that set
+    // instead of re-serializing and diffing every in-scope track a second time.
+    m_affectedTracks = m_scannedTracks;
 }
 
 void UndoHelper::undoChanges()

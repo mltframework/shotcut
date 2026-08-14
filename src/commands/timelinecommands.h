@@ -26,6 +26,7 @@
 #include <MltProducer.h>
 #include <MltTransition.h>
 #include <QObject>
+#include <QSet>
 #include <QString>
 #include <QUndoCommand>
 #include <QUuid>
@@ -315,6 +316,7 @@ protected:
 
 private:
     void redoMarkers();
+    QSet<int> trackScope() const;
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
