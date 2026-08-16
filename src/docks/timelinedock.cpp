@@ -2829,7 +2829,8 @@ void TimelineDock::append(int trackIndex)
 
 /*!
     \qmlmethod void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
-    \brief Removes the clip at (\a trackIndex, \a clipIndex), replacing it with a blank.
+    \brief Removes the clip at (\a trackIndex, \a clipIndex) causing downstream clips to shift
+    earlier by the clip duration (ripple).
     If \a ignoreTransition is \c true, adjacent transitions are not affected.
 */
 
