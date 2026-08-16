@@ -29,7 +29,7 @@
 class UndoHelper
 {
 public:
-    enum OptimizationHints { NoHints, SkipXML, RestoreTracks };
+    enum OptimizationHints { NoHints = 0x0, SkipXML = 0x1, RestoreTracks = 0x2 };
     UndoHelper(MultitrackModel &model);
 
     void recordBeforeState();
@@ -37,6 +37,9 @@ public:
     void undoChanges();
     void setHints(OptimizationHints hints);
     void storeXmlForClip(const QUuid &uid);
+    // Limit snapshot/restore to these timeline track indexes. Empty means all tracks.
+    void restrictToTrack(int trackIndex);
+    void restrictToTracks(const QSet<int> &tracks);
     QSet<int> affectedTracks() const { return m_affectedTracks; }
 
 private:
@@ -44,13 +47,7 @@ private:
     void restoreAffectedTracks();
     void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
-    enum ChangeFlags {
-        NoChange = 0x0,
-        ClipInfoModified = 0x1,
-        XMLModified = 0x2,
-        Moved = 0x4,
-        Removed = 0x8
-    };
+    enum ChangeFlags { NoChange = 0x0, ClipInfoModified = 0x1, Moved = 0x2, Removed = 0x4 };
 
     struct Info
     {
@@ -85,9 +82,12 @@ private:
     QList<QUuid> m_clipsAdded;
     QList<QUuid> m_insertedOrder;
     QSet<int> m_affectedTracks;
+    QSet<int> m_restrictedTracks;
     QSet<QUuid> m_xmlClips;
     MultitrackModel &m_model;
     OptimizationHints m_hints;
+
+    bool includeTrack(int trackIndex) const;
 };
 
 #endif // UNDOHELPER_H

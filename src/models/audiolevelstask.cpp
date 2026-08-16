@@ -28,7 +28,9 @@
 #include <QCryptographicHash>
 #include <QElapsedTimer>
 #include <QImage>
+#include <QMetaObject>
 #include <QMutex>
+#include <QPersistentModelIndex>
 #include <QRgb>
 #include <QString>
 #include <QThreadPool>
@@ -40,6 +42,41 @@ static QMutex tasksListMutex;
 static void deleteQByteArray(QByteArray *data)
 {
     delete data;
+}
+
+static QByteArray levelsFromCachedImage(const QImage &image)
+{
+    QByteArray levels;
+    const int channels = 2;
+    const int n = image.width() * image.height();
+    for (int i = 0; n > 1 && i < n; i++) {
+        QRgb p = image.pixel(i / 2, i % channels);
+        levels.append(static_cast<char>(qRed(p)));
+        levels.append(static_cast<char>(qGreen(p)));
+        levels.append(static_cast<char>(qBlue(p)));
+        levels.append(static_cast<char>(qAlpha(p)));
+    }
+    return levels;
+}
+
+static void applyLevelsToProducer(Mlt::Producer &producer,
+                                  QObject *object,
+                                  const QModelIndex &index,
+                                  const QByteArray &levels)
+{
+    if (levels.isEmpty() || !producer.is_valid())
+        return;
+    auto *levelsCopy = new QByteArray(levels);
+    producer.lock();
+    producer.set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQByteArray);
+    producer.unlock();
+    if (index.isValid() && object
+        && -1 != object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)")) {
+        QMetaObject::invokeMethod(object,
+                                  "audioLevelsReady",
+                                  Q_ARG(const QPersistentModelIndex &,
+                                        QPersistentModelIndex(index)));
+    }
 }
 
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index)
@@ -74,6 +111,14 @@ void AudioLevelsTask::start(Mlt::Producer &producer,
         }
 
         AudioLevelsTask *task = new AudioLevelsTask(producer, object, index);
+        if (!force) {
+            QImage image = DB.getThumbnail(task->cacheKey());
+            if (!image.isNull()) {
+                applyLevelsToProducer(producer, object, index, levelsFromCachedImage(image));
+                delete task;
+                return;
+            }
+        }
         tasksListMutex.lock();
         // See if there is already a task for this MLT service and resource.
         foreach (AudioLevelsTask *t, tasksList) {
@@ -288,16 +333,7 @@ void AudioLevelsTask::run()
                                   Qt::QueuedConnection,
                                   Q_ARG(QString, message));
     } else if (!m_isCanceled && !image.isNull()) {
-        // convert cached image
-        int channels = 2;
-        int n = image.width() * image.height();
-        for (int i = 0; n > 1 && i < n; i++) {
-            QRgb p = image.pixel(i / 2, i % channels);
-            levels.append(static_cast<char>(qRed(p)));
-            levels.append(static_cast<char>(qGreen(p)));
-            levels.append(static_cast<char>(qBlue(p)));
-            levels.append(static_cast<char>(qAlpha(p)));
-        }
+        levels = levelsFromCachedImage(image);
     }
 
     // Remove ourself from the global list of audio tasks.

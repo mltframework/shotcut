@@ -315,6 +315,8 @@ protected:
 
 private:
     void redoMarkers();
+    void undoExplicitMove();
+    void snapshotForHelper();
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -348,6 +350,7 @@ private:
     UndoHelper m_undoHelper;
     QMultiMap<int, Info> m_clips; // ordered by position
     bool m_redo;
+    bool m_useHelper;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
     int m_markersModified;
@@ -447,7 +450,6 @@ private:
     std::vector<int> m_trackIndex;
     std::vector<int> m_clipIndex;
     int m_position;
-    UndoHelper m_undoHelper;
 };
 
 class FadeInCommand : public QUndoCommand
