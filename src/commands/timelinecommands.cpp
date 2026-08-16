@@ -194,7 +194,22 @@ void InsertCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     int shift = 0;
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    // Ripple-all-tracks shifts clips on other tracks, which the fine-grained diff does not track
+    // across tracks; fall back to whole-track restore only then.
+    if (m_rippleAllTracks) {
+        m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    } else {
+        // The clip at the insertion point is split; snapshot it for a cheap undo.
+        auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track && track->is_valid()) {
+            Mlt::Playlist playlist(*track);
+            QScopedPointer<Mlt::Producer> c(
+                playlist.get_clip(playlist.get_clip_index_at(m_position)));
+            if (c && c->is_valid() && !c->is_blank())
+                m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(c->parent()));
+        }
+    }
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (!clip.is_valid()) {
@@ -265,9 +280,25 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model,
 void OverwriteCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
-    m_undoHelper.recordBeforeState({m_trackIndex});
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    // Snapshot the clips the overwrite replaces or splits so undo restores them cheaply.
+    if (clip.is_valid()) {
+        auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track && track->is_valid()) {
+            Mlt::Playlist playlist(*track);
+            int first = qMax(0, playlist.get_clip_index_at(m_position));
+            int last = playlist.get_clip_index_at(m_position + clip.get_playtime() - 1);
+            if (last < 0)
+                last = playlist.count() - 1;
+            for (int idx = first; idx <= last && idx < playlist.count(); ++idx) {
+                QScopedPointer<Mlt::Producer> c(playlist.get_clip(idx));
+                if (c && c->is_valid() && !c->is_blank())
+                    m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(c->parent()));
+            }
+        }
+    }
+    m_undoHelper.recordBeforeState({m_trackIndex});
     if (m_uuids.empty()) {
         m_uuids = getProducerUuids(&clip);
     }
