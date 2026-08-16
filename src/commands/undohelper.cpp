@@ -270,6 +270,22 @@ void UndoHelper::undoChanges()
     // place. The commands that use this path never genuinely reorder clips (real moves use
     // RestoreTracks), so each clip's index is fully determined by the reinsertions before it.
 
+    // Verify that assumption before touching anything: the surviving (non-added) real clips must
+    // still be in their original relative order. If not (some structural edits, or a preceding
+    // whole-track restore, can break it), rebuild the affected tracks from the snapshot instead,
+    // which is always correct.
+    if (m_hints != SkipXML && !survivingClipsInOrder()) {
+        LOG_WARNING() << "UndoHelper: clip order changed, using whole-track restore";
+        m_affectedTracks = m_scannedTracks;
+        restoreAffectedTracks();
+        emit m_model.modified();
+#ifdef UNDOHELPER_PROFILE
+        LOG_INFO() << "UndoHelper::undoChanges fell back to RestoreTracks total"
+                   << totalTimer.elapsed() << "ms";
+#endif
+        return;
+    }
+
     // 1. Remove the clips the edit added.
     for (const auto &i : std::as_const(m_scannedTracks)) {
         if (i < 0 || i >= m_model.trackList().size())
@@ -309,19 +325,6 @@ void UndoHelper::undoChanges()
         int currentIndex = nextIndex[info.oldTrackIndex];
         QModelIndex parentIndex = m_model.index(info.oldTrackIndex);
         QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
-
-#ifndef NDEBUG
-        // This path assumes surviving clips keep their relative order, so a clip that was not
-        // removed must already sit at currentIndex. A mismatch means the command reordered
-        // clips and should use RestoreTracks instead.
-        if (!(info.changes & Removed) && currentIndex < playlist.count()) {
-            QScopedPointer<Mlt::Producer> at(playlist.get_clip(currentIndex));
-            QUuid atUid = at && at->is_valid()
-                              ? (at->is_blank() ? MLT.uuid(*at) : MLT.uuid(at->parent()))
-                              : QUuid();
-            Q_ASSERT(atUid == uid && "fine-grained undo requires clips keep their relative order");
-        }
-#endif
 
         if (info.changes & Removed) {
             m_model.beginInsertRows(parentIndex, currentIndex, currentIndex);
@@ -451,6 +454,41 @@ void UndoHelper::debugPrintState(const QString &title)
         LOG_DEBUG() << qPrintable(trackStr);
     }
     LOG_DEBUG() << "}";
+}
+
+// True if every surviving (non-added) real clip is still in its original relative order, which the
+// fine-grained undo path requires; blanks are ignored because their identity churns as they merge.
+bool UndoHelper::survivingClipsInOrder() const
+{
+    QMap<int, QList<QUuid>> expected;
+    for (const QUuid &uid : std::as_const(m_insertedOrder)) {
+        const Info &info = m_state[uid];
+        if (!(info.changes & Removed) && !info.isBlank)
+            expected[info.oldTrackIndex] << uid;
+    }
+    for (const auto &i : std::as_const(m_scannedTracks)) {
+        if (i < 0 || i >= m_model.trackList().size())
+            continue;
+        QScopedPointer<Mlt::Producer> trackProducer(
+            m_model.tractor()->track(m_model.trackList()[i].mlt_index));
+        if (!trackProducer || !trackProducer->is_valid())
+            continue;
+        Mlt::Playlist playlist(*trackProducer);
+        QList<QUuid> live;
+        for (int j = 0; j < playlist.count(); ++j) {
+            if (playlist.is_blank(j))
+                continue;
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
+            if (!clip || !clip->is_valid())
+                continue;
+            QUuid uid = MLT.uuid(clip->parent());
+            if (!m_clipsAdded.contains(uid))
+                live << uid;
+        }
+        if (live != expected.value(i))
+            return false;
+    }
+    return true;
 }
 
 void UndoHelper::restoreAffectedTracks()
