@@ -317,12 +317,11 @@ protected:
 private:
     void redoMarkers();
     void undoExplicitMove();
-    void undoTransitionGrow();
-    void snapshotForHelper();
     void snapshotOverwritten();
     void restoreOverwritten();
+    void snapshotTransitionGrow(int trackIndex, int clipIndex);
 
-    // GrowTransition*: clip-drag onto a neighbor mix; undo is -delta, not a snapshot.
+    // GrowTransition*: clip-drag onto a neighbor mix; undo is a track-scoped snapshot.
     enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
     TimelineDock &m_timeline;
@@ -369,7 +368,6 @@ private:
     UndoHelper m_undoHelper;
     QMultiMap<int, Info> m_clips; // ordered by position
     bool m_redo;
-    bool m_useHelper; // always false for current move undo; helper path unused
     SpecialMove m_specialMove;
     QList<Overwritten> m_overwritten;
     int m_earliestStart;
@@ -468,9 +466,25 @@ public:
 
 private:
     MultitrackModel &m_model;
+    struct ClipState
+    {
+        int trackIndex;
+        int clipIndex;
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+        bool isBlank;
+    };
+
+    void snapshotClips();
+
     std::vector<int> m_trackIndex;
     std::vector<int> m_clipIndex;
     int m_position;
+    QList<ClipState> m_clips;
 };
 
 class FadeInCommand : public QUndoCommand
@@ -849,6 +863,8 @@ public:
     void undo();
 
 private:
+    void ensureBeforeState();
+
     TimelineDock &m_timeline;
     int m_trackIndex;
     int m_clipIndex;

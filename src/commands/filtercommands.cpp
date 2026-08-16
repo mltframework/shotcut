@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2025 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,14 @@ static Mlt::Producer findProducer(const QUuid &uuid)
     return Mlt::Producer();
 }
 
+static bool requireProducer(Mlt::Producer &producer, const QString &what)
+{
+    if (producer.is_valid())
+        return true;
+    LOG_ERROR() << "Producer not found for" << what;
+    return false;
+}
+
 namespace Filter {
 
 AddCommand::AddCommand(AttachedFiltersModel &model,
@@ -120,7 +128,8 @@ void AddCommand::redo()
     if (!producer.is_valid()) {
         producer = findProducer(m_producerUuid);
     }
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     int adjustFrom = producer.filter_count();
     for (int i = 0; i < m_rows.size(); i++) {
         m_model.doAddService(producer, m_services[i], m_rows[i]);
@@ -135,7 +144,8 @@ void AddCommand::undo()
 {
     LOG_DEBUG() << text() << m_rows[0];
     Mlt::Producer producer(findProducer(m_producerUuid));
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     // Remove the services in reverse order
     for (int i = m_rows.size() - 1; i >= 0; i--) {
         m_model.doRemoveService(producer, m_rows[i]);
@@ -181,7 +191,8 @@ void RemoveCommand::redo()
     if (!producer.is_valid()) {
         producer = findProducer(m_producerUuid);
     }
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     m_model.doRemoveService(producer, m_row);
     // Only hold the producer reference for the first redo and lookup by UUID thereafter.
     m_producer = Mlt::Producer();
@@ -192,7 +203,8 @@ void RemoveCommand::undo()
     Q_ASSERT(m_service.is_valid());
     LOG_DEBUG() << text() << m_row;
     Mlt::Producer producer(findProducer(m_producerUuid));
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     m_model.doAddService(producer, m_service, m_row);
 }
 
@@ -215,7 +227,8 @@ void MoveCommand::redo()
     if (!producer.is_valid()) {
         producer = findProducer(m_producerUuid);
     }
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     if (producer.is_valid()) {
         m_model.doMoveService(producer, m_fromRow, m_toRow);
     }
@@ -229,7 +242,8 @@ void MoveCommand::undo()
 {
     LOG_DEBUG() << text() << "from" << m_toRow << "to" << m_fromRow;
     Mlt::Producer producer(findProducer(m_producerUuid));
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     if (producer.is_valid()) {
         m_model.doMoveService(producer, m_toRow, m_fromRow);
     }
@@ -258,7 +272,8 @@ void DisableCommand::redo()
     if (!producer.is_valid()) {
         producer = findProducer(m_producerUuid);
     }
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     if (producer.is_valid()) {
         m_model.doSetDisabled(producer, m_row, m_disabled);
     }
@@ -272,7 +287,8 @@ void DisableCommand::undo()
 {
     LOG_DEBUG() << text() << m_row;
     Mlt::Producer producer(findProducer(m_producerUuid));
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     if (producer.is_valid()) {
         m_model.doSetDisabled(producer, m_row, !m_disabled);
     }
@@ -311,7 +327,8 @@ void PasteCommand::redo()
 {
     LOG_DEBUG() << text();
     Mlt::Producer producer = findProducer(m_producerUuid);
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     Mlt::Profile profile(kDefaultMltProfile);
     Mlt::Producer filtersProducer(profile, "xml-string", m_xml.toUtf8().constData());
     if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0) {
@@ -324,7 +341,8 @@ void PasteCommand::undo()
 {
     LOG_DEBUG() << text();
     Mlt::Producer producer = findProducer(m_producerUuid);
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     // Remove all filters
     for (int i = 0; i < producer.filter_count(); i++) {
         Mlt::Filter *filter = producer.filter(i);
@@ -378,7 +396,8 @@ void UndoParameterCommand::redo()
         m_firstRedo = false;
     } else {
         Mlt::Producer producer = findProducer(m_producerUuid);
-        Q_ASSERT(producer.is_valid());
+        if (!requireProducer(producer, text()))
+            return;
         if (producer.is_valid() && m_filterController) {
             Mlt::Service service = m_filterController->attachedModel()->doGetService(producer,
                                                                                      m_row);
@@ -392,7 +411,8 @@ void UndoParameterCommand::undo()
 {
     LOG_DEBUG() << text();
     Mlt::Producer producer = findProducer(m_producerUuid);
-    Q_ASSERT(producer.is_valid());
+    if (!requireProducer(producer, text()))
+        return;
     if (producer.is_valid() && m_filterController) {
         Mlt::Service service = m_filterController->attachedModel()->doGetService(producer, m_row);
         service.inherit(m_before);

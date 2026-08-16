@@ -324,8 +324,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        // Elided clips still requested thumbnails; skip the image provider.
-        source: (!elided && settings.timelineShowThumbnails) ? imagePath(outPoint) : ''
+        source: visible ? imagePath(outPoint) : ''
     }
 
     Image {
@@ -341,7 +340,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: (!elided && settings.timelineShowThumbnails) ? imagePath(inPoint) : ''
+        source: visible ? imagePath(inPoint) : ''
     }
 
     Shotcut.TimelineTransition {

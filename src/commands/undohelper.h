@@ -21,6 +21,7 @@
 #include "models/multitrackmodel.h"
 
 #include <MltPlaylist.h>
+#include <QFlags>
 #include <QList>
 #include <QMap>
 #include <QSet>
@@ -29,8 +30,9 @@
 class UndoHelper
 {
 public:
-    // Flags so SkipXML and RestoreTracks can be combined if needed.
-    enum OptimizationHints { NoHints = 0x0, SkipXML = 0x1, RestoreTracks = 0x2 };
+    enum OptimizationHint { NoHints = 0x0, SkipXML = 0x1, RestoreTracks = 0x2 };
+    Q_DECLARE_FLAGS(OptimizationHints, OptimizationHint)
+
     UndoHelper(MultitrackModel &model);
 
     void recordBeforeState();
@@ -38,9 +40,11 @@ public:
     void undoChanges();
     void setHints(OptimizationHints hints);
     void storeXmlForClip(const QUuid &uid);
-    // Limit snapshot/restore to these timeline track indexes. Empty means all tracks.
+    // Limit snapshot/restore to these timeline track indexes.
+    // restrictToTracks({}) is an empty restriction (no tracks), not "all tracks".
     void restrictToTrack(int trackIndex);
     void restrictToTracks(const QSet<int> &tracks);
+    void clearRestriction();
     QSet<int> affectedTracks() const { return m_affectedTracks; }
 
 private:
@@ -48,7 +52,9 @@ private:
     void restoreAffectedTracks();
     void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
-    // XMLModified was unused; keep bits as flags for the remaining kinds.
+    // In-place producer edits (no in/out/move) are not detected. Commands that
+    // mutate filters/XML without replacing the producer must storeXmlForClip()
+    // or avoid SkipXML so the before-state XML can restore them.
     enum ChangeFlags { NoChange = 0x0, ClipInfoModified = 0x1, Moved = 0x2, Removed = 0x4 };
 
     struct Info
@@ -88,8 +94,13 @@ private:
     QSet<QUuid> m_xmlClips;
     MultitrackModel &m_model;
     OptimizationHints m_hints;
+    bool m_hasRestriction;
+    bool m_undoFailed;
 
     bool includeTrack(int trackIndex) const;
+    void failUndo(const QString &detail);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(UndoHelper::OptimizationHints)
 
 #endif // UNDOHELPER_H
