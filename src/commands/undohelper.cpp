@@ -26,6 +26,10 @@
 #include <QUuid>
 
 #include <memory>
+#include <QElapsedTimer>
+
+// Temporary profiling of undo cost; remove once the split/lift regression is understood.
+#define UNDOHELPER_PROFILE
 
 // #define UNDOHELPER_DEBUG
 #ifdef UNDOHELPER_DEBUG
@@ -219,9 +223,18 @@ void UndoHelper::undoChanges()
 #ifdef UNDOHELPER_DEBUG
     debugPrintState("Before undo");
 #endif
+#ifdef UNDOHELPER_PROFILE
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+    qint64 xmlBefore = MLT.xmlCallCount();
+#endif
     if (m_hints == RestoreTracks) {
         restoreAffectedTracks();
         emit m_model.modified();
+#ifdef UNDOHELPER_PROFILE
+        LOG_INFO() << "UndoHelper::undoChanges RestoreTracks total" << totalTimer.elapsed()
+                   << "ms, MLT.XML calls" << (MLT.xmlCallCount() - xmlBefore);
+#endif
 #ifdef UNDOHELPER_DEBUG
         debugPrintState("After undo");
 #endif
@@ -415,6 +428,10 @@ void UndoHelper::undoChanges()
     }
 
     emit m_model.modified();
+#ifdef UNDOHELPER_PROFILE
+    LOG_INFO() << "UndoHelper::undoChanges fine-grained total" << totalTimer.elapsed()
+               << "ms, MLT.XML calls" << (MLT.xmlCallCount() - xmlBefore);
+#endif
 #ifdef UNDOHELPER_DEBUG
     debugPrintState("After undo");
 #endif
@@ -464,10 +481,19 @@ void UndoHelper::restoreAffectedTracks()
         // Parse the "before" snapshot into a self-contained shadow playlist so that any
         // transitions among its entries are wired to each other rather than to anything
         // currently on the live track.
+#ifdef UNDOHELPER_PROFILE
+        QElapsedTimer parseTimer;
+        parseTimer.start();
+#endif
         Mlt::Producer restoredTrack(MLT.profile(),
                                     "xml-string",
                                     m_beforeXml.value(trackIndex).toUtf8().constData());
         Mlt::Playlist restoredPlaylist(restoredTrack);
+#ifdef UNDOHELPER_PROFILE
+        qint64 parseMs = parseTimer.elapsed();
+        QElapsedTimer rebuildTimer;
+        rebuildTimer.start();
+#endif
 
         int oldCount = playlist.count();
         if (oldCount > 0) {
@@ -513,6 +539,10 @@ void UndoHelper::restoreAffectedTracks()
                 AudioLevelsTask::start(parent, &m_model, m_model.createIndex(j, 0, trackIndex));
             }
         }
+#ifdef UNDOHELPER_PROFILE
+        LOG_INFO() << "UndoHelper RestoreTracks track" << trackIndex << "clips" << playlist.count()
+                   << "parse" << parseMs << "ms rebuild" << rebuildTimer.elapsed() << "ms";
+#endif
     }
 }
 
