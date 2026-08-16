@@ -723,11 +723,8 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
     }
 }
 
-static void applyMovedClipIdentity(MultitrackModel &model,
-                                   int trackIndex,
-                                   int start,
-                                   const QUuid &uuid,
-                                   int group)
+static void applyMovedClipIdentity(
+    MultitrackModel &model, int trackIndex, int start, const QUuid &uuid, int group)
 {
     int clipIndex = model.clipIndex(trackIndex, start);
     auto clipInfo = model.getClipInfo(trackIndex, clipIndex);
@@ -736,9 +733,7 @@ static void applyMovedClipIdentity(MultitrackModel &model,
     if (group >= 0) {
         clipInfo->cut->set(kShotcutGroupProperty, group);
         QModelIndex modelIndex = model.index(clipIndex, 0, model.index(trackIndex));
-        emit model.dataChanged(modelIndex,
-                               modelIndex,
-                               QVector<int>() << MultitrackModel::GroupRole);
+        emit model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
     }
     MLT.setUuid(*clipInfo->cut, uuid);
 }
@@ -1086,8 +1081,7 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         return false;
     if (!m_overwritten.isEmpty() || !that->m_overwritten.isEmpty())
         return false;
-    if (m_useHelper
-        && that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
+    if (m_useHelper && that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
         return false;
     }
     if (that->m_trackDelta || m_trackDelta) {

@@ -48,8 +48,7 @@ static bool clipHasUuid(Mlt::Playlist &playlist, int index, const QUuid &uid)
     if (index < 0 || index >= playlist.count())
         return false;
     QScopedPointer<Mlt::Producer> clip(playlist.get_clip(index));
-    return clip && clip->is_valid()
-           && (MLT.uuid(clip->parent()) == uid || MLT.uuid(*clip) == uid);
+    return clip && clip->is_valid() && (MLT.uuid(clip->parent()) == uid || MLT.uuid(*clip) == uid);
 }
 
 static int indexOfUuid(Mlt::Playlist &playlist, const QUuid &uid, int hint1 = -1, int hint2 = -1)
@@ -242,10 +241,7 @@ void UndoHelper::undoChanges()
                 LOG_ERROR() << "Cross-track move is not supported by incremental undo" << uid;
                 continue;
             }
-            int clipCurrentlyAt = indexOfUuid(playlist,
-                                              uid,
-                                              info.oldClipIndex,
-                                              info.newClipIndex);
+            int clipCurrentlyAt = indexOfUuid(playlist, uid, info.oldClipIndex, info.newClipIndex);
             if (clipCurrentlyAt == -1) {
                 LOG_ERROR() << "Moved clip could not be found" << uid;
                 continue;
