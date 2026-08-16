@@ -1764,7 +1764,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             playlist.insert_blank(clipIndex, duration - 1);
             endInsertRows();
         } else {
-            // Make copy of clip. New UUID so split halves are distinct.
+            // XML copy would reuse the parent UUID; mint one so halves stay distinct.
             Mlt::Producer producer(MLT.profile(),
                                    "xml-string",
                                    MLT.XML(info->producer).toUtf8().constData());

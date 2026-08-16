@@ -44,6 +44,7 @@ static void deleteQByteArray(QByteArray *data)
     delete data;
 }
 
+// Shared by the cache-hit path in run() so we do not decode audio again.
 static QByteArray levelsFromCachedImage(const QImage &image)
 {
     QByteArray levels;

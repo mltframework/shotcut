@@ -4130,6 +4130,7 @@ bool TimelineDock::trimClipIn(
             m_undoHelper.reset(new UndoHelper(m_model));
             if (ripple) {
                 m_undoHelper->setHints(UndoHelper::RestoreTracks);
+                // Drag trim: same track scope as TrimClipInCommand.
                 if (!Settings.timelineRippleAllTracks())
                     m_undoHelper->restrictToTrack(trackIndex);
             } else {
@@ -4242,6 +4243,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
                 if (!Settings.timelineRippleAllTracks())
                     m_undoHelper->restrictToTrack(trackIndex);
             } else {
+                // Was SkipXML-only; also scope so undo does not walk the whole track.
                 m_undoHelper->setHints(UndoHelper::SkipXML);
                 m_undoHelper->restrictToTrack(trackIndex);
             }

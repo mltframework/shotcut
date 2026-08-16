@@ -34,8 +34,8 @@
     LOG_DEBUG()
 #endif
 
-// Omit profile and avformat metadata. Restore does not need them, and they dominate
-// snapshot size on large timelines.
+// Omit profile and avformat metadata. Restore does not need them; they dominate
+// snapshot size when every clip on a large timeline is serialized.
 static QString xmlForUndo(Mlt::Producer *producer)
 {
     if (!producer || !producer->is_valid())
@@ -43,6 +43,7 @@ static QString xmlForUndo(Mlt::Producer *producer)
     return MLT.XML(producer, false, false);
 }
 
+// Prefer the expected index before a linear scan of a long playlist.
 static bool clipHasUuid(Mlt::Playlist &playlist, int index, const QUuid &uid)
 {
     if (index < 0 || index >= playlist.count())
@@ -71,6 +72,7 @@ UndoHelper::UndoHelper(MultitrackModel &model)
 
 bool UndoHelper::includeTrack(int trackIndex) const
 {
+    // Empty restrict set means "all tracks" (ripple-all / unscoped commands).
     return m_restrictedTracks.isEmpty() || m_restrictedTracks.contains(trackIndex);
 }
 
@@ -102,6 +104,7 @@ void UndoHelper::recordBeforeState()
             m_insertedOrder << uid;
             Info &info = m_state[uid];
             // Blanks are restored from in/out; skip their XML.
+            // SkipXML: XML only for clips the command listed (storeXmlForClip).
             if (!clip->is_blank() && (!(m_hints & SkipXML) || m_xmlClips.contains(uid)))
                 info.xml = xmlForUndo(&clip->parent());
             Mlt::ClipInfo clipInfo;
@@ -197,6 +200,7 @@ void UndoHelper::undoChanges()
     debugPrintState("Before undo");
 #endif
     if (m_hints & RestoreTracks) {
+        // restrictToTrack sets the scope before any clips look "affected".
         if (m_affectedTracks.isEmpty() && !m_restrictedTracks.isEmpty())
             m_affectedTracks = m_restrictedTracks;
         restoreAffectedTracks();
@@ -214,7 +218,7 @@ void UndoHelper::undoChanges()
     foreach (QUuid uid, m_insertedOrder) {
         const Info &info = m_state[uid];
         if (info.changes == NoChange)
-            continue;
+            continue; // later clips only shifted index; insert/remove slides them
         UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index"
                 << info.oldClipIndex;
 
@@ -295,6 +299,7 @@ void UndoHelper::undoChanges()
             m_model.endInsertRows();
 
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+            // Q_ASSERT here aborted release builds after a failed insert.
             if (!clip || !clip->is_valid()) {
                 LOG_ERROR() << "Restored clip is missing at" << currentIndex << uid;
                 continue;
@@ -556,6 +561,7 @@ void UndoHelper::restoreAffectedTracks()
             if (producer->is_valid()) {
                 Mlt::Playlist playlist(*producer.data());
                 for (auto currentIndex = 0; currentIndex < playlist.count(); currentIndex++) {
+                    // Own the get_clip() pointer; skip if that cut is gone.
                     QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
                     if (clip && clip->is_valid())
                         fixTransitions(playlist, currentIndex, *clip);

@@ -29,6 +29,7 @@
 class UndoHelper
 {
 public:
+    // Flags so SkipXML and RestoreTracks can be combined if needed.
     enum OptimizationHints { NoHints = 0x0, SkipXML = 0x1, RestoreTracks = 0x2 };
     UndoHelper(MultitrackModel &model);
 
@@ -47,6 +48,7 @@ private:
     void restoreAffectedTracks();
     void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
+    // XMLModified was unused; keep bits as flags for the remaining kinds.
     enum ChangeFlags { NoChange = 0x0, ClipInfoModified = 0x1, Moved = 0x2, Removed = 0x4 };
 
     struct Info

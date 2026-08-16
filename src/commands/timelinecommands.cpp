@@ -34,6 +34,7 @@
 
 namespace Timeline {
 
+// SkipXML snapshots omit clip XML unless listed here. Blanks restore from in/out.
 static void storeClipXml(UndoHelper &helper, MultitrackModel &model, int trackIndex, int clipIndex)
 {
     auto info = model.getClipInfo(trackIndex, clipIndex);
@@ -43,6 +44,7 @@ static void storeClipXml(UndoHelper &helper, MultitrackModel &model, int trackIn
     }
 }
 
+// Whole-timeline snapshots hang on large projects; keep undo on this track unless ripple-all.
 static void scopeUndoToTrack(UndoHelper &helper, int trackIndex, bool allTracks = false)
 {
     if (!allTracks)
@@ -142,6 +144,7 @@ void AppendCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     LongUiTask longTask(QObject::tr("Append to Timeline"));
+    // Append only adds at the end; SkipXML + one track avoids serializing every clip.
     m_undoHelper.setHints(UndoHelper::SkipXML);
     scopeUndoToTrack(m_undoHelper, m_trackIndex);
     m_undoHelper.recordBeforeState();
@@ -207,6 +210,7 @@ InsertCommand::InsertCommand(MultitrackModel &model,
     , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
+    // Insert still rebuilds from XML, but only the edited track unless ripple-all.
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
     scopeUndoToTrack(m_undoHelper, m_trackIndex, m_rippleAllTracks);
 }
@@ -280,6 +284,7 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model,
     , m_seek(seek)
 {
     setText(QObject::tr("Overwrite onto track"));
+    // Playlist overwrite can split several dest clips; rebuild this track only.
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
     scopeUndoToTrack(m_undoHelper, m_trackIndex);
 }
@@ -330,6 +335,7 @@ LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, 
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Lift from track"));
+    // Incremental undo of one clip. RestoreTracks rebuilt the whole track.
     m_undoHelper.setHints(UndoHelper::SkipXML);
     scopeUndoToTrack(m_undoHelper, m_trackIndex);
     storeClipXml(m_undoHelper, m_model, m_trackIndex, m_clipIndex);
@@ -366,6 +372,7 @@ RemoveCommand::RemoveCommand(MultitrackModel &model,
     , m_markerRemoveEnd(-1)
 {
     setText(QObject::tr("Remove from track"));
+    // Ripple-all still shifts every track, so keep RestoreTracks. Else one clip.
     if (m_rippleAllTracks) {
         m_undoHelper.setHints(UndoHelper::RestoreTracks);
     } else {
@@ -572,7 +579,7 @@ MergeCommand::MergeCommand(MultitrackModel &model,
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Merge adjacent clips"));
-    scopeUndoToTrack(m_undoHelper, m_trackIndex);
+    scopeUndoToTrack(m_undoHelper, m_trackIndex); // merge is local to one track
 }
 
 void MergeCommand::redo()
@@ -716,13 +723,13 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
         if (info->cut->property_exists(kShotcutGroupProperty)) {
             saveInfo.group = info->cut->get_int(kShotcutGroupProperty);
         }
-        // Identify the playlist entry, not the parent producer. Split halves
-        // (and other cuts of the same media) share a parent UUID.
+        // Playlist entry, not parent: split halves share a parent UUID.
         saveInfo.uuid = MLT.ensureHasUuid(*info->cut);
         m_clips.insert(saveInfo.start, saveInfo);
     }
 }
 
+// overwrite()/insert() make a new cut; put back group and the cut UUID we track.
 static void applyMovedClipIdentity(
     MultitrackModel &model, int trackIndex, int start, const QUuid &uuid, int group)
 {
@@ -738,6 +745,7 @@ static void applyMovedClipIdentity(
     MLT.setUuid(*clipInfo->cut, uuid);
 }
 
+// Unused while move undo is explicit. Kept for transition/ripple-all if we need it.
 void MoveClipCommand::snapshotForHelper()
 {
     const bool rebuildTracks = m_trackDelta != 0 || (m_ripple && m_rippleAllTracks);
@@ -776,6 +784,7 @@ void MoveClipCommand::snapshotForHelper()
     m_undoHelper.recordBeforeState();
 }
 
+// Dest clips overwrite() will delete. Snapshot them so undo can put them back.
 void MoveClipCommand::snapshotOverwritten()
 {
     if (m_ripple)
@@ -845,8 +854,7 @@ void MoveClipCommand::redo()
             setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
             setText(QObject::tr("Move timeline clip"));
-        // Lift/overwrite and transition-grow are reversed directly.
-        // UndoHelper snapshots hang large timelines.
+        // Explicit reverse only. UndoHelper snapshot/rebuild hangs large timelines.
         m_useHelper = false;
     }
     QList<QPoint> selection;
@@ -906,7 +914,7 @@ void MoveClipCommand::redo()
     QVector<QUuid> uuids;
 
     if (!m_redo)
-        snapshotOverwritten();
+        snapshotOverwritten(); // after transition-grow early-out so we only save real overwrites
 
     // First, save each clip and uuid
     for (auto &clip : m_clips) {
@@ -981,7 +989,7 @@ void MoveClipCommand::undo()
     if (m_useHelper)
         m_undoHelper.undoChanges();
     else if (m_specialMove != NoSpecialMove)
-        undoTransitionGrow();
+        undoTransitionGrow(); // opposite trim; do not snapshot the track
     else
         undoExplicitMove();
     if (m_rippleMarkers && m_markersModified == 1) {
@@ -997,6 +1005,7 @@ void MoveClipCommand::undo()
         m_timeline.setCurrentTrack(selection.first().y());
 }
 
+// Inverse of redo lift+overwrite / ripple moveClip. No track-wide snapshot.
 void MoveClipCommand::undoExplicitMove()
 {
     if (m_ripple) {
@@ -1048,6 +1057,7 @@ void MoveClipCommand::undoExplicitMove()
     restoreOverwritten();
 }
 
+// Same -delta path as TrimTransitionIn/OutCommand.
 void MoveClipCommand::undoTransitionGrow()
 {
     if (m_clips.isEmpty())
@@ -1079,6 +1089,7 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         return false;
     if (m_useHelper != that->m_useHelper || m_specialMove != that->m_specialMove)
         return false;
+    // Merged nudges would lose dest snapshots from later drops.
     if (!m_overwritten.isEmpty() || !that->m_overwritten.isEmpty())
         return false;
     if (m_useHelper && that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
@@ -1201,6 +1212,7 @@ void TrimClipInCommand::redo()
             m_undoHelper->setHints(UndoHelper::RestoreTracks);
             scopeUndoToTrack(*m_undoHelper, m_trackIndex, m_rippleAllTracks);
         } else {
+            // Trim only changes this clip's in/out; store its XML for keyframes.
             m_undoHelper->setHints(UndoHelper::SkipXML);
             scopeUndoToTrack(*m_undoHelper, m_trackIndex);
             storeClipXml(*m_undoHelper, m_model, m_trackIndex, m_clipIndex);
@@ -1318,6 +1330,7 @@ void TrimClipOutCommand::redo()
             m_undoHelper->setHints(UndoHelper::RestoreTracks);
             scopeUndoToTrack(*m_undoHelper, m_trackIndex, m_rippleAllTracks);
         } else {
+            // Out-trim is duration-only; still scope so later clips are not snapshotted.
             m_undoHelper->setHints(UndoHelper::SkipXML);
             scopeUndoToTrack(*m_undoHelper, m_trackIndex);
         }
@@ -1493,6 +1506,7 @@ AddTransitionCommand::AddTransitionCommand(TimelineDock &timeline,
     , m_markerNewStart(-1)
 {
     setText(QObject::tr("Add transition"));
+    // Same-track mix unless ripple-all shifts every playlist.
     scopeUndoToTrack(m_undoHelper, m_trackIndex, m_ripple && m_rippleAllTracks);
 }
 
@@ -2074,7 +2088,7 @@ void RemoveTrackCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "type"
                 << (m_trackType == AudioTrackType ? "audio" : "video");
-    scopeUndoToTrack(m_undoHelper, m_trackIndex);
+    scopeUndoToTrack(m_undoHelper, m_trackIndex); // only this playlist is removed
     m_undoHelper.recordBeforeState();
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
@@ -2247,6 +2261,7 @@ UpdateCommand::UpdateCommand(
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Change clip properties"));
+    // Property edits are one clip; do not XML-snapshot the rest of the track.
     m_undoHelper.setHints(UndoHelper::SkipXML);
     scopeUndoToTrack(m_undoHelper, m_trackIndex);
     storeClipXml(m_undoHelper, *m_timeline.model(), m_trackIndex, m_clipIndex);
@@ -2491,7 +2506,7 @@ ReplaceCommand::ReplaceCommand(
     , m_undoHelper(model)
 {
     setText(QObject::tr("Replace timeline clip"));
-    scopeUndoToTrack(m_undoHelper, m_trackIndex);
+    scopeUndoToTrack(m_undoHelper, m_trackIndex); // replace touches one playlist only
     m_undoHelper.recordBeforeState();
 }
 

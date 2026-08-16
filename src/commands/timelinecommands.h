@@ -322,6 +322,7 @@ private:
     void snapshotOverwritten();
     void restoreOverwritten();
 
+    // GrowTransition*: clip-drag onto a neighbor mix; undo is -delta, not a snapshot.
     enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
     TimelineDock &m_timeline;
@@ -348,6 +349,7 @@ private:
         {}
     };
 
+    // Clips the dest overwrite will delete; restored after the moved clip is back.
     struct Overwritten
     {
         int trackIndex;
@@ -367,7 +369,7 @@ private:
     UndoHelper m_undoHelper;
     QMultiMap<int, Info> m_clips; // ordered by position
     bool m_redo;
-    bool m_useHelper;
+    bool m_useHelper; // always false for current move undo; helper path unused
     SpecialMove m_specialMove;
     QList<Overwritten> m_overwritten;
     int m_earliestStart;
