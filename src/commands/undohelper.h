@@ -21,22 +21,36 @@
 #include "models/multitrackmodel.h"
 
 #include <MltPlaylist.h>
+#include <QList>
 #include <QMap>
 #include <QSet>
 #include <QString>
 
-// Captures the XML of the affected tracks' playlists before a timeline edit, and can restore
-// them verbatim on undo. Each affected track is snapshotted/restored as a whole (not clip by
-// clip), so clip content, in/out points, blanks, groups, and transition wiring are all restored
-// together and always consistently, without needing any special-case patch-up code.
+// Records the state of the affected tracks before a timeline edit and reverts them on undo.
+// Two strategies, selected per command via setHints():
 //
-// recordAfterState() does not re-serialize anything: an edit can only ever touch the tracks
-// that were captured by recordBeforeState(), so the affected set is just that capture set.
-// Restoring an untouched track from its own snapshot is a safe no-op, so this is never wrong,
-// merely not minimal when a scoped command turns out to not have modified every track in scope.
+//  - RestoreTracks: each affected track's playlist XML is snapshotted whole and, on undo, the
+//    live track is cleared and rebuilt verbatim from it. Clip content, in/out points, blanks,
+//    groups, and transition wiring all restore together and always consistently. Use for
+//    commands that mutate clip content in place, move clips across tracks, or otherwise cannot
+//    be expressed as a per-clip diff.
+//
+//  - NoHints / SkipXML: a per-clip diff (by uuid) is replayed surgically, restoring only the
+//    clips that actually moved, resized, were added, or were removed. This avoids clearing and
+//    re-inserting an entire track (O(clips)) for a single-clip edit. Under NoHints the track
+//    snapshot is also taken, so a removed or content-changed clip is rebuilt from it; under
+//    SkipXML no snapshot is taken and the command promises its undo needs only in/out resizes
+//    and moves (no clip rebuild). SkipXML and RestoreTracks are mutually exclusive.
+//
+// The fine-grained path cannot detect a pure in-place content change (same uuid, index, and
+// in/out): any command that mutates clip content without a structural change must use
+// RestoreTracks, or its undo will silently do nothing.
 class UndoHelper
 {
 public:
+    // Mutually exclusive; compare with ==, never bitwise.
+    enum OptimizationHints { NoHints, SkipXML, RestoreTracks };
+
     UndoHelper(MultitrackModel &model);
 
     // trackScope: the set of track indexes that this command can possibly affect. When
@@ -51,18 +65,46 @@ public:
     void recordBeforeState(const QSet<int> &trackScope = QSet<int>());
     void recordAfterState();
     void undoChanges();
-    QSet<int> affectedTracks() const { return m_affectedTracks; }
+    void setHints(OptimizationHints hints);
 
 private:
     void debugPrintState(const QString &title);
+    void restoreAffectedTracks();
+    void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
     void promoteUuids(Mlt::Playlist &playlist);
     void demoteUuids(Mlt::Playlist &playlist);
 
+    enum ChangeFlags {
+        NoChange = 0x0,
+        ClipInfoModified = 0x1,
+        Moved = 0x2,
+        Removed = 0x4,
+    };
+
+    struct Info
+    {
+        int oldTrackIndex = -1;
+        int oldClipIndex = -1;
+        int newTrackIndex = -1;
+        int newClipIndex = -1;
+        bool isBlank = false;
+        int frame_in = -1;
+        int frame_out = -1;
+        int in_delta = 0;
+        int out_delta = 0;
+        int group = -1;
+        int changes = NoChange;
+    };
+
     QMap<int, QString> m_beforeXml;
+    QMap<QUuid, Info> m_state;
+    QList<QUuid> m_insertedOrder;
+    QList<QUuid> m_clipsAdded;
     QSet<int> m_affectedTracks;
     QSet<int> m_scannedTracks;
     QSet<int> m_trackScope;
     MultitrackModel &m_model;
+    OptimizationHints m_hints = NoHints;
 };
 
 #endif // UNDOHELPER_H

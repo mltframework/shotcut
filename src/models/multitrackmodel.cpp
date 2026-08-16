@@ -4040,9 +4040,10 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
                 beginInsertRows(index(trackIndex), insertBlankAtIdx, insertBlankAtIdx);
                 trackPlaylist.insert_blank(insertBlankAtIdx, length - 1);
                 endInsertRows();
-            } else {
+            } else if (length < 0) {
                 Q_ASSERT(!"unsupported");
             }
+            // length == 0 needs no blank; e.g. a zero-delta ripple move.
         }
     }
 }

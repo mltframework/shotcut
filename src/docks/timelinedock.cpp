@@ -4067,6 +4067,9 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
+        // A move that nets no change has nothing to do or undo.
+        if (toTrack == fromTrack && position == 0)
+            return;
         auto command = new Timeline::MoveClipCommand(*this, toTrack - fromTrack, position, ripple);
         for (const auto &clip : selection()) {
             command->addClip(clip.y(), clip.x());
@@ -4149,6 +4152,8 @@ bool TimelineDock::trimClipIn(
     } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
+            if (ripple)
+                m_undoHelper->setHints(UndoHelper::RestoreTracks);
             m_undoHelper->recordBeforeState(
                 Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
@@ -4247,6 +4252,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     } else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
+            if (!ripple)
+                m_undoHelper->setHints(UndoHelper::SkipXML);
             m_undoHelper->recordBeforeState(
                 Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
