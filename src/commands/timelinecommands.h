@@ -25,6 +25,7 @@
 
 #include <MltProducer.h>
 #include <MltTransition.h>
+#include <QList>
 #include <QObject>
 #include <QString>
 #include <QUndoCommand>
@@ -318,6 +319,8 @@ private:
     void undoExplicitMove();
     void undoTransitionGrow();
     void snapshotForHelper();
+    void snapshotOverwritten();
+    void restoreOverwritten();
 
     enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
@@ -345,6 +348,17 @@ private:
         {}
     };
 
+    struct Overwritten
+    {
+        int trackIndex;
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+    };
+
     int m_trackDelta;
     int m_positionDelta;
     bool m_ripple;
@@ -355,6 +369,7 @@ private:
     bool m_redo;
     bool m_useHelper;
     SpecialMove m_specialMove;
+    QList<Overwritten> m_overwritten;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
     int m_markersModified;

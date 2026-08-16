@@ -59,26 +59,6 @@ static QByteArray levelsFromCachedImage(const QImage &image)
     return levels;
 }
 
-static void applyLevelsToProducer(Mlt::Producer &producer,
-                                  QObject *object,
-                                  const QModelIndex &index,
-                                  const QByteArray &levels)
-{
-    if (levels.isEmpty() || !producer.is_valid())
-        return;
-    auto *levelsCopy = new QByteArray(levels);
-    producer.lock();
-    producer.set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQByteArray);
-    producer.unlock();
-    if (index.isValid() && object
-        && -1 != object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)")) {
-        QMetaObject::invokeMethod(object,
-                                  "audioLevelsReady",
-                                  Q_ARG(const QPersistentModelIndex &,
-                                        QPersistentModelIndex(index)));
-    }
-}
-
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index)
     : QRunnable()
     , m_object(object)
@@ -111,14 +91,6 @@ void AudioLevelsTask::start(Mlt::Producer &producer,
         }
 
         AudioLevelsTask *task = new AudioLevelsTask(producer, object, index);
-        if (!force) {
-            QImage image = DB.getThumbnail(task->cacheKey());
-            if (!image.isNull()) {
-                applyLevelsToProducer(producer, object, index, levelsFromCachedImage(image));
-                delete task;
-                return;
-            }
-        }
         tasksListMutex.lock();
         // See if there is already a task for this MLT service and resource.
         foreach (AudioLevelsTask *t, tasksList) {

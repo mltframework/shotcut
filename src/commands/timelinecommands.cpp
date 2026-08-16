@@ -781,6 +781,66 @@ void MoveClipCommand::snapshotForHelper()
     m_undoHelper.recordBeforeState();
 }
 
+void MoveClipCommand::snapshotOverwritten()
+{
+    if (m_ripple)
+        return;
+    QSet<QUuid> moving;
+    QSet<QUuid> seen;
+    for (auto &clip : m_clips)
+        moving.insert(clip.uuid);
+    const int last = qMax(int(m_model.trackList().size()) - 1, 0);
+    for (auto &clip : m_clips) {
+        const int destTrack = qBound(0, clip.trackIndex + m_trackDelta, last);
+        const int destStart = clip.start + m_positionDelta;
+        const int destEnd = destStart + (clip.frame_out - clip.frame_in + 1);
+        auto mltIndex = m_model.trackList().at(destTrack).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+        if (!track || !track->is_valid())
+            continue;
+        Mlt::Playlist playlist(*track);
+        const int from = playlist.get_clip_index_at(qMax(0, destStart));
+        const int to = playlist.get_clip_index_at(qMax(0, destEnd - 1));
+        for (int i = from; i <= to && i < playlist.count(); ++i) {
+            if (playlist.is_blank(i))
+                continue;
+            auto info = m_model.getClipInfo(destTrack, i);
+            if (!info || !info->producer || !info->producer->is_valid() || !info->cut)
+                continue;
+            QUuid uid = MLT.ensureHasUuid(*info->cut);
+            if (moving.contains(uid) || seen.contains(uid))
+                continue;
+            seen.insert(uid);
+            Overwritten dest;
+            dest.trackIndex = destTrack;
+            dest.start = info->start;
+            dest.frame_in = info->frame_in;
+            dest.frame_out = info->frame_out;
+            dest.group = info->cut->property_exists(kShotcutGroupProperty)
+                             ? info->cut->get_int(kShotcutGroupProperty)
+                             : -1;
+            dest.uuid = uid;
+            dest.xml = MLT.XML(info->producer, false, false);
+            if (!dest.xml.isEmpty())
+                m_overwritten.append(dest);
+        }
+    }
+}
+
+void MoveClipCommand::restoreOverwritten()
+{
+    for (const auto &dest : std::as_const(m_overwritten)) {
+        Mlt::Producer restored(MLT.profile(), "xml-string", dest.xml.toUtf8().constData());
+        if (!restored.is_valid()) {
+            LOG_ERROR() << "Failed to restore overwritten clip" << dest.uuid;
+            continue;
+        }
+        restored.set_in_and_out(dest.frame_in, dest.frame_out);
+        m_model.overwrite(dest.trackIndex, restored, dest.start, false);
+        applyMovedClipIdentity(m_model, dest.trackIndex, dest.start, dest.uuid, dest.group);
+    }
+}
+
 void MoveClipCommand::redo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta << "position delta" << m_positionDelta;
@@ -849,6 +909,9 @@ void MoveClipCommand::redo()
 
     QVector<Mlt::Producer> producers;
     QVector<QUuid> uuids;
+
+    if (!m_redo)
+        snapshotOverwritten();
 
     // First, save each clip and uuid
     for (auto &clip : m_clips) {
@@ -987,6 +1050,7 @@ void MoveClipCommand::undoExplicitMove()
             applyMovedClipIdentity(m_model, clip.trackIndex, clip.start, clip.uuid, clip.group);
         }
     }
+    restoreOverwritten();
 }
 
 void MoveClipCommand::undoTransitionGrow()
@@ -1019,6 +1083,8 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         || that->m_rippleAllTracks != m_rippleAllTracks || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     if (m_useHelper != that->m_useHelper || m_specialMove != that->m_specialMove)
+        return false;
+    if (!m_overwritten.isEmpty() || !that->m_overwritten.isEmpty())
         return false;
     if (m_useHelper
         && that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
