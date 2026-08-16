@@ -67,6 +67,11 @@ public:
     void undoChanges();
     void setHints(OptimizationHints hints);
 
+    // Capture this clip's own XML in recordBeforeState so it can be restored from that small
+    // snapshot on undo, instead of parsing the whole track's snapshot to reach one clip. Call
+    // before recordBeforeState() for each clip a command removes or rewrites in place.
+    void storeXmlForClip(const QUuid &uid);
+
 private:
     void debugPrintState(const QString &title);
     void restoreAffectedTracks();
@@ -100,6 +105,8 @@ private:
     QMap<QUuid, Info> m_state;
     QList<QUuid> m_insertedOrder;
     QList<QUuid> m_clipsAdded;
+    QSet<QUuid> m_xmlClips;
+    QMap<QUuid, QString> m_clipXml;
     QSet<int> m_affectedTracks;
     QSet<int> m_scannedTracks;
     QSet<int> m_trackScope;

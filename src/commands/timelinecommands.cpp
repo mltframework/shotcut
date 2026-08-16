@@ -314,7 +314,10 @@ LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, 
 void LiftCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    if (auto info = m_model.getClipInfo(m_trackIndex, m_clipIndex)) {
+        if (info->producer && info->producer->is_valid())
+            m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(*info->producer));
+    }
     m_undoHelper.recordBeforeState({m_trackIndex});
     m_model.liftClip(m_trackIndex, m_clipIndex);
     m_undoHelper.recordAfterState();
@@ -388,7 +391,14 @@ void RemoveCommand::redo()
         }
     }
 
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    // Ripple-all-tracks can shift clips on any track, which the fine-grained diff does not
+    // track across tracks; fall back to whole-track restore only then.
+    if (m_rippleAllTracks) {
+        m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    } else if (auto info = m_model.getClipInfo(m_trackIndex, m_clipIndex)) {
+        if (info->producer && info->producer->is_valid())
+            m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(*info->producer));
+    }
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
     m_model.removeClip(m_trackIndex, m_clipIndex, m_rippleAllTracks);
     m_undoHelper.recordAfterState();
@@ -1163,7 +1173,12 @@ void SplitCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position"
                 << m_position;
     MAIN.filterController()->pauseUndoTracking();
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    for (int i = 0; i < m_trackIndex.size(); i++) {
+        if (auto info = m_model.getClipInfo(m_trackIndex[i], m_clipIndex[i])) {
+            if (info->producer && info->producer->is_valid())
+                m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(*info->producer));
+        }
+    }
     m_undoHelper.recordBeforeState(QSet<int>(m_trackIndex.begin(), m_trackIndex.end()));
     for (int i = 0; i < m_trackIndex.size(); i++) {
         m_model.splitClip(m_trackIndex[i], m_clipIndex[i], m_position);
@@ -1291,9 +1306,19 @@ void AddTransitionCommand::redo()
         }
     }
 
-    // A transition is a mix tractor that re-cuts its neighbor clips, which the fine-grained
-    // per-clip diff cannot track; restore the whole track instead.
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    // Ripple-all-tracks can shift clips on other tracks, which the fine-grained diff does not
+    // track across tracks; fall back to whole-track restore only then.
+    if (m_rippleAllTracks) {
+        m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    } else {
+        // Snapshot the clips the mix re-cuts so undo restores them without parsing the track.
+        for (int idx : {m_clipIndex - 1, m_clipIndex, m_clipIndex + 1}) {
+            if (auto info = m_model.getClipInfo(m_trackIndex, idx)) {
+                if (info->producer && info->producer->is_valid())
+                    m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(*info->producer));
+            }
+        }
+    }
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
     m_transitionIndex
         = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
