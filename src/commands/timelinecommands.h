@@ -317,11 +317,12 @@ protected:
 private:
     void redoMarkers();
     void undoExplicitMove();
+    void undoTransitionGrow();
     void snapshotOverwritten();
     void restoreOverwritten();
-    void snapshotTransitionGrow(int trackIndex, int clipIndex);
 
-    // GrowTransition*: clip-drag onto a neighbor mix; undo is a track-scoped snapshot.
+    // GrowTransition*: clip-drag onto a neighbor mix; undo is -delta in place.
+    // Do not XML-restore the mix — that breaks mix_in/mix_out and crashes the consumer.
     enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
     TimelineDock &m_timeline;

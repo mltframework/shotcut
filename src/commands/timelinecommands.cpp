@@ -757,17 +757,30 @@ static void applyMovedClipIdentity(
     MLT.setUuid(*clipInfo->cut, uuid);
 }
 
-// Transition-grow trims clamp internally; snapshot the few affected clips so
-// undo does not apply -delta blindly.
-void MoveClipCommand::snapshotTransitionGrow(int trackIndex, int clipIndex)
+// Opposite trim of the grow-by-drag redo. Mutate the existing mix in place;
+// replacing it from XML leaves mix_in/mix_out pointing at freed cuts and
+// the consumer recurses in transition_get_frame until it segfaults.
+void MoveClipCommand::undoTransitionGrow()
 {
-    m_undoHelper.setHints(UndoHelper::SkipXML);
-    m_undoHelper.restrictToTrack(trackIndex);
-    if (clipIndex > 0)
-        storeClipXml(m_undoHelper, m_model, trackIndex, clipIndex - 1);
-    storeClipXml(m_undoHelper, m_model, trackIndex, clipIndex);
-    storeClipXml(m_undoHelper, m_model, trackIndex, clipIndex + 1);
-    m_undoHelper.recordBeforeState();
+    if (m_clips.isEmpty())
+        return;
+    const Info &clip = m_clips.first();
+    int trackIndex = -1;
+    int clipIndex = -1;
+    auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+    if (!info || !info->cut) {
+        reportUndoFailure(QStringLiteral("Unable to find clip to undo transition grow %1")
+                              .arg(clip.uuid.toString()));
+        return;
+    }
+    if (m_specialMove == GrowTransitionOut) {
+        m_model.trimTransitionOut(trackIndex, clipIndex, -m_positionDelta, true);
+        if (!m_ripple)
+            m_model.trimClipIn(trackIndex, clipIndex + 1, -m_positionDelta, true, false);
+    } else {
+        m_model.trimTransitionIn(trackIndex, clipIndex, m_positionDelta, true);
+        m_model.trimClipOut(trackIndex, clipIndex - 1, m_positionDelta, true, false);
+    }
 }
 
 // Dest clips overwrite() will delete. Snapshot them so undo can put them back.
@@ -861,8 +874,6 @@ void MoveClipCommand::redo()
                 if (targetIndex == clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
                     m_specialMove = GrowTransitionOut;
-                    if (!m_redo)
-                        snapshotTransitionGrow(trackIndex, clipIndex);
                     m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
                     if (!m_ripple)
                         m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
@@ -878,19 +889,14 @@ void MoveClipCommand::redo()
                            && m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
                     m_specialMove = GrowTransitionIn;
-                    if (!m_redo)
-                        snapshotTransitionGrow(trackIndex, clipIndex);
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
                     m_model.trimClipOut(trackIndex, clipIndex - 1, -m_positionDelta, true, false);
                 } else {
                     done = false;
                 }
                 if (done) {
-                    if (!m_redo) {
+                    if (!m_redo)
                         m_redo = true;
-                        if (m_specialMove != NoSpecialMove)
-                            m_undoHelper.recordAfterState();
-                    }
                     redoMarkers();
                     selection = m_timeline.uuidsToSelection(QVector<QUuid>()
                                                             << m_clips.first().uuid);
@@ -976,7 +982,7 @@ void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     if (m_specialMove != NoSpecialMove)
-        m_undoHelper.undoChanges();
+        undoTransitionGrow();
     else
         undoExplicitMove();
     if (m_rippleMarkers && m_markersModified == 1) {
@@ -1069,8 +1075,6 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         thatIterator++;
     }
     m_positionDelta += that->m_positionDelta;
-    if (m_specialMove != NoSpecialMove)
-        m_undoHelper.recordAfterState();
     return true;
 }
 
