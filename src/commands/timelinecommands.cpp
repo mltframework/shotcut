@@ -695,6 +695,7 @@ MoveClipCommand::MoveClipCommand(
     , m_undoHelper(m_model)
     , m_redo(false)
     , m_useHelper(false)
+    , m_specialMove(NoSpecialMove)
     , m_earliestStart(-1)
     , m_markersModified(-1)
 {}
@@ -789,34 +790,9 @@ void MoveClipCommand::redo()
             setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
             setText(QObject::tr("Move timeline clip"));
-        // Lift/overwrite (including across tracks) is reversed directly.
-        // RestoreTracks rebuilds whole tracks from XML and crashes on
-        // large timelines. Only transition-trim still uses UndoHelper.
+        // Lift/overwrite and transition-grow are reversed directly.
+        // UndoHelper snapshots hang large timelines.
         m_useHelper = false;
-        if (!m_trackDelta && m_clips.size() == 1) {
-            auto trackIndex = m_clips.first().trackIndex;
-            if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
-                auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-                QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
-                if (track) {
-                    Mlt::Playlist playlist(*track);
-                    int newStart = m_clips.first().start + m_positionDelta;
-                    auto targetIndex = playlist.get_clip_index_at(newStart);
-                    auto clipIndex = m_clips.first().clipIndex;
-                    if (targetIndex >= clipIndex
-                        || (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
-                        if (targetIndex == clipIndex
-                            && m_model.isTransition(playlist, clipIndex - 1))
-                            m_useHelper = true;
-                        else if (!m_ripple && targetIndex >= clipIndex
-                                 && m_model.isTransition(playlist, clipIndex + 1))
-                            m_useHelper = true;
-                    }
-                }
-            }
-        }
-        if (m_useHelper)
-            snapshotForHelper();
     }
     QList<QPoint> selection;
     if (!m_trackDelta && m_clips.size() == 1) {
@@ -834,6 +810,7 @@ void MoveClipCommand::redo()
                 bool done = true;
                 if (targetIndex == clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
+                    m_specialMove = GrowTransitionOut;
                     m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
                     if (!m_ripple)
                         m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
@@ -848,6 +825,7 @@ void MoveClipCommand::redo()
                 } else if (targetIndex >= clipIndex
                            && m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
+                    m_specialMove = GrowTransitionIn;
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
                     m_model.trimClipOut(trackIndex, clipIndex - 1, -m_positionDelta, true, false);
                 } else {
@@ -944,6 +922,8 @@ void MoveClipCommand::undo()
     LOG_DEBUG() << "track delta" << m_trackDelta;
     if (m_useHelper)
         m_undoHelper.undoChanges();
+    else if (m_specialMove != NoSpecialMove)
+        undoTransitionGrow();
     else
         undoExplicitMove();
     if (m_rippleMarkers && m_markersModified == 1) {
@@ -1009,6 +989,28 @@ void MoveClipCommand::undoExplicitMove()
     }
 }
 
+void MoveClipCommand::undoTransitionGrow()
+{
+    if (m_clips.isEmpty())
+        return;
+    const Info &clip = m_clips.first();
+    int trackIndex = -1;
+    int clipIndex = -1;
+    auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+    if (!info || !info->cut) {
+        LOG_ERROR() << "Unable to find clip to undo transition grow" << clip.uuid;
+        return;
+    }
+    if (m_specialMove == GrowTransitionOut) {
+        m_model.trimTransitionOut(trackIndex, clipIndex, -m_positionDelta, true);
+        if (!m_ripple)
+            m_model.trimClipIn(trackIndex, clipIndex + 1, -m_positionDelta, true, false);
+    } else {
+        m_model.trimTransitionIn(trackIndex, clipIndex, m_positionDelta, true);
+        m_model.trimClipOut(trackIndex, clipIndex - 1, m_positionDelta, true, false);
+    }
+}
+
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 {
     const MoveClipCommand *that = static_cast<const MoveClipCommand *>(other);
@@ -1016,7 +1018,7 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
     if (that->id() != id() || that->m_clips.size() != m_clips.size() || that->m_ripple != m_ripple
         || that->m_rippleAllTracks != m_rippleAllTracks || that->m_rippleMarkers != m_rippleMarkers)
         return false;
-    if (m_useHelper != that->m_useHelper)
+    if (m_useHelper != that->m_useHelper || m_specialMove != that->m_specialMove)
         return false;
     if (m_useHelper
         && that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {

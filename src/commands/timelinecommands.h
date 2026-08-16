@@ -316,7 +316,10 @@ protected:
 private:
     void redoMarkers();
     void undoExplicitMove();
+    void undoTransitionGrow();
     void snapshotForHelper();
+
+    enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -351,6 +354,7 @@ private:
     QMultiMap<int, Info> m_clips; // ordered by position
     bool m_redo;
     bool m_useHelper;
+    SpecialMove m_specialMove;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
     int m_markersModified;
