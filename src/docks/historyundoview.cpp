@@ -31,13 +31,6 @@ void HistoryUndoView::mousePressEvent(QMouseEvent *event)
     m_model->endBulkUpdate();
 }
 
-void HistoryUndoView::mouseReleaseEvent(QMouseEvent *event)
-{
-    m_model->beginBulkUpdate();
-    QUndoView::mouseReleaseEvent(event);
-    m_model->endBulkUpdate();
-}
-
 void HistoryUndoView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     m_model->beginBulkUpdate();
