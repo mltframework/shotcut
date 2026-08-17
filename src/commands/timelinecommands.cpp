@@ -1037,6 +1037,7 @@ void TrimClipInCommand::redo()
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
                     << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
+        m_undoHelper->setText(text());
         if (m_ripple)
             m_undoHelper->setHints(UndoHelper::RestoreTracks);
         m_undoHelper->recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
@@ -1148,6 +1149,7 @@ void TrimClipOutCommand::redo()
 
     if (m_redo) {
         m_undoHelper.reset(new UndoHelper(m_model));
+        m_undoHelper->setText(text());
         if (!m_ripple)
             m_undoHelper->setHints(UndoHelper::SkipXML);
         m_undoHelper->recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
