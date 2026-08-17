@@ -30,6 +30,7 @@ Rectangle {
     property bool isLocked: false
     property alias clipCount: repeater.count
     property bool isMute: false
+    property int layoutEpoch: 0
 
     signal clipClicked(var clip, var track, var mouse)
     signal clipRightClicked(var clip, var track, var mouse)
@@ -69,15 +70,10 @@ Rectangle {
     }
 
     function relayoutClips() {
-        let start = 0;
-        for (let i = 0; i < repeater.count; i++) {
-            const clip = repeater.itemAt(i);
-            if (!clip)
-                continue;
-            if (clip.clipStart !== start)
-                clip.clipStart = start;
-            start += clip.clipDuration;
-        }
+        // Re-read model.start. Do not assign clipStart — that breaks the
+        // StartRole binding and stacks transitions by duration instead of
+        // their playlist start.
+        layoutEpoch++;
     }
 
     color: 'transparent'
@@ -98,7 +94,10 @@ Rectangle {
             mltService: typeof model.mlt_service !== 'undefined' ? model.mlt_service : ""
             inPoint: typeof model.in !== 'undefined' ? model.in : 0
             outPoint: typeof model.out !== 'undefined' ? model.out : 0
-            clipStart: typeof model.start !== 'undefined' ? model.start : 0
+            clipStart: {
+                trackRoot.layoutEpoch;
+                return typeof model.start !== 'undefined' ? model.start : 0;
+            }
             onClipDurationChanged: trackRoot.relayoutClips()
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false

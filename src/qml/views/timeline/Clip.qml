@@ -144,13 +144,19 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
-    onElidedChanged: {
+    function considerThumbnails() {
         if (!elided && !isBlank && !isAudio && !isTransition && settings.timelineShowThumbnails)
             thumbnailsLoaded = true;
     }
-    Component.onCompleted: {
-        if (!elided && !isBlank && !isAudio && !isTransition && settings.timelineShowThumbnails)
-            thumbnailsLoaded = true;
+
+    onElidedChanged: considerThumbnails()
+    Component.onCompleted: considerThumbnails()
+
+    Connections {
+        target: settings
+        function onTimelineShowThumbnailsChanged() {
+            considerThumbnails();
+        }
     }
 
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
