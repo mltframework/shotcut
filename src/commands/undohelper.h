@@ -66,6 +66,7 @@ public:
     void recordAfterState();
     void undoChanges();
     void setHints(OptimizationHints hints);
+    void setText(const QString &text) { m_text = text; };
 
     // Capture this clip's own XML in recordBeforeState so it can be restored from that small
     // snapshot on undo, instead of parsing the whole track's snapshot to reach one clip. Call
@@ -113,6 +114,7 @@ private:
     QSet<int> m_trackScope;
     MultitrackModel &m_model;
     OptimizationHints m_hints = NoHints;
+    QString m_text;
 };
 
 #endif // UNDOHELPER_H

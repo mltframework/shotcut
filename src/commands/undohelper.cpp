@@ -18,15 +18,17 @@
 #include "undohelper.h"
 
 #include "Logger.h"
+#include "dialogs/longuitask.h"
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
 
+#include <QElapsedTimer>
 #include <QScopedPointer>
 #include <QUuid>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include <memory>
-#include <QElapsedTimer>
 
 // Temporary profiling of undo cost; remove once the split/lift regression is understood.
 #define UNDOHELPER_PROFILE
@@ -493,83 +495,91 @@ bool UndoHelper::survivingClipsInOrder() const
 
 void UndoHelper::restoreAffectedTracks()
 {
-    for (const auto &trackIndex : std::as_const(m_affectedTracks)) {
-        if (trackIndex < 0 || trackIndex >= m_model.trackList().size()
-            || !m_beforeXml.contains(trackIndex))
-            continue;
-        int mltIndex = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
-        if (!trackProducer || !trackProducer->is_valid())
-            continue;
-        Mlt::Playlist playlist(*trackProducer);
-        QModelIndex modelIndex = m_model.index(trackIndex);
-
-        // Parse the "before" snapshot into a self-contained shadow playlist so that any
-        // transitions among its entries are wired to each other rather than to anything
-        // currently on the live track.
-#ifdef UNDOHELPER_PROFILE
-        QElapsedTimer parseTimer;
-        parseTimer.start();
-#endif
-        Mlt::Producer restoredTrack(MLT.profile(),
-                                    "xml-string",
-                                    m_beforeXml.value(trackIndex).toUtf8().constData());
-        Mlt::Playlist restoredPlaylist(restoredTrack);
-#ifdef UNDOHELPER_PROFILE
-        qint64 parseMs = parseTimer.elapsed();
-        QElapsedTimer rebuildTimer;
-        rebuildTimer.start();
-#endif
-
-        int oldCount = playlist.count();
-        if (oldCount > 0) {
-            m_model.beginRemoveRows(modelIndex, 0, oldCount - 1);
-            UNDOLOG << "clearing track" << trackIndex;
-            playlist.clear();
-            m_model.endRemoveRows();
-        }
-
-        int newCount = restoredPlaylist.count();
-        if (newCount > 0) {
-            m_model.beginInsertRows(modelIndex, 0, newCount - 1);
-            for (int j = 0; j < newCount; ++j) {
-                Mlt::ClipInfo clipInfo;
-                restoredPlaylist.clip_info(j, &clipInfo);
-                if (restoredPlaylist.is_blank(j)) {
-                    playlist.insert_blank(j, clipInfo.frame_out - clipInfo.frame_in);
-                } else {
-                    QScopedPointer<Mlt::Producer> entry(restoredPlaylist.get_clip(j));
-                    playlist.insert(*entry, j, clipInfo.frame_in, clipInfo.frame_out);
-                }
-            }
-            m_model.endInsertRows();
-        }
-
-        // Restore uuids that were demoted to a temporary serializable property before the
-        // snapshot was taken, and kick off audio levels rebuilds for the restored clips.
-        for (int j = 0; j < playlist.count(); ++j) {
-            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
-            if (!clip || !clip->is_valid())
+    LongUiTask longTask(QObject::tr("Undo"));
+    longTask.setMinimumDuration(1000);
+    QFuture<int> future = QtConcurrent::run([=]() {
+        for (const auto &trackIndex : std::as_const(m_affectedTracks)) {
+            if (trackIndex < 0 || trackIndex >= m_model.trackList().size()
+                || !m_beforeXml.contains(trackIndex))
                 continue;
-            if (playlist.is_blank(j)) {
-                if (clip->get(kUuidPropertyTemp)) {
-                    clip->set(kUuidProperty, clip->get(kUuidPropertyTemp));
-                    clip->set(kUuidPropertyTemp, nullptr, 0);
-                }
-            } else {
-                Mlt::Producer &parent = clip->parent();
-                if (parent.get(kUuidPropertyTemp)) {
-                    parent.set(kUuidProperty, parent.get(kUuidPropertyTemp));
-                    parent.set(kUuidPropertyTemp, nullptr, 0);
-                }
-                AudioLevelsTask::start(parent, &m_model, m_model.createIndex(j, 0, trackIndex));
-            }
-        }
+            int mltIndex = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
+            if (!trackProducer || !trackProducer->is_valid())
+                continue;
+            Mlt::Playlist playlist(*trackProducer);
+            QModelIndex modelIndex = m_model.index(trackIndex);
+
+            // Parse the "before" snapshot into a self-contained shadow playlist so that any
+            // transitions among its entries are wired to each other rather than to anything
+            // currently on the live track.
 #ifdef UNDOHELPER_PROFILE
-        LOG_INFO() << "UndoHelper RestoreTracks track" << trackIndex << "clips" << playlist.count()
-                   << "parse" << parseMs << "ms rebuild" << rebuildTimer.elapsed() << "ms";
+            QElapsedTimer parseTimer;
+            parseTimer.start();
 #endif
-    }
+            Mlt::Producer restoredTrack(MLT.profile(),
+                                        "xml-string",
+                                        m_beforeXml.value(trackIndex).toUtf8().constData());
+            Mlt::Playlist restoredPlaylist(restoredTrack);
+#ifdef UNDOHELPER_PROFILE
+            qint64 parseMs = parseTimer.elapsed();
+            QElapsedTimer rebuildTimer;
+            rebuildTimer.start();
+#endif
+
+            int oldCount = playlist.count();
+            if (oldCount > 0) {
+                m_model.beginRemoveRows(modelIndex, 0, oldCount - 1);
+                UNDOLOG << "clearing track" << trackIndex;
+                playlist.clear();
+                m_model.endRemoveRows();
+            }
+
+            int newCount = restoredPlaylist.count();
+            if (newCount > 0) {
+                m_model.beginInsertRows(modelIndex, 0, newCount - 1);
+                for (int j = 0; j < newCount; ++j) {
+                    Mlt::ClipInfo clipInfo;
+                    restoredPlaylist.clip_info(j, &clipInfo);
+                    if (restoredPlaylist.is_blank(j)) {
+                        playlist.insert_blank(j, clipInfo.frame_out - clipInfo.frame_in);
+                    } else {
+                        QScopedPointer<Mlt::Producer> entry(restoredPlaylist.get_clip(j));
+                        playlist.insert(*entry, j, clipInfo.frame_in, clipInfo.frame_out);
+                    }
+                }
+                m_model.endInsertRows();
+            }
+
+            // Restore uuids that were demoted to a temporary serializable property before the
+            // snapshot was taken, and kick off audio levels rebuilds for the restored clips.
+            for (int j = 0; j < playlist.count(); ++j) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
+                if (!clip || !clip->is_valid())
+                    continue;
+                if (playlist.is_blank(j)) {
+                    if (clip->get(kUuidPropertyTemp)) {
+                        clip->set(kUuidProperty, clip->get(kUuidPropertyTemp));
+                        clip->set(kUuidPropertyTemp, nullptr, 0);
+                    }
+                } else {
+                    Mlt::Producer &parent = clip->parent();
+                    if (parent.get(kUuidPropertyTemp)) {
+                        parent.set(kUuidProperty, parent.get(kUuidPropertyTemp));
+                        parent.set(kUuidPropertyTemp, nullptr, 0);
+                    }
+                    AudioLevelsTask::start(parent, &m_model, m_model.createIndex(j, 0, trackIndex));
+                }
+            }
+#ifdef UNDOHELPER_PROFILE
+            LOG_INFO() << "UndoHelper RestoreTracks track" << trackIndex << "clips"
+                       << playlist.count() << "parse" << parseMs << "ms rebuild"
+                       << rebuildTimer.elapsed() << "ms";
+#endif
+        }
+
+        return 0;
+    });
+    longTask.wait<int>(QObject::tr("Undo %1").arg(m_text), future);
 }
 
 void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip)

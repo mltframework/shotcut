@@ -119,6 +119,7 @@ AppendCommand::AppendCommand(MultitrackModel &model,
     , m_seek(seek)
 {
     setText(QObject::tr("Append to track"));
+    m_undoHelper.setText(text());
 }
 
 void AppendCommand::redo()
@@ -188,6 +189,7 @@ InsertCommand::InsertCommand(MultitrackModel &model,
     , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
+    m_undoHelper.setText(text());
 }
 
 void InsertCommand::redo()
@@ -275,6 +277,7 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model,
     , m_seek(seek)
 {
     setText(QObject::tr("Overwrite onto track"));
+    m_undoHelper.setText(text());
 }
 
 void OverwriteCommand::redo()
@@ -340,6 +343,7 @@ LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, 
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Lift from track"));
+    m_undoHelper.setText(text());
 }
 
 void LiftCommand::redo()
@@ -377,6 +381,7 @@ RemoveCommand::RemoveCommand(MultitrackModel &model,
     , m_markerRemoveEnd(-1)
 {
     setText(QObject::tr("Remove from track"));
+    m_undoHelper.setText(text());
 }
 
 void RemoveCommand::redo()
@@ -584,6 +589,7 @@ MergeCommand::MergeCommand(MultitrackModel &model,
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Merge adjacent clips"));
+    m_undoHelper.setText(text());
 }
 
 void MergeCommand::redo()
@@ -758,6 +764,7 @@ void MoveClipCommand::redo()
             setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
             setText(QObject::tr("Move timeline clip"));
+        m_undoHelper.setText(text());
     }
     QList<QPoint> selection;
     if (!m_trackDelta && m_clips.size() == 1) {
@@ -1197,6 +1204,7 @@ SplitCommand::SplitCommand(MultitrackModel &model,
     } else {
         setText(QObject::tr("Split clips"));
     }
+    m_undoHelper.setText(text());
 }
 
 void SplitCommand::redo()
@@ -1319,6 +1327,7 @@ AddTransitionCommand::AddTransitionCommand(TimelineDock &timeline,
     , m_markerNewStart(-1)
 {
     setText(QObject::tr("Add transition"));
+    m_undoHelper.setText(text());
 }
 
 void AddTransitionCommand::redo()
@@ -1890,6 +1899,7 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel &model, int trackIndex, Q
         setText(QObject::tr("Remove audio track"));
     else if (m_trackType == VideoTrackType)
         setText(QObject::tr("Remove video track"));
+    m_undoHelper.setText(text());
 
     // Get the track as MLT playlist.
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
@@ -2085,6 +2095,7 @@ UpdateCommand::UpdateCommand(
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Change clip properties"));
+    m_undoHelper.setText(text());
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
 }
 
@@ -2154,6 +2165,7 @@ DetachAudioCommand::DetachAudioCommand(TimelineDock &timeline,
     , m_trackAdded(false)
 {
     setText(QObject::tr("Detach Audio"));
+    m_undoHelper.setText(text());
 }
 
 void DetachAudioCommand::redo()
@@ -2303,6 +2315,7 @@ ReplaceCommand::ReplaceCommand(
     , m_undoHelper(model)
 {
     setText(QObject::tr("Replace timeline clip"));
+    m_undoHelper.setText(text());
     m_undoHelper.recordBeforeState({m_trackIndex});
 }
 
@@ -2333,6 +2346,7 @@ AlignClipsCommand::AlignClipsCommand(MultitrackModel &model, QUndoCommand *paren
     // m_alignments and a precise track scope can be computed instead of scanning the
     // whole project.
     setText(QObject::tr("Align clips to reference track"));
+    m_undoHelper.setText(text());
 }
 
 void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speed)
