@@ -46,7 +46,7 @@ public:
     void restrictToTracks(const QSet<int> &tracks);
     void clearRestriction();
     QSet<int> affectedTracks() const { return m_affectedTracks; }
-    // Reconnect mix_in/mix_out after overwrite/insert replaced a cut.
+    // Reconnect mix tractor tracks and mix_in/mix_out/mlt_mix after a cut was replaced.
     static void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
 private:

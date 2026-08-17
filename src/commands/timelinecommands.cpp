@@ -81,7 +81,7 @@ static void applyMovedClipIdentity(
 }
 
 // overwrite() clears mix_in/mix_out/mlt_mix on neighbors. After a dest
-// clip or mix is put back, reconnect neighboring transitions to the new cuts.
+// clip or mix is put back, restitch tractor tracks and those mix pointers.
 static void reconnectTransitionsAround(MultitrackModel &model, int trackIndex, int start)
 {
     if (trackIndex < 0 || trackIndex >= model.trackList().size())

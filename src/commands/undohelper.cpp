@@ -23,6 +23,7 @@
 #include "models/audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
 
+#include <MltTractor.h>
 #include <QObject>
 #include <QScopedPointer>
 #include <QSet>
@@ -631,6 +632,36 @@ void UndoHelper::restoreAffectedTracks()
     }
 }
 
+// overwrite()/lift clear mix_in/mix_out/mlt_mix. Those are live pointers,
+// not XML, so a restored mix tractor still plays as a hard cut until we
+// point the neighbors and the mix at each other again (same graph
+// mlt_playlist_mix writes).
+static void relinkMixReferences(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
+{
+    Mlt::Producer parent = clip.parent();
+    if (!parent.get(kShotcutTransitionProperty))
+        return;
+    Mlt::Tractor tractor(parent);
+    if (!tractor.is_valid())
+        return;
+    mlt_tractor mix = tractor.get_tractor();
+    parent.set("mlt_mix", mix, 0);
+    if (clipIndex > 0 && !playlist.is_blank(clipIndex - 1)) {
+        QScopedPointer<Mlt::Producer> left(playlist.get_clip(clipIndex - 1));
+        if (left && left->is_valid() && !left->parent().get(kShotcutTransitionProperty)) {
+            left->set("mix_out", mix, 0);
+            parent.set("mix_in", left->get_producer(), 0);
+        }
+    }
+    if (clipIndex + 1 < playlist.count() && !playlist.is_blank(clipIndex + 1)) {
+        QScopedPointer<Mlt::Producer> right(playlist.get_clip(clipIndex + 1));
+        if (right && right->is_valid() && !right->parent().get(kShotcutTransitionProperty)) {
+            right->set("mix_in", mix, 0);
+            parent.set("mix_out", right->get_producer(), 0);
+        }
+    }
+}
+
 void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip)
 {
     if (clip.is_blank()) {
@@ -656,4 +687,5 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
         }
         transitionIndex++;
     }
+    relinkMixReferences(playlist, clipIndex, clip);
 }
