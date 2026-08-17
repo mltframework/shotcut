@@ -115,7 +115,6 @@ private:
     int m_position;
     QString m_xml;
     QStringList m_oldTracks;
-    UndoHelper m_undoHelper;
     bool m_seek;
     bool m_rippleAllTracks;
     bool m_rippleMarkers;

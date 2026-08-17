@@ -216,27 +216,21 @@ InsertCommand::InsertCommand(MultitrackModel &model,
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_position(position)
     , m_xml(xml)
-    , m_undoHelper(m_model)
     , m_seek(seek)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_rippleMarkers(Settings.timelineRippleMarkers())
     , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
-    // Insert still rebuilds from XML, but only the edited track unless ripple-all.
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
-    scopeUndoToTrack(m_undoHelper, m_trackIndex, m_rippleAllTracks);
 }
 
 void InsertCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     int shift = 0;
-    m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (!clip.is_valid()) {
         LOG_ERROR() << "Invalid producer";
-        m_undoHelper.recordAfterState();
         return;
     }
     if (m_uuids.empty()) {
@@ -266,7 +260,6 @@ void InsertCommand::redo()
         ProxyManager::generateIfNotExists(clip);
         m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
     }
-    m_undoHelper.recordAfterState();
     if (m_rippleMarkers && shift > 0) {
         m_markersShift = shift;
         m_markersModel.doShift(m_position, m_markersShift);
@@ -276,7 +269,19 @@ void InsertCommand::redo()
 void InsertCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
-    m_undoHelper.undoChanges();
+    // RestoreTracks rebuilt every clip on the track from XML and OOMs/hangs
+    // on large projects. Insert is inverted by removing the clip we stamped.
+    for (int i = m_uuids.size() - 1; i >= 0; --i) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        auto info = m_model.findClipByUuid(m_uuids[i], trackIndex, clipIndex);
+        if (!info) {
+            reportUndoFailure(QStringLiteral("Unable to find inserted clip to undo %1")
+                                  .arg(m_uuids[i].toString()));
+            continue;
+        }
+        m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
+    }
     if (m_rippleMarkers && m_markersShift > 0) {
         m_markersModel.doShift(m_position + m_markersShift, -m_markersShift);
     }
