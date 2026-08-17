@@ -878,13 +878,20 @@ void MoveClipCommand::redo()
                     if (!m_ripple)
                         m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
                 } else if (m_ripple) {
-                    // Push or pull clips on the same track
+                    // Push or pull clips on the same track. moveClip XML-roundtrips
+                    // the producer and drops _shotcut:uuid; restamp or undo cannot
+                    // find the clip and a later redo inserts a duplicate.
                     m_model.moveClip(trackIndex,
                                      trackIndex,
                                      clipIndex,
                                      newStart,
                                      m_ripple,
                                      m_rippleAllTracks);
+                    applyMovedClipIdentity(m_model,
+                                           trackIndex,
+                                           newStart,
+                                           m_clips.first().uuid,
+                                           m_clips.first().group);
                 } else if (targetIndex >= clipIndex
                            && m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
