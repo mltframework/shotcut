@@ -64,6 +64,38 @@ static void prepareRestoredProducer(Mlt::Producer &producer)
         producer.set("mlt_type", "mlt_producer");
 }
 
+// overwrite()/insert() make a new cut; put back group and the cut UUID we track.
+static void applyMovedClipIdentity(
+    MultitrackModel &model, int trackIndex, int start, const QUuid &uuid, int group)
+{
+    int clipIndex = model.clipIndex(trackIndex, start);
+    auto clipInfo = model.getClipInfo(trackIndex, clipIndex);
+    if (!clipInfo || !clipInfo->cut)
+        return;
+    if (group >= 0) {
+        clipInfo->cut->set(kShotcutGroupProperty, group);
+        QModelIndex modelIndex = model.index(clipIndex, 0, model.index(trackIndex));
+        emit model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+    }
+    MLT.setUuid(*clipInfo->cut, uuid);
+}
+
+static int producerPlaytime(Mlt::Producer &clip)
+{
+    if (clip.type() == mlt_service_playlist_type) {
+        Mlt::Playlist playlist(clip);
+        int duration = 0;
+        const int n = playlist.count();
+        for (int i = 0; i < n; ++i) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+            if (info)
+                duration += info->frame_count;
+        }
+        return duration;
+    }
+    return clip.get_playtime();
+}
+
 Mlt::Producer *deserializeProducer(QString &xml)
 {
     return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
@@ -298,22 +330,80 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model,
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_position(position)
     , m_xml(xml)
-    , m_undoHelper(m_model)
     , m_seek(seek)
 {
     setText(QObject::tr("Overwrite onto track"));
-    // Playlist overwrite can split several dest clips; rebuild this track only.
-    m_undoHelper.setHints(UndoHelper::RestoreTracks);
-    scopeUndoToTrack(m_undoHelper, m_trackIndex);
+}
+
+// Dest clips overwrite() will delete or split. Snapshot only the overlapping
+// range so undo does not rebuild a busy track from XML.
+void OverwriteCommand::snapshotOverwritten(int duration)
+{
+    if (duration <= 0 || m_trackIndex < 0 || m_trackIndex >= m_model.trackList().size())
+        return;
+    const int destStart = m_position;
+    const int destEnd = destStart + duration;
+    auto mltIndex = m_model.trackList().at(m_trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+    if (!track || !track->is_valid())
+        return;
+    Mlt::Playlist playlist(*track);
+    const int playtime = playlist.get_playtime();
+    if (destStart >= playtime)
+        return;
+    const int from = playlist.get_clip_index_at(qMax(0, destStart));
+    const int to = playlist.get_clip_index_at(qMax(0, qMin(destEnd, playtime) - 1));
+    QSet<QUuid> seen;
+    for (int i = from; i <= to && i < playlist.count(); ++i) {
+        if (playlist.is_blank(i))
+            continue;
+        auto info = m_model.getClipInfo(m_trackIndex, i);
+        if (!info || !info->producer || !info->producer->is_valid() || !info->cut)
+            continue;
+        if (info->start + info->frame_count <= destStart || info->start >= destEnd)
+            continue;
+        QUuid uid = MLT.ensureHasUuid(*info->cut);
+        if (seen.contains(uid))
+            continue;
+        seen.insert(uid);
+        Overwritten dest;
+        dest.start = info->start;
+        dest.frame_in = info->frame_in;
+        dest.frame_out = info->frame_out;
+        dest.group = info->cut->property_exists(kShotcutGroupProperty)
+                         ? info->cut->get_int(kShotcutGroupProperty)
+                         : -1;
+        dest.uuid = uid;
+        dest.xml = MLT.XML(info->producer, false, false);
+        if (!dest.xml.isEmpty())
+            m_overwritten.append(dest);
+    }
+}
+
+void OverwriteCommand::restoreOverwritten()
+{
+    for (const auto &dest : std::as_const(m_overwritten)) {
+        Mlt::Producer restored(MLT.profile(), "xml-string", dest.xml.toUtf8().constData());
+        if (!restored.is_valid()) {
+            reportUndoFailure(
+                QStringLiteral("Failed to restore overwritten clip %1").arg(dest.uuid.toString()));
+            continue;
+        }
+        prepareRestoredProducer(restored);
+        restored.set_in_and_out(dest.frame_in, dest.frame_out);
+        MLT.setUuid(restored, dest.uuid);
+        m_model.overwrite(m_trackIndex, restored, dest.start, false);
+        applyMovedClipIdentity(m_model, m_trackIndex, dest.start, dest.uuid, dest.group);
+    }
 }
 
 void OverwriteCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
-    m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (m_uuids.empty()) {
         m_uuids = getProducerUuids(&clip);
+        snapshotOverwritten(producerPlaytime(clip));
     }
     if (clip.type() == mlt_service_playlist_type) {
         LongUiTask longTask(QObject::tr("Add Files"));
@@ -336,13 +426,26 @@ void OverwriteCommand::redo()
         ProxyManager::generateIfNotExists(clip);
         m_model.overwrite(m_trackIndex, clip, m_position, m_seek);
     }
-    m_undoHelper.recordAfterState();
 }
 
 void OverwriteCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
-    m_undoHelper.undoChanges();
+    // RestoreTracks rebuilt every clip on the dest track from XML and hangs
+    // on large projects. Overwrite is inverted by lifting the clip we stamped
+    // and putting back only the dest clips that occupied that span.
+    for (int i = m_uuids.size() - 1; i >= 0; --i) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        auto info = m_model.findClipByUuid(m_uuids[i], trackIndex, clipIndex);
+        if (!info) {
+            reportUndoFailure(QStringLiteral("Unable to find overwritten clip to undo %1")
+                                  .arg(m_uuids[i].toString()));
+            continue;
+        }
+        m_model.liftClip(trackIndex, clipIndex);
+    }
+    restoreOverwritten();
 }
 
 LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, QUndoCommand *parent)
@@ -744,22 +847,6 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
         saveInfo.uuid = MLT.ensureHasUuid(*info->cut);
         m_clips.insert(saveInfo.start, saveInfo);
     }
-}
-
-// overwrite()/insert() make a new cut; put back group and the cut UUID we track.
-static void applyMovedClipIdentity(
-    MultitrackModel &model, int trackIndex, int start, const QUuid &uuid, int group)
-{
-    int clipIndex = model.clipIndex(trackIndex, start);
-    auto clipInfo = model.getClipInfo(trackIndex, clipIndex);
-    if (!clipInfo || !clipInfo->cut)
-        return;
-    if (group >= 0) {
-        clipInfo->cut->set(kShotcutGroupProperty, group);
-        QModelIndex modelIndex = model.index(clipIndex, 0, model.index(trackIndex));
-        emit model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
-    }
-    MLT.setUuid(*clipInfo->cut, uuid);
 }
 
 // Opposite trim of the grow-by-drag redo. Mutate the existing mix in place;

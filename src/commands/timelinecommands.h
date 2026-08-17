@@ -135,13 +135,28 @@ public:
     void undo();
 
 private:
+    void snapshotOverwritten(int duration);
+    void restoreOverwritten();
+
+    // Dest clips overwrite() will delete or split. Snapshot so undo can
+    // put them back without RestoreTracks on the whole playlist.
+    struct Overwritten
+    {
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+    };
+
     MultitrackModel &m_model;
     int m_trackIndex;
     int m_position;
     QString m_xml;
-    UndoHelper m_undoHelper;
     bool m_seek;
     QVector<QUuid> m_uuids;
+    QList<Overwritten> m_overwritten;
 };
 
 class LiftCommand : public QUndoCommand
