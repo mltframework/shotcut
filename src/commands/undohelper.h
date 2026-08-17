@@ -46,11 +46,12 @@ public:
     void restrictToTracks(const QSet<int> &tracks);
     void clearRestriction();
     QSet<int> affectedTracks() const { return m_affectedTracks; }
+    // Reconnect mix_in/mix_out after overwrite/insert replaced a cut.
+    static void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
 private:
     void debugPrintState(const QString &title);
     void restoreAffectedTracks();
-    void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
     // In-place producer edits (no in/out/move) are not detected. Commands that
     // mutate filters/XML without replacing the producer must storeXmlForClip()

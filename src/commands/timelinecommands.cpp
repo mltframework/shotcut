@@ -80,6 +80,29 @@ static void applyMovedClipIdentity(
     MLT.setUuid(*clipInfo->cut, uuid);
 }
 
+// overwrite() clears mix_in/mix_out/mlt_mix on neighbors. After a dest
+// clip or mix is put back, reconnect neighboring transitions to the new cuts.
+static void reconnectTransitionsAround(MultitrackModel &model, int trackIndex, int start)
+{
+    if (trackIndex < 0 || trackIndex >= model.trackList().size())
+        return;
+    const int clipIndex = model.clipIndex(trackIndex, start);
+    if (clipIndex < 0)
+        return;
+    auto mltIndex = model.trackList().at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(model.tractor()->track(mltIndex));
+    if (!track || !track->is_valid())
+        return;
+    Mlt::Playlist playlist(*track);
+    const int from = qMax(0, clipIndex - 1);
+    const int to = qMin(playlist.count() - 1, clipIndex + 1);
+    for (int i = from; i <= to; ++i) {
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
+        if (clip && clip->is_valid())
+            UndoHelper::fixTransitions(playlist, i, *clip);
+    }
+}
+
 static int producerPlaytime(Mlt::Producer &clip)
 {
     if (clip.type() == mlt_service_playlist_type) {
@@ -394,6 +417,7 @@ void OverwriteCommand::restoreOverwritten()
         MLT.setUuid(restored, dest.uuid);
         m_model.overwrite(m_trackIndex, restored, dest.start, false);
         applyMovedClipIdentity(m_model, m_trackIndex, dest.start, dest.uuid, dest.group);
+        reconnectTransitionsAround(m_model, m_trackIndex, dest.start);
     }
 }
 
@@ -936,6 +960,7 @@ void MoveClipCommand::restoreOverwritten()
         MLT.setUuid(restored, dest.uuid);
         m_model.overwrite(dest.trackIndex, restored, dest.start, false);
         applyMovedClipIdentity(m_model, dest.trackIndex, dest.start, dest.uuid, dest.group);
+        reconnectTransitionsAround(m_model, dest.trackIndex, dest.start);
     }
 }
 
