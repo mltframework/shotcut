@@ -39,8 +39,11 @@ Rectangle {
     signal checkSnap(var clip)
 
     function redrawWaveforms(force) {
-        for (var i = 0; i < repeater.count; i++)
-            repeater.itemAt(i).generateWaveform(force);
+        for (var i = 0; i < repeater.count; i++) {
+            var clip = repeater.itemAt(i);
+            if (clip && (force || !clip.elided))
+                clip.generateWaveform(force);
+        }
     }
 
     function remakeWaveforms(force) {
@@ -65,6 +68,18 @@ Rectangle {
         return repeater.itemAt(index);
     }
 
+    function relayoutClips() {
+        let start = 0;
+        for (let i = 0; i < repeater.count; i++) {
+            const clip = repeater.itemAt(i);
+            if (!clip)
+                continue;
+            if (clip.clipStart !== start)
+                clip.clipStart = start;
+            start += clip.clipDuration;
+        }
+    }
+
     color: 'transparent'
     width: clipRow.width
     onIsMuteChanged: {
@@ -83,11 +98,12 @@ Rectangle {
             mltService: typeof model.mlt_service !== 'undefined' ? model.mlt_service : ""
             inPoint: typeof model.in !== 'undefined' ? model.in : 0
             outPoint: typeof model.out !== 'undefined' ? model.out : 0
+            clipStart: typeof model.start !== 'undefined' ? model.start : 0
+            onClipDurationChanged: trackRoot.relayoutClips()
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false
             isTransition: typeof model.isTransition !== 'undefined' ? model.isTransition : false
             isFiltered: typeof model.filtered !== 'undefined' ? model.filtered : false
-            width: typeof model.duration !== 'undefined' ? model.duration * timeScale : 0
             height: trackRoot.height
             trackIndex: trackRoot.DelegateModel.itemsIndex
             fadeIn: typeof model.fadeIn !== 'undefined' ? model.fadeIn : 0
@@ -264,6 +280,7 @@ Rectangle {
                         "name": '',
                         "resource": '',
                         "duration": clip.clipDuration,
+                        "start": clip.clipStart,
                         "mlt_service": '<producer',
                         "in": 0,
                         "out": clip.clipDuration - 1,
@@ -293,13 +310,25 @@ Rectangle {
         }
     }
 
-    Row {
+    Item {
         id: clipRow
+
+        height: parent.height
+        width: {
+            let end = 0;
+            for (let i = 0; i < repeater.count; i++) {
+                const clip = repeater.itemAt(i);
+                if (clip)
+                    end = Math.max(end, clip.clipPx + clip.clipPxW);
+            }
+            return Math.max(end, 1);
+        }
 
         Repeater {
             id: repeater
 
             model: trackModel
+            onCountChanged: Qt.callLater(trackRoot.relayoutClips)
         }
     }
 }

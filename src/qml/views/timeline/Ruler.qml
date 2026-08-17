@@ -23,6 +23,9 @@ Rectangle {
 
     property real timeScale: 1
     readonly property real intervalFrames: profile.fps * ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale))))
+    readonly property real tickSpacing: intervalFrames * timeScale
+    readonly property int firstTick: tickSpacing > 0 ? Math.max(0, Math.floor(tracksFlickable.contentX / tickSpacing) - 1) : 0
+    readonly property int tickCount: tickSpacing > 0 ? Math.ceil(tracksFlickable.width / tickSpacing) + 3 : 0
 
     signal editMarkerRequested(int index)
     signal deleteMarkerRequested(int index)
@@ -30,24 +33,20 @@ Rectangle {
     height: 28
     color: activePalette.base
 
-    Timer {
-        id: updateTimer
-        interval: 100
-        onTriggered: repeater.model = Math.round(width / intervalFrames / timeScale)
-    }
-
     Repeater {
         id: repeater
 
+        model: rulerTop.tickCount
+
         Rectangle {
+            readonly property int tickIndex: index + rulerTop.firstTick
 
             // right edge
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
             color: activePalette.windowText
-            x: index * intervalFrames * timeScale
-            visible: ((x + width) > tracksFlickable.contentX) && (x < tracksFlickable.contentX + tracksFlickable.width) // left edge
+            x: tickIndex * rulerTop.tickSpacing
 
             Label {
                 anchors.left: parent.right
@@ -55,7 +54,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 2
                 color: activePalette.windowText
-                text: application.clockFromFrames(index * intervalFrames + 2).substr(0, 8)
+                text: application.clockFromFrames(parent.tickIndex * rulerTop.intervalFrames + 2).substr(0, 8)
             }
         }
     }
@@ -106,8 +105,8 @@ Rectangle {
                         var item = track.clipAt(i);
                         if (item.isBlank)
                             continue;
-                        var itemLeft = item.x;
-                        var itemRight = itemLeft + item.width;
+                        var itemLeft = item.clipPx;
+                        var itemRight = itemLeft + item.clipPxW;
                         if (position > itemLeft - SNAP && position < itemLeft + SNAP)
                             return itemLeft;
                         else if (position > itemRight - SNAP && position < itemRight + SNAP)
@@ -123,26 +122,6 @@ Rectangle {
                 return position;
             }
         }
-    }
-
-    Connections {
-        function onProfileChanged() {
-            updateTimer.restart();
-        }
-
-        target: profile
-    }
-
-    Connections {
-        function onDurationChanged() {
-            updateTimer.restart();
-        }
-
-        function onScaleFactorChanged() {
-            updateTimer.restart();
-        }
-
-        target: multitrack
     }
 
     Connections {

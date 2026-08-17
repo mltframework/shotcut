@@ -1824,6 +1824,9 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         playlist.resize_clip(clipIndex + 1, in + duration, out);
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
         QVector<int> roles;
+        // QML places clips from start*scale, not a Row. The right half
+        // is a new start and must get StartRole or it sits on the left half.
+        roles << StartRole;
         roles << DurationRole;
         roles << InPointRole;
         roles << FadeInRole;
