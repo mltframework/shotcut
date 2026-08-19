@@ -7011,7 +7011,7 @@ void MainWindow::on_actionLeaveSafeMode_triggered()
     if (Settings.safeMode()) {
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
-                           tr("Safe mode was enabled because Shotcut crashed during startup.\n"
+                           tr("Safe mode may have enabled because Shotcut crashed during startup.\n"
                               "Safe mode disables external plugins.\n"
                               "\n"
                               "Do you want to turn off safe mode and restart now?"),
