@@ -7023,17 +7023,14 @@ void MainWindow::on_actionLeaveSafeMode_triggered()
         if (dialog.exec() == QMessageBox::Yes) {
             Settings.setSafeMode(false);
             restart = true;
-            ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
-            ::qunsetenv("VST_PATH");
         }
     } else {
         Settings.setSafeMode(true);
         restart = true;
-        ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate:libmltopenfx");
-        ::qputenv("VST_PATH", "C:/__shotcut_safe_mode_no_vst__");
     }
     if (restart) {
         Settings.sync();
+        Mlt::Controller::setSafeMode();
         m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
     }
