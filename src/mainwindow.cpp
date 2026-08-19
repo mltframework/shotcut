@@ -5124,6 +5124,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         setProfile(action->data().toString());
         MLT.reload(xml);
         m_undoStack->clear();
+        setWindowModified(true);
         emit producerOpened(false);
     } else {
         Settings.setPlayerProfile(action->data().toString());
@@ -5165,6 +5166,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         if (!xml.isEmpty()) {
             MLT.reload(xml);
             m_undoStack->clear();
+            setWindowModified(true);
             emit producerOpened(false);
         }
     }
