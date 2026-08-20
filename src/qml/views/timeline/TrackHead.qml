@@ -246,7 +246,7 @@ Rectangle {
     Component.onCompleted: _syncTrackGain()
 
     color: selected ? selectedTrackColor : (index % 2) ? activePalette.alternateBase : activePalette.base
-    border.color: selected ? 'red' : 'transparent'
+    border.color: selected ? application.playheadColor : 'transparent'
     border.width: selected ? 1 : 0
     clip: true
     state: 'normal'
