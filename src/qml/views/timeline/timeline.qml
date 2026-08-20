@@ -404,7 +404,7 @@ Rectangle {
 
                 Rectangle {
                     // thin dividing line between headers and tracks
-                    color: activePalette.windowText
+                    color: activePalette.base
                     width: 1
                     x: parent.x + parent.width
                     anchors.top: parent.top
