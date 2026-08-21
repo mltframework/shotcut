@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025 Meltytech, LLC
+ * Copyright (c) 2018-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,8 +114,20 @@ bool NewProjectFolder::event(QEvent *event)
 
 void NewProjectFolder::updateRecentProjects()
 {
+    auto projects = Settings.projects();
+    projects.removeIf([](const QString &filePath) {
+        const QString parent = QFileInfo(filePath).absolutePath();
+        const QString grandparent = QFileInfo(parent).absolutePath();
+
+        // Remove if the file is missing but the grandparent directory is present.
+        // That prevents removal due to an unmounted volume, but also handles
+        // when there is a project folder.
+        return !QFile::exists(filePath) && QFile::exists(grandparent);
+    });
+    Settings.setProjects(projects);
+
     m_model.clear();
-    for (auto &s : Settings.projects()) {
+    for (auto &s : projects) {
         if (!s.isEmpty()) {
             QStandardItem *item = new QStandardItem(Util::baseName(s));
             item->setToolTip(QDir::toNativeSeparators(s));
