@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ public:
         while (!future.isFinished()) {
             setValue(0);
             QCoreApplication::processEvents();
-            QThread::msleep(100);
+            QThread::msleep(20);
         }
         return future.result();
     }

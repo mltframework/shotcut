@@ -3138,8 +3138,48 @@ void MultitrackModel::addBackgroundTrack()
     m_tractor->set_track(playlist, m_tractor->count());
 }
 
+void MultitrackModel::beginBulkUpdate()
+{
+    // Reentrant: supports nested bulk operations (e.g. History dock jumps
+    // triggered from within another bulk operation).
+    ++m_bulkUpdateDepth;
+    if (m_bulkUpdateDepth == 1 && !m_bulkRefreshBlocked) {
+        // Suppress the player/consumer refresh that would otherwise happen
+        // on every intermediate command; a single refresh is triggered once
+        // in endBulkUpdate() below.
+        MLT.blockRefresh(true);
+        m_bulkRefreshBlocked = true;
+    }
+}
+
+void MultitrackModel::endBulkUpdate()
+{
+    if (m_bulkUpdateDepth > 0 && --m_bulkUpdateDepth == 0) {
+        // Flush any work that was deferred while bulk updates were suppressed,
+        // e.g. when the History dock replays many undo/redo steps at once.
+        if (m_bulkAdjustBackgroundPending) {
+            m_bulkAdjustBackgroundPending = false;
+            adjustBackgroundDuration();
+        }
+        if (m_bulkAdjustTrackFiltersPending) {
+            m_bulkAdjustTrackFiltersPending = false;
+            adjustTrackFilters();
+        }
+        if (m_bulkRefreshBlocked) {
+            m_bulkRefreshBlocked = false;
+            MLT.blockRefresh(false);
+            MLT.refreshConsumer();
+        }
+        emit bulkUpdateFinished();
+    }
+}
+
 void MultitrackModel::adjustBackgroundDuration()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustBackgroundPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();
@@ -3321,6 +3361,10 @@ QString MultitrackModel::trackTransitionService()
 
 void MultitrackModel::adjustTrackFilters()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustTrackFiltersPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();
@@ -3996,9 +4040,10 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
                 beginInsertRows(index(trackIndex), insertBlankAtIdx, insertBlankAtIdx);
                 trackPlaylist.insert_blank(insertBlankAtIdx, length - 1);
                 endInsertRows();
-            } else {
+            } else if (length < 0) {
                 Q_ASSERT(!"unsupported");
             }
+            // length == 0 needs no blank; e.g. a zero-delta ripple move.
         }
     }
 }

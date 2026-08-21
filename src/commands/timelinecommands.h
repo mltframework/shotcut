@@ -26,6 +26,7 @@
 #include <MltProducer.h>
 #include <MltTransition.h>
 #include <QObject>
+#include <QSet>
 #include <QString>
 #include <QUndoCommand>
 #include <QUuid>
@@ -315,6 +316,7 @@ protected:
 
 private:
     void redoMarkers();
+    QSet<int> trackScope() const;
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -359,7 +361,12 @@ public:
     explicit TrimCommand(QUndoCommand *parent = 0)
         : QUndoCommand(parent)
     {}
-    void setUndoHelper(UndoHelper *helper) { m_undoHelper.reset(helper); }
+    void setUndoHelper(UndoHelper *helper)
+    {
+        m_undoHelper.reset(helper);
+        if (m_undoHelper)
+            m_undoHelper->setText(text());
+    }
 
 protected:
     QScopedPointer<UndoHelper> m_undoHelper;

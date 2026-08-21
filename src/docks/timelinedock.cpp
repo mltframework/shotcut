@@ -452,6 +452,10 @@ TimelineDock::TimelineDock(QWidget *parent)
         connect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
         connect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
         connect(&m_model,
+                &MultitrackModel::bulkUpdateFinished,
+                this,
+                &TimelineDock::onBulkUpdateFinished);
+        connect(&m_model,
                 &MultitrackModel::noMoreEmptyTracks,
                 this,
                 &TimelineDock::onNoMoreEmptyTracks,
@@ -471,6 +475,10 @@ TimelineDock::TimelineDock(QWidget *parent)
         disconnect(&m_model, &MultitrackModel::rowsInserted, this, &TimelineDock::onRowsInserted);
         disconnect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
         disconnect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
+        disconnect(&m_model,
+                   &MultitrackModel::bulkUpdateFinished,
+                   this,
+                   &TimelineDock::onBulkUpdateFinished);
         disconnect(&m_model,
                    &MultitrackModel::noMoreEmptyTracks,
                    this,
@@ -2299,6 +2307,13 @@ void TimelineDock::emitSelectedChanged(const QVector<int> &roles)
 
 void TimelineDock::clearSelectionIfInvalid()
 {
+    if (m_model.isBulkUpdating()) {
+        // Defer until the bulk update (e.g. a multi-step History dock jump)
+        // finishes, rather than redoing this on every intermediate step.
+        m_pendingClearSelectionIfInvalid = true;
+        return;
+    }
+    m_pendingClearSelectionIfInvalid = false;
     QList<QPoint> newSelection;
     foreach (auto clip, selection()) {
         if (clip.x() >= clipCount(clip.y()))
@@ -2307,6 +2322,12 @@ void TimelineDock::clearSelectionIfInvalid()
         newSelection << QPoint(clip.x(), clip.y());
     }
     setSelection(newSelection);
+}
+
+void TimelineDock::onBulkUpdateFinished()
+{
+    if (m_pendingClearSelectionIfInvalid)
+        clearSelectionIfInvalid();
 }
 
 /*!
@@ -4046,6 +4067,9 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
+        // A move that nets no change has nothing to do or undo.
+        if (toTrack == fromTrack && position == 0)
+            return;
         auto command = new Timeline::MoveClipCommand(*this, toTrack - fromTrack, position, ripple);
         for (const auto &clip : selection()) {
             command->addClip(clip.y(), clip.x());
@@ -4128,16 +4152,10 @@ bool TimelineDock::trimClipIn(
     } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (ripple) {
+            if (ripple)
                 m_undoHelper->setHints(UndoHelper::RestoreTracks);
-            } else {
-                m_undoHelper->setHints(UndoHelper::SkipXML);
-                // Store XML for only this clip so keyframes deleted during trim can be restored.
-                auto info = m_model.getClipInfo(trackIndex, clipIndex);
-                if (info && info->producer)
-                    m_undoHelper->storeXmlForClip(MLT.ensureHasUuid(*info->producer));
-            }
-            m_undoHelper->recordBeforeState();
+            m_undoHelper->recordBeforeState(
+                Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
         if (roll && delta < 0
             && m_model.trimClipOutValid(trackIndex, clipIndex - 1, -delta, false)) {
@@ -4236,7 +4254,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
             m_undoHelper.reset(new UndoHelper(m_model));
             if (!ripple)
                 m_undoHelper->setHints(UndoHelper::SkipXML);
-            m_undoHelper->recordBeforeState();
+            m_undoHelper->recordBeforeState(
+                Settings.timelineRippleAllTracks() ? QSet<int>() : QSet<int>{trackIndex});
         }
         if (roll && delta < 0 && m_model.trimClipInValid(trackIndex, clipIndex + 1, -delta, false)) {
             m_model.trimClipIn(trackIndex, clipIndex + 1, -delta, false, false);

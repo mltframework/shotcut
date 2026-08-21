@@ -555,8 +555,21 @@ bool Controller::saveXML(const QString &filename,
     return false;
 }
 
+static qint64 g_xmlCallCount = 0;
+
+qint64 Controller::xmlCallCount()
+{
+    return g_xmlCallCount;
+}
+
+void Controller::resetXmlCallCount()
+{
+    g_xmlCallCount = 0;
+}
+
 QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
 {
+    ++g_xmlCallCount;
     Consumer c(profile(), "xml", kMltXmlPropertyName);
     Service s(service                                  ? service->get_service()
               : (m_producer && m_producer->is_valid()) ? m_producer->get_service()
