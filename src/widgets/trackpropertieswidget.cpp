@@ -187,6 +187,8 @@ void TrackPropertiesWidget::updateDuckStatus(double value)
 void TrackPropertiesWidget::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
+    if (!ui->duckingHeadingLabel->isVisible())
+        return;
     connect(MLT.videoWidget(),
             SIGNAL(frameDisplayed(const SharedFrame &)),
             this,
@@ -196,6 +198,8 @@ void TrackPropertiesWidget::showEvent(QShowEvent *event)
 void TrackPropertiesWidget::hideEvent(QHideEvent *event)
 {
     QWidget::hideEvent(event);
+    if (!ui->duckingHeadingLabel->isVisible())
+        return;
     disconnect(MLT.videoWidget(),
                SIGNAL(frameDisplayed(const SharedFrame &)),
                this,
