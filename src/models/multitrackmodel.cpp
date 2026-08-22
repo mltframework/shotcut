@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QScopedPointer>
 #include <QTimer>
+#include <QUuid>
 #include <qmath.h>
 
 #include <cmath>
@@ -1763,10 +1764,12 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             playlist.insert_blank(clipIndex, duration - 1);
             endInsertRows();
         } else {
-            // Make copy of clip.
+            // XML copy omits _shotcut:uuid (internal, not serialized). Mint one
+            // so the new half is a distinct clip for undo/filter lookup.
             Mlt::Producer producer(MLT.profile(),
                                    "xml-string",
                                    MLT.XML(info->producer).toUtf8().constData());
+            MLT.setUuid(producer, QUuid::createUuid());
 
             // Connect a transition on the left to the new producer.
             if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {

@@ -21,6 +21,7 @@
 #include "models/multitrackmodel.h"
 
 #include <MltPlaylist.h>
+#include <QFlags>
 #include <QList>
 #include <QMap>
 #include <QSet>
@@ -29,7 +30,9 @@
 class UndoHelper
 {
 public:
-    enum OptimizationHints { NoHints, SkipXML, RestoreTracks };
+    enum OptimizationHint { NoHints = 0x0, SkipXML = 0x1, RestoreTracks = 0x2 };
+    Q_DECLARE_FLAGS(OptimizationHints, OptimizationHint)
+
     UndoHelper(MultitrackModel &model);
 
     void recordBeforeState();
@@ -37,20 +40,23 @@ public:
     void undoChanges();
     void setHints(OptimizationHints hints);
     void storeXmlForClip(const QUuid &uid);
+    // Limit snapshot/restore to these timeline track indexes.
+    // restrictToTracks({}) is an empty restriction (no tracks), not "all tracks".
+    void restrictToTrack(int trackIndex);
+    void restrictToTracks(const QSet<int> &tracks);
+    void clearRestriction();
     QSet<int> affectedTracks() const { return m_affectedTracks; }
+    // Reconnect mix tractor tracks and mix_in/mix_out/mlt_mix after a cut was replaced.
+    static void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
 private:
     void debugPrintState(const QString &title);
     void restoreAffectedTracks();
-    void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
-    enum ChangeFlags {
-        NoChange = 0x0,
-        ClipInfoModified = 0x1,
-        XMLModified = 0x2,
-        Moved = 0x4,
-        Removed = 0x8
-    };
+    // In-place producer edits (no in/out/move) are not detected. Commands that
+    // mutate filters/XML without replacing the producer must storeXmlForClip()
+    // or avoid SkipXML so the before-state XML can restore them.
+    enum ChangeFlags { NoChange = 0x0, ClipInfoModified = 0x1, Moved = 0x2, Removed = 0x4 };
 
     struct Info
     {
@@ -85,9 +91,17 @@ private:
     QList<QUuid> m_clipsAdded;
     QList<QUuid> m_insertedOrder;
     QSet<int> m_affectedTracks;
+    QSet<int> m_restrictedTracks;
     QSet<QUuid> m_xmlClips;
     MultitrackModel &m_model;
     OptimizationHints m_hints;
+    bool m_hasRestriction;
+    bool m_undoFailed;
+
+    bool includeTrack(int trackIndex) const;
+    void failUndo(const QString &detail);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(UndoHelper::OptimizationHints)
 
 #endif // UNDOHELPER_H

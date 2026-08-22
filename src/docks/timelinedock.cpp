@@ -4130,8 +4130,12 @@ bool TimelineDock::trimClipIn(
             m_undoHelper.reset(new UndoHelper(m_model));
             if (ripple) {
                 m_undoHelper->setHints(UndoHelper::RestoreTracks);
+                // Drag trim: same track scope as TrimClipInCommand.
+                if (!Settings.timelineRippleAllTracks())
+                    m_undoHelper->restrictToTrack(trackIndex);
             } else {
                 m_undoHelper->setHints(UndoHelper::SkipXML);
+                m_undoHelper->restrictToTrack(trackIndex);
                 // Store XML for only this clip so keyframes deleted during trim can be restored.
                 auto info = m_model.getClipInfo(trackIndex, clipIndex);
                 if (info && info->producer)
@@ -4234,8 +4238,15 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     } else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (!ripple)
+            if (ripple) {
+                m_undoHelper->setHints(UndoHelper::RestoreTracks);
+                if (!Settings.timelineRippleAllTracks())
+                    m_undoHelper->restrictToTrack(trackIndex);
+            } else {
+                // Was SkipXML-only; also scope so undo does not walk the whole track.
                 m_undoHelper->setHints(UndoHelper::SkipXML);
+                m_undoHelper->restrictToTrack(trackIndex);
+            }
             m_undoHelper->recordBeforeState();
         }
         if (roll && delta < 0 && m_model.trimClipInValid(trackIndex, clipIndex + 1, -delta, false)) {

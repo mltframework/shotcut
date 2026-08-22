@@ -25,6 +25,7 @@
 
 #include <MltProducer.h>
 #include <MltTransition.h>
+#include <QList>
 #include <QObject>
 #include <QString>
 #include <QUndoCommand>
@@ -114,7 +115,6 @@ private:
     int m_position;
     QString m_xml;
     QStringList m_oldTracks;
-    UndoHelper m_undoHelper;
     bool m_seek;
     bool m_rippleAllTracks;
     bool m_rippleMarkers;
@@ -135,13 +135,28 @@ public:
     void undo();
 
 private:
+    void snapshotOverwritten(int duration);
+    void restoreOverwritten();
+
+    // Dest clips overwrite() will delete or split. Snapshot so undo can
+    // put them back without RestoreTracks on the whole playlist.
+    struct Overwritten
+    {
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+    };
+
     MultitrackModel &m_model;
     int m_trackIndex;
     int m_position;
     QString m_xml;
-    UndoHelper m_undoHelper;
     bool m_seek;
     QVector<QUuid> m_uuids;
+    QList<Overwritten> m_overwritten;
 };
 
 class LiftCommand : public QUndoCommand
@@ -315,6 +330,14 @@ protected:
 
 private:
     void redoMarkers();
+    void undoExplicitMove();
+    void undoTransitionGrow();
+    void snapshotOverwritten();
+    void restoreOverwritten();
+
+    // GrowTransition*: clip-drag onto a neighbor mix; undo is -delta in place.
+    // Do not XML-restore the mix — that breaks mix_in/mix_out and crashes the consumer.
+    enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -340,6 +363,18 @@ private:
         {}
     };
 
+    // Clips the dest overwrite will delete; restored after the moved clip is back.
+    struct Overwritten
+    {
+        int trackIndex;
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+    };
+
     int m_trackDelta;
     int m_positionDelta;
     bool m_ripple;
@@ -348,6 +383,8 @@ private:
     UndoHelper m_undoHelper;
     QMultiMap<int, Info> m_clips; // ordered by position
     bool m_redo;
+    SpecialMove m_specialMove;
+    QList<Overwritten> m_overwritten;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
     int m_markersModified;
@@ -444,10 +481,25 @@ public:
 
 private:
     MultitrackModel &m_model;
+    struct ClipState
+    {
+        int trackIndex;
+        int clipIndex;
+        int start;
+        int frame_in;
+        int frame_out;
+        int group;
+        QUuid uuid;
+        QString xml;
+        bool isBlank;
+    };
+
+    void snapshotClips();
+
     std::vector<int> m_trackIndex;
     std::vector<int> m_clipIndex;
     int m_position;
-    UndoHelper m_undoHelper;
+    QList<ClipState> m_clips;
 };
 
 class FadeInCommand : public QUndoCommand
@@ -826,6 +878,8 @@ public:
     void undo();
 
 private:
+    void ensureBeforeState();
+
     TimelineDock &m_timeline;
     int m_trackIndex;
     int m_clipIndex;

@@ -324,7 +324,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: imagePath(outPoint)
+        source: visible ? imagePath(outPoint) : ''
     }
 
     Image {
@@ -340,7 +340,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: imagePath(inPoint)
+        source: visible ? imagePath(inPoint) : ''
     }
 
     Shotcut.TimelineTransition {
