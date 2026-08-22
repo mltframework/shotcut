@@ -53,13 +53,11 @@ void UndoHelper::recordBeforeState()
 
         for (int j = 0; j < playlist.count(); ++j) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
-            QUuid uid = MLT.ensureHasUuid(clip->parent());
-            if (clip->is_blank()) {
-                uid = MLT.ensureHasUuid(*clip);
-            }
+            QUuid uid = MLT.ensureHasUuid(*clip);
             m_insertedOrder << uid;
             Info &info = m_state[uid];
-            if (!(m_hints & SkipXML) || m_xmlClips.contains(uid))
+            if (!(m_hints & SkipXML) || m_xmlClips.contains(uid)
+                || m_xmlClips.contains(MLT.uuid(clip->parent())))
                 info.xml = MLT.XML(&clip->parent());
             Mlt::ClipInfo clipInfo;
             playlist.clip_info(j, &clipInfo);
@@ -89,14 +87,15 @@ void UndoHelper::recordAfterState()
 
         for (int j = 0; j < playlist.count(); ++j) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
-            QUuid uid = MLT.ensureHasUuid(clip->parent());
-            if (clip->is_blank()) {
-                uid = MLT.ensureHasUuid(*clip);
+            QUuid uid = MLT.uuid(*clip);
+            if (uid.isNull()) {
+                uid = MLT.uuid(clip->parent());
             }
 
             /* Clips not previously in m_state are new */
             if (!m_state.contains(uid)) {
                 UNDOLOG << "New clip at" << i << j;
+                uid = MLT.ensureHasUuid(*clip);
                 m_clipsAdded << uid;
                 m_affectedTracks << i;
             } else {
@@ -236,11 +235,7 @@ void UndoHelper::undoChanges()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             Q_ASSERT(currentIndex < playlist.count());
             Q_ASSERT(!clip.isNull());
-            if (info.isBlank) {
-                MLT.setUuid(*clip, uid);
-            } else {
-                MLT.setUuid(clip->parent(), uid);
-            }
+            MLT.setUuid(*clip, uid);
             if (info.group >= 0) {
                 clip->set(kShotcutGroupProperty, info.group);
             }
@@ -273,8 +268,7 @@ void UndoHelper::undoChanges()
                 // Re-apply timeline-specific properties that are not encoded in the producer XML.
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
                 if (clip && clip->is_valid()) {
-                    // Restore UUID on the parent producer for this non-blank clip.
-                    MLT.setUuid(clip->parent(), uid);
+                    MLT.setUuid(*clip, uid);
                     // Restore grouping metadata on the clip, if any was recorded.
                     if (info.group >= 0) {
                         clip->set(kShotcutGroupProperty, info.group);
@@ -326,10 +320,7 @@ void UndoHelper::undoChanges()
         Mlt::Playlist playlist(*trackProducer);
         for (int i = playlist.count() - 1; i >= 0; --i) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
-            QUuid uid = MLT.uuid(clip->parent());
-            if (clip->is_blank()) {
-                uid = MLT.uuid(*clip);
-            }
+            QUuid uid = MLT.uuid(*clip);
             if (m_clipsAdded.removeOne(uid)) {
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
@@ -443,11 +434,7 @@ void UndoHelper::restoreAffectedTracks()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             Q_ASSERT(currentIndex < playlist.count());
             Q_ASSERT(!clip.isNull());
-            if (info.isBlank) {
-                MLT.setUuid(*clip, uid);
-            } else {
-                MLT.setUuid(clip->parent(), uid);
-            }
+            MLT.setUuid(*clip, uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }
