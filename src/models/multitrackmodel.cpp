@@ -749,7 +749,13 @@ void MultitrackModel::updateTrackAudioLevels(const SharedFrame &frame)
             = QStringLiteral("meta.track.%1.audio_level.1").arg(mltTrackIndex).toLatin1();
         const double left = frame.get_double(leftKey.constData());
         const double right = frame.get_double(rightKey.constData());
-        const double audioLevel = audioLevelDbFromLinear(left, right);
+        double audioLevel = audioLevelDbFromLinear(left, right);
+
+        // audiolevel measures before the mix transition applies ducking, so subtract it here.
+        const QByteArray duckKey = trackDuckLevelPrefix(mltTrackIndex) + "duck_level";
+        const double duckReduction = frame.get_double(duckKey.constData());
+        if (duckReduction > 0.0)
+            audioLevel = qMax(audioLevel - duckReduction, -100.0);
 
         setTrackAudioLevel(row, audioLevel);
     }
