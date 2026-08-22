@@ -48,6 +48,11 @@ static QByteArray trackAudioLevelPrefix(int mltTrackIndex)
     return QStringLiteral("meta.track.%1.audio_level.").arg(mltTrackIndex).toLatin1();
 }
 
+static QByteArray trackDuckLevelPrefix(int mltTrackIndex)
+{
+    return QStringLiteral("meta.track.%1.").arg(mltTrackIndex).toLatin1();
+}
+
 static double audioLevelDbFromFilter(Mlt::Filter *filter)
 {
     static const char *kAudioLevelLeft = "_audio_level.0";
@@ -812,6 +817,10 @@ void MultitrackModel::syncTrackAudioLevelFilterPrefixes()
         std::unique_ptr<Mlt::Filter> levelFilter(
             ensureTrackAudioLevelFilter(track.data(), mltTrackIndex));
         Q_UNUSED(levelFilter)
+
+        QScopedPointer<Mlt::Transition> mix(getTransition("mix", mltTrackIndex));
+        if (mix && mix->is_valid())
+            mix->set("prefix", trackDuckLevelPrefix(mltTrackIndex).constData());
     }
 }
 
