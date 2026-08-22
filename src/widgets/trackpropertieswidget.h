@@ -22,14 +22,15 @@
 #include <MltProducer.h>
 #include <QWidget>
 
-class QTimer;
-
 namespace Ui {
 class TrackPropertiesWidget;
 }
 namespace Mlt {
 class Transition;
 }
+class SharedFrame;
+class QShowEvent;
+class QHideEvent;
 
 class TrackPropertiesWidget : public QWidget
 {
@@ -53,7 +54,11 @@ private slots:
     void onDuckAttenuationChanged(double value);
     void onDuckFadeInChanged(double value);
     void onDuckFadeOutChanged(double value);
-    void refreshDuckStatus();
+    void onShowFrame(const SharedFrame &frame);
+
+protected:
+    void showEvent(QShowEvent *event) override;
+    void hideEvent(QHideEvent *event) override;
 
 private:
     Mlt::Transition *getTransition(const QString &name);
@@ -62,7 +67,7 @@ private:
 
     Ui::TrackPropertiesWidget *ui;
     Mlt::Producer m_track;
-    QTimer *m_duckStatusTimer;
+    int m_trackIndex;
 };
 
 #endif // TRACKPROPERTIESWIDGET_H
