@@ -978,7 +978,7 @@ void MainWindow::setupMenuFile()
 void MainWindow::setupMenuView()
 {
     if (!Settings.safeMode())
-        ui->actionLeaveSafeMode->setText(tr("Enter Safe Mode"));
+        ui->actionLeaveSafeMode->setText(tr("Block External Plugins (Safe Mode)"));
     ui->menuView->addSeparator();
     ui->menuView->addAction(ui->actionResources);
     ui->menuView->addAction(ui->actionApplicationLog);

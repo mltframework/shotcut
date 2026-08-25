@@ -1548,7 +1548,7 @@ void ShotcutSettings::setGpuAdapterDeviceId(uint id)
 
 bool ShotcutSettings::safeMode() const
 {
-    return settings.value("safeMode", false).toBool();
+    return settings.value("safeMode", true).toBool();
 }
 
 void ShotcutSettings::setSafeMode(bool value)
