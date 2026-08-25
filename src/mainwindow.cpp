@@ -3477,6 +3477,7 @@ void MainWindow::showEvent(QShowEvent *event)
     // This is needed to prevent a crash on windows on startup when timeline
     // is visible and dock title bars are hidden.
     Q_UNUSED(event)
+    emit windowShown(); // tells the watchdog parent process that startup is not hung
     ui->actionShowTitleBars->setChecked(Settings.showTitleBars());
     on_actionShowTitleBars_triggered(Settings.showTitleBars());
     ui->actionShowToolbar->setChecked(Settings.showToolBar());
