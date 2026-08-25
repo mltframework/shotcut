@@ -1819,7 +1819,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             endInsertRows();
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
             AudioLevelsTask::start(producer.parent(), this, modelIndex);
-            MLT.adjustClipFilters(producer, filterIn, out, 0, delta, 0);
+            MLT.adjustClipFilters(producer, filterIn, filterOut, 0, delta, 0);
         }
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
@@ -1832,7 +1832,8 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 
         if (!playlist.is_blank(clipIndex + 1)) {
             AudioLevelsTask::start(*info->producer, this, modelIndex);
-            MLT.adjustClipFilters(*info->producer, in, filterOut, duration, 0, duration);
+            // Use filterIn, not in, to keep filter in/out consistent when clipIndex follows a transition.
+            MLT.adjustClipFilters(*info->producer, filterIn, filterOut, duration, 0, duration);
         }
 
         emit modified();
