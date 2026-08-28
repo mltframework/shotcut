@@ -45,12 +45,12 @@ static const char *kShotcutDefaultTransition = "lumaMix";
 
 static QByteArray trackAudioLevelPrefix(int mltTrackIndex)
 {
-    return QStringLiteral("meta.track.%1.audio_level.").arg(mltTrackIndex).toLatin1();
+    return QStringLiteral("meta.audio.track.%1.audio_level.").arg(mltTrackIndex).toLatin1();
 }
 
 static QByteArray trackDuckLevelPrefix(int mltTrackIndex)
 {
-    return QStringLiteral("meta.track.%1.").arg(mltTrackIndex).toLatin1();
+    return QStringLiteral("meta.audio.track.%1.").arg(mltTrackIndex).toLatin1();
 }
 
 static double audioLevelDbFromFilter(Mlt::Filter *filter)
@@ -743,10 +743,9 @@ void MultitrackModel::updateTrackAudioLevels(const SharedFrame &frame)
 
     for (int row = 0; row < m_trackList.size(); ++row) {
         const int mltTrackIndex = m_trackList[row].mlt_index;
-        const QByteArray leftKey
-            = QStringLiteral("meta.track.%1.audio_level.0").arg(mltTrackIndex).toLatin1();
-        const QByteArray rightKey
-            = QStringLiteral("meta.track.%1.audio_level.1").arg(mltTrackIndex).toLatin1();
+        const QByteArray prefix = trackAudioLevelPrefix(mltTrackIndex);
+        const QByteArray leftKey = prefix + "0";
+        const QByteArray rightKey = prefix + "1";
         const double left = frame.get_double(leftKey.constData());
         const double right = frame.get_double(rightKey.constData());
         double audioLevel = audioLevelDbFromLinear(left, right);

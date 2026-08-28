@@ -210,7 +210,8 @@ void TrackPropertiesWidget::onShowFrame(const SharedFrame &frame)
 {
     if (m_trackIndex < 0 || !frame.is_valid())
         return;
-    const QByteArray key = QStringLiteral("meta.track.%1.duck_level").arg(m_trackIndex).toLatin1();
+    const QByteArray key
+        = QStringLiteral("meta.audio.track.%1.duck_level").arg(m_trackIndex).toLatin1();
     updateDuckStatus(frame.get_double(key.constData()));
 }
 
