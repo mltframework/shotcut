@@ -253,12 +253,53 @@ int SharedFrame::get_audio_samples() const
 
 const void *SharedFrame::get_audio(mlt_audio_format format) const
 {
-    if (format == mlt_audio_none)
-        format = get_audio_format();
+    mlt_audio_format native_format = get_audio_format();
     int frequency = get_audio_frequency();
     int channels = get_audio_channels();
-    int samples = get_audio_samples();
-    return d->f.get_audio(format, frequency, channels, samples);
+    int sample_count = get_audio_samples();
+    void *audio = nullptr;
+
+    if (format == mlt_audio_none) {
+        format = native_format;
+    }
+
+    if (format == native_format) {
+        // Native format is requested. Return frame audio.
+        audio = d->f.get_audio(format, frequency, channels, sample_count);
+    } else {
+        // Non-native format is requested. Return a cached converted audio.
+        const char *formatName = mlt_audio_format_name(format);
+        // Convert to non-const so that the cache can be accessed/modified while
+        // under lock.
+        FrameData *nonConstData = const_cast<FrameData *>(d.data());
+
+        nonConstData->m.lock();
+
+        Mlt::Frame *cacheFrame = static_cast<Mlt::Frame *>(nonConstData->f.get_data(formatName));
+        if (cacheFrame == nullptr) {
+            // A cached audio does not exist, create one.
+            // Make a non-deep clone of the frame (including convert function)
+            mlt_frame cloneFrame = mlt_frame_clone(nonConstData->f.get_frame(), 0);
+            cloneFrame->convert_audio = nonConstData->f.get_frame()->convert_audio;
+            // Create a new cache frame
+            cacheFrame = new Mlt::Frame(cloneFrame);
+            // Release the reference on the clone
+            // (now it is owned by the cache frame)
+            mlt_frame_close(cloneFrame);
+            // Save the cache frame as a property under the name of the audio
+            // format for later use.
+            nonConstData->f.set(formatName, static_cast<void *>(cacheFrame), 0, destroyFrame);
+            // Break a circular reference
+            cacheFrame->clear("_cloned_frame");
+        }
+
+        // Get the audio from the cache frame.
+        // This will cause a conversion if it was just created.
+        audio = cacheFrame->get_audio(format, frequency, channels, sample_count);
+
+        nonConstData->m.unlock();
+    }
+    return audio;
 }
 
 Mlt::Producer *SharedFrame::get_original_producer()
