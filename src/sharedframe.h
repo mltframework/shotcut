@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ public:
     int get_audio_channels() const;
     int get_audio_frequency() const;
     int get_audio_samples() const;
-    const int16_t *get_audio() const;
+    const void *get_audio(mlt_audio_format format) const;
     Mlt::Producer *get_original_producer();
 
 private:

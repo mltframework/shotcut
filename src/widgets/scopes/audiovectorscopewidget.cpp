@@ -180,7 +180,7 @@ void AudioVectorScopeWidget::refreshScope(const QSize &size, bool full)
         int samples = m_frame.get_audio_samples();
 
         // Find the max value to be used for scaling
-        const int16_t *a = (int16_t *) m_frame.get_audio();
+        const int16_t *a = static_cast<const int16_t *>(m_frame.get_audio(mlt_audio_s16));
         int16_t maxSampleValue = 0;
         for (int s = 0; s < samples; s++) {
             if (std::abs(a[c1]) > maxSampleValue) {
@@ -192,7 +192,7 @@ void AudioVectorScopeWidget::refreshScope(const QSize &size, bool full)
             a += channels;
         }
 
-        a = (int16_t *) m_frame.get_audio();
+        a = static_cast<const int16_t *>(m_frame.get_audio(mlt_audio_s16));
         qreal maxPoint = sqrt(side * side + side * side) / 4;
         qreal scaleFactor = maxPoint / maxSampleValue;
         for (int s = 0; s < samples; s++) {
