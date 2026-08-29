@@ -53,6 +53,40 @@ static QByteArray trackDuckLevelPrefix(int mltTrackIndex)
     return QStringLiteral("meta.audio.track.%1.").arg(mltTrackIndex).toLatin1();
 }
 
+static QString audioRoleToString(AudioTrackRole role)
+{
+    switch (role) {
+    case DialogueAudioRole:
+        return "dialogue";
+    case BackgroundMusicAudioRole:
+        return "background-music";
+    case SoundEffectsAudioRole:
+        return "sound-effects";
+    case AmbienceAudioRole:
+        return "ambience";
+    case PremixedProgramAudioRole:
+        return "premixed-program";
+    case UnassignedAudioRole:
+    default:
+        return "unassigned";
+    }
+}
+
+static AudioTrackRole stringToAudioRole(const QString &str)
+{
+    if (str == "dialogue")
+        return DialogueAudioRole;
+    if (str == "background-music")
+        return BackgroundMusicAudioRole;
+    if (str == "sound-effects")
+        return SoundEffectsAudioRole;
+    if (str == "ambience")
+        return AmbienceAudioRole;
+    if (str == "premixed-program")
+        return PremixedProgramAudioRole;
+    return UnassignedAudioRole;
+}
+
 static double audioLevelDbFromFilter(Mlt::Filter *filter)
 {
     static const char *kAudioLevelLeft = "_audio_level.0";
@@ -416,6 +450,11 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case NameRole:
             case Qt::DisplayRole:
                 return QString::fromUtf8(track->get(kTrackNameProperty));
+            case AudioRoleRole:
+                return track->property_exists(kTrackAudioRoleProperty)
+                           ? static_cast<int>(stringToAudioRole(
+                               QString::fromUtf8(track->get(kTrackAudioRoleProperty))))
+                           : static_cast<int>(UnassignedAudioRole);
             case DurationRole:
                 return playlist.get_playtime();
             case IsMuteRole:
@@ -553,6 +592,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[GroupRole] = "group";
     roles[GainRole] = "gain";
     roles[GainEnabledRole] = "gainEnabled";
+    roles[AudioRoleRole] = "audioRole";
     return roles;
 }
 
@@ -592,6 +632,28 @@ void MultitrackModel::setTrackName(int row, const QString &value)
             QModelIndex modelIndex = index(row, 0);
             QVector<int> roles;
             roles << NameRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+        }
+    }
+}
+
+/*!
+    \qmlmethod void MultitrackModel::setTrackRole(int row, int role)
+    \brief Sets the audio mixing role of the track at \a row to \a role.
+*/
+
+void MultitrackModel::setTrackRole(int row, AudioTrackRole role)
+{
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (track) {
+            track->set(kTrackAudioRoleProperty, audioRoleToString(role).toUtf8().constData());
+
+            QModelIndex modelIndex = index(row, 0);
+            QVector<int> roles;
+            roles << AudioRoleRole;
             emit dataChanged(modelIndex, modelIndex, roles);
             emit modified();
         }
@@ -3416,6 +3478,33 @@ QString MultitrackModel::getTrackName(int trackIndex)
             name = track->get(kTrackNameProperty);
     }
     return name;
+}
+
+AudioTrackRole MultitrackModel::getTrackRole(int trackIndex)
+{
+    AudioTrackRole role = UnassignedAudioRole;
+    if (trackIndex < m_trackList.size()) {
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+        if (track && track->property_exists(kTrackAudioRoleProperty))
+            role = stringToAudioRole(QString::fromUtf8(track->get(kTrackAudioRoleProperty)));
+    }
+    return role;
+}
+
+double MultitrackModel::getProjectTargetLoudness() const
+{
+    static const double kDefaultTargetLoudness = -14.0; // Web/YouTube preset
+    if (m_tractor && m_tractor->property_exists(kShotcutProjectTargetLoudnessProperty))
+        return m_tractor->get_double(kShotcutProjectTargetLoudnessProperty);
+    return kDefaultTargetLoudness;
+}
+
+void MultitrackModel::setProjectTargetLoudness(double loudness)
+{
+    if (m_tractor) {
+        m_tractor->set(kShotcutProjectTargetLoudnessProperty, loudness);
+        emit modified();
+    }
 }
 
 int MultitrackModel::addAudioTrack()

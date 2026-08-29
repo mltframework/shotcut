@@ -32,6 +32,7 @@
 #define kAudioTrackProperty "shotcut:audio"
 #define kCommentProperty "shotcut:comment"
 #define kShotcutFilterProperty "shotcut:filter"
+#define kShotcutAudioMixingAssistantProperty "shotcut:audioMixingAssistant"
 #define kShotcutPlaylistProperty "shotcut:playlist"
 #define kShotcutTransitionProperty "shotcut:transition"
 #define kShotcutProducerProperty "shotcut:producer"
@@ -40,6 +41,7 @@
 #define kTrackHeightProperty "shotcut:trackHeight"
 #define kTrackHeaderWidthProperty "shotcut:trackHeaderWidth"
 #define kTrackNameProperty "shotcut:name"
+#define kTrackAudioRoleProperty "shotcut:audioRole"
 #define kTrackLockProperty "shotcut:lock"
 #define kVideoTrackProperty "shotcut:video"
 #define kShotcutCaptionProperty "shotcut:caption"
@@ -72,6 +74,7 @@
 #define kShotcutProjectFolder "shotcut:projectFolder"
 #define kShotcutProjectNote "shotcut:projectNote"
 #define kShotcutProjectProcessingMode "shotcut:processingMode"
+#define kShotcutProjectTargetLoudnessProperty "shotcut:targetLoudness"
 #define kShotcutColorTransfer "shotcut:colorTransfer"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these

@@ -226,6 +226,23 @@ private:
     QString m_oldName;
 };
 
+class ChangeTrackRoleCommand : public QUndoCommand
+{
+public:
+    ChangeTrackRoleCommand(MultitrackModel &model,
+                           int trackIndex,
+                           AudioTrackRole role,
+                           QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+private:
+    MultitrackModel &m_model;
+    int m_trackIndex;
+    AudioTrackRole m_role;
+    AudioTrackRole m_oldRole;
+};
+
 class MergeCommand : public QUndoCommand
 {
 public:

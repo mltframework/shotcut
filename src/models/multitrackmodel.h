@@ -37,6 +37,17 @@ typedef enum {
     VideoTrackType
 } TrackType;
 
+// The role a track plays in a mix, used by the Audio Mixing Assistant to
+// decide how a track should be leveled and whether it should duck others.
+typedef enum {
+    UnassignedAudioRole = 0,
+    DialogueAudioRole,
+    BackgroundMusicAudioRole,
+    SoundEffectsAudioRole,
+    AmbienceAudioRole,
+    PremixedProgramAudioRole
+} AudioTrackRole;
+
 typedef struct
 {
     TrackType type;
@@ -92,6 +103,7 @@ public:
         GroupRole,         /// clip only
         GainRole,          /// track, clip
         GainEnabledRole,   /// track, clip
+        AudioRoleRole,     /// track only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -138,6 +150,9 @@ public:
     std::unique_ptr<Mlt::ClipInfo> getClipInfo(int trackIndex, int clipIndex);
     Q_INVOKABLE int clipStart(int trackIndex, int clipIndex);
     QString getTrackName(int trackIndex);
+    AudioTrackRole getTrackRole(int trackIndex);
+    double getProjectTargetLoudness() const;
+    void setProjectTargetLoudness(double loudness);
     int bottomVideoTrackIndex() const;
     int mltIndexForTrack(int trackIndex) const;
     bool checkForEmptyTracks(int trackIndex);
@@ -168,6 +183,7 @@ signals:
 public slots:
     void refreshTrackList();
     void setTrackName(int row, const QString &value);
+    void setTrackRole(int row, AudioTrackRole role);
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, bool composite);

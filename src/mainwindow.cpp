@@ -2851,6 +2851,7 @@ void MainWindow::setupActions()
     addAction(Actions["timelineMergeWithNextAction"]);
     addAction(Actions["timelineDetachAudioAction"]);
     addAction(Actions["timelineAlignToReferenceAction"]);
+    addAction(Actions["timelineAudioMixingAssistantAction"]);
     addAction(Actions["timelineUpdateThumbnailsAction"]);
     addAction(Actions["timelineRebuildAudioWaveformAction"]);
     addAction(Actions["keyframesTypePrevHoldAction"]);

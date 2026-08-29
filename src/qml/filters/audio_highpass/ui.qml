@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2025 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,6 +69,8 @@ Shotcut.KeyframableFilter {
         anchors.fill: parent
         anchors.margins: 8
         columns: 4
+
+        Shotcut.AudioMixingAssistantTag {}
 
         Label {
             text: qsTr('Preset')
