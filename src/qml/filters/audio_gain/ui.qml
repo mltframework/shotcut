@@ -139,6 +139,8 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
+        Shotcut.AudioMixingAssistantTag {}
+
         Label {
             visible: filter.get('shotcut:trackVolume')
             text: qsTr('%1 Track Volume').arg(filter.get('shotcut:trackVolumeName'))

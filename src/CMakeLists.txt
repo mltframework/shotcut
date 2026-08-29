@@ -20,6 +20,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/addencodepresetdialog.ui
   dialogs/alignaudiodialog.cpp dialogs/alignaudiodialog.h
   dialogs/alignmentarray.cpp dialogs/alignmentarray.h
+  dialogs/audiomixingassistantdialog.cpp dialogs/audiomixingassistantdialog.h
   dialogs/addonfiltersdialog.cpp dialogs/addonfiltersdialog.h
   dialogs/addonmetadatahelpdialog.cpp dialogs/addonmetadatahelpdialog.h
   dialogs/bitratedialog.h dialogs/bitratedialog.cpp
