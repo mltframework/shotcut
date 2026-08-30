@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,6 +138,18 @@ Item {
         columns: 4
         anchors.fill: parent
         anchors.margins: 8
+
+        Label {
+            visible: filter.get('shotcut:trackVolume')
+            text: filter.get('shotcut:trackVolumeName') + qsTr(' Track Volume')
+            Layout.columnSpan: parent.columns
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            font.bold: true
+
+            Shotcut.HoverTip {
+                text: qsTr('Track master volume')
+            }
+        }
 
         Label {
             text: qsTr('Preset')

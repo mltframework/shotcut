@@ -48,6 +48,8 @@
 #define kShotcutHiddenProperty "shotcut:hidden"
 #define kShotcutHiddenPositionProperty "shotcut:hiddenPosition"
 #define kShotcutHiddenPositionPost "post"
+#define kShotcutTrackVolumeProperty "shotcut:trackVolume"
+#define kShotcutTrackVolumeNameProperty "shotcut:trackVolumeName"
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
 #define kShotcutAnimInProperty "shotcut:animIn"
 #define kShotcutAnimOutProperty "shotcut:animOut"

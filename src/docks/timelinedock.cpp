@@ -2306,7 +2306,7 @@ void TimelineDock::clearSelectionIfInvalid()
 
         newSelection << QPoint(clip.x(), clip.y());
     }
-    setSelection(newSelection);
+    setSelection(newSelection, m_selection.selectedTrack, m_selection.isMultitrackSelected);
 }
 
 /*!
@@ -2642,6 +2642,7 @@ void TimelineDock::applyCopiedFiltersToSelectdClips()
 void TimelineDock::onShowFrame(const SharedFrame &frame)
 {
     if (MLT.isMultitrack() && m_model.tractor()) {
+        m_model.updateTrackGains(frame.get_position());
         m_model.updateTrackAudioLevels(frame);
         if (m_ignoreNextPositionChange) {
             m_ignoreNextPositionChange = false;

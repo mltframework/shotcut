@@ -1177,6 +1177,23 @@ static int indexOfFirstNonGpu(Producer &toProducer)
     return -1;
 }
 
+static void moveTrackVolumeFilterToEnd(Producer &producer)
+{
+    int trackVolumeIndex = -1;
+    int firstPostUserFilterIndex = producer.filter_count();
+    for (int i = 0; i < producer.filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer.filter(i));
+        if (filter && filter->get(kShotcutTrackVolumeProperty))
+            trackVolumeIndex = i;
+        else if (Util::isPostUserFilter(filter.data())) {
+            firstPostUserFilterIndex = i;
+            break;
+        }
+    }
+    if (trackVolumeIndex >= 0 && trackVolumeIndex != firstPostUserFilterIndex - 1)
+        producer.move_filter(trackVolumeIndex, firstPostUserFilterIndex);
+}
+
 void Controller::copyFilters(Producer &fromProducer,
                              Producer &toProducer,
                              bool fromClipboard,
@@ -1194,7 +1211,8 @@ void Controller::copyFilters(Producer &fromProducer,
 
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
-        if (Util::isUserFilter(fromFilter.data()) && fromFilter->get("mlt_service")) {
+        if ((Util::isUserFilter(fromFilter.data()) || fromFilter->get(kShotcutTrackVolumeProperty))
+            && fromFilter->get("mlt_service")) {
             filterCount++;
             if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
                 continue;
@@ -1223,6 +1241,7 @@ void Controller::copyFilters(Producer &fromProducer,
             Mlt::Filter toFilter(MLT.profile(), fromFilter->get("mlt_service"));
             if (toFilter.is_valid()) {
                 toFilter.inherit(*fromFilter);
+                toFilter.clear(kShotcutTrackVolumeProperty);
                 if (filterIndex != FILTER_INDEX_ALL)
                     toFilter.clear("disable");
                 // Force any 2-pass filters to require re-analysis
@@ -1296,6 +1315,7 @@ void Controller::pasteFilters(Mlt::Producer *producer, Producer *fromProducer)
             copyFilters(*m_filtersClipboard, *targetProducer, true, FILTER_INDEX_ALL);
         }
         adjustFilters(*targetProducer, j);
+        moveTrackVolumeFilterToEnd(*targetProducer);
     }
 }
 
