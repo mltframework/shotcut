@@ -24,8 +24,10 @@ Rectangle {
     property real timeScale: 1
     readonly property real intervalFrames: profile.fps * ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale))))
     readonly property real tickSpacing: intervalFrames * timeScale
+    // Clamp to rulerTop.width (the actual timeline content width) so ticks do not render past the end of an empty/short timeline.
+    readonly property real tickAreaEnd: Math.min(tracksFlickable.contentX + tracksFlickable.width + tickSpacing * 3, rulerTop.width)
     readonly property int firstTick: tickSpacing > 0 ? Math.max(0, Math.floor(tracksFlickable.contentX / tickSpacing) - 1) : 0
-    readonly property int tickCount: tickSpacing > 0 ? Math.ceil(tracksFlickable.width / tickSpacing) + 3 : 0
+    readonly property int tickCount: (tickSpacing > 0 && tickAreaEnd > firstTick * tickSpacing) ? Math.ceil((tickAreaEnd - firstTick * tickSpacing) / tickSpacing) : 0
 
     signal editMarkerRequested(int index)
     signal deleteMarkerRequested(int index)
