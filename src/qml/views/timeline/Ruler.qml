@@ -22,9 +22,12 @@ Rectangle {
     id: rulerTop
 
     property real timeScale: 1
-    readonly property real intervalFrames: profile.fps * ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale))))
+    // Minimum pixel width for a tick label, so ticks are spaced widely enough to never overlap.
+    readonly property real minTickSpacing: fontMetrics.boundingRect("00:00:00").width + 16
+    readonly property real intervalFrames: profile.fps * Math.max(1, Math.ceil(minTickSpacing / (profile.fps * timeScale)))
     readonly property real tickSpacing: intervalFrames * timeScale
     // Clamp to rulerTop.width (the actual timeline content width) so ticks do not render past the end of an empty/short timeline.
+    // The tickSpacing * 3 look-ahead avoids tick pop-in while scrolling.
     readonly property real tickAreaEnd: Math.min(tracksFlickable.contentX + tracksFlickable.width + tickSpacing * 3, rulerTop.width)
     readonly property int firstTick: tickSpacing > 0 ? Math.max(0, Math.floor(tracksFlickable.contentX / tickSpacing) - 1) : 0
     readonly property int tickCount: (tickSpacing > 0 && tickAreaEnd > firstTick * tickSpacing) ? Math.ceil((tickAreaEnd - firstTick * tickSpacing) / tickSpacing) : 0
@@ -34,6 +37,10 @@ Rectangle {
 
     height: 28
     color: activePalette.base
+
+    FontMetrics {
+        id: fontMetrics
+    }
 
     Repeater {
         id: repeater
