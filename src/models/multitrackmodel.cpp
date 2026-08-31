@@ -768,8 +768,16 @@ void MultitrackModel::setTrackGain(int row, double gain)
         return;
     }
 
-    filter->clear("level");
-    filter->set("level", gain);
+    if (animation.is_valid() && animation.key_count() > 0) {
+        const int position = qMax(m_trackGainPosition - filter->get_in(), 0);
+        if (!animation.is_key(position)
+            || gain != filter->anim_get_double("level", position, filter->get_length())) {
+            filter->anim_set("level", gain, position, filter->get_length());
+        }
+    } else {
+        filter->clear("level");
+        filter->set("level", gain);
+    }
 
     std::unique_ptr<Mlt::Filter> levelFilter(ensureTrackAudioLevelFilter(track.data(), i));
     Q_UNUSED(levelFilter)

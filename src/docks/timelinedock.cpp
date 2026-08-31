@@ -2657,6 +2657,7 @@ void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
         m_position = qMin(position, m_model.tractor()->get_length());
+        m_model.updateTrackGains(m_position);
         m_model.clearTrackAudioLevels();
         emit positionChanged(m_position);
     }
