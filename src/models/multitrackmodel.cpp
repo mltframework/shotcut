@@ -387,7 +387,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 case GainRole: {
                     QScopedPointer<Mlt::Filter> filter(getFilter("audioGain", info->producer));
                     if (filter && filter->is_valid()) {
-                        const auto level = qUtf8Printable("level");
+                        static const char *level = "level";
                         // Cause a string property to be interpreted as animated value.
                         if (!filter->get_animation(level))
                             filter->anim_get_double(level, 0);
