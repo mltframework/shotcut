@@ -141,7 +141,7 @@ Item {
 
         Label {
             visible: filter.get('shotcut:trackVolume')
-            text: filter.get('shotcut:trackVolumeName') + qsTr(' Track Volume')
+            text: qsTr('%1 Track Volume').arg(filter.get('shotcut:trackVolumeName'))
             Layout.columnSpan: parent.columns
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             font.bold: true

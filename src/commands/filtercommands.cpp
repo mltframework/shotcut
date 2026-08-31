@@ -331,7 +331,7 @@ void PasteCommand::undo()
     // Remove all filters
     for (int i = 0; i < producer.filter_count(); i++) {
         Mlt::Filter *filter = producer.filter(i);
-        if (Util::isUserFilter(filter)) {
+        if (Util::isUserFilter(filter) && !filter->get(kShotcutTrackVolumeProperty)) {
             producer.detach(*filter);
             i--;
         }

@@ -264,7 +264,7 @@ private:
     Mlt::Filter *ensureTrackAudioLevelFilter(Mlt::Producer *track, int mltTrackIndex) const;
     void syncTrackAudioLevelFilterPrefixes();
     void setTrackAudioLevel(int row, double audioLevel);
-    Mlt::Filter *ensureTrackVolumeFilter(Mlt::Producer *track, int trackIndex);
+    Mlt::Filter *ensureTrackVolumeFilter(Mlt::Producer *track);
 
     friend class UndoHelper;
 

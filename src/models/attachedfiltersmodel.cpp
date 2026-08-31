@@ -435,8 +435,6 @@ bool AttachedFiltersModel::removeRows(int row, int, const QModelIndex &parent)
     if (!m_producer || !m_producer->is_valid())
         return false;
 
-    int mltIndex = mltFilterIndex(m_producer.data(), row);
-    QScopedPointer<Mlt::Filter> filter(mltIndex >= 0 ? m_producer->filter(mltIndex) : nullptr);
     if (m_dropRow >= 0 && row != m_dropRow) {
         bool result = moveRows(parent, row, 1, parent, m_dropRow);
         m_dropRow = -1;
@@ -779,7 +777,6 @@ void AttachedFiltersModel::remove(int row)
         return;
 
     int mltIndex = mltFilterIndex(m_producer.get(), row);
-    QScopedPointer<Mlt::Filter> filter(mltIndex >= 0 ? m_producer->filter(mltIndex) : nullptr);
     if (isSourceClip()) {
         doRemoveService(*m_producer, row);
     } else {

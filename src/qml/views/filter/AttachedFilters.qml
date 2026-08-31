@@ -214,7 +214,7 @@ Rectangle {
                 property string grabSection: ""
 
                 function beginDrag() {
-                    var clickedIndex = attachedFiltersView.indexAt(mouseX, mouseY);
+                    const clickedIndex = attachedFiltersView.indexAt(mouseX, mouseY);
                     if (clickedIndex < 0 || attachedfiltersmodel.isTrackVolumeFilter(clickedIndex))
                         return;
                     preventStealing = true;

@@ -462,9 +462,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         return enabled;
                     if (enabled)
                         return filter->get_double("level");
-                    return filter->anim_get_double("level",
-                                                   m_trackGainPosition,
-                                                   filter->get_length());
+                    const int position = qMax(m_trackGainPosition - filter->get_in(), 0);
+                    return filter->anim_get_double("level", position, filter->get_length());
                 } else if (GainEnabledRole == role) {
                     return true;
                 }
@@ -729,7 +728,7 @@ void MultitrackModel::setTrackGain(int row, double gain)
         return;
     }
     if (!filter && !qFuzzyIsNull(gain)) {
-        filter.reset(ensureTrackVolumeFilter(track.data(), row));
+        filter.reset(ensureTrackVolumeFilter(track.data()));
         if (!filter) {
             LOG_ERROR() << "Failed to create or get track volume filter";
             return;
@@ -924,7 +923,7 @@ void MultitrackModel::setTrackAudioLevel(int row, double audioLevel)
     emit dataChanged(modelIndex, modelIndex, {AudioLevelRole});
 }
 
-Mlt::Filter *MultitrackModel::ensureTrackVolumeFilter(Mlt::Producer *track, int trackIndex)
+Mlt::Filter *MultitrackModel::ensureTrackVolumeFilter(Mlt::Producer *track)
 {
     if (!track || !track->is_valid())
         return nullptr;
