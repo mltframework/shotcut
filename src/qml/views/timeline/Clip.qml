@@ -144,6 +144,17 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
+    // Match the timeline gain line to the clip gain filter's dB range.
+    function gainLineY(gainValue) {
+        const normalizedGain = Math.max(0, Math.min((gainValue + 70) / 80, 1));
+        return clipRoot.height - waveform.height * normalizedGain;
+    }
+
+    // Keep timeline drag values aligned with the filter UI's 0.1 dB resolution.
+    function quantizedGain(gainValue) {
+        return Math.round(gainValue * 10) / 10;
+    }
+
     function considerThumbnails() {
         if (!elided && !isBlank && !isAudio && !isTransition && settings.timelineShowThumbnails)
             thumbnailsLoaded = true;
@@ -460,7 +471,7 @@ Rectangle {
         height: audioPeakMouseArea.dragging ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
-        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1)
+        y: clipRoot.gainLineY(gain)
         color: audioPeakMouseArea.enabled ? audioPeakMouseArea.dragging ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
         opacity: waveform.opacity
 
@@ -489,7 +500,7 @@ Rectangle {
             onReleased: {
                 root.stopScrolling = false;
                 dragging = false;
-                parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
+                parent.y = Qt.binding(() => clipRoot.gainLineY(clipRoot.gain));
             }
             onPositionChanged: mouse => {
                 if (clipRoot.updateSkim(audioPeakMouseArea, mouse))
@@ -504,16 +515,16 @@ Rectangle {
                 parent.y = newY;
                 let relY = newY - (clipRoot.height - waveform.height);
                 let value = (waveform.height - Math.max(0, Math.min(relY, waveform.height))) / waveform.height;
-                let gainVal = -80 /* dB */ * (1 - value) + 10;
+                let gainVal = clipRoot.quantizedGain(-80 /* dB */ * (1 - value) + 10);
                 if (!timeline.changeGain(trackIndex, index, gainVal))
-                    parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
+                    parent.y = Qt.binding(() => clipRoot.gainLineY(clipRoot.gain));
             }
             onExited: clipRoot.clearSkim()
             onDoubleClicked: timeline.changeGain(trackIndex, index, 0)
 
             ToolTip {
                 visible: adjustGainEnabled && (parent.containsMouse || parent.dragging)
-                text: clipRoot.gain.toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
+                text: clipRoot.quantizedGain(clipRoot.gain).toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
                     qsTr('Hold %1 to adjust\n%1 double-click to reset').arg(application.OS === 'macOS' ? '⌥⌘' : 'Ctrl+Alt'))
                 delay: parent.pressed ? 0 : 500
                 timeout: parent.pressed ? -1 : 5000
