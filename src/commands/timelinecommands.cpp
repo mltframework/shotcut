@@ -126,6 +126,8 @@ void AppendCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     LongUiTask longTask(QObject::tr("Append to Timeline"));
+    // Append only adds at the end; SkipXML + one track avoids serializing every clip.
+    m_undoHelper.setHints(UndoHelper::SkipXML);
     m_undoHelper.recordBeforeState({m_trackIndex});
     Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"), [=]() {
         return deserializeProducer(m_xml);
@@ -431,9 +433,6 @@ void RemoveCommand::redo()
     // track across tracks; fall back to whole-track restore only then.
     if (m_rippleAllTracks) {
         m_undoHelper.setHints(UndoHelper::RestoreTracks);
-    } else if (auto info = m_model.getClipInfo(m_trackIndex, m_clipIndex)) {
-        if (info->producer && info->producer->is_valid())
-            m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(*info->producer));
     }
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
     m_model.removeClip(m_trackIndex, m_clipIndex, m_rippleAllTracks);
@@ -871,16 +870,7 @@ void MoveClipCommand::redo()
             int newClipIndex = m_model.clipIndex(newTrackIndex, newStart);
             auto clipInfo = m_model.getClipInfo(newTrackIndex, newClipIndex);
             if (clipInfo && clipInfo->cut) {
-                if (clip.group >= 0) {
-                    clipInfo->cut->set(kShotcutGroupProperty, clip.group);
-                    QModelIndex modelIndex = m_model.index(newClipIndex,
-                                                           0,
-                                                           m_model.index(newTrackIndex));
-                    emit m_model.dataChanged(modelIndex,
-                                             modelIndex,
-                                             QVector<int>() << MultitrackModel::GroupRole);
-                }
-                MLT.setUuid(*clipInfo->producer, clip.uuid);
+                m_model.setClipGroup(newTrackIndex, newStart, clip.group);
                 uuids << clip.uuid;
             }
         }

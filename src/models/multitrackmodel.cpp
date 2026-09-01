@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QScopedPointer>
 #include <QTimer>
+#include <QUuid>
 #include <qmath.h>
 
 #include <cmath>
@@ -1216,6 +1217,12 @@ bool MultitrackModel::moveClip(
         Mlt::Producer clip(MLT.profile(), "xml-string", xml.toUtf8().constData());
 
         if (clip.is_valid()) {
+            // XML omits _shotcut:uuid (internal, not serialized).
+            MLT.setUuid(clip, MLT.ensureHasUuid(*info->producer));
+            const int group = (info->cut && info->cut->property_exists(kShotcutGroupProperty))
+                                  ? info->cut->get_int(kShotcutGroupProperty)
+                                  : -1;
+
             clearMixReferences(fromTrack, clipIndex);
             clip.set_in_and_out(info->frame_in, info->frame_out);
 
@@ -1285,6 +1292,7 @@ bool MultitrackModel::moveClip(
 
                     // Insert clip
                     insertClip(toTrack, clip, position, rippleAllTracks, false);
+                    setClipGroup(toTrack, position, group);
                 }
             } else {
                 // Lift clip — use structural signals so reparented delegates are properly destroyed
@@ -1300,10 +1308,12 @@ bool MultitrackModel::moveClip(
                 consolidateBlanks(playlist, fromTrack);
 
                 // Overwrite with clip
-                if (position + clip.get_playtime() >= 0)
+                if (position + clip.get_playtime() >= 0) {
                     overwrite(toTrack, clip, position, false /* seek */);
-                else
+                    setClipGroup(toTrack, position, group);
+                } else {
                     emit modified();
+                }
             }
         }
         result = true;
@@ -1763,10 +1773,12 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             playlist.insert_blank(clipIndex, duration - 1);
             endInsertRows();
         } else {
-            // Make copy of clip.
+            // XML copy omits _shotcut:uuid (internal, not serialized). Mint one
+            // so the new half is a distinct clip for undo/filter lookup.
             Mlt::Producer producer(MLT.profile(),
                                    "xml-string",
                                    MLT.XML(info->producer).toUtf8().constData());
+            MLT.setUuid(producer, QUuid::createUuid());
 
             // Connect a transition on the left to the new producer.
             if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {
@@ -3422,6 +3434,19 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::getClipInfo(int trackIndex, int 
         }
     }
     return std::unique_ptr<Mlt::ClipInfo>(result);
+}
+
+void MultitrackModel::setClipGroup(int trackIndex, int position, int group)
+{
+    if (group < 0)
+        return;
+    int idx = clipIndex(trackIndex, position);
+    auto info = getClipInfo(trackIndex, idx);
+    if (!info || !info->cut)
+        return;
+    info->cut->set(kShotcutGroupProperty, group);
+    QModelIndex modelIndex = index(idx, 0, index(trackIndex));
+    emit dataChanged(modelIndex, modelIndex, QVector<int>() << GroupRole);
 }
 
 /*!

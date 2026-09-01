@@ -119,6 +119,7 @@ public:
     void load();
     void close();
     int clipIndex(int trackIndex, int position);
+    void setClipGroup(int trackIndex, int position, int group);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
     int trackHeight() const;

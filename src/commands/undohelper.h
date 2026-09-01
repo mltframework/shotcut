@@ -78,6 +78,7 @@ private:
     bool survivingClipsInOrder() const;
     void restoreAffectedTracks();
     void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
+    void fixTransitionsAround(Mlt::Playlist playlist, int clipIndex);
     void promoteUuids(Mlt::Playlist &playlist);
     void demoteUuids(Mlt::Playlist &playlist);
 
@@ -102,6 +103,12 @@ private:
         int group = -1;
         int changes = NoChange;
     };
+
+    void insertRestoredClip(Mlt::Playlist &playlist,
+                            int clipIndex,
+                            const QUuid &uid,
+                            const Info &info,
+                            Mlt::Producer *entry);
 
     QMap<int, QString> m_beforeXml;
     QMap<QUuid, Info> m_state;
