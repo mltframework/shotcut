@@ -2356,6 +2356,77 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
     }
 }
 
+// overwrite()/lift clear mix_in/mix_out/mlt_mix. Those are live pointers,
+// not XML, so a restored mix tractor still plays as a hard cut until we
+// point the neighbors and the mix at each other again (same graph
+// mlt_playlist_mix writes).
+static void relinkMixReferences(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
+{
+    Mlt::Producer parent = clip.parent();
+    if (!parent.get(kShotcutTransitionProperty))
+        return;
+    Mlt::Tractor tractor(parent);
+    if (!tractor.is_valid())
+        return;
+    mlt_tractor mix = tractor.get_tractor();
+    parent.set("mlt_mix", mix, 0);
+    if (clipIndex > 0 && !playlist.is_blank(clipIndex - 1)) {
+        QScopedPointer<Mlt::Producer> left(playlist.get_clip(clipIndex - 1));
+        if (left && left->is_valid() && !left->parent().get(kShotcutTransitionProperty)) {
+            left->set("mix_out", mix, 0);
+            parent.set("mix_in", left->get_producer(), 0);
+        }
+    }
+    if (clipIndex + 1 < playlist.count() && !playlist.is_blank(clipIndex + 1)) {
+        QScopedPointer<Mlt::Producer> right(playlist.get_clip(clipIndex + 1));
+        if (right && right->is_valid() && !right->parent().get(kShotcutTransitionProperty)) {
+            right->set("mix_in", mix, 0);
+            parent.set("mix_out", right->get_producer(), 0);
+        }
+    }
+}
+
+static void relinkClipTransitions(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
+{
+    if (clip.is_blank())
+        return;
+    int transitionIndex = 0;
+    for (auto neighborIndex : {clipIndex + 1, clipIndex - 1}) {
+        Mlt::Producer neighbor(playlist.get_clip(neighborIndex));
+        if (neighbor.is_valid() && neighbor.parent().get(kShotcutTransitionProperty)) {
+            Mlt::Tractor transition(neighbor.parent());
+            if (transition.is_valid()) {
+                QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));
+                if (transitionClip->is_valid()
+                    && transitionClip->parent().get_service() != clip.parent().get_service()) {
+                    transitionClip.reset(
+                        clip.cut(transitionClip->get_in(), transitionClip->get_out()));
+                    transition.set_track(*transitionClip.data(), transitionIndex);
+                }
+            }
+        }
+        transitionIndex++;
+    }
+    relinkMixReferences(playlist, clipIndex, clip);
+}
+
+void MultitrackModel::relinkTransitions(int trackIndex, int clipIndex)
+{
+    if (trackIndex < 0 || trackIndex >= m_trackList.size() || clipIndex < 0)
+        return;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+    if (!track || !track->is_valid())
+        return;
+    Mlt::Playlist playlist(*track);
+    const int from = qMax(0, clipIndex - 1);
+    const int to = qMin(playlist.count() - 1, clipIndex + 1);
+    for (int i = from; i <= to; ++i) {
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
+        if (clip && clip->is_valid())
+            relinkClipTransitions(playlist, i, *clip);
+    }
+}
+
 /*!
     \qmlmethod void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
     \brief Removes the transition at (\a trackIndex, \a clipIndex).

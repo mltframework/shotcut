@@ -23,8 +23,6 @@
 #include "models/audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
 
-#include <MltTractor.h>
-
 #include <QScopedPointer>
 #include <QUuid>
 #include <QtConcurrent/QtConcurrentRun>
@@ -534,78 +532,6 @@ void UndoHelper::restoreAffectedTracks()
     }
 }
 
-// overwrite()/lift clear mix_in/mix_out/mlt_mix. Those are live pointers,
-// not XML, so a restored mix tractor still plays as a hard cut until we
-// point the neighbors and the mix at each other again (same graph
-// mlt_playlist_mix writes).
-static void relinkMixReferences(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
-{
-    Mlt::Producer parent = clip.parent();
-    if (!parent.get(kShotcutTransitionProperty))
-        return;
-    Mlt::Tractor tractor(parent);
-    if (!tractor.is_valid())
-        return;
-    mlt_tractor mix = tractor.get_tractor();
-    parent.set("mlt_mix", mix, 0);
-    if (clipIndex > 0 && !playlist.is_blank(clipIndex - 1)) {
-        QScopedPointer<Mlt::Producer> left(playlist.get_clip(clipIndex - 1));
-        if (left && left->is_valid() && !left->parent().get(kShotcutTransitionProperty)) {
-            left->set("mix_out", mix, 0);
-            parent.set("mix_in", left->get_producer(), 0);
-        }
-    }
-    if (clipIndex + 1 < playlist.count() && !playlist.is_blank(clipIndex + 1)) {
-        QScopedPointer<Mlt::Producer> right(playlist.get_clip(clipIndex + 1));
-        if (right && right->is_valid() && !right->parent().get(kShotcutTransitionProperty)) {
-            right->set("mix_in", mix, 0);
-            parent.set("mix_out", right->get_producer(), 0);
-        }
-    }
-}
-
-void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip)
-{
-    if (clip.is_blank()) {
-        return;
-    }
-    int transitionIndex = 0;
-    for (auto currentIndex : {clipIndex + 1, clipIndex - 1}) {
-        // Reconnect a transition on the right/left to the freshly restored producer, which is a
-        // new instance the adjacent transition's track slot does not yet reference.
-        Mlt::Producer producer(playlist.get_clip(currentIndex));
-        if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
-            Mlt::Tractor transition(producer.parent());
-            if (transition.is_valid()) {
-                QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));
-                if (transitionClip->is_valid()
-                    && transitionClip->parent().get_service() != clip.parent().get_service()) {
-                    UNDOLOG << "Fixing transition at clip index" << currentIndex
-                            << "transition index" << transitionIndex;
-                    transitionClip.reset(
-                        clip.cut(transitionClip->get_in(), transitionClip->get_out()));
-                    transition.set_track(*transitionClip.data(), transitionIndex);
-                }
-            }
-        }
-        transitionIndex++;
-    }
-    relinkMixReferences(playlist, clipIndex, clip);
-}
-
-void UndoHelper::fixTransitionsAround(Mlt::Playlist playlist, int clipIndex)
-{
-    // lift/overwrite also null mix_in/mix_out on neighbors. Relink the restored
-    // cut and the clips beside it so a surviving mix is wired too.
-    const int from = qMax(0, clipIndex - 1);
-    const int to = qMin(playlist.count() - 1, clipIndex + 1);
-    for (int i = from; i <= to; ++i) {
-        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
-        if (clip && clip->is_valid())
-            fixTransitions(playlist, i, *clip);
-    }
-}
-
 void UndoHelper::insertRestoredClip(Mlt::Playlist &playlist,
                                     int clipIndex,
                                     const QUuid &uid,
@@ -626,7 +552,7 @@ void UndoHelper::insertRestoredClip(Mlt::Playlist &playlist,
     QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
     if (!clip || !clip->is_valid())
         return;
-    fixTransitionsAround(playlist, clipIndex);
+    m_model.relinkTransitions(info.oldTrackIndex, clipIndex);
     MLT.setUuid(clip->parent(), uid);
     clip->parent().set(kUuidPropertyTemp, nullptr, 0);
     m_model.setClipGroup(info.oldTrackIndex, playlist.clip_start(clipIndex), info.group);

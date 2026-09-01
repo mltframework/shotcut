@@ -194,26 +194,44 @@ InsertCommand::InsertCommand(MultitrackModel &model,
     m_undoHelper.setText(text());
 }
 
+void InsertCommand::snapshotSplitDest()
+{
+    if (m_trackIndex < 0 || m_trackIndex >= m_model.trackList().size())
+        return;
+    int mltIndex = m_model.trackList().at(m_trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+    if (!track || !track->is_valid())
+        return;
+    Mlt::Playlist playlist(*track);
+    // insertClip appends without splitting when position is at/after the end.
+    if (m_position >= playlist.get_playtime() - 1)
+        return;
+    int targetIndex = playlist.get_clip_index_at(m_position);
+    if (m_position <= playlist.clip_start(targetIndex) || playlist.is_blank(targetIndex))
+        return;
+    auto info = m_model.getClipInfo(m_trackIndex, targetIndex);
+    if (!info || !info->producer || !info->producer->is_valid() || !info->cut)
+        return;
+    m_splitDest.uuid = MLT.ensureHasUuid(*info->producer);
+    m_splitDest.xml = MLT.XML(info->producer, false);
+    m_splitDest.start = info->start;
+    m_splitDest.frame_in = info->frame_in;
+    m_splitDest.frame_out = info->frame_out;
+    m_splitDest.group = info->cut->property_exists(kShotcutGroupProperty)
+                            ? info->cut->get_int(kShotcutGroupProperty)
+                            : -1;
+}
+
 void InsertCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     int shift = 0;
     // Ripple-all-tracks shifts clips on other tracks, which the fine-grained diff does not track
     // across tracks; fall back to whole-track restore only then.
-    if (m_rippleAllTracks) {
+    if (m_rippleAllTracks)
         m_undoHelper.setHints(UndoHelper::RestoreTracks);
-    } else {
-        // The clip at the insertion point is split; snapshot it for a cheap undo.
-        auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
-        if (track && track->is_valid()) {
-            Mlt::Playlist playlist(*track);
-            QScopedPointer<Mlt::Producer> c(
-                playlist.get_clip(playlist.get_clip_index_at(m_position)));
-            if (c && c->is_valid() && !c->is_blank())
-                m_undoHelper.storeXmlForClip(MLT.ensureHasUuid(c->parent()));
-        }
-    }
+    if (m_uuids.empty())
+        snapshotSplitDest();
     m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (!clip.is_valid()) {
@@ -255,10 +273,62 @@ void InsertCommand::redo()
     }
 }
 
+void InsertCommand::restoreSplitDest()
+{
+    if (!m_splitDest.isValid())
+        return;
+    int rightTrack = -1;
+    int rightIndex = -1;
+    auto right = m_model.findClipByUuid(m_splitDest.uuid, rightTrack, rightIndex);
+    int leftIndex = m_model.clipIndex(m_trackIndex, m_splitDest.start);
+    if (right && rightIndex >= 0 && leftIndex >= 0) {
+        m_model.liftClip(m_trackIndex, qMax(leftIndex, rightIndex));
+        if (leftIndex != rightIndex)
+            m_model.liftClip(m_trackIndex, qMin(leftIndex, rightIndex));
+    }
+    Mlt::Producer restored(MLT.profile(), "xml-string", m_splitDest.xml.toUtf8().constData());
+    if (!restored.is_valid()) {
+        LOG_ERROR() << "Failed to restore split clip" << m_splitDest.uuid.toString();
+        return;
+    }
+    if (restored.type() == mlt_service_tractor_type)
+        restored.set("mlt_type", "mlt_producer");
+    restored.set_in_and_out(m_splitDest.frame_in, m_splitDest.frame_out);
+    MLT.setUuid(restored, m_splitDest.uuid);
+    m_model.overwrite(m_trackIndex, restored, m_splitDest.start, false);
+    m_model.setClipGroup(m_trackIndex, m_splitDest.start, m_splitDest.group);
+    m_model.relinkTransitions(m_trackIndex, m_model.clipIndex(m_trackIndex, m_splitDest.start));
+}
+
+bool InsertCommand::undoByRemovingInserted()
+{
+    if (m_uuids.isEmpty())
+        return false;
+    for (const auto &uid : std::as_const(m_uuids)) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        if (!m_model.findClipByUuid(uid, trackIndex, clipIndex))
+            return false;
+    }
+    for (int i = m_uuids.size() - 1; i >= 0; --i) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        if (!m_model.findClipByUuid(m_uuids[i], trackIndex, clipIndex)) {
+            LOG_ERROR() << "Unable to find inserted clip to undo" << m_uuids[i].toString();
+            continue;
+        }
+        m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
+    }
+    if (m_splitDest.isValid())
+        restoreSplitDest();
+    return true;
+}
+
 void InsertCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
-    m_undoHelper.undoChanges();
+    if (m_rippleAllTracks || !undoByRemovingInserted())
+        m_undoHelper.undoChanges();
     if (m_rippleMarkers && m_markersShift > 0) {
         m_markersModel.doShift(m_position + m_markersShift, -m_markersShift);
     }

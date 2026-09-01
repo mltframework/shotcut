@@ -109,6 +109,21 @@ public:
     void undo();
 
 private:
+    struct SplitDest
+    {
+        QString xml;
+        QUuid uuid;
+        int start = -1;
+        int frame_in = -1;
+        int frame_out = -1;
+        int group = -1;
+        bool isValid() const { return !xml.isEmpty(); }
+    };
+
+    bool undoByRemovingInserted();
+    void restoreSplitDest();
+    void snapshotSplitDest();
+
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
     int m_trackIndex;
@@ -121,6 +136,7 @@ private:
     bool m_rippleMarkers;
     int m_markersShift;
     QVector<QUuid> m_uuids;
+    SplitDest m_splitDest;
 };
 
 class OverwriteCommand : public QUndoCommand

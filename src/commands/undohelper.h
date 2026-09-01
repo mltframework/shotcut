@@ -77,8 +77,6 @@ private:
     void debugPrintState(const QString &title);
     bool survivingClipsInOrder() const;
     void restoreAffectedTracks();
-    void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
-    void fixTransitionsAround(Mlt::Playlist playlist, int clipIndex);
     void promoteUuids(Mlt::Playlist &playlist);
     void demoteUuids(Mlt::Playlist &playlist);
 
