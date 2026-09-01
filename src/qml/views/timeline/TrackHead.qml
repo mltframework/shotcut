@@ -658,10 +658,11 @@ Rectangle {
         Rectangle {
             visible: trackHeadRoot.inlineAudioControlsEnabled
                      && trackHeadRoot.trackAudioLevelSupported
-            width: parent.width
+            width: parent.width - 6
             height: trackHeadRoot.stackedHeaderLayout ? 28 : 30
             color: 'transparent'
             border.color: 'transparent'
+            radius: 3
 
             Column {
                 anchors.fill: parent
