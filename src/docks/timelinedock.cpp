@@ -774,8 +774,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(-1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(-1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -797,8 +797,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
