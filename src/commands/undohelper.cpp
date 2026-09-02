@@ -501,6 +501,12 @@ void UndoHelper::restoreAffectedTracks()
                 restoredPlaylist.clip_info(j, &clipInfo);
                 if (restoredPlaylist.is_blank(j)) {
                     playlist.insert_blank(j, clipInfo.frame_out - clipInfo.frame_in);
+                    // insert_blank() makes a fresh blank, dropping the shadow blank's uuid; carry
+                    // it over so a later command's undo can still recognize this blank.
+                    QScopedPointer<Mlt::Producer> shadowBlank(restoredPlaylist.get_clip(j));
+                    QScopedPointer<Mlt::Producer> newBlank(playlist.get_clip(j));
+                    if (shadowBlank && newBlank && shadowBlank->get(kUuidPropertyTemp))
+                        newBlank->set(kUuidPropertyTemp, shadowBlank->get(kUuidPropertyTemp));
                 } else {
                     QScopedPointer<Mlt::Producer> entry(restoredPlaylist.get_clip(j));
                     playlist.insert(*entry, j, clipInfo.frame_in, clipInfo.frame_out);
