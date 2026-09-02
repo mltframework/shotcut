@@ -857,7 +857,6 @@ Mlt::Filter *MultitrackModel::ensureTrackAudioLevelFilter(Mlt::Producer *track,
         newFilter.set(kShotcutHiddenProperty, 1);
         newFilter.set(kShotcutHiddenPositionProperty, kShotcutHiddenPositionPost);
         newFilter.set("prefix", prefix.constData());
-        newFilter.set_in_and_out(0, qMax(track->get_length() - 1, 0));
         track->attach(newFilter);
         int target = firstPostUserHiddenFilterIndex(track);
         const int gainIndex = filterIndexByShotcutName(track, "audioGain");
@@ -943,7 +942,7 @@ Mlt::Filter *MultitrackModel::ensureTrackVolumeFilter(Mlt::Producer *track)
     newFilter.set(kShotcutTrackVolumeProperty, "Volume"); // Mark as track volume filter
     newFilter.set(kShotcutTrackVolumeNameProperty, track->get(kTrackNameProperty));
     newFilter.set("level", 0); // 0 dB = linear gain of 1.0 (no-op)
-    newFilter.set_in_and_out(0, qMax(track->get_length() - 1, 0));
+    newFilter.set_in_and_out(0, qMax(m_tractor->get_length() - 1, 0));
     AttachedFiltersModel *attachedModel = MAIN.filterController()->attachedModel();
     if (attachedModel->producer()
         && attachedModel->producer()->get_service() == track->get_service()) {
