@@ -782,8 +782,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(-1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(-1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -805,8 +805,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -2321,7 +2321,7 @@ void TimelineDock::clearSelectionIfInvalid()
 
         newSelection << QPoint(clip.x(), clip.y());
     }
-    setSelection(newSelection);
+    setSelection(newSelection, m_selection.selectedTrack, m_selection.isMultitrackSelected);
 }
 
 void TimelineDock::onBulkUpdateFinished()
@@ -2663,6 +2663,7 @@ void TimelineDock::applyCopiedFiltersToSelectdClips()
 void TimelineDock::onShowFrame(const SharedFrame &frame)
 {
     if (MLT.isMultitrack() && m_model.tractor()) {
+        m_model.updateTrackGains(frame.get_position());
         m_model.updateTrackAudioLevels(frame);
         if (m_ignoreNextPositionChange) {
             m_ignoreNextPositionChange = false;
@@ -2677,6 +2678,7 @@ void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
         m_position = qMin(position, m_model.tractor()->get_length());
+        m_model.updateTrackGains(m_position);
         m_model.clearTrackAudioLevels();
         emit positionChanged(m_position);
     }

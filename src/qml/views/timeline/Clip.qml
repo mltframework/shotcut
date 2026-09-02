@@ -28,6 +28,7 @@ Rectangle {
     property int inPoint: 0
     property int outPoint: 0
     property int clipDuration: 0
+    property int clipStart: 0
     property bool isBlank: false
     property bool isAudio: false
     property bool isTransition: false
@@ -47,7 +48,40 @@ Rectangle {
     property string audioIndex: ''
     property int group: -1
     property bool isTrackMute: false
-    property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
+    // Pixel range from the model (start/duration * scale), not from item x/width.
+    readonly property real clipPx: clipStart * multitrack.scaleFactor
+    readonly property real clipPxW: clipDuration * multitrack.scaleFactor
+    // Off-screen clips shrink to a 1px stub to avoid huge item allocations.
+    // Narrow-but-visible clips must keep their real width (thin blue bars).
+    readonly property bool offScreen: {
+        if (Drag.active)
+            return false;
+        const pad = tracksFlickable.width;
+        const viewLeft = tracksFlickable.contentX - pad;
+        const viewRight = tracksFlickable.contentX + tracksFlickable.width + pad;
+        const clipTop = trackRoot.y + y;
+        const viewTop = tracksFlickable.contentY - pad;
+        const viewBottom = tracksFlickable.contentY + tracksFlickable.height + pad;
+        return (clipPx + clipPxW < viewLeft) || (clipPx > viewRight) || (clipTop + height < viewTop) || (clipTop > viewBottom);
+    }
+    property bool elided: offScreen || clipPxW < 15
+    property bool thumbnailsLoaded: false
+    readonly property int waveformMaxWidth: Math.max(application.maxTextureSize / 2, 2048)
+    readonly property int waveformFirstTile: {
+        if (elided || clipPxW <= 0)
+            return 0;
+        const localLeft = tracksFlickable.contentX - clipPx - tracksFlickable.width;
+        return Math.max(0, Math.floor(localLeft / waveformMaxWidth));
+    }
+    readonly property int waveformTileCount: {
+        if (elided || clipPxW <= 0 || isBlank || !settings.timelineShowWaveforms)
+            return 0;
+        if (!(parseInt(audioIndex) > -1 || audioIndex === 'all'))
+            return 0;
+        const localRight = tracksFlickable.contentX - clipPx + 2 * tracksFlickable.width;
+        const last = Math.min(Math.ceil(clipPxW / waveformMaxWidth), Math.ceil(Math.max(localRight, 0) / waveformMaxWidth));
+        return Math.min(8, Math.max(0, last - waveformFirstTile));
+    }
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
 
     signal clicked(var clip, var mouse)
@@ -86,10 +120,6 @@ Rectangle {
     function generateWaveform(force) {
         if (!waveform.visible && !force)
             return;
-
-        // This is needed to make the model have the correct count.
-        // Model as a property expression is not working in all cases.
-        waveformRepeater.model = Math.ceil(clipRoot.width / waveform.maxWidth);
         for (let i = 0; i < waveformRepeater.count; i++)
             waveformRepeater.itemAt(i).update();
     }
@@ -114,12 +144,46 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
+    // Match the timeline gain line to the clip gain filter's dB range.
+    function gainLineY(gainValue) {
+        const normalizedGain = Math.max(0, Math.min((gainValue + 70) / 80, 1));
+        return clipRoot.height - waveform.height * normalizedGain;
+    }
+
+    // Keep timeline drag values aligned with the filter UI's 0.1 dB resolution.
+    function quantizedGain(gainValue) {
+        return Math.round(gainValue * 10) / 10;
+    }
+
+    function considerThumbnails() {
+        if (!elided && !isBlank && !isAudio && !isTransition && settings.timelineShowThumbnails)
+            thumbnailsLoaded = true;
+    }
+
+    onElidedChanged: considerThumbnails()
+    Component.onCompleted: considerThumbnails()
+
+    Connections {
+        target: settings
+        function onTimelineShowThumbnailsChanged() {
+            considerThumbnails();
+        }
+    }
+
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
     border.width: (isBlank && !selected) ? 0 : 1
-    clip: true
+    clip: !offScreen && clipPxW < 4096
+    color: clipColor
+    gradient: offScreen ? null : clipGradient
+    width: offScreen ? 1 : clipPxW
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active ? 0.5 : 1
+
+    Binding on x {
+        value: clipRoot.clipPx
+        when: !clipRoot.Drag.active
+    }
     states: [
         State {
             name: 'normal'
@@ -324,7 +388,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: imagePath(outPoint)
+        source: clipRoot.thumbnailsLoaded ? imagePath(outPoint) : ''
     }
 
     Image {
@@ -340,27 +404,37 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: imagePath(inPoint)
+        source: clipRoot.thumbnailsLoaded ? imagePath(inPoint) : ''
     }
 
-    Shotcut.TimelineTransition {
-        property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
-
-        visible: !elided && isTransition
+    Loader {
         anchors.fill: parent
-        anchors.margins: selected ? parent.border.width : 0
-        colorA: color
-        colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
+        active: !elided && isTransition
+        sourceComponent: transitionComponent
     }
 
-    Row {
+    Component {
+        id: transitionComponent
+
+        Shotcut.TimelineTransition {
+            property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
+
+            anchors.fill: parent
+            anchors.margins: selected ? parent.border.width : 0
+            colorA: color
+            colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
+        }
+    }
+
+    Item {
         id: waveform
 
-        readonly property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
+        readonly property int maxWidth: clipRoot.waveformMaxWidth
 
         visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
         anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: isTrackMute ? 0.2 : 0.7
@@ -368,19 +442,21 @@ Rectangle {
         Repeater {
             id: waveformRepeater
 
-            model: Math.ceil(clipRoot.width / waveform.maxWidth)
+            model: clipRoot.waveformTileCount
 
             Shotcut.TimelineWaveform {
                 property int channels: 2
+                property int tileIndex: clipRoot.waveformFirstTile + index
 
                 trackIndex: clipRoot.trackIndex
                 clipIndex: clipRoot.readonlyClipIndex
-                width: Math.min(clipRoot.width - 2 * clipRoot.border.width, waveform.maxWidth)
+                x: tileIndex * waveform.maxWidth
+                width: Math.min(waveform.maxWidth, parent.width - x)
                 height: waveform.height
                 fillColor: clipColor
-                inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
+                inPoint: Math.round((clipRoot.inPoint + tileIndex * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
-                active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
+                active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height)
 
                 Component.onCompleted: connectToModel()
             }
@@ -395,7 +471,7 @@ Rectangle {
         height: audioPeakMouseArea.dragging ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
-        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1)
+        y: clipRoot.gainLineY(gain)
         color: audioPeakMouseArea.enabled ? audioPeakMouseArea.dragging ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
         opacity: waveform.opacity
 
@@ -424,7 +500,7 @@ Rectangle {
             onReleased: {
                 root.stopScrolling = false;
                 dragging = false;
-                parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
+                parent.y = Qt.binding(() => clipRoot.gainLineY(clipRoot.gain));
             }
             onPositionChanged: mouse => {
                 if (clipRoot.updateSkim(audioPeakMouseArea, mouse))
@@ -439,17 +515,28 @@ Rectangle {
                 parent.y = newY;
                 let relY = newY - (clipRoot.height - waveform.height);
                 let value = (waveform.height - Math.max(0, Math.min(relY, waveform.height))) / waveform.height;
-                let gainVal = -80 /* dB */ * (1 - value) + 10;
+                let gainVal = clipRoot.quantizedGain(-80 /* dB */ * (1 - value) + 10);
                 if (!timeline.changeGain(trackIndex, index, gainVal))
-                    parent.y = Qt.binding(() => clipRoot.height - waveform.height * Math.min((clipRoot.gain + 72) / 80, 1));
+                    parent.y = Qt.binding(() => clipRoot.gainLineY(clipRoot.gain));
             }
             onExited: clipRoot.clearSkim()
             onDoubleClicked: timeline.changeGain(trackIndex, index, 0)
 
             ToolTip {
                 visible: adjustGainEnabled && (parent.containsMouse || parent.dragging)
-                text: clipRoot.gain.toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
+                text: clipRoot.quantizedGain(clipRoot.gain).toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
                     qsTr('Hold %1 to adjust\n%1 double-click to reset').arg(application.OS === 'macOS' ? '⌥⌘' : 'Ctrl+Alt'))
+                delay: parent.pressed ? 0 : 500
+                timeout: parent.pressed ? -1 : 5000
+                onVisibleChanged: {
+                    if (visible) {
+                        let point = application.mousePos;
+                        point = parent.mapFromGlobal(point.x, point.y);
+                        x = point.x + 20;
+                        y = Math.max(point.y - 20, 0);
+                    }
+                }
+
             }
         }
     }
@@ -869,7 +956,9 @@ Rectangle {
         }
     }
 
-    gradient: Gradient {
+    Gradient {
+        id: clipGradient
+
         GradientStop {
             id: gradientStop
 

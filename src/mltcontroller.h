@@ -188,6 +188,7 @@ public:
     static int checkFile(const QString &path);
     bool blockRefresh(bool block);
     void configureHardwareDecoder(bool enable);
+    static void setSafeMode();
 
     class RefreshBlocker
     {

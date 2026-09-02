@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ function snapClip(clip, repeater) {
             // Do not snap to self.
             if (i === clip.DelegateModel.itemsIndex && clip.originalTrackIndex === repeater.itemAt(i).originalTrackIndex)
                 continue
-            var itemLeft = repeater.itemAt(i).x
-            var itemRight = itemLeft + repeater.itemAt(i).width
+            var itemLeft = repeater.itemAt(i).clipPx
+            var itemRight = itemLeft + repeater.itemAt(i).clipPxW
             // Snap to blank / neighboring clips in frame space so low zoom
             // (small timeScale) round-trips to integer frames.
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
@@ -95,8 +95,8 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank || repeater.itemAt(i).isTransition)
                 continue
-            var itemLeft = repeater.itemAt(i).x
-            var itemRight = itemLeft + repeater.itemAt(i).width
+            var itemLeft = repeater.itemAt(i).clipPx
+            var itemRight = itemLeft + repeater.itemAt(i).clipPxW
             if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                 return Math.round((itemLeft - clip.x) / timeScale)
             else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
@@ -111,8 +111,8 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
                 var item = track.clipAt(i)
                 if (item.isBlank)
                     continue
-                itemLeft = item.x
-                itemRight = itemLeft + item.width
+                itemLeft = item.clipPx
+                itemRight = itemLeft + item.clipPxW
                 if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                     return Math.round((itemLeft - clip.x) / timeScale)
                 else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
@@ -149,8 +149,8 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank || repeater.itemAt(i).isTransition)
                 continue
-            var itemLeft = repeater.itemAt(i).x
-            var itemRight = itemLeft + repeater.itemAt(i).width
+            var itemLeft = repeater.itemAt(i).clipPx
+            var itemRight = itemLeft + repeater.itemAt(i).clipPxW
             if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                 return Math.round((rightEdge - itemLeft) / timeScale)
             else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
@@ -165,8 +165,8 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
                 var item = track.clipAt(i)
                 if (item.isBlank)
                     continue
-                itemLeft = item.x
-                itemRight = itemLeft + item.width
+                itemLeft = item.clipPx
+                itemRight = itemLeft + item.clipPxW
                 if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                     return Math.round((rightEdge - itemLeft) / timeScale)
                 else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
@@ -201,8 +201,8 @@ function snapDrop(pos, repeater) {
     } else {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
-            var itemLeft = repeater.itemAt(i).x
-            var itemRight = itemLeft + repeater.itemAt(i).width
+            var itemLeft = repeater.itemAt(i).clipPx
+            var itemRight = itemLeft + repeater.itemAt(i).clipPxW
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
                 dropTarget.x = itemLeft - dropTarget.width + headerWidth - tracksFlickable.contentX
                 return

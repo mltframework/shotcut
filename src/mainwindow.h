@@ -127,6 +127,7 @@ signals:
     void renameRequested();
     void serviceInChanged(int delta, Mlt::Service *);
     void serviceOutChanged(int delta, Mlt::Service *);
+    void windowShown();
 
 protected:
     MainWindow();

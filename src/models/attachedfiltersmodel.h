@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ public:
     bool supportsLinks() const;
     Mlt::Producer *producer() const { return m_producer.data(); }
     QString name(int row) const;
+    Q_INVOKABLE bool isTrackVolumeFilter(int row) const;
+    int trackVolumeFilterIndex() const;
 
     // The below are used by QUndoCommands
     void doAddService(Mlt::Producer &producer, Mlt::Service &service, int row);

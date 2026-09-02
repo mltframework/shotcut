@@ -111,7 +111,7 @@ void AudioWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 
     if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
         int samples = m_frame.get_audio_samples();
-        int16_t *audio = (int16_t *) m_frame.get_audio();
+        const int16_t *audio = static_cast<const int16_t *>(m_frame.get_audio(mlt_audio_s16));
         int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
         qreal scaleFactor = (qreal) waveAmplitude / (qreal) MAX_AMPLITUDE;
 
@@ -257,7 +257,7 @@ void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     int channels = m_frame.get_audio_channels();
     int samples = m_frame.get_audio_samples();
-    int16_t *audio = (int16_t *) m_frame.get_audio();
+    const int16_t *audio = static_cast<const int16_t *>(m_frame.get_audio(mlt_audio_s16));
     if (samples < 10 || channels < 1)
         return;
 

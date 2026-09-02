@@ -22,7 +22,10 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
+
+#include <QScopedPointer>
 
 class FindProducerParser : public Mlt::Parser
 {
@@ -338,7 +341,7 @@ void PasteCommand::undo()
     // Remove all filters
     for (int i = 0; i < producer.filter_count(); i++) {
         Mlt::Filter *filter = producer.filter(i);
-        if (Util::isUserFilter(filter)) {
+        if (Util::isUserFilter(filter) && !filter->get(kShotcutTrackVolumeProperty)) {
             producer.detach(*filter);
             i--;
         }
@@ -347,6 +350,13 @@ void PasteCommand::undo()
     // Restore the "before" filters
     Mlt::Profile profile(kDefaultMltProfile);
     Mlt::Producer filtersProducer(profile, "xml-string", m_beforeXml.toUtf8().constData());
+    for (int i = 0; i < filtersProducer.filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(filtersProducer.filter(i));
+        if (filter && filter->get(kShotcutTrackVolumeProperty)) {
+            filtersProducer.detach(*filter);
+            i--;
+        }
+    }
     if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0) {
         MLT.pasteFilters(&producer, &filtersProducer);
     }

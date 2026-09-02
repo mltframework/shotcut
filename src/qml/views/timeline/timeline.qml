@@ -38,10 +38,32 @@ Rectangle {
     property int shortestTrackHeight: Logic.trackHeight()
     property bool inlineAudioControlsEnabled: shortestTrackHeight >= inlineAudioControlsThreshold
     property bool separateTrackHeaderRows: shortestTrackHeight >= separateTrackHeaderRowsThreshold
+    property real pendingZoomContentX: -1
+    property int zoomScrollRetries: 0
 
     signal clipClicked
     signal timelineRightClicked
     signal clipRightClicked
+
+    function applyPendingZoomScroll() {
+        if (pendingZoomContentX < 0)
+            return;
+        const maxX = Logic.scrollMax().x;
+        if (pendingZoomContentX > maxX + 1 && zoomScrollRetries < 10) {
+            zoomScrollRetries++;
+            applyZoomScrollTimer.restart();
+            return;
+        }
+        tracksFlickable.contentX = Logic.clamp(pendingZoomContentX, 0, maxX);
+        pendingZoomContentX = -1;
+        zoomScrollRetries = 0;
+    }
+
+    function scheduleZoomScroll(x) {
+        pendingZoomContentX = Math.max(x, 0);
+        zoomScrollRetries = 0;
+        applyPendingZoomScroll();
+    }
 
     function setZoom(value, targetX) {
         if (!targetX) {
@@ -57,17 +79,21 @@ Rectangle {
             value = 0;
         let playheadVisualX = timeline.position * before - tracksFlickable.contentX;
         let playheadWasVisible = playheadVisualX >= 0 && playheadVisualX <= tracksFlickable.width;
-        multitrack.scaleFactor = Math.pow(Math.max(value, 0), 3) + 0.01;
+        const newScale = Math.pow(Math.max(value, 0), 3) + 0.01;
+        let newContentX = -1;
         if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead) {
             if (settings.timelineScrollZoom) {
                 if (playheadWasVisible)
-                    tracksFlickable.contentX = Math.max(timeline.position * multitrack.scaleFactor - playheadVisualX, 0);
+                    newContentX = Math.max(timeline.position * newScale - playheadVisualX, 0);
                 else
                     scrollZoomTimer.restart();
             } else {
-                tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
+                newContentX = (targetX * newScale / before) - offset;
             }
         }
+        multitrack.scaleFactor = newScale;
+        if (newContentX >= 0)
+            scheduleZoomScroll(newContentX);
         for (let i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false);
     }
@@ -115,6 +141,13 @@ Rectangle {
             if (playheadX < tracksFlickable.contentX || playheadX > tracksFlickable.contentX + tracksFlickable.width)
                 Logic.scrollIfNeeded(true);
         }
+    }
+
+    Timer {
+        id: applyZoomScrollTimer
+
+        interval: 10
+        onTriggered: applyPendingZoomScroll()
     }
 
     Timer {
@@ -594,6 +627,8 @@ Rectangle {
 
                         Column {
                             id: tracksContainer
+
+                            onWidthChanged: applyPendingZoomScroll()
 
                             Repeater {
                                 id: tracksRepeater
