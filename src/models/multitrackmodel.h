@@ -197,7 +197,8 @@ public slots:
                    bool notify = true);
     int appendClip(int trackIndex, Mlt::Producer &clip, bool seek = true, bool notify = true);
     void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
-    void liftClip(int trackIndex, int clipIndex);
+    void liftClip(int trackIndex, int clipIndex, bool consolidate = true);
+    void consolidateBlanks(int trackIndex);
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
     void changeGain(int trackIndex, int clipIndex, double gain);

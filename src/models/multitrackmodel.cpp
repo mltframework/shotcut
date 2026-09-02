@@ -1841,7 +1841,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
     \brief Lifts (clears) the clip at (\a trackIndex, \a clipIndex), leaving a blank.
 */
 
-void MultitrackModel::liftClip(int trackIndex, int clipIndex)
+void MultitrackModel::liftClip(int trackIndex, int clipIndex, bool consolidate)
 {
     if (trackIndex >= m_trackList.size()) {
         return;
@@ -1856,19 +1856,35 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
-            int duration = playlist.clip_length(clipIndex);
             emit removing(playlist.get_clip(clipIndex));
-            beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
-            playlist.remove(clipIndex);
-            endRemoveRows();
-            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
-            playlist.insert_blank(clipIndex, duration - 1);
-            endInsertRows();
+            // Replace the clip with a blank in place (single dataChanged, no row-count change) to
+            // avoid the O(clips-on-track) QML relayout that remove()+insert_blank() would trigger.
+            delete playlist.replace_with_blank(clipIndex);
+            QModelIndex idx = createIndex(clipIndex, 0, trackIndex);
+            emit dataChanged(idx,
+                             idx,
+                             QVector<int>()
+                                 << ResourceRole << ServiceRole << IsBlankRole << IsTransitionRole);
 
+            if (consolidate)
             consolidateBlanks(playlist, trackIndex);
 
             emit modified();
         }
+    }
+}
+
+// Public per-track wrapper so a multi-clip caller (e.g. MoveClipCommand) can
+// defer consolidation until after all its lifts instead of paying it per clip.
+void MultitrackModel::consolidateBlanks(int trackIndex)
+{
+    if (trackIndex < 0 || trackIndex >= m_trackList.size())
+        return;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+    if (track && track->is_valid()) {
+        Mlt::Playlist playlist(*track);
+        if (playlist.is_valid())
+            consolidateBlanks(playlist, trackIndex);
     }
 }
 

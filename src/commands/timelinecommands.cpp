@@ -29,6 +29,8 @@
 #include "util.h"
 
 #include <QMetaObject>
+#include <QSet>
+#include <QUuid>
 
 namespace Timeline {
 
@@ -102,6 +104,32 @@ Mlt::Transition *getMixTransitionByTrackIndex(int trackIndex)
     }
 
     return nullptr;
+}
+
+// Restore a moved/restored clip's tracked identity after overwrite()/insert()/moveClip() made a
+// fresh cut, so undo can find it by uuid again. Keyed on the parent producer uuid: that is what the
+// rest of this branch and the whole-track snapshot restore (the undo fallback) preserve.
+static void applyMovedClipIdentity(
+    MultitrackModel &model, int trackIndex, int start, const QUuid &uuid, int group)
+{
+    int clipIndex = model.clipIndex(trackIndex, start);
+    auto info = model.getClipInfo(trackIndex, clipIndex);
+    if (info && info->producer)
+        MLT.setUuid(*info->producer, uuid);
+    model.setClipGroup(trackIndex, start, group);
+}
+
+// Re-wire mix transitions (and mix_in/mix_out) around a clip that was just put back.
+static void reconnectTransitionsAround(MultitrackModel &model, int trackIndex, int start)
+{
+    model.relinkTransitions(trackIndex, model.clipIndex(trackIndex, start));
+}
+
+// A tractor entry (transition) reinserted as a plain producer needs its type reset first.
+static void prepareRestoredProducer(Mlt::Producer &producer)
+{
+    if (producer.type() == mlt_service_tractor_type)
+        producer.set("mlt_type", "mlt_producer");
 }
 
 AppendCommand::AppendCommand(MultitrackModel &model,
@@ -817,6 +845,8 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
         if (info->cut->property_exists(kShotcutGroupProperty)) {
             saveInfo.group = info->cut->get_int(kShotcutGroupProperty);
         }
+        // Parent producer uuid: the whole-track snapshot restore (undo fallback) preserves this,
+        // where a cut uuid would be lost.
         saveInfo.uuid = MLT.ensureHasUuid(*info->producer);
         m_clips.insert(saveInfo.start, saveInfo);
     }
@@ -827,13 +857,17 @@ void MoveClipCommand::redo()
     LOG_DEBUG() << "track delta" << m_trackDelta << "position delta" << m_positionDelta;
 
     if (!m_redo) {
-        m_undoHelper.setHints(UndoHelper::RestoreTracks);
-        m_undoHelper.recordBeforeState(trackScope());
         if (m_clips.size() > 1)
             setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
             setText(QObject::tr("Move timeline clip"));
         m_undoHelper.setText(text());
+        // Ripple moves undo by restoring whole tracks from a snapshot, so capture it. Non-ripple
+        // moves undo by explicit inverse, so skip the costly whole-track XML serialization.
+        if (m_ripple) {
+            m_undoHelper.setHints(UndoHelper::RestoreTracks);
+            m_undoHelper.recordBeforeState(trackScope());
+        }
     }
     QList<QPoint> selection;
     if (!m_trackDelta && m_clips.size() == 1) {
@@ -851,20 +885,28 @@ void MoveClipCommand::redo()
                 bool done = true;
                 if (targetIndex == clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
+                    m_specialMove = GrowTransitionOut;
                     m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
                     if (!m_ripple)
                         m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
                 } else if (m_ripple) {
-                    // Push or pull clips on the same track
+                    // Push or pull clips on the same track; moveClip() round-trips the producer
+                    // through XML and drops the uuid, so restamp it for undo lookup.
                     m_model.moveClip(trackIndex,
                                      trackIndex,
                                      clipIndex,
                                      newStart,
                                      m_ripple,
                                      m_rippleAllTracks);
+                    applyMovedClipIdentity(m_model,
+                                           trackIndex,
+                                           newStart,
+                                           m_clips.first().uuid,
+                                           m_clips.first().group);
                 } else if (targetIndex >= clipIndex
                            && m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
+                    m_specialMove = GrowTransitionIn;
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
                     m_model.trimClipOut(trackIndex, clipIndex - 1, -m_positionDelta, true, false);
                 } else {
@@ -873,7 +915,8 @@ void MoveClipCommand::redo()
                 if (done) {
                     if (!m_redo) {
                         m_redo = true;
-                        m_undoHelper.recordAfterState();
+                        if (m_ripple)
+                            m_undoHelper.recordAfterState();
                     }
                     redoMarkers();
                     selection = m_timeline.uuidsToSelection(QVector<QUuid>()
@@ -884,6 +927,12 @@ void MoveClipCommand::redo()
             }
         }
     }
+
+    // Snapshot the dest clips this non-ripple drop will delete/split so undo restores them
+    // without rebuilding the whole track. After the transition-grow early-out so it saves only
+    // real overwrites.
+    if (!m_redo)
+        snapshotOverwritten();
 
     QVector<Mlt::Producer> producers;
     QVector<QUuid> uuids;
@@ -901,16 +950,21 @@ void MoveClipCommand::redo()
     }
 
     // Next, remove each clip
+    QSet<int> liftedTracks;
     for (auto &clip : m_clips) {
         // Need to look up each one by UUID because indexes will change as clips are removed and
         // some clips may be removed due to ripple.
         int trackIndex, clipIndex;
         auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
         if (info && info->producer && info->producer->is_valid() && info->cut) {
-            if (m_ripple)
+            if (m_ripple) {
                 m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
-            else
-                m_model.liftClip(trackIndex, clipIndex);
+            } else {
+                // Defer consolidateBlanks: it is O(clips-on-track) per call, so consolidate
+                // each lifted track once after all lifts instead of once per clip.
+                m_model.liftClip(trackIndex, clipIndex, false);
+                liftedTracks.insert(trackIndex);
+            }
         } else {
             // This can happen with ripple since a clip my be removed due to ripple
             if (!m_ripple) {
@@ -919,6 +973,8 @@ void MoveClipCommand::redo()
             }
         }
     }
+    for (int trackIndex : std::as_const(liftedTracks))
+        m_model.consolidateBlanks(trackIndex);
 
     // Finally, place each clip in the new location
     for (auto &clip : m_clips) {
@@ -940,7 +996,7 @@ void MoveClipCommand::redo()
             int newClipIndex = m_model.clipIndex(newTrackIndex, newStart);
             auto clipInfo = m_model.getClipInfo(newTrackIndex, newClipIndex);
             if (clipInfo && clipInfo->cut) {
-                m_model.setClipGroup(newTrackIndex, newStart, clip.group);
+                applyMovedClipIdentity(m_model, newTrackIndex, newStart, clip.uuid, clip.group);
                 uuids << clip.uuid;
             }
         }
@@ -949,7 +1005,8 @@ void MoveClipCommand::redo()
 
     if (!m_redo) {
         m_redo = true;
-        m_undoHelper.recordAfterState();
+        if (m_ripple)
+            m_undoHelper.recordAfterState();
     }
     redoMarkers();
     selection = m_timeline.uuidsToSelection(uuids);
@@ -961,7 +1018,17 @@ void MoveClipCommand::redo()
 void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
-    m_undoHelper.undoChanges();
+    // A transition grow is reversed in place (ripple-safe). A non-ripple move is reversed by
+    // reinserting clips at their original positions. Ripple shifts other clips as it removes and
+    // inserts, invalidating those stored positions, so ripple (and ripple-all) moves restore the
+    // whole tracks from the snapshot instead. Any failure also falls back to that snapshot.
+    bool restored = false;
+    if (m_specialMove != NoSpecialMove)
+        restored = undoTransitionGrow();
+    else if (!m_ripple)
+        restored = undoExplicitMove();
+    if (!restored)
+        m_undoHelper.undoChanges();
     if (m_rippleMarkers && m_markersModified == 1) {
         m_markersModel.doReplace(m_markers);
     }
@@ -975,6 +1042,149 @@ void MoveClipCommand::undo()
         m_timeline.setCurrentTrack(selection.first().y());
 }
 
+// Opposite trim of the grow-by-drag redo, mutating the existing mix in place. Restoring the mix
+// from XML would leave mix_in/mix_out pointing at freed cuts and the consumer would segfault.
+bool MoveClipCommand::undoTransitionGrow()
+{
+    if (m_clips.isEmpty())
+        return false;
+    const Info &clip = m_clips.first();
+    int trackIndex = -1;
+    int clipIndex = -1;
+    auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+    if (!info || !info->cut) {
+        LOG_WARNING() << "MoveClipCommand: transition-grow undo could not find clip" << clip.uuid;
+        return false;
+    }
+    if (m_specialMove == GrowTransitionOut) {
+        m_model.trimTransitionOut(trackIndex, clipIndex, -m_positionDelta, true);
+        if (!m_ripple)
+            m_model.trimClipIn(trackIndex, clipIndex + 1, -m_positionDelta, true, false);
+    } else {
+        m_model.trimTransitionIn(trackIndex, clipIndex, m_positionDelta, true);
+        m_model.trimClipOut(trackIndex, clipIndex - 1, m_positionDelta, true, false);
+    }
+    return true;
+}
+
+// Inverse of redo: remove every moved clip and reinsert it at its original start, then put back
+// the dest clips the drop overwrote. Sequential moveClip() is not the inverse for >=2 ripple clips,
+// so the removal/insertion is done explicitly here.
+bool MoveClipCommand::undoExplicitMove()
+{
+    // Look everything up first so a miss aborts before any mutation and the whole-track fallback
+    // can restore cleanly.
+    QVector<Mlt::Producer> producers;
+    QSet<int> liftedTracks;
+    for (auto &clip : m_clips) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+        if (!info || !info->producer || !info->producer->is_valid() || !info->cut) {
+            LOG_WARNING() << "MoveClipCommand: move undo could not find clip" << clip.uuid;
+            return false;
+        }
+        producers.append(info->producer);
+    }
+    for (auto &clip : m_clips) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+        if (!info)
+            return false;
+        if (m_ripple) {
+            m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
+        } else {
+            // Defer consolidateBlanks to once per track after all lifts (see redo()).
+            m_model.liftClip(trackIndex, clipIndex, false);
+            liftedTracks.insert(trackIndex);
+        }
+    }
+    for (int trackIndex : std::as_const(liftedTracks))
+        m_model.consolidateBlanks(trackIndex);
+    int i = 0;
+    for (auto &clip : m_clips) {
+        Mlt::Producer &producer = producers[i++];
+        producer.set_in_and_out(clip.frame_in, clip.frame_out);
+        if (clip.start + producer.get_playtime() >= 0) {
+            if (m_ripple)
+                m_model.insertClip(clip.trackIndex, producer, clip.start, m_rippleAllTracks);
+            else
+                m_model.overwrite(clip.trackIndex, producer, clip.start, false);
+            applyMovedClipIdentity(m_model, clip.trackIndex, clip.start, clip.uuid, clip.group);
+        }
+    }
+    return m_ripple ? true : restoreOverwritten();
+}
+
+// Dest clips overwrite() will delete/split. Snapshot them (skipping the moving set and blanks) so
+// undo can put them back. Keyed by cut uuid.
+void MoveClipCommand::snapshotOverwritten()
+{
+    if (m_ripple)
+        return;
+    QSet<QUuid> moving;
+    for (auto &clip : m_clips)
+        moving.insert(clip.uuid);
+    QSet<QUuid> seen;
+    const int last = qMax(int(m_model.trackList().size()) - 1, 0);
+    for (auto &clip : m_clips) {
+        const int destTrack = qBound(0, clip.trackIndex + m_trackDelta, last);
+        const int destStart = clip.start + m_positionDelta;
+        const int destEnd = destStart + (clip.frame_out - clip.frame_in + 1);
+        auto mltIndex = m_model.trackList().at(destTrack).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+        if (!track || !track->is_valid())
+            continue;
+        Mlt::Playlist playlist(*track);
+        const int from = playlist.get_clip_index_at(qMax(0, destStart));
+        const int to = playlist.get_clip_index_at(qMax(0, destEnd - 1));
+        for (int i = from; i <= to && i < playlist.count(); ++i) {
+            if (playlist.is_blank(i))
+                continue;
+            auto info = m_model.getClipInfo(destTrack, i);
+            if (!info || !info->producer || !info->producer->is_valid() || !info->cut)
+                continue;
+            QUuid uid = MLT.ensureHasUuid(*info->producer);
+            if (moving.contains(uid) || seen.contains(uid))
+                continue;
+            seen.insert(uid);
+            Overwritten dest;
+            dest.trackIndex = destTrack;
+            dest.start = info->start;
+            dest.frame_in = info->frame_in;
+            dest.frame_out = info->frame_out;
+            dest.group = info->cut->property_exists(kShotcutGroupProperty)
+                             ? info->cut->get_int(kShotcutGroupProperty)
+                             : -1;
+            dest.uuid = uid;
+            dest.xml = MLT.XML(info->producer, false, false);
+            if (!dest.xml.isEmpty())
+                m_overwritten.append(dest);
+        }
+    }
+}
+
+bool MoveClipCommand::restoreOverwritten()
+{
+    bool ok = true;
+    for (const auto &dest : std::as_const(m_overwritten)) {
+        Mlt::Producer restored(MLT.profile(), "xml-string", dest.xml.toUtf8().constData());
+        if (!restored.is_valid()) {
+            LOG_WARNING() << "MoveClipCommand: could not restore overwritten clip" << dest.uuid;
+            ok = false;
+            continue;
+        }
+        prepareRestoredProducer(restored);
+        restored.set_in_and_out(dest.frame_in, dest.frame_out);
+        MLT.setUuid(restored, dest.uuid);
+        m_model.overwrite(dest.trackIndex, restored, dest.start, false);
+        applyMovedClipIdentity(m_model, dest.trackIndex, dest.start, dest.uuid, dest.group);
+        reconnectTransitionsAround(m_model, dest.trackIndex, dest.start);
+    }
+    return ok;
+}
+
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 {
     const MoveClipCommand *that = static_cast<const MoveClipCommand *>(other);
@@ -985,6 +1195,11 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
     if (that->trackScope() != trackScope()) {
         return false;
     }
+    if (that->m_specialMove != m_specialMove)
+        return false;
+    // Merged nudges would lose the dest snapshots captured by a later drop.
+    if (!m_overwritten.isEmpty() || !that->m_overwritten.isEmpty())
+        return false;
     if (that->m_trackDelta || m_trackDelta) {
         // Do not merge move commands if the move is between tracks.
         // In particular, if a clip is moved to a track and then back to the original track,
@@ -1000,7 +1215,8 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         thatIterator++;
     }
     m_positionDelta += that->m_positionDelta;
-    m_undoHelper.recordAfterState();
+    if (m_ripple)
+        m_undoHelper.recordAfterState();
     return true;
 }
 

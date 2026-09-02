@@ -333,6 +333,10 @@ protected:
 private:
     void redoMarkers();
     QSet<int> trackScope() const;
+    bool undoExplicitMove();
+    bool undoTransitionGrow();
+    void snapshotOverwritten();
+    bool restoreOverwritten();
 
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -358,13 +362,32 @@ private:
         {}
     };
 
+    // A clip-drag onto a neighboring mix grows it in place; undo is the opposite trim, never an
+    // XML restore (that dangles mix_in/mix_out and crashes the consumer).
+    enum SpecialMove { NoSpecialMove, GrowTransitionOut, GrowTransitionIn };
+
+    // A non-ripple drop deletes/splits the dest clips it lands on; snapshot them so undo can put
+    // them back without rebuilding the whole track.
+    struct Overwritten
+    {
+        int trackIndex = -1;
+        int start = 0;
+        int frame_in = -1;
+        int frame_out = -1;
+        int group = -1;
+        QUuid uuid;
+        QString xml;
+    };
+
     int m_trackDelta;
     int m_positionDelta;
     bool m_ripple;
     bool m_rippleAllTracks;
     bool m_rippleMarkers;
-    UndoHelper m_undoHelper;
+    UndoHelper m_undoHelper;      // captures the before-snapshot for the whole-track undo fallback
     QMultiMap<int, Info> m_clips; // ordered by position
+    SpecialMove m_specialMove = NoSpecialMove;
+    QList<Overwritten> m_overwritten;
     bool m_redo;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;
