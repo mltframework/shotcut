@@ -1867,7 +1867,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex, bool consolidate)
                                  << ResourceRole << ServiceRole << IsBlankRole << IsTransitionRole);
 
             if (consolidate)
-            consolidateBlanks(playlist, trackIndex);
+                consolidateBlanks(playlist, trackIndex);
 
             emit modified();
         }
@@ -3640,13 +3640,9 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid
         if (track) {
             Mlt::Playlist playlist(*track);
             for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
-                Mlt::ClipInfo *info;
-                if ((info = playlist.clip_info(clipIndex))) {
-                    if (MLT.uuid(*info->producer) == uuid || MLT.uuid(*info->cut) == uuid)
-                        return std::unique_ptr<Mlt::ClipInfo>(info);
-                    else
-                        delete info;
-                }
+                std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && (MLT.uuid(*info->producer) == uuid || MLT.uuid(*info->cut) == uuid))
+                    return info;
             }
         }
     }

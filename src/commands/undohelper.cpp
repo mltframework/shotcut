@@ -100,7 +100,6 @@ void UndoHelper::recordBeforeState(const QSet<int> &trackScope)
 #ifdef UNDOHELPER_DEBUG
     debugPrintState("Before state");
 #endif
-    qint64 xmlCallCountBefore = MLT.xmlCallCount();
     m_trackScope = trackScope;
     m_beforeXml.clear();
     m_state.clear();
@@ -152,8 +151,6 @@ void UndoHelper::recordBeforeState(const QSet<int> &trackScope)
             }
         }
     }
-    UNDOLOG << "recordBeforeState() called Controller::XML()"
-            << (MLT.xmlCallCount() - xmlCallCountBefore) << "times";
 }
 
 void UndoHelper::recordAfterState()
