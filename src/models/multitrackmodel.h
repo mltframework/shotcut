@@ -122,6 +122,7 @@ public:
     int clipIndex(int trackIndex, int position);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
+    bool transitionOverlapValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     int trackHeight() const;
     void setTrackHeight(int height);
     int trackHeaderWidth() const;

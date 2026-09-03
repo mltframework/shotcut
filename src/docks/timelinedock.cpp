@@ -4010,6 +4010,10 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         emit transitionAdded(fromTrack, clipIndex, position, ripple);
         if (m_updateCommand)
             m_updateCommand->setPosition(toTrack, clipIndex, position);
+    } else if (selection().size() <= 1 && Settings.timelineAllowTransitions()
+               && m_model.transitionOverlapValid(fromTrack, toTrack, clipIndex, position, ripple)) {
+        emit showStatusMessage(tr("You cannot make a transition with an adjustment clip."));
+        return false;
     } else {
         // Check for locked tracks
         auto trackDelta = toTrack - fromTrack;

@@ -137,6 +137,15 @@ static bool hasTrackLevelIndicatorSupport()
     return ok && version >= 4;
 }
 
+static bool isAdjustmentClip(Mlt::Playlist &playlist, int clipIndex)
+{
+    QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+    if (producer && producer->is_valid() && producer->parent().is_valid()
+        && producer->parent().get_int("meta.fx_cut"))
+        return true;
+    return false;
+}
+
 /*!
     \qmltype MultitrackModel
     \inqmlmodule org.shotcut.qml
@@ -2328,14 +2337,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
     }
 }
 
-/*!
-    \qmlmethod bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
-    \brief Returns \c true if adding a transition at time \a position between \a clipIndex and its
-    neighbor on \a fromTrack / \a toTrack would be valid. \a ripple indicates whether
-    ripple mode is active.
-*/
-
-bool MultitrackModel::addTransitionValid(
+bool MultitrackModel::transitionOverlapValid(
     int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
     bool result = false;
@@ -2366,6 +2368,31 @@ bool MultitrackModel::addTransitionValid(
         }
     }
     return result;
+}
+
+/*!
+    \qmlmethod bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
+    \brief Returns \c true if adding a transition at time \a position between \a clipIndex and its
+    neighbor on \a fromTrack / \a toTrack would be valid. \a ripple indicates whether
+    ripple mode is active.
+*/
+
+bool MultitrackModel::addTransitionValid(
+    int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
+{
+    if (!transitionOverlapValid(fromTrack, toTrack, clipIndex, position, ripple))
+        return false;
+
+    int i = m_trackList.at(toTrack).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (!track)
+        return false;
+    Mlt::Playlist playlist(*track);
+    int targetIndex = playlist.get_clip_index_at(position);
+    int neighborIndex = (targetIndex < clipIndex)
+                            ? clipIndex - 1 - (playlist.is_blank(clipIndex - 1) ? 1 : 0)
+                            : clipIndex + 1 + (playlist.is_blank(clipIndex + 1) ? 1 : 0);
+    return !isAdjustmentClip(playlist, clipIndex) && !isAdjustmentClip(playlist, neighborIndex);
 }
 
 /*!
@@ -2750,9 +2777,11 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
             // Check if preceding clip is not blank, not already a transition,
-            // and there is enough frames before in point of current clip.
+            // not an adjustment clip, and there is enough frames before in point
+            // of current clip.
             if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex - 1)
-                && !isTransition(playlist, clipIndex - 1)) {
+                && !isTransition(playlist, clipIndex - 1) && !isAdjustmentClip(playlist, clipIndex)
+                && !isAdjustmentClip(playlist, clipIndex - 1)) {
                 Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
                 if (info.frame_in >= -delta)
@@ -2836,9 +2865,11 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
         Mlt::Playlist playlist(*track);
         if (clipIndex + 1 < playlist.count()) {
             // Check if following clip is not blank, not already a transition,
-            // and there is enough frames after out point of current clip.
+            // not an adjustment clip, and there is enough frames after out point
+            // of current clip.
             if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex + 1)
-                && !isTransition(playlist, clipIndex + 1)) {
+                && !isTransition(playlist, clipIndex + 1) && !isAdjustmentClip(playlist, clipIndex)
+                && !isAdjustmentClip(playlist, clipIndex + 1)) {
                 Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
                 //                LOG_DEBUG() << "(info.length" << info.length << " - info.frame_out" << info.frame_out << ") =" << (info.length - info.frame_out) << " >= -delta" << -delta;
