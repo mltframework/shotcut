@@ -226,6 +226,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             vcodec = chosen;
     }
 
+    if (vcodec == "hevc_vaapi")
+        preset.clear("vtag");
+
     ui->disableAudioCheckbox->setChecked(preset.get_int("an"));
     ui->disableVideoCheckbox->setChecked(preset.get_int("vn"));
     m_extension.clear();
@@ -236,7 +239,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
 
         // Apple needs codec ID hvc1 even though technically that is not what we are writing.
         QString f = preset.get("f");
-        if (!preset.property_exists("vtag") && (f == "mp4" || f == "mov")) {
+        if (vcodec != "hevc_vaapi" && !preset.property_exists("vtag")
+            && (f == "mp4" || f == "mov")) {
             other.append("vtag=hvc1");
         }
     }
@@ -433,8 +437,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else {
             if (name != "an" && name != "vn" && name != "threads"
                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
-                && !name.startsWith('_') && !name.startsWith("qp_")
-                && !name.startsWith("meta.preset.")) {
+                && !(name == "vtag" && vcodec == "hevc_vaapi") && !name.startsWith('_')
+                && !name.startsWith("qp_") && !name.startsWith("meta.preset.")) {
                 other.append(QStringLiteral("%1=%2").arg(name, value));
             }
         }
