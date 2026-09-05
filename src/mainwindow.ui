@@ -1575,6 +1575,9 @@
    </property>
   </action>
   <action name="actionLeaveSafeMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Allow External Plugins</string>
    </property>
