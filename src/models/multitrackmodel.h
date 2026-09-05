@@ -120,6 +120,8 @@ public:
     void load();
     void close();
     int clipIndex(int trackIndex, int position);
+    void setClipGroup(int trackIndex, int position, int group);
+    void relinkTransitions(int trackIndex, int clipIndex);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
     bool transitionOverlapValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
@@ -146,6 +148,9 @@ public:
     QString trackTransitionService();
     bool trackLevelIndicatorSupported() const;
     bool hasAudioTracks() const;
+    void beginBulkUpdate();
+    void endBulkUpdate(bool changed = true);
+    bool isBulkUpdating() const { return m_bulkUpdateDepth > 0; }
 
 signals:
     void created();
@@ -166,6 +171,7 @@ signals:
     void overWritten(int trackIndex, int clipIndex);
     void removing(Mlt::Service *service);
     void noMoreEmptyTracks(bool isAudio);
+    void bulkUpdateFinished();
 
 public slots:
     void refreshTrackList();
@@ -192,7 +198,8 @@ public slots:
                    bool notify = true);
     int appendClip(int trackIndex, Mlt::Producer &clip, bool seek = true, bool notify = true);
     void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
-    void liftClip(int trackIndex, int clipIndex);
+    void liftClip(int trackIndex, int clipIndex, bool consolidate = true);
+    void consolidateBlanks(int trackIndex);
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
     void changeGain(int trackIndex, int clipIndex, double gain);
@@ -226,6 +233,11 @@ private:
     bool m_trackLevelIndicatorSupported;
     bool m_hasAudioTracks;
     int m_trackGainPosition;
+    int m_bulkUpdateDepth = 0;
+    bool m_bulkAdjustBackgroundPending = false;
+    bool m_bulkAdjustTrackFiltersPending = false;
+    bool m_bulkRefreshBlocked = false;
+    bool m_bulkUpdateChanged = false;
 
     void moveClipToEnd(Mlt::Playlist &playlist,
                        int trackIndex,

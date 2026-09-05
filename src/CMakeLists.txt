@@ -54,6 +54,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/filesdock.cpp docks/filesdock.h
   docks/filesdock.ui
   docks/filtersdock.cpp docks/filtersdock.h
+  docks/historyundoview.cpp docks/historyundoview.h
   docks/jobsdock.cpp docks/jobsdock.h
   docks/jobsdock.ui
   docks/keyframesdock.cpp docks/keyframesdock.h

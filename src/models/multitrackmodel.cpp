@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QScopedPointer>
 #include <QTimer>
+#include <QUuid>
 #include <qmath.h>
 
 #include <cmath>
@@ -1354,6 +1355,12 @@ bool MultitrackModel::moveClip(
         Mlt::Producer clip(MLT.profile(), "xml-string", xml.toUtf8().constData());
 
         if (clip.is_valid()) {
+            // XML omits _shotcut:uuid (internal, not serialized).
+            MLT.setUuid(clip, MLT.ensureHasUuid(*info->producer));
+            const int group = (info->cut && info->cut->property_exists(kShotcutGroupProperty))
+                                  ? info->cut->get_int(kShotcutGroupProperty)
+                                  : -1;
+
             clearMixReferences(fromTrack, clipIndex);
             clip.set_in_and_out(info->frame_in, info->frame_out);
 
@@ -1423,6 +1430,7 @@ bool MultitrackModel::moveClip(
 
                     // Insert clip
                     insertClip(toTrack, clip, position, rippleAllTracks, false);
+                    setClipGroup(toTrack, position, group);
                 }
             } else {
                 // Lift clip — use structural signals so reparented delegates are properly destroyed
@@ -1438,10 +1446,12 @@ bool MultitrackModel::moveClip(
                 consolidateBlanks(playlist, fromTrack);
 
                 // Overwrite with clip
-                if (position + clip.get_playtime() >= 0)
+                if (position + clip.get_playtime() >= 0) {
                     overwrite(toTrack, clip, position, false /* seek */);
-                else
+                    setClipGroup(toTrack, position, group);
+                } else {
                     emit modified();
+                }
             }
         }
         result = true;
@@ -1840,7 +1850,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
     \brief Lifts (clears) the clip at (\a trackIndex, \a clipIndex), leaving a blank.
 */
 
-void MultitrackModel::liftClip(int trackIndex, int clipIndex)
+void MultitrackModel::liftClip(int trackIndex, int clipIndex, bool consolidate)
 {
     if (trackIndex >= m_trackList.size()) {
         return;
@@ -1855,19 +1865,35 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
-            int duration = playlist.clip_length(clipIndex);
             emit removing(playlist.get_clip(clipIndex));
-            beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
-            playlist.remove(clipIndex);
-            endRemoveRows();
-            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
-            playlist.insert_blank(clipIndex, duration - 1);
-            endInsertRows();
+            // Replace the clip with a blank in place (single dataChanged, no row-count change) to
+            // avoid the O(clips-on-track) QML relayout that remove()+insert_blank() would trigger.
+            delete playlist.replace_with_blank(clipIndex);
+            QModelIndex idx = createIndex(clipIndex, 0, trackIndex);
+            emit dataChanged(idx,
+                             idx,
+                             QVector<int>()
+                                 << ResourceRole << ServiceRole << IsBlankRole << IsTransitionRole);
 
-            consolidateBlanks(playlist, trackIndex);
+            if (consolidate)
+                consolidateBlanks(playlist, trackIndex);
 
             emit modified();
         }
+    }
+}
+
+// Public per-track wrapper so a multi-clip caller (e.g. MoveClipCommand) can
+// defer consolidation until after all its lifts instead of paying it per clip.
+void MultitrackModel::consolidateBlanks(int trackIndex)
+{
+    if (trackIndex < 0 || trackIndex >= m_trackList.size())
+        return;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+    if (track && track->is_valid()) {
+        Mlt::Playlist playlist(*track);
+        if (playlist.is_valid())
+            consolidateBlanks(playlist, trackIndex);
     }
 }
 
@@ -1901,10 +1927,12 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             playlist.insert_blank(clipIndex, duration - 1);
             endInsertRows();
         } else {
-            // Make copy of clip.
+            // XML copy omits _shotcut:uuid (internal, not serialized). Mint one
+            // so the new half is a distinct clip for undo/filter lookup.
             Mlt::Producer producer(MLT.profile(),
                                    "xml-string",
                                    MLT.XML(info->producer).toUtf8().constData());
+            MLT.setUuid(producer, QUuid::createUuid());
 
             // Connect a transition on the left to the new producer.
             if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {
@@ -2501,6 +2529,77 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
                 producer->set("mix_out", NULL, 0);
             }
         }
+    }
+}
+
+// overwrite()/lift clear mix_in/mix_out/mlt_mix. Those are live pointers,
+// not XML, so a restored mix tractor still plays as a hard cut until we
+// point the neighbors and the mix at each other again (same graph
+// mlt_playlist_mix writes).
+static void relinkMixReferences(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
+{
+    Mlt::Producer parent = clip.parent();
+    if (!parent.get(kShotcutTransitionProperty))
+        return;
+    Mlt::Tractor tractor(parent);
+    if (!tractor.is_valid())
+        return;
+    mlt_tractor mix = tractor.get_tractor();
+    parent.set("mlt_mix", mix, 0);
+    if (clipIndex > 0 && !playlist.is_blank(clipIndex - 1)) {
+        QScopedPointer<Mlt::Producer> left(playlist.get_clip(clipIndex - 1));
+        if (left && left->is_valid() && !left->parent().get(kShotcutTransitionProperty)) {
+            left->set("mix_out", mix, 0);
+            parent.set("mix_in", left->get_producer(), 0);
+        }
+    }
+    if (clipIndex + 1 < playlist.count() && !playlist.is_blank(clipIndex + 1)) {
+        QScopedPointer<Mlt::Producer> right(playlist.get_clip(clipIndex + 1));
+        if (right && right->is_valid() && !right->parent().get(kShotcutTransitionProperty)) {
+            right->set("mix_in", mix, 0);
+            parent.set("mix_out", right->get_producer(), 0);
+        }
+    }
+}
+
+static void relinkClipTransitions(Mlt::Playlist &playlist, int clipIndex, Mlt::Producer &clip)
+{
+    if (clip.is_blank())
+        return;
+    int transitionIndex = 0;
+    for (auto neighborIndex : {clipIndex + 1, clipIndex - 1}) {
+        Mlt::Producer neighbor(playlist.get_clip(neighborIndex));
+        if (neighbor.is_valid() && neighbor.parent().get(kShotcutTransitionProperty)) {
+            Mlt::Tractor transition(neighbor.parent());
+            if (transition.is_valid()) {
+                QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));
+                if (transitionClip->is_valid()
+                    && transitionClip->parent().get_service() != clip.parent().get_service()) {
+                    transitionClip.reset(
+                        clip.cut(transitionClip->get_in(), transitionClip->get_out()));
+                    transition.set_track(*transitionClip.data(), transitionIndex);
+                }
+            }
+        }
+        transitionIndex++;
+    }
+    relinkMixReferences(playlist, clipIndex, clip);
+}
+
+void MultitrackModel::relinkTransitions(int trackIndex, int clipIndex)
+{
+    if (trackIndex < 0 || trackIndex >= m_trackList.size() || clipIndex < 0)
+        return;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+    if (!track || !track->is_valid())
+        return;
+    Mlt::Playlist playlist(*track);
+    const int from = qMax(0, clipIndex - 1);
+    const int to = qMin(playlist.count() - 1, clipIndex + 1);
+    for (int i = from; i <= to; ++i) {
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
+        if (clip && clip->is_valid())
+            relinkClipTransitions(playlist, i, *clip);
     }
 }
 
@@ -3313,8 +3412,53 @@ void MultitrackModel::addBackgroundTrack()
     m_tractor->set_track(playlist, m_tractor->count());
 }
 
+void MultitrackModel::beginBulkUpdate()
+{
+    // Reentrant: supports nested bulk operations (e.g. History dock jumps
+    // triggered from within another bulk operation).
+    ++m_bulkUpdateDepth;
+    if (m_bulkUpdateDepth == 1 && !m_bulkRefreshBlocked) {
+        m_bulkUpdateChanged = false;
+        // Suppress the player/consumer refresh that would otherwise happen
+        // on every intermediate command; a single refresh is triggered once
+        // in endBulkUpdate() below.
+        MLT.blockRefresh(true);
+        m_bulkRefreshBlocked = true;
+    }
+}
+
+void MultitrackModel::endBulkUpdate(bool changed)
+{
+    m_bulkUpdateChanged = m_bulkUpdateChanged || changed;
+    if (m_bulkUpdateDepth > 0 && --m_bulkUpdateDepth == 0) {
+        // Flush any work that was deferred while bulk updates were suppressed,
+        // e.g. when the History dock replays many undo/redo steps at once.
+        if (m_bulkUpdateChanged && m_bulkAdjustBackgroundPending) {
+            m_bulkAdjustBackgroundPending = false;
+            adjustBackgroundDuration();
+        }
+        if (m_bulkUpdateChanged && m_bulkAdjustTrackFiltersPending) {
+            m_bulkAdjustTrackFiltersPending = false;
+            adjustTrackFilters();
+        }
+        if (m_bulkRefreshBlocked) {
+            m_bulkRefreshBlocked = false;
+            MLT.blockRefresh(false);
+            if (m_bulkUpdateChanged)
+                MLT.refreshConsumer();
+        }
+        if (m_bulkUpdateChanged)
+            emit bulkUpdateFinished();
+        m_bulkUpdateChanged = false;
+    }
+}
+
 void MultitrackModel::adjustBackgroundDuration()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustBackgroundPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();
@@ -3496,6 +3640,10 @@ QString MultitrackModel::trackTransitionService()
 
 void MultitrackModel::adjustTrackFilters()
 {
+    if (m_bulkUpdateDepth > 0) {
+        m_bulkAdjustTrackFiltersPending = true;
+        return;
+    }
     if (!m_tractor)
         return;
     int duration = getDuration();
@@ -3528,13 +3676,9 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid
         if (track) {
             Mlt::Playlist playlist(*track);
             for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
-                Mlt::ClipInfo *info;
-                if ((info = playlist.clip_info(clipIndex))) {
-                    if (MLT.uuid(*info->producer) == uuid || MLT.uuid(*info->cut) == uuid)
-                        return std::unique_ptr<Mlt::ClipInfo>(info);
-                    else
-                        delete info;
-                }
+                std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && (MLT.uuid(*info->producer) == uuid || MLT.uuid(*info->cut) == uuid))
+                    return info;
             }
         }
     }
@@ -3553,6 +3697,19 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::getClipInfo(int trackIndex, int 
         }
     }
     return std::unique_ptr<Mlt::ClipInfo>(result);
+}
+
+void MultitrackModel::setClipGroup(int trackIndex, int position, int group)
+{
+    if (group < 0)
+        return;
+    int idx = clipIndex(trackIndex, position);
+    auto info = getClipInfo(trackIndex, idx);
+    if (!info || !info->cut)
+        return;
+    info->cut->set(kShotcutGroupProperty, group);
+    QModelIndex modelIndex = index(idx, 0, index(trackIndex));
+    emit dataChanged(modelIndex, modelIndex, QVector<int>() << GroupRole);
 }
 
 /*!
@@ -4171,9 +4328,10 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
                 beginInsertRows(index(trackIndex), insertBlankAtIdx, insertBlankAtIdx);
                 trackPlaylist.insert_blank(insertBlankAtIdx, length - 1);
                 endInsertRows();
-            } else {
+            } else if (length < 0) {
                 Q_ASSERT(!"unsupported");
             }
+            // length == 0 needs no blank; e.g. a zero-delta ripple move.
         }
     }
 }

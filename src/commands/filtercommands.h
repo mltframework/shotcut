@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "models/attachedfiltersmodel.h"
 
 #include <MltProducer.h>
-#include <MltService.h>
+#include <MltProperties.h>
 #include <QString>
 #include <QUndoCommand>
 #include <QUuid>
@@ -65,7 +65,9 @@ protected:
 private:
     AttachedFiltersModel &m_model;
     std::vector<int> m_rows;
-    std::vector<Mlt::Service> m_services;
+    std::vector<QString> m_serviceNames;
+    std::vector<Mlt::Properties> m_serviceProperties;
+    std::vector<mlt_service_type> m_serviceTypes;
     Mlt::Producer m_producer;
     QUuid m_producerUuid;
     AddType m_type;

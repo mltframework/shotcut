@@ -102,6 +102,11 @@
 #define kUuidProperty "_shotcut:uuid"
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
 #define kExportFromProperty "_shotcut:exportFromDefault"
+
+/* Temporary, serializable copy of kUuidProperty. Only used by UndoHelper to round-trip
+ * _shotcut:uuid through a per-track XML snapshot (private properties are not serialized).
+ * Always set and cleared within the same operation; never intentionally persisted. */
+#define kUuidPropertyTemp "shotcut:temp_uuid"
 #define kTrackIndexProperty "_shotcut:trackIndex"
 #define kFilterIndexProperty "_shotcut:filterIndex"
 #define kNewFilterProperty "_shotcut:newFilter"

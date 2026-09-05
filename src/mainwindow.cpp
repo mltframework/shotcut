@@ -40,6 +40,7 @@
 #include "docks/filesdock.h"
 #include "docks/filtersdock.h"
 #include "docks/findanalysisfilterparser.h"
+#include "docks/historyundoview.h"
 #include "docks/jobsdock.h"
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
@@ -772,7 +773,7 @@ void MainWindow::setupAndConnectDocks()
             this,
             SLOT(onHistoryDockTriggered(bool)));
     connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
-    QUndoView *undoView = new QUndoView(m_undoStack, m_historyDock);
+    QUndoView *undoView = new HistoryUndoView(m_undoStack, m_timelineDock->model(), m_historyDock);
     undoView->setObjectName("historyView");
     undoView->setAlternatingRowColors(true);
     undoView->setSpacing(2);
