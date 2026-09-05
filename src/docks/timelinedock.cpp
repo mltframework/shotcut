@@ -774,8 +774,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(-1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(-1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -797,8 +797,8 @@ void TimelineDock::setupActions()
             int navigationPosition = centerOfClip(selection().first().y(), selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
         }
+        incrementCurrentTrack(1);
         if (newClipIndex >= 0) {
-            incrementCurrentTrack(1);
             newClipIndex = qMin(newClipIndex, clipCount(trackIndex) - 1);
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
@@ -2306,7 +2306,7 @@ void TimelineDock::clearSelectionIfInvalid()
 
         newSelection << QPoint(clip.x(), clip.y());
     }
-    setSelection(newSelection);
+    setSelection(newSelection, m_selection.selectedTrack, m_selection.isMultitrackSelected);
 }
 
 /*!
@@ -2642,6 +2642,7 @@ void TimelineDock::applyCopiedFiltersToSelectdClips()
 void TimelineDock::onShowFrame(const SharedFrame &frame)
 {
     if (MLT.isMultitrack() && m_model.tractor()) {
+        m_model.updateTrackGains(frame.get_position());
         m_model.updateTrackAudioLevels(frame);
         if (m_ignoreNextPositionChange) {
             m_ignoreNextPositionChange = false;
@@ -2656,6 +2657,7 @@ void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
         m_position = qMin(position, m_model.tractor()->get_length());
+        m_model.updateTrackGains(m_position);
         m_model.clearTrackAudioLevels();
         emit positionChanged(m_position);
     }
@@ -2829,7 +2831,8 @@ void TimelineDock::append(int trackIndex)
 
 /*!
     \qmlmethod void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
-    \brief Removes the clip at (\a trackIndex, \a clipIndex), replacing it with a blank.
+    \brief Removes the clip at (\a trackIndex, \a clipIndex) causing downstream clips to shift
+    earlier by the clip duration (ripple).
     If \a ignoreTransition is \c true, adjacent transitions are not affected.
 */
 
@@ -3373,7 +3376,6 @@ void TimelineDock::onRowsMoved(
     // Clear the selection and reload the model to trigger reset of the selected clips in the UI
     QList<QPoint> newSelection;
     setSelection(newSelection);
-    model()->reload(true);
 }
 
 /*!
@@ -4008,6 +4010,10 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         emit transitionAdded(fromTrack, clipIndex, position, ripple);
         if (m_updateCommand)
             m_updateCommand->setPosition(toTrack, clipIndex, position);
+    } else if (selection().size() <= 1 && Settings.timelineAllowTransitions()
+               && m_model.transitionOverlapValid(fromTrack, toTrack, clipIndex, position, ripple)) {
+        emit showStatusMessage(tr("You cannot make a transition with an adjustment clip."));
+        return false;
     } else {
         // Check for locked tracks
         auto trackDelta = toTrack - fromTrack;

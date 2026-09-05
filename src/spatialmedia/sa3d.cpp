@@ -28,6 +28,7 @@
 #include <sstream>
 #include <iterator>
 #include <cmath>
+#include <limits>
 
 #include "constants.h"
 #include "sa3d.h"
@@ -65,33 +66,56 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   char name[4];
 
   fs.seekg( iPos );
-  uint32_t iSize = readUint32 ( fs );
+  uint64_t boxSize = readUint32 ( fs );
+  uint32_t headerSize = 8;
   fs.read ( name, 4 );
   // Test if iSize == 1
   // Added for 360Tube to have load and save in-sync.
-  if ( iSize == 1 )  { 
-    iSize = (int32_t)readUint64 ( fs );
+  if ( boxSize == 1 )  {
+    boxSize = readUint64 ( fs );
+    headerSize = 16;
   }
+
+  if ( boxSize > std::numeric_limits<uint32_t>::max() ) {
+    std::cerr << "Error: SA3D box is too large." << std::endl;
+    return NULL;
+  }
+
+  uint32_t iSize = static_cast<uint32_t>(boxSize);
 
   if ( 0 != memcmp ( name, constants::TAG_SA3D, sizeof ( *constants::TAG_SA3D ) ) )  {
     std::cerr << "Error: box is not an SA3D box." << std::endl;
     return NULL;
   }
 
-  if ( iPos + iSize > iEnd )  {
+  constexpr uint32_t kFixedContentSize = 1 + 1 + 4 + 1 + 1 + 4;
+  if ( iSize < headerSize + kFixedContentSize )  {
+    std::cerr << "Error: SA3D box is too small." << std::endl;
+    return NULL;
+  }
+
+  if ( iPos > iEnd || iSize > iEnd - iPos )  {
     std::cerr << "Error: SA3D box size exceeds bounds." << std::endl;
     return NULL;
   }
 
   pNewBox = new SA3DBox ( );
   pNewBox->m_iPosition = iPos;
-  pNewBox->m_iContentSize    = iSize - pNewBox->m_iHeaderSize;
+  pNewBox->m_iHeaderSize = headerSize;
+  pNewBox->m_iContentSize = iSize - headerSize;
   pNewBox->m_iVersion        = readUint8  ( fs );
   pNewBox->m_iAmbisonicType  = readUint8  ( fs );
   pNewBox->m_iAmbisonicOrder = readUint32 ( fs );
   pNewBox->m_iAmbisonicChannelOrdering = readUint8 ( fs );
   pNewBox->m_iAmbisonicNormalization   = readUint8 ( fs );
   pNewBox->m_iNumChannels    = readUint32 ( fs );
+
+  const uint32_t channelMapBytes = pNewBox->m_iContentSize - kFixedContentSize;
+  if ( pNewBox->m_iNumChannels > channelMapBytes / sizeof(uint32_t) ) {
+    std::cerr << "Error: SA3D channel map exceeds box bounds." << std::endl;
+    delete pNewBox;
+    return NULL;
+  }
 
   for ( auto i = 0U; i< pNewBox->m_iNumChannels; i++ )  {
     uint32_t iVal = readUint32 ( fs );
@@ -221,5 +245,3 @@ std::string SA3DBox::get_metadata_string ( )
 
   return str.str ( );
 }
-
-

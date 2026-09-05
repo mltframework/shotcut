@@ -20,12 +20,14 @@
 
 #include "commands/timelinecommands.h"
 #include "mainwindow.h"
+#include "sharedframe.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 
 #include <Mlt.h>
+#include <QHideEvent>
 #include <QScopedPointer>
-#include <QTimer>
+#include <QShowEvent>
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 static const char *BLEND_PROPERTY_QTBLEND = "compositing";
@@ -42,7 +44,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
     : QWidget(parent)
     , ui(new Ui::TrackPropertiesWidget)
     , m_track(track)
-    , m_duckStatusTimer(new QTimer(this))
+    , m_trackIndex(-1)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
@@ -61,15 +63,6 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
             updateDuckStatus(mixTransition->get_double(MIX_PROPERTY_DUCK_LEVEL));
             setDuckingVisible(true);
         }
-    }
-
-    m_duckStatusTimer->setInterval(100);
-    if (showDucking) {
-        connect(m_duckStatusTimer,
-                &QTimer::timeout,
-                this,
-                &TrackPropertiesWidget::refreshDuckStatus);
-        m_duckStatusTimer->start();
     }
 
     if (showBlend) {
@@ -165,7 +158,6 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
 
 TrackPropertiesWidget::~TrackPropertiesWidget()
 {
-    m_duckStatusTimer->stop();
     delete ui;
 }
 
@@ -192,6 +184,37 @@ void TrackPropertiesWidget::updateDuckStatus(double value)
     ui->duckStatusValueLabel->setFormat(QString::number(clamped, 'f', 1) + tr(" dB"));
 }
 
+void TrackPropertiesWidget::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    if (!ui->duckingHeadingLabel->isVisible())
+        return;
+    connect(MLT.videoWidget(),
+            SIGNAL(frameDisplayed(const SharedFrame &)),
+            this,
+            SLOT(onShowFrame(const SharedFrame &)));
+}
+
+void TrackPropertiesWidget::hideEvent(QHideEvent *event)
+{
+    QWidget::hideEvent(event);
+    if (!ui->duckingHeadingLabel->isVisible())
+        return;
+    disconnect(MLT.videoWidget(),
+               SIGNAL(frameDisplayed(const SharedFrame &)),
+               this,
+               SLOT(onShowFrame(const SharedFrame &)));
+}
+
+void TrackPropertiesWidget::onShowFrame(const SharedFrame &frame)
+{
+    if (m_trackIndex < 0 || !frame.is_valid())
+        return;
+    const QByteArray key
+        = QStringLiteral("meta.audio.track.%1.duck_level").arg(m_trackIndex).toLatin1();
+    updateDuckStatus(frame.get_double(key.constData()));
+}
+
 Mlt::Transition *TrackPropertiesWidget::getTransition(const QString &name)
 {
     // track.consumer() is the multitrack
@@ -206,6 +229,7 @@ Mlt::Transition *TrackPropertiesWidget::getTransition(const QString &name)
             if (producer->get_producer() == m_track.get_producer())
                 break;
         }
+        m_trackIndex = trackIndex;
 
         // Iterate the consumers until found transition by mlt_service and track_b index.
         while (service && service->is_valid() && mlt_service_tractor_type != service->type()) {
@@ -343,12 +367,4 @@ void TrackPropertiesWidget::onDuckFadeOutChanged(double value)
     ui->duckFadeOutSpinBox->blockSignals(true);
     ui->duckFadeOutSpinBox->setValue(value);
     ui->duckFadeOutSpinBox->blockSignals(false);
-}
-
-void TrackPropertiesWidget::refreshDuckStatus()
-{
-    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
-    if (transition && transition->is_valid()) {
-        updateDuckStatus(transition->get_double(MIX_PROPERTY_DUCK_LEVEL));
-    }
 }

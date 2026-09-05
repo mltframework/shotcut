@@ -32,6 +32,7 @@
 #include <QQuickStyle>
 #include <QQuickWindow>
 #include <QSysInfo>
+#include <QTimer>
 #include <QtGlobal>
 #include <QtWidgets>
 
@@ -54,6 +55,10 @@ __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 static constexpr int kMaxCacheCount = 5000;
 constexpr const auto kWatchdogTimeoutMs = 30000;
 constexpr const auto kWatchdogEnvVar = "SHOTCUT_WATCHDOG";
+// How long the watchdog parent waits for kStartupReadyMarker before assuming the child is hung.
+constexpr const auto kStartupHangTimeoutMs = 240000;
+// Printed by the child to stdout once its main window is shown; watched for by the parent.
+constexpr const auto kStartupReadyMarker = "[Info   ] Shotcut window shown";
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 static QString s_qpaPlatformNote;
@@ -620,6 +625,11 @@ int main(int argc, char **argv)
         QQuickStyle::setStyle("Fusion");
 
         a.mainWindow = &MAIN;
+        // Tell the watchdog parent process (if any) that startup got far enough to show a window.
+        QObject::connect(a.mainWindow, &MainWindow::windowShown, []() {
+            ::fprintf(stdout, "%s\n", kStartupReadyMarker);
+            ::fflush(stdout);
+        });
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
         if (Settings.drawMethod() != QSGRendererInterface::Vulkan)
@@ -683,44 +693,81 @@ int main(int argc, char **argv)
             args << a.fileOpenEventArgs;
         ::qputenv(kWatchdogEnvVar, "1");
         child.setProcessChannelMode(QProcess::MergedChannels);
-        QObject::connect(&child, &QProcess::readyRead, [&child]() {
-            const QByteArray output = child.readAll();
+        // Set by the readyRead handler once kStartupReadyMarker is seen in the child's output.
+        bool startupConfirmed = false;
+        // Accumulates recent output in case the marker straddles two reads.
+        QByteArray outputSearchBuffer;
+        QObject::connect(&child, &QProcess::readyRead, [&]() {
+            QByteArray output = child.readAll();
+            if (output.isEmpty())
+                return;
+            if (!startupConfirmed) {
+                outputSearchBuffer.append(output);
+                if (outputSearchBuffer.contains(kStartupReadyMarker)) {
+                    startupConfirmed = true;
+                    output.replace(QByteArray(kStartupReadyMarker) + '\n', "");
+                }
+                if (outputSearchBuffer.size() > 4096)
+                    outputSearchBuffer = outputSearchBuffer.right(4096);
+            }
             if (!output.isEmpty()) {
                 ::fputs(output.constData(), stdout);
                 ::fflush(stdout);
             }
         });
 
-        auto runChildAndWait = [&](const char *backend) {
+        struct ChildRunResult
+        {
+            qint64 elapsedMs;
+            bool hung;
+        };
+
+        auto runChildAndWait = [&](const char *backend) -> ChildRunResult {
 #ifdef Q_OS_WIN
             ::qputenv("QSG_RHI_BACKEND", backend);
 #else
             Q_UNUSED(backend);
 #endif
+            startupConfirmed = false;
+            outputSearchBuffer.clear();
             QElapsedTimer timer;
             timer.start();
             child.start(a.applicationFilePath(), args, QIODevice::ReadOnly);
             if (!child.waitForStarted()) {
                 LOG_WARNING() << "child process failed to start";
-                return timer.elapsed();
+                return {timer.elapsed(), false};
             }
+            bool hung = false;
+            QTimer hangTimer;
+            hangTimer.setSingleShot(true);
+            QObject::connect(&hangTimer, &QTimer::timeout, [&]() {
+                if (!startupConfirmed) {
+                    hung = true;
+                    LOG_WARNING() << "child process appears hung during startup; terminating";
+                    child.kill();
+                }
+            });
+            hangTimer.start(kStartupHangTimeoutMs);
             QEventLoop loop;
             QObject::connect(&child, &QProcess::finished, &loop, &QEventLoop::quit);
             loop.exec();
+            hangTimer.stop();
             // Flush any output not yet delivered via readyRead.
             const QByteArray remaining = child.readAll();
             if (!remaining.isEmpty()) {
                 ::fputs(remaining.constData(), stdout);
                 ::fflush(stdout);
             }
-            return timer.elapsed();
+            return {timer.elapsed(), hung};
         };
 
-        const qint64 firstRunElapsedMs = runChildAndWait(
+        const auto firstRun = runChildAndWait(
             (qEnvironmentVariableIsSet("QSG_RHI_BACKEND") ? qgetenv("QSG_RHI_BACKEND") : "d3d11"));
-        const bool firstRunFailed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
-        if (firstRunFailed && firstRunElapsedMs <= kWatchdogTimeoutMs) {
-            LOG_WARNING() << "child process failed, restarting in OpenGL mode";
+        const bool firstRunCrashed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
+        if (firstRun.hung || (firstRunCrashed && firstRun.elapsedMs <= kWatchdogTimeoutMs)) {
+            LOG_WARNING() << (firstRun.hung
+                                  ? "child process hung during startup, restarting in safe mode"
+                                  : "child process failed, restarting in safe mode");
             Settings.setSafeMode(true);
             Settings.sync();
             runChildAndWait("opengl");

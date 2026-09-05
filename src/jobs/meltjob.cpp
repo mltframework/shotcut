@@ -231,12 +231,19 @@ void MeltJob::onReadyRead()
             }
         } else {
             appendToLog(msg);
+            index = msg.indexOf("[consumer avformat] finished");
+            if (index > -1) {
+                m_previousPercent = 100;
+            }
         }
     } while (!msg.isEmpty());
 }
 
 void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    // Prevent false negative by assuming melt progress (max 99%) near the end is success.
+    if (m_previousPercent >= 99)
+        exitCode = 0;
     AbstractJob::onFinished(exitCode, exitStatus);
     if (exitStatus != QProcess::NormalExit && exitCode != 0 && !stopped()) {
         Mlt::Producer producer(m_profile, "colour:");

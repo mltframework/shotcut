@@ -977,7 +977,8 @@ void MainWindow::setupMenuFile()
 
 void MainWindow::setupMenuView()
 {
-    ui->actionLeaveSafeMode->setVisible(Settings.safeMode());
+    if (!Settings.safeMode())
+        ui->actionLeaveSafeMode->setText(tr("Block External Plugins (Safe Mode)"));
     ui->menuView->addSeparator();
     ui->menuView->addAction(ui->actionResources);
     ui->menuView->addAction(ui->actionApplicationLog);
@@ -3476,6 +3477,7 @@ void MainWindow::showEvent(QShowEvent *event)
     // This is needed to prevent a crash on windows on startup when timeline
     // is visible and dock title bars are hidden.
     Q_UNUSED(event)
+    emit windowShown(); // tells the watchdog parent process that startup is not hung
     ui->actionShowTitleBars->setChecked(Settings.showTitleBars());
     on_actionShowTitleBars_triggered(Settings.showTitleBars());
     ui->actionShowToolbar->setChecked(Settings.showToolBar());
@@ -5123,6 +5125,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         setProfile(action->data().toString());
         MLT.reload(xml);
         m_undoStack->clear();
+        setWindowModified(true);
         emit producerOpened(false);
     } else {
         Settings.setPlayerProfile(action->data().toString());
@@ -5164,6 +5167,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         if (!xml.isEmpty()) {
             MLT.reload(xml);
             m_undoStack->clear();
+            setWindowModified(true);
             emit producerOpened(false);
         }
     }
@@ -7024,20 +7028,30 @@ void MainWindow::showSettingsMenu() const
 
 void MainWindow::on_actionLeaveSafeMode_triggered()
 {
-    QMessageBox dialog(QMessageBox::Question,
-                       qApp->applicationName(),
-                       tr("Safe mode was enabled because Shotcut crashed during startup.\n"
-                          "Safe mode disables external plugins.\n"
-                          "\n"
-                          "Do you want to turn off safe mode and restart now?"),
-                       QMessageBox::No | QMessageBox::Yes,
-                       this);
-    dialog.setDefaultButton(QMessageBox::Yes);
-    dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes) {
-        Settings.setSafeMode(false);
+    bool restart = false;
+    if (Settings.safeMode()) {
+        QMessageBox dialog(QMessageBox::Question,
+                           qApp->applicationName(),
+                           tr("Safe mode may have enabled because Shotcut crashed during startup.\n"
+                              "Safe mode disables external plugins.\n"
+                              "\n"
+                              "Do you want to turn off safe mode and restart now?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            Settings.setSafeMode(false);
+            restart = true;
+        }
+    } else {
+        Settings.setSafeMode(true);
+        restart = true;
+    }
+    if (restart) {
         Settings.sync();
+        Mlt::Controller::setSafeMode();
         m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
     }

@@ -58,9 +58,8 @@ static int firstUserFilterIndex(Mlt::Producer *producer)
 {
     if (producer && producer->is_valid()) {
         for (int i = 0; i < producer->filter_count(); i++) {
-            Mlt::Filter *filter = producer->filter(i);
-            bool preUser = Util::isPreUserFilter(filter);
-            delete filter;
+            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+            bool preUser = Util::isPreUserFilter(filter.data());
             if (!preUser)
                 return i;
         }
@@ -74,13 +73,17 @@ static int userFilterCount(Mlt::Producer *producer)
     int count = 0;
     if (producer && producer->is_valid()) {
         for (int i = 0; i < producer->filter_count(); i++) {
-            Mlt::Filter *filter = producer->filter(i);
-            if (Util::isUserFilter(filter))
+            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+            if (Util::isUserFilter(filter.data()))
                 count++;
-            delete filter;
         }
     }
     return count;
+}
+
+static bool isTrackVolumeFilterService(Mlt::Filter *filter)
+{
+    return filter && filter->is_valid() && filter->get(kShotcutTrackVolumeProperty);
 }
 
 static int firstUserLinkIndex(Mlt::Producer *producer)
@@ -257,6 +260,25 @@ QString AttachedFiltersModel::name(int row) const
     return name;
 }
 
+bool AttachedFiltersModel::isTrackVolumeFilter(int row) const
+{
+    if (row < 0 || !m_producer || !m_producer->is_valid())
+        return false;
+
+    const int mltIndex = mltFilterIndex(m_producer.data(), row);
+    QScopedPointer<Mlt::Filter> filter(mltIndex >= 0 ? m_producer->filter(mltIndex) : nullptr);
+    return filter.data() && isTrackVolumeFilterService(filter.data());
+}
+
+int AttachedFiltersModel::trackVolumeFilterIndex() const
+{
+    for (int row = 0; row < m_metaList.count(); row++) {
+        if (isTrackVolumeFilter(row))
+            return row;
+    }
+    return -1;
+}
+
 int AttachedFiltersModel::rowCount(const QModelIndex &) const
 {
     if (m_producer && m_producer->is_valid())
@@ -410,7 +432,10 @@ bool AttachedFiltersModel::insertRows(int row, int, const QModelIndex &)
 
 bool AttachedFiltersModel::removeRows(int row, int, const QModelIndex &parent)
 {
-    if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
+    if (!m_producer || !m_producer->is_valid())
+        return false;
+
+    if (m_dropRow >= 0 && row != m_dropRow) {
         bool result = moveRows(parent, row, 1, parent, m_dropRow);
         m_dropRow = -1;
         return result;
@@ -432,6 +457,18 @@ bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent,
     if (destinationRow == sourceRow) {
         return false;
     }
+
+    int mltSourceIndex = mltFilterIndex(m_producer.data(), sourceRow);
+    QScopedPointer<Mlt::Filter> sourceFilter(
+        mltSourceIndex >= 0 ? m_producer->filter(mltSourceIndex) : nullptr);
+    if (sourceFilter.data() && isTrackVolumeFilterService(sourceFilter.data()))
+        return false;
+
+    int mltDestinationIndex = mltFilterIndex(m_producer.data(), destinationRow);
+    QScopedPointer<Mlt::Filter> destinationFilter(
+        mltDestinationIndex >= 0 ? m_producer->filter(mltDestinationIndex) : nullptr);
+    if (destinationFilter.data() && isTrackVolumeFilterService(destinationFilter.data()))
+        return false;
 
     if (isSourceClip()) {
         doMoveService(*m_producer, sourceRow, destinationRow);
@@ -736,22 +773,22 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
 void AttachedFiltersModel::remove(int row)
 {
     LOG_DEBUG() << row;
+    if (row < 0 || row >= m_metaList.count())
+        return;
+
+    int mltIndex = mltFilterIndex(m_producer.get(), row);
     if (isSourceClip()) {
         doRemoveService(*m_producer, row);
     } else {
-        int mltIndex = mltLinkIndex(m_producer.get(), row);
-        if (mltIndex >= 0) {
+        int linkIndex = mltLinkIndex(m_producer.get(), row);
+        if (linkIndex >= 0) {
             Mlt::Chain chain(*(m_producer.get()));
-            Mlt::Link *link = chain.link(mltIndex);
+            Mlt::Link *link = chain.link(linkIndex);
             MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), *link, row));
             delete link;
-        } else {
-            mltIndex = mltFilterIndex(m_producer.get(), row);
-            if (mltIndex >= 0) {
-                Mlt::Filter *filter = m_producer->filter(mltIndex);
-                MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), *filter, row));
-                delete filter;
-            }
+        } else if (mltIndex >= 0) {
+            QScopedPointer<Mlt::Filter> removeFilter(m_producer->filter(mltIndex));
+            MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), *removeFilter, row));
         }
     }
 }
@@ -805,9 +842,15 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
 bool AttachedFiltersModel::move(int fromRow, int toRow)
 {
     QModelIndex parent = QModelIndex();
-    if (fromRow < 0 || toRow < 0) {
+    if (fromRow < 0 || toRow < 0 || fromRow >= m_metaList.count() || toRow >= m_metaList.count()) {
         return false;
     }
+
+    int mltIndex = mltFilterIndex(m_producer.get(), fromRow);
+    QScopedPointer<Mlt::Filter> filter(mltIndex >= 0 ? m_producer->filter(mltIndex) : nullptr);
+    if (filter.data() && isTrackVolumeFilterService(filter.data()))
+        return false;
+
     return moveRows(parent, fromRow, 1, parent, toRow);
 }
 
@@ -860,12 +903,11 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
         }
         count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
-            Mlt::Filter *filter = m_producer->filter(i);
-            if (Util::isUserFilter(filter)) {
-                QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
+            QScopedPointer<Mlt::Filter> filter(m_producer->filter(i));
+            if (Util::isUserFilter(filter.data())) {
+                QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter.data());
                 m_metaList.append(newMeta);
             }
-            delete filter;
         }
     }
 
@@ -910,6 +952,8 @@ int AttachedFiltersModel::findInsertRow(QmlMetadata *meta)
     // Put the filter after the last filter that is less than or equal in sort order.
     int insertRow = 0;
     for (int i = m_metaList.count() - 1; i >= 0; i--) {
+        if (isTrackVolumeFilter(i))
+            continue;
         if (sortOrder(m_metaList[i]) <= sortOrder(meta)) {
             insertRow = i + 1;
             break;

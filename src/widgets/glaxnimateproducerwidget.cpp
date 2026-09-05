@@ -580,7 +580,9 @@ GlaxnimateIpcServer &GlaxnimateIpcServer::instance()
 void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
 {
     QFile rawr(QStringLiteral(":/resources/glaxnimate.rawr"));
-    rawr.open(QIODevice::ReadOnly);
+    if (!rawr.open(QIODevice::ReadOnly)) {
+        LOG_ERROR() << "Failed to open Glaxnimate rawr template" << rawr.fileName();
+    }
     auto data = rawr.readAll();
     auto json = QJsonDocument::fromJson(data).object();
     rawr.close();
@@ -597,7 +599,9 @@ void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
     json = jsonValue.toObject();
 
     rawr.setFileName(filename);
-    rawr.open(QIODevice::WriteOnly);
+    if (!rawr.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Failed to write Glaxnimate file" << rawr.fileName();
+    }
     rawr.write(QJsonDocument(json).toJson());
     rawr.close();
 }

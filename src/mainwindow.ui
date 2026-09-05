@@ -1576,7 +1576,7 @@
   </action>
   <action name="actionLeaveSafeMode">
    <property name="text">
-    <string>Leave Safe Mode</string>
+    <string>Allow External Plugins</string>
    </property>
   </action>
  </widget>

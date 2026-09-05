@@ -23,6 +23,23 @@
 #include "constants.h"
 #include "box.h"
 
+namespace {
+
+bool hasValidIndexCount(const Box *box, bool bigMode, uint32_t count)
+{
+  constexpr uint32_t kIndexHeaderSize = 8;
+  const uint32_t entrySize = bigMode ? sizeof(uint64_t) : sizeof(uint32_t);
+  return box->m_iContentSize >= kIndexHeaderSize
+      && count <= (box->m_iContentSize - kIndexHeaderSize) / entrySize;
+}
+
+bool hasIndexHeader(const Box *box)
+{
+  return box->m_iContentSize >= 8;
+}
+
+} // namespace
+
 Box::Box ( )
 {
   memset ( (char *)m_name, ' ', sizeof ( m_name ) );
@@ -305,6 +322,11 @@ void Box::index_copy ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, bool 
   // bBigMode: if true == BigEndian Uint64, else BigEndian Int32
   // iDelta: int, offset change for index entries.
   std::fstream &fs = fsIn;
+  if ( ! hasIndexHeader ( pBox ) ) {
+    std::cerr << "Error: index table is missing its header." << std::endl;
+    return;
+  }
+
   if ( ! pBox->m_pContents )
     fs.seekg ( pBox->content_start ( ) );
   else  {
@@ -314,6 +336,11 @@ void Box::index_copy ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, bool 
 
   uint32_t iHeader = readUint32 ( fs );
   uint32_t iValues = readUint32 ( fs );
+
+  if ( ! hasValidIndexCount ( pBox, bBigMode, iValues ) ) {
+    std::cerr << "Error: index table exceeds box bounds." << std::endl;
+    return;
+  }
  
   writeUint32 ( fsOut, iHeader );
   writeUint32 ( fsOut, iValues );
@@ -355,11 +382,21 @@ uint64_t Box::uint64FromCont ( int32_t &iIDX )
 
 void Box::index_copy_from_contents ( std::fstream &fsOut, Box *pBox, bool bBigMode, int32_t iDelta )
 {
-  (void) pBox; // unused
+  if ( ! hasIndexHeader ( pBox ) ) {
+    std::cerr << "Error: index table is missing its header." << std::endl;
+    return;
+  }
+
   int32_t iIDX = 0;
 
   uint32_t iHeader = uint32FromCont ( iIDX );
   uint32_t iValues = uint32FromCont ( iIDX );
+
+  if ( ! hasValidIndexCount ( pBox, bBigMode, iValues ) ) {
+    std::cerr << "Error: index table exceeds box bounds." << std::endl;
+    return;
+  }
+
   writeUint32 ( fsOut, iHeader );
   writeUint32 ( fsOut, iValues );
   if ( bBigMode )  {
@@ -387,4 +424,3 @@ void Box::co64_copy  ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, int32
   // Copy for co64 box.
   index_copy ( fsIn, fsOut, pBox, true, iDelta );
 }
-

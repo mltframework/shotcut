@@ -890,13 +890,7 @@ void MoveClipCommand::redoMarkers()
         QList<Markers::Marker> newMarkers = m_markers;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
-            if (marker.start < m_earliestStart
-                && marker.start > (m_earliestStart + m_positionDelta)) {
-                // This marker is in the overwritten segment. Remove it
-                newMarkers.removeAt(i);
-                i--;
-                m_markersModified = 1;
-            } else if (marker.start >= m_earliestStart) {
+            if (marker.start >= m_earliestStart) {
                 // This marker is after the start of the moved segment. Shift it with the move
                 marker.start += m_positionDelta;
                 marker.end += m_positionDelta;
@@ -1307,10 +1301,7 @@ void AddTransitionCommand::redo()
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
             if (marker.start <= m_markerOldStart && marker.start > m_markerNewStart) {
-                // This marker is in the overwritten segment. Remove it
-                newMarkers.removeAt(i);
-                i--;
-                markersModified = true;
+                // This marker is in the overwritten segment. Ignore it
             } else if (marker.start >= m_markerOldStart) {
                 // This marker is after the start of the moved segment. Shift it with the move
                 marker.start += startDelta;

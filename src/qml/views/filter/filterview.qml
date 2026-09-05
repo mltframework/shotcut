@@ -279,6 +279,7 @@ Rectangle {
 
             implicitWidth: height
             enabled: attachedFilters.selectedCanMoveUp
+                     && !attachedfiltersmodel.isTrackVolumeFilter(selectedIndex)
             opacity: enabled ? 1 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
@@ -299,6 +300,7 @@ Rectangle {
 
             implicitWidth: height
             enabled: attachedFilters.selectedCanMoveDown
+                     && !attachedfiltersmodel.isTrackVolumeFilter(selectedIndex)
             opacity: enabled ? 1 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'

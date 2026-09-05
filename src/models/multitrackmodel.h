@@ -110,6 +110,7 @@ public:
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     const QByteArray *getAudioLevels(int trackIndex, int clipIndex) const;
     void updateTrackAudioLevels(const SharedFrame &frame);
+    void updateTrackGains(int position);
     void clearTrackAudioLevels();
     bool createIfNeeded();
     void addBackgroundTrack();
@@ -121,6 +122,7 @@ public:
     int clipIndex(int trackIndex, int position);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
+    bool transitionOverlapValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     int trackHeight() const;
     void setTrackHeight(int height);
     int trackHeaderWidth() const;
@@ -223,6 +225,7 @@ private:
     bool m_isMakingTransition;
     bool m_trackLevelIndicatorSupported;
     bool m_hasAudioTracks;
+    int m_trackGainPosition;
 
     void moveClipToEnd(Mlt::Playlist &playlist,
                        int trackIndex,
@@ -262,6 +265,7 @@ private:
     Mlt::Filter *ensureTrackAudioLevelFilter(Mlt::Producer *track, int mltTrackIndex) const;
     void syncTrackAudioLevelFilterPrefixes();
     void setTrackAudioLevel(int row, double audioLevel);
+    Mlt::Filter *ensureTrackVolumeFilter(Mlt::Producer *track);
 
     friend class UndoHelper;
 

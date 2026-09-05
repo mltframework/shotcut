@@ -540,7 +540,7 @@ void FilterController::onGainChanged()
     if (m_currentFilter) {
         QString name = m_currentFilter->objectNameOrService();
         if (name == QStringLiteral("audioGain")) {
-            emit m_currentFilter->changed();
+            emit m_currentFilter->changed(QStringLiteral("level"));
         }
     }
 }
