@@ -25,6 +25,8 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 
+#include <MltFilter.h>
+#include <MltLink.h>
 #include <QScopedPointer>
 
 class FindProducerParser : public Mlt::Parser
@@ -121,7 +123,11 @@ AddCommand::AddCommand(AttachedFiltersModel &model,
         setText(QObject::tr("Add %1 filter set").arg(name));
     }
     m_rows.push_back(row);
-    m_services.push_back(service);
+    m_serviceNames.push_back(QString::fromUtf8(service.get("mlt_service")));
+    Mlt::Properties properties;
+    properties.inherit(service);
+    m_serviceProperties.push_back(properties);
+    m_serviceTypes.push_back(service.type());
 }
 
 void AddCommand::redo()
@@ -135,7 +141,17 @@ void AddCommand::redo()
         return;
     int adjustFrom = producer.filter_count();
     for (int i = 0; i < m_rows.size(); i++) {
-        m_model.doAddService(producer, m_services[i], m_rows[i]);
+        if (m_serviceTypes[i] == mlt_service_filter_type) {
+            Mlt::Filter filter(MLT.profile(), m_serviceNames[i].toUtf8().constData());
+            filter.inherit(m_serviceProperties[i]);
+            m_model.doAddService(producer, filter, m_rows[i]);
+        } else if (m_serviceTypes[i] == mlt_service_link_type) {
+            Mlt::Link link(m_serviceNames[i].toUtf8().constData());
+            link.inherit(m_serviceProperties[i]);
+            m_model.doAddService(producer, link, m_rows[i]);
+        } else {
+            LOG_ERROR() << "Unsupported service type" << m_serviceTypes[i];
+        }
     }
     if (AddSetLast == m_type)
         MLT.adjustFilters(producer, adjustFrom);
@@ -168,7 +184,9 @@ bool AddCommand::mergeWith(const QUndoCommand *other)
     }
     m_type = that->m_type;
     m_rows.push_back(that->m_rows.front());
-    m_services.push_back(that->m_services.front());
+    m_serviceNames.push_back(that->m_serviceNames.front());
+    m_serviceProperties.push_back(that->m_serviceProperties.front());
+    m_serviceTypes.push_back(that->m_serviceTypes.front());
     return true;
 }
 
