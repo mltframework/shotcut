@@ -636,7 +636,7 @@ int main(int argc, char **argv)
             a.mainWindow->setProperty("windowOpacity", 0.0);
         a.mainWindow->show();
         a.processEvents();
-        // a.mainWindow->setFullScreen(a.isFullScreen);
+        a.mainWindow->setFullScreen(a.isFullScreen);
         splash.finish(a.mainWindow);
 
         // Set up a local IPC server so the watchdog parent can forward
