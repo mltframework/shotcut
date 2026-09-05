@@ -1021,16 +1021,21 @@ void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     // A transition grow is reversed in place (ripple-safe). A non-ripple move is reversed by
-    // reinserting clips at their original positions. Ripple shifts other clips as it removes and
-    // inserts, invalidating those stored positions, so ripple (and ripple-all) moves restore the
-    // whole tracks from the snapshot instead. Any failure also falls back to that snapshot.
-    bool restored = false;
-    if (m_specialMove != NoSpecialMove)
-        restored = undoTransitionGrow();
-    else if (!m_ripple)
-        restored = undoExplicitMove();
-    if (!restored)
+    // reinserting clips at their original positions via its explicit inverse, which is
+    // authoritative — non-ripple moves record no whole-track snapshot. Ripple (and ripple-all)
+    // moves restore the whole tracks from the snapshot, which is also their failure fallback.
+    if (m_specialMove != NoSpecialMove) {
+        // Only a ripple special-move has a snapshot to fall back to; a non-ripple one does not.
+        if (!undoTransitionGrow() && m_ripple)
+            m_undoHelper.undoChanges();
+    } else if (m_ripple) {
         m_undoHelper.undoChanges();
+    } else if (!undoExplicitMove()) {
+        // undoExplicitMove() aborts before mutating on failure, so the move is left intact; there
+        // is no non-ripple snapshot to restore from.
+        LOG_ERROR() << "MoveClipCommand: could not reverse non-ripple move";
+        return;
+    }
     if (m_rippleMarkers && m_markersModified == 1) {
         m_markersModel.doReplace(m_markers);
     }
@@ -1074,8 +1079,8 @@ bool MoveClipCommand::undoTransitionGrow()
 // so the removal/insertion is done explicitly here.
 bool MoveClipCommand::undoExplicitMove()
 {
-    // Look everything up first so a miss aborts before any mutation and the whole-track fallback
-    // can restore cleanly.
+    // Validate every lookup up front so a miss aborts before any mutation; once past this point
+    // the reversal runs to completion (non-ripple moves have no whole-track snapshot fallback).
     QVector<Mlt::Producer> producers;
     QSet<int> liftedTracks;
     for (auto &clip : m_clips) {
@@ -1095,11 +1100,9 @@ bool MoveClipCommand::undoExplicitMove()
         int trackIndex = -1;
         int clipIndex = -1;
         auto info = m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        if (!info) {
-            if (m_generatedCuts.contains(uuid))
-                continue;
-            return false;
-        }
+        if (!info)
+            // A moving clip uuid was validated above; a generated cut may already be gone.
+            continue;
         if (m_ripple) {
             m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
         } else {
@@ -1122,7 +1125,9 @@ bool MoveClipCommand::undoExplicitMove()
             applyMovedClipIdentity(m_model, clip.trackIndex, clip.start, clip.uuid, clip.group);
         }
     }
-    return m_ripple ? true : restoreOverwritten();
+    if (!m_ripple)
+        restoreOverwritten();
+    return true;
 }
 
 // Dest clips overwrite() will delete/split. Snapshot them (skipping the moving set and blanks) so
