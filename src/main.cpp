@@ -592,11 +592,10 @@ int main(int argc, char **argv)
         }
         Settings.log();
 
-        // Expire old items from the qmlcache
-        splash.showMessage(QCoreApplication::translate("main", "Expiring cache..."),
-                           Qt::AlignRight | Qt::AlignVCenter);
         splash.show();
         a.processEvents();
+
+        // Expire old items from the qmlcache
         auto dir = QDir(
             QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
         if (dir.exists() && dir.cd("qmlcache")) {
@@ -615,10 +614,6 @@ int main(int argc, char **argv)
                 }
             }
         }
-
-        splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."),
-                           Qt::AlignRight | Qt::AlignVCenter);
-        a.processEvents();
 
         a.setProperty("system-style", a.style()->objectName());
         MainWindow::changeTheme(Settings.theme());

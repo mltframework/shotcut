@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 """
 make-ico.py
@@ -68,9 +68,11 @@ def main():
       resized_name = "%s.png" % resized_base
       redepthed_base = "%s-%02d" % (resized_base, depth)
       redepthed_name = "%s.pnm" % redepthed_base
-      redepth_args = (depth, resized_name, redepthed_name)
+      # ppmtowinicon only supports palettes of up to 256 colors, so always
+      # convert at 8 bits per channel regardless of the nominal icon depth.
+      redepth_args = (resized_name, redepthed_name)
       if depth >= 8:
-        command = "convert -depth %d %s %s" % redepth_args
+        command = "convert -depth 8 %s %s" % redepth_args
       else:
         command = "convert %s %s" % (resized_name, redepthed_name)
       err(command)
@@ -86,7 +88,7 @@ def main():
         os.system(command)
       else:
         # for the < 8 bit images, we don't need to calculate the map
-        open(map_name, 'wb').write(base64.decodestring(win16map))
+        open(map_name, 'wb').write(base64.decodebytes(win16map.encode('ascii')))
       to_delete.append(map_name)
       remapped_base = map_base
       remapped_name = "%s.ppm" % remapped_base
