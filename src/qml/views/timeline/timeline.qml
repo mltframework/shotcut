@@ -735,10 +735,17 @@ Rectangle {
 
                 visible: timeline.position > -1
                 color: application.playheadColor
-                width: 1
+                width: 2
                 height: root.height - horizontalScrollBar.height
-                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - 0.75
                 y: 0
+
+                Rectangle {
+                    width: 1
+                    height: parent.height
+                    color: "black"
+                    anchors.left: parent.right
+                }
             }
 
             Shotcut.TimelinePlayhead {
