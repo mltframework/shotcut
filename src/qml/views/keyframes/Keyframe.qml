@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025 Meltytech, LLC
+ * Copyright (c) 2018-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ Rectangle {
         onPaint: {
             var ctx = getContext("2d");
             if (isSelected) {
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = application.playheadColor;
             } else {
                 ctx.fillStyle = activePalette.buttonText;
             }

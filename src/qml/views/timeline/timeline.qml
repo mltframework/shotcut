@@ -222,7 +222,7 @@ Rectangle {
                 width: headerWidth
                 height: rulerFlickable.height
                 color: selected ? shotcutBlue : activePalette.window
-                border.color: selected ? 'red' : 'transparent'
+                border.color: selected ? application.playheadColor : 'transparent'
                 border.width: selected ? 1 : 0
                 visible: trackHeaderRepeater.count
                 z: 1
@@ -437,7 +437,7 @@ Rectangle {
 
                 Rectangle {
                     // thin dividing line between headers and tracks
-                    color: activePalette.windowText
+                    color: activePalette.base
                     width: 1
                     x: parent.x + parent.width
                     anchors.top: parent.top
@@ -656,7 +656,7 @@ Rectangle {
                                     width: clipN ? clipN.width : 0
                                     height: track ? track.height : 0
                                     color: 'transparent'
-                                    border.color: (clipN && clipN.group < 0) ? 'red' : 'white'
+                                    border.color: (clipN && clipN.group < 0) ? application.playheadColor : 'white'
                                     visible: clipN && !clipN.Drag.active && clipN.trackIndex === clipN.originalTrackIndex
                                 }
                             }
@@ -734,7 +734,7 @@ Rectangle {
                 id: cursor
 
                 visible: timeline.position > -1
-                color: activePalette.text
+                color: application.playheadColor
                 width: 1
                 height: root.height - horizontalScrollBar.height
                 x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX

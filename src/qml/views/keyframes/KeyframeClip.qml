@@ -70,7 +70,7 @@ Rectangle {
     }
 
     width: clipDuration * timeScale
-    border.color: selected ? 'red' : 'black'
+    border.color: selected ? application.playheadColor : 'black'
     border.width: 1
     clip: true
     opacity: isBlank ? 0.5 : 1

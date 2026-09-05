@@ -83,6 +83,25 @@ Rectangle {
         return Math.min(8, Math.max(0, last - waveformFirstTile));
     }
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
+    readonly property real _cornerRadius: 6
+    property real _roundLeft: {
+        if (isBlank || !trackRoot || trackRoot.clipCount === 0)
+            return 0;
+        if (index === 0)
+            return _cornerRadius;
+        const prev = trackRoot.clipAt(index - 1);
+        return (prev && prev.isBlank) ? _cornerRadius : 0;
+    }
+    property real _roundRight: {
+        if (isBlank || !trackRoot)
+            return 0;
+        if (index === trackRoot.clipCount - 1)
+            return _cornerRadius;
+        const next = trackRoot ? trackRoot.clipAt(index + 1) : null;
+        return (next && next.isBlank) ? _cornerRadius : 0;
+    }
+    readonly property real _leftRoundedInset: _roundLeft / 2
+    readonly property real _rightRoundedInset: _roundRight / 2
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -160,6 +179,10 @@ Rectangle {
             thumbnailsLoaded = true;
     }
 
+    topLeftRadius: _roundLeft
+    bottomLeftRadius: _roundLeft
+    topRightRadius: _roundRight
+    bottomRightRadius: _roundRight
     onElidedChanged: considerThumbnails()
     Component.onCompleted: considerThumbnails()
 
@@ -383,7 +406,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width
+        anchors.rightMargin: parent.border.width + _rightRoundedInset
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16 / 9
@@ -398,7 +421,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width
+        anchors.leftMargin: parent.border.width + _leftRoundedInset
         anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
@@ -429,14 +452,18 @@ Rectangle {
     Item {
         id: waveform
 
-        readonly property int maxWidth: clipRoot.waveformMaxWidth
+        readonly property real leftOffset: Math.max(_leftRoundedInset, parent.border.width)
+        readonly property real rightOffset: Math.max(_rightRoundedInset, parent.border.width)
+        readonly property real availableWidth: Math.max(0, clipRoot.width - leftOffset - rightOffset)
 
         visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-        height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
+        height: (isAudio || parent.height <= 20) ? parent.height - (_cornerRadius / 2) : parent.height / 2
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: parent.border.width
+        anchors.leftMargin: leftOffset
+        anchors.rightMargin: rightOffset
+        anchors.bottomMargin: parent.border.width
         opacity: isTrackMute ? 0.2 : 0.7
 
         Repeater {
@@ -450,11 +477,11 @@ Rectangle {
 
                 trackIndex: clipRoot.trackIndex
                 clipIndex: clipRoot.readonlyClipIndex
-                x: tileIndex * waveform.maxWidth
-                width: Math.min(waveform.maxWidth, parent.width - x)
+                x: tileIndex * waveformMaxWidth
+                width: Math.min(waveformMaxWidth, waveform.availableWidth - x)
                 height: waveform.height
                 fillColor: clipColor
-                inPoint: Math.round((clipRoot.inPoint + tileIndex * waveform.maxWidth / timeScale) * speed) * channels
+                inPoint: Math.round((clipRoot.inPoint + tileIndex * waveformMaxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height)
 
@@ -550,7 +577,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : inThumbnail.width + filtersIcon.width)
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : (inThumbnail.width + filtersIcon.width))
         width: label.width + 2
         height: label.height
     }
@@ -560,6 +587,7 @@ Rectangle {
 
         text: clipName
         visible: !elided && !isBlank && !isTransition
+        width: Math.min(implicitWidth, parent.width - leftLabelBackground.anchors.leftMargin - _rightRoundedInset - 2 * parent.border.width)
         font.pointSize: 8
         color: 'black'
 
@@ -579,7 +607,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width) + 2
+        anchors.rightMargin: parent.border.width + _rightRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width)
         width: labelRight.width + 2
         height: labelRight.height
     }
@@ -613,7 +641,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
         width: visible ? label.height : 0
         height: label.height
         padding: 0
@@ -637,9 +665,11 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
+        cornerRadius: _roundLeft
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.leftMargin: parent.border.width
+        anchors.topMargin: parent.border.width
         opacity: 0.5
     }
 
@@ -734,9 +764,11 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
+        cornerRadius: _roundRight
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.rightMargin: parent.border.width
+        anchors.topMargin: parent.border.width
         opacity: 0.5
 
         transform: Scale {
@@ -972,5 +1004,17 @@ Rectangle {
             position: 1
             color: clipColor
         }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: 'transparent'
+        border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? application.playheadColor : 'white' : 'black'
+        border.width: (isBlank && !selected) ? 0 : 1
+        topLeftRadius: clipRoot.topLeftRadius
+        bottomLeftRadius: clipRoot.bottomLeftRadius
+        topRightRadius: clipRoot.topRightRadius
+        bottomRightRadius: clipRoot.bottomRightRadius
+        z: 10
     }
 }

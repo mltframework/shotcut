@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,6 +65,16 @@ StatusLabelWidget::StatusLabelWidget(QWidget *parent)
         connect(&m_timer, &QTimer::timeout, this, &StatusLabelWidget::onFadeOutFinished);
     }
     setLayout(m_layout);
+
+    const auto highlight = QPalette().color(QPalette::Highlight).name();
+    const auto text = QPalette().color(QPalette::HighlightedText).name();
+    const QString style = QString("QWidget {"
+                                  " background-color: %1;"
+                                  " color: %2;"
+                                  " border-radius: 12px;"
+                                  "}")
+                              .arg(highlight, text);
+    setStyleSheet(style);
 }
 
 StatusLabelWidget::~StatusLabelWidget() {}
