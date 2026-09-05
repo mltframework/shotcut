@@ -336,6 +336,7 @@ private:
     bool undoExplicitMove();
     bool undoTransitionGrow();
     void snapshotOverwritten();
+    void captureGeneratedCuts();
     bool restoreOverwritten();
 
     TimelineDock &m_timeline;
@@ -388,6 +389,7 @@ private:
     QMultiMap<int, Info> m_clips; // ordered by position
     SpecialMove m_specialMove = NoSpecialMove;
     QList<Overwritten> m_overwritten;
+    QSet<QUuid> m_generatedCuts;
     bool m_redo;
     int m_earliestStart;
     QList<Markers::Marker> m_markers;

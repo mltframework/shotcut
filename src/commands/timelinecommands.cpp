@@ -1003,6 +1003,8 @@ void MoveClipCommand::redo()
         producers.pop_front();
     }
 
+    captureGeneratedCuts();
+
     if (!m_redo) {
         m_redo = true;
         if (m_ripple)
@@ -1086,12 +1088,18 @@ bool MoveClipCommand::undoExplicitMove()
         }
         producers.append(info->producer);
     }
-    for (auto &clip : m_clips) {
+    QSet<QUuid> cutsToRemove = m_generatedCuts;
+    for (const auto &clip : m_clips)
+        cutsToRemove.insert(clip.uuid);
+    for (const auto &uuid : std::as_const(cutsToRemove)) {
         int trackIndex = -1;
         int clipIndex = -1;
-        auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
-        if (!info)
+        auto info = m_model.findClipByUuid(uuid, trackIndex, clipIndex);
+        if (!info) {
+            if (m_generatedCuts.contains(uuid))
+                continue;
             return false;
+        }
         if (m_ripple) {
             m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
         } else {
@@ -1161,6 +1169,43 @@ void MoveClipCommand::snapshotOverwritten()
             dest.xml = MLT.XML(info->producer, false, false);
             if (!dest.xml.isEmpty())
                 m_overwritten.append(dest);
+        }
+    }
+}
+
+void MoveClipCommand::captureGeneratedCuts()
+{
+    m_generatedCuts.clear();
+    if (m_ripple)
+        return;
+
+    QSet<QUuid> expectedCuts;
+    for (const auto &clip : m_clips)
+        expectedCuts.insert(clip.uuid);
+    for (const auto &clip : m_overwritten)
+        expectedCuts.insert(clip.uuid);
+
+    const int last = qMax(int(m_model.trackList().size()) - 1, 0);
+    for (const auto &clip : m_clips) {
+        const int trackIndex = qBound(0, clip.trackIndex + m_trackDelta, last);
+        const int start = clip.start + m_positionDelta;
+        const int end = start + clip.frame_out - clip.frame_in;
+        auto mltIndex = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+        if (!track || !track->is_valid())
+            continue;
+        Mlt::Playlist playlist(*track);
+        const int from = playlist.get_clip_index_at(qMax(0, start));
+        const int to = playlist.get_clip_index_at(qMax(0, end));
+        for (int i = from; i <= to && i < playlist.count(); ++i) {
+            if (playlist.is_blank(i))
+                continue;
+            auto info = m_model.getClipInfo(trackIndex, i);
+            if (!info || !info->producer || !info->producer->is_valid())
+                continue;
+            QUuid uuid = MLT.ensureHasUuid(*info->producer);
+            if (!expectedCuts.contains(uuid))
+                m_generatedCuts.insert(uuid);
         }
     }
 }
