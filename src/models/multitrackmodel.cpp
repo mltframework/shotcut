@@ -3387,6 +3387,7 @@ void MultitrackModel::beginBulkUpdate()
     // triggered from within another bulk operation).
     ++m_bulkUpdateDepth;
     if (m_bulkUpdateDepth == 1 && !m_bulkRefreshBlocked) {
+        m_bulkUpdateChanged = false;
         // Suppress the player/consumer refresh that would otherwise happen
         // on every intermediate command; a single refresh is triggered once
         // in endBulkUpdate() below.
@@ -3395,25 +3396,29 @@ void MultitrackModel::beginBulkUpdate()
     }
 }
 
-void MultitrackModel::endBulkUpdate()
+void MultitrackModel::endBulkUpdate(bool changed)
 {
+    m_bulkUpdateChanged = m_bulkUpdateChanged || changed;
     if (m_bulkUpdateDepth > 0 && --m_bulkUpdateDepth == 0) {
         // Flush any work that was deferred while bulk updates were suppressed,
         // e.g. when the History dock replays many undo/redo steps at once.
-        if (m_bulkAdjustBackgroundPending) {
+        if (m_bulkUpdateChanged && m_bulkAdjustBackgroundPending) {
             m_bulkAdjustBackgroundPending = false;
             adjustBackgroundDuration();
         }
-        if (m_bulkAdjustTrackFiltersPending) {
+        if (m_bulkUpdateChanged && m_bulkAdjustTrackFiltersPending) {
             m_bulkAdjustTrackFiltersPending = false;
             adjustTrackFilters();
         }
         if (m_bulkRefreshBlocked) {
             m_bulkRefreshBlocked = false;
             MLT.blockRefresh(false);
-            MLT.refreshConsumer();
+            if (m_bulkUpdateChanged)
+                MLT.refreshConsumer();
         }
-        emit bulkUpdateFinished();
+        if (m_bulkUpdateChanged)
+            emit bulkUpdateFinished();
+        m_bulkUpdateChanged = false;
     }
 }
 

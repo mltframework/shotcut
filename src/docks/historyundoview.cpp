@@ -19,6 +19,8 @@
 
 #include "models/multitrackmodel.h"
 
+#include <QUndoStack>
+
 HistoryUndoView::HistoryUndoView(QUndoStack *stack, MultitrackModel *model, QWidget *parent)
     : QUndoView(stack, parent)
     , m_model(model)
@@ -26,21 +28,24 @@ HistoryUndoView::HistoryUndoView(QUndoStack *stack, MultitrackModel *model, QWid
 
 void HistoryUndoView::mousePressEvent(QMouseEvent *event)
 {
+    const int index = stack()->index();
     m_model->beginBulkUpdate();
     QUndoView::mousePressEvent(event);
-    m_model->endBulkUpdate();
+    m_model->endBulkUpdate(stack()->index() != index);
 }
 
 void HistoryUndoView::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    const int index = stack()->index();
     m_model->beginBulkUpdate();
     QUndoView::mouseDoubleClickEvent(event);
-    m_model->endBulkUpdate();
+    m_model->endBulkUpdate(stack()->index() != index);
 }
 
 void HistoryUndoView::keyPressEvent(QKeyEvent *event)
 {
+    const int index = stack()->index();
     m_model->beginBulkUpdate();
     QUndoView::keyPressEvent(event);
-    m_model->endBulkUpdate();
+    m_model->endBulkUpdate(stack()->index() != index);
 }

@@ -31,8 +31,9 @@ class QUndoStack;
 /// QUndoStack::setIndex() synchronously from within these event handlers, so
 /// bracketing the whole handler call is guaranteed to enclose any resulting
 /// redo()/undo() replay, letting the model defer expensive per-step work
-/// (e.g. adjustTrackFilters()) until the jump is complete. This is harmless
-/// when no jump actually occurs, since endBulkUpdate() is then a no-op.
+/// (e.g. adjustTrackFilters()) until the jump is complete. The view compares
+/// the undo index before and after each event so no-op events do not flush
+/// deferred work or refresh the consumer.
 class HistoryUndoView : public QUndoView
 {
     Q_OBJECT

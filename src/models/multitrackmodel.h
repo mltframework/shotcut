@@ -148,7 +148,7 @@ public:
     bool trackLevelIndicatorSupported() const;
     bool hasAudioTracks() const;
     void beginBulkUpdate();
-    void endBulkUpdate();
+    void endBulkUpdate(bool changed = true);
     bool isBulkUpdating() const { return m_bulkUpdateDepth > 0; }
 
 signals:
@@ -236,6 +236,7 @@ private:
     bool m_bulkAdjustBackgroundPending = false;
     bool m_bulkAdjustTrackFiltersPending = false;
     bool m_bulkRefreshBlocked = false;
+    bool m_bulkUpdateChanged = false;
 
     void moveClipToEnd(Mlt::Playlist &playlist,
                        int trackIndex,
