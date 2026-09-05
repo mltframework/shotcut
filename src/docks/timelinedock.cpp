@@ -22,6 +22,7 @@
 #include "actions.h"
 #include "commands/timelinecommands.h"
 #include "dialogs/alignaudiodialog.h"
+#include "dialogs/audiomixingassistantdialog.h"
 #include "dialogs/durationdialog.h"
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
@@ -288,6 +289,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineSplitAllTracksAction"]);
+    editMenu->addAction(Actions["timelineAudioMixingAssistantAction"]);
     editMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
     editMenu->addAction(Actions["timelineFreezeFrameAction"]);
     m_mainMenu->addMenu(editMenu);
@@ -1686,6 +1688,13 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineAlignToReferenceAction", action);
 
+    action = new QAction(tr("Audio Mixing Assistant..."), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (m_model.trackList().size() > 1)
+            showAudioMixingAssistantDialog();
+    });
+    Actions.add("timelineAudioMixingAssistantAction", action);
+
     action = new QAction(tr("Apply Copied Filters"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
@@ -2638,6 +2647,17 @@ void TimelineDock::alignSelectedClips()
     AlignAudioDialog dialog(tr("Align To Reference Track"), &m_model, selection, this);
     dialog.exec();
     restoreSelection();
+}
+
+/*!
+    \qmlmethod void TimelineDock::showAudioMixingAssistantDialog()
+    \brief Shows the Audio Mixing Assistant wizard for leveling and ducking tracks.
+*/
+
+void TimelineDock::showAudioMixingAssistantDialog()
+{
+    AudioMixingAssistantDialog dialog(tr("Audio Mixing Assistant"), &m_model, this);
+    dialog.exec();
 }
 
 void TimelineDock::applyCopiedFiltersToSelectdClips()
