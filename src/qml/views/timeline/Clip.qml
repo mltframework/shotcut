@@ -83,7 +83,7 @@ Rectangle {
         return Math.min(8, Math.max(0, last - waveformFirstTile));
     }
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
-    readonly property real _cornerRadius: 7.5
+    readonly property real _cornerRadius: 6
     property real _roundLeft: {
         if (isBlank || !trackRoot || trackRoot.clipCount === 0)
             return 0;
