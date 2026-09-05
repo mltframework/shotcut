@@ -86,10 +86,12 @@ private:
     void setupActions();
     void emitDataChanged(const QVector<int> &roles);
     void updateViewMode();
+    void onRenameActionTriggered();
     void onUpdateThumbnailsActionTriggered();
     void onSelectAllActionTriggered();
     void incrementIndex(int step);
     void addOpenWithMenu(QMenu *menu);
+    QModelIndex selectedFileIndex() const;
     QString firstSelectedFilePath();
     QString firstSelectedMediaType();
     void openClip(const QString &filePath);
