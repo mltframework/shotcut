@@ -1278,7 +1278,7 @@ function deploy
 
   if [ "$TARGET_ARCH" = "clangarm64" ]; then
     log Copying some libs from msys2
-    cmd cp -p /${TARGET_ARCH}/bin/{libcrypto-3-arm64.dll,libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-16.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libexpat-1.dll,liblz4.dll,libfftw3f-3.dll} .
+    cmd cp -p /${TARGET_ARCH}/bin/{libcrypto-3-arm64.dll,libjasper.dll,libjpeg-8.dll,liblibmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-16.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libexpat-1.dll,liblz4.dll,libfftw3f-3.dll,liblilv-0.dll,libserd-0.dll,libsord-0.dll,libsratom-0.dll,libzix-0.dll} .
     # possibly needed on mingw64: libcrypto-3-x64.dll,liblz4.dll,libunwind.dll
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
