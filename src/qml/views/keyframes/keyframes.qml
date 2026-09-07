@@ -485,10 +485,17 @@ Rectangle {
 
                 visible: producer.position > -1 && metadata !== null
                 color: application.playheadColor
-                width: 1
+                width: 2
                 height: root.height - horizontalScrollBar.height
-                x: producer.position * timeScale - tracksFlickable.contentX
+                x: producer.position * timeScale - tracksFlickable.contentX - 0.75
                 y: 0
+
+                Rectangle {
+                    width: 0.5
+                    height: parent.height
+                    color: "black"
+                    anchors.left: parent.right
+                }
             }
 
             Shotcut.TimelinePlayhead {

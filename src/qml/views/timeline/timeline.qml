@@ -741,7 +741,7 @@ Rectangle {
                 y: 0
 
                 Rectangle {
-                    width: 1
+                    width: 0.5
                     height: parent.height
                     color: "black"
                     anchors.left: parent.right
