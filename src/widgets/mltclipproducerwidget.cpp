@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,14 @@
 #include "mltclipproducerwidget.h"
 
 #include "Logger.h"
+#include "docks/timelinedock.h"
+#include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
+#include <QFileInfo>
 #include <QGridLayout>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -118,6 +122,30 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
         return;
     }
     QString resource = Util::GetFilenameFromProducer(m_producer.data());
+    // The saved length may be stale if the referenced .mlt file changed since this clip was added.
+    // Only reparse the nested project when its mtime changed since last checked.
+    qint64 mtime = QFileInfo(resource).lastModified().toSecsSinceEpoch();
+    if (QString::fromLatin1(m_producer->get("mlt_service")) == "xml-clip"
+        && m_producer->get_int64(kXmlClipCheckedMtimeProperty) != mtime) {
+        m_producer->set(kXmlClipCheckedMtimeProperty, (int64_t) mtime);
+        Mlt::Producer current(Util::openMltVirtualClip(resource));
+        if (current.is_valid() && current.get_length() != m_producer->get_length()) {
+            m_producer->set("length",
+                            m_producer->frames_to_time(current.get_length(), mlt_time_clock));
+            // MLT's playlist "cut" keeps its own copy of "length" snapshotted at cut
+            // creation, so it does not see the corrected value above. Patch it directly
+            // since this is proactive housekeeping, not a user edit, and should not be
+            // an undo step.
+            TimelineDock *timeline = MAIN.timelineDock();
+            if (timeline && !timeline->selection().isEmpty()) {
+                int trackIndex = timeline->selection().first().y();
+                int clipIndex = timeline->selection().first().x();
+                auto info = timeline->model()->getClipInfo(trackIndex, clipIndex);
+                if (info && info->cut)
+                    info->cut->set("length", m_producer->get("length"));
+            }
+        }
+    }
     QString name = Util::baseName(resource, true);
     m_nameLabel->setText(name);
     m_nameLabel->setToolTip(resource);

@@ -114,6 +114,7 @@
 #define kIsProxyProperty "shotcut:proxy"
 #define kPrivateProducerProperty "_shotcut:producer"
 #define kNewFrameOutProperty "_shotcut:newFrameOut"
+#define kXmlClipCheckedMtimeProperty "_shotcut:xmlClipCheckedMtime"
 
 #define kDefaultMltProfile "atsc_1080p_25"
 
