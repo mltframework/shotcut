@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-1029 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,9 @@ private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
     void on_searchFolderButton_clicked();
+
+    void onTableViewCustomContextMenuRequested(const QPoint &pos);
+    void copyMissingToClipboard();
 
 private:
     bool lookInDir(const QDir &dir, bool recurse = false);

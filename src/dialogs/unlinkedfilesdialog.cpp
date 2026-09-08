@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,12 @@
 #include "ui_unlinkedfilesdialog.h"
 #include "util.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QFileDialog>
+#include <QKeySequence>
+#include <QMenu>
+#include <QShortcut>
 #include <QStringList>
 
 UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget *parent)
@@ -30,6 +35,14 @@ UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget *parent)
     , ui(new Ui::UnlinkedFilesDialog)
 {
     ui->setupUi(this);
+    ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableView,
+            &QTableView::customContextMenuRequested,
+            this,
+            &UnlinkedFilesDialog::onTableViewCustomContextMenuRequested);
+    QShortcut *copyShortcut = new QShortcut(QKeySequence::Copy, ui->tableView);
+    copyShortcut->setContext(Qt::WidgetShortcut);
+    connect(copyShortcut, &QShortcut::activated, this, &UnlinkedFilesDialog::copyMissingToClipboard);
 }
 
 UnlinkedFilesDialog::~UnlinkedFilesDialog()
@@ -152,4 +165,24 @@ void UnlinkedFilesDialog::on_searchFolderButton_clicked()
         Settings.setOpenPath(dirName);
         lookInDir(dirName);
     }
+}
+
+void UnlinkedFilesDialog::onTableViewCustomContextMenuRequested(const QPoint &pos)
+{
+    if (!ui->tableView->selectionModel()->selectedRows().isEmpty()) {
+        QMenu menu(this);
+        menu.addAction(tr("Copy"), this, &UnlinkedFilesDialog::copyMissingToClipboard);
+        menu.exec(ui->tableView->viewport()->mapToGlobal(pos));
+    }
+}
+
+void UnlinkedFilesDialog::copyMissingToClipboard()
+{
+    QStringList paths;
+    for (const QModelIndex &row :
+         ui->tableView->selectionModel()->selectedRows(MltXmlChecker::MissingColumn)) {
+        paths << ui->tableView->model()->data(row, Qt::DisplayRole).toString();
+    }
+    if (!paths.isEmpty())
+        QApplication::clipboard()->setText(paths.join('\n'));
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,12 @@
 #include "Logger.h"
 #include "models/resourcemodel.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QHeaderView>
+#include <QKeySequence>
+#include <QMenu>
+#include <QShortcut>
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -55,6 +60,14 @@ ResourceWidget::ResourceWidget(QWidget *parent)
     connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged, this, [=]() {
         m_table->selectionModel()->clearCurrentIndex();
     });
+    m_table->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_table,
+            &QTreeView::customContextMenuRequested,
+            this,
+            &ResourceWidget::onCustomContextMenuRequested);
+    QShortcut *copyShortcut = new QShortcut(QKeySequence::Copy, m_table);
+    copyShortcut->setContext(Qt::WidgetShortcut);
+    connect(copyShortcut, &QShortcut::activated, this, &ResourceWidget::copyNameToClipboard);
     vlayout->addWidget(m_table);
 
     setLayout(vlayout);
@@ -110,6 +123,26 @@ Mlt::Producer ResourceWidget::producer(int index)
 QList<Mlt::Producer> ResourceWidget::getSelected()
 {
     return m_model->getProducers(m_table->selectionModel()->selectedRows());
+}
+
+void ResourceWidget::onCustomContextMenuRequested(const QPoint &pos)
+{
+    if (!m_table->selectionModel()->selectedRows().isEmpty()) {
+        QMenu menu(this);
+        menu.addAction(tr("Copy Name"), this, &ResourceWidget::copyNameToClipboard);
+        menu.exec(m_table->mapToGlobal(pos));
+    }
+}
+
+void ResourceWidget::copyNameToClipboard()
+{
+    QStringList names;
+    for (const QModelIndex &row :
+         m_table->selectionModel()->selectedRows(ResourceModel::COLUMN_NAME)) {
+        names << m_model->data(row, Qt::DisplayRole).toString();
+    }
+    if (!names.isEmpty())
+        QApplication::clipboard()->setText(names.join('\n'));
 }
 
 void ResourceWidget::updateSize()

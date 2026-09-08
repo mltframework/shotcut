@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,10 @@ public:
     Mlt::Producer producer(int index);
     QList<Mlt::Producer> getSelected();
     void updateSize();
+
+private slots:
+    void onCustomContextMenuRequested(const QPoint &pos);
+    void copyNameToClipboard();
 
 private:
     ResourceModel *m_model;
