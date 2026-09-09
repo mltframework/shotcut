@@ -499,7 +499,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
         y: clipRoot.gainLineY(gain)
-        color: audioPeakMouseArea.enabled ? audioPeakMouseArea.dragging ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
+        color: audioPeakMouseArea.enabled ? audioPeakMouseArea.dragging ? Qt.lighter(parent.color) : Qt.darker(clipColor) : 'gray'
         opacity: waveform.opacity
 
         MouseArea {
