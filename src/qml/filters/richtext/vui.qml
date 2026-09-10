@@ -185,6 +185,7 @@ Shotcut.VuiBase {
                     }
 
                     MouseArea {
+                        enabled: application.OS !== 'Windows'
                         acceptedButtons: Qt.RightButton
                         anchors.fill: parent
                         onClicked: contextMenu.popup()

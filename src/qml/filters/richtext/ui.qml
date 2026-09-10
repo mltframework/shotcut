@@ -478,6 +478,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 persistentSelection: true
 
                 MouseArea {
+                    enabled: application.OS !== 'Windows'
                     acceptedButtons: Qt.RightButton
                     anchors.fill: parent
                     onClicked: contextMenu.popup()
@@ -506,6 +507,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 persistentSelection: true
 
                 MouseArea {
+                    enabled: application.OS !== 'Windows'
                     acceptedButtons: Qt.RightButton
                     anchors.fill: parent
                     onClicked: contextMenu2.popup()
