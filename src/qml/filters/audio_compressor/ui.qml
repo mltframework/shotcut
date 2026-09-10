@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2025 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,10 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
         columns: 3
+
+        Shotcut.AudioMixingAssistantTag {
+            Layout.columnSpan: parent.columns
+        }
 
         Label {
             text: qsTr('Preset')

@@ -675,6 +675,31 @@ void NameTrackCommand::undo()
     m_model.setTrackName(m_trackIndex, m_oldName);
 }
 
+ChangeTrackRoleCommand::ChangeTrackRoleCommand(MultitrackModel &model,
+                                               int trackIndex,
+                                               AudioTrackRole role,
+                                               QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_role(role)
+    , m_oldRole(model.getTrackRole(trackIndex))
+{
+    setText(QObject::tr("Change track role"));
+}
+
+void ChangeTrackRoleCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "role" << m_role;
+    m_model.setTrackRole(m_trackIndex, m_role);
+}
+
+void ChangeTrackRoleCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "role" << m_oldRole;
+    m_model.setTrackRole(m_trackIndex, m_oldRole);
+}
+
 MergeCommand::MergeCommand(MultitrackModel &model,
                            int trackIndex,
                            int clipIndex,
