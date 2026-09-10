@@ -32,6 +32,7 @@ Rectangle {
     property bool isBlank: false
     property bool isAudio: false
     property bool isTransition: false
+    property bool isAdjustment: false
     property bool isFiltered: false
     property int fadeIn: 0
     property int fadeOut: 0
@@ -82,7 +83,7 @@ Rectangle {
         const last = Math.min(Math.ceil(clipPxW / waveformMaxWidth), Math.ceil(Math.max(localRight, 0) / waveformMaxWidth));
         return Math.min(8, Math.max(0, last - waveformFirstTile));
     }
-    property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
+    property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : isAdjustment ? root.adjustmentClipColor : root.shotcutBlue
     readonly property real _cornerRadius: 6
     property real _roundLeft: {
         if (isBlank || !trackRoot || trackRoot.clipCount === 0)
@@ -157,7 +158,7 @@ Rectangle {
     }
 
     function imagePath(time) {
-        if (isAudio || isBlank || isTransition)
+        if (isAudio || isBlank || isTransition || isAdjustment)
             return '';
         else
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
@@ -175,7 +176,7 @@ Rectangle {
     }
 
     function considerThumbnails() {
-        if (!elided && !isBlank && !isAudio && !isTransition && settings.timelineShowThumbnails)
+        if (!elided && !isBlank && !isAudio && !isTransition && !isAdjustment && settings.timelineShowThumbnails)
             thumbnailsLoaded = true;
     }
 
@@ -402,7 +403,7 @@ Rectangle {
     Image {
         id: outThumbnail
 
-        visible: !elided && !isBlank && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
+        visible: !elided && !isBlank && !isAdjustment && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -417,7 +418,7 @@ Rectangle {
     Image {
         id: inThumbnail
 
-        visible: !elided && !isBlank && settings.timelineShowThumbnails && parent.height > 20
+        visible: !elided && !isBlank && !isAdjustment && settings.timelineShowThumbnails && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -577,7 +578,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : (inThumbnail.width + filtersIcon.width))
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || isAdjustment || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : (inThumbnail.width + filtersIcon.width))
         width: label.width + 2
         height: label.height
     }
@@ -607,7 +608,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + _rightRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width)
+        anchors.rightMargin: parent.border.width + _rightRoundedInset + ((isAudio || isAdjustment || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width)
         width: labelRight.width + 2
         height: labelRight.height
     }
@@ -616,7 +617,7 @@ Rectangle {
         id: labelRight
 
         text: clipName
-        visible: !elided && !isBlank && !isTransition && parent.width > ((settings.timelineShowThumbnails ? 2 * outThumbnail.width : 0) + 3 * label.width)
+        visible: !elided && !isBlank && !isTransition && parent.width > (((settings.timelineShowThumbnails && !isAdjustment) ? 2 * outThumbnail.width : 0) + 3 * label.width)
         font.pointSize: 8
         color: 'black'
 
@@ -641,7 +642,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + _leftRoundedInset + ((isAudio || isAdjustment || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
         width: visible ? label.height : 0
         height: label.height
         padding: 0

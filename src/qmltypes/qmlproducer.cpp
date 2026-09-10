@@ -18,6 +18,7 @@
 #include "qmlproducer.h"
 
 #include "Logger.h"
+#include "docks/timelinedock.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
@@ -192,6 +193,59 @@ QString QmlProducer::resource()
 QString QmlProducer::name()
 {
     return Util::producerTitle(m_producer);
+}
+
+/*!
+    \qmlproperty bool Producer::isAudio
+    \brief Whether this clip should be treated as audio.
+
+    True when \c video_index is \c -1 (for example a detached audio clip),
+    when the producer is an audio track, or when the clip is on an audio track.
+*/
+
+bool QmlProducer::isAudio()
+{
+    if (!m_producer.is_valid())
+        return false;
+
+    // Detached audio / audio-only media
+    if (m_producer.get("video_index") && m_producer.get_int("video_index") == -1)
+        return true;
+
+    // Selected audio track
+    if (m_producer.get_int(kAudioTrackProperty))
+        return true;
+
+    auto isAudioTrack = [](int trackIndex) {
+        auto *dock = MAIN.timelineDock();
+        if (!dock)
+            return false;
+        const auto &tracks = dock->model()->trackList();
+        return trackIndex >= 0 && trackIndex < tracks.size()
+               && tracks.at(trackIndex).type == AudioTrackType;
+    };
+
+    // Timeline clip: "_shotcut:multitrack-item" is "clipIndex:trackIndex"
+    if (const char *item = m_producer.get(kMultitrackItemProperty)) {
+        const auto parts = QString::fromLatin1(item).split(QLatin1Char(':'));
+        if (parts.size() == 2)
+            return isAudioTrack(parts.at(1).toInt());
+    }
+
+    if (m_producer.property_exists(kTrackIndexProperty))
+        return isAudioTrack(m_producer.get_int(kTrackIndexProperty));
+
+    return false;
+}
+
+/*!
+    \qmlproperty bool Producer::isAdjustment
+    \brief Whether this clip is an adjustment clip (\c meta.fx_cut).
+*/
+
+bool QmlProducer::isAdjustment()
+{
+    return m_producer.is_valid() && m_producer.get_int("meta.fx_cut");
 }
 
 const QByteArray *QmlProducer::audioLevels()

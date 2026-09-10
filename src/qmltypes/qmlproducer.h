@@ -44,6 +44,8 @@ class QmlProducer : public QObject
     Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(double displayAspectRatio READ displayAspectRatio NOTIFY producerChanged)
+    Q_PROPERTY(bool isAudio READ isAudio NOTIFY producerChanged)
+    Q_PROPERTY(bool isAdjustment READ isAdjustment NOTIFY producerChanged)
 
 public:
     explicit QmlProducer(QObject *parent = 0);
@@ -74,6 +76,8 @@ public:
     Q_INVOKABLE Mlt::Producer *getMltProducer() { return &m_producer; }
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();
+    bool isAudio();
+    bool isAdjustment();
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);

@@ -29,7 +29,8 @@ Rectangle {
     property int outPoint: 0
     property int clipDuration: outPoint - inPoint + 1
     property bool isBlank: false
-    property bool isAudio: false
+    property bool isAudio: producer.isAudio
+    property bool isAdjustment: producer.isAdjustment
     property int animateIn: 0
     property int animateOut: 0
     property int trackIndex: 0
@@ -50,7 +51,7 @@ Rectangle {
     signal rightClicked
 
     function getColor() {
-        return isAudio ? 'darkseagreen' : root.shotcutBlue;
+        return isAudio ? 'darkseagreen' : isAdjustment ? root.adjustmentClipColor : root.shotcutBlue;
     }
 
     function generateWaveform() {
@@ -117,7 +118,7 @@ Rectangle {
     Image {
         id: outThumbnail
 
-        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null && parent.height > 20 && x > inThumbnail.width
+        visible: !isAdjustment && settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -132,7 +133,7 @@ Rectangle {
     Image {
         id: inThumbnail
 
-        visible: settings.timelineShowThumbnails && inThumbnailVisible && metadata !== null && parent.height > 20
+        visible: !isAdjustment && settings.timelineShowThumbnails && inThumbnailVisible && metadata !== null && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -195,7 +196,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + ((isAudio || isAdjustment || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
         width: label.width + 2
         height: label.height
     }
@@ -212,7 +213,7 @@ Rectangle {
             top: parent.top
             left: parent.left
             topMargin: parent.border.width + 1
-            leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
+            leftMargin: parent.border.width + ((isAudio || isAdjustment || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
         }
     }
 

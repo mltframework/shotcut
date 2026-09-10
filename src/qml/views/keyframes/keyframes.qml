@@ -31,6 +31,7 @@ Rectangle {
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
+    property color adjustmentClipColor: Qt.rgba(92 / 255, 72 / 255, 23 / 255, 1)
     property double timeScale: keyframes.timeScale
     property var selection: []
     property alias paramRepeater: parametersRepeater

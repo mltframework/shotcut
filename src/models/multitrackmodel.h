@@ -92,6 +92,7 @@ public:
         GroupRole,         /// clip only
         GainRole,          /// track, clip
         GainEnabledRole,   /// track, clip
+        IsAdjustmentRole,  /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

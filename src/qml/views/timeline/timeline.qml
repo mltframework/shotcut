@@ -32,6 +32,7 @@ Rectangle {
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
+    property color adjustmentClipColor: Qt.rgba(92 / 255, 72 / 255, 23 / 255, 1)
     property var dragDelta
     property int inlineAudioControlsThreshold: 60
     property int separateTrackHeaderRowsThreshold: 80

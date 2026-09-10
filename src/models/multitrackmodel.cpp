@@ -174,6 +174,7 @@ static bool isAdjustmentClip(Mlt::Playlist &playlist, int clipIndex)
     \row \li \c fadeIn \li clip \li Fade-in duration in frames
     \row \li \c fadeOut \li clip \li Fade-out duration in frames
     \row \li \c isTransition \li clip \li Whether this clip is a transition
+    \row \li \c isAdjustment \li clip \li Whether this clip is an adjustment clip
     \row \li \c isFiltered \li track, clip \li Whether filters are attached
     \row \li \c speed \li clip \li Playback speed multiplier
     \row \li \c group \li clip \li Clip group identifier
@@ -388,6 +389,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 }
                 case IsTransitionRole:
                     return isTransition(playlist, index.row());
+                case IsAdjustmentRole:
+                    return isAdjustmentClip(playlist, index.row());
                 case FileHashRole:
                     return Util::getHash(*info->producer);
                 case SpeedRole: {
@@ -568,6 +571,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[FadeInRole] = "fadeIn";
     roles[FadeOutRole] = "fadeOut";
     roles[IsTransitionRole] = "isTransition";
+    roles[IsAdjustmentRole] = "isAdjustment";
     roles[FileHashRole] = "hash";
     roles[SpeedRole] = "speed";
     roles[IsFilteredRole] = "filtered";

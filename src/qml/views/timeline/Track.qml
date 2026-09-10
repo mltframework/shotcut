@@ -102,6 +102,7 @@ Rectangle {
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false
             isTransition: typeof model.isTransition !== 'undefined' ? model.isTransition : false
+            isAdjustment: typeof model.isAdjustment !== 'undefined' ? model.isAdjustment : false
             isFiltered: typeof model.filtered !== 'undefined' ? model.filtered : false
             height: trackRoot.height
             trackIndex: trackRoot.DelegateModel.itemsIndex
