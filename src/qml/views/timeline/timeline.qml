@@ -45,6 +45,11 @@ Rectangle {
     signal timelineRightClicked
     signal clipRightClicked
 
+    function snapToDevicePixel(value) {
+        var dpr = Screen.devicePixelRatio;
+        return Math.round(value * dpr) / dpr;
+    }
+
     function applyPendingZoomScroll() {
         if (pendingZoomContentX < 0)
             return;
@@ -735,16 +740,16 @@ Rectangle {
 
                 visible: timeline.position > -1
                 color: application.playheadColor
-                width: 2
+                width: root.snapToDevicePixel(2)
                 height: root.height - horizontalScrollBar.height
-                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - 0.75
+                x: root.snapToDevicePixel(timeline.position * multitrack.scaleFactor - tracksFlickable.contentX) - root.snapToDevicePixel(1)
                 y: 0
 
                 Rectangle {
-                    width: 0.5
+                    width: root.snapToDevicePixel(0.5)
                     height: parent.height
                     color: "black"
-                    anchors.left: parent.right
+                    x: parent.width
                 }
             }
 
@@ -752,7 +757,7 @@ Rectangle {
                 id: playhead
 
                 visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - width / 2
+                x: root.snapToDevicePixel(timeline.position * multitrack.scaleFactor - tracksFlickable.contentX) - width / 2
                 y: 0
                 width: 16
                 height: 8

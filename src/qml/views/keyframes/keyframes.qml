@@ -18,6 +18,7 @@ import "Keyframes.js" as Logic
 import QtQml.Models
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Window
 import org.shotcut.qml as Shotcut
 import Shotcut.Controls as Shotcut
 
@@ -37,6 +38,11 @@ Rectangle {
     signal rightClicked
     signal keyframeRightClicked
     signal clipRightClicked
+
+    function snapToDevicePixel(value) {
+        var dpr = Screen.devicePixelRatio;
+        return Math.round(value * dpr) / dpr;
+    }
 
     function redrawWaveforms() {
         Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead);
@@ -485,16 +491,16 @@ Rectangle {
 
                 visible: producer.position > -1 && metadata !== null
                 color: application.playheadColor
-                width: 2
+                width: root.snapToDevicePixel(2)
                 height: root.height - horizontalScrollBar.height
-                x: producer.position * timeScale - tracksFlickable.contentX - 0.75
+                x: root.snapToDevicePixel(producer.position * timeScale - tracksFlickable.contentX) - root.snapToDevicePixel(1)
                 y: 0
 
                 Rectangle {
-                    width: 0.5
+                    width: root.snapToDevicePixel(0.5)
                     height: parent.height
                     color: "black"
-                    anchors.left: parent.right
+                    x: parent.width
                 }
             }
 
@@ -502,7 +508,7 @@ Rectangle {
                 id: playhead
 
                 visible: producer.position > -1 && metadata !== null
-                x: producer.position * timeScale - tracksFlickable.contentX - width / 2
+                x: root.snapToDevicePixel(producer.position * timeScale - tracksFlickable.contentX) - width / 2
                 y: 0
                 width: 16
                 height: 8
