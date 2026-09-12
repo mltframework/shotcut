@@ -112,7 +112,7 @@ Rectangle {
             adjustGainEnabled: typeof model.gainEnabled !== 'undefined' ? model.gainEnabled : 0
             hash: typeof model.hash !== 'undefined' ? model.hash : 0
             speed: typeof model.speed !== 'undefined' ? model.speed : 1
-            audioIndex: typeof model.audioindex !== 'undefined' ? model.audioIndex : 0
+            audioIndex: typeof model.audioIndex !== 'undefined' ? model.audioIndex : ""
             group: typeof model.group !== 'undefined' ? model.group : -1
             selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute

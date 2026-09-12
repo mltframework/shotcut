@@ -47,6 +47,7 @@ Rectangle {
     property string hash: ''
     property double speed: 1
     property string audioIndex: ''
+    readonly property bool hasAudio: parseInt(audioIndex) > -1 || audioIndex === 'all'
     property int group: -1
     property bool isTrackMute: false
     // Pixel range from the model (start/duration * scale), not from item x/width.
@@ -77,7 +78,7 @@ Rectangle {
     readonly property int waveformTileCount: {
         if (elided || clipPxW <= 0 || isBlank || !settings.timelineShowWaveforms)
             return 0;
-        if (!(parseInt(audioIndex) > -1 || audioIndex === 'all'))
+        if (!hasAudio)
             return 0;
         const localRight = tracksFlickable.contentX - clipPx + 2 * tracksFlickable.width;
         const last = Math.min(Math.ceil(clipPxW / waveformMaxWidth), Math.ceil(Math.max(localRight, 0) / waveformMaxWidth));
@@ -457,7 +458,7 @@ Rectangle {
         readonly property real rightOffset: Math.max(_rightRoundedInset, parent.border.width)
         readonly property real availableWidth: Math.max(0, clipRoot.width - leftOffset - rightOffset)
 
-        visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+        visible: !elided && !isBlank && settings.timelineShowWaveforms && hasAudio
         height: (isAudio || parent.height <= 20) ? parent.height - (_cornerRadius / 2) : parent.height / 2
         anchors.left: parent.left
         anchors.right: parent.right
@@ -495,7 +496,7 @@ Rectangle {
         id: audioPeakLine
 
         width: parent.width - parent.border.width * 2
-        visible: !elided && waveform.visible && !isTransition && parent.height > 35
+        visible: waveform.visible && !isTransition && parent.height > 35
         height: audioPeakMouseArea.dragging ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width

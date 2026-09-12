@@ -46,6 +46,7 @@ class QmlProducer : public QObject
     Q_PROPERTY(double displayAspectRatio READ displayAspectRatio NOTIFY producerChanged)
     Q_PROPERTY(bool isAudio READ isAudio NOTIFY producerChanged)
     Q_PROPERTY(bool isAdjustment READ isAdjustment NOTIFY producerChanged)
+    Q_PROPERTY(QString audioIndex READ audioIndex NOTIFY producerChanged)
 
 public:
     explicit QmlProducer(QObject *parent = 0);
@@ -78,6 +79,11 @@ public:
     double displayAspectRatio();
     bool isAudio();
     bool isAdjustment();
+    QString audioIndex()
+    {
+        return m_producer.is_valid() ? QString::fromLatin1(m_producer.get("audio_index"))
+                                     : QString();
+    }
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);

@@ -239,6 +239,14 @@ bool QmlProducer::isAudio()
 }
 
 /*!
+    \qmlproperty string Producer::audioIndex
+    \brief The producer's \c audio_index property.
+
+    Empty when the producer has no \c audio_index (for example image or color).
+    \c -1 when audio is disabled. A stream index or \c all when the clip has audio.
+*/
+
+/*!
     \qmlproperty bool Producer::isAdjustment
     \brief Whether this clip is an adjustment clip (\c meta.fx_cut).
 */

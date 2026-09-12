@@ -43,6 +43,7 @@ Rectangle {
     property double speed: 1
     property bool inThumbnailVisible: true
     property bool outThumbnailVisible: true
+    readonly property bool hasAudio: parseInt(producer.audioIndex) > -1 || producer.audioIndex === 'all'
 
     signal trimmingIn(var clip, real delta, var mouse)
     signal trimmedIn(var clip)
@@ -150,7 +151,7 @@ Rectangle {
         property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
-        visible: settings.timelineShowWaveforms
+        visible: settings.timelineShowWaveforms && hasAudio
         height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
