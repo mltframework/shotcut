@@ -1558,7 +1558,6 @@ void TimelineDock::setupActions()
         }
 #if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
         if (mltProducers->get_data("color")) {
-            menu->addSeparator();
             menu->addAction(tr("Adjustment Clip"), this, SLOT(addGenerator()))
                 ->setObjectName("adjustment");
         }
