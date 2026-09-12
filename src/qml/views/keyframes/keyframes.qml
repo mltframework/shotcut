@@ -191,7 +191,7 @@ Rectangle {
                 Rectangle {
                     // thin dividing line between headers and tracks
                     visible: metadata !== null
-                    color: activePalette.windowText
+                    color: activePalette.base
                     width: 1
                     x: parent.x + parent.width
                     anchors.top: parent.top
