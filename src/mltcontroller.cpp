@@ -513,8 +513,8 @@ bool Controller::saveXML(const QString &filename,
         c.set("title",
               QStringLiteral("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
 
-        // Save the consumer of this service so it can be restored.
-        auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
+        // Consumer of s, not of s.consumer() — that extra hop rewires tracks.
+        auto saveConsumer = mlt_service_consumer(s.get_service());
         c.connect(s);
         c.start();
         if (ignore)
@@ -564,8 +564,8 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     if (!s.is_valid())
         return QString();
 
-    // Save the consumer of this service so it can be restored.
-    auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
+    // Consumer of s, not of s.consumer() — that extra hop rewires tracks.
+    auto saveConsumer = mlt_service_consumer(s.get_service());
     int ignore = s.get_int("ignore_points");
     if (ignore)
         s.set("ignore_points", 0);
