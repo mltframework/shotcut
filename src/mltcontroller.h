@@ -181,6 +181,7 @@ public:
     static bool fullRange(Mlt::Producer &producer);
     static bool isMltXml(const QString &s) { return s.contains("<mlt "); }
     static bool isTrackProducer(Mlt::Producer &producer);
+    static bool isClipProducer(Mlt::Producer &producer);
     static int checkFile(const QString &path);
     bool blockRefresh(bool block);
     void configureHardwareDecoder(bool enable);

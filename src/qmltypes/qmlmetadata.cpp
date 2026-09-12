@@ -85,7 +85,8 @@
 
 /*!
     \qmlproperty bool Metadata::isClipOnly
-    \brief Whether this filter can only be applied to clips (not tracks or timeline output).
+    \brief Whether this filter can only be applied to clips (not tracks, timeline
+    output, or adjustment clips).
 */
 
 /*!

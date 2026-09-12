@@ -482,7 +482,7 @@ void FilterController::setProducer(Mlt::Producer *producer)
 {
     m_attachedModel.setProducer(producer);
     if (producer && producer->is_valid()) {
-        m_metadataModel.updateFilterMask(!MLT.isTrackProducer(*producer),
+        m_metadataModel.updateFilterMask(MLT.isClipProducer(*producer),
                                          producer->type() == mlt_service_chain_type,
                                          producer->type() == mlt_service_playlist_type,
                                          producer->type() == mlt_service_tractor_type,

@@ -1225,7 +1225,7 @@ void Controller::copyFilters(Producer &fromProducer,
             // Determine if filter can be added
             auto metadata = MAIN.filterController()->metadataForService(fromFilter.data());
             if (metadata) {
-                if (metadata->isClipOnly() && MLT.isTrackProducer(toProducer)) {
+                if (metadata->isClipOnly() && !MLT.isClipProducer(toProducer)) {
                     continue;
                 }
                 if (!metadata->allowMultiple()) {
@@ -1825,6 +1825,12 @@ bool Controller::isTrackProducer(Producer &producer)
     mlt_service_type service_type = producer.type();
     return service_type == mlt_service_playlist_type
            || (service_type == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty));
+}
+
+bool Controller::isClipProducer(Producer &producer)
+{
+    // meta.fx_cut is on the parent producer; playlist cuts are not the parent.
+    return !isTrackProducer(producer) && !producer.parent().get_int("meta.fx_cut");
 }
 
 int Controller::checkFile(const QString &path)
