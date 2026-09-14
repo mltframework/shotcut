@@ -1327,7 +1327,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="555"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="557"/>
         <source>Hold %1 to adjust
 %1 double-click to reset</source>
         <translation type="unfinished"></translation>
@@ -1771,12 +1771,12 @@ leave blank to use the clipboard:</source>
 <context>
     <name>DoubleSliderSpinner</name>
     <message>
-        <location filename="../src/widgets/doublesliderspinner.cpp" line="54"/>
+        <location filename="../src/widgets/doublesliderspinner.cpp" line="80"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/doublesliderspinner.cpp" line="55"/>
+        <location filename="../src/widgets/doublesliderspinner.cpp" line="81"/>
         <source>Restore default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4186,12 +4186,12 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>KeyframeClip</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="242"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="244"/>
         <source>Confirm Removing Advanced Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="243"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="245"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6891,58 +6891,58 @@ Do you want to continue?</source>
 <context>
     <name>MltClipProducerWidget</name>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="47"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="51"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="53"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="57"/>
         <source>Aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="59"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="63"/>
         <source>Frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="65"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="69"/>
         <source>Scan mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="71"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="75"/>
         <source>Colorspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="77"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="81"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="150"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="178"/>
         <source>%L1 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="153"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="181"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="155"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="183"/>
         <source>Interlaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="202"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="230"/>
         <source>Subclip profile does not match project profile.
 This may provide unexpected results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="207"/>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="235"/>
         <source>Subclip profile matches project profile.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7114,12 +7114,12 @@ This may provide unexpected results</source>
 <context>
     <name>MultitrackModel</name>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="317"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="318"/>
         <source>(PROXY)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="3515"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="3519"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -9119,17 +9119,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3714"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3713"/>
         <source>Drop Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3721"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3720"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3737"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3736"/>
         <source>Not adding non-seekable file: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -9683,6 +9683,14 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="398"/>
         <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ResourceWidget</name>
+    <message>
+        <location filename="../src/widgets/resourcewidget.cpp" line="132"/>
+        <source>Copy Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11269,34 +11277,34 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1944"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1943"/>
         <source>This track is locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1949"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1948"/>
         <source>You cannot add a non-seekable source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2433"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2472"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2432"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2471"/>
         <source>Track %1 was not moved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2438"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2437"/>
         <source>Can not move audio track above video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2459"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2458"/>
         <source>Can not move video track below audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1669"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2638"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1668"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2637"/>
         <source>Align To Reference Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11726,190 +11734,190 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1562"/>
-        <location filename="../src/docks/timelinedock.cpp" line="5126"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1561"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5125"/>
         <source>Adjustment Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1588"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1587"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1595"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1594"/>
         <source>Rejoin With Next Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1611"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1610"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1639"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1638"/>
         <source>Freeze Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1689"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1688"/>
         <source>Apply Copied Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1713"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1712"/>
         <source>Update Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1737"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1736"/>
         <source>Rebuild Audio Waveform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1761"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1760"/>
         <source>Ripple Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1768"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1767"/>
         <source>Ripple Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1775"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1774"/>
         <source>Group/Ungroup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1956"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1955"/>
         <source>Not enough space to extend the clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1958"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1957"/>
         <source>Not enough space; clip extended as far as possible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2749"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2748"/>
         <source>Append multiple to timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2872"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2871"/>
         <source>Ripple delete transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2928"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2927"/>
         <source>Lift transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3038"/>
         <source>Cut %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3041"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3040"/>
         <source>Remove %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3069"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3068"/>
         <source>Lift %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3480"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3479"/>
         <source>There is nothing in the Source player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3495"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3494"/>
         <source>You cannot replace a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3535"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3534"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3556"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3555"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3581"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3580"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3729"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3728"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3764"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3763"/>
         <source>Dropped Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3812"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3811"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3831"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3830"/>
         <source>Freeze Frame is not available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3866"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3865"/>
         <source>Insert Freeze Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3870"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3869"/>
         <source>The play head is not over the selected clip.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3917"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3916"/>
         <source>Toggle other tracks mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3961"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3960"/>
         <source>Toggle other tracks hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4035"/>
         <source>You cannot make a transition with an adjustment clip.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4373"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4372"/>
         <source>Insert multiple into timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4601"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4600"/>
         <source>Overwrite multiple onto timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1097"/>
         <location filename="../src/docks/timelinedock.cpp" line="1132"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2995"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2994"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="5177"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5176"/>
         <source>Replace %n timeline clips</source>
         <translation type="unfinished">
             <numerusform>Replace %n timeline clip</numerusform>
@@ -11917,44 +11925,44 @@ Remove the subtitle filter before removing this track.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5235"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5234"/>
         <source>voiceover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1570"/>
-        <location filename="../src/docks/timelinedock.cpp" line="5238"/>
-        <location filename="../src/docks/timelinedock.cpp" line="5359"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1569"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5237"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5358"/>
         <source>Record Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5236"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5235"/>
         <source>All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5252"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5251"/>
         <source>Record Audio: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5319"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5318"/>
         <source>Audio Recording In Progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5329"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5328"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5333"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5332"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="5365"/>
+        <location filename="../src/docks/timelinedock.cpp" line="5364"/>
         <source>Saving audio recording...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12142,7 +12150,7 @@ Remove the subtitle filter before removing this track.</source>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="62"/>
-        <source>Automatic Ducking</source>
+        <source>Automatic Audio Ducking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12163,8 +12171,8 @@ Remove the subtitle filter before removing this track.</source>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="107"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="154"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="184"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="160"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="187"/>
         <source> dB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12174,61 +12182,67 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="126"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="139"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="116"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="185"/>
+        <source>OFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="132"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="145"/>
         <source>Maximum gain reduction applied to this track while ducking is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="129"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="135"/>
         <source>Max Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="170"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="183"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="176"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="189"/>
         <source>How quickly gain reduction is applied after the threshold is exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="173"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="179"/>
         <source>Fade out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="198"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="242"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="204"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="248"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="214"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="227"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="220"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="233"/>
         <source>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="217"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="223"/>
         <source>Fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="258"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="264"/>
         <source>Current gain reduction being applied to this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="261"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="267"/>
         <source>Gain Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="271"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="277"/>
         <source>Current gain reduction being applied to this track. Higher values mean stronger ducking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="283"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="289"/>
         <source>0.0 dB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12416,22 +12430,22 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="296"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="299"/>
         <source>Change track duck threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="310"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="313"/>
         <source>Change track duck attenuation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="324"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="327"/>
         <source>Change track duck fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="338"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="341"/>
         <source>Change track duck fade out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12840,18 +12854,23 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="43"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="56"/>
         <source>Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="44"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="57"/>
         <source>Replacement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="58"/>
+        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="71"/>
         <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="174"/>
+        <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16510,57 +16529,57 @@ IRE: %2</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="231"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="237"/>
         <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="261"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="267"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="371"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="377"/>
         <source>Move %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="413"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="419"/>
         <source>Can not move audio track above video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="415"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="421"/>
         <source>Can not move video track below audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="417"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="423"/>
         <source>Track %1 was not moved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="773"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="779"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="773"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="779"/>
         <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1095"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1101"/>
         <source>Do you want to insert an audio or video track?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1105"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1111"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1113"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1119"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17786,53 +17805,53 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="278"/>
         <source>Insert field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="300"/>
         <source># (Hash sign)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="304"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="305"/>
         <source>Timecode (drop frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="309"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="310"/>
         <source>Timecode (non-drop frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="339"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="340"/>
         <source>File base name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="314"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="315"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="319"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="320"/>
         <source>File date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="324"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="325"/>
         <source>Creation date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="329"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="330"/>
         <source>File name and path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="334"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
         <source>File name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18852,7 +18871,7 @@ Like used in GoPro&apos;s superview</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="673"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="707"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1723"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1724"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1150"/>
         <location filename="../src/qml/filters/openfx.wtf.vala^NtscRs/ui.qml" line="1588"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="187"/>
@@ -19026,29 +19045,29 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="529"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="531"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="310"/>
         <location filename="../src/qml/filters/shake/ui.qml" line="36"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="566"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="568"/>
         <source>Overflow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="580"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="582"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="593"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="595"/>
         <source>Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="605"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="607"/>
         <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20523,7 +20542,7 @@ All = 360° + Randomize</source>
         <location filename="../src/qml/filters/nervous/ui.qml" line="65"/>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="455"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="464"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="465"/>
         <source> frames</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21111,24 +21130,24 @@ For speedometer this draws text for divisions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1696"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1697"/>
         <source>GPS file center is: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1699"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1700"/>
         <source>Get the center coordinate of GPS map. This does not change with trim or crop.
 TIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).
 Google Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1710"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1711"/>
         <source>Browse for an image file to be assigned as graph background.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1727"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1728"/>
         <source>Increase or decrease the size of the background image.
 Values smaller than 1 will zoom into image.</source>
         <translation type="unfinished"></translation>
@@ -21159,12 +21178,12 @@ Values smaller than 1 will zoom into image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="792"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="793"/>
         <source>Insert GPS field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="881"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="882"/>
         <source>Extra arguments can be added inside keywords:
 Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
@@ -21173,117 +21192,117 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>GPS latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>GPS longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Elevation (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Speed (km/h)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Distance (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>GPS date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Video file date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Heart-rate (bpm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Bearing (degrees)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Bearing (compass)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Elevation gain (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Elevation loss (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Distance uphill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Distance downhill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>Distance flat (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Cadence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Temperature (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Grade (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Grade (degrees)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Vertical speed (m/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>3D Speed (km/h)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="804"/>
         <source>Power (W)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="895"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="896"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21306,53 +21325,53 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="900"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="901"/>
         <source>Update speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="905"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="906"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="923"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="924"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="933"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="934"/>
         <source> per second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1770"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="960"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1771"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="961"/>
         <source>Video start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1775"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="965"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1776"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="966"/>
         <source>Detected date-time for the video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1793"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="983"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1794"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="984"/>
         <source>GPS start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="988"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1799"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="989"/>
         <source>Detected date-time for the GPS file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1809"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="999"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1810"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="1000"/>
         <source>This time will be used for synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21789,44 +21808,44 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="257"/>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="318"/>
         <source>Word by Word</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="262"/>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="321"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="322"/>
         <source>Line by Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="276"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="248"/>
         <source>Typewriter rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="280"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="251"/>
         <source>Number of frames between each character, word, or line appearance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="301"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="275"/>
         <source>Rate variation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="305"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="278"/>
         <source>Random variation in timing (0 = no variation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="234"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="302"/>
         <source>Animation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21842,115 +21861,115 @@ Click to select, drag to change position</source>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="238"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="304"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="305"/>
         <source>How text appears: character by character, word by word, or line by line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="252"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="314"/>
         <source>Character by Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="326"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="343"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="344"/>
         <source>Cursor visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="330"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="346"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="347"/>
         <source>When to show the blinking cursor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="344"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="355"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="356"/>
         <source>No Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="349"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="359"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="360"/>
         <source>While Typing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="354"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="363"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="364"/>
         <source>Always Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="368"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="384"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="385"/>
         <source>Cursor shape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="372"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="388"/>
         <source>Character to use for the blinking cursor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="392"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="398"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="399"/>
         <source>| (Vertical Line)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="397"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="402"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="403"/>
         <source>_ (Underscore)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="402"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="406"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="407"/>
         <source>█ (Block)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="407"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="410"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="411"/>
         <source>▌ (Half Block)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="412"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="414"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="415"/>
         <source>▊ (Thick Line)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="417"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="418"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="419"/>
         <source>● (Bullet)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="422"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="422"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="423"/>
         <source>◆ (Diamond)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="427"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="426"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="427"/>
         <source>► (Arrow)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="441"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="452"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="453"/>
         <source>Blink rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="445"/>
-        <location filename="../src/qml/filters/typewriter/ui.qml" line="455"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="456"/>
         <source>Number of frames for cursor blink cycle.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22998,108 +23017,108 @@ Click to select, drag to change position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="364"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="365"/>
         <source>Text size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="383"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="384"/>
         <source>Text color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="485"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="486"/>
         <source>Collapse Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="485"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="486"/>
         <source>Expand Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="265"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="266"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="594"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="595"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="605"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="606"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="616"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="617"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="627"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="628"/>
         <source>Justify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="638"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="639"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="649"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="650"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="660"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="661"/>
         <source>Underline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="806"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="807"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="814"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="815"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="326"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="671"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="327"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="672"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="742"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="743"/>
         <source>Insert Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="687"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="688"/>
         <source>Decrease Indent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="696"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="697"/>
         <source>Insert Indent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="752"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="753"/>
         <source>Rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="769"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="770"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="785"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="786"/>
         <source>Border</source>
         <translation type="unfinished"></translation>
     </message>
