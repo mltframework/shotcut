@@ -20,18 +20,44 @@
 #include <QDoubleSpinBox>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QLineEdit>
 #include <QSignalBlocker>
 #include <QSlider>
 #include <QToolButton>
 
 #include <cmath>
 
+class OverrideDoubleSpinBox : public QDoubleSpinBox
+{
+public:
+    using QDoubleSpinBox::QDoubleSpinBox;
+
+    double overrideValue() const { return m_overrideValue; }
+    QString overrideText() const { return m_overrideText; }
+    void setOverrideValue(double value) { m_overrideValue = value; }
+    void setOverrideText(const QString &text) { m_overrideText = text; }
+    void setTextReadOnly(bool readOnly) { lineEdit()->setReadOnly(readOnly); }
+
+protected:
+    QString textFromValue(double value) const override
+    {
+        if (!m_overrideText.isEmpty() && qFuzzyCompare(value + 1.0, m_overrideValue + 1.0))
+            return m_overrideText;
+        return QDoubleSpinBox::textFromValue(value);
+    }
+
+private:
+    double m_overrideValue = 0.0;
+    QString m_overrideText;
+};
+
 DoubleSliderSpinner::DoubleSliderSpinner(QWidget *parent)
     : QWidget(parent)
     , m_slider(new QSlider(Qt::Horizontal, this))
-    , m_spinBox(new QDoubleSpinBox(this))
+    , m_spinBox(new OverrideDoubleSpinBox(this))
     , m_resetButton(new QToolButton(this))
     , m_scale(1)
+    , m_normalWidth(0)
     , m_defaultValue(0.0)
     , m_showResetButton(false)
 {
@@ -100,12 +126,22 @@ QString DoubleSliderSpinner::prefix() const
 
 QString DoubleSliderSpinner::suffix() const
 {
-    return m_spinBox->suffix();
+    return m_suffix;
 }
 
 QString DoubleSliderSpinner::specialValueText() const
 {
     return m_spinBox->specialValueText();
+}
+
+double DoubleSliderSpinner::overrideValue() const
+{
+    return static_cast<OverrideDoubleSpinBox *>(m_spinBox)->overrideValue();
+}
+
+QString DoubleSliderSpinner::overrideText() const
+{
+    return static_cast<OverrideDoubleSpinBox *>(m_spinBox)->overrideText();
 }
 
 double DoubleSliderSpinner::defaultValue() const
@@ -124,6 +160,7 @@ void DoubleSliderSpinner::setValue(double value)
     const QSignalBlocker blockSpin(m_spinBox);
     m_spinBox->setValue(value);
     m_slider->setValue(toSliderValue(m_spinBox->value()));
+    updateOverrideDisplay();
     updateResetButtonState();
 }
 
@@ -144,6 +181,7 @@ void DoubleSliderSpinner::setRange(double min, double max)
     m_spinBox->setRange(min, max);
     updateSliderRange();
     m_slider->setValue(toSliderValue(m_spinBox->value()));
+    updateOverrideDisplay();
     updateResetButtonState();
 }
 
@@ -173,12 +211,33 @@ void DoubleSliderSpinner::setPrefix(const QString &prefix)
 
 void DoubleSliderSpinner::setSuffix(const QString &suffix)
 {
-    m_spinBox->setSuffix(suffix);
+    m_suffix = suffix;
+    if (overrideText().isEmpty()) {
+        m_spinBox->setSuffix(suffix);
+        m_normalWidth = m_spinBox->sizeHint().width();
+    }
+    updateOverrideDisplay();
 }
 
 void DoubleSliderSpinner::setSpecialValueText(const QString &text)
 {
     m_spinBox->setSpecialValueText(text);
+}
+
+void DoubleSliderSpinner::setOverrideValue(double value)
+{
+    auto *spinBox = static_cast<OverrideDoubleSpinBox *>(m_spinBox);
+    spinBox->setOverrideValue(value);
+    updateOverrideDisplay();
+    spinBox->setValue(spinBox->value());
+}
+
+void DoubleSliderSpinner::setOverrideText(const QString &text)
+{
+    auto *spinBox = static_cast<OverrideDoubleSpinBox *>(m_spinBox);
+    spinBox->setOverrideText(text);
+    updateOverrideDisplay();
+    spinBox->setValue(spinBox->value());
 }
 
 void DoubleSliderSpinner::setDefaultValue(double value)
@@ -199,6 +258,7 @@ void DoubleSliderSpinner::onSliderValueChanged(int value)
     const double spinValue = toSpinValue(value);
     const QSignalBlocker blockSpin(m_spinBox);
     m_spinBox->setValue(spinValue);
+    updateOverrideDisplay();
     updateResetButtonState();
     emit valueChanged(m_spinBox->value());
 }
@@ -207,6 +267,7 @@ void DoubleSliderSpinner::onSpinValueChanged(double value)
 {
     const QSignalBlocker blockSlider(m_slider);
     m_slider->setValue(toSliderValue(value));
+    updateOverrideDisplay();
     updateResetButtonState();
     emit valueChanged(value);
 }
@@ -244,6 +305,17 @@ void DoubleSliderSpinner::updateSliderRange()
     m_slider->setRange(min, max);
     m_slider->setSingleStep(step);
     m_slider->setPageStep(step * 10);
+}
+
+void DoubleSliderSpinner::updateOverrideDisplay()
+{
+    auto *spinBox = static_cast<OverrideDoubleSpinBox *>(m_spinBox);
+    const bool hasOverrideText = !overrideText().isEmpty();
+    const bool isOverrideValue = qFuzzyCompare(value() + 1.0, overrideValue() + 1.0);
+    spinBox->setTextReadOnly(hasOverrideText);
+    spinBox->setAlignment(hasOverrideText ? Qt::AlignCenter : Qt::AlignRight);
+    spinBox->setSuffix(hasOverrideText && isOverrideValue ? QString() : m_suffix);
+    spinBox->setMinimumWidth(hasOverrideText ? m_normalWidth : 0);
 }
 
 void DoubleSliderSpinner::updateResetButtonState()

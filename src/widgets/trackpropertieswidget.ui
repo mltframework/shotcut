@@ -59,7 +59,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Automatic Ducking</string>
+            <string>Automatic Audio Ducking</string>
            </property>
           </widget>
          </item>
@@ -109,6 +109,12 @@
        <property name="specialValueText">
         <string>Off</string>
        </property>
+      <property name="overrideValue">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="overrideText">
+       <string>OFF</string>
+      </property>
        <property name="value">
         <double>0.000000000000000</double>
        </property>

@@ -181,7 +181,10 @@ void TrackPropertiesWidget::updateDuckStatus(double value)
 {
     const double clamped = qBound(0.0, value, 70.0);
     ui->duckStatusValueLabel->setValue(qRound(clamped * 10.0));
-    ui->duckStatusValueLabel->setFormat(QString::number(clamped, 'f', 1) + tr(" dB"));
+    if (qFuzzyCompare(ui->duckThresholdSpinBox->value() + 1.0, 1.0))
+        ui->duckStatusValueLabel->setFormat(tr("OFF"));
+    else
+        ui->duckStatusValueLabel->setFormat(QString::number(clamped, 'f', 1) + tr(" dB"));
 }
 
 void TrackPropertiesWidget::showEvent(QShowEvent *event)
@@ -346,6 +349,13 @@ void TrackPropertiesWidget::onDuckThresholdChanged(double value)
     ui->duckThresholdSpinBox->blockSignals(true);
     ui->duckThresholdSpinBox->setValue(value);
     ui->duckThresholdSpinBox->blockSignals(false);
+    ui->duckStatusValueLabel->setPalette(QPalette());
+    if (qFuzzyCompare(value + 1.0, 1.0)) {
+        QPalette palette = ui->duckStatusValueLabel->palette();
+        palette.setColor(QPalette::Text, QPalette().color(QPalette::Highlight));
+        ui->duckStatusValueLabel->setPalette(palette);
+    }
+    updateDuckStatus(0.0);
 }
 
 void TrackPropertiesWidget::onDuckAttenuationChanged(double value)
