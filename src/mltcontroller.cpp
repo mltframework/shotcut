@@ -177,6 +177,11 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             delete newProducer;
             newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
         }
+        // Must run before setProducer/reconfigure so DeckLink starts with the
+        // project's transfer, not the startup video mode.
+        if (newProducer->is_valid() && newProducer->property_exists(kShotcutColorTransfer)) {
+            setColorTrc(QString::fromLatin1(newProducer->get(kShotcutColorTransfer)));
+        }
         if (m_url.isEmpty() && isProjectProducer(newProducer)) {
             m_url = urlToSave;
         }
