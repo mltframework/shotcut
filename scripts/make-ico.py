@@ -3,114 +3,116 @@
 """
 make-ico.py
 
+Build a Windows .ico from four square PNG images that are already at
+the target pixel sizes (icons/shotcut-logo-<n>.png).
+
+Each size is stored as a 32-bit PNG in the ICO (Windows Vista+). No
+palettes and no dithering.
+
 LICENSE: This program is put into the public domain by James Stroud, 2008.
 """
 
-import sys
+import argparse
 import os
-import base64
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from shlex import quote
 
-win16map = """\
-UDYKMTYgMQoyNTUKAAAAgAAAAP//AP8AwMDAAICA/wD//wAAgICAAACAgACA//////8AAIAAgIAA
-AAD/
-"""
+SIZE_RE = re.compile(r'-(\d+)\.png$', re.IGNORECASE)
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_IMAGES = [
+  os.path.join(ROOT, 'icons', 'shotcut-logo-16.png'),
+  os.path.join(ROOT, 'icons', 'shotcut-logo-24.png'),
+  os.path.join(ROOT, 'icons', 'shotcut-logo-32.png'),
+  os.path.join(ROOT, 'icons', 'shotcut-logo-48.png'),
+]
+DEFAULT_OUTPUT = os.path.join(ROOT, 'packaging', 'windows', 'shotcut-logo-64.ico')
+
 
 def err(msg):
   sys.stderr.write("%s\n" % msg)
 
-def usage(err_msg=None):
-  if err_msg is not None:
-    err("\n** ERROR **: %s\n" % err_msg)
-  progname = os.path.basename(sys.argv[0])
-  err("usage: python %s imagefile\n" % progname)
-  sys.exit()
+
+def run(command):
+  err(command)
+  status = os.system(command)
+  if status != 0:
+    sys.exit('command failed: %s' % command)
+
+
+def size_from_filename(path):
+  m = SIZE_RE.search(os.path.basename(path))
+  if not m:
+    sys.exit('filename must look like shotcut-logo-<n>.png: %s' % path)
+  return int(m.group(1))
+
+
+def png_dimensions(path):
+  out = subprocess.check_output(
+    ['identify', '-format', '%w %h', path], text=True).strip()
+  width, height = out.split()
+  return int(width), int(height)
+
+
+def parse_args():
+  parser = argparse.ArgumentParser(
+    description='Build a Windows .ico from four pre-sized square PNG images.')
+  parser.add_argument(
+    'images', nargs='*',
+    help='four PNGs named *-N.png (default: icons/shotcut-logo-{16,24,32,48}.png)')
+  parser.add_argument(
+    '-o', '--output', default=DEFAULT_OUTPUT,
+    help='output .ico path (default: %s)' % DEFAULT_OUTPUT)
+  args = parser.parse_args()
+  if not args.images:
+    args.images = DEFAULT_IMAGES
+  elif len(args.images) != 4:
+    parser.error('exactly 4 input images are required')
+  return args
 
 
 def main():
+  args = parse_args()
+  pngs = {}
+  for path in args.images:
+    if not os.path.exists(path):
+      sys.exit('The image file given (%s) does not exist.' % path)
+    size = size_from_filename(path)
+    width, height = png_dimensions(path)
+    if width != height:
+      sys.exit('%s is %dx%d; a square image is required' % (path, width, height))
+    if width != size:
+      sys.exit('%s is %dx%d but the filename says %d' % (path, width, height, size))
+    if size in pngs:
+      sys.exit('duplicate size %d: %s and %s' % (size, pngs[size], path))
+    pngs[size] = path
+
+  sizes = sorted(pngs, reverse=True)
+
+  workdir = tempfile.mkdtemp(prefix='shotcut-ico-')
   try:
-    png_file = sys.argv[1]
-  except IndexError:
-    usage('No image file given.')
-
-  if not os.path.exists(png_file):
-    usage('The image file given (%s) does not exist.' % png_file)
-
-  png_base, extension = os.path.basename(png_file).rsplit('.', 1)
-
-
-  to_delete = []
-
-  sizes = [48, 32, 24, 16]
-  depths = [4, 8, 24]
-
-  # these commands are redundant at this point
-  # however, if this is generalized, this will need to be done
-  # to ensure the final .ico file is created correctly
-  sizes.sort(reverse=True)
-  depths.sort()
-
-  to_map = {}
-  for size in sizes:
-    name_args = (png_base, size, size)
-    resized_base = "%s-%02dx%02d" % name_args
-    resized_name = "%s.png" % resized_base
-    resize_args = (png_file, size, size, resized_name)
-    command = 'convert %s -resize %dx%d %s' % resize_args
-    err(command)
-    os.system(command)
-    to_map[size] = resized_base
-    to_delete.append(resized_name)
-
-  ico_parts = []
-  for depth in depths:
+    pams = []
     for size in sizes:
-      resized_base = to_map[size]
-      resized_name = "%s.png" % resized_base
-      redepthed_base = "%s-%02d" % (resized_base, depth)
-      redepthed_name = "%s.pnm" % redepthed_base
-      # ppmtowinicon only supports palettes of up to 256 colors, so always
-      # convert at 8 bits per channel regardless of the nominal icon depth.
-      redepth_args = (resized_name, redepthed_name)
-      if depth >= 8:
-        command = "convert -depth 8 %s %s" % redepth_args
-      else:
-        command = "convert %s %s" % (resized_name, redepthed_name)
-      err(command)
-      os.system(command)
-      to_delete.append(redepthed_name)
-      map_base = "%s-%02d" % (resized_base, depth)
-      map_name = "%s.pam" % map_base
-      if depth >= 8:
-        colors = 256
-        map_args = (colors, redepthed_name, map_name)
-        command = "pnmcolormap %d %s > %s" % map_args
-        err(command)
-        os.system(command)
-      else:
-        # for the < 8 bit images, we don't need to calculate the map
-        open(map_name, 'wb').write(base64.decodebytes(win16map.encode('ascii')))
-      to_delete.append(map_name)
-      remapped_base = map_base
-      remapped_name = "%s.ppm" % remapped_base
-      remap_args = (map_name, redepthed_name, remapped_name)
-      command = "pnmremap -mapfile=%s -fs %s > %s" % remap_args
-      err(command)
-      os.system(command)
-      to_delete.append(remapped_name)
-      ico_parts.append(remapped_name)
+      png_path = pngs[size]
+      pam_name = os.path.join(
+        workdir, os.path.splitext(os.path.basename(png_path))[0] + '.pam')
+      run("convert %s %s" % (quote(png_path), quote(pam_name)))
+      pams.append(pam_name)
 
+    # PNG-compress every size (default threshold is 128, which would BMP-encode
+    # these). -truetransparent avoids XOR-mask inversion on the alpha.
+    command = "cat %s | pamtowinicon -pngthreshold=1 -truetransparent > %s" % (
+      " ".join(quote(p) for p in pams), quote(args.output))
+    run(command)
+  finally:
+    shutil.rmtree(workdir, ignore_errors=True)
 
-  icon_names = " ".join(ico_parts)
-  icon_name = "%s.ico" % png_base
-  icon_args = (icon_names, icon_name)
+  err("Wrote %s" % args.output)
 
-  command = 'ppmtowinicon %s --output %s' % icon_args
-  err(command)
-  os.system(command)
-
-  err("rm %s" % " ".join(to_delete))
-  for p in to_delete:
-    os.remove(p)
 
 if __name__ == "__main__":
   main()
