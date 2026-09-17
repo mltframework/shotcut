@@ -19,6 +19,7 @@
 
 #include "Logger.h"
 #include "mltcontroller.h"
+#include "namedtemporaryfile.h"
 #include "proxymanager.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
@@ -118,7 +119,8 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
     LOG_DEBUG() << "begin";
 
     QFile file(fileName);
-    m_tempFile.reset(new QTemporaryFile(QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt")));
+    m_tempFile.reset(new NamedTemporaryFile(
+        QFileInfo(fileName).dir().filePath(QStringLiteral("shotcut-XXXXXX.mlt"))));
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) && m_tempFile->open()) {
         m_tempFile->resize(0);
         m_fileInfo = QFileInfo(fileName);
