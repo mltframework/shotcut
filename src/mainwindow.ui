@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../icons/resources.qrc">
-    <normaloff>:/icons/shotcut-logo-64.png</normaloff>:/icons/shotcut-logo-64.png</iconset>
+    <normaloff>:/icons/shotcut-logo-64.svg</normaloff>:/icons/shotcut-logo-64.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">

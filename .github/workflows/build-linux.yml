@@ -128,8 +128,8 @@ jobs:
           VERSION=$(cat dist/version/VERSION)
           cd packaging/linux
           mkdir -p snap/gui
-          cp ../../icons/shotcut-logo-64.png snap/gui
-          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
+          cp ../../icons/shotcut-logo-64.svg snap/gui
+          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.svg|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
 
