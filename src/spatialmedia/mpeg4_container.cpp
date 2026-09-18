@@ -1,6 +1,7 @@
 /*****************************************************************************
  * 
  * Copyright 2016 Varol Okan. All rights reserved.
+ * Copyright (c) 2020-2026 Meltytech, LLC
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +18,7 @@
  ****************************************************************************/
 
 #include <iostream>
+#include <memory>
 #include <string.h>
 #include <stdlib.h>
 
@@ -37,7 +39,7 @@ Mpeg4Container::~Mpeg4Container ( )
 
 }
 
-Mpeg4Container *Mpeg4Container::load ( std::fstream &fsIn ) //, uint32_t /* iPos */, uint32_t /* iEnd */ )
+std::unique_ptr<Mpeg4Container> Mpeg4Container::load ( std::fstream &fsIn ) //, uint32_t /* iPos */, uint32_t /* iEnd */ )
 {
   // Load the mpeg4 file structure of a file.
 //  fsIn.seekg ( 0, 2 );
@@ -46,9 +48,9 @@ Mpeg4Container *Mpeg4Container::load ( std::fstream &fsIn ) //, uint32_t /* iPos
 
   if ( list.empty ( ) )  {
     std::cerr << "Error, failed to load .mp4 file." << std::endl;
-    return NULL; 
+    return nullptr;
   }
-  Mpeg4Container *pNewBox = new Mpeg4Container ( );
+  std::unique_ptr<Mpeg4Container> pNewBox(new Mpeg4Container());
   pNewBox->m_listContents = list;
 
   std::vector<Box *>::iterator it = list.begin ( );
@@ -66,13 +68,11 @@ Mpeg4Container *Mpeg4Container::load ( std::fstream &fsIn ) //, uint32_t /* iPos
   }
   if ( ! pNewBox->m_pMoovBox )  {
     std::cerr << "Error, file does not contain moov box." << std::endl;
-    delete pNewBox;
-    return NULL;
+    return nullptr;
   }
   if ( ! pNewBox->m_pFirstMDatBox )  {
     std::cerr << "Error, file does not contain mdat box." << std::endl;
-    delete pNewBox;
-    return NULL;
+    return nullptr;
   }
   pNewBox->m_iFirstMDatPos  = pNewBox->m_pFirstMDatBox->m_iPosition; //m_iFirstMDatPos;
   pNewBox->m_iFirstMDatPos += pNewBox->m_pFirstMDatBox->m_iHeaderSize;

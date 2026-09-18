@@ -2,7 +2,8 @@
 /*****************************************************************************
  * 
  * Copyright 2016 Varol Okan. All rights reserved.
- * 
+ * Copyright (c) 2026 Meltytech, LLC
+ *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,13 +26,15 @@
 #include "container.h"
 #include "box.h"
 
+#include <memory>
+
 class Mpeg4Container : public Container
 {
   public:
     Mpeg4Container ( );
     virtual ~Mpeg4Container ( );
 
-    static Mpeg4Container *load ( std::fstream & ); //, uint32_t iPos, uint32_t iEnd );
+    static std::unique_ptr<Mpeg4Container> load ( std::fstream & ); //, uint32_t iPos, uint32_t iEnd );
 
     void merge ( Box * );
     virtual void print_structure ( const char *p="" );

@@ -1,7 +1,7 @@
 /*****************************************************************************
  *
  * Copyright 2016 Varol Okan. All rights reserved.
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,13 +94,17 @@ static int get_descriptor_length(std::fstream &inFile)
 static int get_aac_num_channels(Box *mp4aBox, std::fstream &inFile)
 {
     auto result = -1;
+    if (mp4aBox->type() != constants::Container)
+        return result;
+
     auto size = sizeof(mp4aBox->m_name);
     auto pos = inFile.tellg();
 
     for (auto box : static_cast<Container*>(mp4aBox)->m_listContents) {
         if (!memcmp(constants::TAG_WAVE, box->m_name, size)) {
             // Handle .mov with AAC audio: stsd -> mp4a -> wave -> esds
-            return get_aac_num_channels(box, inFile);
+            if (box->type() == constants::Container)
+                return get_aac_num_channels(box, inFile);
         } else if (!memcmp(constants::TAG_ESDS, box->m_name, size)) {
             // Read the AAC AudioSpecificConfig
             char data[2];
@@ -177,13 +181,19 @@ static int get_sample_description_num_channels(Box *ssdBox, std::fstream &inFile
 
 static void mpeg4_add_spatial_audio(Box *mdiaBox, std::fstream &inFile)
 {
+    if (mdiaBox->type() != constants::Container)
+        return;
+
     auto size = sizeof(mdiaBox->m_name);
     for (auto box : static_cast<Container*>(mdiaBox)->m_listContents) {
-        if (!memcmp(constants::TAG_MINF, box->m_name, size)) {
+        if (!memcmp(constants::TAG_MINF, box->m_name, size)
+            && box->type() == constants::Container) {
             for (auto box : static_cast<Container*>(box)->m_listContents) {
-                if (!memcmp(constants::TAG_STBL, box->m_name, size)) {
+                if (!memcmp(constants::TAG_STBL, box->m_name, size)
+                    && box->type() == constants::Container) {
                     for (auto box : static_cast<Container*>(box)->m_listContents) {
-                        if (!memcmp(constants::TAG_STSD, box->m_name, size)) {
+                        if (!memcmp(constants::TAG_STSD, box->m_name, size)
+                            && box->type() == constants::Container) {
                             for (auto box : static_cast<Container*>(box)->m_listContents) {
                                 auto channels = 0;
                                 if (!memcmp(constants::TAG_MP4A, box->m_name, size)) {
@@ -191,7 +201,7 @@ static void mpeg4_add_spatial_audio(Box *mdiaBox, std::fstream &inFile)
                                 } else if (sound_samples_contains(box->m_name)) {
                                     channels = get_sample_description_num_channels(box, inFile);
                                 }
-                                if (4 == channels) {
+                                if (4 == channels && box->type() == constants::Container) {
                                     static_cast<Container*>(box)->add(SA3DBox::create(channels));
                                     break;
                                 }
@@ -204,33 +214,35 @@ static void mpeg4_add_spatial_audio(Box *mdiaBox, std::fstream &inFile)
     }
 }
 
-static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, std::string &strMetadata )
+static bool mpeg4_add_spherical ( Mpeg4Container &mpeg4, std::fstream &inFile, std::string &strMetadata )
 {
   // Adds a spherical uuid box to an mpeg4 file for all video tracks.
   //
-  // pMPEG4 : Mpeg4 file structure to add metadata.
+  // mpeg4 : Mpeg4 file structure to add metadata.
   // inFile : file handle, Source for uncached file contents.
   // strMetadata: string, xml metadata to inject into spherical tag.
-  if ( ! pMPEG4 )
-    return false;
-
   bool bAdded = false;
-  Container *pMoov = (Container *)pMPEG4->m_pMoovBox;
-  if ( ! pMoov )
+  if ( ! mpeg4.m_pMoovBox
+       || mpeg4.m_pMoovBox->type() != constants::Container )
     return false;
+  Container *pMoov = static_cast<Container *>(mpeg4.m_pMoovBox);
 
   std::vector<Box *>::iterator it = pMoov->m_listContents.begin ( );
   while ( it != pMoov->m_listContents.end ( ) )  {
-    Container *pBox = (Container *)*it++;
-    if ( memcmp ( pBox->m_name, constants::TAG_TRAK, 4 ) == 0 )  {
+    Box *pTrack = *it++;
+    if ( memcmp ( pTrack->m_name, constants::TAG_TRAK, 4 ) == 0
+         && pTrack->type() == constants::Container )  {
+      Container *pBox = static_cast<Container *>(pTrack);
       bAdded = false;
       pBox->remove ( constants::TAG_UUID );
 
       std::vector<Box *>::iterator it2 = pBox->m_listContents.begin ( );
       while ( it2 != pBox->m_listContents.end ( ) )  {
-        Container *pSub = (Container *)*it2++;
-        if ( memcmp ( pSub->m_name, constants::TAG_MDIA, 4 ) != 0 )
+        Box *pMdia = *it2++;
+        if ( memcmp ( pMdia->m_name, constants::TAG_MDIA, 4 ) != 0
+             || pMdia->type() != constants::Container )
           continue;
+        Container *pSub = static_cast<Container *>(pMdia);
 
         std::vector<Box *>::iterator it3 = pSub->m_listContents.begin ( );
         while ( it3 != pSub->m_listContents.end ( ) )  {
@@ -259,7 +271,7 @@ static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, 
       }
     }
   }
-  pMPEG4->resize ( );
+  mpeg4.resize ( );
   return true;
 }
 
@@ -270,8 +282,8 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
         LOG_ERROR() << "Error \"" << strInFile.c_str() << "\" does not exist or do not have permission.";
         return false;
     }
-    Mpeg4Container* pMPEG4 = Mpeg4Container::load(inFile);
-    if (!pMPEG4)  {
+    auto mpeg4 = Mpeg4Container::load(inFile);
+    if (!mpeg4)  {
         LOG_ERROR() << "Error, file could not be opened.";
         return false;
     }
@@ -281,7 +293,7 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
 //    if ( stereo == SpatialMedia::Parser::SM_LEFT_RIGHT )
 //      stereo_xml += SPHERICAL_XML_CONTENTS_LEFT_RIGHT;
     std::string xml = SPHERICAL_XML_HEADER + SPHERICAL_XML_CONTENTS + stereo_xml + SPHERICAL_XML_FOOTER;;
-    bool bRet = mpeg4_add_spherical(pMPEG4, inFile, xml);
+    bool bRet = mpeg4_add_spherical(*mpeg4, inFile, xml);
     if (!bRet) {
         LOG_ERROR() << "Error failed to insert spherical data";
     }
@@ -292,7 +304,11 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
         LOG_ERROR() << "Error file: \"" << strOutFile.c_str() << "\" could not create or do not have permission.";
         return false;
     }
-    pMPEG4->save(inFile, outFile, 0);
+    mpeg4->save(inFile, outFile, 0);
+    outFile.flush();
+    if (!inFile || !outFile) {
+        LOG_ERROR() << "Error failed to save spatial media metadata";
+        return false;
+    }
     return true;
 }
-

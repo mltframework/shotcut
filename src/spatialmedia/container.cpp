@@ -1,7 +1,8 @@
 /*****************************************************************************
  * 
  * Copyright 2016 Varol Okan. All rights reserved.
- * 
+ * Copyright (c) 2020-2026 Meltytech, LLC
+ *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -44,7 +45,7 @@ Box *Container::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
 
   fs.seekg ( iPos );
   uint32_t iHeaderSize = 8;
-  uint32_t iSize = readUint32 ( fs );
+  uint64_t iSize = readUint32 ( fs );
   char name[4];
   fs.read ( name, 4 );
 
@@ -68,17 +69,13 @@ Box *Container::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   }
 
   if( iSize == 1 )  {
-    iSize = (uint32_t)readUint64 ( fs );
+    iSize = readUint64 ( fs );
     iHeaderSize = 16;
   }
 
-  if ( iSize < 8 )  {
+  if ( iPos > iEnd || iSize < iHeaderSize
+       || iSize > static_cast<uint64_t>(iEnd - iPos) )  {
     std::cerr << "Error, invalid size " << iSize << " in " << name << " at " << iPos << std::endl;
-    return NULL;
-  }
-
-  if ( iPos + iSize > iEnd )  {
-    std::cerr << "Error: Container box size exceeds bounds." << std::endl;
     return NULL;
   }
 
@@ -113,13 +110,18 @@ Box *Container::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
       }
     }
   }
+  if ( iPadding > iSize - iHeaderSize )  {
+    std::cerr << "Error: Container padding exceeds box bounds." << std::endl;
+    return NULL;
+  }
   Container *pNewBox = new Container ( );
   memcpy ( pNewBox->m_name, name, 4 );
   pNewBox->m_iPosition    = iPos;
   pNewBox->m_iHeaderSize  = iHeaderSize;
-  pNewBox->m_iContentSize = iSize - iHeaderSize;
+  pNewBox->m_iContentSize = static_cast<uint32_t>(iSize - iHeaderSize);
   pNewBox->m_iPadding     = iPadding;
-  pNewBox->m_listContents = load_multiple ( fs, iPos + iHeaderSize + iPadding, iPos + iSize );
+  pNewBox->m_listContents = load_multiple ( fs, iPos + iHeaderSize + iPadding,
+                                              iPos + static_cast<uint32_t>(iSize) );
 
   if ( pNewBox->m_listContents.empty ( ) )  {
     delete pNewBox;
@@ -271,4 +273,3 @@ void Container::save ( std::fstream &fsIn, std::fstream &fsOut, int32_t iDelta )
     pElement->save ( fsIn, fsOut, iDelta );
   }
 }
-
