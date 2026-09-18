@@ -214,21 +214,18 @@ static void mpeg4_add_spatial_audio(Box *mdiaBox, std::fstream &inFile)
     }
 }
 
-static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, std::string &strMetadata )
+static bool mpeg4_add_spherical ( Mpeg4Container &mpeg4, std::fstream &inFile, std::string &strMetadata )
 {
   // Adds a spherical uuid box to an mpeg4 file for all video tracks.
   //
-  // pMPEG4 : Mpeg4 file structure to add metadata.
+  // mpeg4 : Mpeg4 file structure to add metadata.
   // inFile : file handle, Source for uncached file contents.
   // strMetadata: string, xml metadata to inject into spherical tag.
-  if ( ! pMPEG4 )
-    return false;
-
   bool bAdded = false;
-  if ( ! pMPEG4->m_pMoovBox
-       || pMPEG4->m_pMoovBox->type() != constants::Container )
+  if ( ! mpeg4.m_pMoovBox
+       || mpeg4.m_pMoovBox->type() != constants::Container )
     return false;
-  Container *pMoov = static_cast<Container *>(pMPEG4->m_pMoovBox);
+  Container *pMoov = static_cast<Container *>(mpeg4.m_pMoovBox);
 
   std::vector<Box *>::iterator it = pMoov->m_listContents.begin ( );
   while ( it != pMoov->m_listContents.end ( ) )  {
@@ -274,7 +271,7 @@ static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, 
       }
     }
   }
-  pMPEG4->resize ( );
+  mpeg4.resize ( );
   return true;
 }
 
@@ -285,8 +282,8 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
         LOG_ERROR() << "Error \"" << strInFile.c_str() << "\" does not exist or do not have permission.";
         return false;
     }
-    Mpeg4Container* pMPEG4 = Mpeg4Container::load(inFile);
-    if (!pMPEG4)  {
+    auto mpeg4 = Mpeg4Container::load(inFile);
+    if (!mpeg4)  {
         LOG_ERROR() << "Error, file could not be opened.";
         return false;
     }
@@ -296,7 +293,7 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
 //    if ( stereo == SpatialMedia::Parser::SM_LEFT_RIGHT )
 //      stereo_xml += SPHERICAL_XML_CONTENTS_LEFT_RIGHT;
     std::string xml = SPHERICAL_XML_HEADER + SPHERICAL_XML_CONTENTS + stereo_xml + SPHERICAL_XML_FOOTER;;
-    bool bRet = mpeg4_add_spherical(pMPEG4, inFile, xml);
+    bool bRet = mpeg4_add_spherical(*mpeg4, inFile, xml);
     if (!bRet) {
         LOG_ERROR() << "Error failed to insert spherical data";
     }
@@ -305,16 +302,13 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
     std::fstream outFile(strOutFile.c_str(), std::ios::out | std::ios::binary);
     if (!outFile.is_open())  {
         LOG_ERROR() << "Error file: \"" << strOutFile.c_str() << "\" could not create or do not have permission.";
-        delete pMPEG4;
         return false;
     }
-    pMPEG4->save(inFile, outFile, 0);
+    mpeg4->save(inFile, outFile, 0);
     outFile.flush();
     if (!inFile || !outFile) {
         LOG_ERROR() << "Error failed to save spatial media metadata";
-        delete pMPEG4;
         return false;
     }
-    delete pMPEG4;
     return true;
 }

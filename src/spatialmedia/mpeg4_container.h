@@ -25,13 +25,15 @@
 #include "container.h"
 #include "box.h"
 
+#include <memory>
+
 class Mpeg4Container : public Container
 {
   public:
     Mpeg4Container ( );
     virtual ~Mpeg4Container ( );
 
-    static Mpeg4Container *load ( std::fstream & ); //, uint32_t iPos, uint32_t iEnd );
+    static std::unique_ptr<Mpeg4Container> load ( std::fstream & ); //, uint32_t iPos, uint32_t iEnd );
 
     void merge ( Box * );
     virtual void print_structure ( const char *p="" );
