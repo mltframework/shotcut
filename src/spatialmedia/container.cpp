@@ -1,7 +1,8 @@
 /*****************************************************************************
  * 
- * Copyright 2016-2026 Varol Okan. All rights reserved.
- * 
+ * Copyright 2016 Varol Okan. All rights reserved.
+ * Copyright (c) 2020-2026 Meltytech, LLC
+ *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
