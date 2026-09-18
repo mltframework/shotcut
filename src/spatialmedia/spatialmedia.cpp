@@ -308,5 +308,10 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
         return false;
     }
     pMPEG4->save(inFile, outFile, 0);
+    outFile.flush();
+    if (!inFile || !outFile) {
+        LOG_ERROR() << "Error failed to save spatial media metadata";
+        return false;
+    }
     return true;
 }

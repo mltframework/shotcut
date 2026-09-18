@@ -38,6 +38,12 @@ bool hasIndexHeader(const Box *box)
   return box->m_iContentSize >= 8;
 }
 
+void setCopyFailed(std::fstream &fsIn, std::fstream &fsOut)
+{
+  fsIn.setstate(std::ios::failbit);
+  fsOut.setstate(std::ios::failbit);
+}
+
 } // namespace
 
 Box::Box ( )
@@ -307,12 +313,17 @@ void Box::tag_copy ( std::fstream &fsIn, std::fstream &fsOut, int32_t iSize )
     fsIn.read   ( (char *)m_pContents, block_size );
     std::streamsize bytesRead = fsIn.gcount ( );
     fsOut.write ( (char *)m_pContents, bytesRead );
-    if ( bytesRead != block_size )
+    if ( bytesRead != block_size || !fsOut ) {
+      setCopyFailed ( fsIn, fsOut );
       return;
+    }
     iSize -= block_size;
   }
   fsIn.read   ( (char *)m_pContents, iSize );
-  fsOut.write ( (char *)m_pContents, fsIn.gcount ( ) );
+  std::streamsize bytesRead = fsIn.gcount ( );
+  fsOut.write ( (char *)m_pContents, bytesRead );
+  if ( bytesRead != iSize || !fsOut )
+    setCopyFailed ( fsIn, fsOut );
 }
 
 void Box::index_copy ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, bool bBigMode, int32_t iDelta )
