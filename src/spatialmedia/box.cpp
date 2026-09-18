@@ -1,6 +1,6 @@
 /*****************************************************************************
  * 
- * Copyright 2016 Varol Okan. All rights reserved.
+ * Copyright 2016-2026 Varol Okan. All rights reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ Box::Box ( )
 
 Box::~Box ( )
 {
-  delete m_pContents;
+  delete[] m_pContents;
   m_pContents = NULL;
   m_iContentSize = m_iHeaderSize = m_iPosition = 0;
 }
@@ -214,15 +214,12 @@ Box *Box::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
     iSize = readUint64 ( fs );
     iHeaderSize = 16;
   }
-  if ( iSize < 8 )  { 
+  if ( iPos > iEnd || iSize < iHeaderSize
+       || iSize > static_cast<uint64_t>(iEnd - iPos) )  {
     std::cerr << "Error, invalid size " << iSize << " in " << name << " at " << iPos << std::endl;
     return NULL;
   }
 
-  if ( iPos + iSize > iEnd )  {
-    std::cerr << "Error: Leaf box size exceeds bounds." << std::endl;
-    return NULL;
-  }
   Box *pNewBox = new Box ( );
   memcpy ( pNewBox->m_name, name, sizeof ( name ) );
   pNewBox->m_iPosition    = iPos;
@@ -308,11 +305,14 @@ void Box::tag_copy ( std::fstream &fsIn, std::fstream &fsOut, int32_t iSize )
   m_pContents = new uint8_t[block_size + 1];
   while ( iSize > block_size )  {
     fsIn.read   ( (char *)m_pContents, block_size );
-    fsOut.write ( (char *)m_pContents, block_size );
+    std::streamsize bytesRead = fsIn.gcount ( );
+    fsOut.write ( (char *)m_pContents, bytesRead );
+    if ( bytesRead != block_size )
+      return;
     iSize -= block_size;
   }
   fsIn.read   ( (char *)m_pContents, iSize );
-  fsOut.write ( (char *)m_pContents, iSize );
+  fsOut.write ( (char *)m_pContents, fsIn.gcount ( ) );
 }
 
 void Box::index_copy ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, bool bBigMode, int32_t iDelta )
