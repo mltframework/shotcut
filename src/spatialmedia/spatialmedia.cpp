@@ -305,13 +305,16 @@ bool SpatialMedia::injectSpherical(const std::string& strInFile, const std::stri
     std::fstream outFile(strOutFile.c_str(), std::ios::out | std::ios::binary);
     if (!outFile.is_open())  {
         LOG_ERROR() << "Error file: \"" << strOutFile.c_str() << "\" could not create or do not have permission.";
+        delete pMPEG4;
         return false;
     }
     pMPEG4->save(inFile, outFile, 0);
     outFile.flush();
     if (!inFile || !outFile) {
         LOG_ERROR() << "Error failed to save spatial media metadata";
+        delete pMPEG4;
         return false;
     }
+    delete pMPEG4;
     return true;
 }
