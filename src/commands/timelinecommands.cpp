@@ -2358,12 +2358,14 @@ ChangeTransitionPropertyCommand::ChangeTransitionPropertyCommand(int trackIndex,
                                                                  const QString &propertyName,
                                                                  double value,
                                                                  const QString &text,
+                                                                 bool mergeable,
                                                                  QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_trackIndex(trackIndex)
     , m_propertyName(propertyName)
     , m_newValue(value)
     , m_oldValue(value)
+    , m_mergeable(mergeable)
 {
     setText(text);
     QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
@@ -2402,10 +2404,62 @@ bool ChangeTransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 {
     const ChangeTransitionPropertyCommand *that
         = static_cast<const ChangeTransitionPropertyCommand *>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex
-        || that->m_propertyName != m_propertyName) {
+    if (!m_mergeable || !that->m_mergeable || that->id() != id()
+        || that->m_trackIndex != m_trackIndex || that->m_propertyName != m_propertyName) {
         return false;
     }
+    m_newValue = that->m_newValue;
+    return true;
+}
+
+ChangeDuckThresholdCommand::ChangeDuckThresholdCommand(int trackIndex,
+                                                       double value,
+                                                       bool enabled,
+                                                       QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_trackIndex(trackIndex)
+    , m_enabled(enabled)
+    , m_newValue(value)
+    , m_oldValue(value)
+    , m_oldRealValue(0.0)
+{
+    setText(QObject::tr("Change track duck threshold"));
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (transition && transition->is_valid()) {
+        m_oldValue = transition->get_double("duck_threshold_shadow");
+        m_oldRealValue = transition->get_double("duck_threshold");
+    }
+}
+
+void ChangeDuckThresholdCommand::redo()
+{
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid())
+        return;
+    transition->set("duck_threshold_shadow", m_newValue);
+    if (m_enabled)
+        transition->set("duck_threshold", m_newValue);
+    MLT.refreshConsumer();
+    emit valueChanged(m_newValue);
+}
+
+void ChangeDuckThresholdCommand::undo()
+{
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid())
+        return;
+    transition->set("duck_threshold_shadow", m_oldValue);
+    if (m_enabled)
+        transition->set("duck_threshold", m_oldRealValue);
+    MLT.refreshConsumer();
+    emit valueChanged(m_oldValue);
+}
+
+bool ChangeDuckThresholdCommand::mergeWith(const QUndoCommand *other)
+{
+    const ChangeDuckThresholdCommand *that = static_cast<const ChangeDuckThresholdCommand *>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_enabled != m_enabled)
+        return false;
     m_newValue = that->m_newValue;
     return true;
 }

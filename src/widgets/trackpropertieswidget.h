@@ -46,11 +46,13 @@ public:
 private slots:
     void on_blendModeCombo_currentIndexChanged(int index);
     void onModeChanged(QString &mode);
+    void on_duckEnabledCheckBox_toggled(bool checked);
     void on_duckThresholdSpinBox_valueChanged(double value);
     void on_duckAttenuationSpinBox_valueChanged(double value);
     void on_duckFadeInSpinBox_valueChanged(double value);
     void on_duckFadeOutSpinBox_valueChanged(double value);
     void onDuckThresholdChanged(double value);
+    void onDuckThresholdShadowChanged(double value);
     void onDuckAttenuationChanged(double value);
     void onDuckFadeInChanged(double value);
     void onDuckFadeOutChanged(double value);
@@ -63,6 +65,7 @@ protected:
 private:
     Mlt::Transition *getTransition(const QString &name);
     void setDuckingVisible(bool visible);
+    void setDuckControlsEnabled(bool enabled);
     void updateDuckStatus(double value);
 
     Ui::TrackPropertiesWidget *ui;
