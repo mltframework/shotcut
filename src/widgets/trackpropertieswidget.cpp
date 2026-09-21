@@ -172,9 +172,8 @@ TrackPropertiesWidget::~TrackPropertiesWidget()
 
 void TrackPropertiesWidget::setDuckingVisible(bool visible)
 {
-    ui->duckingHeadingLabel->setVisible(visible);
-    ui->duckingTipLabel->setVisible(visible);
     ui->duckEnabledCheckBox->setVisible(visible);
+    ui->duckingTipLabel->setVisible(visible);
     ui->duckThresholdLabel->setVisible(visible);
     ui->duckThresholdSpinBox->setVisible(visible);
     ui->duckAttenuationLabel->setVisible(visible);
@@ -214,7 +213,7 @@ void TrackPropertiesWidget::updateDuckStatus(double value)
 void TrackPropertiesWidget::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
-    if (!ui->duckingHeadingLabel->isVisible())
+    if (!ui->duckEnabledCheckBox->isVisible())
         return;
     connect(MLT.videoWidget(),
             SIGNAL(frameDisplayed(const SharedFrame &)),
@@ -225,7 +224,7 @@ void TrackPropertiesWidget::showEvent(QShowEvent *event)
 void TrackPropertiesWidget::hideEvent(QHideEvent *event)
 {
     QWidget::hideEvent(event);
-    if (!ui->duckingHeadingLabel->isVisible())
+    if (!ui->duckEnabledCheckBox->isVisible())
         return;
     disconnect(MLT.videoWidget(),
                SIGNAL(frameDisplayed(const SharedFrame &)),

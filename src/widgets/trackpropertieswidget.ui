@@ -52,7 +52,7 @@
             </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QLabel" name="duckingHeadingLabel">
+          <widget class="QCheckBox" name="duckEnabledCheckBox">
            <property name="font">
             <font>
              <bold>true</bold>
@@ -73,14 +73,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QCheckBox" name="duckEnabledCheckBox">
-           <property name="text">
-            <string>Enable Audio Ducking</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
+         <item row="3" column="0">
       <widget class="QLabel" name="duckThresholdLabel">
              <property name="toolTip">
               <string>When the level of tracks above this one rises above this threshold, ducking is applied to this track.</string>
@@ -93,7 +86,7 @@
        </property>
       </widget>
      </item>
-   <item row="4" column="1">
+   <item row="3" column="1">
       <widget class="DoubleSliderSpinner" name="duckThresholdSpinBox">
        <property name="toolTip">
         <string>When the level of tracks above this one rises above this threshold, ducking is applied to this track.</string>
@@ -124,20 +117,20 @@
           </property>
       </widget>
      </item>
-   <item row="5" column="0">
+   <item row="4" column="0">
       <widget class="QLabel" name="duckAttenuationLabel">
        <property name="toolTip">
       <string>Maximum gain reduction applied to this track while ducking is active.</string>
        </property>
        <property name="text">
-        <string>Max Reduction</string>
+        <string>Max reduction</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
-   <item row="5" column="1">
+   <item row="4" column="1">
       <widget class="DoubleSliderSpinner" name="duckAttenuationSpinBox">
        <property name="toolTip">
       <string>Maximum gain reduction applied to this track while ducking is active.</string>
@@ -168,7 +161,7 @@
           </property>
       </widget>
      </item>
-   <item row="6" column="0">
+   <item row="5" column="0">
       <widget class="QLabel" name="duckFadeOutLabel">
        <property name="toolTip">
       <string>How quickly gain reduction is applied after the threshold is exceeded.</string>
@@ -181,7 +174,7 @@
        </property>
       </widget>
      </item>
-   <item row="6" column="1">
+   <item row="5" column="1">
       <widget class="DoubleSliderSpinner" name="duckFadeOutSpinBox">
        <property name="toolTip">
       <string>How quickly gain reduction is applied after the threshold is exceeded.</string>
@@ -212,7 +205,7 @@
           </property>
       </widget>
      </item>
-   <item row="7" column="0">
+   <item row="6" column="0">
       <widget class="QLabel" name="duckFadeInLabel">
        <property name="toolTip">
       <string>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</string>
@@ -225,7 +218,7 @@
        </property>
       </widget>
      </item>
-   <item row="7" column="1">
+   <item row="6" column="1">
       <widget class="DoubleSliderSpinner" name="duckFadeInSpinBox">
        <property name="toolTip">
       <string>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</string>
@@ -256,20 +249,20 @@
           </property>
       </widget>
      </item>
-   <item row="8" column="0">
+   <item row="7" column="0">
       <widget class="QLabel" name="duckStatusLabel">
      <property name="toolTip">
       <string>Current gain reduction being applied to this track.</string>
      </property>
        <property name="text">
-      <string>Gain Reduction</string>
+      <string>Gain reduction</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
      </item>
-   <item row="8" column="1">
+   <item row="7" column="1">
       <widget class="QProgressBar" name="duckStatusValueLabel">
        <property name="toolTip">
       <string>Current gain reduction being applied to this track. Higher values mean stronger ducking.</string>
