@@ -1106,7 +1106,7 @@ void TimelineDock::setupActions()
         }
         if (tracks.size() > 0) {
             setSelection(); // Avoid filter views becoming out of sync
-            split(tracks[0], clips[0], m_position);
+            MAIN.undoStack()->push(new Timeline::SplitCommand(m_model, tracks, clips, m_position));
         }
     });
     Actions.add("timelineSplitAction", action);
