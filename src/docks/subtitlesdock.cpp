@@ -773,22 +773,30 @@ void SubtitlesDock::onCreateOrEditRequested()
 void SubtitlesDock::onAddRequested()
 {
     LOG_DEBUG();
-    ensureTrackExists();
     int64_t msTime = positionToMs(m_pos);
     int trackIndex = m_trackCombo->currentIndex();
-    if (m_model->itemIndexAtTime(trackIndex, msTime) >= 0) {
+    if (trackIndex >= 0 && m_model->itemIndexAtTime(trackIndex, msTime) >= 0) {
         MAIN.showStatusMessage(tr("A subtitle already exists at this time."));
         return;
     }
     int64_t maxTime = m_model->maxTime();
-    int nextIndex = m_model->itemIndexAfterTime(trackIndex, msTime);
-    if (nextIndex > -1) {
-        auto nextItem = m_model->getItem(trackIndex, nextIndex);
-        maxTime = nextItem.start;
+    if (trackIndex >= 0) {
+        int nextIndex = m_model->itemIndexAfterTime(trackIndex, msTime);
+        if (nextIndex > -1) {
+            auto nextItem = m_model->getItem(trackIndex, nextIndex);
+            maxTime = nextItem.start;
+        }
     }
     if ((maxTime - msTime) < 500) {
         MAIN.showStatusMessage(tr("Not enough space to add subtitle."));
         return;
+    }
+    if (trackIndex < 0) {
+        ensureTrackExists();
+        trackIndex = m_trackCombo->currentIndex();
+        if (trackIndex < 0) {
+            return;
+        }
     }
     Subtitles::SubtitleItem item;
     item.start = msTime;

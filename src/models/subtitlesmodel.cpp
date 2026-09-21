@@ -594,6 +594,7 @@ void SubtitlesModel::doRemoveTrack(int trackIndex)
     LOG_DEBUG() << trackIndex;
     if (trackIndex < 0 || trackIndex >= m_tracks.size()) {
         LOG_ERROR() << "Invalid index" << trackIndex;
+        return;
     }
     beginRemoveRows(QModelIndex(), trackIndex, trackIndex);
     m_tracks.remove(trackIndex);
