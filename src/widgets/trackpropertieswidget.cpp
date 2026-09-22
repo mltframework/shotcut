@@ -31,9 +31,6 @@
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 static const char *BLEND_PROPERTY_QTBLEND = "compositing";
-static const char *MIX_PROPERTY_DUCK_ENABLED = kShotcutDuckEnabledProperty;
-static const char *MIX_PROPERTY_DUCK_THRESHOLD = "duck_threshold";
-static const char *MIX_PROPERTY_DUCK_THRESHOLD_SHADOW = kShotcutDuckThresholdProperty;
 static const char *MIX_PROPERTY_DUCK_ATTENUATION = "duck_attenuation";
 static const char *MIX_PROPERTY_DUCK_FADE_IN = "duck_fade_in";
 static const char *MIX_PROPERTY_DUCK_FADE_OUT = "duck_fade_out";
@@ -60,16 +57,16 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
         QScopedPointer<Mlt::Transition> mixTransition(getTransition("mix"));
         if (mixTransition && mixTransition->is_valid()) {
             double shadowValue = DUCK_THRESHOLD_DEFAULT;
-            const double realThreshold = mixTransition->get_double(MIX_PROPERTY_DUCK_THRESHOLD);
-            const bool enabled = mixTransition->property_exists(MIX_PROPERTY_DUCK_ENABLED)
-                                     ? mixTransition->get_int(MIX_PROPERTY_DUCK_ENABLED) != 0
+            const double realThreshold = mixTransition->get_double("duck_threshold");
+            const bool enabled = mixTransition->property_exists(kShotcutDuckEnabledProperty)
+                                     ? mixTransition->get_int(kShotcutDuckEnabledProperty) != 0
                                      : !qFuzzyIsNull(realThreshold);
-            if (mixTransition->property_exists(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW))
-                shadowValue = mixTransition->get_double(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW);
+            if (mixTransition->property_exists(kShotcutDuckThresholdProperty))
+                shadowValue = mixTransition->get_double(kShotcutDuckThresholdProperty);
             else if (!qFuzzyIsNull(realThreshold) || enabled)
                 shadowValue = realThreshold;
-            mixTransition->set(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW, shadowValue);
-            mixTransition->set(MIX_PROPERTY_DUCK_ENABLED, enabled ? 1 : 0);
+            mixTransition->set(kShotcutDuckThresholdProperty, shadowValue);
+            mixTransition->set(kShotcutDuckEnabledProperty, enabled ? 1 : 0);
             onDuckThresholdShadowChanged(shadowValue);
             onDuckThresholdChanged(realThreshold);
             onDuckAttenuationChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_ATTENUATION));
@@ -396,8 +393,8 @@ void TrackPropertiesWidget::onDuckThresholdChanged(double value)
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     bool enabled = !qFuzzyIsNull(value);
     if (transition && transition->is_valid()
-        && transition->property_exists(MIX_PROPERTY_DUCK_ENABLED))
-        enabled = transition->get_int(MIX_PROPERTY_DUCK_ENABLED) != 0;
+        && transition->property_exists(kShotcutDuckEnabledProperty))
+        enabled = transition->get_int(kShotcutDuckEnabledProperty) != 0;
     ui->duckEnabledCheckBox->blockSignals(true);
     ui->duckEnabledCheckBox->setChecked(enabled);
     ui->duckEnabledCheckBox->blockSignals(false);

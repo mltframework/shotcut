@@ -2429,8 +2429,8 @@ ChangeDuckThresholdCommand::ChangeDuckThresholdCommand(int trackIndex,
     setText(text.isEmpty() ? QObject::tr("Change track duck threshold") : text);
     QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
     if (transition && transition->is_valid()) {
-        if (transition->property_exists(kShotcutDuckThresholdShadowProperty))
-            m_oldValue = transition->get_double(kShotcutDuckThresholdShadowProperty);
+        if (transition->property_exists(kShotcutDuckThresholdProperty))
+            m_oldValue = transition->get_double(kShotcutDuckThresholdProperty);
         else
             m_oldValue = transition->get_double("duck_threshold");
         m_oldRealValue = transition->get_double("duck_threshold");
@@ -2444,7 +2444,7 @@ void ChangeDuckThresholdCommand::redo()
     if (!transition || !transition->is_valid())
         return;
     transition->set(kShotcutDuckEnabledProperty, m_enabled ? 1 : 0);
-    transition->set(kShotcutDuckThresholdShadowProperty, m_newValue);
+    transition->set(kShotcutDuckThresholdProperty, m_newValue);
     transition->set("duck_threshold", m_enabled ? m_newValue : 0.0);
     MLT.refreshConsumer();
     emit valueChanged(m_newValue);
@@ -2459,7 +2459,7 @@ void ChangeDuckThresholdCommand::undo()
                                 ? transition->get_int(kShotcutDuckEnabledProperty) != 0
                                 : !qFuzzyIsNull(m_oldRealValue);
     transition->set(kShotcutDuckEnabledProperty, oldEnabled ? 1 : 0);
-    transition->set(kShotcutDuckThresholdShadowProperty, m_oldValue);
+    transition->set(kShotcutDuckThresholdProperty, m_oldValue);
     transition->set("duck_threshold", oldEnabled ? m_oldRealValue : 0.0);
     MLT.refreshConsumer();
     emit valueChanged(m_oldValue);
