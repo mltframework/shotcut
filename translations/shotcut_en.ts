@@ -1771,12 +1771,12 @@ leave blank to use the clipboard:</source>
 <context>
     <name>DoubleSliderSpinner</name>
     <message>
-        <location filename="../src/widgets/doublesliderspinner.cpp" line="80"/>
+        <location filename="../src/widgets/doublesliderspinner.cpp" line="54"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/doublesliderspinner.cpp" line="81"/>
+        <location filename="../src/widgets/doublesliderspinner.cpp" line="55"/>
         <source>Restore default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8974,37 +8974,42 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2425"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2429"/>
+        <source>Change track duck threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="2490"/>
         <source>Change clip properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2495"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2560"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2645"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2710"/>
         <source>Replace timeline clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2676"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2741"/>
         <source>Align clips to reference track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2770"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2835"/>
         <source>Apply copied filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2874"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2939"/>
         <source>Adjust gain/volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="2908"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="2973"/>
         <source>Adjust track gain/volume</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9014,7 +9019,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="163"/>
+        <location filename="../src/mltxmlchecker.cpp" line="165"/>
         <source>The file is not a MLT XML file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10849,41 +10854,41 @@ If the duration is 0, no transition will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1140"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1142"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1148"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1150"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1170"/>
         <source>Subtitle Track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1212"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1220"/>
         <source>Generate subtitle text on timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1213"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1221"/>
         <source>Text style preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1215"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1223"/>
         <source>Default subtitle style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1358"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1366"/>
         <source>Extracting Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1376"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1384"/>
         <source>Speech to Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="570"/>
         <location filename="../src/docks/subtitlesdock.cpp" line="623"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1307"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1315"/>
         <source>Subtitle track already exists: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10924,37 +10929,37 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="780"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="779"/>
         <source>A subtitle already exists at this time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="790"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="791"/>
         <source>Not enough space to add subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="827"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="835"/>
         <source>Start time can not be after end time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="833"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="841"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="851"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="859"/>
         <source>End time can not be before start time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="858"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="866"/>
         <source>End time can not be after next subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="880"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="888"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10962,22 +10967,22 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>SubtitlesModel</name>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="877"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="878"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="879"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="880"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="881"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="882"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/subtitlesmodel.cpp" line="883"/>
+        <location filename="../src/models/subtitlesmodel.cpp" line="884"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12159,90 +12164,84 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="79"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="92"/>
-        <source>When the level of tracks above this one rises above this threshold, ducking is applied to this track. Off at 0 dB.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="82"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="107"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="160"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="187"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="151"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="213"/>
         <source> dB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="110"/>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="116"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="185"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="211"/>
         <source>OFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="132"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="145"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="123"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="136"/>
         <source>Maximum gain reduction applied to this track while ducking is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="135"/>
-        <source>Max Reduction</source>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="79"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="92"/>
+        <source>When the level of tracks above this one rises above this threshold, ducking is applied to this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="176"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="189"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="126"/>
+        <source>Max reduction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="167"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="180"/>
         <source>How quickly gain reduction is applied after the threshold is exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="179"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="170"/>
         <source>Fade out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="204"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="248"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="195"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="239"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="220"/>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="233"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="211"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="224"/>
         <source>How quickly gain reduction is released after the level of tracks above this one falls below the threshold.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="223"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="214"/>
         <source>Fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="264"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="255"/>
         <source>Current gain reduction being applied to this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="267"/>
-        <source>Gain Reduction</source>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="258"/>
+        <source>Gain reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="277"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="268"/>
         <source>Current gain reduction being applied to this track. Higher values mean stronger ducking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="289"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="280"/>
         <source>0.0 dB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12252,200 +12251,205 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="126"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="138"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="127"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="139"/>
         <source>Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="128"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="140"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="129"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="141"/>
         <source>Saturate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="87"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="130"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="99"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="142"/>
         <source>Multiply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="88"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="131"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="143"/>
         <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="89"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="132"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="144"/>
         <source>Overlay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="90"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="133"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="145"/>
         <source>Darken</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="134"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="146"/>
         <source>Dodge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="135"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="147"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="94"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="136"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="148"/>
         <source>Hard Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="74"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="86"/>
         <source>Source Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="75"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="87"/>
         <source>Destination Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="88"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="89"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="90"/>
         <source>Destination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="91"/>
         <source>Source In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="80"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="92"/>
         <source>Destination In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="81"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="93"/>
         <source>Source Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="82"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="94"/>
         <source>Destination Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="83"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="95"/>
         <source>Source Atop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="84"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="96"/>
         <source>Destination Atop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="85"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="97"/>
         <source>XOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="86"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="98"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="91"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
         <source>Lighten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="92"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
         <source>Color Dodge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="93"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
         <source>Color Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="95"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="137"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="149"/>
         <source>Soft Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="96"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="138"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="150"/>
         <source>Difference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="97"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="139"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="151"/>
         <source>Exclusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="140"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="152"/>
         <source>HSL Hue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="141"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="153"/>
         <source>HSL Saturation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="142"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="154"/>
         <source>HSL Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="143"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="155"/>
         <source>HSL Luminosity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="299"/>
-        <source>Change track duck threshold</source>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="325"/>
+        <source>Enable Track Audio Ducking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="313"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="326"/>
+        <source>Disable Track Audio Ducking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="357"/>
         <source>Change track duck attenuation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="327"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="371"/>
         <source>Change track duck fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="341"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="385"/>
         <source>Change track duck fade out</source>
         <translation type="unfinished"></translation>
     </message>
