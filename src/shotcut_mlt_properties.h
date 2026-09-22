@@ -75,6 +75,8 @@
 #define kShotcutProjectNote "shotcut:projectNote"
 #define kShotcutProjectProcessingMode "shotcut:processingMode"
 #define kShotcutColorTransfer "shotcut:colorTransfer"
+#define kShotcutDuckEnabledProperty "shotcut:duck_enabled"
+#define kShotcutDuckThresholdProperty "shotcut:duck_threshold"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */

@@ -50,6 +50,8 @@ enum {
     UndoIdChangeGain,
     UndoIdChangeTransitionProperty,
     UndoIdChangeTrackGain,
+    UndoIdChangeDuckThreshold,
+    UndoIdChangeDuckEnabled,
 };
 
 struct ClipPosition
@@ -838,6 +840,7 @@ public:
                                     const QString &propertyName,
                                     double value,
                                     const QString &text,
+                                    bool mergeable = true,
                                     QUndoCommand *parent = 0);
     void redo();
     void undo();
@@ -854,6 +857,38 @@ private:
     QString m_propertyName;
     double m_newValue;
     double m_oldValue;
+    bool m_mergeable;
+};
+
+// Updates the shadow (user-intended) threshold and, when ducking is enabled, the real
+// threshold together as a single mergeable undo step.
+class ChangeDuckThresholdCommand : public QObject, public QUndoCommand
+{
+    Q_OBJECT
+public:
+    ChangeDuckThresholdCommand(int trackIndex,
+                               double value,
+                               bool enabled,
+                               const QString &text = QString(),
+                               bool isToggle = false,
+                               QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+protected:
+    int id() const { return m_isToggle ? UndoIdChangeDuckEnabled : UndoIdChangeDuckThreshold; }
+    bool mergeWith(const QUndoCommand *other);
+
+signals:
+    void valueChanged(double value);
+
+private:
+    int m_trackIndex;
+    bool m_enabled;
+    bool m_isToggle;
+    double m_newValue;
+    double m_oldValue;
+    double m_oldRealValue;
 };
 
 class UpdateCommand : public QUndoCommand

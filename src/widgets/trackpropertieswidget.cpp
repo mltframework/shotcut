@@ -31,11 +31,11 @@
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 static const char *BLEND_PROPERTY_QTBLEND = "compositing";
-static const char *MIX_PROPERTY_DUCK_THRESHOLD = "duck_threshold";
 static const char *MIX_PROPERTY_DUCK_ATTENUATION = "duck_attenuation";
 static const char *MIX_PROPERTY_DUCK_FADE_IN = "duck_fade_in";
 static const char *MIX_PROPERTY_DUCK_FADE_OUT = "duck_fade_out";
 static const char *MIX_PROPERTY_DUCK_LEVEL = "duck_level";
+static const double DUCK_THRESHOLD_DEFAULT = -12.0;
 
 TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
                                              bool showBlend,
@@ -56,7 +56,19 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
     if (showDucking) {
         QScopedPointer<Mlt::Transition> mixTransition(getTransition("mix"));
         if (mixTransition && mixTransition->is_valid()) {
-            onDuckThresholdChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_THRESHOLD));
+            double shadowValue = DUCK_THRESHOLD_DEFAULT;
+            const double realThreshold = mixTransition->get_double("duck_threshold");
+            const bool enabled = mixTransition->property_exists(kShotcutDuckEnabledProperty)
+                                     ? mixTransition->get_int(kShotcutDuckEnabledProperty) != 0
+                                     : !qFuzzyIsNull(realThreshold);
+            if (mixTransition->property_exists(kShotcutDuckThresholdProperty))
+                shadowValue = mixTransition->get_double(kShotcutDuckThresholdProperty);
+            else if (!qFuzzyIsNull(realThreshold) || enabled)
+                shadowValue = realThreshold;
+            mixTransition->set(kShotcutDuckThresholdProperty, shadowValue);
+            mixTransition->set(kShotcutDuckEnabledProperty, enabled ? 1 : 0);
+            onDuckThresholdShadowChanged(shadowValue);
+            onDuckThresholdChanged(realThreshold);
             onDuckAttenuationChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_ATTENUATION));
             onDuckFadeInChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_FADE_IN));
             onDuckFadeOutChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_FADE_OUT));
@@ -163,7 +175,7 @@ TrackPropertiesWidget::~TrackPropertiesWidget()
 
 void TrackPropertiesWidget::setDuckingVisible(bool visible)
 {
-    ui->duckingHeadingLabel->setVisible(visible);
+    ui->duckEnabledCheckBox->setVisible(visible);
     ui->duckingTipLabel->setVisible(visible);
     ui->duckThresholdLabel->setVisible(visible);
     ui->duckThresholdSpinBox->setVisible(visible);
@@ -177,11 +189,25 @@ void TrackPropertiesWidget::setDuckingVisible(bool visible)
     ui->duckStatusValueLabel->setVisible(visible);
 }
 
+void TrackPropertiesWidget::setDuckControlsEnabled(bool enabled)
+{
+    ui->duckThresholdLabel->setEnabled(enabled);
+    ui->duckThresholdSpinBox->setEnabled(enabled);
+    ui->duckAttenuationLabel->setEnabled(enabled);
+    ui->duckAttenuationSpinBox->setEnabled(enabled);
+    ui->duckFadeInLabel->setEnabled(enabled);
+    ui->duckFadeInSpinBox->setEnabled(enabled);
+    ui->duckFadeOutLabel->setEnabled(enabled);
+    ui->duckFadeOutSpinBox->setEnabled(enabled);
+    ui->duckStatusLabel->setEnabled(enabled);
+    ui->duckStatusValueLabel->setEnabled(enabled);
+}
+
 void TrackPropertiesWidget::updateDuckStatus(double value)
 {
     const double clamped = qBound(0.0, value, 70.0);
     ui->duckStatusValueLabel->setValue(qRound(clamped * 10.0));
-    if (qFuzzyCompare(ui->duckThresholdSpinBox->value() + 1.0, 1.0))
+    if (!ui->duckEnabledCheckBox->isChecked())
         ui->duckStatusValueLabel->setFormat(tr("OFF"));
     else
         ui->duckStatusValueLabel->setFormat(QString::number(clamped, 'f', 1) + tr(" dB"));
@@ -190,7 +216,7 @@ void TrackPropertiesWidget::updateDuckStatus(double value)
 void TrackPropertiesWidget::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
-    if (!ui->duckingHeadingLabel->isVisible())
+    if (!ui->duckEnabledCheckBox->isVisible())
         return;
     connect(MLT.videoWidget(),
             SIGNAL(frameDisplayed(const SharedFrame &)),
@@ -201,7 +227,7 @@ void TrackPropertiesWidget::showEvent(QShowEvent *event)
 void TrackPropertiesWidget::hideEvent(QHideEvent *event)
 {
     QWidget::hideEvent(event);
-    if (!ui->duckingHeadingLabel->isVisible())
+    if (!ui->duckEnabledCheckBox->isVisible())
         return;
     disconnect(MLT.videoWidget(),
                SIGNAL(frameDisplayed(const SharedFrame &)),
@@ -288,16 +314,34 @@ void TrackPropertiesWidget::onModeChanged(QString &mode)
     }
 }
 
-void TrackPropertiesWidget::on_duckThresholdSpinBox_valueChanged(double value)
+void TrackPropertiesWidget::on_duckEnabledCheckBox_toggled(bool checked)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
         auto command
-            = new Timeline::ChangeTransitionPropertyCommand(transition->get_b_track(),
-                                                            MIX_PROPERTY_DUCK_THRESHOLD,
-                                                            value,
-                                                            tr("Change track duck threshold"));
+            = new Timeline::ChangeDuckThresholdCommand(transition->get_b_track(),
+                                                       ui->duckThresholdSpinBox->value(),
+                                                       checked,
+                                                       checked ? tr("Enable Track Audio Ducking")
+                                                               : tr("Disable Track Audio Ducking"),
+                                                       true,
+                                                       nullptr);
         connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdChanged(double)));
+        connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdShadowChanged(double)));
+        MAIN.undoStack()->push(command);
+    }
+}
+
+void TrackPropertiesWidget::on_duckThresholdSpinBox_valueChanged(double value)
+{
+    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+    if (transition && transition->is_valid()) {
+        auto command = new Timeline::ChangeDuckThresholdCommand(transition->get_b_track(),
+                                                                value,
+                                                                ui->duckEnabledCheckBox->isChecked(),
+                                                                QString(),
+                                                                false);
+        connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdShadowChanged(double)));
         MAIN.undoStack()->push(command);
     }
 }
@@ -346,16 +390,29 @@ void TrackPropertiesWidget::on_duckFadeOutSpinBox_valueChanged(double value)
 
 void TrackPropertiesWidget::onDuckThresholdChanged(double value)
 {
-    ui->duckThresholdSpinBox->blockSignals(true);
-    ui->duckThresholdSpinBox->setValue(value);
-    ui->duckThresholdSpinBox->blockSignals(false);
+    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+    bool enabled = !qFuzzyIsNull(value);
+    if (transition && transition->is_valid()
+        && transition->property_exists(kShotcutDuckEnabledProperty))
+        enabled = transition->get_int(kShotcutDuckEnabledProperty) != 0;
+    ui->duckEnabledCheckBox->blockSignals(true);
+    ui->duckEnabledCheckBox->setChecked(enabled);
+    ui->duckEnabledCheckBox->blockSignals(false);
+    setDuckControlsEnabled(enabled);
     ui->duckStatusValueLabel->setPalette(QPalette());
-    if (qFuzzyCompare(value + 1.0, 1.0)) {
+    if (!enabled) {
         QPalette palette = ui->duckStatusValueLabel->palette();
         palette.setColor(QPalette::Text, QPalette().color(QPalette::Highlight));
         ui->duckStatusValueLabel->setPalette(palette);
     }
     updateDuckStatus(0.0);
+}
+
+void TrackPropertiesWidget::onDuckThresholdShadowChanged(double value)
+{
+    ui->duckThresholdSpinBox->blockSignals(true);
+    ui->duckThresholdSpinBox->setValue(value);
+    ui->duckThresholdSpinBox->blockSignals(false);
 }
 
 void TrackPropertiesWidget::onDuckAttenuationChanged(double value)

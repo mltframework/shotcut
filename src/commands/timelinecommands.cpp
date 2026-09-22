@@ -2358,12 +2358,14 @@ ChangeTransitionPropertyCommand::ChangeTransitionPropertyCommand(int trackIndex,
                                                                  const QString &propertyName,
                                                                  double value,
                                                                  const QString &text,
+                                                                 bool mergeable,
                                                                  QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_trackIndex(trackIndex)
     , m_propertyName(propertyName)
     , m_newValue(value)
     , m_oldValue(value)
+    , m_mergeable(mergeable)
 {
     setText(text);
     QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
@@ -2402,10 +2404,73 @@ bool ChangeTransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 {
     const ChangeTransitionPropertyCommand *that
         = static_cast<const ChangeTransitionPropertyCommand *>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex
-        || that->m_propertyName != m_propertyName) {
+    if (!m_mergeable || !that->m_mergeable || that->id() != id()
+        || that->m_trackIndex != m_trackIndex || that->m_propertyName != m_propertyName) {
         return false;
     }
+    m_newValue = that->m_newValue;
+    return true;
+}
+
+ChangeDuckThresholdCommand::ChangeDuckThresholdCommand(int trackIndex,
+                                                       double value,
+                                                       bool enabled,
+                                                       const QString &text,
+                                                       bool isToggle,
+                                                       QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_trackIndex(trackIndex)
+    , m_enabled(enabled)
+    , m_isToggle(isToggle)
+    , m_newValue(value)
+    , m_oldValue(value)
+    , m_oldRealValue(0.0)
+{
+    setText(text.isEmpty() ? QObject::tr("Change track duck threshold") : text);
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (transition && transition->is_valid()) {
+        if (transition->property_exists(kShotcutDuckThresholdProperty))
+            m_oldValue = transition->get_double(kShotcutDuckThresholdProperty);
+        else
+            m_oldValue = transition->get_double("duck_threshold");
+        m_oldRealValue = transition->get_double("duck_threshold");
+    }
+}
+
+void ChangeDuckThresholdCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "value" << m_newValue;
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid())
+        return;
+    transition->set(kShotcutDuckEnabledProperty, m_enabled ? 1 : 0);
+    transition->set(kShotcutDuckThresholdProperty, m_newValue);
+    transition->set("duck_threshold", m_enabled ? m_newValue : 0.0);
+    MLT.refreshConsumer();
+    emit valueChanged(m_newValue);
+}
+
+void ChangeDuckThresholdCommand::undo()
+{
+    QScopedPointer<Mlt::Transition> transition(getMixTransitionByTrackIndex(m_trackIndex));
+    if (!transition || !transition->is_valid())
+        return;
+    const bool oldEnabled = transition->property_exists(kShotcutDuckEnabledProperty)
+                                ? transition->get_int(kShotcutDuckEnabledProperty) != 0
+                                : !qFuzzyIsNull(m_oldRealValue);
+    transition->set(kShotcutDuckEnabledProperty, oldEnabled ? 1 : 0);
+    transition->set(kShotcutDuckThresholdProperty, m_oldValue);
+    transition->set("duck_threshold", oldEnabled ? m_oldRealValue : 0.0);
+    MLT.refreshConsumer();
+    emit valueChanged(m_oldValue);
+}
+
+bool ChangeDuckThresholdCommand::mergeWith(const QUndoCommand *other)
+{
+    const ChangeDuckThresholdCommand *that = static_cast<const ChangeDuckThresholdCommand *>(other);
+    if (m_isToggle || that->m_isToggle || that->id() != id() || that->m_trackIndex != m_trackIndex
+        || that->m_enabled != m_enabled)
+        return false;
     m_newValue = that->m_newValue;
     return true;
 }
