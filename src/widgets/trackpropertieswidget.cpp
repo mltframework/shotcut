@@ -31,8 +31,9 @@
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 static const char *BLEND_PROPERTY_QTBLEND = "compositing";
+static const char *MIX_PROPERTY_DUCK_ENABLED = kShotcutDuckEnabledProperty;
 static const char *MIX_PROPERTY_DUCK_THRESHOLD = "duck_threshold";
-static const char *MIX_PROPERTY_DUCK_THRESHOLD_SHADOW = "duck_threshold_shadow";
+static const char *MIX_PROPERTY_DUCK_THRESHOLD_SHADOW = kShotcutDuckThresholdProperty;
 static const char *MIX_PROPERTY_DUCK_ATTENUATION = "duck_attenuation";
 static const char *MIX_PROPERTY_DUCK_FADE_IN = "duck_fade_in";
 static const char *MIX_PROPERTY_DUCK_FADE_OUT = "duck_fade_out";
@@ -60,10 +61,15 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
         if (mixTransition && mixTransition->is_valid()) {
             double shadowValue = DUCK_THRESHOLD_DEFAULT;
             const double realThreshold = mixTransition->get_double(MIX_PROPERTY_DUCK_THRESHOLD);
+            const bool enabled = mixTransition->property_exists(MIX_PROPERTY_DUCK_ENABLED)
+                                     ? mixTransition->get_int(MIX_PROPERTY_DUCK_ENABLED) != 0
+                                     : !qFuzzyIsNull(realThreshold);
             if (mixTransition->property_exists(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW))
                 shadowValue = mixTransition->get_double(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW);
-            else if (!qFuzzyIsNull(realThreshold))
+            else if (!qFuzzyIsNull(realThreshold) || enabled)
                 shadowValue = realThreshold;
+            mixTransition->set(MIX_PROPERTY_DUCK_THRESHOLD_SHADOW, shadowValue);
+            mixTransition->set(MIX_PROPERTY_DUCK_ENABLED, enabled ? 1 : 0);
             onDuckThresholdShadowChanged(shadowValue);
             onDuckThresholdChanged(realThreshold);
             onDuckAttenuationChanged(mixTransition->get_double(MIX_PROPERTY_DUCK_ATTENUATION));
@@ -316,16 +322,15 @@ void TrackPropertiesWidget::on_duckEnabledCheckBox_toggled(bool checked)
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
         auto command
-            = new Timeline::ChangeTransitionPropertyCommand(transition->get_b_track(),
-                                                            MIX_PROPERTY_DUCK_THRESHOLD,
-                                                            checked
-                                                                ? ui->duckThresholdSpinBox->value()
-                                                                : 0.0,
-                                                            checked
-                                                                ? tr("Enable Track Audio Ducking")
-                                                                : tr("Disable Track Audio Ducking"),
-                                                            false);
+            = new Timeline::ChangeDuckThresholdCommand(transition->get_b_track(),
+                                                       ui->duckThresholdSpinBox->value(),
+                                                       checked,
+                                                       checked ? tr("Enable Track Audio Ducking")
+                                                               : tr("Disable Track Audio Ducking"),
+                                                       true,
+                                                       nullptr);
         connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdChanged(double)));
+        connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdShadowChanged(double)));
         MAIN.undoStack()->push(command);
     }
 }
@@ -334,10 +339,11 @@ void TrackPropertiesWidget::on_duckThresholdSpinBox_valueChanged(double value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
-        auto command
-            = new Timeline::ChangeDuckThresholdCommand(transition->get_b_track(),
-                                                       value,
-                                                       ui->duckEnabledCheckBox->isChecked());
+        auto command = new Timeline::ChangeDuckThresholdCommand(transition->get_b_track(),
+                                                                value,
+                                                                ui->duckEnabledCheckBox->isChecked(),
+                                                                QString(),
+                                                                false);
         connect(command, SIGNAL(valueChanged(double)), SLOT(onDuckThresholdShadowChanged(double)));
         MAIN.undoStack()->push(command);
     }
@@ -387,7 +393,11 @@ void TrackPropertiesWidget::on_duckFadeOutSpinBox_valueChanged(double value)
 
 void TrackPropertiesWidget::onDuckThresholdChanged(double value)
 {
-    const bool enabled = !qFuzzyIsNull(value);
+    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+    bool enabled = !qFuzzyIsNull(value);
+    if (transition && transition->is_valid()
+        && transition->property_exists(MIX_PROPERTY_DUCK_ENABLED))
+        enabled = transition->get_int(MIX_PROPERTY_DUCK_ENABLED) != 0;
     ui->duckEnabledCheckBox->blockSignals(true);
     ui->duckEnabledCheckBox->setChecked(enabled);
     ui->duckEnabledCheckBox->blockSignals(false);
