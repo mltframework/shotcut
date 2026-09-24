@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,13 @@ QString ExtensionModel::url(int row) const
     if (!m_ext)
         return QString();
     return m_ext->file(row)->url();
+}
+
+QString ExtensionModel::sha256(int row) const
+{
+    if (!m_ext)
+        return QString();
+    return m_ext->file(row)->sha256();
 }
 
 bool ExtensionModel::downloaded(int row) const

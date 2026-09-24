@@ -25,6 +25,7 @@
 #include <QPair>
 #include <QPalette>
 #include <QString>
+#include <QStringView>
 #include <QUrl>
 
 class QWidget;
@@ -111,6 +112,7 @@ public:
     static bool isChromiumAvailable();
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool openUrl(const QUrl &url);
+    static bool isHttpsOnHost(const QString &urlString, QStringView host);
     static bool cpuHasAVX2();
     static int msToPosition(int64_t ms);
     static bool isPostUserFilter(Mlt::Filter *filter);

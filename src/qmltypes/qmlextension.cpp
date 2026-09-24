@@ -22,6 +22,7 @@
 #include "settings.h"
 
 #include <QDir>
+#include <QFileInfo>
 #include <QQmlComponent>
 
 const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
@@ -54,8 +55,13 @@ const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
 */
 
 /*!
+    \qmlproperty string QmlExtensionFile::sha256
+    \brief The expected SHA-256 hex digest of the downloaded file.
+*/
+
+/*!
     \qmlproperty string QmlExtensionFile::size
-    \brief The human-readable size of the download (e.g. \c "120 MB").
+    \brief The size of the download in bytes, as a decimal string.
 */
 
 /*!
@@ -70,10 +76,8 @@ QmlExtensionFile::QmlExtensionFile(QObject *parent)
 
 QmlExtension *QmlExtension::load(const QString &id)
 {
-    QString filePath = appDir(id).absoluteFilePath(extensionFileName(id));
-    if (!QFile::exists(filePath)) {
-        filePath = installDir(id).absoluteFilePath(extensionFileName(id));
-    }
+    // Only the copy shipped with Shotcut. A descriptor under app data is not loaded.
+    QString filePath = installDir(id).absoluteFilePath(extensionFileName(id));
     if (!QFile::exists(filePath)) {
         LOG_ERROR() << filePath << "does not exist";
         return nullptr;
@@ -114,9 +118,10 @@ QDir QmlExtension::appDir(const QString &id)
     \inqmlmodule org.shotcut.qml
     \brief Represents a loadable Shotcut extension (e.g. the Whisper speech-to-text package).
 
-    Extensions are installed or downloaded as a bundle of files described by
-    \l{QmlExtensionFile} entries. Access the current extension object through the
-    \c extension context property in extension-related QML views.
+    The descriptor is loaded from the installation directory. Files described by
+    \l{QmlExtensionFile} entries are downloaded into the application data directory.
+    Access the current extension object through the \c extension context property
+    in extension-related QML views.
 
     \code
     Text { text: extension.name + " v" + extension.version }
@@ -172,8 +177,14 @@ QString QmlExtension::localPath(int index)
         LOG_ERROR() << "Invalid Index" << index;
         return QString();
     }
+    const QString name = m_files[index]->file();
+    if (name.isEmpty() || name == QLatin1String(".") || name == QLatin1String("..")
+        || QFileInfo(name).fileName() != name) {
+        LOG_ERROR() << "Invalid file name" << name;
+        return QString();
+    }
     QDir localPath = appDir(m_id);
-    return localPath.absoluteFilePath(m_files[index]->file());
+    return localPath.absoluteFilePath(name);
 }
 
 bool QmlExtension::downloaded(int index)

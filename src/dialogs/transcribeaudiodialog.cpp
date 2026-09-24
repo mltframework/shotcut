@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,6 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTreeView>
-
-static const QString WHISPER_MODEL_EXTENSION_URL = QStringLiteral(
-    "https://check.shotcut.org/whispermodel.qml");
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {
@@ -242,14 +239,6 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     });
     configLayout->addWidget(modelBrowseButton, 2, 2, Qt::AlignLeft);
 
-    // Update Model button
-    QPushButton *updateModelsButton = new QPushButton(tr("Refresh Models"), this);
-    connect(updateModelsButton,
-            &QAbstractButton::clicked,
-            this,
-            &TranscribeAudioDialog::refreshModels);
-    configLayout->addWidget(updateModelsButton, 3, 1, Qt::AlignLeft);
-
     // List of models
     m_table = new QTreeView();
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -277,7 +266,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
             this,
             &TranscribeAudioDialog::showModelContextMenu);
 
-    configLayout->addWidget(m_table, 4, 0, 1, 3);
+    configLayout->addWidget(m_table, 3, 0, 1, 3);
 
     grid->addWidget(m_configWidget, 7, 0, 1, 2);
 
@@ -408,7 +397,6 @@ void TranscribeAudioDialog::showEvent(QShowEvent *event)
     qDialog.setWindowModality(QmlApplication::dialogModality());
     int result = qDialog.exec();
     if (result == QMessageBox::Yes) {
-        refreshModels(false);
         int index = m_model.getStandardIndex();
         downloadModel(index);
         setCurrentModel(index);
@@ -416,39 +404,13 @@ void TranscribeAudioDialog::showEvent(QShowEvent *event)
     }
 }
 
-void TranscribeAudioDialog::refreshModels(bool report)
-{
-    QString localDst = QmlExtension::appDir(QmlExtension::WHISPER_ID)
-                           .absoluteFilePath(QmlExtension::extensionFileName("whisper"));
-    FileDownloadDialog dlDialog(tr("Refresh Models"), this);
-    dlDialog.setSrc(WHISPER_MODEL_EXTENSION_URL);
-    dlDialog.setDst(localDst);
-    if (dlDialog.start() && report) {
-        m_model.load(QmlExtension::WHISPER_ID);
-        QMessageBox qDialog(QMessageBox::Information,
-                            tr("Refresh Models"),
-                            tr("Models refreshed"),
-                            QMessageBox::Ok,
-                            this);
-        qDialog.setWindowModality(QmlApplication::dialogModality());
-        qDialog.exec();
-    } else if (report) {
-        QMessageBox qDialog(QMessageBox::Critical,
-                            tr("Refresh Models"),
-                            tr("Failed to refresh models"),
-                            QMessageBox::Ok,
-                            this);
-        qDialog.setWindowModality(QmlApplication::dialogModality());
-        qDialog.exec();
-    }
-}
-
 void TranscribeAudioDialog::downloadModel(int index)
 {
     FileDownloadDialog dlDialog(tr("Download Model"), this);
-    dlDialog.setSrc(m_model.url(index));
-    dlDialog.setDst(m_model.localPath(index));
-    dlDialog.start();
+    dlDialog.start(m_model.url(index),
+                   m_model.localPath(index),
+                   m_model.sha256(index),
+                   QStringLiteral("huggingface.co"));
 }
 
 void TranscribeAudioDialog::setCurrentModel(int index)

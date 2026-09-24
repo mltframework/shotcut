@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ public:
     QString getFormattedDataSize(int row) const;
     QString localPath(int row) const;
     QString url(int row) const;
+    QString sha256(int row) const;
     bool downloaded(int row) const;
     void deleteFile(int row);
     int getStandardIndex() const;

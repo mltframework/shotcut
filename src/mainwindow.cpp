@@ -145,6 +145,15 @@ static QRegularExpression kBackupFileRegex("^(.+) "
                                            "([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2["
                                            "0-3]|[01][0-9])-([0-5][0-9])-([0-5][0-9]).mlt$");
 
+static QNetworkRequest versionCheckRequest()
+{
+    QNetworkRequest request{QUrl(QStringLiteral("https://check.shotcut.org/version.json"))};
+    // Keep an HTTPS response from being followed onto cleartext HTTP.
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+                         QNetworkRequest::NoLessSafeRedirectPolicy);
+    return request;
+}
+
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
@@ -4545,7 +4554,7 @@ void MainWindow::showUpgradePrompt()
 {
     if (Settings.checkUpgradeAutomatic()) {
         showStatusMessage("Checking for upgrade...");
-        m_network.get(QNetworkRequest(QUrl("https://check.shotcut.org/version.json")));
+        m_network.get(versionCheckRequest());
     } else {
         QAction *action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
         connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
@@ -5419,7 +5428,7 @@ void MainWindow::on_actionUpgrade_triggered()
             Settings.setAskUpgradeAutomatic(false);
     }
     showStatusMessage("Checking for upgrade...");
-    m_network.get(QNetworkRequest(QUrl("https://check.shotcut.org/version.json")));
+    m_network.get(versionCheckRequest());
 }
 
 void MainWindow::on_actionOpenXML_triggered()
@@ -5607,8 +5616,11 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
                 QAction *action = new QAction(
                     tr("Shotcut version %1 is available! Click here to get it.").arg(latest), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
-                if (!json.object().value("url").isUndefined())
-                    m_upgradeUrl = json.object().value("url").toString();
+                if (!json.object().value("url").isUndefined()) {
+                    const QString candidate = json.object().value("url").toString();
+                    if (Util::isHttpsOnHost(candidate, QStringLiteral("shotcut.org")))
+                        m_upgradeUrl = candidate;
+                }
                 showStatusMessage(action, 15 /* seconds */);
             } else {
                 showStatusMessage(tr("You are running the latest version of Shotcut."));
@@ -5620,9 +5632,6 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
         }
     } else {
         LOG_WARNING() << reply->errorString();
-        if (reply->error() == QNetworkReply::UnknownNetworkError) {
-            m_network.get(QNetworkRequest(QUrl("http://check.shotcut.org/version.json")));
-        }
     }
     QAction *action = new QAction(
         tr("Failed to read version.json when checking. Click here to go to the Web site."), 0);

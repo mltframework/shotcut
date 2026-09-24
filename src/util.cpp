@@ -1306,6 +1306,18 @@ bool Util::startDetached(const QString &program, const QStringList &arguments)
     return process.startDetached();
 }
 
+bool Util::isHttpsOnHost(const QString &urlString, QStringView host)
+{
+    const QUrl url(urlString, QUrl::StrictMode);
+    if (!url.isValid() || url.scheme() != QLatin1String("https") || !url.userInfo().isEmpty()
+        || host.isEmpty()) {
+        return false;
+    }
+    const QString actual = url.host(QUrl::FullyDecoded).toLower();
+    const QString expected = host.toString().toLower();
+    return actual == expected || actual.endsWith(QLatin1Char('.') + expected);
+}
+
 bool Util::openUrl(const QUrl &url)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)

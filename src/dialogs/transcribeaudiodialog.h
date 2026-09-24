@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,6 @@ private slots:
     void onModelRowClicked(const QModelIndex &index);
 
 private:
-    void refreshModels(bool report = true);
     void downloadModel(int index);
     void setCurrentModel(int index);
     void updateWhisperStatus();

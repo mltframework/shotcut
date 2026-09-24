@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,31 @@
 
 #include "Logger.h"
 #include "mainwindow.h"
-#include "qmltypes/qmlapplication.h"
+#include "util.h"
 
+#include <QCryptographicHash>
+#include <QFile>
 #include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QUrl>
 
 static const int PROGRESS_MAX = 1000;
+
+static bool isSha256Hex(const QString &digest)
+{
+    if (digest.size() != 64)
+        return false;
+    for (const QChar &c : digest) {
+        const char16_t u = c.unicode();
+        const bool hex = (u >= u'0' && u <= u'9') || (u >= u'a' && u <= u'f')
+                         || (u >= u'A' && u <= u'F');
+        if (!hex)
+            return false;
+    }
+    return true;
+}
 
 FileDownloadDialog::FileDownloadDialog(const QString &title, QWidget *parent)
     : QProgressDialog(title, tr("Cancel"), 0, PROGRESS_MAX, parent ? parent : &MAIN)
@@ -37,106 +54,89 @@ FileDownloadDialog::FileDownloadDialog(const QString &title, QWidget *parent)
     setMinimumDuration(0);
 }
 
-FileDownloadDialog::~FileDownloadDialog() {}
-
-void FileDownloadDialog::setSrc(const QString &src)
+bool FileDownloadDialog::start(const QString &url,
+                               const QString &destination,
+                               const QString &sha256,
+                               QStringView host)
 {
-    m_src = src;
-}
-
-void FileDownloadDialog::setDst(const QString &dst)
-{
-    m_dst = dst;
-}
-
-bool FileDownloadDialog::start()
-{
-    LOG_INFO() << "Download Source" << m_src;
-    LOG_INFO() << "Download Destination" << m_dst;
-    bool retVal = false;
-    QString tmpPath = m_dst + ".tmp";
-    m_file = new QFile(tmpPath, this);
-    if (!m_file || !m_file->open(QIODevice::WriteOnly)) {
-        LOG_ERROR() << "Unable to open file to write";
-        delete m_file;
-        return retVal;
+    LOG_INFO() << "Download Source" << url;
+    LOG_INFO() << "Download Destination" << destination;
+    if (destination.isEmpty() || !isSha256Hex(sha256) || !Util::isHttpsOnHost(url, host)) {
+        LOG_ERROR() << "Refusing download";
+        QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        return false;
     }
 
-    QNetworkAccessManager manager(this);
-    QUrl url = m_src;
-    QNetworkRequest request(url);
-    request.setTransferTimeout(6000);
-    m_reply = manager.get(request);
+    QFile file(destination + QStringLiteral(".tmp"));
+    if (!file.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Unable to open file to write";
+        QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        return false;
+    }
 
-    QObject::connect(m_reply,
+    QCryptographicHash hasher(QCryptographicHash::Sha256);
+    bool writeFailed = false;
+    QNetworkAccessManager manager(this);
+    QNetworkRequest request{QUrl(url, QUrl::StrictMode)};
+    request.setTransferTimeout(6000);
+    // HTTPS redirects stay on HTTPS. Hugging Face resolve URLs redirect to a CDN.
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+                         QNetworkRequest::NoLessSafeRedirectPolicy);
+    QNetworkReply *reply = manager.get(request);
+
+    QObject::connect(reply,
                      &QNetworkReply::downloadProgress,
                      this,
-                     &FileDownloadDialog::onDownloadProgress);
-    QObject::connect(m_reply, &QNetworkReply::readyRead, this, &FileDownloadDialog::onReadyRead);
-    QObject::connect(m_reply, &QNetworkReply::finished, this, &FileDownloadDialog::onFinished);
-    QObject::connect(m_reply, &QNetworkReply::sslErrors, this, &FileDownloadDialog::sslErrors);
+                     [this](qint64 bytesReceived, qint64 bytesTotal) {
+                         if (bytesTotal > 0) {
+                             int progress = bytesReceived * PROGRESS_MAX / bytesTotal;
+                             LOG_INFO() << "Download Progress" << progress / 10;
+                             setValue(progress);
+                         }
+                     });
+    QObject::connect(reply, &QNetworkReply::readyRead, this, [&]() {
+        if (writeFailed)
+            return;
+        const QByteArray data = reply->readAll();
+        if (file.write(data) != data.size()) {
+            LOG_ERROR() << "Short write";
+            writeFailed = true;
+            reply->abort();
+            return;
+        }
+        hasher.addData(data);
+    });
+    QObject::connect(reply, &QNetworkReply::finished, this, &QDialog::accept);
 
-    int result = exec();
+    const int result = exec();
     if (result != QDialog::Accepted) {
         LOG_WARNING() << "Download canceled";
-        m_file->remove();
-    } else if (m_reply->error() != QNetworkReply::NoError) {
-        LOG_ERROR() << m_reply->errorString();
-        if (m_reply->error() == QNetworkReply::UnknownNetworkError && m_src.startsWith("https:")) {
-            m_src.replace("https://", "http://");
-            return start();
-        }
-        if (m_reply->error() != QNetworkReply::NoError) {
-            m_file->remove();
-            QMessageBox::information(this, windowTitle(), tr("Download Failed"));
-        }
-    } else {
-        // Notify success
-        m_file->rename(m_dst);
-        retVal = true;
+        file.remove();
+        return false;
     }
-    delete m_reply;
-    delete m_file;
-    return retVal;
-}
-
-void FileDownloadDialog::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
-{
-    if (bytesTotal > 0) {
-        int progress = bytesReceived * PROGRESS_MAX / bytesTotal;
-        LOG_INFO() << "Download Progress" << progress / 10;
-        setValue(progress);
+    if (reply->error() != QNetworkReply::NoError) {
+        LOG_ERROR() << reply->errorString();
+        file.remove();
+        QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        return false;
     }
-}
 
-void FileDownloadDialog::onReadyRead()
-{
-    m_file->write(m_reply->readAll());
-}
-
-void FileDownloadDialog::onFinished()
-{
-    accept();
-}
-
-void FileDownloadDialog::sslErrors(const QList<QSslError> &errors)
-{
-    LOG_ERROR() << "SSL Errors" << errors;
-    QString message = tr("The following SSL errors were encountered:");
-    foreach (const QSslError &error, errors) {
-        message = QStringLiteral("\n") + error.errorString();
+    file.flush();
+    file.close();
+    const QString actual = QString::fromLatin1(hasher.result().toHex());
+    if (actual.compare(sha256, Qt::CaseInsensitive) != 0) {
+        LOG_ERROR() << "SHA-256 verification failed";
+        file.remove();
+        QMessageBox::information(this,
+                                 windowTitle(),
+                                 tr("The downloaded file failed verification."));
+        return false;
     }
-    message += tr("Attempt to ignore SSL errors?");
-    QMessageBox qDialog(QMessageBox::Question,
-                        windowTitle(),
-                        message,
-                        QMessageBox::No | QMessageBox::Yes,
-                        this);
-    qDialog.setDefaultButton(QMessageBox::Yes);
-    qDialog.setEscapeButton(QMessageBox::No);
-    qDialog.setWindowModality(QmlApplication::dialogModality());
-    int result = qDialog.exec();
-    if (result == QMessageBox::Yes) {
-        m_reply->ignoreSslErrors();
+    if (!file.rename(destination)) {
+        LOG_ERROR() << "Unable to rename download";
+        file.remove();
+        QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        return false;
     }
+    return true;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,31 +19,16 @@
 #define FILEDOWNLOADDIALOG_H
 
 #include <QProgressDialog>
-#include <QSslError>
-
-class QFile;
-class QNetworkReply;
+#include <QStringView>
 
 class FileDownloadDialog : public QProgressDialog
 {
 public:
     explicit FileDownloadDialog(const QString &title, QWidget *parent = nullptr);
-    ~FileDownloadDialog();
-    void setSrc(const QString &src);
-    void setDst(const QString &dst);
-    bool start();
-private slots:
-    void onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-    void onReadyRead();
-    void onFinished();
-    void sslErrors(const QList<QSslError> &errors);
-
-private:
-    QString m_src;
-    QString m_dst;
-    QFile *m_file;
-    QNetworkReply *m_reply;
-    int m_replyCode;
+    bool start(const QString &url,
+               const QString &destination,
+               const QString &sha256,
+               QStringView host);
 };
 
 #endif // FILEDOWNLOADDIALOG_H

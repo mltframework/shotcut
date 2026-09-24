@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Meltytech, LLC
+ * Copyright (c) 2025-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ class QmlExtensionFile : public QObject
     Q_PROPERTY(QString description MEMBER m_description NOTIFY changed)
     Q_PROPERTY(QString file MEMBER m_file NOTIFY changed)
     Q_PROPERTY(QString url MEMBER m_url NOTIFY changed)
+    Q_PROPERTY(QString sha256 MEMBER m_sha256 NOTIFY changed)
     Q_PROPERTY(QString size MEMBER m_size NOTIFY changed)
     Q_PROPERTY(bool standard MEMBER m_standard NOTIFY changed)
 
@@ -40,6 +41,7 @@ public:
     QString description() const { return m_description; }
     QString file() const { return m_file; }
     QString url() const { return m_url; }
+    QString sha256() const { return m_sha256; }
     QString size() const { return m_size; }
     bool standard() const { return m_standard; }
 
@@ -51,6 +53,7 @@ private:
     QString m_description;
     QString m_file;
     QString m_url;
+    QString m_sha256;
     QString m_size;
     bool m_standard;
 };
