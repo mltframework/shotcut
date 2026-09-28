@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Meltytech, LLC
+ * Copyright (c) 2023-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "fontdialog.h"
 
 #include <QFontDialog>
+#include <QOperatingSystemVersion>
 
 FontDialog::FontDialog(QObject *parent)
     : QObject{parent}
@@ -27,7 +28,13 @@ void FontDialog::open()
 {
     QFontDialog dialog(m_font);
     dialog.setModal(true);
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_MAC)
+    // macOS 27's font panel has no OK or Cancel button.
+    if (QOperatingSystemVersion::current()
+        >= QOperatingSystemVersion(QOperatingSystemVersion::MacOS, 27)) {
+        dialog.setOption(QFontDialog::DontUseNativeDialog);
+    }
+#elif defined(Q_OS_UNIX)
     dialog.setOption(QFontDialog::DontUseNativeDialog);
 #endif
     if (dialog.exec() == QDialog::Accepted) {
