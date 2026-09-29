@@ -142,7 +142,7 @@ Shotcut.KeyframableFilter {
             filter.set('smoothing_value', 5);
             filter.set('videofile_timezone_seconds', 0);
             filter.set('speed_multiplier', 1);
-            filter.set('updates_per_second', 1);
+            filter.set('updates_per_second', -1);
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
         } else {
             if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
@@ -646,10 +646,10 @@ Shotcut.KeyframableFilter {
 
                 value: 1
                 horizontalAlignment: Qt.AlignRight
-                Layout.minimumWidth: 80
+                Layout.minimumWidth: 100
                 from: 0
-                to: 1000
-                decimals: 2
+                to: 10000
+                decimals: 3
                 stepSize: 1
                 suffix: 'x'
                 onValueChanged: {
@@ -911,7 +911,7 @@ Shotcut.KeyframableFilter {
             TextField {
                 id: updates_per_second
 
-                text: '1'
+                text: '-1'
                 horizontalAlignment: TextInput.AlignRight
                 implicitWidth: 25
                 onFocusChanged: {
@@ -925,7 +925,7 @@ Shotcut.KeyframableFilter {
                 }
 
                 validator: DoubleValidator {
-                    bottom: 0
+                    bottom: -1
                     top: 1000
                 }
             }
@@ -936,8 +936,8 @@ Shotcut.KeyframableFilter {
 
             Shotcut.UndoButton {
                 onClicked: {
-                    filter.set('updates_per_second', 1);
-                    updates_per_second.text = '1';
+                    filter.set('updates_per_second', -1);
+                    updates_per_second.text = '-1';
                 }
             }
         }
