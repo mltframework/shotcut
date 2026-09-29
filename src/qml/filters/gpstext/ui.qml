@@ -142,7 +142,10 @@ Shotcut.KeyframableFilter {
             filter.set('smoothing_value', 5);
             filter.set('videofile_timezone_seconds', 0);
             filter.set('speed_multiplier', 1);
-            filter.set('updates_per_second', -1);
+            if (isAtLeastVersion(9))
+            	filter.set('updates_per_second', -1);
+            else 
+                filter.set('updates_per_second', 1);
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
         } else {
             if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
@@ -903,7 +906,9 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).')
+                property var string_v0: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).')
+                property var string_v9: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).\nSet to -1 to update every frame.')
+                text: (filter.isAtLeastVersion(9) ? string_v9 : string_v0)
             }
         }
 
@@ -911,7 +916,7 @@ Shotcut.KeyframableFilter {
             TextField {
                 id: updates_per_second
 
-                text: '-1'
+                text: (filter.isAtLeastVersion(9) ? '-1' : '1')
                 horizontalAlignment: TextInput.AlignRight
                 implicitWidth: 25
                 onFocusChanged: {
@@ -925,7 +930,7 @@ Shotcut.KeyframableFilter {
                 }
 
                 validator: DoubleValidator {
-                    bottom: -1
+                    bottom: (filter.isAtLeastVersion(9) ? -1 : 0)
                     top: 1000
                 }
             }
@@ -936,8 +941,8 @@ Shotcut.KeyframableFilter {
 
             Shotcut.UndoButton {
                 onClicked: {
-                    filter.set('updates_per_second', -1);
-                    updates_per_second.text = '-1';
+                    filter.set('updates_per_second', (filter.isAtLeastVersion(9) ? -1 : 1));
+                    updates_per_second.text = (filter.isAtLeastVersion(9) ? '-1' : '1');
                 }
             }
         }
