@@ -1030,6 +1030,9 @@ with parallel processing enabled.</string>
                   <property name="value">
                    <number>100</number>
                   </property>
+                  <property name="stepType">
+                   <enum>QAbstractSpinBox::StepType::AdaptiveDecimalStepType</enum>
+                  </property>
                  </widget>
                 </item>
                 <item>
