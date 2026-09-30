@@ -68,17 +68,22 @@ static int firstUserFilterIndex(Mlt::Producer *producer)
     return 0;
 }
 
-static int userFilterCount(Mlt::Producer *producer)
+static int userFilterMltIndex(Mlt::Producer *producer, int userRow)
 {
-    int count = 0;
-    if (producer && producer->is_valid()) {
-        for (int i = 0; i < producer->filter_count(); i++) {
-            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
-            if (Util::isUserFilter(filter.data()))
-                count++;
+    // Hidden filters (for example the track audio-level meter) are not user
+    // filters and may sit between them. Model rows follow user filters only.
+    if (userRow < 0 || !producer || !producer->is_valid())
+        return -1;
+    int seen = 0;
+    for (int i = 0; i < producer->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+        if (Util::isUserFilter(filter.data())) {
+            if (seen == userRow)
+                return i;
+            ++seen;
         }
     }
-    return count;
+    return -1;
 }
 
 static bool isTrackVolumeFilterService(Mlt::Filter *filter)
@@ -128,12 +133,7 @@ static int mltFilterIndex(Mlt::Producer *producer, int row)
                 return -1;
             }
         }
-        int userRow = row - linkCount;
-        int mltIndex = firstUserFilterIndex(producer) + userRow;
-        if (userRow >= 0 && userRow < userFilterCount(producer) && mltIndex >= 0
-            && mltIndex < producer->filter_count()) {
-            return mltIndex;
-        }
+        return userFilterMltIndex(producer, row - linkCount);
     }
     return -1;
 }
