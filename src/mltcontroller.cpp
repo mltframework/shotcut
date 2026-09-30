@@ -1182,21 +1182,38 @@ static int indexOfFirstNonGpu(Producer &toProducer)
     return -1;
 }
 
+static int firstPostUserFilterIndex(Producer &producer)
+{
+    for (int i = 0; i < producer.filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer.filter(i));
+        if (Util::isPostUserFilter(filter.data()))
+            return i;
+    }
+    return producer.filter_count();
+}
+
 static void moveTrackVolumeFilterToEnd(Producer &producer)
 {
     int trackVolumeIndex = -1;
-    int firstPostUserFilterIndex = producer.filter_count();
     for (int i = 0; i < producer.filter_count(); i++) {
         QScopedPointer<Mlt::Filter> filter(producer.filter(i));
-        if (filter && filter->get(kShotcutTrackVolumeProperty))
+        if (filter && filter->get(kShotcutTrackVolumeProperty)) {
             trackVolumeIndex = i;
-        else if (Util::isPostUserFilter(filter.data())) {
-            firstPostUserFilterIndex = i;
             break;
         }
     }
-    if (trackVolumeIndex >= 0 && trackVolumeIndex != firstPostUserFilterIndex - 1)
-        producer.move_filter(trackVolumeIndex, firstPostUserFilterIndex);
+    if (trackVolumeIndex < 0)
+        return;
+
+    // Keep track volume immediately before hidden post filters such as the
+    // audio-level meter. Moving onto the post-filter index puts volume after it
+    // when volume currently sits before that meter.
+    const int firstPost = firstPostUserFilterIndex(producer);
+    int target = (trackVolumeIndex < firstPost) ? firstPost - 1 : firstPost;
+    if (target < 0)
+        target = 0;
+    if (trackVolumeIndex != target)
+        producer.move_filter(trackVolumeIndex, target);
 }
 
 void Controller::copyFilters(Producer &fromProducer,
@@ -1210,8 +1227,7 @@ void Controller::copyFilters(Producer &fromProducer,
                                                    : fromProducer.get_out();
     int count = fromProducer.filter_count();
     int filterCount = 0;
-
-    // Get the index of the first non-GPU filter or link in toProducer
+    // Destination index for pasted GPU filters, taken before any of them attach.
     int firstNonGpuService = fromClipboard ? indexOfFirstNonGpu(toProducer) : -1;
 
     for (int i = 0; i < count; i++) {
@@ -1252,10 +1268,25 @@ void Controller::copyFilters(Producer &fromProducer,
                 // Force any 2-pass filters to require re-analysis
                 toFilter.clear("results");
                 toProducer.attach(toFilter);
-                if (firstNonGpuService >= 0 && metadata->needsGPU())
-                    toProducer.move_filter(toProducer.filter_count(), firstNonGpuService++);
 
-                if (!fromClipboard) {
+                if (fromClipboard) {
+                    // Retarget while this filter is still last. adjustFilters only
+                    // walks a suffix, and the moves below take it off the end.
+                    adjustFilters(toProducer, toProducer.filter_count() - 1);
+                    int newIndex = toProducer.filter_count() - 1;
+                    if (firstNonGpuService >= 0 && metadata && metadata->needsGPU()) {
+                        toProducer.move_filter(newIndex, firstNonGpuService);
+                        newIndex = firstNonGpuService++;
+                    }
+                    // Keep pasted filters ahead of hidden post filters (track audio
+                    // level) so the filters panel does not bind the new row to one.
+                    const int postIndex = firstPostUserFilterIndex(toProducer);
+                    if (newIndex > postIndex) {
+                        toProducer.move_filter(newIndex, postIndex);
+                        if (firstNonGpuService >= postIndex && firstNonGpuService < newIndex)
+                            ++firstNonGpuService;
+                    }
+                } else {
                     toFilter.set(kFilterInProperty, fromFilter->get_in() - in);
                     if (fromFilter->get_out() != out) {
                         toFilter.set(kFilterOutProperty,
@@ -1313,13 +1344,11 @@ void Controller::pasteFilters(Mlt::Producer *producer, Producer *fromProducer)
                                     : (m_producer && m_producer->is_valid()) ? m_producer.data()
                                                                              : nullptr;
     if (targetProducer) {
-        int j = targetProducer->filter_count();
         if (fromProducer && fromProducer->is_valid()) {
             copyFilters(*fromProducer, *targetProducer, true, FILTER_INDEX_ALL);
         } else if (hasFiltersOnClipboard()) {
             copyFilters(*m_filtersClipboard, *targetProducer, true, FILTER_INDEX_ALL);
         }
-        adjustFilters(*targetProducer, j);
         moveTrackVolumeFilterToEnd(*targetProducer);
     }
 }
@@ -1342,7 +1371,7 @@ void Controller::adjustFilters(Producer &producer, int index)
                 // Convert legacy fadeIn filters.
                 filter->set(kShotcutAnimInProperty, filter->get_length());
             } else if (filterName.startsWith("fadeOut") && !filter->get(kShotcutAnimOutProperty)) {
-                // Convert legacy fadeIn filters.
+                // Convert legacy fadeOut filters.
                 filter->set(kShotcutAnimOutProperty, filter->get_length());
             }
             if (Util::isUserFilter(filter.data())) {
