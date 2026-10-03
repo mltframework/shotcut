@@ -2113,6 +2113,56 @@ int ShotcutSettings::notesZoom() const
     return settings.value("notes/zoom", 0).toInt();
 }
 
+QString ShotcutSettings::coproducerProvider() const
+{
+    return settings.value("coproducer/provider", "openai").toString();
+}
+
+void ShotcutSettings::setCoproducerProvider(const QString &provider)
+{
+    settings.setValue("coproducer/provider", provider);
+}
+
+QString ShotcutSettings::coproducerBaseUrl() const
+{
+    return settings.value("coproducer/baseUrl", "https://api.openai.com/v1").toString();
+}
+
+void ShotcutSettings::setCoproducerBaseUrl(const QString &url)
+{
+    settings.setValue("coproducer/baseUrl", url);
+}
+
+QString ShotcutSettings::coproducerModel() const
+{
+    return settings.value("coproducer/model", "").toString();
+}
+
+void ShotcutSettings::setCoproducerModel(const QString &model)
+{
+    settings.setValue("coproducer/model", model);
+}
+
+QString ShotcutSettings::coproducerModelPath() const
+{
+    return settings.value("coproducer/modelPath").toString();
+}
+
+void ShotcutSettings::setCoproducerModelPath(const QString &path)
+{
+    settings.setValue("coproducer/modelPath", path);
+}
+
+QString ShotcutSettings::coproducerApiKey() const
+{
+    return settings.value("coproducer/apiKey").toString();
+}
+
+void ShotcutSettings::setCoproducerApiKey(const QString &key)
+{
+    settings.setValue("coproducer/apiKey", key);
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {

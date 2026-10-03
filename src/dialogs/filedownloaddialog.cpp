@@ -52,6 +52,9 @@ FileDownloadDialog::FileDownloadDialog(const QString &title, QWidget *parent)
     setModal(true);
     setWindowModality(Qt::ApplicationModal);
     setMinimumDuration(0);
+    // QProgressDialog's initial sizeHint doesn't reliably account for the
+    // label/title text width, leaving both it and the OS title bar clipped.
+    setMinimumWidth(fontMetrics().horizontalAdvance(title) + 120);
 }
 
 bool FileDownloadDialog::start(const QString &url,
@@ -78,7 +81,8 @@ bool FileDownloadDialog::start(const QString &url,
     bool writeFailed = false;
     QNetworkAccessManager manager(this);
     QNetworkRequest request{QUrl(url, QUrl::StrictMode)};
-    request.setTransferTimeout(6000);
+    // Large files can stall briefly mid-transfer; give plenty of time to recover.
+    request.setTransferTimeout(60000);
     // HTTPS redirects stay on HTTPS. Hugging Face resolve URLs redirect to a CDN.
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
                          QNetworkRequest::NoLessSafeRedirectPolicy);

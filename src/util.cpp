@@ -1318,6 +1318,20 @@ bool Util::isHttpsOnHost(const QString &urlString, QStringView host)
     return actual == expected || actual.endsWith(QLatin1Char('.') + expected);
 }
 
+bool Util::isAllowedApiBaseUrl(const QString &urlString)
+{
+    const QUrl url(urlString, QUrl::StrictMode);
+    if (!url.isValid() || !url.userInfo().isEmpty())
+        return false;
+    const QString host = url.host(QUrl::FullyDecoded).toLower();
+    if (url.scheme() == QLatin1String("https"))
+        return !host.isEmpty();
+    if (url.scheme() == QLatin1String("http"))
+        return host == QLatin1String("localhost") || host == QLatin1String("127.0.0.1")
+               || host == QLatin1String("::1");
+    return false;
+}
+
 bool Util::openUrl(const QUrl &url)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)

@@ -113,6 +113,8 @@ public:
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool openUrl(const QUrl &url);
     static bool isHttpsOnHost(const QString &urlString, QStringView host);
+    // Requires https, except http is allowed for localhost/loopback (e.g. local API servers).
+    static bool isAllowedApiBaseUrl(const QString &urlString);
     static bool cpuHasAVX2();
     static int msToPosition(int64_t ms);
     static bool isPostUserFilter(Mlt::Filter *filter);
