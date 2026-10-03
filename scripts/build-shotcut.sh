@@ -109,6 +109,9 @@ OPENBLAS_HEAD=0
 OPENBLAS_REVISION="v0.3.34"
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.8.3"
+ENABLE_LLAMACPP=1
+LLAMACPP_HEAD=0
+LLAMACPP_REVISION="b11240"
 ENABLE_RNNOISE=1
 RNNOISE_HEAD=1
 RNNOISE_REVISION=
@@ -290,6 +293,9 @@ function to_key {
     ;;
     rnnoise)
       echo 31
+    ;;
+    llama.cpp)
+      echo 32
     ;;
     *)
       echo UNKNOWN
@@ -544,6 +550,9 @@ function set_globals {
     if test "$ENABLE_RNNOISE" = 1 ; then
         SUBDIRS="rnnoise $SUBDIRS"
     fi
+    if test "$ENABLE_LLAMACPP" = 1  && test "$LLAMACPP_HEAD" = 1 -o "$LLAMACPP_REVISION" != ""; then
+        SUBDIRS="llama.cpp $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -599,6 +608,7 @@ function set_globals {
   REPOLOCS[29]="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
   REPOLOCS[30]="https://github.com/ggerganov/whisper.cpp.git"
   REPOLOCS[31]="https://github.com/xiph/rnnoise.git"
+  REPOLOCS[32]="https://github.com/ggml-org/llama.cpp.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -631,6 +641,7 @@ function set_globals {
   REPOTYPES[29]="git"
   REPOTYPES[30]="git"
   REPOTYPES[31]="git"
+  REPOTYPES[32]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -738,6 +749,10 @@ function set_globals {
   REVISIONS[31]=""
   if test 0 = "$RNNOISE_HEAD" -a "$RNNOISE_REVISION" ; then
     REVISIONS[31]="$RNNOISE_REVISION"
+  fi
+  REVISIONS[32]=""
+  if test 0 = "$LLAMACPP_HEAD" -a "$LLAMACPP_REVISION" ; then
+    REVISIONS[32]="$LLAMACPP_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -948,6 +963,11 @@ function set_globals {
     CONFIG[7]="${CONFIG[7]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   else
     CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_MINIMAL_MEDIA_BACKEND=ON"
+  fi
+  if [ "$ENABLE_LLAMACPP" = "1" ]; then
+    CONFIG[7]="${CONFIG[7]} -D SHOTCUT_ENABLE_LLAMA_SERVER=ON"
+  else
+    CONFIG[7]="${CONFIG[7]} -D SHOTCUT_ENABLE_LLAMA_SERVER=OFF"
   fi
   CFLAGS_[7]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[7]="$ASAN_LDFLAGS $LDFLAGS"
@@ -1181,6 +1201,23 @@ function set_globals {
     BUILD[31]="make -j$MAKEJ"
   fi
   INSTALL[31]="make install"
+
+  #####
+  # llama.cpp - only the llama-server executable, used by Coproducer for local models.
+  # Static so its ggml does not overwrite the different ggml shared libs installed by whisper.cpp.
+  # Always Release+LTO, regardless of DEBUG_BUILD: it's a prebuilt tool, never debugged here.
+  CONFIG[32]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_BUILD_TYPE=Release -D CMAKE_INTERPROCEDURAL_OPTIMIZATION=ON -D BUILD_SHARED_LIBS=OFF -D GGML_NATIVE=OFF -D LLAMA_BUILD_COMMON=ON -D LLAMA_BUILD_TOOLS=ON -D LLAMA_BUILD_SERVER=ON -D LLAMA_BUILD_TESTS=OFF -D LLAMA_BUILD_EXAMPLES=OFF -D LLAMA_BUILD_APP=OFF -D LLAMA_BUILD_UI=OFF -D LLAMA_USE_PREBUILT_UI=OFF -D LLAMA_OPENSSL=OFF"
+  if test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[32]="${CONFIG[32]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+    CONFIG[32]="${CONFIG[32]} -D GGML_OPENMP=ON -D OpenMP_C_FLAGS=-I/opt/local/include/libomp -D OpenMP_CXX_FLAGS=-I/opt/local/include/libomp -D OpenMP_C_LIB_NAMES=libomp -D OpenMP_CXX_LIB_NAMES=libomp -D OpenMP_libomp_LIBRARY=omp"
+    LDFLAGS_[32]="$LDFLAGS -L /opt/local/lib/libomp"
+  else
+    CONFIG[32]="${CONFIG[32]} -D GGML_VULKAN=ON -D GGML_OPENMP=ON"
+    CFLAGS_[32]=$CFLAGS
+    LDFLAGS_[32]=$LDFLAGS
+  fi
+  BUILD[32]="ninja -C build -j $MAKEJ llama-server"
+  INSTALL[32]="install_llamacpp"
 }
 
 function build_ffmpeg_darwin {
@@ -1296,6 +1333,11 @@ function install_whispercpp {
   cmd ninja -C build install
   cmd mkdir -p $FINAL_INSTALL_DIR/bin
   cmd install -p -c build/bin/whisper-cli $FINAL_INSTALL_DIR/bin
+}
+
+function install_llamacpp {
+  cmd mkdir -p $FINAL_INSTALL_DIR/bin
+  cmd install -p -c build/bin/llama-server $FINAL_INSTALL_DIR/bin
 }
 
 function build_rnnoise_darwin {
@@ -1968,6 +2010,13 @@ function deploy_mac
   cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src/ggml-metal MacOS/whisper-cli 2> /dev/null
   cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/whisper-cli
 
+  # llama.cpp (statically linked to its own ggml, so no llama/ggml dylibs to copy)
+  if [ "$ENABLE_LLAMACPP" = "1" ]; then
+    cmd cp -a "$FINAL_INSTALL_DIR"/bin/llama-server MacOS
+    fixlibs MacOS/llama-server
+    cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/llama-server
+  fi
+
   # MLT plugins
   log Copying MLT plugins
   cmd mkdir -p PlugIns/mlt 2>/dev/null
@@ -2156,7 +2205,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe whisper-cli; do
+  for exe in melt ffmpeg ffplay ffprobe whisper-cli llama-server; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment
