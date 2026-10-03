@@ -142,7 +142,7 @@ Shotcut.KeyframableFilter {
             filter.set('smoothing_value', 5);
             filter.set('videofile_timezone_seconds', 0);
             filter.set('speed_multiplier', 1);
-            if (isAtLeastVersion(9))
+            if (filter.isAtLeastVersion(9))
             	filter.set('updates_per_second', -1);
             else 
                 filter.set('updates_per_second', 1);
