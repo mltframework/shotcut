@@ -1,5 +1,7 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
+option(SHOTCUT_ENABLE_LLAMA_SERVER "Enable the llama-server local model provider" OFF)
+
 add_executable(shotcut WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
@@ -11,6 +13,10 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   commands/timelinecommands.cpp commands/timelinecommands.h
   commands/undohelper.cpp commands/undohelper.h
   controllers/addonmetadataparser.cpp controllers/addonmetadataparser.h
+  coproducer/chatprovider.h
+  coproducer/forumsearch.cpp coproducer/forumsearch.h
+  coproducer/localllamaserverprovider.cpp coproducer/localllamaserverprovider.h
+  coproducer/openaicompatibleprovider.cpp coproducer/openaicompatibleprovider.h
   controllers/addonqmlgenerator.cpp controllers/addonqmlgenerator.h
   controllers/filtercontroller.cpp controllers/filtercontroller.h
   controllers/scopecontroller.cpp controllers/scopecontroller.h
@@ -23,6 +29,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/addonfiltersdialog.cpp dialogs/addonfiltersdialog.h
   dialogs/addonmetadatahelpdialog.cpp dialogs/addonmetadatahelpdialog.h
   dialogs/bitratedialog.h dialogs/bitratedialog.cpp
+  dialogs/coproducersettingsdialog.cpp dialogs/coproducersettingsdialog.h
   dialogs/customprofiledialog.cpp dialogs/customprofiledialog.h
   dialogs/customprofiledialog.ui
   dialogs/durationdialog.cpp dialogs/durationdialog.h
@@ -48,6 +55,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/transcribeaudiodialog.cpp dialogs/transcribeaudiodialog.h
   dialogs/unlinkedfilesdialog.cpp dialogs/unlinkedfilesdialog.h
   dialogs/unlinkedfilesdialog.ui
+  docks/coproducerdock.cpp docks/coproducerdock.h
   docks/elementsdock.cpp docks/elementsdock.h
   docks/encodedock.cpp docks/encodedock.h
   docks/encodedock.ui
@@ -316,6 +324,11 @@ target_link_libraries(shotcut
   Qt6::Widgets
   Qt6::Xml
 )
+
+if(SHOTCUT_ENABLE_LLAMA_SERVER)
+  target_compile_definitions(shotcut PRIVATE SHOTCUT_HAS_LLAMA_SERVER)
+endif()
+
 if(UNIX AND NOT APPLE)
   target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
   target_sources(shotcut PRIVATE linuxtools.cpp linuxtools.h)

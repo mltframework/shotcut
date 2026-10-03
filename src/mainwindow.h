@@ -55,6 +55,7 @@ class KeyframesDock;
 class MarkersDock;
 class NotesDock;
 class SubtitlesDock;
+class CoproducerDock;
 class ScreenCapture;
 class HdrPreviewWindow;
 
@@ -226,6 +227,7 @@ private:
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
     SubtitlesDock *m_subtitlesDock;
+    CoproducerDock *m_coproducerDock;
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
     ElementsDock *m_elementsDock;
@@ -281,6 +283,7 @@ private slots:
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
     void onSubtitlesDockTriggered(bool = true);
+    void onCoproducerDockTriggered(bool = true);
     void onFilesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();

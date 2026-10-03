@@ -35,6 +35,7 @@
 #include "dialogs/systemsyncdialog.h"
 #include "dialogs/textviewerdialog.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "docks/coproducerdock.h"
 #include "docks/elementsdock.h"
 #include "docks/encodedock.h"
 #include "docks/filesdock.h"
@@ -917,6 +918,16 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::onCreateOrEditFilterOnOutput);
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
+    m_coproducerDock = new CoproducerDock(this);
+    m_coproducerDock->hide();
+    m_coproducerDock->toggleViewAction()->setShortcut(
+        QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_7));
+    ui->menuView->addAction(m_coproducerDock->toggleViewAction());
+    connect(m_coproducerDock->toggleViewAction(),
+            SIGNAL(triggered(bool)),
+            this,
+            SLOT(onCoproducerDockTriggered(bool)));
+
     // Left area
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
@@ -935,6 +946,7 @@ void MainWindow::setupAndConnectDocks()
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     addDockWidget(Qt::RightDockWidgetArea, m_filesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_elementsDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_coproducerDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget *>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_filesDock);
@@ -3931,6 +3943,14 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
     if (checked) {
         m_subtitlesDock->show();
         m_subtitlesDock->raise();
+    }
+}
+
+void MainWindow::onCoproducerDockTriggered(bool checked)
+{
+    if (checked) {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
     }
 }
 
