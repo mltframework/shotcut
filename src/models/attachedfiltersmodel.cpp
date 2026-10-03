@@ -54,31 +54,50 @@ static int sortOrder(const QmlMetadata *meta)
     return 2;
 }
 
-static int firstUserFilterIndex(Mlt::Producer *producer)
+static int userFilterMltIndex(Mlt::Producer *producer, int userRow)
 {
-    if (producer && producer->is_valid()) {
-        for (int i = 0; i < producer->filter_count(); i++) {
-            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
-            bool preUser = Util::isPreUserFilter(filter.data());
-            if (!preUser)
+    // Hidden filters (for example the track audio-level meter) are not user
+    // filters and may sit between them. Model rows follow user filters only.
+    if (userRow < 0 || !producer || !producer->is_valid())
+        return -1;
+    int seen = 0;
+    for (int i = 0; i < producer->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+        if (Util::isUserFilter(filter.data())) {
+            if (seen == userRow)
                 return i;
+            ++seen;
         }
-        return producer->filter_count();
     }
-    return 0;
+    return -1;
 }
 
-static int userFilterCount(Mlt::Producer *producer)
+// Where a new filter for this user-row belongs. An existing row is that
+// filter's index. Appending goes after the last user filter, which is the
+// first hidden post filter when no user filter follows it.
+static int userFilterInsertIndex(Mlt::Producer *producer, int userRow)
 {
-    int count = 0;
-    if (producer && producer->is_valid()) {
-        for (int i = 0; i < producer->filter_count(); i++) {
-            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
-            if (Util::isUserFilter(filter.data()))
-                count++;
-        }
+    if (userRow < 0 || !producer || !producer->is_valid())
+        return -1;
+    int seen = 0;
+    int lastUser = -1;
+    for (int i = 0; i < producer->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+        if (!Util::isUserFilter(filter.data()))
+            continue;
+        if (seen == userRow)
+            return i;
+        lastUser = i;
+        ++seen;
     }
-    return count;
+    if (lastUser >= 0)
+        return lastUser + 1;
+    for (int i = 0; i < producer->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+        if (Util::isPostUserFilter(filter.data()))
+            return i;
+    }
+    return producer->filter_count();
 }
 
 static bool isTrackVolumeFilterService(Mlt::Filter *filter)
@@ -128,12 +147,7 @@ static int mltFilterIndex(Mlt::Producer *producer, int row)
                 return -1;
             }
         }
-        int userRow = row - linkCount;
-        int mltIndex = firstUserFilterIndex(producer) + userRow;
-        if (userRow >= 0 && userRow < userFilterCount(producer) && mltIndex >= 0
-            && mltIndex < producer->filter_count()) {
-            return mltIndex;
-        }
+        return userFilterMltIndex(producer, row - linkCount);
     }
     return -1;
 }
@@ -710,7 +724,7 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
         if (producer.type() == mlt_service_chain_type) {
             linkRows = userLinkCount(&producer);
         }
-        int mltIndex = firstUserFilterIndex(&producer) + row - linkRows;
+        int mltIndex = userFilterInsertIndex(&producer, row - linkRows);
         if (mltIndex < 0) {
             LOG_ERROR() << "Invalid MLT index" << row;
             return;
