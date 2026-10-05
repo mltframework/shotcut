@@ -1550,127 +1550,174 @@ Item {
             }
         }
 
-        Label {
-            text: qsTr('Position')
+        
+        //special row for size & poz so we center the buttons
+        ColumnLayout {
             Layout.alignment: Qt.AlignRight
-        }
-
-        RowLayout {
-            Shotcut.DoubleSpinBox {
-                id: rectX
-
-                value: filterRect.x
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
             Label {
-                text: ','
-                Layout.minimumWidth: 20
-                horizontalAlignment: Qt.AlignHCenter
+                text: qsTr('Position')
+                Layout.alignment: Qt.AlignRight
             }
-
-            Shotcut.DoubleSpinBox {
-                id: rectY
-
-                value: filterRect.y
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
-            Shotcut.UndoButton {
-                onClicked: {
-                    rectX.value = profile.width * 0.1;
-                    rectY.value = profile.height * 0.1;
-                    setFilter();
-                }
-            }
-        }
-
-        Label {
-            text: qsTr('Size')
-            Layout.alignment: Qt.AlignRight
-        }
-
-        RowLayout {
-            Shotcut.DoubleSpinBox {
-                id: rectW
-
-                value: filterRect.width
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
             Label {
-                text: 'x'
-                Layout.minimumWidth: 20
-                horizontalAlignment: Qt.AlignHCenter
+                text: qsTr('Size')
+                Layout.alignment: Qt.AlignRight
             }
+        }
+        GridLayout {
+            rows: 2
+            columns: 2
 
-            Shotcut.DoubleSpinBox {
-                id: rectH
+            RowLayout { //position
+                Layout.column: 0 
+                Layout.row: 0; 
+                Shotcut.DoubleSpinBox {
+                    id: rectX
 
-                value: filterRect.height
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
-            Shotcut.UndoButton {
-                onClicked: {
-                    //for map, try to compute height from width using map_aspect_ratio and the crop values
-                    if (combo_data_source.currentIndex === 0) {
-                        var width_p = (spin_right.value - spin_left.value) / 100;
-                        var height_p = (spin_top.value - spin_bot.value) / 100;
-                        rectH.value = 1 * ((rectW.value * height_p) / filter.getDouble('map_original_aspect_ratio')) / width_p;
-                    } else {
-                        rectH.value = rectW.value;
+                    value: filterRect.x
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
                     }
-                    //if it's outside viewport just make it inside, ignore map or crops
-                    if (rectW.value + rectX.value > profile.width)
-                        rectW.value = profile.width - rectX.value;
-                    if (rectH.value + rectY.value > profile.height)
-                        rectH.value = profile.height - rectY.value;
-                    setFilter();
                 }
 
-                Shotcut.HoverTip {
-                    text: qsTr('Sets the height to the correct map aspect ratio or 1:1.')
+                Label {
+                    text: ','
+                    Layout.minimumWidth: 20
+                    horizontalAlignment: Qt.AlignHCenter
+                }
+
+                Shotcut.DoubleSpinBox {
+                    id: rectY
+
+                    value: filterRect.y
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+            }
+            RowLayout { //size
+                Layout.column: 0 
+                Layout.row: 1; 
+                Shotcut.DoubleSpinBox {
+                    id: rectW
+
+                    value: filterRect.width
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+
+                Label {
+                    text: 'x'
+                    Layout.minimumWidth: 20
+                    horizontalAlignment: Qt.AlignHCenter
+                }
+
+                Shotcut.DoubleSpinBox {
+                    id: rectH
+
+                    value: filterRect.height
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+            }
+
+            //buttons (centered vertically)
+            RowLayout {
+                Layout.row: 0
+                Layout.column: 1
+                Layout.rowSpan: 2
+                Layout.alignment: Qt.AlignVCenter
+
+                Shotcut.Button {
+                    icon.name: "view-fullscreen"
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    onClicked: {
+                        rectX.value = 0 + profile.width * 0.01;
+                        rectY.value = 0 + profile.height * 0.01;
+                        rectW.value = profile.width * 0.98;
+                        rectH.value = profile.height * 0.98;
+                        setFilter();
+                    }
+                    Shotcut.HoverTip {
+                        text: qsTr('Reset size and position to almost fullscreen')
+                    }
+                }
+
+                Shotcut.UndoButton {
+                    onClicked: {
+                        rectX.value = profile.width * 0.7;
+                        rectY.value = profile.height * 0.7;
+                        rectW.value = profile.width * 0.25;
+                        rectH.value = profile.height * 0.25;
+                        setFilter();
+                    }
+                    Shotcut.HoverTip {
+                        text: qsTr('Reset size and position to bottom right side')
+                    }
+                }
+
+                Shotcut.Button {
+                    icon.name: 'zoom-fit-best'
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    onClicked: {
+                        //for map, compute height and width using map_aspect_ratio and the crop values
+                        //only shrink so it doesn't get out of frame
+                        if (combo_data_source.currentIndex === 0) {
+                            var map_ratio = filter.getDouble('map_original_aspect_ratio');
+                            var width_p = (spin_right.value - spin_left.value) / 100;
+                            var height_p = (spin_top.value - spin_bot.value) / 100;
+                            var new_height = ((rectW.value * height_p) / map_ratio) / width_p;
+                            if (new_height <= rectH.value) {
+                                rectH.value = new_height;
+                            } else {
+                                rectW.value = (rectH.value * width_p * map_ratio) / height_p;
+                            }
+                        } else {
+                            if (rectH.value > rectW.value)
+                                rectH.value = rectW.value;
+                            else
+                                rectW.value = rectH.value;
+                        }
+                        setFilter();
+                    }
+                    Shotcut.HoverTip {
+                        text: qsTr('Shrink to the correct map aspect ratio (or 1:1)')
+                    }
                 }
             }
         }
