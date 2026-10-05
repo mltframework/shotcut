@@ -46,7 +46,13 @@ Shotcut.KeyframableFilter {
         combo_smoothing.currentIndex = combo_smoothing.get_smooth_index_from_val(filter.get('smoothing_value'));
         speed_multiplier.value = filter.get('speed_multiplier');
         updates_per_second.text = filter.get('updates_per_second');
-        gps_processing_start.text = filter.get('gps_processing_start_time');
+        if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
+        {
+            gps_processing_start.text = filter.get('gps_start_text');
+            filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+        }
+        else 
+            gps_processing_start.text = filter.get('gps_processing_start_time');
     }
 
     //this function combines the text values from sign combobox * days/hours/mins/sec TextFields into an int
