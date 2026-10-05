@@ -100,6 +100,7 @@ Item {
         //gps sync data
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName;
+            fileLabel.color = activePalette.text;
             fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text');
         } else {
             fileLabel.text = qsTr("No File Loaded.");
@@ -377,6 +378,7 @@ Item {
             filter.savePreset(usedParams, "Colors: green middle (5)");
             usedParams = reset_all_params();
             filter.savePreset(usedParams);
+            autoGpsFileDetectionTimer.restart();
         }
         //get current timezone
         //TODO: not sure why this doesn't include daylight saving if active, remove completely?
@@ -412,6 +414,29 @@ Item {
         }
     }
 
+
+    //timer to update Ui in case of automatic gps file detection
+    Timer {
+        id: autoGpsFileDetectionTimer
+        property int calls: 0
+        interval: 250
+        repeat: true
+        onTriggered: {
+            var res = filter.get('resource')
+            if (res) {
+                autoGpsFileDetectionTimer.stop();
+                gpsFile.url = res;
+                gpsGraphRoot.fileOpened(gpsFile.path);
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                setControls();
+            } else {
+                calls += 1;
+                if (calls > 4)
+                    autoGpsFileDetectionTimer.stop();
+            }
+        }
+    }
+
     //timer to update UI after gps file is processed; max: 10x250ms
     Timer {
         id: gpsFinishParseTimer
@@ -420,7 +445,6 @@ Item {
 
         interval: 250
         repeat: true
-        triggeredOnStart: false
         onTriggered: {
             if (filter.get('gps_start_text') == '') {
                 calls += 1;

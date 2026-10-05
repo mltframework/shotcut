@@ -35,6 +35,7 @@ Shotcut.KeyframableFilter {
         textFilterUi.setControls();
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName;
+            fileLabel.color = activePalette.text;
             fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text');
         } else {
             fileLabel.text = qsTr("No File Loaded.");
@@ -128,6 +129,7 @@ Shotcut.KeyframableFilter {
             filter.set(textFilterUi.rectProperty, '10%/10%:80%x80%');
             filter.savePreset(presetParams);
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
+            autoGpsFileDetectionTimer.restart();
         } else {
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
@@ -176,6 +178,29 @@ Shotcut.KeyframableFilter {
             filter.set('gps_start_text', '');
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
             gpsFinishParseTimer.restart();
+        }
+    }
+
+
+    //timer to update Ui in case of automatic gps file detection
+    Timer {
+        id: autoGpsFileDetectionTimer
+        property int calls: 0
+        interval: 250
+        repeat: true
+        onTriggered: {
+            var res = filter.get('resource')
+            if (res) {
+                autoGpsFileDetectionTimer.stop();
+                gpsFile.url = res;
+                gpsGraphRoot.fileOpened(gpsFile.path);
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                setControls();
+            } else {
+                calls += 1;
+                if (calls > 4)
+                    autoGpsFileDetectionTimer.stop();
+            }
         }
     }
 
