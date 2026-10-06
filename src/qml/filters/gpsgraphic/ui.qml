@@ -34,7 +34,7 @@ Item {
     property var default_colors_grade: ["#ff00ff", "#00aaff", "#00e000", "#ffff00", "#ff0000"]
     property string color_white: "#ffffff"
     property string default_now_dot: "#00ffffff"
-    property string default_rect: '10%/10%:30%x30%'
+    property string default_rect: '75% 75% 20% 20%'
     property int js_tz_offset: 0
     property bool _disableUpdate: true
 
@@ -401,7 +401,7 @@ Item {
         id: fileDialog
 
         title: qsTr("Select GPS File")
-        nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files *.*']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsGraphRoot.fileOpened(gpsFile.path);
@@ -457,6 +457,7 @@ Item {
                 gpsFinishParseTimer.stop();
                 calls = 0;
                 filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                button_correct_ar.correct_ar();
                 setControls();
             }
         }
@@ -1679,10 +1680,10 @@ Item {
 
                 Shotcut.UndoButton {
                     onClicked: {
-                        rectX.value = profile.width * 0.7;
-                        rectY.value = profile.height * 0.7;
-                        rectW.value = profile.width * 0.25;
-                        rectH.value = profile.height * 0.25;
+                        rectX.value = profile.width * 0.75;
+                        rectY.value = profile.height * 0.75;
+                        rectW.value = profile.width * 0.20;
+                        rectH.value = profile.height * 0.20;
                         setFilter();
                     }
                     Shotcut.HoverTip {
@@ -1691,10 +1692,11 @@ Item {
                 }
 
                 Shotcut.Button {
+                    id: button_correct_ar
                     icon.name: 'zoom-fit-best'
                     implicitWidth: 20
                     implicitHeight: 20
-                    onClicked: {
+                    function correct_ar() {
                         //for map, compute height and width using map_aspect_ratio and the crop values
                         //only shrink so it doesn't get out of frame
                         if (combo_data_source.currentIndex === 0) {
@@ -1715,6 +1717,7 @@ Item {
                         }
                         setFilter();
                     }
+                    onClicked: button_correct_ar.correct_ar();
                     Shotcut.HoverTip {
                         text: qsTr('Shrink to the correct map aspect ratio (or 1:1)')
                     }

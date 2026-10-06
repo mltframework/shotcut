@@ -132,7 +132,7 @@ Shotcut.KeyframableFilter {
             // Add default preset.
             filter.set(textFilterUi.valignProperty, 'bottom');
             filter.set(textFilterUi.halignProperty, 'left');
-            filter.set(textFilterUi.rectProperty, '10%/10%:80%x80%');
+            filter.set(textFilterUi.rectProperty, '5% 50% 45% 45%');
             filter.savePreset(presetParams);
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
             autoGpsFileDetectionTimer.restart();
@@ -173,7 +173,7 @@ Shotcut.KeyframableFilter {
     Shotcut.FileDialog {
         id: fileDialog
 
-        nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files *.*']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsTextRoot.fileOpened(gpsFile.path);
@@ -199,7 +199,7 @@ Shotcut.KeyframableFilter {
             if (res) {
                 autoGpsFileDetectionTimer.stop();
                 gpsFile.url = res;
-                gpsGraphRoot.fileOpened(gpsFile.path);
+                gpsTextRoot.fileOpened(gpsFile.path);
                 filter.set('time_offset', filter.get('auto_gps_offset_start'));
                 setControls();
             } else {
