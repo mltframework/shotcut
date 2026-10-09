@@ -1,13 +1,13 @@
-There are a number of ways to contribute for people all skills and skill levels.
+There are a number of ways to contribute for people of all skills and skill levels.
 
 Translation
 -----------
 
 We use the
 [Transifex](https://explore.transifex.com/ddennedy/shotcut/)
-collaboration web site to translate the Shotcut user interface.
+collaboration website to translate the Shotcut user interface.
 Additional languages are already started but have not yet reached the
-60% minimum level to be included in a Shotcut release.
+minimum level of 60% to be included in a Shotcut release.
 
 Please do not open a pull request to update a translation. Your request
 will be rejected unless it is for the English language to add a plural form
@@ -17,17 +17,17 @@ Support Other Users
 -------------------
 
 An easy way for non-programmers to help is simply to participate in the
-[Shotcut Forum](https://forum.shotcut.org/) by answering user's questions.
+[Shotcut Forum](https://forum.shotcut.org/) by answering users' questions.
 Alternatively, consider making a tutorial video on YouTube or similar.
 
 Write Documentation
 -------------------
 
 We are now building [documentation in the
-forum](https://forum.shotcut.org/c/docs/docs-english) using its wiki-mode where
+forum](https://forum.shotcut.org/c/docs/docs-english) using its wiki mode where
 any trusted user (some forum experience required or manual promotion) can edit
 the topic. Please treat this like real documentation you would see in a user
-manual. Some day these topics might get compiled into an offline help file or
+manual. Someday these topics might get compiled into an offline help file or
 large document. Initially, we only have English, but it is a sub-category with
 the hope that some day a volunteer will offer to translate to another language.
 
@@ -36,7 +36,7 @@ Report a Bug
 
 You can report a bug on the [Shotcut Forum](https://forum.shotcut.org/) using
 the Bug category or on [GitHub Issues](https://github.com/mltframework/shotcut/issues/). Bug reports must include the Shotcut version, your operating system,
-and the steps. It can helpful to include a screenshot, screencast video, or
+and the steps. It can be helpful to include a screenshot, screencast video, or
 project file. Please do not use this to request a feature.
 
 Make a Preset
