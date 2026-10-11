@@ -312,7 +312,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('The distance from the threshold where the knee curve starts.')
+                text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')
             }
         }
 
@@ -343,7 +343,7 @@ Shotcut.KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')
+                text: qsTr('The amount of late reverberation (the diffuse tail of the reverb).')
             }
         }
 
