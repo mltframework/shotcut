@@ -18,7 +18,7 @@
 AppVersion=YY.MM.DD
 AppPublisher=Meltytech
 AppName=Shotcut
-WizardStyle=modern
+WizardStyle=modern dynamic
 DefaultDirName={autopf}\Shotcut
 ; Since no icons will be created in "{group}", we don't need the wizard
 ; to ask for a Start Menu folder name:
