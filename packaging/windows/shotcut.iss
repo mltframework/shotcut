@@ -53,6 +53,7 @@ en.StartMenu=Create Start Menu Shortcut
 en.AssociateMltXml=Associate *.mlt files with Shotcut
 en.DesktopIcon=Create Desktop Shortcut (Icon)
 en.ClearShotcutSettings=Remove Shotcut Settings From Registry
+en.RemoveOldProgramFiles=Remove Old Program Files
 en.InstallingShotcut=Installing Shotcut...
 en.StartShotcut=Start Shotcut
 
@@ -60,7 +61,14 @@ en.StartShotcut=Start Shotcut
 Name: startMenu; Description: "{cm:StartMenu}"
 Name: associateExtension; Description: "{cm:AssociateMltXml}"; Check: IsAdminInstallMode
 Name: desktopIcon; Description: "{cm:DesktopIcon}"; Flags: unchecked
+Name: removeOldProgramFiles; Description: "{cm:RemoveOldProgramFiles}"; Check: IsUpgradeInstall
 Name: removeSettings; Description: "{cm:ClearShotcutSettings}"; Flags: unchecked
+
+; Only when the destination already exists, including files left by an
+; installer this uninstaller no longer tracks. Remove that directory
+; before the new tree is copied.
+[InstallDelete]
+Type: filesandordirs; Name: "{app}"; Tasks: removeOldProgramFiles; Check: IsUpgradeInstall and InstallDirIsSafeToRemove
 
 [Files]
 Source: "Shotcut\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs uninsremovereadonly
@@ -86,6 +94,32 @@ var
 procedure RemoveShotcutSettings();
 begin
   RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\Meltytech\Shotcut');
+end;
+
+function IsUpgradeInstall(): Boolean;
+begin
+  Result := DirExists(ExpandConstant('{app}'));
+end;
+
+function InstallDirIsSafeToRemove(): Boolean;
+var
+  Dir: String;
+begin
+  Dir := RemoveBackslashUnlessRoot(ExpandConstant('{app}'));
+  { Refuse a drive root, Windows, System32, or a Program Files directory itself. }
+  Result :=
+    (Length(Dir) > 3) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{win}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{sys}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{autopf}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{autopf32}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{autopf64}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{commonpf}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{commonpf32}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{commonpf64}'))) <> 0) and
+    (CompareText(Dir, RemoveBackslashUnlessRoot(ExpandConstant('{localappdata}\Programs'))) <> 0);
+  if not Result then
+    Log('Not removing "' + Dir + '" because it is not an application directory');
 end;
 
 procedure InitializeWizard();
