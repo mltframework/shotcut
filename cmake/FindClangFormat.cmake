@@ -39,9 +39,9 @@ function(_ClangFormat_get_version clangformat_version result_var clangformat_pat
   set(${clangformat_version} ${clean_clangformat_version} PARENT_SCOPE)
 endfunction()
 
-function(_ClangFromat_version_validator version_match clangformat_path)
+function(_ClangFormat_version_validator version_match clangformat_path)
     if(NOT DEFINED ClangFormat_FIND_VERSION)
-        set(${is_valid_version} TRUE PARENT_SCOPE)
+        set(${version_match} TRUE PARENT_SCOPE)
     else()
         _ClangFormat_get_version(candidate_version version_result "${clangformat_path}")
 
@@ -67,7 +67,7 @@ find_program(CLANGFORMAT_EXECUTABLE
                    clang-format-11
                    clang-format-10
              DOC "clang-format executable"
-             VALIDATOR _ClangFromat_version_validator
+             VALIDATOR _ClangFormat_version_validator
             )
 mark_as_advanced(CLANGFORMAT_EXECUTABLE)
 
