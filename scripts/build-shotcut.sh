@@ -1845,6 +1845,7 @@ function bundle_libs
          ($3 !~ /\/libresolv\./) &&
          ($3 !~ /\/librt\./) &&
          ($3 !~ /\/libstdc\+\+\./) &&
+         ($3 !~ /\/libsystemd\./) &&
          ($3 !~ /\/libthai\./) &&
          ($3 !~ /\/libthread_db\./) &&
          ($3 !~ /\/libusb-1.0\./) &&

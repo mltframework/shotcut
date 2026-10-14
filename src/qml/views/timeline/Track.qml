@@ -30,7 +30,8 @@ Rectangle {
     property bool isLocked: false
     property alias clipCount: repeater.count
     property bool isMute: false
-    property int layoutEpoch: 0
+    property int contentFrames: 0
+    property bool relayoutPending: false
 
     signal clipClicked(var clip, var track, var mouse)
     signal clipRightClicked(var clip, var track, var mouse)
@@ -69,11 +70,40 @@ Rectangle {
         return repeater.itemAt(index);
     }
 
-    function relayoutClips() {
-        // Re-read model.start. Do not assign clipStart — that breaks the
-        // StartRole binding and stacks transitions by duration instead of
-        // their playlist start.
-        layoutEpoch++;
+    function scheduleClipLayout() {
+        // Queue one layout. A drop emits many row and duration changes, and each
+        // one used to re-read StartRole for every clip.
+        if (relayoutPending)
+            return;
+        relayoutPending = true;
+        Qt.callLater(trackRoot.applyClipLayout);
+    }
+
+    function applyClipLayout() {
+        relayoutPending = false;
+        const n = repeater.count;
+        const clips = [];
+        for (let i = 0; i < n; i++) {
+            const clip = repeater.itemAt(i);
+            // A missing delegate would drop its duration and pull later clips left.
+            // onItemAdded schedules the next pass.
+            if (!clip)
+                return;
+            clips.push(clip);
+        }
+        let frame = 0;
+        for (let i = 0; i < n; i++) {
+            const start = frame;
+            // Playlist start is the sum of entry lengths, including a transition
+            // and the clips shortened on either side of it.
+            frame += clips[i].clipDuration;
+            // Do not assign clipStart. That removes its binding.
+            if (!clips[i].hasLaidOutStart || clips[i].laidOutStart !== start) {
+                clips[i].laidOutStart = start;
+                clips[i].hasLaidOutStart = true;
+            }
+        }
+        contentFrames = frame;
     }
 
     color: 'transparent'
@@ -94,11 +124,13 @@ Rectangle {
             mltService: typeof model.mlt_service !== 'undefined' ? model.mlt_service : ""
             inPoint: typeof model.in !== 'undefined' ? model.in : 0
             outPoint: typeof model.out !== 'undefined' ? model.out : 0
-            clipStart: {
-                trackRoot.layoutEpoch;
-                return typeof model.start !== 'undefined' ? model.start : 0;
-            }
-            onClipDurationChanged: trackRoot.relayoutClips()
+            // model.start until the prefix sum is stored. Assigning clipStart
+            // would drop this binding. hasLaidOutStart stops later row moves
+            // from reading StartRole again.
+            clipStart: hasLaidOutStart ? laidOutStart : (typeof model.start !== 'undefined' ? model.start : 0)
+            // originalClipIndex is assigned on press, so it no longer follows the row.
+            onReadonlyClipIndexChanged: trackRoot.scheduleClipLayout()
+            onClipDurationChanged: trackRoot.scheduleClipLayout()
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false
             isTransition: typeof model.isTransition !== 'undefined' ? model.isTransition : false
@@ -314,21 +346,14 @@ Rectangle {
         id: clipRow
 
         height: parent.height
-        width: {
-            let end = 0;
-            for (let i = 0; i < repeater.count; i++) {
-                const clip = repeater.itemAt(i);
-                if (clip)
-                    end = Math.max(end, clip.clipPx + clip.clipPxW);
-            }
-            return Math.max(end, 1);
-        }
+        width: Math.max(1, trackRoot.contentFrames * trackRoot.timeScale)
 
         Repeater {
             id: repeater
 
             model: trackModel
-            onCountChanged: Qt.callLater(trackRoot.relayoutClips)
+            onCountChanged: trackRoot.scheduleClipLayout()
+            onItemAdded: trackRoot.scheduleClipLayout()
         }
     }
 }

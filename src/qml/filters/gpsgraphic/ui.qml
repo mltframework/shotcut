@@ -432,6 +432,7 @@ Item {
             } else {
                 gpsFinishParseTimer.stop();
                 calls = 0;
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
                 setControls();
             }
         }
@@ -859,10 +860,10 @@ Item {
 
                 value: 1
                 horizontalAlignment: Qt.AlignRight
-                Layout.minimumWidth: 80
+                Layout.minimumWidth: 100
                 from: 0
                 to: 10000
-                decimals: 2
+                decimals: 3
                 stepSize: 1
                 suffix: 'x'
                 onValueChanged: {

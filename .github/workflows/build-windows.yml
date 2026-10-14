@@ -37,6 +37,7 @@ jobs:
             mingw-w64-ucrt-x86_64-gcc-fortran
             mingw-w64-ucrt-x86_64-gettext-tools
             mingw-w64-ucrt-x86_64-harfbuzz
+            mingw-w64-ucrt-x86_64-ladspa-sdk
             mingw-w64-ucrt-x86_64-lame
             mingw-w64-ucrt-x86_64-libarchive
             mingw-w64-ucrt-x86_64-libepoxy

@@ -29,6 +29,10 @@ Rectangle {
     property int outPoint: 0
     property int clipDuration: 0
     property int clipStart: 0
+    // Prefix sum of durations. The delegate reads model.start until the first
+    // layout stores it here, so a new clip does not paint at frame 0.
+    property int laidOutStart: 0
+    property bool hasLaidOutStart: false
     property bool isBlank: false
     property bool isAudio: false
     property bool isTransition: false
