@@ -19,7 +19,6 @@ target_include_directories(test_mix_transition_order PRIVATE ${CMAKE_SOURCE_DIR}
 target_link_libraries(test_mix_transition_order PRIVATE Qt6::Core Qt6::Test PkgConfig::mlt++)
 add_test(NAME mix_transition_order COMMAND test_mix_transition_order)
 
-
 add_executable(test_dataqueue
   test_dataqueue.cpp
 )
