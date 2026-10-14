@@ -1233,12 +1233,6 @@ int MultitrackModel::trimClipOut(
         if (!track)
             continue;
 
-        Mlt::Playlist playlist(*track);
-        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-        // These are used to adjust filters but must be retrieved before changing clip length.
-        int filterIn = MLT.filterIn(playlist, clipIndex);
-        int filterOut = MLT.filterOut(playlist, clipIndex);
-
         //when not rippling, never touch the other tracks
         if (trackIndex != i && (!ripple || !rippleAllTracks))
             continue;
@@ -1252,6 +1246,24 @@ int MultitrackModel::trimClipOut(
                 continue;
             }
         }
+
+        Mlt::Playlist playlist(*track);
+        if (!playlist.is_valid()) {
+            LOG_DEBUG() << "Invalid Playlist" << trackIndex;
+            continue;
+        }
+        if (clipIndex >= playlist.count()) {
+            LOG_DEBUG() << "Invalid Clip Index" << clipIndex;
+            continue;
+        }
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (!info) {
+            LOG_DEBUG() << "Invalid clip info";
+            continue;
+        }
+        // These are used to adjust filters but must be retrieved before changing clip length.
+        int filterIn = MLT.filterIn(playlist, clipIndex);
+        int filterOut = MLT.filterOut(playlist, clipIndex);
 
         Q_ASSERT(otherTracksPosition == -1);
         otherTracksPosition = info->start + info->frame_count;

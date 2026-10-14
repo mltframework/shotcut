@@ -904,7 +904,9 @@ void MoveClipCommand::redo()
                                            m_clips.first().uuid,
                                            m_clips.first().group);
                 } else if (targetIndex >= clipIndex
-                           && m_model.isTransition(playlist, clipIndex + 1)) {
+                           && m_model.trimTransitionInValid(trackIndex,
+                                                            clipIndex,
+                                                            -m_positionDelta)) {
                     // Increase duration of transition
                     m_specialMove = GrowTransitionIn;
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
