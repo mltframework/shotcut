@@ -879,7 +879,11 @@ void MoveClipCommand::redo()
             int newStart = m_clips.first().start + m_positionDelta;
             auto targetIndex = playlist.get_clip_index_at(newStart);
             auto clipIndex = m_clips.first().clipIndex;
-            if (targetIndex >= clipIndex || // pushing clips on same track
+            const bool resizeTransitionIn = !m_ripple
+                                            && m_model.resizeTransitionInByMoveValid(trackIndex,
+                                                                                     clipIndex,
+                                                                                     newStart);
+            if (resizeTransitionIn || targetIndex >= clipIndex || // pushing clips on same track
                 // pulling clips on same track
                 (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
                 bool done = true;
@@ -903,10 +907,7 @@ void MoveClipCommand::redo()
                                            newStart,
                                            m_clips.first().uuid,
                                            m_clips.first().group);
-                } else if (targetIndex >= clipIndex
-                           && m_model.trimTransitionInValid(trackIndex,
-                                                            clipIndex,
-                                                            -m_positionDelta)) {
+                } else if (resizeTransitionIn) {
                     // Increase duration of transition
                     m_specialMove = GrowTransitionIn;
                     m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);

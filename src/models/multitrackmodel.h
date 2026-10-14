@@ -212,6 +212,7 @@ public slots:
     void removeTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
     void removeTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool trimTransitionInValid(int trackIndex, int clipIndex, int delta);
+    bool resizeTransitionInByMoveValid(int trackIndex, int clipIndex, int position);
     void trimTransitionIn(int trackIndex, int clipIndex, int delta, bool slip = false);
     bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
     void trimTransitionOut(int trackIndex, int clipIndex, int delta, bool slip = false);
