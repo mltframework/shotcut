@@ -25,3 +25,11 @@ add_executable(test_dataqueue
 target_include_directories(test_dataqueue PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(test_dataqueue PRIVATE Qt6::Core Qt6::Test)
 add_test(NAME dataqueue COMMAND test_dataqueue)
+
+add_executable(test_exportpresetdialog
+  test_exportpresetdialog.cpp
+  ${CMAKE_SOURCE_DIR}/src/dialogs/addencodepresetdialog.cpp
+)
+target_include_directories(test_exportpresetdialog PRIVATE ${CMAKE_SOURCE_DIR}/src/dialogs)
+target_link_libraries(test_exportpresetdialog PRIVATE Qt6::Widgets Qt6::Test)
+add_test(NAME exportpresetdialog COMMAND test_exportpresetdialog -platform offscreen)
