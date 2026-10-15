@@ -18,6 +18,8 @@
 #include "addencodepresetdialog.h"
 #include "ui_addencodepresetdialog.h"
 
+#include <QUrl>
+
 AddEncodePresetDialog::AddEncodePresetDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::AddEncodePresetDialog)
@@ -37,7 +39,7 @@ void AddEncodePresetDialog::setProperties(const QString &properties)
 
 QString AddEncodePresetDialog::presetName() const
 {
-    return ui->nameEdit->text();
+    return QString::fromUtf8(QUrl::toPercentEncoding(ui->nameEdit->text()));
 }
 
 QString AddEncodePresetDialog::properties() const

@@ -39,6 +39,7 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QTimer>
+#include <QUrl>
 #include <QtMath>
 #include <QtWidgets>
 #include <QtXml>
@@ -567,9 +568,12 @@ void EncodeDock::loadPresets()
     if (dir.cd("presets") && dir.cd("encode")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         foreach (QString name, entries) {
+            auto displayName = QUrl::fromPercentEncoding(name.toUtf8());
+            if (name != QUrl::toPercentEncoding(displayName))
+                displayName = name;
             // Create a category node if the name includes a ).
-            QStringList nameParts = name.split(')');
-            if (nameParts.count() > 1 && !nameParts[1].isEmpty() && !name.contains('(')) {
+            QStringList nameParts = displayName.split(')');
+            if (nameParts.count() > 1 && !nameParts[1].isEmpty() && !displayName.contains('(')) {
                 // See if there is already a category node with this name.
                 int row;
                 for (row = 0; row < grandParentItem->rowCount(); row++) {
@@ -2347,7 +2351,8 @@ void EncodeDock::on_removePresetButton_clicked()
     QString preset = m_presetsModel.data(index, kCustomPresetFileNameRole).toString();
     QMessageBox dialog(QMessageBox::Question,
                        tr("Delete Preset"),
-                       tr("Are you sure you want to delete %1?").arg(preset),
+                       tr("Are you sure you want to delete %1?")
+                           .arg(m_presetsModel.data(index).toString()),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
