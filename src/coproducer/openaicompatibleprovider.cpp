@@ -57,7 +57,10 @@ OpenAiCompatibleProvider::OpenAiCompatibleProvider(const QString &apiKey,
     , m_model(model)
     , m_baseUrl(baseUrl.endsWith('/') ? baseUrl.chopped(1) : baseUrl)
 {
-    connect(&m_network, &QNetworkAccessManager::finished, this, &OpenAiCompatibleProvider::onFinished);
+    connect(&m_network,
+            &QNetworkAccessManager::finished,
+            this,
+            &OpenAiCompatibleProvider::onFinished);
 }
 
 void OpenAiCompatibleProvider::sendMessage(const QList<ChatMessage> &history)
@@ -68,8 +71,7 @@ void OpenAiCompatibleProvider::sendMessage(const QList<ChatMessage> &history)
         return;
     }
     if (m_model.isEmpty()) {
-        emit errorOccurred(
-            tr("No model is configured. Open the Coproducer menu to choose one."));
+        emit errorOccurred(tr("No model is configured. Open the Coproducer menu to choose one."));
         return;
     }
     if (!Util::isAllowedApiBaseUrl(m_baseUrl)) {

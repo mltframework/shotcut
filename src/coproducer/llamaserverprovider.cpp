@@ -195,7 +195,8 @@ void LlamaServerProvider::onServerReady()
     m_startupTimeout->stop();
     LOG_INFO() << "Coproducer: local model loaded" << QFileInfo(m_modelPath).fileName();
 
-    m_chatProvider = new OpenAiCompatibleClient(m_apiKey, QStringLiteral("shotcut-local"), m_baseUrl, this);
+    m_chatProvider
+        = new OpenAiCompatibleClient(m_apiKey, QStringLiteral("shotcut-local"), m_baseUrl, this);
     connect(m_chatProvider, &AiProvider::responseStarted, this, &AiProvider::responseStarted);
     connect(m_chatProvider, &AiProvider::tokenReceived, this, &AiProvider::tokenReceived);
     connect(m_chatProvider, &AiProvider::responseReceived, this, &AiProvider::responseReceived);

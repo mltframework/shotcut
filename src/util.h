@@ -49,6 +49,7 @@ public:
     static void showInFolder(const QString &path);
     static bool warnIfNotWritable(const QString &filePath, QWidget *parent, const QString &caption);
     static QString producerTitle(const Mlt::Producer &producer);
+    static QString clipDisplayName(Mlt::Producer *producer);
     static QString removeFileScheme(QUrl &url, bool fromPercentEncoding = true);
     static const QStringList sortedFileList(const QList<QUrl> &urls);
     static int coerceMultiple(int value, int multiple = 2);

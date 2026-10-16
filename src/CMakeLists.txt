@@ -14,6 +14,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   commands/undohelper.cpp commands/undohelper.h
   controllers/addonmetadataparser.cpp controllers/addonmetadataparser.h
   coproducer/chatprovider.h
+  coproducer/projectinspector.cpp coproducer/projectinspector.h
   coproducer/forumsearch.cpp coproducer/forumsearch.h
   coproducer/localllamaserverprovider.cpp coproducer/localllamaserverprovider.h
   coproducer/openaicompatibleprovider.cpp coproducer/openaicompatibleprovider.h
