@@ -189,6 +189,31 @@ QString Util::producerTitle(const Mlt::Producer &producer)
     return Util::baseName(ProxyManager::resource(p));
 }
 
+QString Util::clipDisplayName(Mlt::Producer *producer)
+{
+    if (!producer || !producer->is_valid())
+        return QString();
+
+    QString result = QString::fromUtf8(producer->get(kShotcutCaptionProperty)).trimmed();
+    if (!result.isEmpty() && result != QStringLiteral("<producer>"))
+        return result;
+
+    result = Util::baseName(ProxyManager::resource(*producer));
+    if (!result.isEmpty() && result != QStringLiteral("<producer>")) {
+        if (!::qstrcmp(producer->get("mlt_service"), "timewarp")) {
+            double speed = ::qAbs(producer->get_double("warp_speed"));
+            result = QStringLiteral("%1 (%2x)").arg(result).arg(speed);
+        }
+        return result;
+    }
+
+    result = QString::fromUtf8(producer->get("mlt_service")).trimmed();
+    if (!result.isEmpty() && result != QStringLiteral("<producer>"))
+        return result;
+
+    return QStringLiteral("Producer");
+}
+
 QString Util::removeFileScheme(QUrl &url, bool fromPercentEncoding)
 {
     QString path = url.url();
