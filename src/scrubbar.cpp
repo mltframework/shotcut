@@ -222,7 +222,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
     p.setPen(pen);
-    p.setPen(QPen(QBrush(QmlApplication::playheadColor()), 2));
+    p.setPen(QPen(QBrush(QmlApplication::playheadColor()), 1));
     if (m_head >= 0) {
         head = m_margin + m_head * m_scale;
         p.drawLine(head, 0, head, height() - 1);
@@ -242,7 +242,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(in, 0, in, selectionSize - 2);
+        p.drawLine(in, 0, in, selectionSize - 1);
     }
 
     // draw out point
@@ -259,7 +259,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(out, 0, out, selectionSize - 2);
+        p.drawLine(out, 0, out, selectionSize - 1);
     }
 }
 

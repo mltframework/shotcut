@@ -741,9 +741,9 @@ Rectangle {
 
                 visible: timeline.position > -1
                 color: application.playheadColor
-                width: root.snapToDevicePixel(2)
+                width: root.snapToDevicePixel(1)
                 height: root.height - horizontalScrollBar.height
-                x: root.snapToDevicePixel(timeline.position * multitrack.scaleFactor - tracksFlickable.contentX) - root.snapToDevicePixel(1)
+                x: root.snapToDevicePixel(timeline.position * multitrack.scaleFactor - tracksFlickable.contentX)
                 y: 0
 
                 Rectangle {

@@ -492,9 +492,9 @@ Rectangle {
 
                 visible: producer.position > -1 && metadata !== null
                 color: application.playheadColor
-                width: root.snapToDevicePixel(2)
+                width: root.snapToDevicePixel(1)
                 height: root.height - horizontalScrollBar.height
-                x: root.snapToDevicePixel(producer.position * timeScale - tracksFlickable.contentX) - root.snapToDevicePixel(1)
+                x: root.snapToDevicePixel(producer.position * timeScale - tracksFlickable.contentX)
                 y: 0
 
                 Rectangle {
