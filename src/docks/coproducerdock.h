@@ -24,22 +24,42 @@
 #include <QDockWidget>
 #include <QElapsedTimer>
 #include <QList>
-#include <QTextCursor>
+#include <QQmlContext>
+#include <QQuickWidget>
 
-class QComboBox;
-class QLabel;
-class QPlainTextEdit;
-class QPushButton;
-class QTextEdit;
 class QTimer;
-class QToolButton;
 
 class CoproducerDock : public QDockWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList transcript READ transcript NOTIFY transcriptChanged)
+    Q_PROPERTY(QString promptText READ promptText WRITE setPromptText NOTIFY promptTextChanged)
+    Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
+    Q_PROPERTY(int mode READ mode WRITE setMode NOTIFY modeChanged)
+
+signals:
+    void transcriptChanged();
+    void promptTextChanged();
+    void statusTextChanged();
+    void busyChanged();
+    void modeChanged();
 
 public:
     explicit CoproducerDock(QWidget *parent = nullptr);
+
+    QVariantList transcript() const;
+    QString promptText() const;
+    void setPromptText(const QString &text);
+    QString statusText() const;
+    bool isBusy() const;
+    int mode() const;
+    void setMode(int value);
+
+public slots:
+    void submitPrompt();
+    void newChat();
+    void openSettings();
 
 private slots:
     void onNewChatClicked();
@@ -57,10 +77,10 @@ private slots:
 
 private:
     enum class TranscriptRole { User, Assistant, Error, Diagnostic };
-    // Conversation: chat with the model, which may call the forum search
-    // tool itself. Help Search: forum search only, top results shown
+    // AI Chat: chat with the model, which may call the user-guide search
+    // tool itself. Search User Guide: user-guide search only, top results shown
     // directly, no model involved.
-    enum class Mode { Conversation, HelpSearch };
+    enum class Mode { AiChat, SearchUserGuide };
 
     void ensureProvider();
     void unloadProvider();
@@ -72,31 +92,26 @@ private:
     void runNextToolCall();
     void finishToolCall(const QString &result);
     void onForumToolResults(const QList<Coproducer::ForumSource> &sources, const QString &error);
-    void showHelpSearchResults(const QList<Coproducer::ForumSource> &sources, const QString &error);
+    void showUserGuideSearchResults(const QList<Coproducer::ForumSource> &sources,
+                                    const QString &error);
     void setStatusBase(const QString &text);
     void updateStatusLabel();
     static QString formatElapsedTime(int seconds);
-    void insertMarkdownFragment(QTextCursor &cursor, const QString &text);
     void updateAssistantStream(const QString &partialText);
     void finishAssistantStream(const QString &fullText);
     QString applyCitations(const QString &text) const;
 
-    QTextEdit *m_transcript;
-    QPlainTextEdit *m_promptEdit;
-    QPushButton *m_sendButton;
-    QToolButton *m_newChatButton;
-    QComboBox *m_modeCombo;
-    QToolButton *m_settingsButton;
-    QLabel *m_statusLabel;
+    QQuickWidget *m_qview = nullptr;
+    QVariantList m_transcriptData;
+    QString m_promptText;
+    QString m_statusText;
     QTimer *m_thinkingTimer;
     QList<Coproducer::ChatMessage> m_history;
     QString m_pendingResponse;
     QString m_statusBase;
-    int m_promptGroupCounter = 0;
     int m_thinkingSeconds = 0;
     bool m_busy = false;
-    Mode m_mode = Mode::Conversation;
-    int m_streamStartPosition = -1;
+    Mode m_mode = Mode::AiChat;
     QElapsedTimer m_promptTimer;
     Coproducer::ChatProvider *m_provider = nullptr;
     Coproducer::ForumSearch *m_forumSearch = nullptr;

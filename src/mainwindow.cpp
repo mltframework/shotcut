@@ -928,6 +928,22 @@ void MainWindow::setupAndConnectDocks()
             this,
             SLOT(onCoproducerDockTriggered(bool)));
 
+    auto *coproducerSearchAction = new QAction(tr("Search User Guide"), this);
+    connect(coproducerSearchAction, &QAction::triggered, this, [this]() {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
+        m_coproducerDock->setMode(1);
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerSearchAction);
+
+    auto *coproducerChatAction = new QAction(tr("Chat"), this);
+    connect(coproducerChatAction, &QAction::triggered, this, [this]() {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
+        m_coproducerDock->setMode(0);
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerChatAction);
+
     // Left area
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
