@@ -22,38 +22,18 @@
 #include "coproducer/openaicompatibleprovider.h"
 #include "coproducer/projectinspector.h"
 #include "dialogs/coproducersettingsdialog.h"
+#include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlview.h"
 #include "settings.h"
 
-#include <QAbstractTextDocumentLayout>
 #include <QAction>
-#include <QComboBox>
 #include <QCoreApplication>
-#include <QDesktopServices>
-#include <QHBoxLayout>
-#include <QIcon>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QKeyEvent>
-#include <QLabel>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPainterPath>
-#include <QPlainTextEdit>
-#include <QPushButton>
 #include <QRegularExpression>
-#include <QScrollBar>
-#include <QTextBlock>
-#include <QTextBlockFormat>
-#include <QTextCharFormat>
-#include <QTextCursor>
-#include <QTextDocumentFragment>
-#include <QTextEdit>
 #include <QTimer>
-#include <QToolButton>
-#include <QToolTip>
 #include <QUrl>
-#include <QVBoxLayout>
 
 namespace {
 
@@ -62,11 +42,6 @@ const char *kMasterSystemPrompt
     = "You are Coproducer, an AI assistant embedded in Shotcut, a free, open-source, "
       "cross-platform video editor built on the MLT framework. Answer questions about "
       "video editing and about Shotcut's features and workflow. Be concise.";
-
-// Tags the blocks that make up one prompt bubble (blank/text/blank) so the
-// transcript's paintEvent can find and group them without guessing from
-// block parity, which would break once a response spans multiple blocks.
-const int kPromptGroupProperty = QTextFormat::UserProperty + 1;
 
 // Maximum message history sent in the API payload (excluding system prompt).
 const int kMaxApiContextMessages = 12;
@@ -123,200 +98,31 @@ QString formatHms(qint64 ms)
 
 } // namespace
 
-// The prompt input is a QPlainTextEdit so Shift+Enter can insert a newline;
-// plain Enter submits the message like a typical chat box.
-class CoproducerPromptEdit : public QPlainTextEdit
-{
-    Q_OBJECT
-
-public:
-    explicit CoproducerPromptEdit(QWidget *parent = nullptr)
-        : QPlainTextEdit(parent)
-    {}
-
-signals:
-    void submitRequested();
-
-protected:
-    void keyPressEvent(QKeyEvent *event) override
-    {
-        if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
-            && !(event->modifiers() & Qt::ShiftModifier)) {
-            emit submitRequested();
-            return;
-        }
-        QPlainTextEdit::keyPressEvent(event);
-    }
-};
-
-// QTextDocument block backgrounds are always plain rectangles, so prompt
-// bubbles are drawn here by hand to get corners rounded on the left only.
-// Blocks belonging to one prompt are tagged with a shared kPromptGroupProperty
-// value (see appendTranscript) and grouped together into a single shape.
-class CoproducerTranscriptEdit : public QTextEdit
-{
-    Q_OBJECT
-
-public:
-    explicit CoproducerTranscriptEdit(QWidget *parent = nullptr)
-        : QTextEdit(parent)
-    {
-        setTextInteractionFlags(Qt::TextBrowserInteraction);
-        setMouseTracking(true);
-    }
-
-protected:
-    void paintEvent(QPaintEvent *event) override
-    {
-        paintPromptBubbles();
-        QTextEdit::paintEvent(event);
-    }
-
-    void mouseMoveEvent(QMouseEvent *event) override
-    {
-        const auto anchor = anchorAt(event->pos());
-        viewport()->setCursor(anchor.isEmpty() ? Qt::IBeamCursor : Qt::PointingHandCursor);
-        // Let the user inspect a link's target before clicking it.
-        if (anchor != m_lastAnchor) {
-            m_lastAnchor = anchor;
-            QToolTip::showText(event->globalPosition().toPoint(), anchor, this);
-        }
-        QTextEdit::mouseMoveEvent(event);
-    }
-
-    void mouseReleaseEvent(QMouseEvent *event) override
-    {
-        const auto anchor = anchorAt(event->pos());
-        if (!anchor.isEmpty()) {
-            QDesktopServices::openUrl(QUrl(anchor));
-            return;
-        }
-        QTextEdit::mouseReleaseEvent(event);
-    }
-
-private:
-    void paintPromptBubbles()
-    {
-        auto *layout = document()->documentLayout();
-        const QPointF offset(-horizontalScrollBar()->value(), -verticalScrollBar()->value());
-
-        QPainter painter(viewport());
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(Qt::NoPen);
-        painter.setBrush(palette().color(QPalette::AlternateBase));
-
-        const qreal radius = 16;
-        for (auto block = document()->begin(); block.isValid();) {
-            const auto groupId = block.blockFormat().property(kPromptGroupProperty);
-            if (!groupId.isValid()) {
-                block = block.next();
-                continue;
-            }
-
-            QRectF bubbleRect = layout->blockBoundingRect(block).translated(offset);
-            auto next = block.next();
-            while (next.isValid() && next.blockFormat().property(kPromptGroupProperty) == groupId) {
-                bubbleRect |= layout->blockBoundingRect(next).translated(offset);
-                next = next.next();
-            }
-
-            // Anchor explicitly from 20% width to the full viewport right edge.
-            bubbleRect.setLeft(viewport()->width() * 0.2);
-            bubbleRect.setRight(viewport()->width());
-
-            QPainterPath path;
-            path.moveTo(bubbleRect.right(), bubbleRect.top());
-            path.lineTo(bubbleRect.left() + radius, bubbleRect.top());
-            path.arcTo(bubbleRect.left(), bubbleRect.top(), radius * 2, radius * 2, 90, 90);
-            path.lineTo(bubbleRect.left(), bubbleRect.bottom() - radius);
-            path.arcTo(bubbleRect.left(),
-                       bubbleRect.bottom() - radius * 2,
-                       radius * 2,
-                       radius * 2,
-                       180,
-                       90);
-            path.lineTo(bubbleRect.right(), bubbleRect.bottom());
-            path.closeSubpath();
-            painter.drawPath(path);
-
-            block = next;
-        }
-    }
-
-    QString m_lastAnchor;
-};
-
 CoproducerDock::CoproducerDock(QWidget *parent)
     : QDockWidget(tr("Coproducer"), parent)
-    , m_transcript(new CoproducerTranscriptEdit(this))
-    , m_promptEdit(new CoproducerPromptEdit(this))
-    , m_sendButton(new QPushButton(this))
-    , m_newChatButton(new QToolButton(this))
-    , m_modeCombo(new QComboBox(this))
-    , m_settingsButton(new QToolButton(this))
-    , m_statusLabel(new QLabel(this))
     , m_thinkingTimer(new QTimer(this))
     , m_forumSearch(new Coproducer::ForumSearch(this))
 {
     setObjectName("CoproducerDock");
-    QIcon icon
-        = QIcon::fromTheme("view-conversation-balloon",
-                           QIcon(":/icons/oxygen/32x32/actions/view-conversation-balloon.png"));
-    toggleViewAction()->setIcon(icon);
+    setWindowTitle(tr("Coproducer"));
 
-    m_transcript->setReadOnly(true);
-    m_transcript->setPlaceholderText(tr("Ask Coproducer about Shotcut or your project..."));
+    m_qview = new QQuickWidget(QmlUtilities::sharedEngine(), this);
+    m_qview->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_qview->setClearColor(palette().window().color());
+    m_qview->quickWindow()->setPersistentSceneGraph(false);
+#ifndef Q_OS_MAC
+    m_qview->setAttribute(Qt::WA_AcceptTouchEvents);
+#endif
+    setWidget(m_qview);
 
-    m_promptEdit->setPlaceholderText(
-        tr("Type a message... (Enter to send, Shift+Enter for a new line)"));
-    m_promptEdit->setMaximumHeight(80);
-    connect(static_cast<CoproducerPromptEdit *>(m_promptEdit),
-            &CoproducerPromptEdit::submitRequested,
-            this,
-            &CoproducerDock::onSendOrCancelClicked);
+    QmlUtilities::setCommonProperties(m_qview->rootContext());
+    m_qview->rootContext()->setContextProperty("coproducer", this);
+    m_qview->rootContext()->setContextProperty("view", new QmlView(m_qview));
 
-    m_sendButton->setIcon(
-        QIcon::fromTheme("go-up", QIcon(":/icons/oxygen/32x32/actions/go-up.png")));
-    m_sendButton->setToolTip(tr("Send"));
-    connect(m_sendButton, &QPushButton::clicked, this, &CoproducerDock::onSendOrCancelClicked);
-
-    m_newChatButton->setIcon(
-        QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
-    m_newChatButton->setToolTip(tr("New Chat"));
-    connect(m_newChatButton, &QToolButton::clicked, this, &CoproducerDock::onNewChatClicked);
-
-    m_modeCombo->addItem(tr("Conversation"));
-    m_modeCombo->addItem(tr("Help Search"));
-    m_modeCombo->setToolTip(tr("Conversation: chat with the model, using forum search as context.\n"
-                               "Help Search: just search the Shotcut forum, no model involved."));
-    connect(m_modeCombo,
-            qOverload<int>(&QComboBox::currentIndexChanged),
-            this,
-            &CoproducerDock::onModeChanged);
-
-    m_settingsButton->setIcon(
-        QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
-    m_settingsButton->setToolTip(tr("Settings"));
-    connect(m_settingsButton, &QToolButton::clicked, this, &CoproducerDock::onSettingsTriggered);
-
-    m_statusLabel->setEnabled(false);
-
-    auto headerLayout = new QHBoxLayout;
-    headerLayout->addWidget(m_statusLabel, /*stretch*/ 1);
-    headerLayout->addWidget(m_modeCombo, /*stretch*/ 0);
-    headerLayout->addWidget(m_newChatButton, /*stretch*/ 0);
-    headerLayout->addWidget(m_settingsButton, /*stretch*/ 0);
-
-    auto inputLayout = new QHBoxLayout;
-    inputLayout->addWidget(m_promptEdit, /*stretch*/ 1);
-    inputLayout->addWidget(m_sendButton, /*stretch*/ 0);
-
-    auto container = new QWidget(this);
-    auto layout = new QVBoxLayout(container);
-    layout->addLayout(headerLayout);
-    layout->addWidget(m_transcript, /*stretch*/ 1);
-    layout->addLayout(inputLayout);
-    setWidget(container);
+    QDir viewPath = QmlUtilities::qmlDir();
+    viewPath.cd("views");
+    viewPath.cd("coproducer");
+    m_qview->setSource(QUrl::fromLocalFile(viewPath.absoluteFilePath("coproducer.qml")));
 
     m_history.append({Coproducer::ChatMessage::System, QString::fromLatin1(kMasterSystemPrompt)});
 
@@ -384,28 +190,88 @@ void CoproducerDock::unloadProvider()
     m_provider = nullptr;
 }
 
-void CoproducerDock::onNewChatClicked()
+QVariantList CoproducerDock::transcript() const
 {
-    m_history.clear();
-    m_history.append({Coproducer::ChatMessage::System, QString::fromLatin1(kMasterSystemPrompt)});
-    m_promptGroupCounter = 0;
-    m_lastSources.clear();
-    m_transcript->clear();
-    m_statusLabel->clear();
+    return m_transcriptData;
 }
 
-void CoproducerDock::onModeChanged(int index)
+QString CoproducerDock::promptText() const
 {
-    m_mode = index == 1 ? Mode::HelpSearch : Mode::Conversation;
-    onNewChatClicked();
+    return m_promptText;
 }
 
-void CoproducerDock::onSendOrCancelClicked()
+void CoproducerDock::setPromptText(const QString &text)
+{
+    if (m_promptText == text)
+        return;
+    m_promptText = text;
+    emit promptTextChanged();
+}
+
+QString CoproducerDock::statusText() const
+{
+    return m_statusText;
+}
+
+bool CoproducerDock::isBusy() const
+{
+    return m_busy;
+}
+
+int CoproducerDock::mode() const
+{
+    return static_cast<int>(m_mode);
+}
+
+void CoproducerDock::setMode(int value)
+{
+    const Mode nextMode = value == 1 ? Mode::SearchUserGuide : Mode::AiChat;
+    if (m_mode == nextMode)
+        return;
+    m_mode = nextMode;
+    emit modeChanged();
+}
+
+void CoproducerDock::submitPrompt()
 {
     if (m_busy)
         cancelRequest();
     else
         sendPrompt();
+}
+
+void CoproducerDock::newChat()
+{
+    onNewChatClicked();
+}
+
+void CoproducerDock::openSettings()
+{
+    onSettingsTriggered();
+}
+
+void CoproducerDock::onNewChatClicked()
+{
+    m_history.clear();
+    m_history.append({Coproducer::ChatMessage::System, QString::fromLatin1(kMasterSystemPrompt)});
+    m_lastSources.clear();
+    m_transcriptData.clear();
+    emit transcriptChanged();
+    m_statusText.clear();
+    emit statusTextChanged();
+    m_promptText.clear();
+    emit promptTextChanged();
+}
+
+void CoproducerDock::onModeChanged(int index)
+{
+    m_mode = index == 1 ? Mode::SearchUserGuide : Mode::AiChat;
+    onNewChatClicked();
+}
+
+void CoproducerDock::onSendOrCancelClicked()
+{
+    submitPrompt();
 }
 
 void CoproducerDock::cancelRequest()
@@ -417,16 +283,16 @@ void CoproducerDock::cancelRequest()
     m_toolPayload.clear();
     m_queuedToolCalls.clear();
     m_activeToolCall = Coproducer::ToolCall();
-    m_streamStartPosition = -1; // Leave any partial streamed text visible.
     setBusy(false);
-    m_statusLabel->setText(tr("Canceled."));
+    m_statusText = tr("Canceled.");
+    emit statusTextChanged();
     if (m_promptTimer.isValid())
         LOG_INFO() << "Coproducer: prompt canceled after" << formatHms(m_promptTimer.elapsed());
 }
 
 void CoproducerDock::sendPrompt()
 {
-    const auto prompt = m_promptEdit->toPlainText().trimmed();
+    const auto prompt = m_promptText.trimmed();
     if (prompt.isEmpty())
         return;
 
@@ -435,12 +301,11 @@ void CoproducerDock::sendPrompt()
     // thread for a while loading a multi-gigabyte GGUF file -- so the user
     // never sees what looks like a silent freeze.
     setBusy(true);
-    setStatusBase(m_mode == Mode::Conversation ? tr("Thinking...")
-                                               : tr("Searching Shotcut forum..."));
+    setStatusBase(m_mode == Mode::AiChat ? tr("Thinking...") : tr("Searching User Guide..."));
     m_promptTimer.start();
     QCoreApplication::processEvents();
 
-    if (m_mode == Mode::Conversation) {
+    if (m_mode == Mode::AiChat) {
         ensureProvider();
         if (!m_provider) {
             setBusy(false);
@@ -449,9 +314,10 @@ void CoproducerDock::sendPrompt()
     }
 
     appendTranscript(TranscriptRole::User, prompt);
-    m_promptEdit->clear();
+    m_promptText.clear();
+    emit promptTextChanged();
 
-    if (m_mode == Mode::Conversation) {
+    if (m_mode == Mode::AiChat) {
         m_history.append({Coproducer::ChatMessage::User, prompt});
         m_pendingResponse.clear();
 
@@ -499,22 +365,23 @@ void CoproducerDock::onSearchResults(const QList<Coproducer::ForumSource> &sourc
         onForumToolResults(sources, error);
         return;
     }
-    showHelpSearchResults(sources, error);
+    showUserGuideSearchResults(sources, error);
 }
 
-// Forum-only mode: no model call, just show the top few results directly.
+// User-guide search mode: no model call, just show the top few results directly.
 // Discourse's search API doesn't expose a relevance score, so we just take
 // the first few results in whatever order the search already ranked them.
-void CoproducerDock::showHelpSearchResults(const QList<Coproducer::ForumSource> &sources,
-                                           const QString &error)
+void CoproducerDock::showUserGuideSearchResults(const QList<Coproducer::ForumSource> &sources,
+                                                const QString &error)
 {
     setBusy(false);
     if (m_promptTimer.isValid())
-        LOG_INFO() << "Coproducer: help search finished in" << formatHms(m_promptTimer.elapsed());
+        LOG_INFO() << "Coproducer: user-guide search finished in"
+                   << formatHms(m_promptTimer.elapsed());
 
     if (sources.isEmpty()) {
         appendTranscript(TranscriptRole::Error,
-                         error.isEmpty() ? tr("No results found on the Shotcut forum.")
+                         error.isEmpty() ? tr("No results found in the User Guide.")
                                          : tr("Search unavailable: %1").arg(error));
         return;
     }
@@ -555,7 +422,7 @@ void CoproducerDock::runNextToolCall()
         tools << forumSearchTool();
         tools << Coproducer::projectInspectorTool();
         m_provider->setTools(tools, m_toolRounds < kMaxToolRounds);
-        setStatusBase(tr("Found %1 source(s); thinking...").arg(m_lastSources.size()));
+        setStatusBase(tr("Found %1 result(s); thinking...").arg(m_lastSources.size()));
         m_provider->sendMessage(m_toolPayload);
         return;
     }
@@ -577,8 +444,15 @@ void CoproducerDock::runNextToolCall()
         return;
     }
     LOG_INFO() << "Coproducer: forum search tool query" << query;
-    appendTranscript(TranscriptRole::Diagnostic, tr("🔎 Searching..."));
-    setStatusBase(tr("Searching Shotcut forum for \"%1\"...").arg(query));
+    if (!m_transcriptData.isEmpty()) {
+        QVariantMap last = m_transcriptData.last().toMap();
+        if (last.value("role").toString() == QStringLiteral("diagnostic")
+            && last.value("text").toString().contains("Searching", Qt::CaseInsensitive)) {
+            m_transcriptData.removeLast();
+            emit transcriptChanged();
+        }
+    }
+    setStatusBase(tr("Searching User Guide for \"%1\"...").arg(query));
     m_forumSearch->search(query);
 }
 
@@ -627,6 +501,14 @@ void CoproducerDock::onResponseStarted()
 {
     setBusy(true);
     m_pendingResponse.clear();
+    if (!m_transcriptData.isEmpty()) {
+        QVariantMap last = m_transcriptData.last().toMap();
+        if (last.value("role").toString() == QStringLiteral("assistant")
+            && last.value("text").toString().trimmed().isEmpty()) {
+            m_transcriptData.removeLast();
+            emit transcriptChanged();
+        }
+    }
     updateAssistantStream(QString());
     setStatusBase(tr("Thinking..."));
 }
@@ -653,7 +535,6 @@ void CoproducerDock::onResponseReceived(const QString &text, const Coproducer::U
     const auto response = text.isEmpty() ? m_pendingResponse : text;
     m_pendingResponse.clear();
     if (response.trimmed().isEmpty()) {
-        m_streamStartPosition = -1;
         appendTranscript(TranscriptRole::Error,
                          tr("The model finished without producing a visible response."));
         return;
@@ -672,8 +553,9 @@ void CoproducerDock::onResponseReceived(const QString &text, const Coproducer::U
     }
 
     if (usage.promptTokens > 0 || usage.completionTokens > 0) {
-        m_statusLabel->setText(
-            tr("Tokens: %1 in / %2 out").arg(usage.promptTokens).arg(usage.completionTokens));
+        m_statusText
+            = tr("Tokens: %1 in / %2 out").arg(usage.promptTokens).arg(usage.completionTokens);
+        emit statusTextChanged();
     }
 }
 
@@ -686,7 +568,6 @@ void CoproducerDock::onErrorOccurred(const QString &message)
     if (m_promptTimer.isValid())
         LOG_INFO() << "Coproducer: prompt failed after" << formatHms(m_promptTimer.elapsed());
     m_pendingResponse.clear();
-    m_streamStartPosition = -1; // Leave any partial streamed text visible.
     appendTranscript(TranscriptRole::Error, message);
 }
 
@@ -697,64 +578,58 @@ void CoproducerDock::onSettingsTriggered()
         unloadProvider(); // Re-created lazily on the next prompt with the new settings.
 }
 
-void CoproducerDock::insertMarkdownFragment(QTextCursor &cursor, const QString &text)
-{
-    // Render Markdown (bold, lists, code, etc.) instead of showing raw syntax.
-    QTextDocument markdownDoc;
-    QFont responseFont = m_transcript->font();
-    responseFont.setPointSize(qMax(8, responseFont.pointSize() - 3));
-    markdownDoc.setDefaultFont(responseFont);
-    markdownDoc.setMarkdown(text);
-    // Give the response some breathing room instead of sitting flush left/top.
-    QTextBlockFormat breathingRoom;
-    breathingRoom.setLeftMargin(6);
-    breathingRoom.setTopMargin(6);
-    // The fragment's first block merges into this (destination) block, so it
-    // needs the margin set here too, not just merged into the fragment's blocks.
-    cursor.setBlockFormat(breathingRoom);
-    // Otherwise the text inherits whatever char format (e.g. a hyperlink) was
-    // last active, such as the "Sources used" links printed just above.
-    cursor.setCharFormat(QTextCharFormat());
-    QTextCursor mdCursor(&markdownDoc);
-    mdCursor.select(QTextCursor::Document);
-    mdCursor.mergeBlockFormat(breathingRoom);
-    cursor.insertFragment(QTextDocumentFragment(&markdownDoc));
-}
-
-// Re-renders the whole partial response as Markdown on every call (rather
-// than appending raw tokens) so formatting shows up live instead of only
-// once the response finishes, at the cost of some redundant work per token.
+// QML renders the transcript bubble list; the C++ layer only needs to keep
+// the model entries up to date as tokens stream in.
 void CoproducerDock::updateAssistantStream(const QString &partialText)
 {
-    QTextCursor cursor(m_transcript->document());
-    if (m_streamStartPosition >= 0) {
-        // Clear this block's prior content only; never re-split the block
-        // here; doing so every token merged the previous block boundary away,
-        // corrupting the user bubble's trailing block it was adjacent to.
-        cursor.setPosition(m_streamStartPosition);
-        cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-        cursor.removeSelectedText();
-    } else {
-        cursor.movePosition(QTextCursor::End);
-        QTextBlockFormat spacerFormat;
-        spacerFormat.setTopMargin(6);
-        if (cursor.atStart())
-            cursor.setBlockFormat(spacerFormat);
-        else
-            cursor.insertBlock(spacerFormat);
-        m_streamStartPosition = cursor.position();
+    if (m_transcriptData.isEmpty()) {
+        if (!partialText.trimmed().isEmpty())
+            appendTranscript(TranscriptRole::Assistant, partialText);
+        return;
     }
 
-    insertMarkdownFragment(cursor, partialText);
+    QVariantMap last = m_transcriptData.last().toMap();
+    if (last.value("role").toString() != QStringLiteral("assistant")) {
+        if (!partialText.trimmed().isEmpty())
+            appendTranscript(TranscriptRole::Assistant, partialText);
+        return;
+    }
 
-    m_transcript->setTextCursor(cursor);
-    m_transcript->ensureCursorVisible();
+    if (partialText.trimmed().isEmpty()) {
+        m_transcriptData.removeLast();
+        emit transcriptChanged();
+        return;
+    }
+
+    last["text"] = partialText;
+    m_transcriptData[m_transcriptData.size() - 1] = last;
+    emit transcriptChanged();
 }
 
 void CoproducerDock::finishAssistantStream(const QString &fullText)
 {
-    updateAssistantStream(fullText);
-    m_streamStartPosition = -1;
+    if (m_transcriptData.isEmpty()) {
+        appendTranscript(TranscriptRole::Assistant, fullText);
+        return;
+    }
+
+    QVariantMap last = m_transcriptData.last().toMap();
+    if (last.value("role").toString() == QStringLiteral("assistant")) {
+        last["text"] = fullText;
+        m_transcriptData[m_transcriptData.size() - 1] = last;
+        emit transcriptChanged();
+        if (!m_transcriptData.isEmpty()) {
+            QVariantMap prior = m_transcriptData.last().toMap();
+            if (prior.value("role").toString() == QStringLiteral("diagnostic")
+                && prior.value("text").toString().contains("Searching", Qt::CaseInsensitive)) {
+                m_transcriptData.removeLast();
+                emit transcriptChanged();
+            }
+        }
+        return;
+    }
+
+    appendTranscript(TranscriptRole::Assistant, fullText);
 }
 
 // Replaces "[N]" citation markers with a real Markdown link using our own
@@ -791,72 +666,20 @@ QString CoproducerDock::applyCitations(const QString &text) const
 
 void CoproducerDock::appendTranscript(TranscriptRole role, const QString &text)
 {
-    QTextCursor cursor(m_transcript->document());
-    cursor.movePosition(QTextCursor::End);
-
-    QTextBlockFormat spacerFormat;
-    spacerFormat.setTopMargin(6);
-    if (cursor.atStart())
-        cursor.setBlockFormat(spacerFormat);
-    else
-        cursor.insertBlock(spacerFormat);
-
-    switch (role) {
-    case TranscriptRole::User: {
-        // Constrain the prompt to an 80%-wide bubble instead of the full width.
-        // Blank lines above/below (tagged with the same group) act as padding so
-        // the painted bubble extends around the text rather than leaving a gap.
-        // The background itself is drawn by CoproducerTranscriptEdit::paintEvent()
-        // so its left corners can be rounded, which QTextBlockFormat can't do.
-        QTextBlockFormat bubbleFormat;
-        bubbleFormat.setProperty(kPromptGroupProperty, ++m_promptGroupCounter);
-        const auto viewportWidth = m_transcript->viewport()->width();
-        const qreal paddingLeft = 16;
-        const qreal paddingRight = 12;
-        bubbleFormat.setLeftMargin(viewportWidth * 0.2 + paddingLeft);
-        bubbleFormat.setRightMargin(paddingRight);
-
-        cursor.setBlockFormat(bubbleFormat);
-        cursor.insertBlock(bubbleFormat);
-        QTextCharFormat promptCharFormat;
-        promptCharFormat.setFontItalic(true);
-        cursor.setCharFormat(promptCharFormat);
-        cursor.insertText(text);
-        cursor.setCharFormat(QTextCharFormat());
-        cursor.insertBlock(bubbleFormat);
-        break;
-    }
-    case TranscriptRole::Assistant: {
-        insertMarkdownFragment(cursor, text);
-        break;
-    }
-    case TranscriptRole::Error: {
-        QTextBlockFormat errorFormat = spacerFormat;
-        errorFormat.setBackground(QColor(255, 0, 0, 40));
-        cursor.setBlockFormat(errorFormat);
-        cursor.insertText(text);
-        break;
-    }
-    case TranscriptRole::Diagnostic: {
-        cursor.setBlockFormat(spacerFormat);
-        QTextCharFormat diagnosticCharFormat;
-        diagnosticCharFormat.setFontItalic(true);
-        diagnosticCharFormat.setForeground(palette().color(QPalette::PlaceholderText));
-        cursor.setCharFormat(diagnosticCharFormat);
-        cursor.insertText(text);
-        cursor.setCharFormat(QTextCharFormat());
-        break;
-    }
-    }
-
-    m_transcript->moveCursor(QTextCursor::End);
-    m_transcript->ensureCursorVisible();
+    QVariantMap entry;
+    entry["role"] = role == TranscriptRole::User        ? QStringLiteral("user")
+                    : role == TranscriptRole::Assistant ? QStringLiteral("assistant")
+                    : role == TranscriptRole::Error     ? QStringLiteral("error")
+                                                        : QStringLiteral("diagnostic");
+    entry["text"] = text;
+    m_transcriptData.append(entry);
+    emit transcriptChanged();
 }
 
 void CoproducerDock::rebuildTranscript()
 {
-    m_promptGroupCounter = 0;
-    m_transcript->clear();
+    m_transcriptData.clear();
+    emit transcriptChanged();
     for (int i = 1; i < m_history.size(); ++i) {
         const auto &msg = m_history.at(i);
         TranscriptRole role = (msg.role == Coproducer::ChatMessage::User)
@@ -870,12 +693,7 @@ void CoproducerDock::setBusy(bool busy)
 {
     bool wasBusy = m_busy;
     m_busy = busy;
-    m_promptEdit->setEnabled(!busy);
-    m_sendButton->setIcon(
-        busy ? QIcon::fromTheme("media-playback-stop",
-                                QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png"))
-             : QIcon::fromTheme("go-up", QIcon(":/icons/oxygen/32x32/actions/go-up.png")));
-    m_sendButton->setToolTip(busy ? tr("Cancel") : tr("Send"));
+    emit busyChanged();
     if (busy) {
         if (!wasBusy) {
             m_thinkingSeconds = 0;
@@ -884,7 +702,7 @@ void CoproducerDock::setBusy(bool busy)
     } else {
         m_thinkingTimer->stop();
         m_statusBase.clear();
-        m_statusLabel->clear();
+        updateStatusLabel();
     }
 }
 
@@ -897,10 +715,10 @@ void CoproducerDock::setStatusBase(const QString &text)
 void CoproducerDock::updateStatusLabel()
 {
     if (m_busy && m_thinkingSeconds > 0)
-        m_statusLabel->setText(m_statusBase + QStringLiteral(" ")
-                               + formatElapsedTime(m_thinkingSeconds));
+        m_statusText = m_statusBase + QStringLiteral(" ") + formatElapsedTime(m_thinkingSeconds);
     else
-        m_statusLabel->setText(m_statusBase);
+        m_statusText = m_statusBase;
+    emit statusTextChanged();
 }
 
 QString CoproducerDock::formatElapsedTime(int seconds)
@@ -915,5 +733,3 @@ void CoproducerDock::onThinkingTick()
     ++m_thinkingSeconds;
     updateStatusLabel();
 }
-
-#include "coproducerdock.moc"
