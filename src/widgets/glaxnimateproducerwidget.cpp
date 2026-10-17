@@ -690,7 +690,9 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer,
             const QString storedPath = Settings.glaxnimatePath();
             // A path starting with "shell:" is a previously saved Store App ID.
             // A path with a drive letter is a user-specified executable — skip Store check.
-            const bool isAppIdPath = storedPath.startsWith(QStringLiteral("shell:"));
+            const bool isAppIdPath = storedPath.startsWith(QStringLiteral("shell:"))
+                                     && !storedPath.startsWith(
+                                         QStringLiteral("shell:AppsFolder\\{"));
             const bool isExePath = storedPath.length() >= 2 && storedPath[1] == u':';
             QString storeId;
             if (isAppIdPath) {
@@ -710,7 +712,7 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer,
                 checkProcess.waitForFinished(10000);
                 const QString foundAppId = QString::fromLocal8Bit(
                     checkProcess.readAllStandardOutput().trimmed());
-                if (!foundAppId.isEmpty()) {
+                if (!foundAppId.isEmpty() && !foundAppId.startsWith(QStringLiteral("{"))) {
                     storeId = QStringLiteral("shell:AppsFolder\\") + foundAppId;
                     if (storeId != storedPath) {
                         Settings.setGlaxnimatePath(storeId);
