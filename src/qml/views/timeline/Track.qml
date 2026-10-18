@@ -93,6 +93,9 @@ Rectangle {
         }
         let frame = 0;
         for (let i = 0; i < n; i++) {
+            // A clip dragged to another track is reparented, and its placeholder holds its place.
+            if (placeHolderAdded && clips[i].parent !== clipRow)
+                continue;
             const start = frame;
             // Playlist start is the sum of entry lengths, including a transition
             // and the clips shortened on either side of it.
