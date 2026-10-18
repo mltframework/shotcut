@@ -11,6 +11,7 @@ TimeSpinner 1.0 TimeSpinner.qml
 SaveDefaultButton 1.0 SaveDefaultButton.qml
 SliderSpinner 1.0 SliderSpinner.qml
 RectangleControl 1.0 RectangleControl.qml
+RectangleVui 1.0 RectangleVui.qml
 SimplePropertyUI 1.0 SimplePropertyUI.qml
 TextFilterUi 1.0 TextFilterUi.qml
 TextFilterVui 1.0 TextFilterVui.qml

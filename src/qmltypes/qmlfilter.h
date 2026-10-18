@@ -97,6 +97,7 @@ public:
                          const QRectF &rect,
                          int position = -1,
                          mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void setRectNoUndo(const QString &name, const QRectF &rect);
     Q_INVOKABLE void setGradient(QString name, const QStringList &gradient);
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();

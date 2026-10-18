@@ -530,6 +530,30 @@ void QmlFilter::set(QString name, const QRectF &rect, int position, mlt_keyframe
 }
 
 /*!
+    \qmlmethod Filter::setRectNoUndo(string name, rect value)
+    \brief Sets MLT property \a name to \a value without recording an undo command.
+    When undo tracking is already active, the value is copied into the undo baseline
+    so a later undo does not treat the write as a user edit.
+*/
+
+void QmlFilter::setRectNoUndo(const QString &name, const QRectF &rect)
+{
+    if (!m_service.is_valid() || name.isEmpty())
+        return;
+    const bool exists = m_service.get(qUtf8Printable(name));
+    if (exists) {
+        const mlt_rect current = m_service.get_rect(qUtf8Printable(name));
+        if (rect.x() == current.x && rect.y() == current.y && rect.width() == current.w
+            && rect.height() == current.h && current.o == 1.0)
+            return;
+    }
+    m_service.set(qUtf8Printable(name), rect.x(), rect.y(), rect.width(), rect.height(), 1.0);
+    // An empty baseline means tracking has not started. Do not create one here.
+    if (m_previousState.count())
+        m_previousState.pass_property(m_service, name.toUtf8().constData());
+}
+
+/*!
     \qmlmethod Filter::loadPresets()
     \brief Reloads the list of saved presets from disk and emits \l presetsChanged.
 */

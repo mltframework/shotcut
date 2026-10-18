@@ -33,3 +33,11 @@ add_executable(test_exportpresetdialog
 target_include_directories(test_exportpresetdialog PRIVATE ${CMAKE_SOURCE_DIR}/src/dialogs)
 target_link_libraries(test_exportpresetdialog PRIVATE Qt6::Widgets Qt6::Test)
 add_test(NAME exportpresetdialog COMMAND test_exportpresetdialog -platform offscreen)
+
+add_executable(test_addonqmlgenerator
+  test_addonqmlgenerator.cpp
+  ${CMAKE_SOURCE_DIR}/src/controllers/addonqmlgenerator.cpp
+)
+target_include_directories(test_addonqmlgenerator PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(test_addonqmlgenerator PRIVATE Qt6::Core Qt6::Test PkgConfig::mlt++)
+add_test(NAME addonqmlgenerator COMMAND test_addonqmlgenerator)

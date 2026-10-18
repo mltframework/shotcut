@@ -248,7 +248,20 @@ void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
         meta->setIsAudio(descriptor.isAudio);
 
         QStringList keyframeableProperties;
+        QStringList simpleProperties;
+        bool sawFullRect = false;
         for (const auto &parameter : descriptor.parameters) {
+            const QString earlyType = parameter.type.trimmed().toLower();
+            const QString earlyWidget = parameter.widget.trimmed().toLower();
+            const bool fullRect = !descriptor.isAudio && !parameter.isReadOnly
+                                  && earlyType == QStringLiteral("rect")
+                                  && earlyWidget != QStringLiteral("point")
+                                  && earlyWidget != QStringLiteral("size");
+            bool extraFullRect = false;
+            if (fullRect) {
+                extraFullRect = sawFullRect;
+                sawFullRect = true;
+            }
             if (!parameter.supportsKeyframes)
                 continue;
 
@@ -262,9 +275,15 @@ void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
             const bool isNumericType = paramType == QStringLiteral("integer")
                                        || paramType == QStringLiteral("float");
             const bool isColorType = paramType == QStringLiteral("color");
+            const QString widget = parameter.widget.trimmed().toLower();
+            const bool isPointOrSizeWidget = widget == QStringLiteral("point")
+                                             || widget == QStringLiteral("size");
+            const bool isRectangleType = paramType == QStringLiteral("rect")
+                                         && !isPointOrSizeWidget;
 
             keyParam->setProperty("isCurve", isNumericType);
             keyParam->setProperty("isColor", isColorType);
+            keyParam->setProperty("isRectangle", isRectangleType);
             if (!parameter.unit.isEmpty())
                 keyParam->setProperty("units", parameter.unit);
 
@@ -282,12 +301,14 @@ void FilterController::loadAddOnFilterMetadata(Mlt::Properties *mltFilters)
                 parameterList.append(&parameterList, keyParam);
 
             keyframeableProperties << parameter.name;
+            if (!extraFullRect)
+                simpleProperties << parameter.name;
         }
 
         if (!keyframeableProperties.isEmpty()) {
             meta->keyframes()->setProperty("allowAnimateIn", true);
             meta->keyframes()->setProperty("allowAnimateOut", true);
-            meta->keyframes()->setProperty("simpleProperties", keyframeableProperties);
+            meta->keyframes()->setProperty("simpleProperties", simpleProperties);
         }
 
         addMetadata(meta);
@@ -330,9 +351,12 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
     tempDir = QDir(tempDir.absoluteFilePath(service));
 
     const QString cachedFileName = QStringLiteral("ui.qml");
+    const QString vuiFileName = QStringLiteral("vui.qml");
     if (QFileInfo::exists(tempDir.filePath(cachedFileName))) {
         meta->setPath(tempDir);
         meta->setQmlFileName(cachedFileName);
+        meta->setVuiFileName(QFileInfo::exists(tempDir.filePath(vuiFileName)) ? vuiFileName
+                                                                              : QString());
         return true;
     }
 
@@ -376,6 +400,7 @@ bool FilterController::ensureAddOnFilterQml(QmlMetadata *meta)
 
     meta->setPath(tempDir);
     meta->setQmlFileName(cachedFileName);
+    meta->setVuiFileName(QFileInfo::exists(tempDir.filePath(vuiFileName)) ? vuiFileName : QString());
     return true;
 }
 

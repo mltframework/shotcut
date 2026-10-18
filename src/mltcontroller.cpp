@@ -1353,6 +1353,24 @@ void Controller::pasteFilters(Mlt::Producer *producer, Producer *fromProducer)
     }
 }
 
+static void promoteSimpleKeyframeProperty(Mlt::Filter &filter,
+                                          QmlMetadata *meta,
+                                          const QString &name)
+{
+    if (!meta || !meta->keyframes() || filter.get_animation(name.toUtf8().constData()))
+        return;
+
+    // Cause a string property to be interpreted as an animated value.
+    const QByteArray key = name.toUtf8();
+    QmlKeyframesParameter *parameter = meta->keyframes()->parameter(name);
+    if (parameter && parameter->isColor())
+        filter.anim_get_color(key.constData(), 0, filter.get_length());
+    else if (parameter && parameter->isRectangle())
+        filter.anim_get_rect(key.constData(), 0, filter.get_length());
+    else
+        filter.anim_get_double(key.constData(), 0, filter.get_length());
+}
+
 void Controller::adjustFilters(Producer &producer, int index)
 {
     bool changed = false;
@@ -1413,17 +1431,8 @@ void Controller::adjustFilters(Producer &producer, int index)
                     QmlMetadata *meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
                         foreach (QString name, meta->keyframes()->simpleProperties()) {
-                            if (!filter->get_animation(name.toUtf8().constData())) {
-                                // Cause a string property to be interpreted as animated value.
-                                if (meta->keyframes()->parameter(name)->isColor())
-                                    filter->anim_get_color(name.toUtf8().constData(),
-                                                           0,
-                                                           filter->get_length());
-                                else
-                                    filter->anim_get_double(name.toUtf8().constData(),
-                                                            0,
-                                                            filter->get_length());
-                            }
+                            if (!filter->get_animation(name.toUtf8().constData()))
+                                promoteSimpleKeyframeProperty(*filter, meta, name);
                             Mlt::Animation animation = filter->get_animation(
                                 name.toUtf8().constData());
                             if (animation.is_valid()) {
@@ -1628,17 +1637,8 @@ void Controller::adjustFilter(
             if ((filter->get_int(kShotcutAnimInProperty) || filter->get_int(kShotcutAnimOutProperty))
                 && meta && meta->keyframes()) {
                 for (const QString &name : meta->keyframes()->simpleProperties()) {
-                    if (!filter->get_animation(name.toUtf8().constData())) {
-                        // Cause a string property to be interpreted as animated value.
-                        if (meta->keyframes()->parameter(name)->isColor())
-                            filter->anim_get_color(name.toUtf8().constData(),
-                                                   0,
-                                                   filter->get_length());
-                        else
-                            filter->anim_get_double(name.toUtf8().constData(),
-                                                    0,
-                                                    filter->get_length());
-                    }
+                    if (!filter->get_animation(name.toUtf8().constData()))
+                        promoteSimpleKeyframeProperty(*filter, meta, name);
                     Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
                     if (animation.is_valid()) {
                         int n = animation.key_count();
