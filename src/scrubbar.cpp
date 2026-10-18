@@ -204,7 +204,6 @@ bool ScrubBar::onSeek(int value)
 void ScrubBar::paintEvent(QPaintEvent *e)
 {
     QPen pen(QBrush(palette().text().color()), 2);
-    // QPen pen(QBrush(QmlApplication::playheadColor()), 2);
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
@@ -213,22 +212,36 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     if (!isEnabled())
         return;
 
-    // draw playhead
-    QPolygon pa(3);
-    const int x = selectionSize / 2 - 1;
-    int head = m_margin + m_cursorPosition;
-    pa.setPoints(3, head - x - 1, 0, head + x, 0, head, x);
-    p.setBrush(QmlApplication::playheadColor());
+    // Snap the playhead to device pixels so fractional scaling does not
+    // crawl the triangle edge or change the shaft width. The shaft is one
+    // logical pixel, rounded up to whole device pixels.
+    const qreal ratio = devicePixelRatioF();
+    const QColor playheadColor = QmlApplication::playheadColor();
+    p.setRenderHint(QPainter::Antialiasing, false);
     p.setPen(Qt::NoPen);
-    p.drawPolygon(pa);
-    p.setPen(pen);
-    p.setPen(QPen(QBrush(QmlApplication::playheadColor()), 1));
+    p.setBrush(playheadColor);
+    const int origin = qRound((m_margin + m_cursorPosition) * ratio);
+    // Equal device-pixel run and height on both sides.
+    // An even shaft is centered on a pixel boundary, so the triangle is even too.
+    const int shaftWidth = qMax(1, qCeil(ratio));
+    const int span = qMax(1, qRound((selectionSize / 2.0 - 1.0) * ratio));
+    const bool evenWidth = shaftWidth % 2 == 0;
+    for (int y = 0; y <= span; ++y) {
+        const int half = span - y;
+        const int width = evenWidth ? half * 2 : half * 2 + 1;
+        if (width < 1)
+            continue;
+        const int left = origin - half;
+        p.fillRect(QRectF(left / ratio, y / ratio, width / ratio, 1.0 / ratio), playheadColor);
+    }
     if (m_head >= 0) {
-        head = m_margin + m_head * m_scale;
-        p.drawLine(head, 0, head, height() - 1);
+        const int shaftLogical = m_margin + static_cast<int>(m_head * m_scale);
+        const int shaft = qRound(shaftLogical * ratio) - shaftWidth / 2;
+        p.fillRect(QRectF(shaft / ratio, 0, shaftWidth / ratio, height()), playheadColor);
     }
 
     // draw in point
+    QPolygon pa(3);
     if (m_in > -1) {
         const int in = m_margin + m_in * m_scale;
         pa.setPoints(3,
