@@ -190,7 +190,7 @@ Rectangle {
             model: attachedfiltersmodel
             delegate: filterDelegate
             boundsBehavior: Flickable.StopAtBounds
-            snapMode: ListView.SnapToItem
+            snapMode: atYBeginning || moving ? ListView.NoSnap : ListView.SnapToItem
             currentIndex: -1
             focus: true
             section.property: "typeDisplay"
