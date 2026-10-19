@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "coproducer/projectinspector.h"
+#include "mcp/projectinspector.h"
 
 #include "docks/timelinedock.h"
 #include "mainwindow.h"
@@ -177,20 +177,8 @@ QJsonArray summarizeTimelineClips()
 
 } // namespace
 
-namespace Coproducer {
-
-ToolDefinition projectInspectorTool()
-{
-    ToolDefinition tool;
-    tool.name = QStringLiteral("shotcut_project_inspect");
-    tool.description = QStringLiteral(
-        "Inspect the currently open Shotcut clip, playlist, or timeline and the UI playback state. "
-        "Return a compact JSON object with read-only metadata. Do not modify project content.");
-    tool.parameters = QJsonObject{{"type", "object"},
-                                  {"properties", QJsonObject{}},
-                                  {"required", QJsonArray{}}};
-    return tool;
-}
+namespace Shotcut {
+namespace Mcp {
 
 QJsonObject inspectProject()
 {
@@ -215,9 +203,8 @@ QJsonObject inspectProject()
         snapshot["current_producer"] = QJsonObject{{"valid", false}};
     }
 
-    if (hasOpenClip && controller.producer()) {
+    if (hasOpenClip && controller.producer())
         snapshot["open_clip"] = summarizeProducer(controller.producer());
-    }
 
     if (hasPlaylist && controller.producer()) {
         Mlt::Playlist playlist(*controller.producer());
@@ -229,7 +216,6 @@ QJsonObject inspectProject()
     }
 
     QJsonObject uiState;
-
     if (hasTimeline && controller.producer()) {
         QJsonObject info = summarizeProducer(controller.producer());
         info["duration_frames"] = controller.producer()->get_length();
@@ -316,8 +302,8 @@ QJsonObject inspectProject()
     }
 
     snapshot["ui_state"] = uiState;
-
     return snapshot;
 }
 
-} // namespace Coproducer
+} // namespace Mcp
+} // namespace Shotcut

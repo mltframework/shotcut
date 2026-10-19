@@ -20,7 +20,6 @@
 #include "Logger.h"
 #include "coproducer/localllamaserverprovider.h"
 #include "coproducer/openaicompatibleprovider.h"
-#include "coproducer/projectinspector.h"
 #include "dialogs/coproducersettingsdialog.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -53,14 +52,13 @@ const int kMaxUiHistoryMessages = 50;
 const int kMaxToolRounds = 3;
 
 const auto kForumSearchToolName = QStringLiteral("shotcut_forum_search");
-const auto kProjectInspectorToolName = QStringLiteral("shotcut_project_inspect");
-
 const char *kToolSearchInstructions
     = "You have two tools available: shotcut_forum_search searches the Shotcut user forum, "
-      "and shotcut_project_inspect reports the live clip, playlist, timeline, and UI state of "
-      "the current project. Use shotcut_project_inspect for questions about the currently open "
-      "clip, the playlist, the timeline, current playback position, or the active editing "
-      "context. For questions about Shotcut's UI, menus, filters, keyboard shortcuts, "
+      "shotcut_project_inspect reports the live project state, and shotcut_timeline_summary "
+      "summarizes the timeline. Use shotcut_project_inspect or shotcut_timeline_summary for "
+      "questions about the currently open clip, playlist, timeline, current playback position, "
+      "or active editing context. For questions about Shotcut's UI, menus, filters, keyboard "
+      "shortcuts, "
       "version-specific behavior, or error messages, prefer shotcut_forum_search over "
       "guessing from general knowledge. Use a short keyword query when searching the forum, "
       "and call it again with a different query if the first results are not relevant. Tool "
@@ -68,23 +66,6 @@ const char *kToolSearchInstructions
       "When you use information from a source, put its number in brackets right after the "
       "relevant sentence, e.g. [1]. Only cite sources you actually used; do not invent URLs "
       "or citation numbers.";
-
-Coproducer::ToolDefinition forumSearchTool()
-{
-    Coproducer::ToolDefinition tool;
-    tool.name = kForumSearchToolName;
-    tool.description = QStringLiteral(
-        "Search the Shotcut user forum (forum.shotcut.org) and return excerpts from the "
-        "most relevant topics as numbered sources.");
-    tool.parameters
-        = QJsonObject{{"type", "object"},
-                      {"properties",
-                       QJsonObject{{"query",
-                                    QJsonObject{{"type", "string"},
-                                                {"description", "Short keyword search query"}}}}},
-                      {"required", QJsonArray{"query"}}};
-    return tool;
-}
 
 // Formats a duration for the log, e.g. 3725000 -> "01:02:05".
 QString formatHms(qint64 ms)
@@ -96,12 +77,25 @@ QString formatHms(qint64 ms)
         .arg(totalSeconds % 60, 2, 10, QChar('0'));
 }
 
+QList<Shotcut::Mcp::ForumSource> forumSourcesFromMcpResult(const QJsonObject &result)
+{
+    QList<Shotcut::Mcp::ForumSource> sources;
+    const QJsonArray sourceArray = result.value("sources").toArray();
+    for (const QJsonValue &value : sourceArray) {
+        const QJsonObject source = value.toObject();
+        sources.append({source.value("title").toString(),
+                        source.value("url").toString(),
+                        source.value("excerpt").toString()});
+    }
+    return sources;
+}
+
 } // namespace
 
-CoproducerDock::CoproducerDock(QWidget *parent)
+CoproducerDock::CoproducerDock(quint16 mcpServerPort, QWidget *parent)
     : QDockWidget(tr("Coproducer"), parent)
     , m_thinkingTimer(new QTimer(this))
-    , m_forumSearch(new Coproducer::ForumSearch(this))
+    , m_mcpClient(new Shotcut::Mcp::McpClient(mcpServerPort, this))
 {
     setObjectName("CoproducerDock");
     setWindowTitle(tr("Coproducer"));
@@ -129,10 +123,10 @@ CoproducerDock::CoproducerDock(QWidget *parent)
     m_thinkingTimer->setInterval(1000);
     connect(m_thinkingTimer, &QTimer::timeout, this, &CoproducerDock::onThinkingTick);
 
-    connect(m_forumSearch,
-            &Coproducer::ForumSearch::resultsReady,
+    connect(m_mcpClient,
+            &Shotcut::Mcp::McpClient::requestCompleted,
             this,
-            &CoproducerDock::onSearchResults);
+            &CoproducerDock::onMcpRequestCompleted);
 }
 
 void CoproducerDock::ensureProvider()
@@ -283,6 +277,11 @@ void CoproducerDock::cancelRequest()
     m_toolPayload.clear();
     m_queuedToolCalls.clear();
     m_activeToolCall = Coproducer::ToolCall();
+    m_mcpClient->cancelAll();
+    m_initializeRequestId = 0;
+    m_toolListRequestId = 0;
+    m_activeMcpRequestId = 0;
+    m_pendingSearchQuery.clear();
     setBusy(false);
     m_statusText = tr("Canceled.");
     emit statusTextChanged();
@@ -345,33 +344,133 @@ void CoproducerDock::sendPrompt()
         m_activeToolCall = Coproducer::ToolCall();
         m_toolRounds = 0;
         m_toolSearchActive = true;
-        QList<Coproducer::ToolDefinition> tools;
-        tools << forumSearchTool();
-        tools << Coproducer::projectInspectorTool();
-        m_provider->setTools(tools);
+        m_initializeRequestId = m_mcpClient->initialize();
+        return;
+    }
+
+    m_lastSources.clear();
+    m_pendingSearchQuery = prompt.left(200);
+    m_initializeRequestId = m_mcpClient->initialize();
+}
+
+void CoproducerDock::onMcpRequestCompleted(quint64 requestId,
+                                           const QJsonObject &response,
+                                           const QString &error)
+{
+    if (!m_busy)
+        return;
+
+    if (requestId == m_initializeRequestId) {
+        m_initializeRequestId = 0;
+        if (!error.isEmpty()) {
+            if (m_mode == Mode::SearchUserGuide) {
+                showUserGuideSearchResults({},
+                                           tr("Unable to initialize the Shotcut MCP connection: %1")
+                                               .arg(error));
+            } else {
+                setBusy(false);
+                m_toolSearchActive = false;
+                appendTranscript(TranscriptRole::Error,
+                                 tr("Unable to initialize the Shotcut MCP connection: %1")
+                                     .arg(error));
+            }
+            return;
+        }
+        if (m_mode == Mode::SearchUserGuide) {
+            QJsonObject arguments;
+            arguments.insert("query", m_pendingSearchQuery);
+            setStatusBase(tr("Searching User Guide..."));
+            m_activeMcpRequestId = m_mcpClient->callTool(kForumSearchToolName, arguments);
+            return;
+        }
+        m_toolListRequestId = m_mcpClient->toolsList();
+        return;
+    }
+
+    if (requestId == m_toolListRequestId) {
+        m_toolListRequestId = 0;
+        if (!error.isEmpty()) {
+            setBusy(false);
+            m_toolSearchActive = false;
+            appendTranscript(TranscriptRole::Error,
+                             tr("Unable to connect to the Shotcut MCP server: %1").arg(error));
+            return;
+        }
+
+        const QJsonArray tools = response.value("result").toObject().value("tools").toArray();
+        m_mcpTools.clear();
+        for (const QJsonValue &value : tools) {
+            const QJsonObject object = value.toObject();
+            Coproducer::ToolDefinition tool;
+            tool.name = object.value("name").toString();
+            tool.description = object.value("description").toString();
+            tool.parameters = object.value("inputSchema").toObject();
+            if (!tool.name.isEmpty())
+                m_mcpTools.append(tool);
+        }
+        if (m_mcpTools.isEmpty()) {
+            setBusy(false);
+            m_toolSearchActive = false;
+            appendTranscript(TranscriptRole::Error,
+                             tr("The Shotcut MCP server returned no available tools."));
+            return;
+        }
+        m_provider->setTools(m_mcpTools);
         m_provider->sendMessage(m_toolPayload);
         return;
     }
 
-    m_forumSearch->search(prompt);
-}
-
-void CoproducerDock::onSearchResults(const QList<Coproducer::ForumSource> &sources,
-                                     const QString &error)
-{
-    if (!m_busy)
+    if (requestId != m_activeMcpRequestId)
         return;
-    if (m_toolSearchActive) {
-        onForumToolResults(sources, error);
+    m_activeMcpRequestId = 0;
+    if (m_mode == Mode::SearchUserGuide) {
+        m_pendingSearchQuery.clear();
+        if (!error.isEmpty()) {
+            showUserGuideSearchResults({}, error);
+            return;
+        }
+        if (response.contains("error")) {
+            showUserGuideSearchResults(
+                {}, response.value("error").toObject().value("message").toString());
+            return;
+        }
+        const QJsonObject structuredContent
+            = response.value("result").toObject().value("structuredContent").toObject();
+        onUserGuideMcpResults(structuredContent);
         return;
     }
-    showUserGuideSearchResults(sources, error);
+    if (!m_toolSearchActive)
+        return;
+    if (!error.isEmpty()) {
+        finishToolCall(QStringLiteral("MCP request failed: %1").arg(error));
+        return;
+    }
+    if (response.contains("error")) {
+        finishToolCall(QStringLiteral("MCP tool failed: %1")
+                           .arg(response.value("error").toObject().value("message").toString()));
+        return;
+    }
+    const QJsonObject structuredContent
+        = response.value("result").toObject().value("structuredContent").toObject();
+    if (m_activeToolCall.name == kForumSearchToolName) {
+        const auto sources = forumSourcesFromMcpResult(structuredContent);
+        onForumToolResults(sources, structuredContent.value("error").toString());
+        return;
+    }
+    finishToolCall(
+        QString::fromUtf8(QJsonDocument(structuredContent).toJson(QJsonDocument::Compact)));
+}
+
+void CoproducerDock::onUserGuideMcpResults(const QJsonObject &structuredContent)
+{
+    showUserGuideSearchResults(forumSourcesFromMcpResult(structuredContent),
+                               structuredContent.value("error").toString());
 }
 
 // User-guide search mode: no model call, just show the top few results directly.
 // Discourse's search API doesn't expose a relevance score, so we just take
 // the first few results in whatever order the search already ranked them.
-void CoproducerDock::showUserGuideSearchResults(const QList<Coproducer::ForumSource> &sources,
+void CoproducerDock::showUserGuideSearchResults(const QList<Shotcut::Mcp::ForumSource> &sources,
                                                 const QString &error)
 {
     setBusy(false);
@@ -418,47 +517,30 @@ void CoproducerDock::runNextToolCall()
 {
     if (m_queuedToolCalls.isEmpty()) {
         // Force an answer once the round limit is hit to avoid endless searching.
-        QList<Coproducer::ToolDefinition> tools;
-        tools << forumSearchTool();
-        tools << Coproducer::projectInspectorTool();
-        m_provider->setTools(tools, m_toolRounds < kMaxToolRounds);
+        m_provider->setTools(m_mcpTools, m_toolRounds < kMaxToolRounds);
         setStatusBase(tr("Found %1 result(s); thinking...").arg(m_lastSources.size()));
         m_provider->sendMessage(m_toolPayload);
         return;
     }
 
     m_activeToolCall = m_queuedToolCalls.takeFirst();
-    if (m_activeToolCall.name == kProjectInspectorToolName) {
-        const auto project = Coproducer::inspectProject();
-        finishToolCall(QString::fromUtf8(QJsonDocument(project).toJson(QJsonDocument::Compact)));
-        return;
-    }
-    if (m_activeToolCall.name != kForumSearchToolName) {
-        finishToolCall(QStringLiteral("Error: unknown tool \"%1\".").arg(m_activeToolCall.name));
-        return;
-    }
-    const auto args = QJsonDocument::fromJson(m_activeToolCall.arguments.toUtf8()).object();
-    const auto query = args.value(QStringLiteral("query")).toString().trimmed().left(200);
-    if (query.isEmpty()) {
-        finishToolCall(QStringLiteral("Error: the \"query\" argument is required."));
-        return;
-    }
-    LOG_INFO() << "Coproducer: forum search tool query" << query;
-    if (!m_transcriptData.isEmpty()) {
-        QVariantMap last = m_transcriptData.last().toMap();
-        if (last.value("role").toString() == QStringLiteral("diagnostic")
-            && last.value("text").toString().contains("Searching", Qt::CaseInsensitive)) {
-            m_transcriptData.removeLast();
-            emit transcriptChanged();
+    const QJsonObject args = QJsonDocument::fromJson(m_activeToolCall.arguments.toUtf8()).object();
+    if (m_activeToolCall.name == kForumSearchToolName) {
+        const QString query = args.value(QStringLiteral("query")).toString().trimmed().left(200);
+        if (query.isEmpty()) {
+            finishToolCall(QStringLiteral("Error: the \"query\" argument is required."));
+            return;
         }
+        setStatusBase(tr("Searching User Guide for \"%1\"... ").arg(query).trimmed());
+    } else {
+        setStatusBase(tr("Inspecting the current Shotcut project..."));
     }
-    setStatusBase(tr("Searching User Guide for \"%1\"...").arg(query));
-    m_forumSearch->search(query);
+    m_activeMcpRequestId = m_mcpClient->callTool(m_activeToolCall.name, args);
 }
 
 // Numbers new sources after those already found for this prompt, reusing the
 // existing number for a repeated URL, so citations stay unique across calls.
-void CoproducerDock::onForumToolResults(const QList<Coproducer::ForumSource> &sources,
+void CoproducerDock::onForumToolResults(const QList<Shotcut::Mcp::ForumSource> &sources,
                                         const QString &error)
 {
     QStringList parts;

@@ -58,6 +58,11 @@ class SubtitlesDock;
 class CoproducerDock;
 class ScreenCapture;
 class HdrPreviewWindow;
+namespace Shotcut {
+namespace Mcp {
+class McpServer;
+}
+} // namespace Shotcut
 
 class MainWindow : public QMainWindow
 {
@@ -228,6 +233,7 @@ private:
     NotesDock *m_notesDock;
     SubtitlesDock *m_subtitlesDock;
     CoproducerDock *m_coproducerDock;
+    Shotcut::Mcp::McpServer *m_mcpServer = nullptr;
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
     ElementsDock *m_elementsDock;

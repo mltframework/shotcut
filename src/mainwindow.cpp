@@ -54,6 +54,7 @@
 #include "hdrpreviewwindow.h"
 #include "jobqueue.h"
 #include "jobs/screencapturejob.h"
+#include "mcp/mcpserver.h"
 #include "models/audiolevelstask.h"
 #include "models/keyframesmodel.h"
 #include "models/motiontrackermodel.h"
@@ -201,6 +202,13 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
+    m_mcpServer = new Shotcut::Mcp::McpServer(this);
+    if (m_mcpServer->listen()) {
+        LOG_INFO() << "MCP endpoint listening at http://127.0.0.1:" << m_mcpServer->boundPort()
+                   << "/mcp";
+    } else {
+        LOG_WARNING() << "MCP server failed to start; Coproducer MCP tools will be unavailable.";
+    }
     setDockNestingEnabled(true);
     const auto highlight = palette().highlight().color();
     setStyleSheet(QString("QMainWindow::separator {"
@@ -918,7 +926,7 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::onCreateOrEditFilterOnOutput);
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
-    m_coproducerDock = new CoproducerDock(this);
+    m_coproducerDock = new CoproducerDock(m_mcpServer->boundPort(), this);
     m_coproducerDock->hide();
     m_coproducerDock->toggleViewAction()->setShortcut(
         QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_7));
@@ -943,6 +951,16 @@ void MainWindow::setupAndConnectDocks()
         m_coproducerDock->setMode(0);
     });
     ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerChatAction);
+
+    auto *copyMcpEndpointAction = new QAction(tr("Copy MCP Endpoint"), this);
+    copyMcpEndpointAction->setEnabled(m_mcpServer->boundPort() != 0);
+    connect(copyMcpEndpointAction, &QAction::triggered, this, [this]() {
+        const QString endpoint
+            = QStringLiteral("http://127.0.0.1:%1/mcp").arg(m_mcpServer->boundPort());
+        QApplication::clipboard()->setText(endpoint);
+        showStatusMessage(tr("MCP endpoint copied to clipboard."));
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, copyMcpEndpointAction);
 
     // Left area
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);

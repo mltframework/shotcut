@@ -19,7 +19,8 @@
 #define COPRODUCERDOCK_H
 
 #include "coproducer/chatprovider.h"
-#include "coproducer/forumsearch.h"
+#include "mcp/forumsearch.h"
+#include "mcp/mcpclient.h"
 
 #include <QDockWidget>
 #include <QElapsedTimer>
@@ -46,7 +47,7 @@ signals:
     void modeChanged();
 
 public:
-    explicit CoproducerDock(QWidget *parent = nullptr);
+    explicit CoproducerDock(quint16 mcpServerPort, QWidget *parent = nullptr);
 
     QVariantList transcript() const;
     QString promptText() const;
@@ -65,7 +66,7 @@ private slots:
     void onNewChatClicked();
     void onSendOrCancelClicked();
     void onModeChanged(int index);
-    void onSearchResults(const QList<Coproducer::ForumSource> &sources, const QString &error);
+    void onMcpRequestCompleted(quint64 requestId, const QJsonObject &response, const QString &error);
     void onResponseStarted();
     void onPromptProgress(int processedTokens, int totalTokens);
     void onTokenReceived(const QString &token);
@@ -91,8 +92,9 @@ private:
     void cancelRequest();
     void runNextToolCall();
     void finishToolCall(const QString &result);
-    void onForumToolResults(const QList<Coproducer::ForumSource> &sources, const QString &error);
-    void showUserGuideSearchResults(const QList<Coproducer::ForumSource> &sources,
+    void onForumToolResults(const QList<Shotcut::Mcp::ForumSource> &sources, const QString &error);
+    void onUserGuideMcpResults(const QJsonObject &structuredContent);
+    void showUserGuideSearchResults(const QList<Shotcut::Mcp::ForumSource> &sources,
                                     const QString &error);
     void setStatusBase(const QString &text);
     void updateStatusLabel();
@@ -114,8 +116,13 @@ private:
     Mode m_mode = Mode::AiChat;
     QElapsedTimer m_promptTimer;
     Coproducer::ChatProvider *m_provider = nullptr;
-    Coproducer::ForumSearch *m_forumSearch = nullptr;
-    QList<Coproducer::ForumSource> m_lastSources;
+    Shotcut::Mcp::McpClient *m_mcpClient = nullptr;
+    QList<Coproducer::ToolDefinition> m_mcpTools;
+    quint64 m_initializeRequestId = 0;
+    quint64 m_toolListRequestId = 0;
+    quint64 m_activeMcpRequestId = 0;
+    QString m_pendingSearchQuery;
+    QList<Shotcut::Mcp::ForumSource> m_lastSources;
     // Tool search: the conversation for the current prompt, including tool
     // calls and results, which is resent after each round of tool calls.
     QList<Coproducer::ChatMessage> m_toolPayload;
