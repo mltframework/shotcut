@@ -40,6 +40,10 @@ CTestTestfile.cmake
 /tests/test_gpuinfo_autogen/
 /tests/test_mix_transition_order
 /tests/test_mix_transition_order_autogen/
+/tests/test_mcpserver
+/tests/test_mcpserver_autogen/
+/tests/test_dataqueue
+/tests/test_dataqueue_autogen/
 *CMakeFiles/
 CuteLogger/CuteLogger_autogen/
 install_manifest.txt
@@ -56,3 +60,4 @@ CuteLogger/libCuteLogger.dll
 docs/qml-api/
 shotcut.code-workspace
 .qtcreator/
+Testing

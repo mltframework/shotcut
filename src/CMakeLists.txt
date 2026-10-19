@@ -14,10 +14,16 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   commands/undohelper.cpp commands/undohelper.h
   controllers/addonmetadataparser.cpp controllers/addonmetadataparser.h
   coproducer/chatprovider.h
-  coproducer/projectinspector.cpp coproducer/projectinspector.h
-  coproducer/forumsearch.cpp coproducer/forumsearch.h
   coproducer/localllamaserverprovider.cpp coproducer/localllamaserverprovider.h
   coproducer/openaicompatibleprovider.cpp coproducer/openaicompatibleprovider.h
+  mcp/forumsearch.cpp mcp/forumsearch.h
+  mcp/httpserver.cpp mcp/httpserver.h
+  mcp/mcpclient.cpp mcp/mcpclient.h
+  mcp/mcpserver.cpp mcp/mcpserver.h
+  mcp/projectinspector.cpp mcp/projectinspector.h
+  mcp/shotcuttools.cpp mcp/shotcuttools.h
+  mcp/tooldefinition.h
+  mcp/toolregistry.cpp mcp/toolregistry.h
   controllers/addonqmlgenerator.cpp controllers/addonqmlgenerator.h
   controllers/filtercontroller.cpp controllers/filtercontroller.h
   controllers/scopecontroller.cpp controllers/scopecontroller.h
