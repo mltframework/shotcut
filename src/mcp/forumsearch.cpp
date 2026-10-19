@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "forumsearch.h"
+#include "mcp/forumsearch.h"
 
 #include "Logger.h"
 
@@ -26,27 +26,34 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QRegularExpression>
+#include <QTimer>
 #include <QUrlQuery>
 
-namespace Coproducer {
+namespace Shotcut {
+namespace Mcp {
 
 ForumSearch::ForumSearch(QObject *parent)
     : QObject(parent)
 {
     auto network = new QNetworkAccessManager(this);
     connect(network, &QNetworkAccessManager::finished, this, &ForumSearch::onFinished);
+    m_timeoutTimer = new QTimer(this);
+    m_timeoutTimer->setSingleShot(true);
+    connect(m_timeoutTimer, &QTimer::timeout, this, &ForumSearch::onTimeout);
 }
 
-void ForumSearch::search(const QString &query)
+void ForumSearch::search(const QString &query, int timeoutMs)
 {
+    cancel();
+    ++m_searchGeneration;
+    m_finished = false;
     m_results.clear();
     m_errors.clear();
     m_pending = 0;
-    m_query = query;
 
     auto network = findChild<QNetworkAccessManager *>();
     if (!network) {
-        emit resultsReady({}, QString());
+        finishIfReady();
         return;
     }
 
@@ -58,11 +65,34 @@ void ForumSearch::search(const QString &query)
     request.setRawHeader("User-Agent", "Shotcut Coproducer/1.0");
     auto reply = network->get(request);
     reply->setProperty("searchType", QStringLiteral("forum"));
+    reply->setProperty("searchGeneration", QVariant::fromValue(m_searchGeneration));
     ++m_pending;
+    m_timeoutTimer->start(qMax(1, timeoutMs));
+}
+
+void ForumSearch::cancel()
+{
+    if (m_timeoutTimer)
+        m_timeoutTimer->stop();
+    if (m_finished)
+        return;
+
+    m_finished = true;
+    m_pending = 0;
+    if (auto *network = findChild<QNetworkAccessManager *>()) {
+        const auto replies = network->findChildren<QNetworkReply *>();
+        for (QNetworkReply *reply : replies)
+            reply->abort();
+    }
 }
 
 void ForumSearch::onFinished(QNetworkReply *reply)
 {
+    if (m_finished || reply->property("searchGeneration").toULongLong() != m_searchGeneration) {
+        reply->deleteLater();
+        return;
+    }
+
     const auto body = reply->readAll();
     const auto type = reply->property("searchType").toString();
     if (reply->error() == QNetworkReply::NoError) {
@@ -83,6 +113,7 @@ void ForumSearch::onFinished(QNetworkReply *reply)
                     = QStringLiteral("https://forum.shotcut.org/t/%1/%2.json").arg(slug).arg(id);
                 auto topicReply = network->get(QNetworkRequest(QUrl(url)));
                 topicReply->setProperty("searchType", QStringLiteral("forumTopic"));
+                topicReply->setProperty("searchGeneration", QVariant::fromValue(m_searchGeneration));
                 topicReply->setProperty("topicTitle", title);
                 topicReply->setProperty("topicUrl",
                                         QStringLiteral("https://forum.shotcut.org/t/%1/%2")
@@ -121,11 +152,25 @@ void ForumSearch::onFinished(QNetworkReply *reply)
 
 void ForumSearch::finishIfReady()
 {
-    if (m_pending > 0)
+    if (m_pending > 0 || m_finished)
         return;
+    m_finished = true;
+    m_timeoutTimer->stop();
     LOG_DEBUG() << "Coproducer: search complete; source count=" << m_results.size()
                 << "errors=" << m_errors.size();
     emit resultsReady(m_results, m_errors.join(QStringLiteral("\n")));
+}
+
+void ForumSearch::onTimeout()
+{
+    if (m_finished)
+        return;
+
+    m_errors.append(QStringLiteral("Forum search timed out."));
+    const auto results = m_results;
+    const QString error = m_errors.join(QStringLiteral("\n"));
+    cancel();
+    emit resultsReady(results, error);
 }
 
 QString ForumSearch::cleanForumText(const QString &html) const
@@ -140,4 +185,5 @@ QString ForumSearch::cleanForumText(const QString &html) const
     return text.trimmed().left(1200);
 }
 
-} // namespace Coproducer
+} // namespace Mcp
+} // namespace Shotcut

@@ -15,20 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COPRODUCERFORUMSEARCH_H
-#define COPRODUCERFORUMSEARCH_H
+#ifndef SHOTCUT_MCP_FORUMSEARCH_H
+#define SHOTCUT_MCP_FORUMSEARCH_H
 
 #include <QList>
 #include <QObject>
 #include <QString>
 
 class QNetworkReply;
+class QTimer;
 
-namespace Coproducer {
+namespace Shotcut {
+namespace Mcp {
 
-// One retrieved source, kept structured (rather than pre-formatted text) so
-// the caller can number sources itself and later match model citations back
-// to a trusted URL instead of rendering whatever URL the model outputs.
 struct ForumSource
 {
     QString title;
@@ -42,24 +41,29 @@ class ForumSearch : public QObject
 
 public:
     explicit ForumSearch(QObject *parent = nullptr);
-    void search(const QString &query);
+    void search(const QString &query, int timeoutMs = 30000);
+    void cancel();
 
 signals:
-    void resultsReady(const QList<Coproducer::ForumSource> &sources, const QString &error);
+    void resultsReady(const QList<Shotcut::Mcp::ForumSource> &sources, const QString &error);
 
 private slots:
     void onFinished(QNetworkReply *reply);
+    void onTimeout();
 
 private:
     QString cleanForumText(const QString &html) const;
     void finishIfReady();
 
     int m_pending = 0;
-    QString m_query;
+    quint64 m_searchGeneration = 0;
+    bool m_finished = true;
+    QTimer *m_timeoutTimer = nullptr;
     QList<ForumSource> m_results;
     QStringList m_errors;
 };
 
-} // namespace Coproducer
+} // namespace Mcp
+} // namespace Shotcut
 
-#endif // COPRODUCERFORUMSEARCH_H
+#endif // SHOTCUT_MCP_FORUMSEARCH_H

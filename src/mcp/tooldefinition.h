@@ -15,18 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COPRODUCERPROJECTINSPECTOR_H
-#define COPRODUCERPROJECTINSPECTOR_H
-
-#include "coproducer/chatprovider.h"
+#ifndef SHOTCUT_MCP_TOOLDEFINITION_H
+#define SHOTCUT_MCP_TOOLDEFINITION_H
 
 #include <QJsonObject>
+#include <QString>
 
-namespace Coproducer {
+#include <functional>
 
-ToolDefinition projectInspectorTool();
-QJsonObject inspectProject();
+namespace Shotcut {
+namespace Mcp {
 
-} // namespace Coproducer
+struct ToolDefinition
+{
+    QString name;
+    QString description;
+    QJsonObject parameters;
+    using Handler = std::function<QJsonObject(const QJsonObject &)>;
+    Handler handler;
+};
 
-#endif // COPRODUCERPROJECTINSPECTOR_H
+} // namespace Mcp
+} // namespace Shotcut
+
+#endif // SHOTCUT_MCP_TOOLDEFINITION_H
