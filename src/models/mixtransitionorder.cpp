@@ -23,6 +23,7 @@
 #include <QScopedPointer>
 #include <QString>
 
+#include <mutex>
 #include <utility>
 
 namespace {
@@ -48,6 +49,9 @@ void reorderMixTransitions(Mlt::Tractor &tractor,
                            const QList<int> &orderedTrackMltIndexes,
                            Mlt::Profile &profile)
 {
+    // Keep frame acquisition off the chain while transitions are replaced.
+    std::lock_guard<Mlt::Tractor> lock(tractor);
+
     struct StoredMix
     {
         int bTrack;
