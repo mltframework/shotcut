@@ -270,7 +270,6 @@ Shotcut.VuiBase {
         filter.blockSignals = false;
         filter.changed();
         blockUpdate = false;
-        setRectangleControl();
     }
 
     // A non-positive stored rect is drawn as the full frame. Wheel zoom starts from that frame.
