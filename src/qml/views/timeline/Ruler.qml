@@ -98,17 +98,17 @@ Rectangle {
             function getSnapPosition(position) {
                 if (!settings.timelineSnap)
                     return position;
-                var SNAP = 10;
+                const SNAP = 10;
                 // Snap to clips on tracks.
-                var timeline = root;
-                for (var j = 0; j < timeline.trackCount; j++) {
-                    var track = timeline.trackAt(j);
-                    for (var i = 0; i < track.clipCount; i++) {
-                        var item = track.clipAt(i);
+                const timelineRoot = root;
+                for (let j = 0; j < timelineRoot.trackCount; j++) {
+                    const track = timelineRoot.trackAt(j);
+                    for (let i = 0; i < track.clipCount; i++) {
+                        const item = track.clipAt(i);
                         if (item.isBlank)
                             continue;
-                        var itemLeft = item.clipPx;
-                        var itemRight = itemLeft + item.clipPxW;
+                        const itemLeft = item.clipPx;
+                        const itemRight = itemLeft + item.clipPxW;
                         if (position > itemLeft - SNAP && position < itemLeft + SNAP)
                             return itemLeft;
                         else if (position > itemRight - SNAP && position < itemRight + SNAP)
@@ -117,8 +117,8 @@ Rectangle {
                             continue;
                     }
                 }
-                // Snap around cursor/playhead.
-                var cursorX = tracksFlickable.contentX + cursor.x;
+                // Snap around cursor/playhead using its exact frame position.
+                const cursorX = timeline.position * multitrack.scaleFactor;
                 if (position > cursorX - SNAP && position < cursorX + SNAP)
                     return cursorX;
                 return position;

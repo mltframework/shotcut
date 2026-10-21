@@ -15,8 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var SNAP = 10
-var SNAP_TRIM = 4
+const SNAP = 10
+const SNAP_TRIM = 4
+
+// Use exact frame-based coordinates (not device-pixel rounded ones) so that
+// snapping round-trips to the correct frame at low zoom levels.
+function playheadX() {
+    return timeline.position * timeScale
+}
+
+function markerX(frame) {
+    return frame < 0 ? -Infinity : frame * timeScale
+}
 
 function snapClip(clip, repeater) {
     var left = clip.x
@@ -56,29 +66,29 @@ function snapClip(clip, repeater) {
     }
     // Snap to markers
     var leftFrame = Math.round(left / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(leftFrame) * timeScale)
+    var prevMarkerX = markerX(markers.prevMarkerPosition(leftFrame))
     if (left < prevMarkerX + SNAP) {
         clip.x = prevMarkerX
         return
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(leftFrame) * timeScale)
+    var nextMarkerX = markerX(markers.nextMarkerPosition(leftFrame))
     if (nextMarkerX > 0 && left > nextMarkerX - SNAP) {
         clip.x = nextMarkerX
         return
     }
     var rightFrame = Math.round(right / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(rightFrame) * timeScale)
+    var prevMarkerX = markerX(markers.prevMarkerPosition(rightFrame))
     if (right < prevMarkerX + SNAP) {
         clip.x = prevMarkerX - clip.width
         return
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(rightFrame) * timeScale)
+    var nextMarkerX = markerX(markers.nextMarkerPosition(rightFrame))
     if (nextMarkerX > 0 && right > nextMarkerX - SNAP) {
         clip.x = nextMarkerX - clip.width
         return
     }
     if (!settings.timelineDragScrub) {
-        var cursorX = tracksFlickable.contentX + cursor.x
+        var cursorX = playheadX()
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
             clip.x = cursorX
@@ -89,7 +99,7 @@ function snapClip(clip, repeater) {
 
 function snapTrimIn(clip, delta, timeline, trackIndex) {
     var x = clip.x + delta * timeScale
-    var cursorX = tracksFlickable.contentX + cursor.x
+    var cursorX = playheadX()
     if (delta < 0) {
         // Snap to other clips on the same track.
         for (var i = 0; i < repeater.count; i++) {
@@ -122,11 +132,11 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
     }
     // Snap to markers
     var frame = Math.round(x / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(frame) * timeScale)
+    var prevMarkerX = markerX(markers.prevMarkerPosition(frame))
     if (x < prevMarkerX + SNAP_TRIM) {
         return Math.round((prevMarkerX - clip.x) / timeScale)
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(frame) * timeScale)
+    var nextMarkerX = markerX(markers.nextMarkerPosition(frame))
     if (nextMarkerX > 0 && x > nextMarkerX - SNAP_TRIM) {
         return Math.round((nextMarkerX - clip.x) / timeScale)
     }
@@ -143,7 +153,7 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
 function snapTrimOut(clip, delta, timeline, trackIndex) {
     var rightEdge = clip.x + clip.width
     var x = rightEdge - delta * timeScale
-    var cursorX = tracksFlickable.contentX + cursor.x
+    var cursorX = playheadX()
     if (delta < 0) {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
@@ -176,11 +186,11 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
     }
     // Snap to markers
     var frame = Math.round(x / timeScale)
-    var prevMarkerX = Math.round(markers.prevMarkerPosition(frame) * timeScale)
+    var prevMarkerX = markerX(markers.prevMarkerPosition(frame))
     if (x < prevMarkerX + SNAP_TRIM) {
         return Math.round((rightEdge - prevMarkerX) / timeScale)
     }
-    var nextMarkerX = Math.round(markers.nextMarkerPosition(frame) * timeScale)
+    var nextMarkerX = markerX(markers.nextMarkerPosition(frame))
     if (nextMarkerX > 0 && x > nextMarkerX - SNAP_TRIM) {
         return Math.round((rightEdge - nextMarkerX) / timeScale)
     }
@@ -213,7 +223,7 @@ function snapDrop(pos, repeater) {
         }
     }
     if (!settings.timelineDragScrub) {
-        var cursorX = tracksFlickable.contentX + cursor.x
+        var cursorX = playheadX()
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
             dropTarget.x = cursorX + headerWidth - tracksFlickable.contentX
