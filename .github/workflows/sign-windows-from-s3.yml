@@ -91,8 +91,9 @@ jobs:
         run: |
           mkdir -p "$HOME/bin"
           pushd "$HOME/bin"
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
-          tar -xJf iscc632.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc-6.7.3.txz
+          tar -xJf iscc-6.7.3.txz
+          rm iscc-6.7.3.txz
           popd
 
       - name: Package installer
@@ -100,6 +101,7 @@ jobs:
         run: |
           PATH="$HOME/bin:$PATH"
           cp packaging/windows/shotcut.iss .
+          cp icons/shotcut-logo-64.png .
           sed -i "s/YY.MM.DD/$VERSION/" shotcut.iss
           echo Extracting installer dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz

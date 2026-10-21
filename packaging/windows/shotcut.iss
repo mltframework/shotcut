@@ -18,7 +18,7 @@
 AppVersion=YY.MM.DD
 AppPublisher=Meltytech
 AppName=Shotcut
-WizardStyle=modern
+WizardStyle=modern dynamic
 DefaultDirName={autopf}\Shotcut
 ; Since no icons will be created in "{group}", we don't need the wizard
 ; to ask for a Start Menu folder name:
@@ -41,7 +41,8 @@ AppMutex="Meltytech Shotcut Running Mutex"
 OutputBaseFilename=shotcut-setup
 UninstallDisplayName=Shotcut
 VersionInfoCopyright="Copyright (c) 2012-2026 Meltytech, LLC"
-WizardSmallImageFile="shotcut-logo-64.bmp"
+WizardSmallImageFile="shotcut-logo-64.png"
+WizardSmallImageFileDynamicDark="shotcut-logo-64.png"
 WizardImageStretch=yes
 ShowLanguageDialog=no
 
