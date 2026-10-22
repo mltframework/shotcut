@@ -24,6 +24,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
+#include "widgets/lineeditclear.h"
 #include "widgets/playlisticonview.h"
 
 #include <MltConsumer.h>
@@ -34,10 +35,12 @@
 #include <QActionGroup>
 #include <QApplication>
 #include <QComboBox>
+#include <QConcatenateTablesProxyModel>
 #include <QDir>
 #include <QDrag>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QHBoxLayout>
 #include <QIcon>
 #include <QMimeData>
 #include <QMouseEvent>
@@ -53,6 +56,53 @@
 
 // Minimum dock width (px) at which the toolbar shows text under the icon.
 static constexpr int kTextUnderIconThreshold = 310;
+
+// Emoji page proxy. The emoji catalog holds every subcategory; this keeps one folder visible.
+class ElementFolderProxy : public QSortFilterProxyModel
+{
+public:
+    explicit ElementFolderProxy(QObject *parent = nullptr)
+        : QSortFilterProxyModel(parent)
+    {}
+
+    void setFolderName(const QString &folder)
+    {
+        if (m_folder == folder)
+            return;
+        beginFilterChange();
+        m_folder = folder;
+        endFilterChange(QSortFilterProxyModel::Direction::Rows);
+    }
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override
+    {
+        if (!m_folder.isEmpty()) {
+            const QString path = sourceModel()
+                                     ->index(sourceRow, 0, sourceParent)
+                                     .data(ElementsModel::FilePathRole)
+                                     .toString();
+            if (QFileInfo(path).dir().dirName() != m_folder)
+                return false;
+        }
+        return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
+    }
+
+private:
+    QString m_folder;
+};
+
+static QList<QPair<QString, QString>> emojiCategories()
+{
+    return {{ElementsDock::tr("Smileys & Emotion"), QStringLiteral("standard")},
+            {ElementsDock::tr("People & Body"), QStringLiteral("person")},
+            {ElementsDock::tr("Animals & Nature"), QStringLiteral("nature")},
+            {ElementsDock::tr("Food & Drink"), QStringLiteral("food")},
+            {ElementsDock::tr("Travel & Places"), QStringLiteral("travel")},
+            {ElementsDock::tr("Activities"), QStringLiteral("activity")},
+            {ElementsDock::tr("Objects"), QStringLiteral("object")},
+            {ElementsDock::tr("Symbols"), QStringLiteral("symbol")}};
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -98,6 +148,15 @@ ElementsDock::ElementsDock(QWidget *parent)
     m_categoryGroup->setExclusive(true);
     layout->addWidget(m_categoryToolbar);
 
+    m_searchField = new LineEditClear(mainWidget);
+    m_searchField->setPlaceholderText(tr("search (English only)"));
+    m_searchField->setClearButtonEnabled(false);
+    auto *searchRow = new QWidget(mainWidget);
+    auto *searchLayout = new QHBoxLayout(searchRow);
+    searchLayout->setContentsMargins(4, 0, 4, 0);
+    searchLayout->addWidget(m_searchField);
+    layout->addWidget(searchRow);
+
     // Stacked content area
     m_stack = new QStackedWidget(mainWidget);
     layout->addWidget(m_stack);
@@ -136,6 +195,12 @@ ElementsDock::ElementsDock(QWidget *parent)
                       true,
                       QDir(dir.filePath("graphics")));
 
+    setupSearchPage();
+    connect(m_searchField, &QLineEdit::textChanged, this, [this](const QString &search) {
+        m_searchProxy->setFilterFixedString(search);
+        showSearchOrCategory();
+    });
+
     // Activate first category
     updateToolbarStyle();
     if (!m_categoryGroup->actions().isEmpty())
@@ -173,13 +238,34 @@ void ElementsDock::setupCategoryPage(
     btn->setIconSize(QSize(24, 24));
     m_categoryToolbar->layout()->addWidget(btn);
     connect(action, &QAction::triggered, this, [this, pageIndex]() {
-        m_stack->setCurrentIndex(pageIndex);
+        m_currentPage = pageIndex;
+        showSearchOrCategory();
     });
 
-    // Model and proxy
-    auto *model = new ElementsModel(dir, this);
-    auto *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
+    // One catalog per category. Emojis keep every subcategory; the page proxy shows one folder.
+    const auto categories = page == Page::Emojis ? emojiCategories()
+                                                 : QList<QPair<QString, QString>>{};
+    ElementsModel *model = nullptr;
+    QSortFilterProxyModel *proxyModel = nullptr;
+    ElementFolderProxy *folderProxy = nullptr;
+    if (page == Page::Emojis) {
+        model = new ElementsModel(this);
+        QList<QDir> dirs;
+        dirs.reserve(categories.size());
+        for (const auto &cat : categories)
+            dirs.append(QDir(dir.filePath(cat.second)));
+        model->setDirs(dirs);
+
+        folderProxy = new ElementFolderProxy(this);
+        folderProxy->setSourceModel(model);
+        if (!categories.isEmpty())
+            folderProxy->setFolderName(categories.first().second);
+        proxyModel = folderProxy;
+    } else {
+        model = new ElementsModel(dir, this);
+        proxyModel = new QSortFilterProxyModel(this);
+        proxyModel->setSourceModel(model);
+    }
 
     // View
     auto *view = new PlaylistIconView(this);
@@ -189,72 +275,202 @@ void ElementsDock::setupCategoryPage(
     view->setMouseTracking(true);
     view->viewport()->setMouseTracking(true);
     view->viewport()->installEventFilter(this);
-
-    connect(view, &QAbstractItemView::activated, this, [this, page](const QModelIndex &idx) {
-        onActivated(idx, page);
-    });
-
-    if (page == Page::Sounds) {
-        // Play on selection change
-        connect(view->selectionModel(),
-                &QItemSelectionModel::currentChanged,
-                this,
-                [this, proxyModel](const QModelIndex &current, const QModelIndex &) {
-                    if (!current.isValid()) {
-                        stopAudioPreview();
-                        return;
-                    }
-                    const auto srcIdx = proxyModel->mapToSource(current);
-                    const QString fp = srcIdx.data(ElementsModel::FilePathRole).toString();
-                    startAudioPreview(fp);
-                });
-        // Re-play when clicking an already-current item (currentChanged doesn't fire)
-        connect(view,
-                &QAbstractItemView::clicked,
-                this,
-                [this, proxyModel](const QModelIndex &current) {
-                    if (!current.isValid())
-                        return;
-                    const auto srcIdx = proxyModel->mapToSource(current);
-                    const QString fp = srcIdx.data(ElementsModel::FilePathRole).toString();
-                    startAudioPreview(fp);
-                });
-    }
+    connectView(view);
 
     // Wrap in a page widget
     auto *pageWidget = new QWidget(this);
     auto *pageLayout = new QVBoxLayout(pageWidget);
     pageLayout->setContentsMargins(0, 0, 0, 0);
 
-    if (page == Page::Emojis) {
-        static const QList<QPair<QString, QString>> kEmojiCategories = {
-            {tr("Smileys & Emotion"), QStringLiteral("standard")},
-            {tr("People & Body"), QStringLiteral("person")},
-            {tr("Animals & Nature"), QStringLiteral("nature")},
-            {tr("Food & Drink"), QStringLiteral("food")},
-            {tr("Travel & Places"), QStringLiteral("travel")},
-            {tr("Activities"), QStringLiteral("activity")},
-            {tr("Objects"), QStringLiteral("object")},
-            {tr("Symbols"), QStringLiteral("symbol")},
-        };
+    if (folderProxy) {
         auto *combo = new QComboBox(pageWidget);
-        for (const auto &cat : kEmojiCategories)
+        for (const auto &cat : categories)
             combo->addItem(cat.first, cat.second);
-        pageLayout->addWidget(combo);
+        auto *comboRow = new QWidget(pageWidget);
+        auto *comboLayout = new QHBoxLayout(comboRow);
+        comboLayout->setContentsMargins(4, 0, 4, 0);
+        comboLayout->addWidget(combo);
+        pageLayout->addWidget(comboRow);
 
-        // Load the first sub-category immediately
-        model->setDir(QDir(dir.filePath(kEmojiCategories.first().second)));
-
-        connect(combo, &QComboBox::currentIndexChanged, this, [model, dir, combo](int index) {
-            const QString subFolder = combo->itemData(index).toString();
-            model->setDir(QDir(dir.filePath(subFolder)));
-        });
+        connect(combo,
+                qOverload<int>(&QComboBox::currentIndexChanged),
+                this,
+                [folderProxy, combo](int index) {
+                    folderProxy->setFolderName(combo->itemData(index).toString());
+                });
     }
 
     pageLayout->addWidget(view);
     m_stack->addWidget(pageWidget);
 
     m_pages.append({name, autoFilter, model, proxyModel, view});
+}
+
+void ElementsDock::setupSearchPage()
+{
+    auto *catalogs = new QConcatenateTablesProxyModel(this);
+    for (const auto &page : std::as_const(m_pages))
+        catalogs->addSourceModel(page.model);
+
+    m_searchProxy = new QSortFilterProxyModel(this);
+    m_searchProxy->setSourceModel(catalogs);
+    m_searchProxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    m_searchView = new PlaylistIconView(this);
+    m_searchView->setModel(m_searchProxy);
+    m_searchView->setIconRole(ElementsModel::ThumbnailRole);
+    m_searchView->setElideMode(Qt::ElideRight);
+    m_searchView->setMouseTracking(true);
+    m_searchView->viewport()->setMouseTracking(true);
+    m_searchView->viewport()->installEventFilter(this);
+    connectView(m_searchView);
+
+    auto *pageWidget = new QWidget(this);
+    auto *pageLayout = new QVBoxLayout(pageWidget);
+    pageLayout->setContentsMargins(0, 0, 0, 0);
+    pageLayout->addWidget(m_searchView);
+    m_searchPageIndex = m_stack->addWidget(pageWidget);
+}
+
+void ElementsDock::showSearchOrCategory()
+{
+    if (!m_searchField || m_searchField->text().isEmpty())
+        m_stack->setCurrentIndex(m_currentPage);
+    else if (m_searchPageIndex >= 0)
+        m_stack->setCurrentIndex(m_searchPageIndex);
+}
+
+void ElementsDock::connectView(PlaylistIconView *view)
+{
+    connect(view, &QAbstractItemView::activated, this, [this, view](const QModelIndex &idx) {
+        openElement(policyFor(view, idx));
+    });
+    connect(view->selectionModel(),
+            &QItemSelectionModel::currentChanged,
+            this,
+            [this, view](const QModelIndex &current, const QModelIndex &) {
+                if (!current.isValid()) {
+                    stopAudioPreview();
+                    return;
+                }
+                previewElement(policyFor(view, current));
+            });
+    // Re-play when clicking an already-current item (currentChanged doesn't fire)
+    connect(view, &QAbstractItemView::clicked, this, [this, view](const QModelIndex &current) {
+        if (!current.isValid())
+            return;
+        previewElement(policyFor(view, current));
+    });
+}
+
+QModelIndex ElementsDock::sourceIndex(const QSortFilterProxyModel *proxy,
+                                      const QModelIndex &viewIndex) const
+{
+    if (!proxy || !viewIndex.isValid())
+        return {};
+    QModelIndex idx = proxy->mapToSource(viewIndex);
+    if (const auto *catalogs = qobject_cast<const QConcatenateTablesProxyModel *>(idx.model()))
+        idx = catalogs->mapToSource(idx);
+    return idx;
+}
+
+int ElementsDock::pageIndexForModel(const QAbstractItemModel *model) const
+{
+    for (int i = 0; i < m_pages.count(); ++i) {
+        if (m_pages.at(i).model == model)
+            return i;
+    }
+    return -1;
+}
+
+int ElementsDock::pageIndexForView(const PlaylistIconView *view) const
+{
+    for (int i = 0; i < m_pages.count(); ++i) {
+        if (m_pages.at(i).view == view)
+            return i;
+    }
+    return -1;
+}
+
+ElementsDock::ElementPolicy ElementsDock::policyFor(const PlaylistIconView *view,
+                                                    const QModelIndex &viewIndex) const
+{
+    ElementPolicy policy;
+    if (!view || !viewIndex.isValid())
+        return policy;
+    // The view index already forwards FilePathRole through every proxy.
+    policy.filePath = viewIndex.data(ElementsModel::FilePathRole).toString();
+    policy.pageIndex = pageIndexForView(view);
+    if (policy.pageIndex < 0) {
+        auto *proxy = qobject_cast<const QSortFilterProxyModel *>(view->model());
+        policy.pageIndex = pageIndexForModel(sourceIndex(proxy, viewIndex).model());
+    }
+    if (policy.pageIndex < 0 || policy.filePath.isEmpty())
+        return policy;
+    const auto &page = m_pages.at(policy.pageIndex);
+    policy.categoryName = page.name;
+    policy.autoFilter = page.autoFilter;
+    policy.isSound = policy.pageIndex == static_cast<int>(Page::Sounds);
+    policy.makeUnique = policy.pageIndex != static_cast<int>(Page::Emojis) && !policy.isSound;
+    return policy;
+}
+
+void ElementsDock::openElement(const ElementPolicy &policy)
+{
+    if (!policy.valid())
+        return;
+    auto *producer = copyAndCreateProducer(policy.filePath,
+                                           policy.categoryName,
+                                           policy.autoFilter,
+                                           policy.isSound,
+                                           policy.makeUnique);
+    if (producer)
+        MAIN.open(producer);
+}
+
+void ElementsDock::previewElement(const ElementPolicy &policy)
+{
+    if (policy.isSound && !policy.filePath.isEmpty())
+        startAudioPreview(policy.filePath);
+    else if (policy.pageIndex >= 0)
+        stopAudioPreview();
+}
+
+void ElementsDock::startDrag(PlaylistIconView *view)
+{
+    const auto idx = view->indexAt(m_dragStartPos);
+    m_dragStartPos = QPoint();
+    const auto policy = policyFor(view, idx);
+    if (!policy.valid())
+        return;
+    QString dest;
+    bool didCreate = false;
+    auto *mimeData = buildMimeData(policy.filePath,
+                                   policy.categoryName,
+                                   policy.autoFilter,
+                                   policy.isSound,
+                                   policy.makeUnique,
+                                   &dest,
+                                   &didCreate);
+    if (!mimeData)
+        return;
+    stopAudioPreview();
+    auto *drag = new QDrag(view);
+    drag->setMimeData(mimeData);
+    const Qt::DropAction action = drag->exec(Qt::CopyAction);
+    if (action != Qt::CopyAction && didCreate)
+        QFile::remove(dest);
+}
+
+PlaylistIconView *ElementsDock::viewForViewport(QObject *watched) const
+{
+    if (m_searchView && watched == m_searchView->viewport())
+        return m_searchView;
+    for (const auto &page : m_pages) {
+        if (page.view && watched == page.view->viewport())
+            return page.view;
+    }
+    return nullptr;
 }
 
 // ---------------------------------------------------------------------------
@@ -292,33 +508,26 @@ void ElementsDock::updateToolbarStyle()
 
 bool ElementsDock::eventFilter(QObject *watched, QEvent *event)
 {
-    // Identify which page the event belongs to
-    int pageIndex = -1;
-    for (int i = 0; i < m_pages.count(); ++i) {
-        if (watched == m_pages[i].view->viewport()) {
-            pageIndex = i;
-            break;
-        }
-    }
-    if (pageIndex < 0)
+    auto *view = viewForViewport(watched);
+    if (!view)
         return QDockWidget::eventFilter(watched, event);
-
-    const auto &page = m_pages[pageIndex];
+    auto *proxy = qobject_cast<QSortFilterProxyModel *>(view->model());
 
     if (event->type() == QEvent::MouseMove) {
         auto *me = static_cast<QMouseEvent *>(event);
 
         if (me->buttons() == Qt::NoButton) {
             // ---- Hover logic ----
-            const auto proxyIdx = page.view->indexAt(me->pos());
+            const auto proxyIdx = view->indexAt(me->pos());
             if (QPersistentModelIndex(proxyIdx) != m_hoveredProxyIndex) {
                 stopHoverPreview();
                 m_hoveredProxyIndex = QPersistentModelIndex(proxyIdx);
 
                 if (proxyIdx.isValid()) {
-                    const auto sourceIdx = page.proxyModel->mapToSource(proxyIdx);
+                    const auto sourceIdx = sourceIndex(proxy, proxyIdx);
                     m_hoveredSourceIndex = QPersistentModelIndex(sourceIdx);
-                    m_hoveredPageIndex = pageIndex;
+                    m_hoveredModel = const_cast<ElementsModel *>(
+                        qobject_cast<const ElementsModel *>(sourceIdx.model()));
                     const QString filePath = sourceIdx.data(ElementsModel::FilePathRole).toString();
 
                     // Animated .webp companion
@@ -335,51 +544,22 @@ bool ElementsDock::eventFilter(QObject *watched, QEvent *event)
             if (!m_dragStartPos.isNull()
                 && (me->pos() - m_dragStartPos).manhattanLength()
                        >= QApplication::startDragDistance()) {
-                const auto idx = page.view->indexAt(m_dragStartPos);
-                if (idx.isValid()) {
-                    const auto srcIdx = page.proxyModel->mapToSource(idx);
-                    const QString filePath = srcIdx.data(ElementsModel::FilePathRole).toString();
-                    const bool isSound = pageIndex == static_cast<int>(Page::Sounds);
-                    const bool makeUnique = (pageIndex != static_cast<int>(Page::Emojis)
-                                             && !isSound);
-                    QString dest;
-                    bool didCreate = false;
-                    auto *mimeData = buildMimeData(filePath,
-                                                   page.name,
-                                                   page.autoFilter,
-                                                   isSound,
-                                                   makeUnique,
-                                                   &dest,
-                                                   &didCreate);
-                    if (mimeData) {
-                        stopAudioPreview();
-                        auto *drag = new QDrag(page.view);
-                        drag->setMimeData(mimeData);
-                        const Qt::DropAction action = drag->exec(Qt::CopyAction);
-                        if (action != Qt::CopyAction && didCreate)
-                            QFile::remove(dest);
-                    }
-                }
-                m_dragStartPos = QPoint();
+                startDrag(view);
                 return true;
             }
         }
 
     } else if (event->type() == QEvent::MouseButtonPress) {
         auto *me = static_cast<QMouseEvent *>(event);
-        if (me->button() == Qt::LeftButton) {
+        if (me->button() == Qt::LeftButton)
             m_dragStartPos = me->pos();
-            m_dragPageIndex = pageIndex;
-        }
 
     } else if (event->type() == QEvent::MouseButtonRelease) {
         m_dragStartPos = QPoint();
-        m_dragPageIndex = -1;
 
     } else if (event->type() == QEvent::Leave) {
         stopHoverPreview();
         m_dragStartPos = QPoint();
-        m_dragPageIndex = -1;
     }
 
     return QDockWidget::eventFilter(watched, event);
@@ -397,11 +577,8 @@ void ElementsDock::stopHoverPreview()
     if (m_activeMovie) {
         m_activeMovie->stop();
         // Restore the DB thumbnail by clearing the override
-        if (m_hoveredSourceIndex.isValid() && m_hoveredPageIndex >= 0
-            && m_hoveredPageIndex < m_pages.count() && m_pages[m_hoveredPageIndex].model) {
-            m_pages[m_hoveredPageIndex].model->setData(m_hoveredSourceIndex,
-                                                       QImage(),
-                                                       ElementsModel::ThumbnailRole);
+        if (m_hoveredSourceIndex.isValid() && m_hoveredModel) {
+            m_hoveredModel->setData(m_hoveredSourceIndex, QImage(), ElementsModel::ThumbnailRole);
         }
         delete m_activeMovie;
         m_activeMovie = nullptr;
@@ -409,7 +586,7 @@ void ElementsDock::stopHoverPreview()
 
     m_hoveredProxyIndex = QPersistentModelIndex();
     m_hoveredSourceIndex = QPersistentModelIndex();
-    m_hoveredPageIndex = -1;
+    m_hoveredModel = nullptr;
 }
 
 void ElementsDock::startHoverAnimation(const QModelIndex &sourceIndex, const QString &webpPath)
@@ -423,13 +600,12 @@ void ElementsDock::startHoverAnimation(const QModelIndex &sourceIndex, const QSt
 
     m_activeMovie->setScaledSize(QSize(128, 72));
 
-    if (m_hoveredPageIndex < 0 || m_hoveredPageIndex >= m_pages.count()
-        || !m_pages[m_hoveredPageIndex].model) {
+    if (!m_hoveredModel) {
         delete m_activeMovie;
         m_activeMovie = nullptr;
         return;
     }
-    ElementsModel *sourceModel = m_pages[m_hoveredPageIndex].model;
+    ElementsModel *sourceModel = m_hoveredModel;
 
     QPersistentModelIndex persistentSource(sourceIndex);
     connect(m_activeMovie, &QMovie::frameChanged, this, [this, sourceModel, persistentSource]() {
@@ -468,22 +644,6 @@ void ElementsDock::startAudioPreview(const QString &filePath)
     m_audioConsumer->set("terminate_on_pause", 1);
     m_audioConsumer->set("video_off", 1);
     m_audioConsumer->start();
-}
-
-void ElementsDock::onActivated(const QModelIndex &proxyIndex, Page page)
-{
-    const int pageIndex = static_cast<int>(page);
-    if (!proxyIndex.isValid() || pageIndex < 0 || pageIndex >= m_pages.count())
-        return;
-    const auto &pg = m_pages[pageIndex];
-    const auto sourceIdx = pg.proxyModel->mapToSource(proxyIndex);
-    const QString filePath = sourceIdx.data(ElementsModel::FilePathRole).toString();
-
-    const bool makeUnique = (page != Page::Emojis && page != Page::Sounds);
-    auto *producer
-        = copyAndCreateProducer(filePath, pg.name, pg.autoFilter, page == Page::Sounds, makeUnique);
-    if (producer)
-        MAIN.open(producer);
 }
 
 // ---------------------------------------------------------------------------

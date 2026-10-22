@@ -33,6 +33,8 @@ namespace Mlt {
 class Producer;
 }
 
+class LineEditClear;
+class QAbstractItemModel;
 class QActionGroup;
 class QMimeData;
 class QMovie;
@@ -75,21 +77,41 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
-private slots:
-    void onActivated(const QModelIndex &proxyIndex, Page page);
-
 private:
     struct CategoryPage
     {
         QString name;
-        bool autoFilter; ///< true for emojis and text categories
+        bool autoFilter{false}; ///< true for emojis, text, and graphics
         ElementsModel *model{nullptr};
         QSortFilterProxyModel *proxyModel{nullptr};
         PlaylistIconView *view{nullptr};
     };
 
+    struct ElementPolicy
+    {
+        int pageIndex{-1};
+        QString filePath;
+        QString categoryName;
+        bool autoFilter{false};
+        bool isSound{false};
+        bool makeUnique{false};
+
+        bool valid() const { return pageIndex >= 0 && !filePath.isEmpty(); }
+    };
+
     void setupCategoryPage(
         Page page, const QString &name, const QIcon &icon, bool autoFilter, const QDir &dir);
+    void setupSearchPage();
+    void showSearchOrCategory();
+    void connectView(PlaylistIconView *view);
+    QModelIndex sourceIndex(const QSortFilterProxyModel *proxy, const QModelIndex &viewIndex) const;
+    int pageIndexForModel(const QAbstractItemModel *model) const;
+    int pageIndexForView(const PlaylistIconView *view) const;
+    ElementPolicy policyFor(const PlaylistIconView *view, const QModelIndex &viewIndex) const;
+    void openElement(const ElementPolicy &policy);
+    void previewElement(const ElementPolicy &policy);
+    void startDrag(PlaylistIconView *view);
+    PlaylistIconView *viewForViewport(QObject *watched) const;
     void updateToolbarStyle();
     void stopHoverPreview();
     void stopAudioPreview();
@@ -107,18 +129,22 @@ private:
     static QIcon makeTextIcon(const QString &text, const QColor &color = QColor());
 
     QWidget *m_categoryToolbar{nullptr};
+    LineEditClear *m_searchField{nullptr};
     QActionGroup *m_categoryGroup{nullptr};
     QStackedWidget *m_stack{nullptr};
     QList<CategoryPage> m_pages;
+    QSortFilterProxyModel *m_searchProxy{nullptr};
+    PlaylistIconView *m_searchView{nullptr};
+    int m_searchPageIndex{-1};
+    int m_currentPage{0};
 
     QMovie *m_activeMovie{nullptr};
     QTimer *m_previewTimer{nullptr};
     QString m_previewFilePath;
     QPersistentModelIndex m_hoveredProxyIndex;
     QPersistentModelIndex m_hoveredSourceIndex;
-    int m_hoveredPageIndex{-1};
+    ElementsModel *m_hoveredModel{nullptr};
     QPoint m_dragStartPos;
-    int m_dragPageIndex{-1};
     std::unique_ptr<Mlt::Consumer> m_audioConsumer;
 };
 

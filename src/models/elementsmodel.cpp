@@ -147,15 +147,17 @@ private:
 // ElementsModel
 // ---------------------------------------------------------------------------
 
-ElementsModel::ElementsModel(const QDir &dir, QObject *parent)
+ElementsModel::ElementsModel(QObject *parent)
     : QAbstractListModel(parent)
-    , m_dir(dir)
 {
     gThreadPool = new QThreadPool(this);
     gThreadPool->setMaxThreadCount(1);
-    m_files = dir.entryInfoList(kElementExtensions,
-                                QDir::Files | QDir::Readable,
-                                QDir::Name | QDir::IgnoreCase);
+}
+
+ElementsModel::ElementsModel(const QDir &dir, QObject *parent)
+    : ElementsModel(parent)
+{
+    setDir(dir);
 }
 
 int ElementsModel::rowCount(const QModelIndex &parent) const
@@ -238,12 +240,21 @@ Qt::ItemFlags ElementsModel::flags(const QModelIndex &index) const
 
 void ElementsModel::setDir(const QDir &dir)
 {
+    setDirs({dir});
+}
+
+void ElementsModel::setDirs(const QList<QDir> &dirs)
+{
     beginResetModel();
-    m_dir = dir;
     m_overrideThumbnails.clear();
-    m_files = dir.entryInfoList(kElementExtensions,
-                                QDir::Files | QDir::Readable,
-                                QDir::Name | QDir::IgnoreCase);
+    m_files.clear();
+    if (!dirs.isEmpty())
+        m_dir = dirs.first();
+    for (const auto &dir : dirs) {
+        m_files += dir.entryInfoList(kElementExtensions,
+                                     QDir::Files | QDir::Readable,
+                                     QDir::Name | QDir::IgnoreCase);
+    }
     endResetModel();
 }
 

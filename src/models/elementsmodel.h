@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #include <QHash>
 #include <QImage>
+#include <QList>
 
 class ElementsModel : public QAbstractListModel
 {
@@ -35,6 +36,7 @@ public:
         HasAnimationRole,
     };
 
+    explicit ElementsModel(QObject *parent = nullptr);
     explicit ElementsModel(const QDir &dir, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -47,6 +49,9 @@ public:
 
     /// Reload the model from a new directory.
     void setDir(const QDir &dir);
+
+    /// Replace the file list with the files in these directories, in order.
+    void setDirs(const QList<QDir> &dirs);
 
 private:
     QDir m_dir;
