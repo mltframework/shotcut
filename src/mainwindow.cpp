@@ -35,6 +35,7 @@
 #include "dialogs/systemsyncdialog.h"
 #include "dialogs/textviewerdialog.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "docks/coproducerdock.h"
 #include "docks/elementsdock.h"
 #include "docks/encodedock.h"
 #include "docks/filesdock.h"
@@ -53,6 +54,7 @@
 #include "hdrpreviewwindow.h"
 #include "jobqueue.h"
 #include "jobs/screencapturejob.h"
+#include "mcp/mcpserver.h"
 #include "models/audiolevelstask.h"
 #include "models/keyframesmodel.h"
 #include "models/motiontrackermodel.h"
@@ -200,6 +202,13 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
+    m_mcpServer = new Shotcut::Mcp::McpServer(this);
+    if (m_mcpServer->listen()) {
+        LOG_INFO() << "MCP endpoint listening at http://127.0.0.1:" << m_mcpServer->boundPort()
+                   << "/mcp";
+    } else {
+        LOG_WARNING() << "MCP server failed to start; Coproducer MCP tools will be unavailable.";
+    }
     setDockNestingEnabled(true);
     const auto highlight = palette().highlight().color();
     setStyleSheet(QString("QMainWindow::separator {"
@@ -917,6 +926,42 @@ void MainWindow::setupAndConnectDocks()
             &MainWindow::onCreateOrEditFilterOnOutput);
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
+    m_coproducerDock = new CoproducerDock(m_mcpServer->boundPort(), this);
+    m_coproducerDock->hide();
+    m_coproducerDock->toggleViewAction()->setShortcut(
+        QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_7));
+    ui->menuView->addAction(m_coproducerDock->toggleViewAction());
+    connect(m_coproducerDock->toggleViewAction(),
+            SIGNAL(triggered(bool)),
+            this,
+            SLOT(onCoproducerDockTriggered(bool)));
+
+    auto *coproducerSearchAction = new QAction(tr("Search User Guide"), this);
+    connect(coproducerSearchAction, &QAction::triggered, this, [this]() {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
+        m_coproducerDock->setMode(1);
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerSearchAction);
+
+    auto *coproducerChatAction = new QAction(tr("Chat"), this);
+    connect(coproducerChatAction, &QAction::triggered, this, [this]() {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
+        m_coproducerDock->setMode(0);
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerChatAction);
+
+    auto *copyMcpEndpointAction = new QAction(tr("Copy MCP Endpoint"), this);
+    copyMcpEndpointAction->setEnabled(m_mcpServer->boundPort() != 0);
+    connect(copyMcpEndpointAction, &QAction::triggered, this, [this]() {
+        const QString endpoint
+            = QStringLiteral("http://127.0.0.1:%1/mcp").arg(m_mcpServer->boundPort());
+        QApplication::clipboard()->setText(endpoint);
+        showStatusMessage(tr("MCP endpoint copied to clipboard."));
+    });
+    ui->menuHelp->insertAction(ui->actionAbout_Shotcut, copyMcpEndpointAction);
+
     // Left area
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
@@ -935,6 +980,7 @@ void MainWindow::setupAndConnectDocks()
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     addDockWidget(Qt::RightDockWidgetArea, m_filesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_elementsDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_coproducerDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget *>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_filesDock);
@@ -3931,6 +3977,14 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
     if (checked) {
         m_subtitlesDock->show();
         m_subtitlesDock->raise();
+    }
+}
+
+void MainWindow::onCoproducerDockTriggered(bool checked)
+{
+    if (checked) {
+        m_coproducerDock->show();
+        m_coproducerDock->raise();
     }
 }
 

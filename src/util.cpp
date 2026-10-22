@@ -189,6 +189,31 @@ QString Util::producerTitle(const Mlt::Producer &producer)
     return Util::baseName(ProxyManager::resource(p));
 }
 
+QString Util::clipDisplayName(Mlt::Producer *producer)
+{
+    if (!producer || !producer->is_valid())
+        return QString();
+
+    QString result = QString::fromUtf8(producer->get(kShotcutCaptionProperty)).trimmed();
+    if (!result.isEmpty() && result != QStringLiteral("<producer>"))
+        return result;
+
+    result = Util::baseName(ProxyManager::resource(*producer));
+    if (!result.isEmpty() && result != QStringLiteral("<producer>")) {
+        if (!::qstrcmp(producer->get("mlt_service"), "timewarp")) {
+            double speed = ::qAbs(producer->get_double("warp_speed"));
+            result = QStringLiteral("%1 (%2x)").arg(result).arg(speed);
+        }
+        return result;
+    }
+
+    result = QString::fromUtf8(producer->get("mlt_service")).trimmed();
+    if (!result.isEmpty() && result != QStringLiteral("<producer>"))
+        return result;
+
+    return QStringLiteral("Producer");
+}
+
 QString Util::removeFileScheme(QUrl &url, bool fromPercentEncoding)
 {
     QString path = url.url();
@@ -1316,6 +1341,20 @@ bool Util::isHttpsOnHost(const QString &urlString, QStringView host)
     const QString actual = url.host(QUrl::FullyDecoded).toLower();
     const QString expected = host.toString().toLower();
     return actual == expected || actual.endsWith(QLatin1Char('.') + expected);
+}
+
+bool Util::isAllowedApiBaseUrl(const QString &urlString)
+{
+    const QUrl url(urlString, QUrl::StrictMode);
+    if (!url.isValid() || !url.userInfo().isEmpty())
+        return false;
+    const QString host = url.host(QUrl::FullyDecoded).toLower();
+    if (url.scheme() == QLatin1String("https"))
+        return !host.isEmpty();
+    if (url.scheme() == QLatin1String("http"))
+        return host == QLatin1String("localhost") || host == QLatin1String("127.0.0.1")
+               || host == QLatin1String("::1");
+    return false;
 }
 
 bool Util::openUrl(const QUrl &url)

@@ -41,3 +41,20 @@ add_executable(test_addonqmlgenerator
 target_include_directories(test_addonqmlgenerator PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(test_addonqmlgenerator PRIVATE Qt6::Core Qt6::Test PkgConfig::mlt++)
 add_test(NAME addonqmlgenerator COMMAND test_addonqmlgenerator)
+
+add_executable(test_mcpserver
+  test_mcpserver.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/forumsearch.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/httpserver.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/mcpclient.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/mcpserver.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/shotcuttools.cpp
+  ${CMAKE_SOURCE_DIR}/src/mcp/toolregistry.cpp
+)
+target_include_directories(test_mcpserver PRIVATE
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/CuteLogger/include
+)
+target_compile_definitions(test_mcpserver PRIVATE SHOTCUT_MCP_NO_DEFAULT_TOOLS=1)
+target_link_libraries(test_mcpserver PRIVATE Qt6::Core Qt6::Network Qt6::Test CuteLogger)
+add_test(NAME mcpserver COMMAND test_mcpserver)
