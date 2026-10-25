@@ -1699,9 +1699,16 @@ Item {
                         //for map, compute height and width using map_aspect_ratio and the crop values
                         //only shrink so it doesn't get out of frame
                         if (combo_data_source.currentIndex === 0) {
+                            //skip if cropmode is by value as we don't have enough info to correct the ratio
+                            if (combo_cropmode_h.currentIndex !== 0 || combo_cropmode_v.currentIndex !== 0)
+                                return;
+
                             const map_ratio = filter.getDouble('map_original_aspect_ratio');
                             const width_p = (spin_right.value - spin_left.value) / 100;
                             const height_p = (spin_top.value - spin_bot.value) / 100;
+                            if (!isFinite(map_ratio) || !isFinite(width_p) || !isFinite(height_p))
+                                return;
+
                             const new_height = ((rectW.value * height_p) / map_ratio) / width_p;
                             if (new_height <= rectH.value) {
                                 rectH.value = new_height;
