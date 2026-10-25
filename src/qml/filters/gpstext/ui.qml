@@ -64,7 +64,7 @@ Shotcut.KeyframableFilter {
 
     //transforms a wheel-up/down event into the correct offset direction
     function wheel_offset(val) {
-        var offset = Number(filter.get("time_offset"));
+        const offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
         if (offset == 0 && val < 0)
@@ -173,7 +173,7 @@ Shotcut.KeyframableFilter {
     Shotcut.FileDialog {
         id: fileDialog
 
-        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files *.*']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files (*.*)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsTextRoot.fileOpened(gpsFile.path);
@@ -195,7 +195,7 @@ Shotcut.KeyframableFilter {
         interval: 250
         repeat: true
         onTriggered: {
-            var res = filter.get('resource')
+            const res = filter.get('resource')
             if (res) {
                 autoGpsFileDetectionTimer.stop();
                 gpsFile.url = res;
@@ -646,7 +646,7 @@ Shotcut.KeyframableFilter {
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {
-                    var gps_time_now = filter.get('auto_gps_processing_start_now');
+                    const gps_time_now = filter.get('auto_gps_processing_start_now');
                     gps_processing_start.text = gps_time_now;
                     filter.set('gps_processing_start_time', gps_time_now);
                 }

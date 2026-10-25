@@ -27,9 +27,8 @@ Item {
     //keep in UI order for sanity!
     id: gpsGraphRoot
 
-    property string rectProperty: "rect"
-    property rect filterRect: filter.getRect(rectProperty)
-    property var allParameters: ['time_offset', 'smoothing_value', 'speed_multiplier', 'graph_data_source', 'graph_type', 'trim_start_p', 'trim_end_p', 'crop_mode_h', 'crop_left_p', 'crop_right_p', 'crop_mode_v', 'crop_bot_p', 'crop_top_p', 'color_style', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'show_now_dot', 'now_dot_color', 'show_now_text', 'angle', 'thickness', rectProperty, 'show_grid', 'legend_unit', 'draw_individual_dots', 'bg_img_path', 'bg_scale_w']
+    property rect filterRect: filter.getRect("rect")
+    property var allParameters: ['time_offset', 'smoothing_value', 'speed_multiplier', 'graph_data_source', 'graph_type', 'trim_start_p', 'trim_end_p', 'crop_mode_h', 'crop_left_p', 'crop_right_p', 'crop_mode_v', 'crop_bot_p', 'crop_top_p', 'color_style', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'show_now_dot', 'now_dot_color', 'show_now_text', 'angle', 'thickness', "rect", 'show_grid', 'legend_unit', 'draw_individual_dots', 'bg_img_path', 'bg_scale_w']
     property var default_colors: ["#00aaff", "#00e000", "#ffff00", "#ff8c00", "#ff0000"]
     property var default_colors_grade: ["#ff00ff", "#00aaff", "#00e000", "#ffff00", "#ff0000"]
     property string color_white: "#ffffff"
@@ -49,7 +48,7 @@ Item {
 
     //transforms a wheel-up/down event into the correct offset direction
     function wheel_offset(val) {
-        var offset = Number(filter.get("time_offset"));
+        const offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
         if (offset === 0 && val < 0)
@@ -81,16 +80,16 @@ Item {
     //graph rect
     function setFilter() {
         _disableUpdate = true;
-        var x = rectX.value;
-        var y = rectY.value;
-        var w = rectW.value;
-        var h = rectH.value;
+        const x = rectX.value;
+        const y = rectY.value;
+        const w = rectW.value;
+        const h = rectH.value;
         if (x !== filterRect.x || y !== filterRect.y || w !== filterRect.width || h !== filterRect.height) {
             filterRect.x = x;
             filterRect.y = y;
             filterRect.width = w;
             filterRect.height = h;
-            filter.set(rectProperty, filterRect);
+            filter.set("rect", filterRect);
         }
         _disableUpdate = false;
     }
@@ -220,9 +219,9 @@ Item {
             used_params.push(filterset_getparams('angle', angle));
         if (thick !== undefined)
             used_params.push(filterset_getparams('thickness', thick));
-
-        //can't figure out how to properly set rect from preset to update the VUI
-        //if (rect !== undefined) used_params.push(filterset_getparams(rectProperty, rect))
+        //note: we don't generally want to change rect on a preset change
+        if (rect !== undefined) 
+            used_params.push(filterset_getparams("rect", rect))
         if (grid !== undefined)
             used_params.push(filterset_getparams('show_grid', grid));
         if (legendunit !== undefined)
@@ -275,14 +274,14 @@ Item {
     }
     Component.onCompleted: {
         filter.blockSignals = true;
-        var resource = filter.get('resource');
+        const resource = filter.get('resource');
         gpsFile.url = resource;
         if (filter.isNew) {
             var usedParams;
-            var _ = undefined; //skip params faster
+            const _ = undefined; //skip params faster
             //main preset
             usedParams = set_graph_data_params(0, 0, 0, 100, 0, 0, 100, 0, 0, 100);
-            usedParams.push(set_graph_style_params(1, 1, 0, 0, 5, default_rect, 0, _, 0));
+            usedParams.push(set_graph_style_params(1, 1, 0, 0, 5, _, 0, _, 0));
             usedParams.push(set_graph_colors(default_now_dot, default_colors[0], color_white));
             filter.savePreset(usedParams, "2D map: full map progress line");
             usedParams = set_graph_data_params(0, 1, _, _, 0, 90, 100, 0, 90, 100);
@@ -319,10 +318,10 @@ Item {
             usedParams = set_graph_data_params(0, 1, _, _, 0, 99, 100, 0, 99, 100);
             usedParams.push(set_graph_style_params(1, 1, 0, 0, 8, _, _, _, 1));
             filter.savePreset(usedParams, "Map style: show GPS points as dots @99%");
-            usedParams = set_graph_style_params(2, 1, 0, 0, 5, default_rect, 0, _, 0);
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5, _, 0, _, 0);
             usedParams.push(set_graph_colors(_, default_colors[0], '#00ffffff'));
             filter.savePreset(usedParams, "Map style: hide future path");
-            usedParams = set_graph_style_params(2, 1, 0, 0, 5, default_rect, 0, _, 0);
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5, _, 0, _, 0);
             usedParams.push(set_graph_colors(_, default_colors[0], '#40ffffff'));
             filter.savePreset(usedParams, "Map style: 25% opacity thin future path");
             usedParams = set_graph_data_params(3, 0, 0, 100, 0, 0, 100, 0, 100, 100);
@@ -345,19 +344,19 @@ Item {
             filter.savePreset(usedParams, "Speedometer: min-max km/h");
             //basic text only presets
             usedParams = set_graph_data_params(0, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, " ", 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, " ", 0));
             filter.savePreset(usedParams, "Text only: GPS coordinates");
             usedParams = set_graph_data_params(1, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'm', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'm', 0));
             filter.savePreset(usedParams, "Text only: Altitude");
             usedParams = set_graph_data_params(2, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'bpm', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'bpm', 0));
             filter.savePreset(usedParams, "Text only: Heart rate");
             usedParams = set_graph_data_params(3, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'km/h', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'km/h', 0));
             filter.savePreset(usedParams, "Text only: Speed");
             usedParams = set_graph_data_params(0, 2, _, _, 0, 0, 100, 0, 0, 100);
-            usedParams.push(set_graph_style_params(0, 0, 1, 0, 5, default_rect, 0, '%', 0));
+            usedParams.push(set_graph_style_params(0, 0, 1, 0, 5, _, 0, '%', 0));
             usedParams.push(set_graph_colors(_, "#00000000", "#00000000"));
             filter.savePreset(usedParams, "Text only: Percentage of trimmed track");
             //color presets:
@@ -401,7 +400,7 @@ Item {
         id: fileDialog
 
         title: qsTr("Select GPS File")
-        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files *.*']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files (*.*)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsGraphRoot.fileOpened(gpsFile.path);
@@ -422,7 +421,7 @@ Item {
         interval: 250
         repeat: true
         onTriggered: {
-            var res = filter.get('resource')
+            const res = filter.get('resource')
             if (res) {
                 autoGpsFileDetectionTimer.stop();
                 gpsFile.url = res;
@@ -518,7 +517,7 @@ Item {
                 filter.resetProperty("legend_unit");
             }
             onPresetSelected: {
-                filterRect = filter.getRect(rectProperty);
+                filterRect = filter.getRect("rect");
                 setControls();
                 reset_legend_unit();
             }
@@ -1700,10 +1699,10 @@ Item {
                         //for map, compute height and width using map_aspect_ratio and the crop values
                         //only shrink so it doesn't get out of frame
                         if (combo_data_source.currentIndex === 0) {
-                            var map_ratio = filter.getDouble('map_original_aspect_ratio');
-                            var width_p = (spin_right.value - spin_left.value) / 100;
-                            var height_p = (spin_top.value - spin_bot.value) / 100;
-                            var new_height = ((rectW.value * height_p) / map_ratio) / width_p;
+                            const map_ratio = filter.getDouble('map_original_aspect_ratio');
+                            const width_p = (spin_right.value - spin_left.value) / 100;
+                            const height_p = (spin_top.value - spin_bot.value) / 100;
+                            const new_height = ((rectW.value * height_p) / map_ratio) / width_p;
                             if (new_height <= rectH.value) {
                                 rectH.value = new_height;
                             } else {
@@ -1894,7 +1893,7 @@ Item {
     Connections {
         target: filter
         function onChanged() {
-            var newValue = filter.getRect(rectProperty);
+            const newValue = filter.getRect("rect");
             if (filterRect !== newValue) {
                 filterRect = newValue;
                 setControls();
