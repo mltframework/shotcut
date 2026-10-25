@@ -1,8 +1,8 @@
 ---
-agent: agent
+name: new-filter-ui
 description: Scaffold all QML files for a new MLT filter UI in Shotcut.
+disable-model-invocation: true
 ---
-
 Add a new MLT filter UI to Shotcut for the filter named **${input:filterName}** (display name) with MLT service identifier **${input:mltService}**.
 
 ## What to create
