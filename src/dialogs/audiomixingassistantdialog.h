@@ -88,6 +88,9 @@ class AudioMixingAssistantDialog : public QDialog
 public:
     explicit AudioMixingAssistantDialog(QString title, MultitrackModel *model, QWidget *parent = 0);
 
+public slots:
+    void reject() override;
+
 private slots:
     void onTrackNameChanged(QTableWidgetItem *item);
     void onTrackRoleChanged(int trackIndex, int roleComboIndex);
@@ -153,6 +156,8 @@ private:
     QPushButton *m_actionButton;
     Stage m_stage;
     bool m_blockUpdates;
+    bool m_processing = false;
+    bool m_cancelRequested = false;
     QVector<TrackAnalysisResult> m_analysisResults;
     QVector<MixRecommendation> m_recommendations;
     QHash<int, int> m_trackProgressByIndex;

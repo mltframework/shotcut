@@ -44,6 +44,7 @@
 #include <QVBoxLayout>
 #include <QtConcurrent/QtConcurrentRun>
 
+#include <atomic>
 #include <cmath>
 
 // How far below the program (dialogue anchor) loudness a frame must be to no
@@ -86,9 +87,14 @@ public:
 
     void start() { m_future = QtConcurrent::run(&TrackAudioReader::process, this); }
     bool isFinished() { return m_future.isFinished(); }
+    void cancel() { m_cancelRequested.store(true); }
+    void waitForFinished() { m_future.waitForFinished(); }
 
     void process()
     {
+        if (m_cancelRequested.load())
+            return;
+
         QScopedPointer<Mlt::Producer> producer(
             new Mlt::Producer(MLT.profile(), "xml-string", m_producerXml.toUtf8().constData()));
         if (!producer->is_valid()) {
@@ -120,6 +126,9 @@ public:
         int n = producer->get_playtime();
         int progress = 0;
         for (int i = 0; i < n; i++) {
+            if (m_cancelRequested.load())
+                return;
+
             QScopedPointer<Mlt::Frame> frame(producer->get_frame());
             if (frame && frame->is_valid()) {
                 // Always pull audio, even for silent/blank frames, because the
@@ -145,6 +154,9 @@ public:
             }
         }
 
+        if (m_cancelRequested.load())
+            return;
+
         double integratedLoudness = -100.0;
         QString results = QString::fromUtf8(loudnessFilter.get("results"));
         if (!results.isEmpty()) {
@@ -166,6 +178,7 @@ private:
     QString m_producerXml;
     bool m_measureFrameLevels;
     QFuture<void> m_future;
+    std::atomic_bool m_cancelRequested{false};
 };
 
 AudioMixingAssistantDialog::AudioMixingAssistantDialog(QString title,
@@ -190,7 +203,7 @@ AudioMixingAssistantDialog::AudioMixingAssistantDialog(QString title,
     vlayout->addWidget(m_stack, 1);
 
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
-    connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(m_buttonBox, &QDialogButtonBox::rejected, this, &AudioMixingAssistantDialog::reject);
     m_actionButton = m_buttonBox->addButton(tr("Process"), QDialogButtonBox::AcceptRole);
     connect(m_actionButton,
             &QPushButton::pressed,
@@ -424,8 +437,19 @@ void AudioMixingAssistantDialog::onTargetLoudnessChanged(double value)
     m_model->setProjectTargetLoudness(value);
 }
 
+void AudioMixingAssistantDialog::reject()
+{
+    if (m_processing) {
+        m_cancelRequested = true;
+        return;
+    }
+    QDialog::reject();
+}
+
 void AudioMixingAssistantDialog::startProcessing()
 {
+    m_processing = true;
+    m_cancelRequested = false;
     m_stage = StageProcessing;
     m_stack->setCurrentIndex(StageProcessing);
     m_actionButton->setEnabled(false);
@@ -462,6 +486,7 @@ void AudioMixingAssistantDialog::startProcessing()
 
     m_pendingAnalysisCount = readers.size();
     if (readers.isEmpty()) {
+        m_processing = false;
         finishProcessing();
         return;
     }
@@ -470,16 +495,36 @@ void AudioMixingAssistantDialog::startProcessing()
         reader->start();
 
     for (auto *reader : readers) {
-        while (!reader->isFinished()) {
+        while (!reader->isFinished() && !m_cancelRequested) {
             QThread::msleep(10);
             QCoreApplication::processEvents();
         }
-        reader->deleteLater();
+        if (m_cancelRequested)
+            break;
+    }
+
+    if (m_cancelRequested) {
+        for (auto *reader : readers)
+            reader->cancel();
+    }
+    // Readers must stop using their state before they or the dialog can be destroyed.
+    for (auto *reader : readers) {
+        reader->waitForFinished();
+        delete reader;
+    }
+    m_processing = false;
+    if (m_cancelRequested) {
+        m_analysisResults.clear();
+        m_pendingAnalysisCount = 0;
+        QDialog::reject();
     }
 }
 
 void AudioMixingAssistantDialog::onTrackAnalysisProgress(int trackIndex, int percent)
 {
+    if (m_cancelRequested)
+        return;
+
     m_trackProgressByIndex[trackIndex] = percent;
     int total = 0;
     for (int value : std::as_const(m_trackProgressByIndex))
@@ -491,6 +536,9 @@ void AudioMixingAssistantDialog::onTrackAnalysisFinished(int trackIndex,
                                                          double integratedLoudness,
                                                          QVector<float> frameLevels)
 {
+    if (m_cancelRequested)
+        return;
+
     TrackAnalysisResult result;
     result.trackIndex = trackIndex;
     result.role = m_model->getTrackRole(trackIndex);
