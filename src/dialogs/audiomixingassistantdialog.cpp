@@ -574,12 +574,22 @@ void AudioMixingAssistantDialog::populateRecommendationsList()
     m_recommendationsTable->resizeRowsToContents();
 }
 
+double AudioMixingAssistantDialog::dialogueNormalizationGain(const TrackAnalysisResult &result) const
+{
+    if (result.integratedLoudness <= -100.0)
+        return 0.0;
+    double targetLoudness = dialogueAnchorLoudness();
+    if (std::abs(targetLoudness - result.integratedLoudness) < kGainNormalizationToleranceDb)
+        return 0.0;
+    return qBound(-70.0, targetLoudness - result.integratedLoudness, 24.0);
+}
+
 void AudioMixingAssistantDialog::addLoudnessRecommendation(const TrackAnalysisResult &result)
 {
     double targetLoudness = m_model->getProjectTargetLoudness();
-    if (std::abs(targetLoudness - result.integratedLoudness) < kGainNormalizationToleranceDb)
+    double gain = dialogueNormalizationGain(result);
+    if (gain == 0.0)
         return;
-    double gain = qBound(-70.0, targetLoudness - result.integratedLoudness, 24.0);
 
     MixRecommendation recommendation;
     recommendation.trackIndex = result.trackIndex;
@@ -930,7 +940,8 @@ void AudioMixingAssistantDialog::finishProcessing()
 QVector<QPair<int, int>> AudioMixingAssistantDialog::findDialogueEvents() const
 {
     // A frame counts as "dialogue active" when any dialogue track's level
-    // there is within kDuckingThresholdOffsetDb of the program loudness.
+    // there is within kDuckingThresholdOffsetDb of the program loudness, after
+    // the planned dialogue normalization gain is applied.
     double thresholdDb = dialogueAnchorLoudness() + kDuckingThresholdOffsetDb;
 
     int frameCount = 0;
@@ -942,9 +953,10 @@ QVector<QPair<int, int>> AudioMixingAssistantDialog::findDialogueEvents() const
     for (const auto &result : m_analysisResults) {
         if (result.role != DialogueAudioRole)
             continue;
+        double gainDb = dialogueNormalizationGain(result);
         for (int i = 0; i < result.frameLevels.size(); i++) {
             double linear = result.frameLevels.at(i);
-            double db = linear > 0.0 ? 20.0 * std::log10(linear) : -100.0;
+            double db = linear > 0.0 ? 20.0 * std::log10(linear) + gainDb : -100.0;
             if (db >= thresholdDb)
                 active[i] = true;
         }

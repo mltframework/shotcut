@@ -136,6 +136,7 @@ private:
     void addSfxDuckingRecommendation(const TrackAnalysisResult &result);
     void addPremixedProgramGainRecommendation(const TrackAnalysisResult &result);
     double dialogueAnchorLoudness() const;
+    double dialogueNormalizationGain(const TrackAnalysisResult &result) const;
     void populateRecommendationsList();
     void applyApprovedRecommendations();
     QVector<QPair<int, int>> findDialogueEvents() const;
