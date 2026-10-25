@@ -643,6 +643,8 @@ void AudioMixingAssistantDialog::generateRecommendations()
 {
     m_recommendations.clear();
     double anchor = dialogueAnchorLoudness();
+    // Ducking without dialogue to duck against would add a filter with no keyframes.
+    bool hasDialogueEvents = !findDialogueEvents().isEmpty();
     for (const auto &result : std::as_const(m_analysisResults)) {
         // -100 LUFS (or no measurement at all) means the track has no audible sound.
         if (result.integratedLoudness <= -100.0)
@@ -654,7 +656,8 @@ void AudioMixingAssistantDialog::generateRecommendations()
             addCompressorRecommendation(result);
         } else if (result.role == BackgroundMusicAudioRole) {
             addBackgroundMusicGainRecommendation(result, anchor);
-            addDuckingRecommendation(result);
+            if (hasDialogueEvents)
+                addDuckingRecommendation(result);
             addFrequencyCarvingRecommendation(result);
         } else if (result.role == AmbienceAudioRole) {
             addAmbienceGainRecommendation(result, anchor);
@@ -663,7 +666,8 @@ void AudioMixingAssistantDialog::generateRecommendations()
         } else if (result.role == SoundEffectsAudioRole) {
             addSfxGainRecommendation(result, anchor);
             addSfxHighPassRecommendation(result);
-            addSfxDuckingRecommendation(result);
+            if (hasDialogueEvents)
+                addSfxDuckingRecommendation(result);
         } else if (result.role == PremixedProgramAudioRole) {
             addPremixedProgramGainRecommendation(result);
         }
