@@ -70,12 +70,26 @@ static bool isDialogueSourceRole(AudioTrackRole role)
     return role == DialogueAudioRole || role == PremixedProgramAudioRole;
 }
 
+static bool isAssistantFilter(Mlt::Properties &properties)
+{
+    const char *reason = properties.get(kShotcutAudioMixingAssistantProperty);
+    return reason && *reason;
+}
+
+static bool replacesAssistantFilter(Mlt::Service &service, const MixRecommendation &recommendation)
+{
+    return isAssistantFilter(service)
+           && QString::fromUtf8(service.get("mlt_service")) == recommendation.mltService
+           && (recommendation.shotcutFilterName.isEmpty()
+               || QString::fromUtf8(service.get(kShotcutFilterProperty))
+                      == recommendation.shotcutFilterName);
+}
+
 static void removeAssistantFilters(Mlt::Producer &producer)
 {
     for (int i = producer.filter_count() - 1; i >= 0; --i) {
         QScopedPointer<Mlt::Filter> filter(producer.filter(i));
-        if (filter && filter->is_valid() && filter->get(kShotcutAudioMixingAssistantProperty)
-            && strlen(filter->get(kShotcutAudioMixingAssistantProperty)) > 0)
+        if (filter && filter->is_valid() && isAssistantFilter(*filter))
             producer.detach(*filter);
     }
 }
@@ -314,7 +328,9 @@ QWidget *AudioMixingAssistantDialog::createRecommendationsPage()
     vlayout->setContentsMargins(0, 0, 0, 0);
 
     QLabel *label = new QLabel(
-        tr("Review the proposed changes below. Uncheck any item you do not want applied."));
+        tr("Review the proposed changes below. Uncheck any item you do not want applied. "
+           "Existing assistant filters of the same type as checked recommendations "
+           "will be replaced."));
     label->setWordWrap(true);
     vlayout->addWidget(label);
 
@@ -1129,30 +1145,8 @@ void AudioMixingAssistantDialog::applyApprovedRecommendations()
     }
 
     AttachedFiltersModel *attachedModel = MAIN.filterController()->attachedModel();
-    QSet<int> tracksToReset;
-    for (int row : std::as_const(rowsToApply))
-        tracksToReset.insert(m_recommendations.at(row).trackIndex);
 
     MAIN.undoStack()->beginMacro(tr("Apply Audio Mixing Recommendations"));
-    for (int trackIndex : std::as_const(tracksToReset)) {
-        int mltIndex = m_model->trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model->tractor()->track(mltIndex));
-        if (!track || !track->is_valid())
-            continue;
-
-        attachedModel->setProducer();
-        attachedModel->setProducer(track.data());
-        for (int filterRow = attachedModel->rowCount() - 1; filterRow >= 0; --filterRow) {
-            QScopedPointer<Mlt::Service> service(attachedModel->getService(filterRow));
-            if (service && service->is_valid() && service->get(kShotcutAudioMixingAssistantProperty)
-                && strlen(service->get(kShotcutAudioMixingAssistantProperty)) > 0) {
-                MAIN.undoStack()->push(new Filter::RemoveCommand(*attachedModel,
-                                                                 attachedModel->name(filterRow),
-                                                                 *service,
-                                                                 filterRow));
-            }
-        }
-    }
     // Dialogue events are the same for every ducking recommendation, so only compute them once.
     QVector<QPair<int, int>> dialogueEvents;
     bool haveDialogueEvents = false;
@@ -1232,6 +1226,17 @@ void AudioMixingAssistantDialog::applyApprovedRecommendations()
 
         attachedModel->setProducer();
         attachedModel->setProducer(track.data());
+        // Gain and ducking share a Volume filter, so either replaces the whole filter.
+        for (int filterRow = attachedModel->rowCount() - 1; filterRow >= 0; --filterRow) {
+            QScopedPointer<Mlt::Service> service(attachedModel->getService(filterRow));
+            if (service && service->is_valid()
+                && replacesAssistantFilter(*service, recommendation)) {
+                MAIN.undoStack()->push(new Filter::RemoveCommand(*attachedModel,
+                                                                 attachedModel->name(filterRow),
+                                                                 *service,
+                                                                 filterRow));
+            }
+        }
         MAIN.undoStack()->push(
             new Filter::AddCommand(*attachedModel, title, filter, attachedModel->rowCount()));
     }
