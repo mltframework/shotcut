@@ -63,6 +63,13 @@ static const double kCompressorReleaseMs = 200.0;
 // normalization gain filter is not worth recommending.
 static const double kGainNormalizationToleranceDb = 0.1;
 
+// Premixed program audio may contain dialogue, so it is treated like a
+// dialogue track when deciding when to duck other tracks.
+static bool isDialogueSourceRole(AudioTrackRole role)
+{
+    return role == DialogueAudioRole || role == PremixedProgramAudioRole;
+}
+
 static void removeAssistantFilters(Mlt::Producer &producer)
 {
     for (int i = producer.filter_count() - 1; i >= 0; --i) {
@@ -470,7 +477,7 @@ void AudioMixingAssistantDialog::startProcessing()
         if (!track || !track->is_valid())
             continue;
 
-        bool measureFrameLevels = (role == DialogueAudioRole);
+        bool measureFrameLevels = isDialogueSourceRole(role);
         auto *reader = new TrackAudioReader(row, MLT.XML(track.data()), measureFrameLevels);
         connect(reader,
                 &TrackAudioReader::progressUpdate,
@@ -907,9 +914,9 @@ void AudioMixingAssistantDialog::addPremixedProgramGainRecommendation(
     const TrackAnalysisResult &result)
 {
     double targetLoudness = m_model->getProjectTargetLoudness();
-    if (std::abs(targetLoudness - result.integratedLoudness) < kGainNormalizationToleranceDb)
+    double gain = dialogueNormalizationGain(result);
+    if (gain == 0.0)
         return;
-    double gain = qBound(-70.0, targetLoudness - result.integratedLoudness, 24.0);
 
     MixRecommendation recommendation;
     recommendation.trackIndex = result.trackIndex;
@@ -939,19 +946,19 @@ void AudioMixingAssistantDialog::finishProcessing()
 
 QVector<QPair<int, int>> AudioMixingAssistantDialog::findDialogueEvents() const
 {
-    // A frame counts as "dialogue active" when any dialogue track's level
-    // there is within kDuckingThresholdOffsetDb of the program loudness, after
-    // the planned dialogue normalization gain is applied.
+    // A frame counts as "dialogue active" when any dialogue or premixed program
+    // track's level there is within kDuckingThresholdOffsetDb of the program
+    // loudness, after the planned normalization gain is applied.
     double thresholdDb = dialogueAnchorLoudness() + kDuckingThresholdOffsetDb;
 
     int frameCount = 0;
     for (const auto &result : m_analysisResults)
-        if (result.role == DialogueAudioRole)
+        if (isDialogueSourceRole(result.role))
             frameCount = qMax(frameCount, result.frameLevels.size());
 
     QVector<bool> active(frameCount, false);
     for (const auto &result : m_analysisResults) {
-        if (result.role != DialogueAudioRole)
+        if (!isDialogueSourceRole(result.role))
             continue;
         double gainDb = dialogueNormalizationGain(result);
         for (int i = 0; i < result.frameLevels.size(); i++) {

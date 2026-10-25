@@ -40,7 +40,7 @@ struct TrackAnalysisResult
     int trackIndex = -1;
     AudioTrackRole role = UnassignedAudioRole;
     double integratedLoudness = -100.0;
-    QVector<float> frameLevels; // only populated for dialogue tracks
+    QVector<float> frameLevels; // only populated for dialogue and premixed program tracks
 };
 
 // A single point in a keyframed gain envelope used to duck a track.
