@@ -27,14 +27,13 @@ Item {
     //keep in UI order for sanity!
     id: gpsGraphRoot
 
-    property string rectProperty: "rect"
-    property rect filterRect: filter.getRect(rectProperty)
-    property var allParameters: ['time_offset', 'smoothing_value', 'speed_multiplier', 'graph_data_source', 'graph_type', 'trim_start_p', 'trim_end_p', 'crop_mode_h', 'crop_left_p', 'crop_right_p', 'crop_mode_v', 'crop_bot_p', 'crop_top_p', 'color_style', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'show_now_dot', 'now_dot_color', 'show_now_text', 'angle', 'thickness', rectProperty, 'show_grid', 'legend_unit', 'draw_individual_dots', 'bg_img_path', 'bg_scale_w']
+    property rect filterRect: filter.getRect("rect")
+    property var allParameters: ['time_offset', 'smoothing_value', 'speed_multiplier', 'graph_data_source', 'graph_type', 'trim_start_p', 'trim_end_p', 'crop_mode_h', 'crop_left_p', 'crop_right_p', 'crop_mode_v', 'crop_bot_p', 'crop_top_p', 'color_style', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'show_now_dot', 'now_dot_color', 'show_now_text', 'angle', 'thickness', "rect", 'show_grid', 'legend_unit', 'draw_individual_dots', 'bg_img_path', 'bg_scale_w']
     property var default_colors: ["#00aaff", "#00e000", "#ffff00", "#ff8c00", "#ff0000"]
     property var default_colors_grade: ["#ff00ff", "#00aaff", "#00e000", "#ffff00", "#ff0000"]
     property string color_white: "#ffffff"
     property string default_now_dot: "#00ffffff"
-    property string default_rect: '10%/10%:30%x30%'
+    property string default_rect: '75% 75% 20% 20%'
     property int js_tz_offset: 0
     property bool _disableUpdate: true
 
@@ -49,7 +48,7 @@ Item {
 
     //transforms a wheel-up/down event into the correct offset direction
     function wheel_offset(val) {
-        var offset = Number(filter.get("time_offset"));
+        const offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
         if (offset === 0 && val < 0)
@@ -81,16 +80,16 @@ Item {
     //graph rect
     function setFilter() {
         _disableUpdate = true;
-        var x = rectX.value;
-        var y = rectY.value;
-        var w = rectW.value;
-        var h = rectH.value;
+        const x = rectX.value;
+        const y = rectY.value;
+        const w = rectW.value;
+        const h = rectH.value;
         if (x !== filterRect.x || y !== filterRect.y || w !== filterRect.width || h !== filterRect.height) {
             filterRect.x = x;
             filterRect.y = y;
             filterRect.width = w;
             filterRect.height = h;
-            filter.set(rectProperty, filterRect);
+            filter.set("rect", filterRect);
         }
         _disableUpdate = false;
     }
@@ -100,6 +99,7 @@ Item {
         //gps sync data
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName;
+            fileLabel.color = activePalette.text;
             fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text');
         } else {
             fileLabel.text = qsTr("No File Loaded.");
@@ -219,9 +219,9 @@ Item {
             used_params.push(filterset_getparams('angle', angle));
         if (thick !== undefined)
             used_params.push(filterset_getparams('thickness', thick));
-
-        //can't figure out how to properly set rect from preset to update the VUI
-        //if (rect !== undefined) used_params.push(filterset_getparams(rectProperty, rect))
+        //note: we don't generally want to change rect on a preset change
+        if (rect !== undefined) 
+            used_params.push(filterset_getparams("rect", rect))
         if (grid !== undefined)
             used_params.push(filterset_getparams('show_grid', grid));
         if (legendunit !== undefined)
@@ -274,14 +274,14 @@ Item {
     }
     Component.onCompleted: {
         filter.blockSignals = true;
-        var resource = filter.get('resource');
+        const resource = filter.get('resource');
         gpsFile.url = resource;
         if (filter.isNew) {
             var usedParams;
-            var _ = undefined; //skip params faster
+            const _ = undefined; //skip params faster
             //main preset
             usedParams = set_graph_data_params(0, 0, 0, 100, 0, 0, 100, 0, 0, 100);
-            usedParams.push(set_graph_style_params(1, 1, 0, 0, 5, default_rect, 0, _, 0));
+            usedParams.push(set_graph_style_params(1, 1, 0, 0, 5, _, 0, _, 0));
             usedParams.push(set_graph_colors(default_now_dot, default_colors[0], color_white));
             filter.savePreset(usedParams, "2D map: full map progress line");
             usedParams = set_graph_data_params(0, 1, _, _, 0, 90, 100, 0, 90, 100);
@@ -318,10 +318,10 @@ Item {
             usedParams = set_graph_data_params(0, 1, _, _, 0, 99, 100, 0, 99, 100);
             usedParams.push(set_graph_style_params(1, 1, 0, 0, 8, _, _, _, 1));
             filter.savePreset(usedParams, "Map style: show GPS points as dots @99%");
-            usedParams = set_graph_style_params(2, 1, 0, 0, 5, default_rect, 0, _, 0);
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5, _, 0, _, 0);
             usedParams.push(set_graph_colors(_, default_colors[0], '#00ffffff'));
             filter.savePreset(usedParams, "Map style: hide future path");
-            usedParams = set_graph_style_params(2, 1, 0, 0, 5, default_rect, 0, _, 0);
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5, _, 0, _, 0);
             usedParams.push(set_graph_colors(_, default_colors[0], '#40ffffff'));
             filter.savePreset(usedParams, "Map style: 25% opacity thin future path");
             usedParams = set_graph_data_params(3, 0, 0, 100, 0, 0, 100, 0, 100, 100);
@@ -344,19 +344,19 @@ Item {
             filter.savePreset(usedParams, "Speedometer: min-max km/h");
             //basic text only presets
             usedParams = set_graph_data_params(0, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, " ", 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, " ", 0));
             filter.savePreset(usedParams, "Text only: GPS coordinates");
             usedParams = set_graph_data_params(1, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'm', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'm', 0));
             filter.savePreset(usedParams, "Text only: Altitude");
             usedParams = set_graph_data_params(2, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'bpm', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'bpm', 0));
             filter.savePreset(usedParams, "Text only: Heart rate");
             usedParams = set_graph_data_params(3, 0, 0, 100, 0, 0, 0, 0, 0, 0);
-            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, default_rect, 0, 'km/h', 0));
+            usedParams.push(set_graph_style_params(_, 0, 1, 0, 5, _, 0, 'km/h', 0));
             filter.savePreset(usedParams, "Text only: Speed");
             usedParams = set_graph_data_params(0, 2, _, _, 0, 0, 100, 0, 0, 100);
-            usedParams.push(set_graph_style_params(0, 0, 1, 0, 5, default_rect, 0, '%', 0));
+            usedParams.push(set_graph_style_params(0, 0, 1, 0, 5, _, 0, '%', 0));
             usedParams.push(set_graph_colors(_, "#00000000", "#00000000"));
             filter.savePreset(usedParams, "Text only: Percentage of trimmed track");
             //color presets:
@@ -377,6 +377,7 @@ Item {
             filter.savePreset(usedParams, "Colors: green middle (5)");
             usedParams = reset_all_params();
             filter.savePreset(usedParams);
+            autoGpsFileDetectionTimer.restart();
         }
         //get current timezone
         //TODO: not sure why this doesn't include daylight saving if active, remove completely?
@@ -399,7 +400,7 @@ Item {
         id: fileDialog
 
         title: qsTr("Select GPS File")
-        nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files (*.*)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsGraphRoot.fileOpened(gpsFile.path);
@@ -412,6 +413,29 @@ Item {
         }
     }
 
+
+    //timer to update Ui in case of automatic gps file detection
+    Timer {
+        id: autoGpsFileDetectionTimer
+        property int calls: 0
+        interval: 250
+        repeat: true
+        onTriggered: {
+            const res = filter.get('resource')
+            if (res) {
+                autoGpsFileDetectionTimer.stop();
+                gpsFile.url = res;
+                gpsGraphRoot.fileOpened(gpsFile.path);
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                setControls();
+            } else {
+                calls += 1;
+                if (calls > 4)
+                    autoGpsFileDetectionTimer.stop();
+            }
+        }
+    }
+
     //timer to update UI after gps file is processed; max: 10x250ms
     Timer {
         id: gpsFinishParseTimer
@@ -420,7 +444,6 @@ Item {
 
         interval: 250
         repeat: true
-        triggeredOnStart: false
         onTriggered: {
             if (filter.get('gps_start_text') == '') {
                 calls += 1;
@@ -433,6 +456,7 @@ Item {
                 gpsFinishParseTimer.stop();
                 calls = 0;
                 filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                button_correct_ar.correct_ar();
                 setControls();
             }
         }
@@ -493,7 +517,7 @@ Item {
                 filter.resetProperty("legend_unit");
             }
             onPresetSelected: {
-                filterRect = filter.getRect(rectProperty);
+                filterRect = filter.getRect("rect");
                 setControls();
                 reset_legend_unit();
             }
@@ -1526,127 +1550,183 @@ Item {
             }
         }
 
-        Label {
-            text: qsTr('Position')
+        
+        //special row for size & poz so we center the buttons
+        ColumnLayout {
             Layout.alignment: Qt.AlignRight
-        }
-
-        RowLayout {
-            Shotcut.DoubleSpinBox {
-                id: rectX
-
-                value: filterRect.x
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
             Label {
-                text: ','
-                Layout.minimumWidth: 20
-                horizontalAlignment: Qt.AlignHCenter
+                text: qsTr('Position')
+                Layout.alignment: Qt.AlignRight
             }
-
-            Shotcut.DoubleSpinBox {
-                id: rectY
-
-                value: filterRect.y
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
-            Shotcut.UndoButton {
-                onClicked: {
-                    rectX.value = profile.width * 0.1;
-                    rectY.value = profile.height * 0.1;
-                    setFilter();
-                }
-            }
-        }
-
-        Label {
-            text: qsTr('Size')
-            Layout.alignment: Qt.AlignRight
-        }
-
-        RowLayout {
-            Shotcut.DoubleSpinBox {
-                id: rectW
-
-                value: filterRect.width
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
             Label {
-                text: 'x'
-                Layout.minimumWidth: 20
-                horizontalAlignment: Qt.AlignHCenter
+                text: qsTr('Size')
+                Layout.alignment: Qt.AlignRight
             }
+        }
+        GridLayout {
+            rows: 2
+            columns: 2
 
-            Shotcut.DoubleSpinBox {
-                id: rectH
+            RowLayout { //position
+                Layout.column: 0 
+                Layout.row: 0; 
+                Shotcut.DoubleSpinBox {
+                    id: rectX
 
-                value: filterRect.height
-                Layout.minimumWidth: 80
-                horizontalAlignment: Qt.AlignRight
-                decimals: 0
-                stepSize: 1
-                from: -1e+09
-                to: 1e+09
-                onValueModified: {
-                    if (_disableUpdate)
-                        return;
-                    setFilter();
-                }
-            }
-
-            Shotcut.UndoButton {
-                onClicked: {
-                    //for map, try to compute height from width using map_aspect_ratio and the crop values
-                    if (combo_data_source.currentIndex === 0) {
-                        var width_p = (spin_right.value - spin_left.value) / 100;
-                        var height_p = (spin_top.value - spin_bot.value) / 100;
-                        rectH.value = 1 * ((rectW.value * height_p) / filter.getDouble('map_original_aspect_ratio')) / width_p;
-                    } else {
-                        rectH.value = rectW.value;
+                    value: filterRect.x
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
                     }
-                    //if it's outside viewport just make it inside, ignore map or crops
-                    if (rectW.value + rectX.value > profile.width)
-                        rectW.value = profile.width - rectX.value;
-                    if (rectH.value + rectY.value > profile.height)
-                        rectH.value = profile.height - rectY.value;
-                    setFilter();
                 }
 
-                Shotcut.HoverTip {
-                    text: qsTr('Sets the height to the correct map aspect ratio or 1:1.')
+                Label {
+                    text: ','
+                    Layout.minimumWidth: 20
+                    horizontalAlignment: Qt.AlignHCenter
+                }
+
+                Shotcut.DoubleSpinBox {
+                    id: rectY
+
+                    value: filterRect.y
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+            }
+            RowLayout { //size
+                Layout.column: 0 
+                Layout.row: 1; 
+                Shotcut.DoubleSpinBox {
+                    id: rectW
+
+                    value: filterRect.width
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+
+                Label {
+                    text: 'x'
+                    Layout.minimumWidth: 20
+                    horizontalAlignment: Qt.AlignHCenter
+                }
+
+                Shotcut.DoubleSpinBox {
+                    id: rectH
+
+                    value: filterRect.height
+                    Layout.minimumWidth: 80
+                    horizontalAlignment: Qt.AlignRight
+                    decimals: 0
+                    stepSize: 1
+                    from: -1e+09
+                    to: 1e+09
+                    onValueModified: {
+                        if (_disableUpdate)
+                            return;
+                        setFilter();
+                    }
+                }
+            }
+
+            //buttons (centered vertically)
+            RowLayout {
+                Layout.row: 0
+                Layout.column: 1
+                Layout.rowSpan: 2
+                Layout.alignment: Qt.AlignVCenter
+
+                Shotcut.Button {
+                    icon.name: "view-fullscreen"
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    onClicked: {
+                        rectX.value = 0 + profile.width * 0.01;
+                        rectY.value = 0 + profile.height * 0.01;
+                        rectW.value = profile.width * 0.98;
+                        rectH.value = profile.height * 0.98;
+                        setFilter();
+                    }
+                    Shotcut.HoverTip {
+                        text: qsTr('Reset size and position to almost fullscreen')
+                    }
+                }
+
+                Shotcut.UndoButton {
+                    onClicked: {
+                        rectX.value = profile.width * 0.75;
+                        rectY.value = profile.height * 0.75;
+                        rectW.value = profile.width * 0.20;
+                        rectH.value = profile.height * 0.20;
+                        setFilter();
+                    }
+                    Shotcut.HoverTip {
+                        text: qsTr('Reset size and position to bottom right side')
+                    }
+                }
+
+                Shotcut.Button {
+                    id: button_correct_ar
+                    icon.name: 'zoom-fit-best'
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    function correct_ar() {
+                        //for map, compute height and width using map_aspect_ratio and the crop values
+                        //only shrink so it doesn't get out of frame
+                        if (combo_data_source.currentIndex === 0) {
+                            //skip if cropmode is by value as we don't have enough info to correct the ratio
+                            if (combo_cropmode_h.currentIndex !== 0 || combo_cropmode_v.currentIndex !== 0)
+                                return;
+
+                            const map_ratio = filter.getDouble('map_original_aspect_ratio');
+                            const width_p = (spin_right.value - spin_left.value) / 100;
+                            const height_p = (spin_top.value - spin_bot.value) / 100;
+                            if (!isFinite(map_ratio) || !isFinite(width_p) || !isFinite(height_p))
+                                return;
+
+                            const new_height = ((rectW.value * height_p) / map_ratio) / width_p;
+                            if (new_height <= rectH.value) {
+                                rectH.value = new_height;
+                            } else {
+                                rectW.value = (rectH.value * width_p * map_ratio) / height_p;
+                            }
+                        } else {
+                            if (rectH.value > rectW.value)
+                                rectH.value = rectW.value;
+                            else
+                                rectW.value = rectH.value;
+                        }
+                        setFilter();
+                    }
+                    onClicked: button_correct_ar.correct_ar();
+                    Shotcut.HoverTip {
+                        text: qsTr('Shrink to the correct map aspect ratio (or 1:1)')
+                    }
                 }
             }
         }
@@ -1820,7 +1900,7 @@ Item {
     Connections {
         target: filter
         function onChanged() {
-            var newValue = filter.getRect(rectProperty);
+            const newValue = filter.getRect("rect");
             if (filterRect !== newValue) {
                 filterRect = newValue;
                 setControls();

@@ -35,6 +35,7 @@ Shotcut.KeyframableFilter {
         textFilterUi.setControls();
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName;
+            fileLabel.color = activePalette.text;
             fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text');
         } else {
             fileLabel.text = qsTr("No File Loaded.");
@@ -45,7 +46,13 @@ Shotcut.KeyframableFilter {
         combo_smoothing.currentIndex = combo_smoothing.get_smooth_index_from_val(filter.get('smoothing_value'));
         speed_multiplier.value = filter.get('speed_multiplier');
         updates_per_second.text = filter.get('updates_per_second');
-        gps_processing_start.text = filter.get('gps_processing_start_time');
+        if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
+        {
+            gps_processing_start.text = filter.get('gps_start_text');
+            filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+        }
+        else 
+            gps_processing_start.text = filter.get('gps_processing_start_time');
     }
 
     //this function combines the text values from sign combobox * days/hours/mins/sec TextFields into an int
@@ -57,7 +64,7 @@ Shotcut.KeyframableFilter {
 
     //transforms a wheel-up/down event into the correct offset direction
     function wheel_offset(val) {
-        var offset = Number(filter.get("time_offset"));
+        const offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
         if (offset == 0 && val < 0)
@@ -125,9 +132,10 @@ Shotcut.KeyframableFilter {
             // Add default preset.
             filter.set(textFilterUi.valignProperty, 'bottom');
             filter.set(textFilterUi.halignProperty, 'left');
-            filter.set(textFilterUi.rectProperty, '10%/10%:80%x80%');
+            filter.set(textFilterUi.rectProperty, '5% 50% 45% 45%');
             filter.savePreset(presetParams);
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
+            autoGpsFileDetectionTimer.restart();
         } else {
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
@@ -165,7 +173,7 @@ Shotcut.KeyframableFilter {
     Shotcut.FileDialog {
         id: fileDialog
 
-        nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
+        nameFilters: ['Supported files (*.gpx *.tcx *.txt)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)', 'Text files (*.txt)', 'All files (*.*)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
             gpsTextRoot.fileOpened(gpsFile.path);
@@ -176,6 +184,29 @@ Shotcut.KeyframableFilter {
             filter.set('gps_start_text', '');
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
             gpsFinishParseTimer.restart();
+        }
+    }
+
+
+    //timer to update Ui in case of automatic gps file detection
+    Timer {
+        id: autoGpsFileDetectionTimer
+        property int calls: 0
+        interval: 250
+        repeat: true
+        onTriggered: {
+            const res = filter.get('resource')
+            if (res) {
+                autoGpsFileDetectionTimer.stop();
+                gpsFile.url = res;
+                gpsTextRoot.fileOpened(gpsFile.path);
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
+                setControls();
+            } else {
+                calls += 1;
+                if (calls > 4)
+                    autoGpsFileDetectionTimer.stop();
+            }
         }
     }
 
@@ -615,7 +646,7 @@ Shotcut.KeyframableFilter {
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {
-                    var gps_time_now = filter.get('auto_gps_processing_start_now');
+                    const gps_time_now = filter.get('auto_gps_processing_start_now');
                     gps_processing_start.text = gps_time_now;
                     filter.set('gps_processing_start_time', gps_time_now);
                 }
