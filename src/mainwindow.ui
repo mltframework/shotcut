@@ -323,6 +323,7 @@
     <addaction name="menuJobPriority"/>
     <addaction name="menuData_Directory"/>
     <addaction name="actionAudioVideoDevice"/>
+    <addaction name="actionSettingsShortcuts"/>
     <addaction name="actionClearRecentOnExit"/>
     <addaction name="separator"/>
     <addaction name="actionLeaveSafeMode"/>
@@ -1469,6 +1470,11 @@
     <string>Audio/Video Device...</string>
    </property>
   </action>
+  <action name="actionSettingsShortcuts">
+   <property name="text">
+    <string>Shortcuts...</string>
+   </property>
+  </action>
   <action name="actionReset">
    <property name="text">
     <string>Reset...</string>
@@ -1588,6 +1594,22 @@
   <include location="../icons/resources.qrc"/>
  </resources>
  <connections>
+  <connection>
+   <sender>actionSettingsShortcuts</sender>
+   <signal>triggered()</signal>
+   <receiver>actionKeyboardShortcuts</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
   <connection>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
