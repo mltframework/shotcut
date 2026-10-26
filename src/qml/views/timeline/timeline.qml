@@ -634,6 +634,7 @@ Rectangle {
                         Column {
                             id: tracksContainer
 
+                            Accessible.role: Accessible.Pane
                             onWidthChanged: applyPendingZoomScroll()
 
                             Repeater {
