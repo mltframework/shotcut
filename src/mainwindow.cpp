@@ -944,7 +944,7 @@ void MainWindow::setupAndConnectDocks()
     });
     ui->menuHelp->insertAction(ui->actionAbout_Shotcut, coproducerSearchAction);
 
-    auto *coproducerChatAction = new QAction(tr("Chat"), this);
+    auto *coproducerChatAction = new QAction(tr("AI Chat"), this);
     connect(coproducerChatAction, &QAction::triggered, this, [this]() {
         m_coproducerDock->show();
         m_coproducerDock->raise();
