@@ -36,6 +36,8 @@ class ShotcutSettings : public QObject
                    NOTIFY timelineShowWaveformsChanged)
     Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE
                    setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
+    Q_PROPERTY(bool timelineRoundedCorners READ timelineRoundedCorners WRITE
+                   setTimelineRoundedCorners NOTIFY timelineRoundedCornersChanged)
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY
                    timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE
@@ -238,6 +240,8 @@ public:
     void setTimelineShowWaveforms(bool);
     bool timelineShowThumbnails() const;
     void setTimelineShowThumbnails(bool);
+    bool timelineRoundedCorners() const;
+    void setTimelineRoundedCorners(bool);
     bool timelineRipple() const;
     void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
@@ -454,6 +458,7 @@ signals:
     void timelineDragScrubChanged();
     void timelineShowWaveformsChanged();
     void timelineShowThumbnailsChanged();
+    void timelineRoundedCornersChanged();
     void timelineRippleChanged();
     void timelineRippleAllTracksChanged();
     void timelineRippleMarkersChanged();

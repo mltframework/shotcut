@@ -1421,6 +1421,17 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineShowThumbnailsAction", action);
 
+    action = new QAction(tr("Rounded Corners"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineRoundedCorners());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineRoundedCorners(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineRoundedCornersChanged, action, [=]() {
+        action->setChecked(Settings.timelineRoundedCorners());
+    });
+    Actions.add("timelineRoundedCornersAction", action);
+
     action = new QAction(tr("No"), this);
     action->setCheckable(true);
     action->setChecked(ShotcutSettings::TimelineScrolling::NoScrolling

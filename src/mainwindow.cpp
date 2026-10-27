@@ -603,6 +603,7 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelineRectangleSelectAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
+    ui->menuTimeline->addAction(Actions["timelineRoundedCornersAction"]);
     auto submenu = ui->menuTimeline->addMenu(tr("Scrolling"));
     auto *group = new QActionGroup(this);
     submenu->addAction(Actions["timelineScrollingCenterPlayhead"]);

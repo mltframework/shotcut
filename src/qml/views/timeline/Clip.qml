@@ -89,7 +89,7 @@ Rectangle {
         return Math.min(8, Math.max(0, last - waveformFirstTile));
     }
     property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : isAdjustment ? root.adjustmentClipColor : root.shotcutBlue
-    readonly property real _cornerRadius: 6
+    readonly property real _cornerRadius: settings.timelineRoundedCorners ? 6 : 0
     property real _roundLeft: {
         if (isBlank || !trackRoot || trackRoot.clipCount === 0)
             return 0;
@@ -185,10 +185,17 @@ Rectangle {
             thumbnailsLoaded = true;
     }
 
-    topLeftRadius: _roundLeft
-    bottomLeftRadius: _roundLeft
-    topRightRadius: _roundRight
-    bottomRightRadius: _roundRight
+    // A radius of 0 must stay unset. Qt still uses the rounded-rectangle
+    // border path when a corner radius property is set, and that path draws
+    // the left and right edges thinner than a straight border at high DPI.
+    function optionalCornerRadius(radius) {
+        return radius > 0 ? radius : undefined;
+    }
+
+    topLeftRadius: optionalCornerRadius(_roundLeft)
+    bottomLeftRadius: optionalCornerRadius(_roundLeft)
+    topRightRadius: optionalCornerRadius(_roundRight)
+    bottomRightRadius: optionalCornerRadius(_roundRight)
     onElidedChanged: considerThumbnails()
     Component.onCompleted: considerThumbnails()
 
@@ -199,7 +206,7 @@ Rectangle {
         }
     }
 
-    border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
+    border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? application.playheadColor : 'white' : 'black'
     border.width: (isBlank && !selected) ? 0 : 1
     clip: !offScreen && clipPxW < 4096
     color: clipColor
@@ -569,7 +576,6 @@ Rectangle {
                         y = Math.max(point.y - 20, 0);
                     }
                 }
-
             }
         }
     }
@@ -1014,13 +1020,14 @@ Rectangle {
 
     Rectangle {
         anchors.fill: parent
+        visible: settings.timelineRoundedCorners
         color: 'transparent'
-        border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? application.playheadColor : 'white' : 'black'
-        border.width: (isBlank && !selected) ? 0 : 1
-        topLeftRadius: clipRoot.topLeftRadius
-        bottomLeftRadius: clipRoot.bottomLeftRadius
-        topRightRadius: clipRoot.topRightRadius
-        bottomRightRadius: clipRoot.bottomRightRadius
+        border.color: clipRoot.border.color
+        border.width: clipRoot.border.width
+        topLeftRadius: optionalCornerRadius(_roundLeft)
+        bottomLeftRadius: optionalCornerRadius(_roundLeft)
+        topRightRadius: optionalCornerRadius(_roundRight)
+        bottomRightRadius: optionalCornerRadius(_roundRight)
         z: 10
     }
 }

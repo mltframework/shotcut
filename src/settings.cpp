@@ -1117,6 +1117,22 @@ void ShotcutSettings::setTimelineShowThumbnails(bool b)
 }
 
 /*!
+    \qmlproperty bool Settings::timelineRoundedCorners
+    \brief Whether timeline clips are drawn with rounded corners.
+*/
+
+bool ShotcutSettings::timelineRoundedCorners() const
+{
+    return settings.value("timeline/roundedCorners", true).toBool();
+}
+
+void ShotcutSettings::setTimelineRoundedCorners(bool b)
+{
+    settings.setValue("timeline/roundedCorners", b);
+    emit timelineRoundedCornersChanged();
+}
+
+/*!
     \qmlproperty bool Settings::timelineRipple
     \brief Whether ripple editing is enabled on the timeline.
 */
