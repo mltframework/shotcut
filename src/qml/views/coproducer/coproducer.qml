@@ -21,6 +21,8 @@ import QtQuick.Layouts
 Rectangle {
     id: root
 
+    property string chatModeLabel: qsTr("AI Chat")
+
     color: activePalette.window
     width: 420
     height: 560
@@ -33,7 +35,7 @@ Rectangle {
                 widest = entry;
         }
         if (!widest)
-            widest = "AI Chat";
+            widest = chatModeLabel;
         modeComboText.text = widest;
         return modeComboText.implicitWidth + 52;
     }
@@ -46,7 +48,7 @@ Rectangle {
         id: modeComboText
         visible: false
         font: modeCombo.font
-        text: "AI Chat"
+        text: root.chatModeLabel
     }
 
     ColumnLayout {
@@ -68,7 +70,7 @@ Rectangle {
 
             ComboBox {
                 id: modeCombo
-                model: ["AI Chat", "Search User Guide"]
+                model: [root.chatModeLabel, qsTr("Search User Guide")]
                 currentIndex: coproducer.mode
                 onCurrentIndexChanged: coproducer.mode = currentIndex
                 Layout.minimumWidth: root.modeComboWidth()
