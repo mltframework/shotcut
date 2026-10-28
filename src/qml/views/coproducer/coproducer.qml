@@ -147,39 +147,39 @@ Rectangle {
 
                         implicitHeight: bubbleText.implicitHeight + 18
 
-                        Text {
+                        TextEdit {
                             id: bubbleText
                             anchors.fill: parent
                             anchors.margins: 10
                             text: item.text
-                            textFormat: Text.MarkdownText
-                            wrapMode: Text.Wrap
+                            textFormat: TextEdit.MarkdownText
+                            wrapMode: TextEdit.Wrap
+                            readOnly: true
+                            selectByMouse: true
+                            persistentSelection: true
                             font.pointSize: Math.max(8, Qt.application.font.pointSize - 2)
                             color: item.role === "user" ? activePalette.highlightedText : activePalette.text
-                            linkColor: item.role === "user" ? activePalette.highlightedText : "#4da3ff"
-                            onLinkActivated: Qt.openUrlExternally(link)
+                            selectionColor: activePalette.highlight
+                            selectedTextColor: activePalette.highlightedText
+                            palette.link: item.role === "user" ? activePalette.highlightedText : "#4da3ff"
+                            onLinkActivated: link => Qt.openUrlExternally(link)
                         }
 
                         MouseArea {
                             id: linkMouseArea
                             anchors.fill: bubbleText
-                            acceptedButtons: Qt.LeftButton
+                            acceptedButtons: Qt.NoButton
                             hoverEnabled: true
                             property string hoveredLink: ""
-                            cursorShape: bubbleText.linkAt(mouseX, mouseY) ? Qt.PointingHandCursor : Qt.ArrowCursor
+                            cursorShape: bubbleText.linkAt(mouseX, mouseY) ? Qt.PointingHandCursor : Qt.IBeamCursor
                             onPositionChanged: mouse => {
                                 const link = bubbleText.linkAt(mouse.x, mouse.y);
                                 hoveredLink = link || "";
-                                cursorShape = link ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                                cursorShape = link ? Qt.PointingHandCursor : Qt.IBeamCursor;
                             }
                             onExited: {
                                 hoveredLink = "";
-                                cursorShape = Qt.ArrowCursor;
-                            }
-                            onClicked: mouse => {
-                                const link = bubbleText.linkAt(mouse.x, mouse.y);
-                                if (link)
-                                    Qt.openUrlExternally(link);
+                                cursorShape = Qt.IBeamCursor;
                             }
                         }
 
