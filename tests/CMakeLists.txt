@@ -26,6 +26,14 @@ target_include_directories(test_dataqueue PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(test_dataqueue PRIVATE Qt6::Core Qt6::Test)
 add_test(NAME dataqueue COMMAND test_dataqueue)
 
+add_executable(test_proxyencode
+  test_proxyencode.cpp
+  ${CMAKE_SOURCE_DIR}/src/proxyencode.cpp
+)
+target_include_directories(test_proxyencode PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(test_proxyencode PRIVATE Qt6::Core Qt6::Test)
+add_test(NAME proxyencode COMMAND test_proxyencode)
+
 add_executable(test_exportpresetdialog
   test_exportpresetdialog.cpp
   ${CMAKE_SOURCE_DIR}/src/dialogs/addencodepresetdialog.cpp
