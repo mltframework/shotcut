@@ -47,6 +47,36 @@ static constexpr char kProxyImageExtension[] = ".jpg";
 static constexpr char kProxyPendingImageExtension[] = ".pending.jpg";
 static constexpr float kProxyResolutionRatio = 1.3f;
 static constexpr int kFallbackProxyResolution = 540;
+
+#ifdef Q_OS_WIN
+// Same alignment as ff_dxva2_common_frame_params(). scale_d3d11 samples that
+// whole surface, so any padding past the picture becomes a black bar.
+static int d3d11SurfaceAlignment(const QString &codecName)
+{
+    if (codecName == QLatin1String("hevc") || codecName == QLatin1String("av1")
+        || codecName == QLatin1String("libdav1d") || codecName == QLatin1String("libaom-av1"))
+        return 128;
+    if (codecName == QLatin1String("mpeg2video"))
+        return 32;
+    return 16;
+}
+
+static int alignD3d11Surface(int value, int alignment)
+{
+    return (value + alignment - 1) & ~(alignment - 1);
+}
+
+// scale_d3d11 samples the whole aligned surface. 2160-line HEVC sits on a
+// 2176-line surface and already scaled on the GPU. Larger pads show bars.
+static bool d3d11SurfaceFitsPicture(int pictureWidth, int pictureHeight, int alignment)
+{
+    if (pictureWidth <= 0 || pictureHeight <= 0 || alignment <= 0)
+        return false;
+    const int padX = alignD3d11Surface(pictureWidth, alignment) - pictureWidth;
+    const int padY = alignD3d11Surface(pictureHeight, alignment) - pictureHeight;
+    return padX <= 16 && padY <= 16;
+}
+#endif
 static const QStringList kPixFmtsWithAlpha
     = {"pal8",         "argb",         "rgba",         "abgr",         "bgra",
        "yuva420p",     "yuva422p",     "yuva444p",     "yuva420p9be",  "yuva420p9le",
@@ -115,8 +145,59 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
     file.resize(0);
     file.close();
 
+    auto videoIndex = producer.get_int("video_index");
+#ifdef Q_OS_WIN
+    // yadif cannot run on D3D11 frames, so an explicit interlaced scan stays on the
+    // software filter path. Automatic still tries the GPU path and does not deinterlace.
+    // There is no codec allow-list: -hwaccel_output_format d3d11 fails instead of
+    // falling back, and FfmpegJob retries with a software decoder and scaler.
+    // MLT stores the visible picture. The D3D11 surface is that size aligned up
+    // (and aligned further when the coded size is larger). Skip the GPU path
+    // when either side is padded by more than 16 pixels.
+    const bool explicitDeinterlace = scanMode == InterlacedTopFieldFirst
+                                     || scanMode == InterlacedBottomFieldFirst;
+    const bool wantHardwareProxy = Settings.proxyUseHardware() && !explicitDeinterlace;
+    bool surfaceMatches = false;
+    if (wantHardwareProxy) {
+        const QString codecKey = QStringLiteral("meta.media.%1.codec.name").arg(videoIndex);
+        const QString codecName = QString::fromLatin1(producer.get(codecKey.toLatin1().constData()));
+        const QString widthKey = QStringLiteral("meta.media.%1.codec.width").arg(videoIndex);
+        const QString heightKey = QStringLiteral("meta.media.%1.codec.height").arg(videoIndex);
+        int pictureWidth = producer.get_int(widthKey.toLatin1().constData());
+        int pictureHeight = producer.get_int(heightKey.toLatin1().constData());
+        if (pictureWidth <= 0)
+            pictureWidth = producer.get_int("meta.media.width");
+        if (pictureHeight <= 0)
+            pictureHeight = producer.get_int("meta.media.height");
+        const int alignment = d3d11SurfaceAlignment(codecName);
+        const int alignedWidth = pictureWidth > 0 ? alignD3d11Surface(pictureWidth, alignment) : 0;
+        const int alignedHeight = pictureHeight > 0 ? alignD3d11Surface(pictureHeight, alignment)
+                                                    : 0;
+        surfaceMatches = d3d11SurfaceFitsPicture(pictureWidth, pictureHeight, alignment);
+        if (!surfaceMatches) {
+            LOG_DEBUG() << "D3D11 surface" << alignedWidth << "x" << alignedHeight
+                        << "is larger than" << pictureWidth << "x" << pictureHeight << codecName
+                        << "; using software decode and scale";
+        }
+    }
+    const bool useD3d11Proxy = wantHardwareProxy && surfaceMatches;
+    // Software decode and scale, still encoded with h264_mf.
+    const bool useSoftwareMfProxy = wantHardwareProxy && !surfaceMatches;
+#else
+    const bool useD3d11Proxy = false;
+    const bool useSoftwareMfProxy = false;
+#endif
+
     args << "-loglevel"
          << "verbose";
+    // Input options. d3d11 frames are required so scale_d3d11 and h264_mf never
+    // download the picture.
+    if (useD3d11Proxy) {
+        args << "-hwaccel"
+             << "d3d11va"
+             << "-hwaccel_output_format"
+             << "d3d11";
+    }
     args << "-noautorotate";
     args << "-i" << resource;
     args << "-max_muxing_queue_size"
@@ -146,107 +227,174 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
          << "0"
          << "-ignore_unknown";
     args << "-vf";
+    // Same command without the D3D11 input options. Filled in below if the GPU
+    // graph cannot be negotiated, which is how unsupported decoders fail.
+    QStringList fallbackArgs;
+    if (useD3d11Proxy) {
+        fallbackArgs = args;
+        fallbackArgs.removeOne(QStringLiteral("-hwaccel"));
+        fallbackArgs.removeOne(QStringLiteral("d3d11va"));
+        fallbackArgs.removeOne(QStringLiteral("-hwaccel_output_format"));
+        fallbackArgs.removeOne(QStringLiteral("d3d11"));
+    }
+    const auto addBoth = [&](const QString &a, const QString &b = QString()) {
+        args << a;
+        if (!b.isNull())
+            args << b;
+        if (useD3d11Proxy) {
+            fallbackArgs << a;
+            if (!b.isNull())
+                fallbackArgs << b;
+        }
+    };
 
     // Detect rotation from either an explicit "rotate" property (user override)
     // or from the stream's codec metadata. If non-zero the rotation will be
     // injected into the proxy file after transcoding via a fast -c copy pass so
     // that media players and MLT read it automatically from the proxy.
-    auto videoIndex = producer.get_int("video_index");
     QString rotateKey = QStringLiteral("meta.media.%1.codec.rotate").arg(videoIndex);
     int rotation = producer.property_exists("rotate")
                        ? producer.get_int("rotate")
                        : producer.get_int(rotateKey.toLatin1().constData());
     rotation = ((rotation % 360) + 360) % 360;
 
-    if (scanMode == Automatic) {
-        filters = QStringLiteral("yadif=deint=interlaced,");
-    } else if (scanMode != Progressive) {
-        filters = QStringLiteral("yadif=parity=%1,")
-                      .arg(scanMode == InterlacedTopFieldFirst ? "tff" : "bff");
-    }
-    filters += QStringLiteral("scale=width=-2:height=%1").arg(resolution());
-    if (Settings.proxyUseHardware()
-        && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
-        hwFilters = ",format=nv12,hwupload";
-    }
-    if (fullRange) {
-        args << filters + ":in_range=full:out_range=full" + hwFilters;
-        args << "-color_range"
-             << "jpeg";
-    } else {
-        args << filters + ":in_range=mpeg:out_range=mpeg" + hwFilters;
-        args << "-color_range"
-             << "mpeg";
-    }
+    QString colorPrimaries = QStringLiteral("bt709");
+    QString colorTrc = QStringLiteral("bt709");
+    QString colorSpace = QStringLiteral("bt709");
+    bool setColorTrc = true;
     switch (producer.get_int("meta.media.colorspace")) {
     case 601:
         if (producer.get_int("meta.media.height") == 576) {
-            args << "-color_primaries"
-                 << "bt470bg";
-            args << "-color_trc"
-                 << "smpte170m";
-            args << "-colorspace"
-                 << "bt470bg";
+            colorPrimaries = QStringLiteral("bt470bg");
+            colorTrc = QStringLiteral("smpte170m");
+            colorSpace = QStringLiteral("bt470bg");
         } else {
-            args << "-color_primaries"
-                 << "smpte170m";
-            args << "-color_trc"
-                 << "smpte170m";
-            args << "-colorspace"
-                 << "smpte170m";
+            colorPrimaries = QStringLiteral("smpte170m");
+            colorTrc = QStringLiteral("smpte170m");
+            colorSpace = QStringLiteral("smpte170m");
         }
         break;
     case 170:
-        args << "-color_primaries"
-             << "smpte170m";
-        args << "-color_trc"
-             << "smpte170m";
-        args << "-colorspace"
-             << "smpte170m";
+        colorPrimaries = QStringLiteral("smpte170m");
+        colorTrc = QStringLiteral("smpte170m");
+        colorSpace = QStringLiteral("smpte170m");
         break;
     case 240:
-        args << "-color_primaries"
-             << "smpte240m";
-        args << "-color_trc"
-             << "smpte240m";
-        args << "-colorspace"
-             << "smpte240m";
+        colorPrimaries = QStringLiteral("smpte240m");
+        colorTrc = QStringLiteral("smpte240m");
+        colorSpace = QStringLiteral("smpte240m");
         break;
     case 470:
-        args << "-color_primaries"
-             << "bt470bg";
-        args << "-color_trc"
-             << "bt470bg";
-        args << "-colorspace"
-             << "bt470bg";
+        colorPrimaries = QStringLiteral("bt470bg");
+        colorTrc = QStringLiteral("bt470bg");
+        colorSpace = QStringLiteral("bt470bg");
         break;
     case 2020:
-        args << "-color_primaries"
-             << "bt2020";
-        args << "-colorspace"
-             << "bt2020nc";
+        colorPrimaries = QStringLiteral("bt2020");
+        colorSpace = QStringLiteral("bt2020nc");
+        setColorTrc = false;
         break;
     default:
-        args << "-color_primaries"
-             << "bt709";
-        args << "-color_trc"
-             << "bt709";
-        args << "-colorspace"
-             << "bt709";
         break;
     }
-    if (!aspectRatio.isNull()) {
-        args << "-aspect" << QStringLiteral("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
+    if (useD3d11Proxy) {
+        // scale_d3d11 does not treat -2 as "keep aspect, even". trunc(oh*a/2)*2
+        // matches scale=width=-2. Output -colorspace/-color_range would insert a
+        // software scale, so color is tagged with setparams instead.
+        const QString range = fullRange ? QStringLiteral("pc") : QStringLiteral("tv");
+        if (setColorTrc) {
+            filters = QStringLiteral(
+                          "scale_d3d11=width=trunc(oh*a/2)*2:height=%1:format=nv12,"
+                          "setparams=color_primaries=%2:color_trc=%3:colorspace=%4:range=%5")
+                          .arg(resolution())
+                          .arg(colorPrimaries)
+                          .arg(colorTrc)
+                          .arg(colorSpace)
+                          .arg(range);
+        } else {
+            filters = QStringLiteral("scale_d3d11=width=trunc(oh*a/2)*2:height=%1:format=nv12,"
+                                     "setparams=color_primaries=%2:colorspace=%3:range=%4")
+                          .arg(resolution())
+                          .arg(colorPrimaries)
+                          .arg(colorSpace)
+                          .arg(range);
+        }
+        args << filters;
     }
-    args << "-f"
-         << "mp4"
-         << "-codec:a"
-         << "ac3"
-         << "-b:a"
-         << "256k";
-    args << "-pix_fmt"
-         << "yuv420p";
-    if (Settings.proxyUseHardware()) {
+    {
+        QStringList *scaleTarget = useD3d11Proxy ? &fallbackArgs : &args;
+        if (scanMode == Automatic) {
+            filters = QStringLiteral("yadif=deint=interlaced,");
+        } else if (scanMode != Progressive) {
+            filters = QStringLiteral("yadif=parity=%1,")
+                          .arg(scanMode == InterlacedTopFieldFirst ? "tff" : "bff");
+        } else {
+            filters.clear();
+        }
+        filters += QStringLiteral("scale=width=-2:height=%1").arg(resolution());
+        if (!useD3d11Proxy && Settings.proxyUseHardware()
+            && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
+            hwFilters = ",format=nv12,hwupload";
+        }
+        if (fullRange) {
+            *scaleTarget << filters + ":in_range=full:out_range=full" + hwFilters;
+            *scaleTarget << "-color_range"
+                         << "jpeg";
+        } else {
+            *scaleTarget << filters + ":in_range=mpeg:out_range=mpeg" + hwFilters;
+            *scaleTarget << "-color_range"
+                         << "mpeg";
+        }
+        *scaleTarget << "-color_primaries" << colorPrimaries;
+        if (setColorTrc)
+            *scaleTarget << "-color_trc" << colorTrc;
+        *scaleTarget << "-colorspace" << colorSpace;
+    }
+    if (!aspectRatio.isNull()) {
+        addBoth("-aspect", QStringLiteral("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y()));
+    }
+    addBoth("-f", "mp4");
+    addBoth("-codec:a", "ac3");
+    addBoth("-b:a", "256k");
+    if (useD3d11Proxy) {
+        // d3d11 keeps the scaled texture on the GPU. nv12 here would hwdownload.
+        args << "-pix_fmt"
+             << "d3d11";
+        args << "-codec:v"
+             << "h264_mf";
+        args << "-rate_control"
+             << "quality";
+        args << "-quality"
+             << "41";
+        args << "-hw_encoding"
+             << "true";
+        // Software frames. nv12 is what h264_mf encodes from the CPU.
+        fallbackArgs << "-pix_fmt"
+                     << "nv12"
+                     << "-codec:v"
+                     << "h264_mf"
+                     << "-rate_control"
+                     << "quality"
+                     << "-quality"
+                     << "41"
+                     << "-hw_encoding"
+                     << "true";
+    } else if (useSoftwareMfProxy) {
+        args << "-pix_fmt"
+             << "nv12"
+             << "-codec:v"
+             << "h264_mf"
+             << "-rate_control"
+             << "quality"
+             << "-quality"
+             << "41"
+             << "-hw_encoding"
+             << "true";
+    } else {
+        args << "-pix_fmt"
+             << "yuv420p";
+    }
+    if (!useD3d11Proxy && !useSoftwareMfProxy && Settings.proxyUseHardware()) {
         if (hwCodecs.contains("hevc_nvenc")) {
             args << "-codec:v"
                  << "hevc_nvenc";
@@ -368,15 +516,30 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
         args << "-crf"
              << "23";
     }
-    args << "-g"
-         << QString::fromLatin1(hwCodecs.contains("hevc_nvenc")   ? "0"
-                                : hwCodecs.contains("h264_nvenc") ? "2"
-                                                                  : "1");
+    QString gop = QStringLiteral("1");
+    // The Windows D3D11 and software-mf paths use a fixed GOP. Every other
+    // proxy keeps the previous choice, including when hardware proxy is off.
+    if (!useD3d11Proxy && !useSoftwareMfProxy) {
+        if (hwCodecs.contains("hevc_nvenc"))
+            gop = QStringLiteral("0");
+        else if (hwCodecs.contains("h264_nvenc"))
+            gop = QStringLiteral("2");
+    }
+    args << "-g" << gop;
     args << "-bf"
          << "0";
     args << "-y" << fileName;
+    if (useD3d11Proxy) {
+        fallbackArgs << "-g"
+                     << "1"
+                     << "-bf"
+                     << "0"
+                     << "-y" << fileName;
+    }
 
     FfmpegJob *job = new FfmpegJob(fileName, args, true);
+    if (useD3d11Proxy)
+        job->setFallbackArgs(fallbackArgs);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
     job->setTarget(fileName);
     if (replace) {

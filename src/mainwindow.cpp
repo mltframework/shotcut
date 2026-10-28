@@ -1724,6 +1724,11 @@ void MainWindow::setupSettingsMenu()
     ui->actionUseProxy->setChecked(Settings.proxyEnabled());
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
+#ifdef Q_OS_WIN
+    // Windows proxies use a fixed d3d11va + h264_mf pipeline, so the
+    // nvenc/qsv/amf encoder list does not apply.
+    ui->actionProxyConfigureHardware->setVisible(false);
+#endif
 
     // Initialize the preview scaling submenu
 #if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))

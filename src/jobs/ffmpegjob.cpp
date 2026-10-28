@@ -28,6 +28,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QRegularExpression>
+#include <QTimer>
 
 #include <cstdio>
 
@@ -39,6 +40,7 @@ FfmpegJob::FfmpegJob(const QString &name,
     , m_duration(0.0)
     , m_previousPercent(0)
     , m_isOpenLog(isOpenLog)
+    , m_triedFallback(false)
 {
     QAction *action = new QAction(tr("Open"), this);
     action->setData("Open");
@@ -54,6 +56,11 @@ FfmpegJob::~FfmpegJob()
     if (objectName().contains("proxies") && objectName().contains(".pending.")) {
         QFile::remove(objectName());
     }
+}
+
+void FfmpegJob::setFallbackArgs(const QStringList &args)
+{
+    m_fallbackArgs = args;
 }
 
 void FfmpegJob::start()
@@ -93,6 +100,25 @@ static double timeToSeconds(QString time)
         return -1.0;
     }
     return (h * 60.0 * 60.0) + (m * 60.0) + s + (mil / 100.0);
+}
+
+void FfmpegJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    const bool failed = exitStatus != QProcess::NormalExit || exitCode != 0;
+    if (failed && !stopped() && !m_triedFallback && !m_fallbackArgs.isEmpty()) {
+        m_triedFallback = true;
+        m_duration = 0.0;
+        m_previousPercent = 0;
+        const QString message(tr("Hardware decode or scale failed; retrying with a software "
+                                 "decoder and scaler."));
+        appendToLog(message + QLatin1Char('\n'));
+        LOG_INFO() << message;
+        m_args = QStringList{QStringLiteral("-hide_banner")};
+        m_args.append(m_fallbackArgs);
+        QTimer::singleShot(0, this, [this]() { start(); });
+        return;
+    }
+    AbstractJob::onFinished(exitCode, exitStatus);
 }
 
 void FfmpegJob::onReadyRead()
