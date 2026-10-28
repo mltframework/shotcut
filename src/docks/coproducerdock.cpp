@@ -27,6 +27,7 @@
 
 #include <QAction>
 #include <QCoreApplication>
+#include <QIcon>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -99,6 +100,9 @@ CoproducerDock::CoproducerDock(quint16 mcpServerPort, QWidget *parent)
 {
     setObjectName("CoproducerDock");
     setWindowTitle(tr("Coproducer"));
+    toggleViewAction()->setIcon(
+        QIcon::fromTheme("view-conversation-balloon",
+                         QIcon(":/icons/oxygen/32x32/actions/view-conversation-balloon.png")));
 
     m_qview = new QQuickWidget(QmlUtilities::sharedEngine(), this);
     m_qview->setResizeMode(QQuickWidget::SizeRootObjectToView);
