@@ -58,6 +58,7 @@ private:
     QNetworkReply *m_reply = nullptr;
     QByteArray m_rawBuffer;
     QString m_streamText;
+    QString m_finishReason;
     QList<ToolCall> m_streamToolCalls; // Indexed by the stream's tool_calls[].index
 };
 

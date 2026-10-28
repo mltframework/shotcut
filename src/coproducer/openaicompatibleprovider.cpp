@@ -25,6 +25,7 @@
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QStringList>
 #include <QUrl>
 
 namespace {
@@ -108,6 +109,9 @@ void OpenAiCompatibleProvider::sendMessage(const QList<ChatMessage> &history)
     body["model"] = m_model;
     body["messages"] = messages;
     body["stream"] = true;
+    // Disable OpenAI reasoning to allow function tools through Chat Completions.
+    if (QUrl(m_baseUrl).host().compare(QStringLiteral("api.openai.com"), Qt::CaseInsensitive) == 0)
+        body["reasoning_effort"] = QStringLiteral("none");
     if (!m_tools.isEmpty()) {
         QJsonArray tools;
         for (const auto &tool : m_tools) {
@@ -131,6 +135,7 @@ void OpenAiCompatibleProvider::sendMessage(const QList<ChatMessage> &history)
     m_rawBuffer.clear();
     m_streamText.clear();
     m_streamToolCalls.clear();
+    m_finishReason.clear();
     m_reply = m_network.post(request, payload);
     connect(m_reply, &QNetworkReply::readyRead, this, &OpenAiCompatibleProvider::onReadyRead);
     emit responseStarted();
@@ -149,7 +154,8 @@ void OpenAiCompatibleProvider::cancel()
 void OpenAiCompatibleProvider::onReadyRead()
 {
     m_rawBuffer += m_reply->readAll();
-    if (m_reply->error() != QNetworkReply::NoError)
+    if (m_reply->error() != QNetworkReply::NoError
+        || m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() >= 400)
         return;
 
     int newlineIndex;
@@ -164,7 +170,11 @@ void OpenAiCompatibleProvider::onReadyRead()
         const auto choices = QJsonDocument::fromJson(payload).object().value("choices").toArray();
         if (choices.isEmpty())
             continue;
-        const auto delta = choices.at(0).toObject().value("delta").toObject();
+        const auto choice = choices.at(0).toObject();
+        const auto finishReason = choice.value("finish_reason").toString();
+        if (!finishReason.isEmpty())
+            m_finishReason = finishReason;
+        const auto delta = choice.value("delta").toObject();
         const auto content = delta.value("content").toString();
         if (!content.isEmpty()) {
             m_streamText += content;
@@ -204,11 +214,26 @@ void OpenAiCompatibleProvider::onFinished(QNetworkReply *reply)
     }
 
     if (reply->error() != QNetworkReply::NoError) {
+        m_rawBuffer += reply->readAll();
         const auto root = QJsonDocument::fromJson(m_rawBuffer).object();
         auto message = reply->errorString();
         const auto errorObj = root.value("error").toObject();
-        if (!errorObj.isEmpty() && errorObj.contains("message"))
+        if (!errorObj.value("message").toString().isEmpty())
             message = errorObj.value("message").toString();
+        QStringList details;
+        details << tr("Model: %1").arg(m_model);
+        const auto status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (status)
+            details << tr("HTTP status: %1").arg(status);
+        for (const auto &key : {"type", "code", "param"}) {
+            const auto value = errorObj.value(QLatin1String(key));
+            if (value.isString() && !value.toString().isEmpty())
+                details << QStringLiteral("%1: %2").arg(QLatin1String(key), value.toString());
+        }
+        const auto requestId = reply->rawHeader("x-request-id");
+        if (!requestId.isEmpty())
+            details << tr("Request ID: %1").arg(QString::fromUtf8(requestId));
+        message += QStringLiteral("\n\n") + details.join(QLatin1Char('\n'));
         LOG_ERROR() << "Coproducer: OpenAI request failed:" << message;
         emit errorOccurred(message);
         if (reply == m_reply)
@@ -242,7 +267,12 @@ void OpenAiCompatibleProvider::onFinished(QNetworkReply *reply)
     }
 
     if (m_streamText.isEmpty()) {
-        emit errorOccurred(tr("OpenAI returned an empty response."));
+        auto message = tr("OpenAI returned an empty response.");
+        message += QStringLiteral("\n\n") + tr("Model: %1").arg(m_model);
+        if (!m_finishReason.isEmpty())
+            message += QLatin1Char('\n') + tr("Finish reason: %1").arg(m_finishReason);
+        LOG_ERROR() << "Coproducer:" << message;
+        emit errorOccurred(message);
         return;
     }
 
