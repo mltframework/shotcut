@@ -30,7 +30,9 @@ struct ProxyPiece
     QStringList beforeInput;
     QString filter;
     QStringList tail;
-    bool fixedGop = false;
+    // Empty stays GOP 1 unless the assembled video codec is hevc_nvenc (0)
+    // or h264_nvenc (2). The VAAPI hardware-frames command sets 2 itself.
+    QString gop;
 };
 
 static bool explicitInterlace(int scanMode)
@@ -274,6 +276,25 @@ static QStringList listedHardwareEncoder(const QStringList &hwCodecs)
     return args;
 }
 
+static QStringList h264VaapiHardwareEncoder()
+{
+    QStringList args;
+    args << QStringLiteral("-pix_fmt") << QStringLiteral("vaapi");
+    args << QStringLiteral("-codec:v") << QStringLiteral("h264_vaapi");
+    args << QStringLiteral("-qp") << QStringLiteral("30");
+    return args;
+}
+
+static QStringList h264VaapiSoftwareEncoder()
+{
+    // Software frames are uploaded by the filter. h264_vaapi still needs a
+    // device, which the listed encoder arguments create.
+    QStringList args;
+    args << QStringLiteral("-pix_fmt") << QStringLiteral("yuv420p");
+    args << listedHardwareEncoder({QStringLiteral("h264_vaapi")});
+    return args;
+}
+
 static bool wantsVaapiUpload(const ProxyVideoRequest &request)
 {
     return request.hardware
@@ -281,18 +302,24 @@ static bool wantsVaapiUpload(const ProxyVideoRequest &request)
                || request.hardwareCodecs.contains(QLatin1String("h264_vaapi")));
 }
 
+static bool wantsVaapiTranscode(const ProxyVideoRequest &request)
+{
+    // Presence selects this graph. A list that also contains hevc_vaapi or
+    // nvenc still takes it. Those encoders stay on the software path only
+    // when h264_vaapi is absent.
+    return request.hardware && request.hardwareCodecs.contains(QLatin1String("h264_vaapi"));
+}
+
 static ProxyPiece softwarePiece(const ProxyVideoRequest &request,
                                 const ColorTags &tags,
                                 const QStringList &encoder,
-                                bool vaapiUpload,
-                                bool fixedGop)
+                                bool vaapiUpload)
 {
     ProxyPiece piece;
     piece.filter = softwareScaleFilter(request, vaapiUpload);
     piece.tail = colorArgs(tags, request.fullRange);
     piece.tail << containerAndAudio(request);
     piece.tail << encoder;
-    piece.fixedGop = fixedGop;
     return piece;
 }
 
@@ -306,7 +333,24 @@ static ProxyPiece d3d11Piece(const ProxyVideoRequest &request, const ColorTags &
                        .arg(setparamsFilter(tags, request.fullRange));
     piece.tail = containerAndAudio(request);
     piece.tail << h264MfEncoder(true);
-    piece.fixedGop = true;
+    return piece;
+}
+
+static ProxyPiece vaapiPiece(const ProxyVideoRequest &request, const ColorTags &tags)
+{
+    ProxyPiece piece;
+    piece.beforeInput << QStringLiteral("-hwaccel") << QStringLiteral("vaapi");
+    piece.beforeInput << QStringLiteral("-hwaccel_output_format") << QStringLiteral("vaapi");
+    // deinterlace_vaapi drops the first frames of progressive pictures on
+    // radeonsi, so this graph only scales. Explicit field order stays on yadif.
+    piece.filter = QStringLiteral("scale_vaapi=w=-2:h=%1:format=nv12,%2")
+                       .arg(request.resolution)
+                       .arg(setparamsFilter(tags, request.fullRange));
+    piece.tail = containerAndAudio(request);
+    piece.tail << h264VaapiHardwareEncoder();
+    // Intra-only (-g 1) makes radeonsi h264_vaapi spin at frame 0 on some
+    // Main 10 pictures, including GoPro 4K HLG scaled to 540. GOP 2 encodes.
+    piece.gop = QStringLiteral("2");
     return piece;
 }
 
@@ -323,7 +367,6 @@ static ProxyPiece videoToolboxPiece(const ProxyVideoRequest &request, const Colo
                         .arg(setparamsFilter(tags, request.fullRange));
     piece.tail = containerAndAudio(request);
     piece.tail << h264VideoToolboxEncoder(true, request.fullRange);
-    piece.fixedGop = true;
     return piece;
 }
 
@@ -333,7 +376,7 @@ static ProxyPiece genericPiece(const ProxyVideoRequest &request, const ColorTags
     encoder << QStringLiteral("-pix_fmt") << QStringLiteral("yuv420p");
     if (request.hardware)
         encoder << listedHardwareEncoder(request.hardwareCodecs);
-    return softwarePiece(request, tags, encoder, wantsVaapiUpload(request), false);
+    return softwarePiece(request, tags, encoder, wantsVaapiUpload(request));
 }
 
 static QStringList assemble(const ProxyVideoRequest &request, const ProxyPiece &piece)
@@ -363,12 +406,12 @@ static QStringList assemble(const ProxyVideoRequest &request, const ProxyPiece &
         args << QStringLiteral("-crf") << QStringLiteral("23");
     }
     QString gop = QStringLiteral("1");
-    if (!piece.fixedGop) {
-        if (request.hardwareCodecs.contains(QLatin1String("hevc_nvenc")))
-            gop = QStringLiteral("0");
-        else if (request.hardwareCodecs.contains(QLatin1String("h264_nvenc")))
-            gop = QStringLiteral("2");
-    }
+    if (!piece.gop.isEmpty())
+        gop = piece.gop;
+    else if (args.contains(QStringLiteral("hevc_nvenc")))
+        gop = QStringLiteral("0");
+    else if (args.contains(QStringLiteral("h264_nvenc")))
+        gop = QStringLiteral("2");
     args << QStringLiteral("-g") << gop;
     args << QStringLiteral("-bf") << QStringLiteral("0");
     args << QStringLiteral("-y") << request.outputFile;
@@ -393,29 +436,27 @@ ProxyVideoCommand buildProxyVideoCommand(const ProxyVideoRequest &request)
                                                             request.pictureHeight);
         if (surface.fits) {
             primary = d3d11Piece(request, tags);
-            fallback = softwarePiece(request, tags, h264MfEncoder(false), false, true);
+            fallback = softwarePiece(request, tags, h264MfEncoder(false), false);
             hasFallback = true;
         } else {
-            primary = softwarePiece(request,
-                                    tags,
-                                    h264MfEncoder(false),
-                                    wantsVaapiUpload(request),
-                                    true);
+            primary = softwarePiece(request, tags, h264MfEncoder(false), wantsVaapiUpload(request));
         }
     } else if (policy == ProxyHwPolicy::Mac && gpuScan) {
         primary = videoToolboxPiece(request, tags);
         fallback = softwarePiece(request,
                                  tags,
                                  h264VideoToolboxEncoder(false, request.fullRange),
-                                 false,
-                                 true);
+                                 false);
         hasFallback = true;
     } else if (policy == ProxyHwPolicy::Mac && request.hardware) {
         primary = softwarePiece(request,
                                 tags,
                                 h264VideoToolboxEncoder(false, request.fullRange),
-                                false,
-                                true);
+                                false);
+    } else if (wantsVaapiTranscode(request) && gpuScan) {
+        primary = vaapiPiece(request, tags);
+        fallback = softwarePiece(request, tags, h264VaapiSoftwareEncoder(), true);
+        hasFallback = true;
     } else {
         primary = genericPiece(request, tags);
     }

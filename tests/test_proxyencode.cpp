@@ -391,14 +391,222 @@ private slots:
                     QStringList({QStringLiteral("hevc_vaapi"), QStringLiteral("-hwaccel")}));
     }
 
-    void hardwareOffKeepsNvencGopWithSoftwareEncoder()
+    void h264VaapiUsesHardwareTranscode()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanProgressive;
+        // Higher-priority codecs stay in the list. h264_vaapi still selects
+        // the VAAPI graph.
+        request.hardwareCodecs = {QStringLiteral("hevc_nvenc"),
+                                  QStringLiteral("hevc_vaapi"),
+                                  QStringLiteral("h264_vaapi")};
+
+        const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-hwaccel"),
+                                   QStringLiteral("vaapi"),
+                                   QStringLiteral("-hwaccel_output_format"),
+                                   QStringLiteral("vaapi")}));
+        QCOMPARE(videoFilter(command.args),
+                 QStringLiteral("scale_vaapi=w=-2:h=540:format=nv12,"
+                                "setparams=color_primaries=bt709:color_trc=bt709:colorspace=bt709:"
+                                "range=tv"));
+        QVERIFY(!videoFilter(command.args).contains(QStringLiteral("deinterlace_vaapi")));
+        QVERIFY(!videoFilter(command.args).contains(QStringLiteral("hwupload")));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-pix_fmt"),
+                                   QStringLiteral("vaapi"),
+                                   QStringLiteral("-codec:v"),
+                                   QStringLiteral("h264_vaapi"),
+                                   QStringLiteral("-qp"),
+                                   QStringLiteral("30")}));
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("hevc_nvenc"),
+                                 QStringLiteral("hevc_vaapi"),
+                                 QStringLiteral("-init_hw_device"),
+                                 QStringLiteral("-colorspace"),
+                                 QStringLiteral("-bsf:v")}));
+        checkTail(command.args, QStringLiteral("2"));
+
+        checkAbsent(command.fallbackArgs,
+                    QStringList({QStringLiteral("-hwaccel"),
+                                 QStringLiteral("scale_vaapi"),
+                                 QStringLiteral("hevc_nvenc"),
+                                 QStringLiteral("hevc_vaapi")}));
+        QCOMPARE(videoFilter(command.fallbackArgs),
+                 QStringLiteral("scale=width=-2:height=540:in_range=mpeg:out_range=mpeg,"
+                                "format=nv12,hwupload"));
+        checkSequence(command.fallbackArgs,
+                      QStringList({QStringLiteral("-pix_fmt"),
+                                   QStringLiteral("yuv420p"),
+                                   QStringLiteral("-init_hw_device"),
+                                   QStringLiteral("vaapi=vaapi0:"),
+                                   QStringLiteral("-filter_hw_device"),
+                                   QStringLiteral("vaapi0"),
+                                   QStringLiteral("-codec:v"),
+                                   QStringLiteral("h264_vaapi"),
+                                   QStringLiteral("-qp"),
+                                   QStringLiteral("30")}));
+        checkTail(command.fallbackArgs, QStringLiteral("1"));
+    }
+
+    void h264VaapiAutomaticFallbackDeinterlaces()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanAutomatic;
+        request.hardwareCodecs = {QStringLiteral("h264_vaapi")};
+
+        const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(!videoFilter(command.args).contains(QStringLiteral("yadif")));
+        QVERIFY(!videoFilter(command.args).contains(QStringLiteral("deinterlace_vaapi")));
+        QVERIFY(videoFilter(command.fallbackArgs)
+                    .startsWith(QStringLiteral("yadif=deint=interlaced,scale=width=-2:height=540")));
+        QVERIFY(videoFilter(command.fallbackArgs).endsWith(QStringLiteral(",format=nv12,hwupload")));
+    }
+
+    void h264VaapiFullRangeMarksPc()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanProgressive;
+        request.fullRange = true;
+        request.hardwareCodecs = {QStringLiteral("h264_vaapi")};
+
+        const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(videoFilter(command.args).contains(QStringLiteral("range=pc")));
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("-bsf:v"), QStringLiteral("-color_range")}));
+        QCOMPARE(videoFilter(command.fallbackArgs),
+                 QStringLiteral("scale=width=-2:height=540:in_range=full:out_range=full,"
+                                "format=nv12,hwupload"));
+        checkSequence(command.fallbackArgs,
+                      QStringList({QStringLiteral("-color_range"), QStringLiteral("jpeg")}));
+    }
+
+    void h264VaapiExplicitInterlaceStaysOnYadif()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanTopFieldFirst;
+        request.hardwareCodecs = {QStringLiteral("h264_vaapi")};
+
+        const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(command.fallbackArgs.isEmpty());
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("-hwaccel"), QStringLiteral("scale_vaapi")}));
+        QCOMPARE(videoFilter(command.args),
+                 QStringLiteral("yadif=parity=tff,"
+                                "scale=width=-2:height=540:in_range=mpeg:out_range=mpeg,"
+                                "format=nv12,hwupload"));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"), QStringLiteral("h264_vaapi")}));
+        checkTail(command.args, QStringLiteral("1"));
+    }
+
+    void hevcVaapiKeepsSoftwareUpload()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanProgressive;
+        request.hardwareCodecs = {QStringLiteral("hevc_vaapi")};
+
+        ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(command.fallbackArgs.isEmpty());
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("-hwaccel"),
+                                 QStringLiteral("scale_vaapi"),
+                                 QStringLiteral("h264_vaapi")}));
+        QCOMPARE(videoFilter(command.args),
+                 QStringLiteral("scale=width=-2:height=540:in_range=mpeg:out_range=mpeg,"
+                                "format=nv12,hwupload"));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-init_hw_device"),
+                                   QStringLiteral("vaapi=vaapi0:"),
+                                   QStringLiteral("-codec:v"),
+                                   QStringLiteral("hevc_vaapi"),
+                                   QStringLiteral("-qp"),
+                                   QStringLiteral("37")}));
+        checkTail(command.args, QStringLiteral("1"));
+
+        request.hardwareCodecs = {QStringLiteral("hevc_vaapi"), QStringLiteral("h264_nvenc")};
+        command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"), QStringLiteral("hevc_vaapi")}));
+        checkAbsent(command.args, QStringList({QStringLiteral("h264_nvenc")}));
+        checkTail(command.args, QStringLiteral("1"));
+    }
+
+    void nvencKeepsSoftwareEncode()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Generic;
+        request.scanMode = kProxyScanProgressive;
+        request.hardwareCodecs = {QStringLiteral("h264_nvenc")};
+
+        ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(command.fallbackArgs.isEmpty());
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("-hwaccel"),
+                                 QStringLiteral("hwupload"),
+                                 QStringLiteral("h264_vaapi"),
+                                 QStringLiteral("scale_vaapi")}));
+        QCOMPARE(videoFilter(command.args),
+                 QStringLiteral("scale=width=-2:height=540:in_range=mpeg:out_range=mpeg"));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"),
+                                   QStringLiteral("h264_nvenc"),
+                                   QStringLiteral("-qp:v"),
+                                   QStringLiteral("37")}));
+        checkTail(command.args, QStringLiteral("2"));
+
+        request.hardwareCodecs = {QStringLiteral("hevc_nvenc")};
+        command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"), QStringLiteral("hevc_nvenc")}));
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("-hwaccel"), QStringLiteral("h264_vaapi")}));
+        checkTail(command.args, QStringLiteral("0"));
+    }
+
+    void windowsAndMacIgnoreH264VaapiList()
+    {
+        ProxyVideoRequest request = baseRequest();
+        request.policy = ProxyHwPolicy::Windows;
+        request.scanMode = kProxyScanProgressive;
+        request.codecName = QStringLiteral("h264");
+        request.pictureWidth = 1920;
+        request.pictureHeight = 1080;
+        request.hardwareCodecs = {QStringLiteral("h264_vaapi")};
+
+        ProxyVideoCommand command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-hwaccel"), QStringLiteral("d3d11va")}));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"), QStringLiteral("h264_mf")}));
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("vaapi"), QStringLiteral("h264_vaapi")}));
+
+        request.policy = ProxyHwPolicy::Mac;
+        command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-hwaccel"), QStringLiteral("videotoolbox")}));
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"),
+                                   QStringLiteral("h264_videotoolbox")}));
+        checkAbsent(command.args,
+                    QStringList({QStringLiteral("scale_vaapi"), QStringLiteral("h264_vaapi")}));
+    }
+
+    void hardwareOffIgnoresListedNvenc()
     {
         ProxyVideoRequest request = baseRequest();
         request.policy = ProxyHwPolicy::Generic;
         request.hardware = false;
         request.hardwareCodecs = {QStringLiteral("hevc_nvenc")};
 
-        const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        ProxyVideoCommand command = buildProxyVideoCommand(request);
         QVERIFY(command.fallbackArgs.isEmpty());
         checkSequence(command.args,
                       QStringList({QStringLiteral("-pix_fmt"),
@@ -411,7 +619,14 @@ private slots:
                                    QStringLiteral("23")}));
         checkAbsent(command.args,
                     QStringList({QStringLiteral("hevc_nvenc"), QStringLiteral("-hwaccel")}));
-        checkTail(command.args, QStringLiteral("0"));
+        checkTail(command.args, QStringLiteral("1"));
+
+        request.hardwareCodecs = {QStringLiteral("h264_nvenc")};
+        command = buildProxyVideoCommand(request);
+        checkSequence(command.args,
+                      QStringList({QStringLiteral("-codec:v"), QStringLiteral("libx264")}));
+        checkAbsent(command.args, QStringList({QStringLiteral("h264_nvenc")}));
+        checkTail(command.args, QStringLiteral("1"));
     }
 };
 
