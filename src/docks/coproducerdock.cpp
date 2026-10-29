@@ -192,6 +192,15 @@ void CoproducerDock::unloadProvider()
     m_provider = nullptr;
 }
 
+void CoproducerDock::shutdown()
+{
+    if (m_provider)
+        disconnect(m_provider, nullptr, this, nullptr);
+    disconnect(m_mcpClient, nullptr, this, nullptr);
+    cancelRequest();
+    unloadProvider();
+}
+
 QVariantList CoproducerDock::transcript() const
 {
     return m_transcriptData;

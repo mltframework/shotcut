@@ -3514,6 +3514,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         QThreadPool::globalInstance()->clear();
         AudioLevelsTask::closeAll();
         event->accept();
+        // _Exit() skips destructors, so stop the local model server explicitly.
+        m_coproducerDock->shutdown();
         emit aboutToShutDown();
         if (m_exitCode == EXIT_SUCCESS) {
             QApplication::quit();
