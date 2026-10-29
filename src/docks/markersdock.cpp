@@ -25,13 +25,13 @@
 #include "util.h"
 #include "widgets/docktoolbar.h"
 #include "widgets/editmarkerwidget.h"
+#include "widgets/lineeditclear.h"
 
 #include <QAction>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
-#include <QLineEdit>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
@@ -224,20 +224,11 @@ MarkersDock::MarkersDock(QWidget *parent)
         connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
     toolbar->addWidget(m_clearButton);
 
-    m_searchField = new QLineEdit(this);
+    m_searchField = new LineEditClear(this);
     m_searchField->setPlaceholderText(tr("search"));
     if (!connect(m_searchField, &QLineEdit::textChanged, this, &MarkersDock::onSearchChanged))
         connect(m_searchField, SIGNAL(textChanged(const QString &)), SLOT(onSearchChanged()));
     toolbar->addWidget(m_searchField);
-
-    m_clearSearchButton = new QToolButton(this);
-    m_clearSearchButton->setIcon(
-        QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
-    m_clearSearchButton->setToolTip(tr("Clear search"));
-    m_clearSearchButton->setAutoRaise(true);
-    if (!connect(m_clearSearchButton, &QAbstractButton::clicked, m_searchField, &QLineEdit::clear))
-        connect(m_clearSearchButton, SIGNAL(clicked()), m_searchField, SLOT(clear()));
-    toolbar->addWidget(m_clearSearchButton);
 
     vboxLayout->addWidget(toolbar);
     enableButtons(false);

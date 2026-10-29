@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@
 #include <QItemSelectionModel>
 
 class EditMarkerWidget;
+class LineEditClear;
 class MarkerTreeView;
 class MarkersModel;
-class QLineEdit;
 class QSortFilterProxyModel;
 class QToolButton;
 
@@ -75,8 +75,7 @@ private:
     QToolButton *m_addButton;
     QToolButton *m_removeButton;
     QToolButton *m_clearButton;
-    QLineEdit *m_searchField;
-    QToolButton *m_clearSearchButton;
+    LineEditClear *m_searchField;
     EditMarkerWidget *m_editMarkerWidget;
     bool m_editInProgress;
 };
