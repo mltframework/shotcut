@@ -17,6 +17,7 @@
 
 #include "subtitles.h"
 
+#include <cctype>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -49,16 +50,24 @@ static Subtitles::SubtitleVector readFromSrtStream(std::istream &stream)
     };
 
     std::string line;
-    std::string text;
     int state = STATE_SEEKING_NUM;
     Subtitles::SubtitleItem item;
     Subtitles::SubtitleVector ret;
 
     while (std::getline(stream, line)) {
+        // getline leaves the carriage return in place when the stream is CRLF.
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
         switch (state) {
         case STATE_SEEKING_NUM: {
+            // An empty line is not a cue index. The digit scan used to accept
+            // it, then miss the real timestamp and drop every later cue.
+            if (line.empty()) {
+                break;
+            }
             state = STATE_READING_TIME;
-            for (char &c : line) {
+            for (unsigned char c : line) {
                 if (!std::isdigit(c)) {
                     // Bad line. Keep seeking
                     state = STATE_SEEKING_NUM;
@@ -133,8 +142,11 @@ static bool writeToSrtStream(std::ostream &stream, const Subtitles::SubtitleVect
     for (auto item : items) {
         stream << i << "\n";
         stream << msToSrtTime(item.start) << " --> " << msToSrtTime(item.end) << "\n";
+        while (!item.text.empty() && (item.text.back() == '\n' || item.text.back() == '\r')) {
+            item.text.pop_back();
+        }
         stream << item.text;
-        if (!item.text.empty() && item.text.back() != '\n') {
+        if (!item.text.empty()) {
             stream << "\n";
         }
         stream << "\n";

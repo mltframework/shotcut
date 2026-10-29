@@ -41,3 +41,11 @@ add_executable(test_addonqmlgenerator
 target_include_directories(test_addonqmlgenerator PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(test_addonqmlgenerator PRIVATE Qt6::Core Qt6::Test PkgConfig::mlt++)
 add_test(NAME addonqmlgenerator COMMAND test_addonqmlgenerator)
+
+add_executable(test_subtitles
+  test_subtitles.cpp
+  ${CMAKE_SOURCE_DIR}/src/models/subtitles.cpp
+)
+target_include_directories(test_subtitles PRIVATE ${CMAKE_SOURCE_DIR}/src/models)
+target_link_libraries(test_subtitles PRIVATE Qt6::Core Qt6::Test)
+add_test(NAME subtitles COMMAND test_subtitles)
