@@ -1048,6 +1048,8 @@ void VideoWidget::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
         && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
+        // Discard a VUI saved while hiding for a previous filter so it is not restored over this one.
+        m_savedQmlSource.clear();
         setSource(meta->vuiFilePath());
         refreshConsumer();
     } else {
