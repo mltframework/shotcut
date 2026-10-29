@@ -174,9 +174,7 @@ void LocalLlamaServerProvider::startServer(const QList<ChatMessage> &history)
                                    QStringLiteral("--alias"),
                                    QStringLiteral("shotcut-local"),
                                    QStringLiteral("--no-webui"),
-                                   QStringLiteral("--jinja"),
-                                   QStringLiteral("--n-gpu-layers"),
-                                   QStringLiteral("0")};
+                                   QStringLiteral("--jinja")};
     m_server->setProgram(executable);
     m_server->setArguments(arguments);
     LOG_INFO() << "Coproducer: loading local model" << QFileInfo(m_modelPath).fileName();
