@@ -78,8 +78,13 @@ Rectangle {
             }
 
             ToolButton {
-                icon.name: "list-add"
-                icon.source: "qrc:///icons/oxygen/32x32/actions/list-add.png"
+                icon.name: "window-close"
+                icon.source: "qrc:///icons/oxygen/32x32/actions/window-close.png"
+                enabled: !coproducer.busy
+                Accessible.name: qsTr("Clear conversation")
+                ToolTip.text: qsTr("Clear conversation and start over")
+                ToolTip.visible: hovered
+                ToolTip.delay: 400
                 onClicked: coproducer.newChat()
             }
 
