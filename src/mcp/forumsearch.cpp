@@ -42,7 +42,7 @@ ForumSearch::ForumSearch(QObject *parent)
     connect(m_timeoutTimer, &QTimer::timeout, this, &ForumSearch::onTimeout);
 }
 
-void ForumSearch::search(const QString &query, int timeoutMs)
+void ForumSearch::search(const QString &query, Scope scope, int timeoutMs)
 {
     cancel();
     ++m_searchGeneration;
@@ -59,7 +59,9 @@ void ForumSearch::search(const QString &query, int timeoutMs)
 
     QUrl url(QStringLiteral("https://forum.shotcut.org/search.json"));
     QUrlQuery params;
-    params.addQueryItem(QStringLiteral("q"), query);
+    const auto category = scope == Scope::Documentation ? QStringLiteral(" #docs:docs-english")
+                                                        : QStringLiteral(" -#docs:docs-english");
+    params.addQueryItem(QStringLiteral("q"), query + category);
     url.setQuery(params);
     QNetworkRequest request(url);
     request.setRawHeader("User-Agent", "Shotcut Coproducer/1.0");

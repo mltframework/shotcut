@@ -123,7 +123,10 @@ quint64 McpClient::callTool(const QString &name, const QJsonObject &arguments)
     QJsonObject params;
     params.insert("name", name);
     params.insert("arguments", arguments);
-    const int timeoutMs = name == QStringLiteral("shotcut_forum_search") ? 35000 : 5000;
+    const int timeoutMs = name == QStringLiteral("shotcut_forum_search")
+                                  || name == QStringLiteral("shotcut_documentation_search")
+                              ? 35000
+                              : 5000;
     return sendRequest(QStringLiteral("tools/call"), params, timeoutMs);
 }
 

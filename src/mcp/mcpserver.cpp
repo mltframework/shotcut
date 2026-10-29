@@ -313,8 +313,10 @@ void McpServer::handleHttpRequest(const HttpServer::Request &request,
 
     if (method == QStringLiteral("tools/call")) {
         const QJsonObject params = message.value("params").toObject();
-        if (params.value("name").toString() == QStringLiteral("shotcut_forum_search")) {
-            handleForumSearchRequest(responder, id, params.value("arguments").toObject());
+        const auto toolName = params.value("name").toString();
+        if (toolName == QStringLiteral("shotcut_forum_search")
+            || toolName == QStringLiteral("shotcut_documentation_search")) {
+            handleForumSearchRequest(responder, id, toolName, params.value("arguments").toObject());
             return;
         }
     }
@@ -331,6 +333,7 @@ void McpServer::handleHttpRequest(const HttpServer::Request &request,
 
 void McpServer::handleForumSearchRequest(HttpServer::Responder responder,
                                          const QJsonValue &id,
+                                         const QString &toolName,
                                          const QJsonObject &arguments)
 {
     const QString query = arguments.value("query").toString().trimmed().left(200);
@@ -349,9 +352,10 @@ void McpServer::handleForumSearchRequest(HttpServer::Responder responder,
     connect(search,
             &ForumSearch::resultsReady,
             this,
-            [responder, id, query, search](const QList<ForumSource> &sources, const QString &error) {
+            [responder, id, query, search, toolName](const QList<ForumSource> &sources,
+                                                     const QString &error) {
                 QJsonObject result;
-                result.insert("tool", QStringLiteral("shotcut_forum_search"));
+                result.insert("tool", toolName);
                 result.insert("status",
                               sources.isEmpty() ? QStringLiteral("no_results")
                                                 : QStringLiteral("ok"));
@@ -371,7 +375,10 @@ void McpServer::handleForumSearchRequest(HttpServer::Responder responder,
                 responder.write(httpResponse(200, jsonRpcResult(id, toolResult(result))));
                 search->deleteLater();
             });
-    search->search(query);
+    search->search(query,
+                   toolName == QStringLiteral("shotcut_documentation_search")
+                       ? ForumSearch::Scope::Documentation
+                       : ForumSearch::Scope::Discussion);
 }
 
 QJsonObject McpServer::handleRequest(const QJsonObject &request, QString *error) const

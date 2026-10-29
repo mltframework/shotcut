@@ -15,17 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "mcp/forumsearch.h"
 #include "mcp/mcpclient.h"
 #include "mcp/mcpserver.h"
 #include "mcp/shotcuttools.h"
 
+#include <QEventLoop>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QEventLoop>
 #include <QNetworkAccessManager>
+#include <QNetworkProxy>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QSignalSpy>
+#include <QUrlQuery>
 #include <QtTest/QtTest>
 
 namespace {
@@ -109,6 +112,77 @@ private slots:
         const QJsonObject result = m_registry.call(QStringLiteral("echo"), arguments);
         QVERIFY(result.contains("echo"));
         QCOMPARE(result.value("echo").toString(), QStringLiteral("hello from test"));
+    }
+
+    void searchToolsHaveDistinctDescriptions()
+    {
+        const auto documentation = Shotcut::Mcp::makeDocumentationSearchTool();
+        const auto discussion = Shotcut::Mcp::makeForumSearchTool();
+        QCOMPARE(documentation.name, QStringLiteral("shotcut_documentation_search"));
+        QCOMPARE(discussion.name, QStringLiteral("shotcut_forum_search"));
+        QVERIFY(documentation.description.contains(QStringLiteral("English documentation")));
+        QVERIFY(discussion.description.contains(QStringLiteral("excluding English documentation")));
+        QCOMPARE(documentation.parameters, discussion.parameters);
+        const auto tools = Shotcut::Mcp::createShotcutToolRegistry().tools();
+        QStringList names;
+        for (const auto &tool : tools)
+            names.append(tool.name);
+        QVERIFY(names.contains(documentation.name));
+        QVERIFY(names.contains(discussion.name));
+    }
+
+    void forumSearchScopesQuery_data()
+    {
+        QTest::addColumn<bool>("documentation");
+        QTest::addColumn<QString>("expectedQuery");
+        QTest::newRow("documentation") << true << QStringLiteral("audio #docs:docs-english");
+        QTest::newRow("discussion") << false << QStringLiteral("audio -#docs:docs-english");
+    }
+
+    void forumSearchScopesQuery()
+    {
+        QFETCH(bool, documentation);
+        QFETCH(QString, expectedQuery);
+        Shotcut::Mcp::ForumSearch search;
+        auto *network = search.findChild<QNetworkAccessManager *>();
+        QVERIFY(network);
+        // Keep this request local and cancel before processing network events.
+        network->setProxy(QNetworkProxy(QNetworkProxy::HttpProxy, QStringLiteral("127.0.0.1"), 9));
+        search.search(QStringLiteral("audio"),
+                      documentation ? Shotcut::Mcp::ForumSearch::Scope::Documentation
+                                    : Shotcut::Mcp::ForumSearch::Scope::Discussion);
+        const auto replies = network->findChildren<QNetworkReply *>();
+        QCOMPARE(replies.size(), 1);
+        const auto url = replies.first()->request().url();
+        search.cancel();
+        QCOMPARE(url.host(), QStringLiteral("forum.shotcut.org"));
+        QCOMPARE(url.path(), QStringLiteral("/search.json"));
+        QCOMPARE(QUrlQuery(url).queryItemValue(QStringLiteral("q")), expectedQuery);
+    }
+
+    void searchToolsRejectEmptyQueries_data()
+    {
+        QTest::addColumn<QString>("toolName");
+        QTest::newRow("documentation") << QStringLiteral("shotcut_documentation_search");
+        QTest::newRow("discussion") << QStringLiteral("shotcut_forum_search");
+    }
+
+    void searchToolsRejectEmptyQueries()
+    {
+        QFETCH(QString, toolName);
+        Shotcut::Mcp::McpServer server(Shotcut::Mcp::createShotcutToolRegistry());
+        QVERIFY(server.listen());
+        Shotcut::Mcp::McpClient client(server.boundPort());
+        QSignalSpy responseSpy(&client, &Shotcut::Mcp::McpClient::requestCompleted);
+        const auto requestId = client.callTool(toolName, QJsonObject());
+        QTRY_COMPARE_WITH_TIMEOUT(responseSpy.count(), 1, 3000);
+        const auto arguments = responseSpy.takeFirst();
+        QCOMPARE(arguments.at(0).toULongLong(), requestId);
+        QVERIFY(arguments.at(2).toString().isEmpty());
+        const auto result = qvariant_cast<QJsonObject>(arguments.at(1)).value("result").toObject();
+        QVERIFY(result.value("isError").toBool());
+        QCOMPARE(result.value("structuredContent").toObject().value("error").toString(),
+                 QStringLiteral("The query argument is required."));
     }
 
     void clientUsesServerForToolListAndCall()

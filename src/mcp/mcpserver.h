@@ -48,6 +48,7 @@ private:
     void handleHttpRequest(const HttpServer::Request &request, HttpServer::Responder responder);
     void handleForumSearchRequest(HttpServer::Responder responder,
                                   const QJsonValue &id,
+                                  const QString &toolName,
                                   const QJsonObject &arguments);
     QJsonObject handleRequest(const QJsonObject &request, QString *error) const;
 

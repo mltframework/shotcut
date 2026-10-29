@@ -86,7 +86,9 @@ ToolDefinition makeForumSearchTool()
     ToolDefinition tool;
     tool.name = QStringLiteral("shotcut_forum_search");
     tool.description = QStringLiteral(
-        "Search the Shotcut user guide and support forum for answers to a query.");
+        "Search Shotcut user discussions, excluding English documentation, for troubleshooting, "
+        "reported problems, and workarounds. Prefer shotcut_documentation_search for instructions "
+        "on using Shotcut.");
 
     QJsonObject properties;
     QJsonObject querySchema;
@@ -100,6 +102,16 @@ ToolDefinition makeForumSearchTool()
     tool.parameters.insert("type", QStringLiteral("object"));
     tool.parameters.insert("properties", properties);
     tool.parameters.insert("required", required);
+    return tool;
+}
+
+ToolDefinition makeDocumentationSearchTool()
+{
+    auto tool = makeForumSearchTool();
+    tool.name = QStringLiteral("shotcut_documentation_search");
+    tool.description = QStringLiteral(
+        "Search Shotcut's English documentation for instructions on features, controls, filters, "
+        "and keyboard shortcuts. Use this first for questions about how to use Shotcut.");
     return tool;
 }
 
@@ -132,6 +144,7 @@ ToolRegistry createShotcutToolRegistry()
     ToolRegistry registry;
     registry.registerTool(makeProjectInspectTool());
     registry.registerTool(makeForumSearchTool());
+    registry.registerTool(makeDocumentationSearchTool());
     registry.registerTool(makeTimelineSummaryTool());
     return registry;
 }
