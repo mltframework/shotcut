@@ -1133,6 +1133,22 @@ void ShotcutSettings::setTimelineRoundedCorners(bool b)
 }
 
 /*!
+    \qmlproperty bool Settings::timelineSyncZoomKeyframes
+    \brief Whether Timeline and Keyframes use the same horizontal zoom. Defaults to off.
+*/
+
+bool ShotcutSettings::timelineSyncZoomKeyframes() const
+{
+    return settings.value("timeline/syncZoomKeyframes", false).toBool();
+}
+
+void ShotcutSettings::setTimelineSyncZoomKeyframes(bool b)
+{
+    settings.setValue("timeline/syncZoomKeyframes", b);
+    emit timelineSyncZoomKeyframesChanged();
+}
+
+/*!
     \qmlproperty bool Settings::timelineRipple
     \brief Whether ripple editing is enabled on the timeline.
 */

@@ -96,6 +96,7 @@ public:
     void getSelectionRange(int *start, int *end);
     int loopStart() const { return m_loopStart; }
     int loopEnd() const { return m_loopEnd; }
+    void setZoomScale(double scale);
 
 signals:
     void currentTrackChanged();

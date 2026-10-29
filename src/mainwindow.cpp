@@ -604,6 +604,7 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
     ui->menuTimeline->addAction(Actions["timelineRoundedCornersAction"]);
+    ui->menuTimeline->addAction(Actions["timelineSyncZoomKeyframesAction"]);
     auto submenu = ui->menuTimeline->addMenu(tr("Scrolling"));
     auto *group = new QActionGroup(this);
     submenu->addAction(Actions["timelineScrollingCenterPlayhead"]);
@@ -770,6 +771,22 @@ void MainWindow::setupAndConnectDocks()
             &FilterController::undoOrRedo,
             m_keyframesDock,
             &KeyframesDock::reload);
+    connect(m_timelineDock->model(), &MultitrackModel::scaleFactorChanged, this, [this]() {
+        syncTimelineKeyframesZoom(m_timelineDock->model()->scaleFactor());
+    });
+    connect(m_keyframesDock, &KeyframesDock::timeScaleChanged, this, [this]() {
+        syncTimelineKeyframesZoom(m_keyframesDock->timeScale());
+    });
+    connect(&Settings, &ShotcutSettings::timelineSyncZoomKeyframesChanged, this, [this]() {
+        if (!Settings.timelineSyncZoomKeyframes())
+            return;
+        if (m_keyframesDock->isVisible() && !m_timelineDock->isVisible())
+            syncTimelineKeyframesZoom(m_keyframesDock->timeScale());
+        else
+            syncTimelineKeyframesZoom(m_timelineDock->model()->scaleFactor());
+    });
+    if (Settings.timelineSyncZoomKeyframes())
+        syncTimelineKeyframesZoom(m_timelineDock->model()->scaleFactor());
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -3901,6 +3918,25 @@ void MainWindow::onFiltersDockTriggered(bool checked)
         m_filtersDock->show();
         m_filtersDock->raise();
     }
+}
+
+void MainWindow::syncTimelineKeyframesZoom(double scale)
+{
+    if (!Settings.timelineSyncZoomKeyframes() || m_syncingZoom || !m_timelineDock
+        || !m_keyframesDock)
+        return;
+    const double clamped = qBound(0.01, scale, 27.01);
+    const bool timelineDiffers = qAbs(m_timelineDock->model()->scaleFactor() - clamped) >= 1e-6;
+    const bool keyframesDiffer = qAbs(m_keyframesDock->timeScale() - clamped) >= 1e-6;
+    if (!timelineDiffers && !keyframesDiffer)
+        return;
+    // setZoomScale emits the other panel's zoom change before it returns.
+    m_syncingZoom = true;
+    if (timelineDiffers)
+        m_timelineDock->setZoomScale(clamped);
+    if (keyframesDiffer)
+        m_keyframesDock->setZoomScale(clamped);
+    m_syncingZoom = false;
 }
 
 void MainWindow::onKeyframesDockTriggered(bool checked)

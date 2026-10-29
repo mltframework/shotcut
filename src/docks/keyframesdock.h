@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ public:
     int currentParameter() const;
     double timeScale() const { return m_timeScale; }
     void setTimeScale(double value);
+    void setZoomScale(double scale);
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.

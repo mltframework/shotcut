@@ -65,6 +65,8 @@
 #include <QWidgetAction>
 #include <qlistwidget.h>
 
+#include <cmath>
+
 static const char *kFileUrlProtocol = "file://";
 static const char *kFilesUrlDelimiter = ",file://";
 static const int kRecordingTimerIntervalMs = 1000;
@@ -1431,6 +1433,17 @@ void TimelineDock::setupActions()
         action->setChecked(Settings.timelineRoundedCorners());
     });
     Actions.add("timelineRoundedCornersAction", action);
+
+    action = new QAction(tr("Sync Zoom With Keyframes"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineSyncZoomKeyframes());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineSyncZoomKeyframes(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineSyncZoomKeyframesChanged, action, [=]() {
+        action->setChecked(Settings.timelineSyncZoomKeyframes());
+    });
+    Actions.add("timelineSyncZoomKeyframesAction", action);
 
     action = new QAction(tr("No"), this);
     action->setCheckable(true);
@@ -4515,6 +4528,16 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 void TimelineDock::selectClip(int trackIndex, int clipIndex)
 {
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
+}
+
+void TimelineDock::setZoomScale(double scale)
+{
+    const double clamped = qBound(0.01, scale, 27.01);
+    if (!m_quickView.rootObject()) {
+        m_model.setScaleFactor(clamped);
+        return;
+    }
+    emit setZoom(std::pow(std::max(0.0, clamped - 0.01), 1.0 / 3.0));
 }
 
 void TimelineDock::onMultitrackClosed()

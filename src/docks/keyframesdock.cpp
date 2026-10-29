@@ -237,7 +237,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     });
     connect(this, &KeyframesDock::timeScaleChanged, zoomSlider, [=]() {
         double value = round(pow(m_timeScale - 0.01, 1.0 / 3.0) * 100.0);
+        zoomSlider->blockSignals(true);
         zoomSlider->setValue(value);
+        zoomSlider->blockSignals(false);
     });
     toolbar->addWidget(zoomSlider);
     toolbar->addAction(Actions["keyframesZoomInAction"]);
@@ -1233,6 +1235,16 @@ void KeyframesDock::setTimeScale(double value)
 {
     m_timeScale = value;
     emit timeScaleChanged();
+}
+
+void KeyframesDock::setZoomScale(double scale)
+{
+    const double clamped = qBound(0.01, scale, 27.01);
+    if (!m_qview.rootObject()) {
+        setTimeScale(clamped);
+        return;
+    }
+    emit setZoom(std::pow(std::max(0.0, clamped - 0.01), 1.0 / 3.0));
 }
 
 /*!
