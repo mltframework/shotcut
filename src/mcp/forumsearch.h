@@ -40,8 +40,10 @@ class ForumSearch : public QObject
     Q_OBJECT
 
 public:
+    enum class Scope { Documentation, Discussion };
+
     explicit ForumSearch(QObject *parent = nullptr);
-    void search(const QString &query, int timeoutMs = 30000);
+    void search(const QString &query, Scope scope, int timeoutMs = 30000);
     void cancel();
 
 signals:

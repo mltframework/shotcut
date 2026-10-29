@@ -31,6 +31,7 @@ QJsonObject shotcutTimelineSummaryTool(const QJsonObject &arguments);
 
 ToolDefinition makeProjectInspectTool();
 ToolDefinition makeForumSearchTool();
+ToolDefinition makeDocumentationSearchTool();
 ToolDefinition makeTimelineSummaryTool();
 ToolRegistry createShotcutToolRegistry();
 
