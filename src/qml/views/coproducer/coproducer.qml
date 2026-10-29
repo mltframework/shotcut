@@ -89,8 +89,12 @@ Rectangle {
             }
 
             ToolButton {
-                icon.name: "show-menu"
-                icon.source: "qrc:///icons/oxygen/32x32/actions/show-menu.png"
+                icon.name: "run-build"
+                icon.source: "qrc:///icons/oxygen/32x32/actions/run-build.png"
+                Accessible.name: qsTr("Coproducer settings")
+                ToolTip.text: Accessible.name
+                ToolTip.visible: hovered
+                ToolTip.delay: 400
                 onClicked: coproducer.openSettings()
             }
         }
