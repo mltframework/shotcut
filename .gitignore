@@ -35,15 +35,9 @@ build.ninja
 rules.ninja
 CMakeCache.txt
 CTestTestfile.cmake
-/tests/CTestTestfile.cmake
-/tests/test_gpuinfo
-/tests/test_gpuinfo_autogen/
-/tests/test_mix_transition_order
-/tests/test_mix_transition_order_autogen/
-/tests/test_mcpserver
-/tests/test_mcpserver_autogen/
-/tests/test_dataqueue
-/tests/test_dataqueue_autogen/
+# In-source test executables and autogen directories; keep files with extensions visible.
+/tests/test_*
+!/tests/test_*.*
 *CMakeFiles/
 CuteLogger/CuteLogger_autogen/
 install_manifest.txt
