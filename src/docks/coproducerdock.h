@@ -56,6 +56,7 @@ public:
     bool isBusy() const;
     int mode() const;
     void setMode(int value);
+    void shutdown();
 
 public slots:
     void submitPrompt();
