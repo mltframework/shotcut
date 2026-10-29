@@ -1724,12 +1724,8 @@ void MainWindow::setupSettingsMenu()
     ui->actionUseProxy->setChecked(Settings.proxyEnabled());
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    // Windows proxies use a fixed d3d11va + h264_mf pipeline, and macOS
-    // proxies use a fixed videotoolbox + h264_videotoolbox pipeline, so the
-    // hardware encoder list does not apply.
+    // Hide this always, but temporarily in case we change our mind.
     ui->actionProxyConfigureHardware->setVisible(false);
-#endif
 
     // Initialize the preview scaling submenu
 #if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))

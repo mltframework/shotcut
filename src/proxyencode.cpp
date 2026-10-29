@@ -30,7 +30,9 @@ struct ProxyPiece
     QStringList beforeInput;
     QString filter;
     QStringList tail;
-    bool fixedGop = false;
+    // Empty stays GOP 1 unless the assembled video codec is hevc_nvenc (0)
+    // or h264_nvenc (2).
+    QString gop;
 };
 
 static bool explicitInterlace(int scanMode)
@@ -150,12 +152,12 @@ static QString fullRangeSuffix(bool fullRange)
                      : QStringLiteral(":in_range=mpeg:out_range=mpeg");
 }
 
-static QString softwareScaleFilter(const ProxyVideoRequest &request, bool vaapiUpload)
+static QString softwareScaleFilter(const ProxyVideoRequest &request, bool hwUpload)
 {
     QString filters = softwareDeinterlace(request.scanMode);
     filters += QStringLiteral("scale=width=-2:height=%1").arg(request.resolution);
     filters += fullRangeSuffix(request.fullRange);
-    if (vaapiUpload)
+    if (hwUpload)
         filters += QStringLiteral(",format=nv12,hwupload");
     return filters;
 }
@@ -274,6 +276,31 @@ static QStringList listedHardwareEncoder(const QStringList &hwCodecs)
     return args;
 }
 
+static QStringList vulkanDeviceArgs()
+{
+    QStringList args;
+    args << QStringLiteral("-init_hw_device") << QStringLiteral("vulkan=vk:0");
+    args << QStringLiteral("-filter_hw_device") << QStringLiteral("vk");
+    return args;
+}
+
+static QStringList h264VulkanEncoder(bool hardwareFrames)
+{
+    QStringList args;
+    if (hardwareFrames) {
+        args << QStringLiteral("-pix_fmt") << QStringLiteral("vulkan");
+    } else {
+        // Same role as h264_mf(false) and h264_videotoolbox(false): software
+        // pictures, same encoder. h264_vulkan has no CPU pixel format, so the
+        // filter uploads and these arguments create the device.
+        args << QStringLiteral("-pix_fmt") << QStringLiteral("yuv420p");
+        args << vulkanDeviceArgs();
+    }
+    args << QStringLiteral("-codec:v") << QStringLiteral("h264_vulkan");
+    args << QStringLiteral("-qp") << QStringLiteral("30");
+    return args;
+}
+
 static bool wantsVaapiUpload(const ProxyVideoRequest &request)
 {
     return request.hardware
@@ -284,15 +311,13 @@ static bool wantsVaapiUpload(const ProxyVideoRequest &request)
 static ProxyPiece softwarePiece(const ProxyVideoRequest &request,
                                 const ColorTags &tags,
                                 const QStringList &encoder,
-                                bool vaapiUpload,
-                                bool fixedGop)
+                                bool hwUpload)
 {
     ProxyPiece piece;
-    piece.filter = softwareScaleFilter(request, vaapiUpload);
+    piece.filter = softwareScaleFilter(request, hwUpload);
     piece.tail = colorArgs(tags, request.fullRange);
     piece.tail << containerAndAudio(request);
     piece.tail << encoder;
-    piece.fixedGop = fixedGop;
     return piece;
 }
 
@@ -306,7 +331,24 @@ static ProxyPiece d3d11Piece(const ProxyVideoRequest &request, const ColorTags &
                        .arg(setparamsFilter(tags, request.fullRange));
     piece.tail = containerAndAudio(request);
     piece.tail << h264MfEncoder(true);
-    piece.fixedGop = true;
+    return piece;
+}
+
+static ProxyPiece vulkanPiece(const ProxyVideoRequest &request, const ColorTags &tags)
+{
+    ProxyPiece piece;
+    // One device for decode, scale_vulkan, and h264_vulkan. Frames stay in VRAM.
+    // 10-bit decode is p010, which scale_vulkan cannot convert to nv12, so that
+    // graph fails and the software-scale h264_vulkan command retries it.
+    piece.beforeInput << vulkanDeviceArgs();
+    piece.beforeInput << QStringLiteral("-hwaccel") << QStringLiteral("vulkan");
+    piece.beforeInput << QStringLiteral("-hwaccel_output_format") << QStringLiteral("vulkan");
+    piece.beforeInput << QStringLiteral("-hwaccel_device") << QStringLiteral("vk");
+    piece.filter = QStringLiteral("scale_vulkan=w=-2:h=%1:format=nv12,%2")
+                       .arg(request.resolution)
+                       .arg(setparamsFilter(tags, request.fullRange));
+    piece.tail = containerAndAudio(request);
+    piece.tail << h264VulkanEncoder(true);
     return piece;
 }
 
@@ -323,7 +365,6 @@ static ProxyPiece videoToolboxPiece(const ProxyVideoRequest &request, const Colo
                         .arg(setparamsFilter(tags, request.fullRange));
     piece.tail = containerAndAudio(request);
     piece.tail << h264VideoToolboxEncoder(true, request.fullRange);
-    piece.fixedGop = true;
     return piece;
 }
 
@@ -333,7 +374,7 @@ static ProxyPiece genericPiece(const ProxyVideoRequest &request, const ColorTags
     encoder << QStringLiteral("-pix_fmt") << QStringLiteral("yuv420p");
     if (request.hardware)
         encoder << listedHardwareEncoder(request.hardwareCodecs);
-    return softwarePiece(request, tags, encoder, wantsVaapiUpload(request), false);
+    return softwarePiece(request, tags, encoder, wantsVaapiUpload(request));
 }
 
 static QStringList assemble(const ProxyVideoRequest &request, const ProxyPiece &piece)
@@ -363,12 +404,12 @@ static QStringList assemble(const ProxyVideoRequest &request, const ProxyPiece &
         args << QStringLiteral("-crf") << QStringLiteral("23");
     }
     QString gop = QStringLiteral("1");
-    if (!piece.fixedGop) {
-        if (request.hardwareCodecs.contains(QLatin1String("hevc_nvenc")))
-            gop = QStringLiteral("0");
-        else if (request.hardwareCodecs.contains(QLatin1String("h264_nvenc")))
-            gop = QStringLiteral("2");
-    }
+    if (!piece.gop.isEmpty())
+        gop = piece.gop;
+    else if (args.contains(QStringLiteral("hevc_nvenc")))
+        gop = QStringLiteral("0");
+    else if (args.contains(QStringLiteral("h264_nvenc")))
+        gop = QStringLiteral("2");
     args << QStringLiteral("-g") << gop;
     args << QStringLiteral("-bf") << QStringLiteral("0");
     args << QStringLiteral("-y") << request.outputFile;
@@ -393,29 +434,30 @@ ProxyVideoCommand buildProxyVideoCommand(const ProxyVideoRequest &request)
                                                             request.pictureHeight);
         if (surface.fits) {
             primary = d3d11Piece(request, tags);
-            fallback = softwarePiece(request, tags, h264MfEncoder(false), false, true);
+            fallback = softwarePiece(request, tags, h264MfEncoder(false), false);
             hasFallback = true;
         } else {
-            primary = softwarePiece(request,
-                                    tags,
-                                    h264MfEncoder(false),
-                                    wantsVaapiUpload(request),
-                                    true);
+            primary = softwarePiece(request, tags, h264MfEncoder(false), wantsVaapiUpload(request));
         }
     } else if (policy == ProxyHwPolicy::Mac && gpuScan) {
         primary = videoToolboxPiece(request, tags);
         fallback = softwarePiece(request,
                                  tags,
                                  h264VideoToolboxEncoder(false, request.fullRange),
-                                 false,
-                                 true);
+                                 false);
         hasFallback = true;
     } else if (policy == ProxyHwPolicy::Mac && request.hardware) {
         primary = softwarePiece(request,
                                 tags,
                                 h264VideoToolboxEncoder(false, request.fullRange),
-                                false,
-                                true);
+                                false);
+    } else if (policy == ProxyHwPolicy::Generic && gpuScan) {
+        // hardwareCodecs is the export encoder list. Proxy hardware does not
+        // wait for h264_vulkan to show up there. A failure retries with a
+        // software decode and scale into the same encoder.
+        primary = vulkanPiece(request, tags);
+        fallback = softwarePiece(request, tags, h264VulkanEncoder(false), true);
+        hasFallback = true;
     } else {
         primary = genericPiece(request, tags);
     }
