@@ -137,6 +137,7 @@ public slots:
     int addAudioTrack();
     int addVideoTrack();
     void alignSelectedClips();
+    void showAudioMixingAssistantDialog();
     void onShowFrame(const SharedFrame &frame);
     void onSeeked(int position);
     void append(int trackIndex);
