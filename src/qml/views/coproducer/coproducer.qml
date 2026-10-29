@@ -212,7 +212,7 @@ Rectangle {
                 Layout.fillWidth: true
                 enabled: !coproducer.busy
                 text: coproducer.promptText
-                placeholderText: coproducer.mode === 1 ? qsTr("Enter keywords to search the User Guide...") : qsTr("Ask about Shotcut features and workflows. AI answers may be inaccurate.")
+                placeholderText: coproducer.mode === 1 ? qsTr("Enter English keywords to search the English User Guide...") : qsTr("Ask about Shotcut features and workflows. AI answers may be inaccurate.")
                 placeholderTextColor: Qt.alpha(palette.text, 0.4)
                 wrapMode: TextEdit.Wrap
                 implicitHeight: 80
