@@ -72,6 +72,7 @@ public:
     static QDir installDir(const QString &id);
     static QDir appDir(const QString &id);
     static const QString WHISPER_ID;
+    static const QString LLAMA_ID;
 
     explicit QmlExtension(QObject *parent = 0);
 
