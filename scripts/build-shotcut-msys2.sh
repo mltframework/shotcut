@@ -68,7 +68,7 @@ LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
-WHISPERCPP_REVISION="v1.8.3"
+WHISPERCPP_REVISION="v1.9.5"
 ENABLE_RNNOISE=1
 RNNOISE_HEAD=1
 RNNOISE_REVISION=
@@ -656,6 +656,7 @@ function set_globals {
   # whisper.cpp
   CONFIG[9]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_VULKAN=1 -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
   if [ "$TARGET_ARCH" = "clangarm64" ]; then
+    CXXFLAGS_[9]="-include cstdlib -include algorithm -include atomic"
     CONFIG[9]="${CONFIG[9]} -D GGML_BLAS=OFF"
   else
     CONFIG[9]="${CONFIG[9]} -D GGML_AVX2=OFF -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS"
@@ -696,6 +697,8 @@ function set_globals {
     CONFIG[12]="${CONFIG[12]} --buildtype=release"
   fi
   CFLAGS_[12]="$CFLAGS"
+  # libc++ unqualified swap is ambiguous with svm.cpp's global swap template.
+  [ "$TARGET_ARCH" = "clangarm64" ] && PRECONFIG[12]="patch_vmaf_svm_swap"
   [ "$TARGET_ARCH" = "clangarm64" ] && LDFLAGS_[12]="$LDFLAGS -lwinpthread"
   BUILD[12]="ninja -C libvmaf/build -j $MAKEJ"
   INSTALL[12]="install_vmaf"
@@ -773,6 +776,13 @@ function install_shotcut {
 function install_ladspa-swh {
   cmd install -d "$FINAL_INSTALL_DIR"/lib/ladspa
   cmd install -p -c .libs/*.dll "$FINAL_INSTALL_DIR"/lib/ladspa
+}
+
+# v3.0.0 svm.cpp declares a global swap() template. libc++ instantiates
+# std::vector from that file and an unqualified swap is then ambiguous.
+function patch_vmaf_svm_swap {
+  cmd sed -i -E 's/(^|[^[:alnum:]_])swap\(/\1svm_swap(/g' libvmaf/src/svm.cpp \
+    || die "Unable to patch libvmaf svm.cpp"
 }
 
 function install_vmaf {

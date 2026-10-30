@@ -56,6 +56,7 @@ jobs:
             mingw-w64-ucrt-x86_64-qt6-multimedia-wmf
             mingw-w64-ucrt-x86_64-qt6-svg
             mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-spirv-headers            
             mingw-w64-ucrt-x86_64-qt6-translations
             mingw-w64-ucrt-x86_64-qt6-websockets
             mingw-w64-ucrt-x86_64-rubberband
