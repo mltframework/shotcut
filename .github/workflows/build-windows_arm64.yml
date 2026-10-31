@@ -2,6 +2,11 @@ name: build-shotcut-windows-arm64
 
 on:
   workflow_dispatch:
+    inputs:
+      version-manual:
+        description: Optional Shotcut version (for example 26.6.18). If empty, use today's date.
+        required: false
+        type: string
 
 jobs:
   build:
@@ -29,7 +34,14 @@ jobs:
 
       - name: Set version
         shell: msys2 {0}
-        run: echo "VERSION=$(date +"%y.%-m.%-d")" >> "$GITHUB_ENV"
+        run: |
+          VERSION_MANUAL="${{ inputs['version-manual'] }}"
+          if [ -n "$VERSION_MANUAL" ]; then
+            VERSION="$VERSION_MANUAL"
+          else
+            VERSION="$(date +"%y.%-m.%-d")"
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
       - name: Download from S3
         shell: bash
