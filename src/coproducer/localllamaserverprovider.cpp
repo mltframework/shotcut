@@ -106,6 +106,7 @@ QString LocalLlamaServerProvider::findServerExecutable() const
     const auto appDir = QCoreApplication::applicationDirPath();
     const QStringList candidates
         = {QDir(appDir).filePath(executableName),
+           QDir(appDir).filePath(QStringLiteral("llama/") + executableName),
            QDir(appDir).filePath(QStringLiteral("../bin/") + executableName),
            QDir(appDir).filePath(QStringLiteral("../MacOS/") + executableName)};
     for (const auto &candidate : candidates) {
