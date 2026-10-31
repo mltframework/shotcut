@@ -46,6 +46,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QPainter>
+#include <QPushButton>
 #include <QRegularExpression>
 #include <QStyle>
 #include <QStyledItemDelegate>
@@ -56,6 +57,8 @@
 #include <algorithm>
 
 namespace {
+
+constexpr int kRefreshTimeoutMs = 5000;
 
 // Paints the model id on the left and its creation date (stored in
 // Qt::UserRole + 1) right-aligned, so dates line up like a column.
@@ -239,6 +242,7 @@ CoproducerSettingsDialog::CoproducerSettingsDialog(QWidget *parent)
     m_apiKeyEdit->setToolTip(apiKeyNote);
 
     auto buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    m_buttonBox = buttons;
     connect(buttons, &QDialogButtonBox::accepted, this, &CoproducerSettingsDialog::onAccepted);
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
@@ -375,6 +379,10 @@ void CoproducerSettingsDialog::maybeAutoRefreshOpenAiModels()
 {
     const auto apiKey = m_apiKeyEdit->text().trimmed();
     const auto baseUrl = currentBaseUrl();
+    // Wait until an in-progress refresh finishes without recording this
+    // attempt, so a later edit producing the same key can still refresh.
+    if (m_refreshReply)
+        return;
     if (apiKey.length() < 20 || !Util::isAllowedApiBaseUrl(baseUrl))
         return;
     const auto key = baseUrl + QChar('\n') + apiKey;
@@ -384,8 +392,35 @@ void CoproducerSettingsDialog::maybeAutoRefreshOpenAiModels()
     refreshOpenAiModels(/*silent*/ true);
 }
 
+// Disables everything that could start another refresh or accept the dialog
+// while a refresh is underway. Cancel stays enabled to cancel the refresh.
+void CoproducerSettingsDialog::setRefreshBusy(bool busy)
+{
+    m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!busy);
+    m_openAiRefreshButton->setEnabled(!busy);
+    m_providerCombo->setEnabled(!busy);
+    m_baseUrlEdit->setEnabled(!busy);
+    m_modelEdit->setEnabled(!busy);
+    m_apiKeyEdit->setEnabled(!busy);
+}
+
+void CoproducerSettingsDialog::reject()
+{
+    // While a model refresh is underway, Cancel (or Esc) only cancels the
+    // refresh; its finished handler re-enables the controls.
+    if (m_refreshReply) {
+        m_refreshCanceled = true;
+        m_refreshReply->abort();
+        return;
+    }
+    QDialog::reject();
+}
+
 void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
 {
+    // Only one refresh at a time.
+    if (m_refreshReply)
+        return;
     const auto apiKey = m_apiKeyEdit->text().trimmed();
     if (apiKey.isEmpty()) {
         if (!silent)
@@ -403,9 +438,20 @@ void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
 
     QNetworkRequest request{QUrl(baseUrl + QStringLiteral("/models"))};
     request.setRawHeader("Authorization", QByteArray("Bearer ") + apiKey.toUtf8());
+    request.setTransferTimeout(kRefreshTimeoutMs);
+    setRefreshBusy(true);
+    m_refreshCanceled = false;
     auto *reply = m_network->get(request);
+    m_refreshReply = reply;
     connect(reply, &QNetworkReply::finished, this, [this, reply, silent]() {
         reply->deleteLater();
+        m_refreshReply = nullptr;
+        setRefreshBusy(false);
+        const bool canceled = m_refreshCanceled;
+        m_refreshCanceled = false;
+        // The user canceled; leave the model list as it was.
+        if (canceled && reply->error() == QNetworkReply::OperationCanceledError)
+            return;
         const auto body = reply->readAll();
         const auto root = QJsonDocument::fromJson(body).object();
 
@@ -419,9 +465,15 @@ void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
                 m_modelEdit->addItem(currentId, currentId);
             if (!silent) {
                 auto message = reply->errorString();
-                const auto errorObj = root.value("error").toObject();
-                if (!errorObj.isEmpty() && errorObj.contains("message"))
-                    message = errorObj.value("message").toString();
+                if (reply->error() == QNetworkReply::OperationCanceledError) {
+                    // setTransferTimeout() aborts stalled requests with
+                    // OperationCanceledError and an unhelpful message.
+                    message = tr("The request timed out.");
+                } else {
+                    const auto errorObj = root.value("error").toObject();
+                    if (!errorObj.isEmpty() && errorObj.contains("message"))
+                        message = errorObj.value("message").toString();
+                }
                 QMessageBox::warning(this, tr("Refresh Models"), message);
             }
             return;
