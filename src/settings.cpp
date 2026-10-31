@@ -2163,6 +2163,16 @@ void ShotcutSettings::setCoproducerApiKey(const QString &key)
     settings.setValue("coproducer/apiKey", key);
 }
 
+QString ShotcutSettings::coproducerMode() const
+{
+    return settings.value("coproducer/mode", "chat").toString();
+}
+
+void ShotcutSettings::setCoproducerMode(const QString &mode)
+{
+    settings.setValue("coproducer/mode", mode);
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {

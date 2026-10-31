@@ -108,6 +108,11 @@ CoproducerDock::CoproducerDock(quint16 mcpServerPort, QWidget *parent)
         QIcon::fromTheme("view-conversation-balloon",
                          QIcon(":/icons/oxygen/32x32/actions/view-conversation-balloon.png")));
 
+    // Restore the last mode the user selected in the combo box; defaults to
+    // AI Chat the first time. Must be set before the QML view loads below.
+    if (Settings.coproducerMode() == QStringLiteral("search"))
+        m_mode = Mode::SearchUserGuide;
+
     m_qview = new QQuickWidget(QmlUtilities::sharedEngine(), this);
     m_qview->setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_qview->setClearColor(palette().window().color());
@@ -241,6 +246,17 @@ void CoproducerDock::setMode(int value)
         return;
     m_mode = nextMode;
     emit modeChanged();
+}
+
+// Invoked by the mode combo box in the QML view for a user-initiated change.
+// Unlike setMode(), this also persists the mode so it is restored next time.
+// Programmatic changes (e.g. from the Help menu) use setMode() and neither
+// read nor change the saved setting.
+void CoproducerDock::selectMode(int value)
+{
+    setMode(value);
+    Settings.setCoproducerMode(m_mode == Mode::SearchUserGuide ? QStringLiteral("search")
+                                                               : QStringLiteral("chat"));
 }
 
 void CoproducerDock::submitPrompt()

@@ -56,6 +56,7 @@ public:
     bool isBusy() const;
     int mode() const;
     void setMode(int value);
+    Q_INVOKABLE void selectMode(int value);
     void shutdown();
 
 public slots:
