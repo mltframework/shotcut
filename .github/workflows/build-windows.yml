@@ -74,6 +74,7 @@ jobs:
             mingw-w64-ucrt-x86_64-vid.stab
             mingw-w64-ucrt-x86_64-vulkan-headers
             mingw-w64-ucrt-x86_64-vulkan-loader
+            mingw-w64-ucrt-x86_64-whisper.cpp
             mingw-w64-ucrt-x86_64-x264
             mingw-w64-ucrt-x86_64-x265
             mingw-w64-ucrt-x86_64-zimg
