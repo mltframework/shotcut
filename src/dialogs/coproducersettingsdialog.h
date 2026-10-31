@@ -28,9 +28,14 @@ class QLabel;
 class QLineEdit;
 class QNetworkAccessManager;
 class QNetworkReply;
+class QPushButton;
 class QToolButton;
 class QTreeView;
 class QWidget;
+
+namespace Coproducer {
+class LocalLlamaServerProvider;
+}
 
 class CoproducerSettingsDialog : public QDialog
 {
@@ -39,6 +44,8 @@ class CoproducerSettingsDialog : public QDialog
 public:
     explicit CoproducerSettingsDialog(QWidget *parent = nullptr);
 
+    // While a model refresh or connection test is underway, cancels only that
+    // operation instead of closing the dialog.
     void reject() override;
 
 private slots:
@@ -48,6 +55,7 @@ private slots:
     void onBrowseModelClicked();
     void onRefreshModelsClicked();
     void onRefreshOpenAiModelsClicked();
+    void onTestClicked();
     void onAccepted();
 
 private:
@@ -56,7 +64,12 @@ private:
     void updateModelStatus();
     void refreshOpenAiModels(bool silent);
     void maybeAutoRefreshOpenAiModels();
-    void setRefreshBusy(bool busy);
+    void testOpenAi();
+    void testLocalModel();
+    void finishLocalTest();
+    void setBusy(bool busy);
+    QString networkErrorMessage(QNetworkReply *reply, const QByteArray &body) const;
+    void showErrorMessage(const QString &title, const QString &text);
     void setLocalModelPath(const QString &path);
     QString currentModelId() const;
     QString currentBaseUrl() const;
@@ -72,11 +85,14 @@ private:
     QWidget *m_localConfigWidget;
     QTreeView *m_modelTable;
     QToolButton *m_openAiRefreshButton = nullptr;
+    QPushButton *m_testButton = nullptr;
+    QLabel *m_testStatusLabel = nullptr;
     QDialogButtonBox *m_buttonBox = nullptr;
     ExtensionModel m_model;
     QNetworkAccessManager *m_network;
-    QNetworkReply *m_refreshReply = nullptr;
-    bool m_refreshCanceled = false;
+    QNetworkReply *m_activeReply = nullptr;
+    bool m_activeCanceled = false;
+    Coproducer::LocalLlamaServerProvider *m_testProvider = nullptr;
     QString m_lastAutoRefreshKey;
 };
 

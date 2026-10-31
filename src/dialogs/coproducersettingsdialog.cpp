@@ -17,6 +17,7 @@
 
 #include "coproducersettingsdialog.h"
 
+#include "coproducer/localllamaserverprovider.h"
 #include "dialogs/filedownloaddialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
@@ -59,6 +60,7 @@
 namespace {
 
 constexpr int kRefreshTimeoutMs = 5000;
+constexpr int kTestTimeoutMs = 30000;
 
 // Paints the model id on the left and its creation date (stored in
 // Qt::UserRole + 1) right-aligned, so dates line up like a column.
@@ -246,10 +248,19 @@ CoproducerSettingsDialog::CoproducerSettingsDialog(QWidget *parent)
     connect(buttons, &QDialogButtonBox::accepted, this, &CoproducerSettingsDialog::onAccepted);
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
+    m_testButton = new QPushButton(tr("Test"), this);
+    m_testButton->setToolTip(tr("Send a short test chat message to check the configuration"));
+    connect(m_testButton, &QPushButton::clicked, this, &CoproducerSettingsDialog::onTestClicked);
+    m_testStatusLabel = new QLabel(this);
+
     auto layout = new QVBoxLayout(this);
     layout->addLayout(form);
     layout->addWidget(m_localConfigWidget);
-    layout->addWidget(buttons);
+    auto buttonRow = new QHBoxLayout;
+    buttonRow->addWidget(m_testButton, /*stretch*/ 0);
+    buttonRow->addWidget(m_testStatusLabel, /*stretch*/ 1);
+    buttonRow->addWidget(buttons, /*stretch*/ 0);
+    layout->addLayout(buttonRow);
 
     // Size for the larger of the two providers' sections up front (with both
     // temporarily shown) so switching providers later doesn't resize the
@@ -379,9 +390,9 @@ void CoproducerSettingsDialog::maybeAutoRefreshOpenAiModels()
 {
     const auto apiKey = m_apiKeyEdit->text().trimmed();
     const auto baseUrl = currentBaseUrl();
-    // Wait until an in-progress refresh finishes without recording this
-    // attempt, so a later edit producing the same key can still refresh.
-    if (m_refreshReply)
+    // Wait until an in-progress refresh or test finishes without recording
+    // this attempt, so a later edit producing the same key can still refresh.
+    if (m_activeReply || m_testProvider)
         return;
     if (apiKey.length() < 20 || !Util::isAllowedApiBaseUrl(baseUrl))
         return;
@@ -392,34 +403,257 @@ void CoproducerSettingsDialog::maybeAutoRefreshOpenAiModels()
     refreshOpenAiModels(/*silent*/ true);
 }
 
-// Disables everything that could start another refresh or accept the dialog
-// while a refresh is underway. Cancel stays enabled to cancel the refresh.
-void CoproducerSettingsDialog::setRefreshBusy(bool busy)
+// Cancel stays enabled to cancel the refresh or test.
+void CoproducerSettingsDialog::setBusy(bool busy)
 {
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!busy);
     m_openAiRefreshButton->setEnabled(!busy);
+    m_testButton->setEnabled(!busy);
     m_providerCombo->setEnabled(!busy);
     m_baseUrlEdit->setEnabled(!busy);
     m_modelEdit->setEnabled(!busy);
     m_apiKeyEdit->setEnabled(!busy);
+    m_localConfigWidget->setEnabled(!busy);
 }
 
 void CoproducerSettingsDialog::reject()
 {
-    // While a model refresh is underway, Cancel (or Esc) only cancels the
-    // refresh; its finished handler re-enables the controls.
-    if (m_refreshReply) {
-        m_refreshCanceled = true;
-        m_refreshReply->abort();
+    if (m_activeReply) {
+        m_activeCanceled = true;
+        m_activeReply->abort();
+        return;
+    }
+    if (m_testProvider) {
+        finishLocalTest();
         return;
     }
     QDialog::reject();
 }
 
+// A friendly first line suggesting the likely cause, then details for
+// debugging connection problems.
+QString CoproducerSettingsDialog::networkErrorMessage(QNetworkReply *reply,
+                                                      const QByteArray &body) const
+{
+    QString friendly;
+    switch (reply->error()) {
+    case QNetworkReply::ConnectionRefusedError:
+        friendly = tr("The connection was refused. Check that the server is running and that the "
+                      "port number is correct.");
+        break;
+    case QNetworkReply::RemoteHostClosedError:
+        friendly = tr("The server closed the connection unexpectedly.");
+        break;
+    case QNetworkReply::HostNotFoundError:
+        friendly = tr("The host was not found. Check the host name in the base URL.");
+        break;
+    case QNetworkReply::TimeoutError:
+    // setTransferTimeout() reports aborted stalled requests as canceled.
+    case QNetworkReply::OperationCanceledError:
+        friendly = tr("The request timed out. Check the address and port number, and check for a "
+                      "firewall blocking the connection.");
+        break;
+    case QNetworkReply::SslHandshakeFailedError:
+        friendly = tr("The secure connection failed. The server may not support https on this "
+                      "port.");
+        break;
+    case QNetworkReply::ProxyConnectionRefusedError:
+    case QNetworkReply::ProxyConnectionClosedError:
+    case QNetworkReply::ProxyNotFoundError:
+    case QNetworkReply::ProxyTimeoutError:
+    case QNetworkReply::ProxyAuthenticationRequiredError:
+        friendly = tr("There is a problem with the network proxy.");
+        break;
+    case QNetworkReply::AuthenticationRequiredError:
+        friendly = tr("Authentication failed. Check the API key.");
+        break;
+    case QNetworkReply::ContentAccessDenied:
+        friendly = tr("Access was denied. Check the API key and its permissions.");
+        break;
+    case QNetworkReply::ContentNotFoundError:
+        friendly = tr("Not found. Check the path in the base URL (it usually ends with /v1).");
+        break;
+    default:
+        friendly = reply->errorString();
+        break;
+    }
+
+    auto message = friendly;
+    message += QStringLiteral("\n\nURL: %1").arg(reply->request().url().toString());
+    message += QStringLiteral("\n%1 (%2)").arg(reply->errorString()).arg(int(reply->error()));
+    const auto status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    if (status) {
+        const auto reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+        message += QStringLiteral("\nHTTP %1 %2").arg(status).arg(reason);
+    }
+    auto serverMessage = QJsonDocument::fromJson(body)
+                             .object()
+                             .value("error")
+                             .toObject()
+                             .value("message")
+                             .toString();
+    if (serverMessage.isEmpty())
+        serverMessage = QString::fromUtf8(body.left(300)).trimmed();
+    if (!serverMessage.isEmpty())
+        message += QStringLiteral("\n%1").arg(serverMessage);
+    return message;
+}
+
+// A warning box whose text can be copied for troubleshooting.
+void CoproducerSettingsDialog::showErrorMessage(const QString &title, const QString &text)
+{
+    QMessageBox dialog(QMessageBox::Warning, title, text, QMessageBox::Ok, this);
+    dialog.setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
+}
+
+void CoproducerSettingsDialog::onTestClicked()
+{
+    if (m_activeReply || m_testProvider)
+        return;
+    if (m_providerCombo->currentData().toString() == QStringLiteral("llama"))
+        testLocalModel();
+    else
+        testOpenAi();
+}
+
+// Sends a tiny real chat completion so the test exercises the base URL, API
+// key, and model end to end -- exactly what sending a prompt does.
+void CoproducerSettingsDialog::testOpenAi()
+{
+    const auto apiKey = m_apiKeyEdit->text().trimmed();
+    if (apiKey.isEmpty()) {
+        QMessageBox::warning(this, tr("Test"), tr("Enter an API key first."));
+        return;
+    }
+    const auto baseUrl = currentBaseUrl();
+    if (!Util::isAllowedApiBaseUrl(baseUrl)) {
+        QMessageBox::warning(this, tr("Test"), tr("Use https, or http for localhost only."));
+        return;
+    }
+    const auto model = currentModelId();
+    if (model.isEmpty()) {
+        QMessageBox::warning(this, tr("Test"), tr("Enter or choose a model first."));
+        return;
+    }
+
+    QNetworkRequest request{QUrl(baseUrl + QStringLiteral("/chat/completions"))};
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", QByteArray("Bearer ") + apiKey.toUtf8());
+    request.setTransferTimeout(kTestTimeoutMs);
+    QJsonObject payload;
+    payload["model"] = model;
+    payload["messages"] = QJsonArray{
+        QJsonObject{{"role", "user"}, {"content", "Reply with only the word OK."}}};
+    payload["stream"] = false;
+
+    setBusy(true);
+    m_testStatusLabel->setText(tr("Testing..."));
+    m_activeCanceled = false;
+    auto *reply = m_network->post(request, QJsonDocument(payload).toJson(QJsonDocument::Compact));
+    m_activeReply = reply;
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        reply->deleteLater();
+        m_activeReply = nullptr;
+        setBusy(false);
+        m_testStatusLabel->clear();
+        const bool canceled = m_activeCanceled;
+        m_activeCanceled = false;
+        if (canceled && reply->error() == QNetworkReply::OperationCanceledError)
+            return;
+        const auto body = reply->readAll();
+        if (reply->error() != QNetworkReply::NoError) {
+            showErrorMessage(tr("Test"), networkErrorMessage(reply, body));
+            return;
+        }
+        const auto content = QJsonDocument::fromJson(body)
+                                 .object()
+                                 .value("choices")
+                                 .toArray()
+                                 .at(0)
+                                 .toObject()
+                                 .value("message")
+                                 .toObject()
+                                 .value("content")
+                                 .toString()
+                                 .trimmed();
+        if (content.isEmpty()) {
+            auto message = tr(
+                "The server responded, but not with a chat completion. Check the base URL.");
+            message += QStringLiteral("\n\nURL: %1").arg(reply->request().url().toString());
+            const auto snippet = QString::fromUtf8(body.left(300)).trimmed();
+            if (!snippet.isEmpty())
+                message += QStringLiteral("\n%1").arg(snippet);
+            showErrorMessage(tr("Test"), message);
+            return;
+        }
+        QMessageBox::information(this,
+                                 tr("Test"),
+                                 tr("Success! The model replied: %1").arg(content.left(200)));
+    });
+}
+
+// Tests the local model the same way the Coproducer dock uses it: start
+// llama-server, wait for it to load the model, and request a tiny chat
+// completion.
+void CoproducerSettingsDialog::testLocalModel()
+{
+    const auto path = Settings.coproducerModelPath();
+    if (path.isEmpty() || !QFileInfo::exists(path)) {
+        QMessageBox::warning(this, tr("Test"), tr("Select a downloaded model first."));
+        return;
+    }
+    setBusy(true);
+    m_testStatusLabel->setText(tr("Starting the local model..."));
+    m_testProvider = new Coproducer::LocalLlamaServerProvider(path, this);
+    connect(m_testProvider,
+            &Coproducer::ChatProvider::statusMessage,
+            m_testStatusLabel,
+            &QLabel::setText);
+    connect(m_testProvider,
+            &Coproducer::ChatProvider::responseReceived,
+            this,
+            [this](const QString &text, const Coproducer::Usage &) {
+                finishLocalTest();
+                const auto reply = text.trimmed();
+                if (reply.isEmpty())
+                    QMessageBox::information(this, tr("Test"), tr("Success! The model replied."));
+                else
+                    QMessageBox::information(this,
+                                             tr("Test"),
+                                             tr("Success! The model replied: %1")
+                                                 .arg(reply.left(200)));
+            });
+    connect(m_testProvider,
+            &Coproducer::ChatProvider::errorOccurred,
+            this,
+            [this](const QString &message) {
+                finishLocalTest();
+                showErrorMessage(tr("Test"), message);
+            });
+    const QList<Coproducer::ChatMessage> history = {
+        {Coproducer::ChatMessage::User, QStringLiteral("Reply with only the word OK.")}};
+    m_testProvider->sendMessage(history);
+}
+
+// Deleting the provider stops its llama-server.
+void CoproducerSettingsDialog::finishLocalTest()
+{
+    if (!m_testProvider)
+        return;
+    disconnect(m_testProvider, nullptr, this, nullptr);
+    disconnect(m_testProvider, nullptr, m_testStatusLabel, nullptr);
+    m_testProvider->cancel();
+    m_testProvider->deleteLater();
+    m_testProvider = nullptr;
+    m_testStatusLabel->clear();
+    setBusy(false);
+}
+
 void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
 {
-    // Only one refresh at a time.
-    if (m_refreshReply)
+    if (m_activeReply || m_testProvider)
         return;
     const auto apiKey = m_apiKeyEdit->text().trimmed();
     if (apiKey.isEmpty()) {
@@ -439,16 +673,16 @@ void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
     QNetworkRequest request{QUrl(baseUrl + QStringLiteral("/models"))};
     request.setRawHeader("Authorization", QByteArray("Bearer ") + apiKey.toUtf8());
     request.setTransferTimeout(kRefreshTimeoutMs);
-    setRefreshBusy(true);
-    m_refreshCanceled = false;
+    setBusy(true);
+    m_activeCanceled = false;
     auto *reply = m_network->get(request);
-    m_refreshReply = reply;
+    m_activeReply = reply;
     connect(reply, &QNetworkReply::finished, this, [this, reply, silent]() {
         reply->deleteLater();
-        m_refreshReply = nullptr;
-        setRefreshBusy(false);
-        const bool canceled = m_refreshCanceled;
-        m_refreshCanceled = false;
+        m_activeReply = nullptr;
+        setBusy(false);
+        const bool canceled = m_activeCanceled;
+        m_activeCanceled = false;
         // The user canceled; leave the model list as it was.
         if (canceled && reply->error() == QNetworkReply::OperationCanceledError)
             return;
@@ -463,19 +697,8 @@ void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
             m_modelEdit->clear();
             if (!currentId.isEmpty())
                 m_modelEdit->addItem(currentId, currentId);
-            if (!silent) {
-                auto message = reply->errorString();
-                if (reply->error() == QNetworkReply::OperationCanceledError) {
-                    // setTransferTimeout() aborts stalled requests with
-                    // OperationCanceledError and an unhelpful message.
-                    message = tr("The request timed out.");
-                } else {
-                    const auto errorObj = root.value("error").toObject();
-                    if (!errorObj.isEmpty() && errorObj.contains("message"))
-                        message = errorObj.value("message").toString();
-                }
-                QMessageBox::warning(this, tr("Refresh Models"), message);
-            }
+            if (!silent)
+                showErrorMessage(tr("Refresh Models"), networkErrorMessage(reply, body));
             return;
         }
 
@@ -563,6 +786,11 @@ void CoproducerSettingsDialog::refreshOpenAiModels(bool silent)
             m_modelEdit->setCurrentIndex(foundIndex);
         else
             m_modelEdit->setEditText(currentId);
+        if (!silent) {
+            // Draw attention to the refreshed list as the success feedback.
+            m_modelEdit->setFocus(Qt::OtherFocusReason);
+            m_modelEdit->showPopup();
+        }
     });
 }
 
