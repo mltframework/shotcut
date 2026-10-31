@@ -66,11 +66,9 @@ ENABLE_LADSPA=1
 LADSPA_HEAD=0
 LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
+# whisper.cpp and llama.cpp are not built from source; whisper-cli and
+# llama-server are deployed from the MSYS2 packages. See deploy().
 ENABLE_WHISPERCPP=1
-WHISPERCPP_HEAD=0
-WHISPERCPP_REVISION="v1.9.5"
-# llama.cpp is not built from source; llama-server is deployed from the MSYS2
-# llama.cpp package. See deploy_llamacpp.
 ENABLE_LLAMACPP=1
 ENABLE_RNNOISE=1
 RNNOISE_HEAD=1
@@ -175,35 +173,32 @@ function to_key {
     bigsh0t)
       echo 8
     ;;
-    whisper.cpp)
+    dav1d)
       echo 9
     ;;
-    dav1d)
+    aom)
       echo 10
     ;;
-    aom)
+    vmaf)
       echo 11
     ;;
-    vmaf)
+    glaxnimate)
       echo 12
     ;;
-    glaxnimate)
+    gopro2gpx)
       echo 13
     ;;
-    gopro2gpx)
+    opencv)
       echo 14
     ;;
-    opencv)
+    opencv_contrib)
       echo 15
     ;;
-    opencv_contrib)
+    libspatialaudio)
       echo 16
     ;;
-    libspatialaudio)
-      echo 17
-    ;;
     rnnoise)
-      echo 18
+      echo 17
     ;;
     *)
       echo UNKNOWN
@@ -408,9 +403,6 @@ function set_globals {
     if test "$ENABLE_LADSPA" = 1 && test "$LADSPA_HEAD" = 1 -o "$LADSPA_REVISION" != ""; then
         SUBDIRS="ladspa-swh $SUBDIRS"
     fi
-    if test "$ENABLE_WHISPERCPP" = 1  && test "$WHISPERCPP_HEAD" = 1 -o "$WHISPERCPP_REVISION" != ""; then
-        SUBDIRS="whisper.cpp $SUBDIRS"
-    fi
     if test "$ENABLE_RNNOISE" = 1 ; then
       SUBDIRS="rnnoise $SUBDIRS"
     fi
@@ -448,16 +440,15 @@ function set_globals {
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
-  REPOLOCS[9]="https://github.com/ggerganov/whisper.cpp.git"
-  REPOLOCS[10]="https://github.com/videolan/dav1d.git"
-  REPOLOCS[11]="https://aomedia.googlesource.com/aom"
-  REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
-  REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
-  REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
-  REPOLOCS[15]="https://github.com/opencv/opencv.git"
-  REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
-  REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
-  REPOLOCS[18]="https://github.com/xiph/rnnoise.git"
+  REPOLOCS[9]="https://github.com/videolan/dav1d.git"
+  REPOLOCS[10]="https://aomedia.googlesource.com/aom"
+  REPOLOCS[11]="https://github.com/Netflix/vmaf.git"
+  REPOLOCS[12]="https://gitlab.com/ddennedy/glaxnimate.git"
+  REPOLOCS[13]="https://github.com/ddennedy/gopro2gpx.git"
+  REPOLOCS[14]="https://github.com/opencv/opencv.git"
+  REPOLOCS[15]="https://github.com/opencv/opencv_contrib.git"
+  REPOLOCS[16]="https://github.com/ddennedy/libspatialaudio.git"
+  REPOLOCS[17]="https://github.com/xiph/rnnoise.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -470,6 +461,7 @@ function set_globals {
   REPOTYPES[7]="git"
   REPOTYPES[8]="git"
   REPOTYPES[9]="git"
+  REPOTYPES[9]="git"
   REPOTYPES[10]="git"
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
@@ -478,7 +470,6 @@ function set_globals {
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
-  REPOTYPES[18]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -512,41 +503,37 @@ function set_globals {
     REVISIONS[8]="$BIGSH0T_REVISION"
   fi
   REVISIONS[9]=""
-  if test 0 = "$WHISPERCPP_HEAD" -a "$WHISPERCPP_REVISION" ; then
-    REVISIONS[9]="$WHISPERCPP_REVISION"
+  if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
+    REVISIONS[9]="$DAV1D_REVISION"
   fi
   REVISIONS[10]=""
-  if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
-    REVISIONS[10]="$DAV1D_REVISION"
+  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
+    REVISIONS[10]="$AOM_REVISION"
   fi
   REVISIONS[11]=""
-  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
-    REVISIONS[11]="$AOM_REVISION"
+  if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
+    REVISIONS[11]="$VMAF_REVISION"
   fi
   REVISIONS[12]=""
-  if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
-    REVISIONS[12]="$VMAF_REVISION"
+  if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
+    REVISIONS[12]="$GLAXNIMATE_REVISION"
   fi
   REVISIONS[13]=""
-  if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
-    REVISIONS[13]="$GLAXNIMATE_REVISION"
-  fi
   REVISIONS[14]=""
-  REVISIONS[15]=""
   if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
-    REVISIONS[15]="$OPENCV_REVISION"
+    REVISIONS[14]="$OPENCV_REVISION"
+  fi
+  REVISIONS[15]=""
+  if test 0 = "$OPENCV_CONTRIB_HEAD" -a "$OPENCV_CONTRIB_REVISION" ; then
+    REVISIONS[15]="$OPENCV_CONTRIB_REVISION"
   fi
   REVISIONS[16]=""
-  if test 0 = "$OPENCV_CONTRIB_HEAD" -a "$OPENCV_CONTRIB_REVISION" ; then
-    REVISIONS[16]="$OPENCV_CONTRIB_REVISION"
+  if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
+    REVISIONS[16]="$LIBSPATIALAUDIO_REVISION"
   fi
   REVISIONS[17]=""
-  if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
-    REVISIONS[17]="$LIBSPATIALAUDIO_REVISION"
-  fi
-  REVISIONS[18]=""
   if test 0 = "$RNNOISE_HEAD" -a "$RNNOISE_REVISION" ; then
-    REVISIONS[18]="$RNNOISE_REVISION"
+    REVISIONS[17]="$RNNOISE_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -661,104 +648,90 @@ function set_globals {
   INSTALL[8]="install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1"
 
   #####
-  # whisper.cpp
-  CONFIG[9]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_VULKAN=1 -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
-  if [ "$TARGET_ARCH" = "clangarm64" ]; then
-    CXXFLAGS_[9]="-include cstdlib -include algorithm -include atomic"
-    CONFIG[9]="${CONFIG[9]} -D GGML_BLAS=OFF"
+  # dav1d
+  CONFIG[9]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIG[9]="${CONFIG[9]} --buildtype=debug"
   else
-    CONFIG[9]="${CONFIG[9]} -D GGML_AVX2=OFF -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS"
+    CONFIG[9]="${CONFIG[9]} --buildtype=release"
   fi
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
-  BUILD[9]="ninja -C build -j $MAKEJ"
-  INSTALL[9]="install_whispercpp"
-
-  #####
-  # dav1d
-  CONFIG[10]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
-  if [ "$DEBUG_BUILD" = "1" ]; then
-    CONFIG[10]="${CONFIG[10]} --buildtype=debug"
-  else
-    CONFIG[10]="${CONFIG[10]} --buildtype=release"
-  fi
-  CFLAGS_[10]=$CFLAGS
-  LDFLAGS_[10]=$LDFLAGS
-  BUILD[10]="build_dav1d"
-  INSTALL[10]="meson install -C builddir"
+  BUILD[9]="build_dav1d"
+  INSTALL[9]="meson install -C builddir"
 
   #####
   # aom
   # Use -DCMAKE_POSITION_INDEPENDENT_CODE=ON if -DBUILD_SHARED_LIBS=1 does not work.
-  CONFIG[11]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
-  CFLAGS_[11]=$CFLAGS
-  LDFLAGS_[11]=$LDFLAGS
-  BUILD[11]="ninja -j $MAKEJ"
-  INSTALL[11]="ninja install"
+  CONFIG[10]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
+  CFLAGS_[10]=$CFLAGS
+  LDFLAGS_[10]=$LDFLAGS
+  BUILD[10]="ninja -j $MAKEJ"
+  INSTALL[10]="ninja install"
 
   #####
   # vmaf
-  CONFIG[12]="meson setup libvmaf/build libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  CONFIG[11]="meson setup libvmaf/build libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
   if [ "$DEBUG_BUILD" = "1" ]; then
-    CONFIG[12]="${CONFIG[12]} --buildtype=debug"
+    CONFIG[11]="${CONFIG[11]} --buildtype=debug"
   else
-    CONFIG[12]="${CONFIG[12]} --buildtype=release"
+    CONFIG[11]="${CONFIG[11]} --buildtype=release"
   fi
-  CFLAGS_[12]="$CFLAGS"
+  CFLAGS_[11]="$CFLAGS"
   # libc++ unqualified swap is ambiguous with svm.cpp's global swap template.
-  [ "$TARGET_ARCH" = "clangarm64" ] && PRECONFIG[12]="patch_vmaf_svm_swap"
-  [ "$TARGET_ARCH" = "clangarm64" ] && LDFLAGS_[12]="$LDFLAGS -lwinpthread"
-  BUILD[12]="ninja -C libvmaf/build -j $MAKEJ"
-  INSTALL[12]="install_vmaf"
+  [ "$TARGET_ARCH" = "clangarm64" ] && PRECONFIG[11]="patch_vmaf_svm_swap"
+  [ "$TARGET_ARCH" = "clangarm64" ] && LDFLAGS_[11]="$LDFLAGS -lwinpthread"
+  BUILD[11]="ninja -C libvmaf/build -j $MAKEJ"
+  INSTALL[11]="install_vmaf"
 
   #####
   # glaxnimate
-  CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
-  CONFIG[13]="${CONFIG[13]} -D CMAKE_CXX_FLAGS=-DPYBIND11_EXPORT_EXCEPTION= -D CMAKE_PREFIX_PATH=$FINAL_INSTALL_DIR"
+  CONFIG[12]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
+  CONFIG[12]="${CONFIG[12]} -D CMAKE_CXX_FLAGS=-DPYBIND11_EXPORT_EXCEPTION= -D CMAKE_PREFIX_PATH=$FINAL_INSTALL_DIR"
   if [ "$DEBUG_BUILD" = "1" ]; then
-    CONFIG[13]="${CONFIG[13]} -D CMAKE_BUILD_TYPE=RelWithDebInfo"
+    CONFIG[12]="${CONFIG[12]} -D CMAKE_BUILD_TYPE=RelWithDebInfo"
   else
-    CONFIG[13]="${CONFIG[13]} -D CMAKE_BUILD_TYPE=Release"
+    CONFIG[12]="${CONFIG[12]} -D CMAKE_BUILD_TYPE=Release"
   fi
-  CFLAGS_[13]="$ASAN_CFLAGS $CFLAGS"
-  LDFLAGS_[13]="$ASAN_LDFLAGS $LDFLAGS"
-  BUILD[13]="ninja -j $MAKEJ"
-  INSTALL[13]="ninja translations install"
+  CFLAGS_[12]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[12]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[12]="ninja -j $MAKEJ"
+  INSTALL[12]="ninja translations install"
 
   #####
   # gopro2gpx
-  CONFIG[14]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
-  CFLAGS_[14]="$CFLAGS"
-  LDFLAGS_[14]="$LDFLAGS"
-  BUILD[14]="ninja -j $MAKEJ"
-  INSTALL[14]="install -p -c gopro2gpx $FINAL_INSTALL_DIR"
+  CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[13]="$CFLAGS"
+  LDFLAGS_[13]="$LDFLAGS"
+  BUILD[13]="ninja -j $MAKEJ"
+  INSTALL[13]="install -p -c gopro2gpx $FINAL_INSTALL_DIR"
 
   #####
   # opencv
-  CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D CMAKE_CXX_STANDARD=14 -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
-  [ "$TARGET_ARCH" = "clangarm64" ] && CONFIG[15]="${CONFIG[15]} -DWITH_LAPACK=OFF -DWITH_OPENBLAS=OFF"
-  CFLAGS_[15]="$CFLAGS"
-  LDFLAGS_[15]="$LDFLAGS"
-  BUILD[15]="ninja -C build -j $MAKEJ"
-  INSTALL[15]="ninja -C build install"
+  CONFIG[14]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D CMAKE_CXX_STANDARD=14 -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_ARCH" = "clangarm64" ] && CONFIG[14]="${CONFIG[14]} -DWITH_LAPACK=OFF -DWITH_OPENBLAS=OFF"
+  CFLAGS_[14]="$CFLAGS"
+  LDFLAGS_[14]="$LDFLAGS"
+  BUILD[14]="ninja -C build -j $MAKEJ"
+  INSTALL[14]="ninja -C build install"
 
   #####
   # libspatialaudio
-  CONFIG[17]="cmake -G Ninja -B build -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
-  CFLAGS_[17]="$CFLAGS"
-  LDFLAGS_[17]="$LDFLAGS"
-  BUILD[17]="ninja -C build -j $MAKEJ"
-  INSTALL[17]="install_spatialaudio"
+  CONFIG[16]="cmake -G Ninja -B build -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[16]="$CFLAGS"
+  LDFLAGS_[16]="$LDFLAGS"
+  BUILD[16]="ninja -C build -j $MAKEJ"
+  INSTALL[16]="install_spatialaudio"
 
   #####
   # rnnoise
-  [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[18]="./autogen.sh"
-  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
-  [ "$TARGET_ARCH" = "ucrt64" ] && CONFIG[18]="${CONFIG[18]}  --enable-x86-rtcd"
-  CFLAGS_[18]="$CFLAGS"
-  LDFLAGS_[18]="$LDFLAGS"
-  BUILD[18]="make -j$MAKEJ"
-  INSTALL[18]="make install"
+  [ ! -e "$SOURCE_DIR"/rnnoise/configure ] && PRECONFIG[17]="./autogen.sh"
+  CONFIG[17]="./configure --prefix=$FINAL_INSTALL_DIR --enable-shared --disable-static"
+  [ "$TARGET_ARCH" = "ucrt64" ] && CONFIG[17]="${CONFIG[17]}  --enable-x86-rtcd"
+  CFLAGS_[17]="$CFLAGS"
+  LDFLAGS_[17]="$LDFLAGS"
+  BUILD[17]="make -j$MAKEJ"
+  INSTALL[17]="make install"
 }
 
 function build_dav1d {
@@ -803,11 +776,6 @@ function install_spatialaudio {
   cmd ninja -C build install || die "Unable to install $1"
   cmd sed -i "s,-I/${TARGET_ARCH}/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
   cmd install -p -c build/libspatialaudio.dll $FINAL_INSTALL_DIR
-}
-
-function install_whispercpp {
-  cmd ninja -C build install
-  cmd install -p -c build/bin/whisper-cli.exe $FINAL_INSTALL_DIR/bin
 }
 
 ######################################################################
@@ -1234,40 +1202,6 @@ function bundle_dlls
 
 
 #################################################################
-# deploy_llamacpp
-# Deploys llama-server from the MSYS2 llama.cpp package into a subdirectory.
-# Only the Coproducer local model provider uses it, and Shotcut looks for it
-# in this subdirectory. The subdirectory isolates the ggml DLLs of the
-# package (ggml-vulkan.dll, ggml-cpu*.dll, ...) from the different,
-# same-named ggml DLLs installed by whisper.cpp.
-function deploy_llamacpp
-{
-  log Deploying llama-server from the MSYS2 llama.cpp package
-  cmd mkdir -p llama
-  cmd cp -p /$TARGET_ARCH/bin/llama-server.exe llama
-  # The ggml backends are loaded at runtime; ldd does not report them.
-  cmd cp -p /$TARGET_ARCH/bin/ggml-cpu*.dll llama
-  [ -e /$TARGET_ARCH/bin/ggml-vulkan.dll ] && cmd cp -p /$TARGET_ARCH/bin/ggml-vulkan.dll llama
-  # Recursively bundle the DLL dependencies next to llama-server.exe.
-  # Dependencies already copied resolve to the llama directory instead of
-  # /$TARGET_ARCH/bin, so this loop stops when the closure is complete.
-  pending=1
-  while [ "$pending" = "1" ]; do
-    pending=0
-    for target in llama/*.exe llama/*.dll; do
-      libs=$(ldd "$target" | awk "(\$3 ~ /\/$TARGET_ARCH\/bin\//) {print \$3}")
-      for lib in $libs; do
-        if [ ! -e "llama/$(basename "$lib")" ]; then
-          cmd cp -p "$lib" llama
-          pending=1
-        fi
-      done
-    done
-  done
-}
-
-
-#################################################################
 # deploy
 function deploy
 {
@@ -1291,7 +1225,6 @@ function deploy
     cmd mv bin/ffplay.exe .
     cmd mv bin/ffprobe.exe .
     cmd mv bin/glaxnimate.exe .
-    cmd mv bin/whisper-cli.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
@@ -1321,13 +1254,24 @@ function deploy
         share/glaxnimate/glaxnimate/pythonhome/lib/python
   fi
 
+  if [ "$ENABLE_WHISPERCPP" = "1" ]; then
+    log Deploying whisper-cli from the MSYS2 whisper.cpp package
+    cmd cp -p /$TARGET_ARCH/bin/whisper-cli.exe .
+  fi
+  if [ "$ENABLE_LLAMACPP" = "1" ]; then
+    log Deploying llama-server from the MSYS2 llama.cpp package
+    cmd cp -p /$TARGET_ARCH/bin/llama-server.exe .
+  fi
+  if [ "$ENABLE_WHISPERCPP" = "1" -o "$ENABLE_LLAMACPP" = "1" ]; then
+    # One set of ggml backends shared by whisper-cli and llama-server. They
+    # are loaded at runtime, so bundle_dlls cannot discover them with ldd.
+    cmd cp -p /$TARGET_ARCH/bin/ggml-cpu*.dll .
+    [ -e /$TARGET_ARCH/bin/ggml-vulkan.dll ] && cmd cp -p /$TARGET_ARCH/bin/ggml-vulkan.dll .
+  fi
+
   for lib in $(find -name '*.dll' -or -name '*.exe'); do
     bundle_dlls "$lib"
   done
-
-  if [ "$ENABLE_LLAMACPP" = "1" ]; then
-    deploy_llamacpp
-  fi
 
   log Copying some libs from mlt-prebuilt
   cmd cp -p "$HOME"/bin/*.dll .
