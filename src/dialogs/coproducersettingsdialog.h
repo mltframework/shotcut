@@ -23,6 +23,7 @@
 #include "models/extensionmodel.h"
 
 class QComboBox;
+class QDialogButtonBox;
 class QLabel;
 class QLineEdit;
 class QNetworkAccessManager;
@@ -37,6 +38,8 @@ class CoproducerSettingsDialog : public QDialog
 
 public:
     explicit CoproducerSettingsDialog(QWidget *parent = nullptr);
+
+    void reject() override;
 
 private slots:
     void onProviderChanged(int index);
@@ -53,6 +56,7 @@ private:
     void updateModelStatus();
     void refreshOpenAiModels(bool silent);
     void maybeAutoRefreshOpenAiModels();
+    void setRefreshBusy(bool busy);
     void setLocalModelPath(const QString &path);
     QString currentModelId() const;
     QString currentBaseUrl() const;
@@ -68,8 +72,11 @@ private:
     QWidget *m_localConfigWidget;
     QTreeView *m_modelTable;
     QToolButton *m_openAiRefreshButton = nullptr;
+    QDialogButtonBox *m_buttonBox = nullptr;
     ExtensionModel m_model;
     QNetworkAccessManager *m_network;
+    QNetworkReply *m_refreshReply = nullptr;
+    bool m_refreshCanceled = false;
     QString m_lastAutoRefreshKey;
 };
 
