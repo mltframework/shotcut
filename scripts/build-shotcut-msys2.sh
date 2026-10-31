@@ -69,6 +69,9 @@ MLT_DISABLE_SOX=0
 ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=0
 WHISPERCPP_REVISION="v1.9.5"
+# llama.cpp is not built from source; llama-server is deployed from the MSYS2
+# llama.cpp package. See deploy_llamacpp.
+ENABLE_LLAMACPP=1
 ENABLE_RNNOISE=1
 RNNOISE_HEAD=1
 RNNOISE_REVISION=
@@ -622,6 +625,11 @@ function set_globals {
   #####
   # shotcut
   CONFIG[4]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
+  if [ "$ENABLE_LLAMACPP" = "1" ]; then
+    CONFIG[4]="${CONFIG[4]} -D SHOTCUT_ENABLE_LLAMA_SERVER=ON"
+  else
+    CONFIG[4]="${CONFIG[4]} -D SHOTCUT_ENABLE_LLAMA_SERVER=OFF"
+  fi
   CFLAGS_[4]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[4]="$ASAN_LDFLAGS $LDFLAGS"
   BUILD[4]="ninja -j $MAKEJ"
@@ -1226,6 +1234,40 @@ function bundle_dlls
 
 
 #################################################################
+# deploy_llamacpp
+# Deploys llama-server from the MSYS2 llama.cpp package into a subdirectory.
+# Only the Coproducer local model provider uses it, and Shotcut looks for it
+# in this subdirectory. The subdirectory isolates the ggml DLLs of the
+# package (ggml-vulkan.dll, ggml-cpu*.dll, ...) from the different,
+# same-named ggml DLLs installed by whisper.cpp.
+function deploy_llamacpp
+{
+  log Deploying llama-server from the MSYS2 llama.cpp package
+  cmd mkdir -p llama
+  cmd cp -p /$TARGET_ARCH/bin/llama-server.exe llama
+  # The ggml backends are loaded at runtime; ldd does not report them.
+  cmd cp -p /$TARGET_ARCH/bin/ggml-cpu*.dll llama
+  [ -e /$TARGET_ARCH/bin/ggml-vulkan.dll ] && cmd cp -p /$TARGET_ARCH/bin/ggml-vulkan.dll llama
+  # Recursively bundle the DLL dependencies next to llama-server.exe.
+  # Dependencies already copied resolve to the llama directory instead of
+  # /$TARGET_ARCH/bin, so this loop stops when the closure is complete.
+  pending=1
+  while [ "$pending" = "1" ]; do
+    pending=0
+    for target in llama/*.exe llama/*.dll; do
+      libs=$(ldd "$target" | awk "(\$3 ~ /\/$TARGET_ARCH\/bin\//) {print \$3}")
+      for lib in $libs; do
+        if [ ! -e "llama/$(basename "$lib")" ]; then
+          cmd cp -p "$lib" llama
+          pending=1
+        fi
+      done
+    done
+  done
+}
+
+
+#################################################################
 # deploy
 function deploy
 {
@@ -1282,6 +1324,10 @@ function deploy
   for lib in $(find -name '*.dll' -or -name '*.exe'); do
     bundle_dlls "$lib"
   done
+
+  if [ "$ENABLE_LLAMACPP" = "1" ]; then
+    deploy_llamacpp
+  fi
 
   log Copying some libs from mlt-prebuilt
   cmd cp -p "$HOME"/bin/*.dll .
