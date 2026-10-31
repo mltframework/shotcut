@@ -88,8 +88,8 @@ Rectangle {
             }
 
             ToolButton {
-                icon.name: "window-close"
-                icon.source: "qrc:///icons/oxygen/32x32/actions/window-close.png"
+                icon.name: "edit-clear"
+                icon.source: "qrc:///icons/oxygen/32x32/actions/edit-clear.png"
                 enabled: !coproducer.busy
                 Accessible.name: qsTr("Clear conversation")
                 ToolTip.text: qsTr("Clear conversation and start over")
