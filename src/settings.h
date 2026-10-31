@@ -437,6 +437,8 @@ public:
     void setCoproducerModelPath(const QString &path);
     QString coproducerApiKey() const;
     void setCoproducerApiKey(const QString &key);
+    QString coproducerMode() const;
+    void setCoproducerMode(const QString &mode);
 
     // Files
     QString filesViewMode() const;

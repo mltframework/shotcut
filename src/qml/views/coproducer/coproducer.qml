@@ -72,9 +72,19 @@ Rectangle {
                 id: modeCombo
                 model: [root.chatModeLabel, qsTr("Search User Guide")]
                 currentIndex: coproducer.mode
-                onCurrentIndexChanged: coproducer.mode = currentIndex
+                // Only a user-initiated change persists the mode setting.
+                onActivated: index => coproducer.selectMode(index)
                 Layout.minimumWidth: root.modeComboWidth()
                 Layout.preferredWidth: root.modeComboWidth()
+
+                // User interaction can break the currentIndex binding, so
+                // re-sync programmatic changes (e.g. from the Help menu).
+                Connections {
+                    function onModeChanged() {
+                        modeCombo.currentIndex = coproducer.mode;
+                    }
+                    target: coproducer
+                }
             }
 
             ToolButton {
