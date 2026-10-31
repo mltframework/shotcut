@@ -375,7 +375,6 @@ void CoproducerSettingsDialog::onBrowseModelClicked()
 
 void CoproducerSettingsDialog::onRefreshModelsClicked()
 {
-    // TODO: publish llamamodel.qml and restore the remote manifest refresh.
     m_model.load(QmlExtension::LLAMA_ID);
 }
 
