@@ -570,10 +570,11 @@ Rectangle {
                 timeout: parent.pressed ? -1 : 5000
                 onVisibleChanged: {
                     if (visible) {
-                        let point = application.mousePos;
-                        point = parent.mapFromGlobal(point.x, point.y);
-                        x = point.x + 20;
-                        y = Math.max(point.y - 20, 0);
+                        const mouse = application.mousePos;
+                        // QQuickItem.mapFromGlobal() ignores the QQuickWidget offset in Qt 6.12, but mapToGlobal() does not.
+                        const origin = parent.mapToGlobal(0, 0);
+                        x = mouse.x - origin.x + 20;
+                        y = Math.max(mouse.y - origin.y - 20, 0);
                     }
                 }
             }

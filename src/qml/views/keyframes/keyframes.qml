@@ -516,10 +516,11 @@ Rectangle {
         property alias text: bubbleHelpLabel.text
 
         function show(text) {
-            var point = application.mousePos;
-            point = parent.mapFromGlobal(point.x, point.y);
-            bubbleHelp.x = point.x + 20;
-            bubbleHelp.y = Math.max(point.y - 20, 0);
+            const mouse = application.mousePos;
+            // QQuickItem.mapFromGlobal() ignores the QQuickWidget offset in Qt 6.12, but mapToGlobal() does not.
+            const origin = parent.mapToGlobal(0, 0);
+            bubbleHelp.x = mouse.x - origin.x + 20;
+            bubbleHelp.y = Math.max(mouse.y - origin.y - 20, 0);
             bubbleHelp.text = text;
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible';
