@@ -574,8 +574,6 @@ Rectangle {
                         point = parent.mapFromGlobal(point.x, point.y);
                         x = point.x + 20;
                         y = Math.max(point.y - 20, 0);
-                        if (application.OS === 'Windows')
-                            y = rulerFlickable.height;
                     }
                 }
             }

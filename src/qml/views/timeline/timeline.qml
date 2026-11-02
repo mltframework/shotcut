@@ -788,8 +788,6 @@ Rectangle {
             point = parent.mapFromGlobal(point.x, point.y);
             bubbleHelp.x = point.x + 20;
             bubbleHelp.y = Math.max(point.y - 20, 0);
-            if (application.OS === 'Windows')
-                bubbleHelp.y = rulerFlickable.height;
             bubbleHelp.text = text;
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible';
