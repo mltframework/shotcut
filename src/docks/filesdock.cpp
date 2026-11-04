@@ -890,6 +890,14 @@ void FilesDock::setupActions()
     });
     Actions.add("filesUpdateThumbnailsAction", action);
 
+    action = new QAction(tr("Rename"), this);
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, &FilesDock::onRenameActionTriggered);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
+        action->setEnabled(selectedFileIndex().isValid());
+    });
+    Actions.add("filesRenameAction", action);
+
     action = new QAction(tr("Select All"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &FilesDock::onSelectAllActionTriggered);
@@ -1099,6 +1107,26 @@ QString FilesDock::firstSelectedMediaType()
     return result;
 }
 
+QModelIndex FilesDock::selectedFileIndex() const
+{
+    QModelIndex result;
+    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
+        if (!index.isValid())
+            continue;
+
+        const auto fileIndex = index.sibling(index.row(), 0);
+        if (!fileIndex.isValid())
+            continue;
+
+        if (!result.isValid()) {
+            result = fileIndex;
+        } else if (fileIndex != result) {
+            return QModelIndex();
+        }
+    }
+    return result;
+}
+
 void FilesDock::openClip(const QString &filePath)
 {
 #if defined(Q_OS_WIN)
@@ -1169,6 +1197,7 @@ void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
         QMenu menu(this);
         menu.addAction(Actions["filesOpenAction"]);
         menu.addAction(Actions["filesUpdateThumbnailsAction"]);
+        menu.addAction(Actions["filesRenameAction"]);
         menu.addAction(Actions["filesShowInFolder"]);
         addOpenWithMenu(&menu);
         menu.exec(mapToGlobal(pos));
@@ -1253,6 +1282,57 @@ void FilesDock::onSelectAllActionTriggered()
         m_view->selectionModel()->select(m_filesProxyModel->index(i, 0, m_view->rootIndex()),
                                          QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
+}
+
+void FilesDock::onRenameActionTriggered()
+{
+    const auto index = selectedFileIndex();
+    if (!index.isValid())
+        return;
+
+    const auto sourceIndex = m_filesProxyModel->mapToSource(index);
+    if (!sourceIndex.isValid())
+        return;
+
+    const auto info = m_filesModel->fileInfo(sourceIndex);
+    const auto oldName = info.fileName();
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Rename"));
+    dialog.setLabelText(tr("Name"));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setTextValue(oldName);
+    if (QDialog::Accepted != dialog.exec())
+        return;
+
+    const auto newName = dialog.textValue();
+    if (newName.isEmpty() || newName == oldName)
+        return;
+
+    // Keep rename scoped to the current directory instead of moving the item.
+    if (newName.contains(QLatin1Char('/')) || newName.contains(QLatin1Char('\\'))) {
+        QMessageBox::warning(this, tr("Rename"), tr("A file name cannot contain path separators."));
+        return;
+    }
+
+    QDir dir(info.absolutePath());
+    if (!dir.rename(oldName, newName)) {
+        QMessageBox::warning(this,
+                             tr("Rename"),
+                             tr("Unable to rename %1 to %2.").arg(oldName, newName));
+        return;
+    }
+
+    const auto newPath = dir.filePath(newName);
+    QTimer::singleShot(0, this, [=]() {
+        const auto index = m_filesProxyModel->mapFromSource(m_filesModel->index(newPath));
+        if (!index.isValid())
+            return;
+        m_view->selectionModel()->select(index,
+                                         QItemSelectionModel::ClearAndSelect
+                                             | QItemSelectionModel::Rows);
+        m_view->setCurrentIndex(index);
+    });
 }
 
 void FilesDock::onUpdateThumbnailsActionTriggered()
