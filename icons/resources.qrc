@@ -62,6 +62,7 @@
         <file>dark/32x32/folder-new.png</file>
         <file>dark/32x32/folder.png</file>
         <file>dark/32x32/font.png</file>
+        <file>dark/32x32/go-up.png</file>
         <file>dark/32x32/format-indent-less.png</file>
         <file>dark/32x32/format-indent-more.png</file>
         <file>dark/32x32/format-justify-center.png</file>
@@ -128,6 +129,7 @@
         <file>dark/32x32/text-speak.png</file>
         <file>dark/32x32/video-television.png</file>
         <file>dark/32x32/view-choose.png</file>
+        <file>dark/32x32/view-conversation-balloon.png</file>
         <file>dark/32x32/view-filter.png</file>
         <file>dark/32x32/view-fullscreen.png</file>
         <file>dark/32x32/view-grid.png</file>
@@ -208,6 +210,7 @@
         <file>light/32x32/folder-new.png</file>
         <file>light/32x32/folder.png</file>
         <file>light/32x32/font.png</file>
+        <file>light/32x32/go-up.png</file>
         <file>light/32x32/format-indent-less.png</file>
         <file>light/32x32/format-indent-more.png</file>
         <file>light/32x32/format-justify-center.png</file>
@@ -274,6 +277,7 @@
         <file>light/32x32/text-speak.png</file>
         <file>light/32x32/video-television.png</file>
         <file>light/32x32/view-choose.png</file>
+        <file>light/32x32/view-conversation-balloon.png</file>
         <file>light/32x32/view-filter.png</file>
         <file>light/32x32/view-fullscreen.png</file>
         <file>light/32x32/view-grid.png</file>
@@ -344,6 +348,7 @@
         <file>oxygen/32x32/actions/edit-undo.png</file>
         <file>oxygen/32x32/actions/folder-new.png</file>
         <file>oxygen/32x32/actions/font.png</file>
+        <file>oxygen/32x32/actions/go-up.png</file>
         <file>oxygen/32x32/actions/format-indent-less.png</file>
         <file>oxygen/32x32/actions/format-indent-more.png</file>
         <file>oxygen/32x32/actions/format-justify-center.png</file>
@@ -406,6 +411,7 @@
         <file>oxygen/32x32/actions/target.png</file>
         <file>oxygen/32x32/actions/text-speak.png</file>
         <file>oxygen/32x32/actions/view-choose.png</file>
+        <file>oxygen/32x32/actions/view-conversation-balloon.png</file>
         <file>oxygen/32x32/actions/view-filter.png</file>
         <file>oxygen/32x32/actions/view-fullscreen.png</file>
         <file>oxygen/32x32/actions/view-grid.png</file>
@@ -493,6 +499,7 @@
         <file>oxygen-dark/32x32/actions/edit-undo.png</file>
         <file>oxygen-dark/32x32/actions/folder-new.png</file>
         <file>oxygen-dark/32x32/actions/font.png</file>
+        <file>oxygen-dark/32x32/actions/go-up.png</file>
         <file>oxygen-dark/32x32/actions/format-indent-less.png</file>
         <file>oxygen-dark/32x32/actions/format-indent-more.png</file>
         <file>oxygen-dark/32x32/actions/format-justify-center.png</file>
@@ -555,6 +562,7 @@
         <file>oxygen-dark/32x32/actions/target.png</file>
         <file>oxygen-dark/32x32/actions/text-speak.png</file>
         <file>oxygen-dark/32x32/actions/view-choose.png</file>
+        <file>oxygen-dark/32x32/actions/view-conversation-balloon.png</file>
         <file>oxygen-dark/32x32/actions/view-filter.png</file>
         <file>oxygen-dark/32x32/actions/view-fullscreen.png</file>
         <file>oxygen-dark/32x32/actions/view-grid.png</file>
