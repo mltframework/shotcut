@@ -158,6 +158,8 @@ public:
                 int frequency = 48000;
                 int channelCount = 2;
                 int samples = mlt_audio_calculate_frame_samples(producer->get_fps(), frequency, i);
+                // Blank frames otherwise bypass the audio filters.
+                frame->set("test_audio", 0);
                 frame->get_audio(format, frequency, channelCount, samples);
                 if (m_measureFrameLevels) {
                     double left = frame->get_double("meta.media.audio_level.0");
