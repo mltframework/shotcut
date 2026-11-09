@@ -50,6 +50,7 @@ public:
         AddSetLast,
     } AddType;
     AddCommand(AttachedFiltersModel &model,
+               Mlt::Producer &producer,
                const QString &name,
                Mlt::Service &service,
                int row,
@@ -77,6 +78,7 @@ class RemoveCommand : public QUndoCommand
 {
 public:
     RemoveCommand(AttachedFiltersModel &model,
+                  Mlt::Producer &producer,
                   const QString &name,
                   Mlt::Service &service,
                   int row,
@@ -97,6 +99,7 @@ class MoveCommand : public QUndoCommand
 {
 public:
     MoveCommand(AttachedFiltersModel &model,
+                Mlt::Producer &producer,
                 const QString &name,
                 int fromRow,
                 int toRow,
@@ -119,6 +122,7 @@ class DisableCommand : public QUndoCommand
 {
 public:
     DisableCommand(AttachedFiltersModel &model,
+                   Mlt::Producer &producer,
                    const QString &name,
                    int row,
                    bool disabled,
@@ -136,6 +140,29 @@ private:
     Mlt::Producer m_producer;
     QUuid m_producerUuid;
     bool m_disabled;
+};
+
+// For explicit API edits; interactive filter UIs use QmlFilter's UndoParameterCommand tracking.
+class SetParametersCommand : public QUndoCommand
+{
+public:
+    SetParametersCommand(AttachedFiltersModel &model,
+                         Mlt::Producer &producer,
+                         const QString &name,
+                         int row,
+                         Mlt::Properties &values,
+                         QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+private:
+    void apply(Mlt::Properties &values);
+
+    AttachedFiltersModel &m_model;
+    QUuid m_producerUuid;
+    int m_row;
+    Mlt::Properties m_oldParameters;
+    Mlt::Properties m_newParameters;
 };
 
 class PasteCommand : public QUndoCommand

@@ -38,6 +38,10 @@ class CoproducerDock : public QDockWidget
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
     Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(int mode READ mode WRITE setMode NOTIFY modeChanged)
+    Q_PROPERTY(QStringList scripts READ scripts NOTIFY scriptsChanged)
+    Q_PROPERTY(int scriptIndex READ scriptIndex NOTIFY scriptsChanged)
+    Q_PROPERTY(QUrl scriptSource READ scriptSource NOTIFY scriptSourceChanged)
+    Q_PROPERTY(QString scriptError READ scriptError NOTIFY scriptErrorChanged)
 
 signals:
     void transcriptChanged();
@@ -45,6 +49,9 @@ signals:
     void statusTextChanged();
     void busyChanged();
     void modeChanged();
+    void scriptsChanged();
+    void scriptSourceChanged();
+    void scriptErrorChanged();
 
 public:
     explicit CoproducerDock(quint16 mcpServerPort, QWidget *parent = nullptr);
@@ -57,6 +64,13 @@ public:
     int mode() const;
     void setMode(int value);
     Q_INVOKABLE void selectMode(int value);
+    QStringList scripts() const { return m_scripts; }
+    int scriptIndex() const { return m_scripts.indexOf(m_selectedScript); }
+    QUrl scriptSource() const { return m_scriptSource; }
+    QString scriptError() const { return m_scriptError; }
+    Q_INVOKABLE void selectScript(int index);
+    Q_INVOKABLE void reloadScripts();
+    Q_INVOKABLE void openScriptsFolder();
     void shutdown();
 
 public slots:
@@ -83,7 +97,11 @@ private:
     // AI Chat: chat with the model, which may call the user-guide search
     // tool itself. Search User Guide: user-guide search only, top results shown
     // directly, no model involved.
-    enum class Mode { AiChat, SearchUserGuide };
+    enum class Mode { AiChat, SearchUserGuide, Scripts };
+
+    bool discoverScripts(bool copyExamples);
+    void setScriptError(const QString &error, bool logError = true);
+    void loadSelectedScript();
 
     void ensureProvider();
     void unloadProvider();
@@ -106,6 +124,10 @@ private:
     QString applyCitations(const QString &text) const;
 
     QQuickWidget *m_qview = nullptr;
+    QStringList m_scripts;
+    QString m_selectedScript;
+    QUrl m_scriptSource;
+    QString m_scriptError;
     QVariantList m_transcriptData;
     QString m_promptText;
     QString m_statusText;
@@ -132,6 +154,7 @@ private:
     Coproducer::ToolCall m_activeToolCall;
     bool m_toolSearchActive = false;
     int m_toolRounds = 0;
+    bool m_toolLimitReached = false;
 };
 
 #endif // COPRODUCERDOCK_H

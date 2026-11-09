@@ -34,6 +34,14 @@ target_include_directories(test_exportpresetdialog PRIVATE ${CMAKE_SOURCE_DIR}/s
 target_link_libraries(test_exportpresetdialog PRIVATE Qt6::Widgets Qt6::Test)
 add_test(NAME exportpresetdialog COMMAND test_exportpresetdialog -platform offscreen)
 
+add_executable(test_exportpresetproperties
+  test_exportpresetproperties.cpp
+  ${CMAKE_SOURCE_DIR}/src/exportpreset.cpp
+)
+target_include_directories(test_exportpresetproperties PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(test_exportpresetproperties PRIVATE Qt6::Core Qt6::Xml Qt6::Test PkgConfig::mlt++)
+add_test(NAME exportpresetproperties COMMAND test_exportpresetproperties)
+
 add_executable(test_addonqmlgenerator
   test_addonqmlgenerator.cpp
   ${CMAKE_SOURCE_DIR}/src/controllers/addonqmlgenerator.cpp
@@ -63,6 +71,7 @@ target_include_directories(test_mcpserver PRIVATE
   ${CMAKE_SOURCE_DIR}/src
   ${CMAKE_SOURCE_DIR}/CuteLogger/include
 )
+# Covers transport and auxiliary tools, not shared API edits or transaction rollback.
 target_compile_definitions(test_mcpserver PRIVATE SHOTCUT_MCP_NO_DEFAULT_TOOLS=1)
 target_link_libraries(test_mcpserver PRIVATE Qt6::Core Qt6::Network Qt6::Test CuteLogger)
 add_test(NAME mcpserver COMMAND test_mcpserver)

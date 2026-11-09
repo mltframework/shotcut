@@ -108,6 +108,26 @@ FilterController::FilterController(QObject *parent)
             SIGNAL(duplicateAddFailed(int)),
             this,
             SLOT(handleAttachDuplicateFailed(int)));
+
+    connect(&m_attachedModel,
+            &QAbstractItemModel::rowsMoved,
+            this,
+            [this](const QModelIndex &, int first, int last, const QModelIndex &, int destination) {
+                const int count = last - first + 1;
+                if (m_currentFilterIndex >= first && m_currentFilterIndex <= last)
+                    m_currentFilterIndex += destination > last ? destination - last - 1
+                                                               : destination - first;
+                else if (destination > last && m_currentFilterIndex > last
+                         && m_currentFilterIndex < destination)
+                    m_currentFilterIndex -= count;
+                else if (destination < first && m_currentFilterIndex >= destination
+                         && m_currentFilterIndex < first)
+                    m_currentFilterIndex += count;
+                if (m_currentFilter)
+                    emit currentFilterChanged(m_currentFilter.data(),
+                                              m_attachedModel.getMetadata(m_currentFilterIndex),
+                                              m_currentFilterIndex);
+            });
 }
 
 FilterController::~FilterController()
@@ -484,6 +504,18 @@ void FilterController::onUndoOrRedo(Mlt::Service &service)
                                   Qt::QueuedConnection,
                                   Q_ARG(int, m_currentFilterIndex));
     }
+}
+
+void FilterController::onFilterEdited(Mlt::Service &service)
+{
+    MLT.refreshConsumer();
+    if (m_currentFilter && m_mltService.is_valid()
+        && service.get_service() == m_mltService.get_service()) {
+        pauseUndoTracking();
+        emit m_currentFilter->changed(QString());
+        resumeUndoTracking();
+    }
+    emit filterChanged(&service);
 }
 
 void FilterController::timerEvent(QTimerEvent *event)

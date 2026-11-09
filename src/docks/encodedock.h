@@ -178,16 +178,7 @@ private:
 
     void loadPresets();
     Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
-    void collectProperties(QDomElement &node, int realtime);
-    void setSubtitleProperties(QDomElement &node, Mlt::Producer *service);
-    QPoint addConsumerElement(
-        Mlt::Producer *service, QDomDocument &dom, const QString &target, int realtime, int pass);
-    MeltJob *convertReframe(Mlt::Producer *service,
-                            QTemporaryFile *tmp,
-                            const QString &target,
-                            int realtime,
-                            int pass,
-                            const QThread::Priority priority);
+    void addProcessingProperties(Mlt::Properties &properties);
     MeltJob *createMeltJob(Mlt::Producer *service,
                            const QString &target,
                            int realtime,

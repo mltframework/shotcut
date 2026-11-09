@@ -97,6 +97,16 @@ public:
     int loopStart() const { return m_loopStart; }
     int loopEnd() const { return m_loopEnd; }
     void setZoomScale(double scale);
+    void removeWithRipplePolicy(int trackIndex,
+                                int clipIndex,
+                                bool ignoreTransition,
+                                bool rippleAllTracks,
+                                bool rippleMarkers);
+    void liftWithRipplePolicy(int trackIndex,
+                              int clipIndex,
+                              bool ignoreTransition,
+                              bool rippleAllTracks,
+                              bool rippleMarkers);
 
 signals:
     void currentTrackChanged();

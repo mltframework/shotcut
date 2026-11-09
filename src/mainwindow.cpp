@@ -20,6 +20,7 @@
 
 #include "Logger.h"
 #include "actions.h"
+#include "api/apidocs.h"
 #include "autosavefile.h"
 #include "commands/playlistcommands.h"
 #include "controllers/filtercontroller.h"
@@ -2908,6 +2909,37 @@ void MainWindow::setupActions()
     });
     Actions.add("analyzeFilters", action);
     ui->menuFile->insertAction(ui->actionShowProjectFolder, action);
+
+    action = new QAction(tr("API Documentation..."), this);
+    action->setObjectName("actionApiDocumentation");
+    connect(action, &QAction::triggered, this, [this]() {
+        const QString cache = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        if (cache.isEmpty()) {
+            LOG_ERROR() << "Cannot find a cache location for API documentation";
+            QMessageBox::critical(this,
+                                  qApp->applicationName(),
+                                  tr("Cannot find a location for the API documentation."));
+            return;
+        }
+        const QString directory = QDir(cache).filePath("scripting-api");
+        QString error;
+        if (!Shotcut::Api::generateDocumentation(":/docs/scripting-api.html.in", directory, error)) {
+            LOG_ERROR() << "API documentation generation failed:" << error;
+            QMessageBox::critical(this,
+                                  qApp->applicationName(),
+                                  tr("Failed to generate API documentation:\n%1").arg(error));
+            return;
+        }
+        const QString index = QDir(directory).filePath("index.html");
+        if (!QDesktopServices::openUrl(QUrl::fromLocalFile(index))) {
+            LOG_ERROR() << "Failed to open API documentation:" << index;
+            QMessageBox::critical(this,
+                                  qApp->applicationName(),
+                                  tr("Failed to open API documentation:\n%1").arg(index));
+        }
+    });
+    ui->menuHelp->insertAction(ui->actionForum, action);
+    Actions.add("actionApiDocumentation", action, tr("Help"));
 
     Actions.loadFromMenu(ui->menuFile);
     Actions.loadFromMenu(ui->menuEdit);

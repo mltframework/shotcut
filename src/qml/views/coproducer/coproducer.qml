@@ -62,7 +62,7 @@ Rectangle {
 
             Label {
                 Layout.fillWidth: true
-                text: coproducer.statusText
+                text: coproducer.mode === 2 ? qsTr("Scripts") : coproducer.statusText
                 elide: Text.ElideRight
                 color: activePalette.text
                 opacity: 0.85
@@ -70,7 +70,8 @@ Rectangle {
 
             ComboBox {
                 id: modeCombo
-                model: [root.chatModeLabel, qsTr("Search User Guide")]
+                enabled: !shotcut.undo.running
+                model: [root.chatModeLabel, qsTr("Search User Guide"), qsTr("Scripts")]
                 currentIndex: coproducer.mode
                 // Only a user-initiated change persists the mode setting.
                 onActivated: index => coproducer.selectMode(index)
@@ -88,6 +89,7 @@ Rectangle {
             }
 
             ToolButton {
+                visible: coproducer.mode !== 2
                 icon.name: "edit-clear"
                 icon.source: "qrc:///icons/oxygen/32x32/actions/edit-clear.png"
                 enabled: !coproducer.busy
@@ -99,6 +101,7 @@ Rectangle {
             }
 
             ToolButton {
+                visible: coproducer.mode !== 2
                 icon.name: "run-build"
                 icon.source: "qrc:///icons/oxygen/32x32/actions/run-build.png"
                 Accessible.name: qsTr("Coproducer settings")
@@ -109,7 +112,72 @@ Rectangle {
             }
         }
 
+        ColumnLayout {
+            visible: coproducer.mode === 2
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            RowLayout {
+                Layout.fillWidth: true
+                ComboBox {
+                    id: scriptCombo
+                    enabled: !shotcut.undo.running
+                    model: coproducer.scripts
+                    currentIndex: coproducer.scriptIndex
+                    displayText: currentIndex < 0 ? qsTr("Select a script to run") : currentText
+                    Layout.fillWidth: true
+                    onActivated: index => coproducer.selectScript(index)
+                    Connections {
+                        function onScriptsChanged() {
+                            scriptCombo.currentIndex = coproducer.scriptIndex;
+                        }
+                        target: coproducer
+                    }
+                }
+                Button {
+                    text: qsTr("Reload")
+                    enabled: !shotcut.undo.running
+                    onClicked: coproducer.reloadScripts()
+                }
+                Button {
+                    text: qsTr("Open Folder")
+                    onClicked: coproducer.openScriptsFolder()
+                }
+            }
+            Label {
+                visible: coproducer.scripts.length === 0
+                text: qsTr("Add QML files to the scripts folder, then click Reload.")
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+            Label {
+                visible: coproducer.scriptIndex < 0 && coproducer.scripts.length > 0
+                text: qsTr("Select a script to run")
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+            }
+            Loader {
+                id: scriptLoader
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                active: coproducer.mode === 2
+                source: coproducer.scriptSource
+            }
+            ScrollView {
+                visible: coproducer.scriptError.length > 0
+                Layout.fillWidth: true
+                Layout.preferredHeight: 100
+                TextArea {
+                    text: coproducer.scriptError
+                    readOnly: true
+                    wrapMode: TextEdit.Wrap
+                    selectByMouse: true
+                }
+            }
+        }
+
         ScrollView {
+            visible: coproducer.mode !== 2
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
@@ -214,6 +282,7 @@ Rectangle {
         }
 
         RowLayout {
+            visible: coproducer.mode !== 2
             Layout.fillWidth: true
             spacing: 8
 

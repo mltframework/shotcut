@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,9 @@ EncodeJob::EncodeJob(const QString &name,
                      const QString &xml,
                      int frameRateNum,
                      int frameRateDen,
-                     QThread::Priority priority)
-    : MeltJob(name, xml, frameRateNum, frameRateDen, priority)
+                     QThread::Priority priority,
+                     bool useHardwareDecoder)
+    : MeltJob(name, xml, frameRateNum, frameRateDen, priority, useHardwareDecoder)
 {
     QAction *action = new QAction(tr("Open"), this);
     action->setData("Open");

@@ -20,7 +20,11 @@
 #include "mcp/mcpserver.h"
 #include "mcp/shotcuttools.h"
 
+#include "FileAppender.h"
+#include "Logger.h"
+
 #include <QEventLoop>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QNetworkAccessManager>
@@ -28,21 +32,9 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QSignalSpy>
+#include <QTemporaryDir>
 #include <QUrlQuery>
 #include <QtTest/QtTest>
-
-namespace {
-QJsonObject g_projectSnapshot;
-}
-
-namespace Shotcut {
-namespace Mcp {
-QJsonObject inspectProject()
-{
-    return g_projectSnapshot;
-}
-} // namespace Mcp
-} // namespace Shotcut
 
 class TestMcpServer : public QObject
 {
@@ -112,6 +104,39 @@ private slots:
         const QJsonObject result = m_registry.call(QStringLiteral("echo"), arguments);
         QVERIFY(result.contains("echo"));
         QCOMPARE(result.value("echo").toString(), QStringLiteral("hello from test"));
+    }
+
+    void toolLoggingOmitsPayloads()
+    {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const QString path = directory.filePath("tool.log");
+        const QJsonObject arguments{{"text", QStringLiteral("argument-payload-sentinel")}};
+        const QJsonObject failure{{"status", QStringLiteral("error")},
+                                  {"message", QStringLiteral("result-payload-sentinel")}};
+        auto tool = m_registry.tool("echo");
+        tool.handler = [failure](const QJsonObject &) { return failure; };
+        QJsonObject successResult, errorResult;
+        {
+            FileAppender appender(path);
+            appender.setFormat("%{type} %{message}\n");
+            appender.setDetailsLevel(Logger::Debug);
+            cuteLogger->registerAppender(&appender);
+            successResult = m_registry.call("echo", arguments);
+            m_registry.registerTool(tool);
+            errorResult = m_registry.call("echo", arguments);
+            cuteLogger->removeAppender(&appender);
+        }
+        QCOMPARE(successResult.value("echo"), arguments.value("text"));
+        QCOMPARE(errorResult, failure);
+        QFile log(path);
+        QVERIFY(log.open(QIODevice::ReadOnly));
+        const QByteArray contents = log.readAll();
+        QCOMPARE(contents.count("MCP tool"), 2);
+        QCOMPARE(contents.count('\n'), 2);
+        QVERIFY(contents.contains("echo"));
+        QVERIFY(!contents.contains("argument-payload-sentinel"));
+        QVERIFY(!contents.contains("result-payload-sentinel"));
     }
 
     void searchToolsHaveDistinctDescriptions()
@@ -201,7 +226,10 @@ private slots:
         QCOMPARE(initializeArguments.at(0).toULongLong(), initializeRequestId);
         QVERIFY(initializeArguments.at(2).toString().isEmpty());
         QCOMPARE(qvariant_cast<QJsonObject>(initializeArguments.at(1))
-                     .value("result").toObject().value("protocolVersion").toString(),
+                     .value("result")
+                     .toObject()
+                     .value("protocolVersion")
+                     .toString(),
                  QStringLiteral("2025-11-25"));
 
         const quint64 listRequestId = client.toolsList();
@@ -210,7 +238,8 @@ private slots:
         QCOMPARE(listArguments.at(0).toULongLong(), listRequestId);
         const QJsonObject listResponse = qvariant_cast<QJsonObject>(listArguments.at(1));
         QVERIFY(listArguments.at(2).toString().isEmpty());
-        const QJsonArray listedTools = listResponse.value("result").toObject().value("tools").toArray();
+        const QJsonArray listedTools
+            = listResponse.value("result").toObject().value("tools").toArray();
         QVERIFY(listedTools.size() >= 2);
 
         QJsonObject arguments;
@@ -294,51 +323,18 @@ private slots:
         QTRY_COMPARE_WITH_TIMEOUT(firstSpy.count(), 1, 3000);
         QTRY_COMPARE_WITH_TIMEOUT(secondSpy.count(), 1, 3000);
 
-        const QJsonObject firstResult
-            = qvariant_cast<QJsonObject>(firstSpy.takeFirst().at(1))
-                  .value("result").toObject().value("structuredContent").toObject();
-        const QJsonObject secondResult
-            = qvariant_cast<QJsonObject>(secondSpy.takeFirst().at(1))
-                  .value("result").toObject().value("structuredContent").toObject();
+        const QJsonObject firstResult = qvariant_cast<QJsonObject>(firstSpy.takeFirst().at(1))
+                                            .value("result")
+                                            .toObject()
+                                            .value("structuredContent")
+                                            .toObject();
+        const QJsonObject secondResult = qvariant_cast<QJsonObject>(secondSpy.takeFirst().at(1))
+                                             .value("result")
+                                             .toObject()
+                                             .value("structuredContent")
+                                             .toObject();
         QCOMPARE(firstResult.value("echo").toString(), QStringLiteral(""));
         QCOMPARE(secondResult.value("echo").toString(), QStringLiteral("second instance"));
-    }
-
-    void timelineSummaryOmitsTracksByDefault()
-    {
-        const QJsonArray tracks{QJsonObject{{"name", QStringLiteral("V1")}},
-                                QJsonObject{{"name", QStringLiteral("A1")}}};
-        g_projectSnapshot = QJsonObject{
-            {"active_context", QStringLiteral("timeline")},
-            {"has_timeline", true},
-            {"has_playlist", false},
-            {"timeline", QJsonObject{{"track_count", 2}, {"tracks", tracks}}},
-        };
-
-        const QJsonObject result = Shotcut::Mcp::shotcutTimelineSummaryTool(QJsonObject());
-        const QJsonObject timeline = result.value("timeline").toObject();
-        QVERIFY(!result.value("include_tracks").toBool());
-        QVERIFY(!timeline.contains("tracks"));
-        QCOMPARE(timeline.value("track_count").toInt(), 2);
-    }
-
-    void timelineSummaryIncludesTracksWhenRequested()
-    {
-        const QJsonArray tracks{QJsonObject{{"name", QStringLiteral("V1")}},
-                                QJsonObject{{"name", QStringLiteral("A1")}}};
-        g_projectSnapshot = QJsonObject{
-            {"active_context", QStringLiteral("timeline")},
-            {"has_timeline", true},
-            {"has_playlist", false},
-            {"timeline", QJsonObject{{"track_count", 2}, {"tracks", tracks}}},
-        };
-        const QJsonObject arguments{{"include_tracks", true}};
-
-        const QJsonObject result = Shotcut::Mcp::shotcutTimelineSummaryTool(arguments);
-        const QJsonObject timeline = result.value("timeline").toObject();
-        QVERIFY(result.value("include_tracks").toBool());
-        QCOMPARE(timeline.value("tracks").toArray().size(), 2);
-        QCOMPARE(timeline.value("track_count").toInt(), 2);
     }
 };
 

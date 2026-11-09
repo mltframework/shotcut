@@ -55,6 +55,15 @@ public:
     void setTarget(const QString &target) { m_target = target; }
     QString target() { return m_target; }
     bool hasPostJobAction() const { return !m_postJobAction.isNull(); }
+    QString id() const { return m_id; }
+    int progress() const { return m_progress; }
+    QString status() const;
+    QString failureMessage() const { return m_failureMessage; }
+    qint64 elapsedMs() const
+    {
+        return m_completed ? m_elapsedMs : m_totalTime.isValid() ? m_totalTime.elapsed() : 0;
+    }
+    void cancel();
 
 public slots:
     void start(const QString &program, const QStringList &arguments);
@@ -95,6 +104,12 @@ private:
     QAction *m_actionResume;
     bool m_isPaused;
     QString m_target;
+    QString m_id;
+    int m_progress = 0;
+    bool m_completed = false;
+    bool m_success = false;
+    QString m_failureMessage;
+    qint64 m_elapsedMs = 0;
 };
 
 #endif // ABSTRACTJOB_H

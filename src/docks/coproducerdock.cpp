@@ -18,19 +18,24 @@
 #include "coproducerdock.h"
 
 #include "Logger.h"
+#include "api/shotcutapi.h"
 #include "coproducer/localllamaserverprovider.h"
 #include "coproducer/openaicompatibleprovider.h"
 #include "dialogs/coproducersettingsdialog.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "settings.h"
 
 #include <QAction>
 #include <QCoreApplication>
+#include <QDesktopServices>
+#include <QFile>
 #include <QIcon>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QQmlEngine>
 #include <QRegularExpression>
 #include <QTimer>
 #include <QUrl>
@@ -49,18 +54,25 @@ const int kMaxApiContextMessages = 12;
 // Maximum number of user/assistant messages preserved in memory and UI.
 const int kMaxUiHistoryMessages = 50;
 
-// Rounds of tool calls allowed per prompt before the model must answer.
-const int kMaxToolRounds = 3;
+// Rounds of tool calls allowed per prompt before the model must answer. Edits typically need
+// several rounds: read state, look up parameters, read clips, edit, and possibly retry.
+const int kMaxToolRounds = 15;
 
 const auto kForumSearchToolName = QStringLiteral("shotcut_forum_search");
 const auto kDocumentationSearchToolName = QStringLiteral("shotcut_documentation_search");
 const char *kToolSearchInstructions
     = "shotcut_documentation_search searches Shotcut's English documentation, "
       "shotcut_forum_search searches all other Shotcut forum topics, "
-      "shotcut_project_inspect reports the live project state, and shotcut_timeline_summary "
-      "summarizes the timeline. Use shotcut_project_inspect or shotcut_timeline_summary for "
-      "questions about the currently open clip, playlist, timeline, current playback position, "
-      "or active editing context. For questions about Shotcut's UI, menus, filters, keyboard "
+      "and shotcut_state reports the live state of the open project, player, timeline, "
+      "playlist, and markers. For questions about the currently open project, clips, playlist, "
+      "timeline, markers, current playback position, or active editing context, call "
+      "shotcut_state first, then the timeline_, playlist_, markers_, or player_ tools for "
+      "details. Project times are frames; convert them to time using project.profile.fps. "
+      "When the user asks you to change the project, use shotcut_edit with all the changes "
+      "in one call so they undo as one step, and tell the user what changed. "
+      "To move the playhead, play, or select clips, use the player_ and timeline_ action tools "
+      "(e.g. timeline_seek, player_play, timeline_set_selection); they are not undoable edits. "
+      "For questions about Shotcut's UI, menus, filters, keyboard "
       "shortcuts, "
       "or how to use a feature, use shotcut_documentation_search first instead of "
       "guessing from general knowledge. For troubleshooting, reported problems, workarounds, "
@@ -112,8 +124,11 @@ CoproducerDock::CoproducerDock(quint16 mcpServerPort, QWidget *parent)
     // AI Chat the first time. Must be set before the QML view loads below.
     if (Settings.coproducerMode() == QStringLiteral("search"))
         m_mode = Mode::SearchUserGuide;
+    else if (Settings.coproducerMode() == QStringLiteral("scripts"))
+        m_mode = Mode::Scripts;
 
-    m_qview = new QQuickWidget(QmlUtilities::sharedEngine(), this);
+    m_qview = new QQuickWidget(this);
+    m_qview->engine()->addImportPath(QmlUtilities::qmlDir().filePath("modules"));
     m_qview->setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_qview->setClearColor(palette().window().color());
     m_qview->quickWindow()->setPersistentSceneGraph(false);
@@ -125,11 +140,27 @@ CoproducerDock::CoproducerDock(quint16 mcpServerPort, QWidget *parent)
     QmlUtilities::setCommonProperties(m_qview->rootContext());
     m_qview->rootContext()->setContextProperty("coproducer", this);
     m_qview->rootContext()->setContextProperty("view", new QmlView(m_qview));
+    connect(m_qview->engine(), &QQmlEngine::warnings, this, [this](const QList<QQmlError> &errors) {
+        if (m_mode != Mode::Scripts)
+            return;
+        QStringList messages;
+        for (const auto &error : errors)
+            messages.append(error.toString());
+        // Qt already logs engine warnings; retain them in the panel without logging twice.
+        setScriptError(messages.join('\n'), false);
+    });
+    discoverScripts(m_mode == Mode::Scripts);
 
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("coproducer");
-    m_qview->setSource(QUrl::fromLocalFile(viewPath.absoluteFilePath("coproducer.qml")));
+    // The API accesses MAIN; wait until MainWindow's singleton finishes construction.
+    QTimer::singleShot(0, this, [this, viewPath]() {
+        auto &api = Shotcut::Api::ShotcutApi::singleton();
+        QQmlEngine::setObjectOwnership(&api, QQmlEngine::CppOwnership);
+        m_qview->rootContext()->setContextProperty("shotcut", &api);
+        m_qview->setSource(QUrl::fromLocalFile(viewPath.absoluteFilePath("coproducer.qml")));
+    });
 
     m_history.append({Coproducer::ChatMessage::System, QString::fromLatin1(kMasterSystemPrompt)});
 
@@ -241,10 +272,24 @@ int CoproducerDock::mode() const
 
 void CoproducerDock::setMode(int value)
 {
-    const Mode nextMode = value == 1 ? Mode::SearchUserGuide : Mode::AiChat;
+    if (value < 0 || value > 2) {
+        LOG_WARNING() << "Invalid Coproducer mode:" << value;
+        return;
+    }
+    const Mode nextMode = static_cast<Mode>(value);
     if (m_mode == nextMode)
         return;
+    if (m_busy)
+        cancelRequest();
     m_mode = nextMode;
+    m_selectedScript.clear();
+    m_scriptSource = QUrl();
+    emit scriptSourceChanged();
+    setScriptError(QString());
+    if (m_mode == Mode::Scripts)
+        discoverScripts(true);
+    else
+        emit scriptsChanged();
     emit modeChanged();
 }
 
@@ -255,12 +300,105 @@ void CoproducerDock::setMode(int value)
 void CoproducerDock::selectMode(int value)
 {
     setMode(value);
-    Settings.setCoproducerMode(m_mode == Mode::SearchUserGuide ? QStringLiteral("search")
-                                                               : QStringLiteral("chat"));
+    Settings.setCoproducerMode(m_mode == Mode::Scripts           ? QStringLiteral("scripts")
+                               : m_mode == Mode::SearchUserGuide ? QStringLiteral("search")
+                                                                 : QStringLiteral("chat"));
+}
+
+void CoproducerDock::setScriptError(const QString &error, bool logError)
+{
+    const QString boundedError = error.left(16000);
+    if (m_scriptError == boundedError)
+        return;
+    m_scriptError = boundedError;
+    if (logError && !m_scriptError.isEmpty())
+        LOG_WARNING() << "Coproducer Scripts:" << m_scriptError;
+    emit scriptErrorChanged();
+}
+
+bool CoproducerDock::discoverScripts(bool copyExamples)
+{
+    const QDir directory(QDir(Settings.appDataLocation()).filePath("scripts"));
+    if (!directory.mkpath(".")) {
+        setScriptError(tr("Cannot create scripts folder: %1").arg(directory.absolutePath()));
+        return false;
+    }
+    if (copyExamples) {
+        const QDir examples(QmlApplication::dataDir().filePath("shotcut/scripts"));
+        if (!examples.exists()) {
+            setScriptError(
+                tr("Reference scripts folder is missing: %1").arg(examples.absolutePath()));
+            return false;
+        }
+        for (const auto &name : examples.entryList({"*.qml"}, QDir::Files, QDir::Name)) {
+            const QString destination = directory.filePath(name);
+            if (QFileInfo::exists(destination))
+                continue;
+            QFile source(examples.filePath(name));
+            if (!source.copy(destination)) {
+                setScriptError(
+                    tr("Cannot copy reference script %1: %2").arg(name, source.errorString()));
+                return false;
+            }
+            if (!QFile::setPermissions(destination,
+                                       QFile::permissions(destination) | QFileDevice::WriteOwner)) {
+                setScriptError(tr("Cannot make reference script writable: %1").arg(destination));
+                return false;
+            }
+        }
+    }
+    m_scripts = directory.entryList({"*.qml"}, QDir::Files, QDir::Name);
+    if (!m_scripts.contains(m_selectedScript))
+        m_selectedScript.clear();
+    emit scriptsChanged();
+    return true;
+}
+
+void CoproducerDock::loadSelectedScript()
+{
+    if (m_mode != Mode::Scripts)
+        return;
+    m_scriptSource
+        = m_selectedScript.isEmpty()
+              ? QUrl()
+              : QUrl::fromLocalFile(
+                  QDir(Settings.appDataLocation()).filePath("scripts/" + m_selectedScript));
+    emit scriptSourceChanged();
+}
+
+void CoproducerDock::selectScript(int index)
+{
+    if (index < 0 || index >= m_scripts.size()) {
+        setScriptError(tr("The selected script no longer exists. Reload the scripts list."));
+        return;
+    }
+    m_selectedScript = m_scripts.at(index);
+    reloadScripts();
+}
+
+void CoproducerDock::reloadScripts()
+{
+    m_scriptSource = QUrl();
+    emit scriptSourceChanged();
+    setScriptError(QString());
+    QTimer::singleShot(0, this, [this]() {
+        m_qview->engine()->clearComponentCache();
+        if (discoverScripts(m_mode == Mode::Scripts))
+            loadSelectedScript();
+    });
+}
+
+void CoproducerDock::openScriptsFolder()
+{
+    const QString directory = QDir(Settings.appDataLocation()).filePath("scripts");
+    if (!QDesktopServices::openUrl(QUrl::fromLocalFile(directory)))
+        setScriptError(tr("Cannot open scripts folder: %1").arg(directory));
 }
 
 void CoproducerDock::submitPrompt()
 {
+    if (m_mode == Mode::Scripts)
+        return;
     if (m_busy)
         cancelRequest();
     else
@@ -292,7 +430,7 @@ void CoproducerDock::onNewChatClicked()
 
 void CoproducerDock::onModeChanged(int index)
 {
-    m_mode = index == 1 ? Mode::SearchUserGuide : Mode::AiChat;
+    setMode(index);
     onNewChatClicked();
 }
 
@@ -376,6 +514,7 @@ void CoproducerDock::sendPrompt()
         m_queuedToolCalls.clear();
         m_activeToolCall = Coproducer::ToolCall();
         m_toolRounds = 0;
+        m_toolLimitReached = false;
         m_toolSearchActive = true;
         m_initializeRequestId = m_mcpClient->initialize();
         return;
@@ -551,7 +690,20 @@ void CoproducerDock::runNextToolCall()
 {
     if (m_queuedToolCalls.isEmpty()) {
         // Force an answer once the round limit is hit to avoid endless searching.
-        m_provider->setTools(m_mcpTools, m_toolRounds < kMaxToolRounds);
+        const bool allowTools = m_toolRounds < kMaxToolRounds;
+        if (!allowTools && !m_toolLimitReached) {
+            m_toolLimitReached = true;
+            LOG_INFO() << "Coproducer: tool round limit reached" << kMaxToolRounds;
+            // A user message rather than a system one: some providers reject system messages
+            // after the first.
+            m_toolPayload.append(
+                {Coproducer::ChatMessage::User,
+                 QStringLiteral("[Shotcut] The tool call limit for this request has been reached; "
+                                "no more tools are available. Tell the user plainly that you ran "
+                                "out of steps, which changes (if any) succeeded, and what is left "
+                                "to do. Do not give any other reason for stopping.")});
+        }
+        m_provider->setTools(m_mcpTools, allowTools);
         setStatusBase(tr("Found %1 result(s); thinking...").arg(m_lastSources.size()));
         m_provider->sendMessage(m_toolPayload);
         return;
@@ -653,15 +805,23 @@ void CoproducerDock::onResponseReceived(const QString &text, const Coproducer::U
         LOG_INFO() << "Coproducer: prompt finished in" << formatHms(m_promptTimer.elapsed());
     const auto response = text.isEmpty() ? m_pendingResponse : text;
     m_pendingResponse.clear();
+    const auto toolLimitNotice = tr("Coproducer stopped after %n tool round(s). Changes it already "
+                                    "made remain in the Undo history.",
+                                    nullptr,
+                                    kMaxToolRounds);
     if (response.trimmed().isEmpty()) {
         appendTranscript(TranscriptRole::Error,
                          tr("The model finished without producing a visible response."));
+        if (m_toolLimitReached)
+            appendTranscript(TranscriptRole::Diagnostic, toolLimitNotice);
         return;
     }
 
     const auto citedResponse = applyCitations(response);
     m_history.append({Coproducer::ChatMessage::Assistant, citedResponse});
     finishAssistantStream(citedResponse);
+    if (m_toolLimitReached)
+        appendTranscript(TranscriptRole::Diagnostic, toolLimitNotice);
 
     // Enforce hard UI history limit if assistant response exceeded it.
     if (m_history.size() - 1 > kMaxUiHistoryMessages) {
