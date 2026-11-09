@@ -17,69 +17,15 @@
 
 #include "mcp/shotcuttools.h"
 
-#include "mcp/projectinspector.h"
+#ifndef SHOTCUT_MCP_NO_DEFAULT_TOOLS
+#include "mcp/mcpbridge.h"
+#endif
 
 #include <QJsonArray>
-#include <QJsonDocument>
 #include <QJsonObject>
-#include <QVariant>
 
 namespace Shotcut {
 namespace Mcp {
-
-QJsonObject shotcutProjectInspectTool(const QJsonObject &arguments)
-{
-    Q_UNUSED(arguments);
-
-    QJsonObject result = inspectProject();
-    result["tool"] = QStringLiteral("shotcut_project_inspect");
-    result["status"] = QStringLiteral("ok");
-    return result;
-}
-
-QJsonObject shotcutTimelineSummaryTool(const QJsonObject &arguments)
-{
-    QJsonObject result;
-    const QJsonObject project = inspectProject();
-    const bool includeTracks = arguments.value("include_tracks").toBool();
-
-    result["tool"] = QStringLiteral("shotcut_timeline_summary");
-    result["status"] = QStringLiteral("ok");
-    result["include_tracks"] = includeTracks;
-    result["active_context"] = project.value("active_context");
-    result["has_timeline"] = project.value("has_timeline");
-    result["has_playlist"] = project.value("has_playlist");
-
-    if (project.value("has_timeline").toBool()) {
-        QJsonObject timeline = project.value("timeline").toObject();
-        if (!includeTracks)
-            timeline.remove("tracks");
-        result["timeline"] = timeline;
-    }
-
-    if (project.value("has_playlist").toBool()) {
-        const QJsonObject playlist = project.value("playlist").toObject();
-        result["playlist"] = playlist;
-    }
-
-    result["current_producer"] = project.value("current_producer");
-    result["note"] = QStringLiteral("This summary is derived from the live Shotcut project state "
-                                    "and tracks the current timeline/playlist context.");
-    return result;
-}
-
-ToolDefinition makeProjectInspectTool()
-{
-    ToolDefinition tool;
-    tool.name = QStringLiteral("shotcut_project_inspect");
-    tool.description = QStringLiteral(
-        "Inspect the open Shotcut project, timeline, selection, and current producer state.");
-    tool.parameters.insert("type", QStringLiteral("object"));
-    tool.parameters.insert("properties", QJsonObject());
-    tool.parameters.insert("required", QJsonArray());
-    tool.handler = [](const QJsonObject &arguments) { return shotcutProjectInspectTool(arguments); };
-    return tool;
-}
 
 ToolDefinition makeForumSearchTool()
 {
@@ -115,37 +61,15 @@ ToolDefinition makeDocumentationSearchTool()
     return tool;
 }
 
-ToolDefinition makeTimelineSummaryTool()
-{
-    ToolDefinition tool;
-    tool.name = QStringLiteral("shotcut_timeline_summary");
-    tool.description = QStringLiteral(
-        "Produce a concise summary of the current timeline and selected clips.");
-
-    QJsonObject properties;
-    QJsonObject includeTracksSchema;
-    includeTracksSchema.insert("type", QStringLiteral("boolean"));
-    includeTracksSchema.insert("description",
-                               QStringLiteral(
-                                   "Include per-track details. Defaults to false when omitted."));
-    properties.insert("include_tracks", includeTracksSchema);
-
-    tool.parameters.insert("type", QStringLiteral("object"));
-    tool.parameters.insert("properties", properties);
-    tool.parameters.insert("required", QJsonArray());
-    tool.handler = [](const QJsonObject &arguments) {
-        return shotcutTimelineSummaryTool(arguments);
-    };
-    return tool;
-}
-
 ToolRegistry createShotcutToolRegistry()
 {
     ToolRegistry registry;
-    registry.registerTool(makeProjectInspectTool());
     registry.registerTool(makeForumSearchTool());
     registry.registerTool(makeDocumentationSearchTool());
-    registry.registerTool(makeTimelineSummaryTool());
+#ifndef SHOTCUT_MCP_NO_DEFAULT_TOOLS
+    for (const auto &tool : makeApiTools())
+        registry.registerTool(tool);
+#endif
     return registry;
 }
 

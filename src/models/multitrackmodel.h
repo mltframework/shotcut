@@ -23,6 +23,7 @@
 #include <QAbstractItemModel>
 #include <QByteArray>
 #include <QList>
+#include <QPair>
 #include <QString>
 
 #include <memory>
@@ -153,6 +154,7 @@ public:
                                                   int &trackIndex,
                                                   int &clipIndex);
     std::unique_ptr<Mlt::ClipInfo> getClipInfo(int trackIndex, int clipIndex);
+    QPair<int, int> getClipFilterRange(int trackIndex, int clipIndex, const Mlt::ClipInfo &info);
     Q_INVOKABLE int clipStart(int trackIndex, int clipIndex);
     QString getTrackName(int trackIndex);
     AudioTrackRole getTrackRole(int trackIndex);

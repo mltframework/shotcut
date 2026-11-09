@@ -932,7 +932,7 @@ void PlaylistModel::setInOut(int row, int in, int out)
     bool inChanged = false, outChanged = false;
     QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(row));
     if (info && info->producer && info->producer->is_valid()) {
-        if (MLT.producer()->get_producer() == info->producer->get_producer()) {
+        if (MLT.producer() && MLT.producer()->get_producer() == info->producer->get_producer()) {
             inChanged = info->frame_in != in;
             outChanged = info->frame_out != out;
         }

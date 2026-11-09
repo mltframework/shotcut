@@ -73,6 +73,29 @@ endif()
 add_subdirectory(CuteLogger)
 add_subdirectory(src)
 add_subdirectory(translations)
+
+if(NOT CMAKE_CROSSCOMPILING)
+  set(API_DOCS_PATH "$ENV{PATH}")
+  if(WIN32)
+    set(API_DOCS_PATH "${CMAKE_INSTALL_PREFIX};${CMAKE_INSTALL_PREFIX}/bin;${mlt++_LIBRARY_DIRS};$<TARGET_FILE_DIR:Qt6::Core>;${CMAKE_SOURCE_DIR}/drmingw/x64/bin;$ENV{PATH}")
+  endif()
+  add_custom_target(api-docs-check ALL
+    COMMAND ${CMAKE_COMMAND} -E env "PATH=${API_DOCS_PATH}"
+      $<TARGET_FILE:shotcut> --check-api-docs
+    DEPENDS shotcut
+    COMMENT "Checking shared API documentation completeness"
+    VERBATIM
+  )
+  add_custom_target(shared-api-docs
+    COMMAND ${CMAKE_COMMAND} -E env "PATH=${API_DOCS_PATH}"
+      $<TARGET_FILE:shotcut> --generate-api-docs
+      "${CMAKE_SOURCE_DIR}/docs/src/scripting-api.html.in"
+      "${CMAKE_BINARY_DIR}/docs/scripting-api"
+    DEPENDS shotcut
+    COMMENT "Generating shared QML and MCP API documentation"
+    VERBATIM
+  )
+endif()
 if(UNIX AND NOT APPLE AND BUILD_MINIMAL_MEDIA_BACKEND)
   add_subdirectory(MinimalMediaBackend)
 endif()
@@ -136,4 +159,7 @@ if(BUILD_DOCS)
     COMMENT "Generating QDoc API documentation"
     VERBATIM
   )
+  if(TARGET shared-api-docs)
+    add_dependencies(docs shared-api-docs)
+  endif()
 endif()

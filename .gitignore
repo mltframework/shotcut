@@ -35,9 +35,9 @@ build.ninja
 rules.ninja
 CMakeCache.txt
 CTestTestfile.cmake
-# In-source test executables and autogen directories; keep files with extensions visible.
+# In-source test executables and autogen directories; keep test sources visible.
 /tests/test_*
-!/tests/test_*.*
+!/tests/test_*.cpp
 *CMakeFiles/
 CuteLogger/CuteLogger_autogen/
 install_manifest.txt
@@ -52,6 +52,7 @@ scripts/build-shotcut.conf
 MinimalMediaBackend/
 CuteLogger/libCuteLogger.dll
 docs/qml-api/
+docs/scripting-api/
 shotcut.code-workspace
 .qtcreator/
 Testing

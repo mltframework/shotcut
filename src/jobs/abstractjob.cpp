@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QTimer>
+#include <QUuid>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -39,6 +40,7 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     , m_startingPercent(0)
     , m_priority(priority)
     , m_isPaused(false)
+    , m_id(QUuid::createUuid().toString(QUuid::WithoutBraces))
 {
     setObjectName(name);
     connect(this,
@@ -63,11 +65,66 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
         m_actionPause->setEnabled(false);
         m_actionResume->setEnabled(false);
     });
+    connect(this, &AbstractJob::finished, this, [this](AbstractJob *, bool success) {
+        m_elapsedMs = m_totalTime.isValid() ? m_totalTime.elapsed() : 0;
+        m_completed = true;
+        m_success = success;
+        if (!success && !m_killed && m_failureMessage.isEmpty())
+            m_failureMessage = tr("Job failed. See the job log for details.");
+        if (success)
+            m_progress = 100;
+    });
+    connect(
+        this,
+        &QProcess::errorOccurred,
+        this,
+        [this](QProcess::ProcessError error) {
+            m_failureMessage = errorString();
+            if (error == QProcess::FailedToStart && !m_completed) {
+                appendToLog(m_failureMessage + '\n');
+                emit finished(this, false);
+            }
+        },
+        Qt::QueuedConnection);
+}
+
+QString AbstractJob::status() const
+{
+    if (m_completed)
+        return m_killed    ? QStringLiteral("canceled")
+               : m_success ? QStringLiteral("succeeded")
+                           : QStringLiteral("failed");
+    if (m_killed)
+        return QStringLiteral("canceling");
+    if (m_isPaused)
+        return QStringLiteral("paused");
+    if (!m_ran)
+        return QStringLiteral("pending");
+    return state() == QProcess::Starting ? QStringLiteral("starting") : QStringLiteral("running");
+}
+
+void AbstractJob::cancel()
+{
+    if (m_completed || m_killed)
+        return;
+    if (m_ran) {
+        stop();
+    } else {
+        m_ran = true;
+        m_killed = true;
+        appendToLog(tr("Canceled before starting.") + '\n');
+        emit finished(this, false);
+    }
 }
 
 void AbstractJob::start()
 {
     m_killed = false;
+    m_completed = false;
+    m_success = false;
+    m_failureMessage.clear();
+    m_progress = 0;
+    m_elapsedMs = 0;
     m_ran = true;
     m_estimateTime.start();
     m_totalTime.start();
@@ -220,6 +277,7 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         emit finished(this, false);
     } else {
         LOG_INFO() << "job failed with" << exitCode;
+        m_failureMessage = tr("Job failed with exit code %1.").arg(exitCode);
         m_log.append(QStringLiteral("Failed with exit code %1\n").arg(exitCode));
         emit finished(this, false);
     }
@@ -258,6 +316,8 @@ void AbstractJob::onStarted()
 
 void AbstractJob::onProgressUpdated(QStandardItem *, int percent)
 {
+    if (percent >= 0)
+        m_progress = std::clamp(percent, 0, 100);
     // Start timer on first reported percentage > 0.
     if (percent == 1 || m_startingPercent < 0) {
         m_estimateTime.restart();

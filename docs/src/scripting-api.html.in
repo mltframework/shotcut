@@ -1,0 +1,470 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Meltytech, LLC. SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shotcut Shared Scripting and MCP API</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 72rem; margin: auto; padding: 2rem; font: 1rem/1.6 system-ui, sans-serif; }
+    a { color: light-dark(#075a9c, #8dcaff); }
+    code, pre { font-family: ui-monospace, monospace; }
+    pre { padding: 1rem; background: light-dark(#f1f3f5, #202327); overflow: auto; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
+    th, td { border: 1px solid light-dark(#bbb, #666); padding: .5rem; text-align: left; }
+    h2 { border-bottom: 1px solid light-dark(#bbb, #666); margin-top: 3rem; }
+    h4 { margin-bottom: .5rem; }
+    .notice { border-left: .3rem solid #d99c00; padding-left: 1rem; }
+    nav ul { display: flex; flex-wrap: wrap; gap: 1.5rem; list-style: none; padding: 0; }
+  </style>
+</head>
+<body>
+<h1>Shotcut Shared Scripting and MCP API</h1>
+<p class="notice"><strong>Proof of concept.</strong> This API is experimental and may change.
+MCP tools and Coproducer Scripts mode are available. Local scripts are trusted code,
+not sandboxed, and can access files and the network. No consent dialog is shown in this POC.</p>
+<nav aria-label="Contents"><ul>
+  <li><a href="#conventions">Conventions</a></li>
+  <li><a href="#qml">QML usage</a></li>
+  <li><a href="#mcp">MCP usage</a></li>
+  <li><a href="#undo-and-revisions">Undo and revisions</a></li>
+  <li><a href="#errors">Errors and limitations</a></li>
+  <li><a href="#reference">API reference</a></li>
+  <li><a href="#tools">MCP tool reference</a></li>
+  <li><a href="#building">Building and contributing</a></li>
+</ul></nav>
+
+<h2 id="conventions">Conventions</h2>
+<p>The same typed C++ API supplies QML methods, the capabilities catalog, MCP tools,
+and this generated reference. Properties are read-only. Methods have three kinds:</p>
+<table>
+  <thead><tr><th>Kind</th><th>Behavior</th><th>MCP access</th></tr></thead>
+  <tbody>
+    <tr><td>read</td><td>Reads project information</td><td>Individual tool or a batch operation</td></tr>
+    <tr><td>edit</td><td>Changes the project through undoable commands</td><td><code>shotcut_edit</code> batch</td></tr>
+    <tr><td>action</td><td>Playback, playhead, or selection changes; not undoable</td><td>Individual tool or a batch operation</td></tr>
+  </tbody>
+</table>
+<p>Unmarked helper methods are QML-only: they are described in the catalog but are not
+exported as MCP tools or accepted in edit batches. For example, QML has
+<code>shotcut.frames()</code> and <code>shotcut.timecode()</code>;
+MCP clients use the project frame rate to convert times.</p>
+<p>Times are integer frames at <code>shotcut.project.profile.fps</code>, not seconds.
+At 25 fps, one second is 25 frames. Clip <code>in</code> and <code>out</code> are
+inclusive source frames; timeline <code>start</code> is the clip's start on its track.
+Clip range filters use overlap with a half-open <code>[start, end)</code> interval.</p>
+<p>For <code>timeline.removeClip()</code>, <code>moveClip()</code>, and
+<code>trimClip()</code>, <code>ripple</code> defaults to false. When enabled, it
+affects the edited track (or the source and destination tracks of a move), not
+unrelated tracks or markers. GUI Ripple All Tracks and Ripple Markers settings
+do not alter these API operations.</p>
+<p>Tracks and playlist items use zero-based indexes. Track 0 is the top track.
+Clip indexes include gaps and can change after edits. Use the returned UUID
+<code>id</code> as <code>clipId</code> when editing clips; do not retain clip indexes
+across edits. Marker indexes can change after removal. Re-read indexes and revisions
+before a later edit. A split returns <code>{left, right}</code>;
+the right half retains the original id.</p>
+<p>Results are plain objects and arrays, not editable model objects.
+Changing a returned object does not change Shotcut. Use edit methods instead.
+The reference uses JSON type names: <code>integer</code>, <code>number</code>,
+<code>boolean</code>, <code>string</code>, <code>array</code>, and <code>object</code>.
+<code>any</code> denotes a dynamic result; read the method description for its shape.
+An optional positional argument is shown with <code>?</code>.</p>
+
+<h2 id="qml">QML usage</h2>
+<p>Playlist edits use indexes into the complete source bin, not its current UI filter.
+<code>playlist.addItem({resource, index?, in?, out?})</code> imports a local media file
+or MLT virtual clip; the default is to append. <code>removeItem(index)</code>,
+<code>moveItem(index, toIndex)</code>, and <code>trimItem(index, {in?, out?})</code>
+remove, reorder, and set inclusive source ranges. These edits do not alter existing
+timeline clips or delete media files. Re-read indexes after removal or reordering.
+Import follows Shotcut's image-duration and proxy settings; background proxy jobs
+are not canceled by undo or batch rollback.</p>
+<p><code>timeline.appendClip(options)</code>, <code>insertClip(options)</code>, and
+<code>overwriteClip(options)</code> place new independent clips on an explicit
+<code>trackIndex</code>. Give exactly one <code>resource</code> (local file) or
+<code>playlistIndex</code> (complete source-bin index), and optional inclusive
+<code>in</code>/<code>out</code>. A playlist source is copied with its filters and
+does not change when the timeline copy is edited. Append uses the track end; insert
+and overwrite require a nonnegative <code>position</code> in timeline frames.
+Insert shifts later footage; overwrite replaces only the covered range without
+shifting later footage. Positions beyond the track end create a gap.</p>
+<p>Insert offers explicit <code>rippleAllTracks</code> and <code>rippleMarkers</code>
+options, both defaulting to false, independent of the timeline toolbar settings.
+Ripple All Tracks affects only unlocked tracks. Ripple Markers shifts markers
+starting at or after the insertion point, including their range ends.
+Append and overwrite leave other tracks and markers unchanged.
+These methods clear timeline clip selection but do not select the new clip or seek.
+Insertion that splits transitions or joined clips, and overwrite covering transitions
+or joined clips, are not supported yet.</p>
+<h3>Clip selectors</h3>
+<p><code>timeline.clipIds({trackIndex?, start?, end?, selectedOnly?})</code>
+returns ordinary clip IDs in track/timeline order. No options means all clips;
+<code>{selectedOnly: true}</code> means the current clip selection. Combine options
+to intersect criteria, for example selected clips on one track overlapping a range.
+Ranges are timeline frames and half-open: a clip matches <code>[start, end)</code>
+when it ends after start and starts before end. Boundaries must be nonnegative
+integers, and end must exceed start when both are given.</p>
+<p>Selectors never change selection or history, and do not exclude locked tracks:
+edit methods enforce locks. Blanks and transitions are always excluded from
+<code>clipIds()</code>. To read full snapshots with the same criteria, use
+<code>timeline.clips()</code>; it also accepts <code>includeBlanks</code> (default false)
+and <code>includeTransitions</code> (default true, preserving existing behavior).
+Resolve track names through <code>timeline.tracks()</code>; names need not be unique.</p>
+<pre><code>const ids = shotcut.timeline.clipIds({
+    trackIndex: 0, selectedOnly: true, start: 100, end: 250
+})
+shotcut.undo.macro("Brightness on matching clips", function () {
+    for (const id of ids)
+        shotcut.filters.add({clipId: id}, "brightness", {level: 1.2})
+})</code></pre>
+<p>MCP exposes <code>timeline_clip_ids</code> with the same named criteria.
+The result is an array of strings, not clip objects. It can also be used as a read
+operation inside <code>shotcut_edit</code>, with aliases such as
+<code>$matches.0</code>. The batch does not automatically loop over results;
+clients construct the edit operations for the returned IDs.</p>
+<h3>Filters</h3>
+<p><code>filters.available()</code> lists installed Shotcut metadata IDs and target
+restrictions; <code>filters.metadata(metadataId)</code> returns the native MLT metadata
+under <code>mlt</code>, including parameter descriptions, types, ranges, and declared
+defaults. Native fields are strings exactly as declared, without UI conversions;
+missing fields remain absent. <code>metadataAvailable</code> indicates whether MLT
+provided metadata. These declarations can be incomplete and are not necessarily
+the defaults set by Shotcut's filter UI.</p>
+<p>Filter targets are exactly one of <code>{clipId: id}</code>,
+<code>{trackIndex: 0}</code>, or <code>{output: true}</code>.
+<code>filters.list(target)</code> returns regular user filters and their parameters.
+Use <code>add(target, metadataId, parameters?)</code>,
+<code>remove(target, index)</code>, <code>move(target, index, toIndex)</code>,
+<code>setEnabled(target, index, enabled)</code>, and
+<code>setParameters(target, index, parameters)</code> for undoable edits.
+Creation accepts only installed Shotcut metadata IDs, not arbitrary MLT services,
+and uses native MLT defaults plus explicit parameters without executing filter QML.
+There is no automatic conversion from UI percentages or sliders.
+Selecting a filter later can apply additional behavior from its normal QML UI.</p>
+<p>Values may be finite numbers, booleans, strings, or native rectangles
+<code>{x, y, width, height, opacity}</code>. Declared MLT types and readonly flags
+are checked where supplied. Undeclared native properties are permitted because
+metadata is not exhaustive. Internal identity, timing, and enable properties are
+protected. Keyframe strings and modifications to animated parameters are not yet
+supported. Edits leave the target selection and playhead alone; removing the
+currently displayed filter clears its UI and may select a remaining filter. Timeline filter indicators
+update for affected clips and tracks even when they are not selected.
+Filter indexes are panel rows
+(including user links), not raw MLT indexes. Re-read after add/remove/move.
+Clip filter ranges include footage used by adjacent transitions, just as in the
+Filters panel. Track and output filters follow their normal duration-pinning behavior.
+API structural edits use normal Filters panel selection behavior for the displayed
+target, including selecting added filters. A selected list row corresponds to the
+filter displayed in the parameter UI.
+Links, filter sets, blanks, transitions, locked tracks, and changes to built-in
+track volume filters are excluded from these writes.</p>
+<pre><code>const target = {clipId: shotcut.timeline.selection()[0].id}
+const meta = shotcut.filters.metadata("brightness")
+console.log(JSON.stringify(meta.mlt.parameters))
+const added = shotcut.filters.add(target, "brightness", {level: 1.2})
+shotcut.filters.setParameters(target, added.index, {level: 1.1})
+shotcut.filters.setEnabled(target, added.index, false)</code></pre>
+<p>Select <strong>Scripts</strong> in Coproducer. Missing reference examples are copied from
+the installation's <code>share/shotcut/scripts</code> directory into the user scripts
+folder without overwriting existing files. Use <strong>Open Folder</strong> to locate it.
+Each top-level <code>*.qml</code> file appears in the picker by filename; no manifest is needed.
+Discovery does not execute scripts. Entering Scripts mode shows
+<strong>Select a script to run</strong> until you choose one from the picker.
+Only the selected file is loaded, with
+<code>shotcut</code> available as a context property. Leaving Scripts mode unloads it.</p>
+<p>Use an <code>Item</code> or <code>Rectangle</code> as the root. Inline JavaScript and QML
+components can live in the same file. Relative helper imports are supported, but helper QML
+files in the discovery root also appear in the picker. <strong>Reload</strong> unloads the
+panel, clears its engine's component cache, and rescans files. Loading and runtime warnings
+appear below the panel. Reload keeps the selection if the file still exists.
+Deleting an example restores it on the next activation or reload.</p>
+<p>Reference scripts are maintained in <code>src/qml/scripts</code>, with developer
+comments explaining API usage, undo, and job handling. <code>ProjectDashboard.qml</code> displays live project and selection
+information. <code>ClipNavigator.qml</code> filters clip names case-insensitively and
+matches durations at least as long as the minimum seconds. It can select all matches,
+clear selection, or select and seek to an individual clip. Its actions do not edit
+the project or create undo entries.</p>
+<p><code>AddTransitions.qml</code> pairs consecutive selected clips on each track and
+adds dissolve/audio crossfade transitions in one undo step. Choose a duration in frames
+and either overlap existing footage or preserve the combined clip duration using spare
+source frames before the right clip's in point. Close Gaps includes gap-separated pairs;
+turn it off to skip them. Ripple closes vacated time on the affected track; Ripple All
+Tracks also removes that time from other unlocked tracks. Markers stay in place.
+Locked tracks, insufficient footage, and intervening clips or transitions are skipped
+with reasons; other valid pairs are still applied.</p>
+<p>QML calls methods with positional arguments. A trailing options map groups named
+settings or filters. Omit it only when the method provides a default.</p>
+<pre><code>// Read clips on the top track.
+const clips = shotcut.timeline.clips({trackIndex: 0})
+
+// Set the first clip's fade-out to one second.
+if (clips.length &gt; 0)
+    shotcut.timeline.updateClip(clips[0].id, {
+        fadeOut: Math.round(shotcut.project.profile.fps)
+    })
+
+// Playback actions do not add undo entries.
+shotcut.timeline.seek(250)
+shotcut.player.play({speed: 1})
+shotcut.player.pause()</code></pre>
+<p>Properties have change notifications where applicable, so QML property bindings
+can update automatically. Snapshots returned by methods do not update themselves;
+query again when the relevant state changes. Errors in an associated QML engine
+are JavaScript exceptions with <code>message</code> and <code>code</code>:</p>
+<pre><code>try {
+    shotcut.timeline.setSelection(["invalid-id"])
+} catch (error) {
+    console.error(error.code + ": " + error.message)
+}</code></pre>
+<p>Use <code>shotcut.undo.macro(text, callback)</code> for a named synchronous edit
+group; see <a href="#undo-and-revisions">Undo and revisions</a> for rollback rules and examples.</p>
+
+<h2 id="mcp">MCP usage</h2>
+<p>The in-app MCP server uses the standard MCP <code>tools/list</code> and
+<code>tools/call</code> protocol. Its listener is local to Shotcut; use the address
+reported by the running application. The examples show the <code>params</code>
+portion of a <code>tools/call</code> request.</p>
+<p>Start with <code>shotcut_state</code> for properties and summaries.
+Use <code>shotcut_capabilities</code> with an object or method path for discovery.
+Read and action tool names convert camelCase to snake_case:
+<code>timeline.setSelection</code> becomes <code>timeline_set_selection</code>.</p>
+<pre><code>{"name": "shotcut_state", "arguments": {}}
+{"name": "shotcut_capabilities", "arguments": {"path": "timeline.splitClip"}}
+{"name": "timeline_clips", "arguments": {"trackIndex": 0}}
+{"name": "timeline_seek", "arguments": {"position": 250}}</code></pre>
+<p>MCP uses named arguments. Options are normally flattened alongside positional
+parameter names. A nested <code>options</code> object is also accepted by the
+invoker, but generated tool schemas expose the flattened form.</p>
+<p>Use <code>shotcut_edit</code> to group changes into one undo step.
+Each operation has an API <code>path</code>, named <code>args</code>, and an optional
+<code>as</code> alias for its result. Here <code>CLIP_UUID</code> must be replaced
+with a clip id, frame 100 must be inside that clip, and <code>expectedRevision</code>
+must match the revision returned by your preceding read:</p>
+<pre><code>{
+  "name": "shotcut_edit",
+  "arguments": {
+    "label": "Split and fade",
+    "expectedRevision": 12,
+    "ops": [
+      {
+        "path": "timeline.splitClip",
+        "args": {"clipId": "CLIP_UUID", "position": 100},
+        "as": "split"
+      },
+      {
+        "path": "timeline.updateClip",
+        "args": {"clipId": "$split.left.id", "fadeOut": 25}
+      },
+      {
+        "path": "timeline.setSelection",
+        "args": {"clipIds": ["$split.left.id"]}
+      }
+    ]
+  }
+}</code></pre>
+<p>Aliases can reference a whole result (<code>$split</code>), a field
+(<code>$split.left.id</code>), or an array element (<code>$clips.0.id</code>).
+References are resolved recursively inside argument objects and arrays.
+Use <code>$$</code> to escape a literal leading dollar sign.
+Aliases must be unique, must not contain dots or begin with a dollar sign, and
+may only refer to earlier operations. Operations execute in order.
+A client can loop over clips, assemble up to 500 operations, and submit one
+batch without consuming one undo entry per clip.</p>
+<p>Tool results are available as MCP <code>structuredContent</code> (and a JSON text
+content block). A read or standalone action returns:</p>
+<pre><code>{"status": "ok", "revision": 12, "result": ...}</code></pre>
+<p>A batch returns per-operation results. <code>undoText</code> is present only
+when undoable edits were committed:</p>
+<pre><code>{
+  "status": "ok",
+  "revision": 13,
+  "undoText": "Coproducer: Split and fade",
+  "results": [{"path": "timeline.splitClip", "result": ...}]
+}</code></pre>
+<p>The downloads <a href="api.json">api.json</a> and
+<a href="mcp-tools.json">mcp-tools.json</a> contain the generated API catalog and
+actual shared MCP tool descriptions and input schemas. Auxiliary tools such as
+forum and documentation search are outside this reference.</p>
+
+<h2 id="undo-and-revisions">Undo and revisions</h2>
+<h3>Background jobs and exports</h3>
+<p><code>jobs.list()</code> and <code>jobs.job(id)</code> read the normal Jobs queue.
+Job IDs are stable until the job is removed or Shotcut exits. Status is one of
+<code>pending</code>, <code>starting</code>, <code>running</code>, <code>paused</code>,
+<code>canceling</code>, <code>canceled</code>, <code>succeeded</code>, or <code>failed</code>.
+Snapshots include progress (0-100), elapsedMs, and canCancel. Failed jobs include
+an error message; <code>jobs.log(id, maxCharacters?)</code> reads a bounded diagnostic
+log tail. A queued export is not a completed export: poll its job IDs.</p>
+<p><code>jobs.cancel(id)</code> cancels pending or active work without removing the job
+or deleting partial output files. Active cancellation is asynchronous. Completed jobs
+are unchanged. Cancel and export launch are not undoable, cannot run inside
+<code>shotcut_edit</code> or <code>undo.macro()</code>, and do not change project revision.</p>
+<p><code>jobs.exportPresets()</code> lists stock and custom presets with stable IDs:
+<code>default</code>, <code>stock:consumer/avformat/x264-medium</code> (the full MLT
+registry key), and <code>custom:filename</code> (the actual preset filename).
+<code>jobs.startExport(target, presetId, {overwrite?})</code> exports a snapshot of
+the full timeline, returning <code>{jobIds, jobs, target}</code>. Use an absolute local
+filename in an existing writable directory. Existing output is rejected unless overwrite
+is true; project media, the project file, and outputs of active jobs cannot be replaced.
+Preset fields are passed directly to the MLT consumer; the Export controls' conversions,
+format-dependent normalization, processing-mode adjustments, and saved hardware encoder
+or decoder preferences are not applied. The consumer may supply defaults for fields absent
+from a preset. The API's <code>default</code> preset explicitly selects MP4, software
+libx264, AAC, CRF 23, fast x264 preset, and fast-start; dimensions and frame rate come from
+the project profile unless a profile-specific preset supplies them. Hardware encoders are
+used only when explicitly stored in the selected preset. Hardware decoding is always
+disabled for API exports. Subtitle feeds are included.
+<code>meta.preset.*</code> and underscore-prefixed fields are treated as preset metadata,
+not consumer options; the extension field is only a hint and does not change the target
+filename. <code>v2pass=true</code> or <code>pass=1</code>/<code>pass=2</code> requests
+the normal two-pass pair, with each pass property generated for its job. Invalid or
+conflicting pass markers fail instead of being silently ignored.</p>
+<p>Streaming, source/bin exports, range exports, image sequences, arbitrary encoder
+properties, and filter analysis launch are not included. Missing media or filters
+still requiring analysis cause an explicit error, not a dialog or automatic analysis.
+Jobs follow existing queue pause/scheduling behavior.</p>
+<pre><code>const result = shotcut.jobs.startExport("/absolute/path/output.mp4", "default")
+const state = shotcut.jobs.job(result.jobIds[0])
+// Later: shotcut.jobs.cancel(result.jobIds[0])</code></pre>
+<p>MCP tools are <code>jobs_list</code>, <code>jobs_job</code>, <code>jobs_log</code>,
+<code>jobs_cancel</code>, <code>jobs_export_presets</code>, and <code>jobs_start_export</code>.
+The <code>JobsAndExport.qml</code> example provides preset/output selection, live job
+progress, cancellation, and log viewing.</p>
+<p>Synchronous QML edits from one script callback are grouped into one undo entry
+prefixed with <code>Script: </code>. A successful MCP edit batch creates one undo entry prefixed with
+<code>Coproducer: </code>. Failed batches roll back undoable changes.
+Empty, read-only, and action-only batches create no undo entry.
+The transaction foundation also groups synchronous QML edit calls into an
+automatic macro that closes after the script returns to the event loop.</p>
+<p>Use <code>shotcut.undo.macro(text, callback)</code> for an explicit, named,
+synchronous group. It returns the callback's result. Any thrown value or API error
+rolls back the group, even if an API error is caught inside the callback.
+Nested macros share the outer group and its label. If an automatic group is already
+open, the explicit macro joins it; failure rolls back that entire group when it closes.</p>
+<pre><code>try {
+    const count = shotcut.undo.macro("Batch Brightness", function () {
+        const clips = shotcut.timeline.selection()
+        for (const clip of clips)
+            shotcut.filters.add({clipId: clip.id}, "brightness", {level: 1.2})
+        return clips.length
+    })
+} catch (error) {
+    console.warn("Edits rolled back: " + error)
+}</code></pre>
+<p>The installed <code>BatchBrightness.qml</code> reference script demonstrates adding
+or updating Brightness on selected clips with one named undo entry.
+<code>shotcut.undo.running</code> is true during a callback; the Scripts panel disables
+mode selection, script selection, and Reload while it runs. The helper always closes
+its scope on return or error, so it does not leave an open macro on script reload.</p>
+<p><strong>Callbacks must be synchronous.</strong> Do not use async functions, Promises,
+timers, network requests, or other deferred edits inside the callback. Prepare asynchronous
+results first, then apply them in a synchronous macro. Async functions and Promise
+return values are rejected; already scheduled external work cannot be canceled.
+Manual start/stop macros remain deferred. This QML-only helper is not an MCP tool;
+MCP clients use <code>shotcut_edit</code> for equivalent grouping and rollback.</p>
+<p><strong>Actions are never rolled back or undone.</strong> A seek, playback change,
+or selection applied earlier in a failing batch remains applied.
+Selection changes caused by ordinary editing commands may also be visible.
+Put actions at the end of a batch when that matches the intended workflow.</p>
+<p>Project <code>revision</code> is a change token, not a persistent project id or
+a frame counter. A committed transaction advances it once; failed transactions
+and standalone actions do not advance it. Other project changes and undo/redo
+can also advance it. Supply <code>expectedRevision</code> to prevent a stale batch
+from running. A foreign open transaction returns <code>busy</code>.</p>
+<p class="notice">Known POC limitations: opening an undo macro discards existing redo
+history even if the macro is empty or later rolled back. Automatic track creation
+after a move empties a track may produce a separate undo entry.</p>
+
+<h2 id="errors">Errors and limitations</h2>
+<p>Do not treat null or an empty list alone as an MCP error: some reads legitimately
+return no match. Check <code>status</code>. Errors contain a stable code and a
+human-readable message. A batch may also include a zero-based <code>opIndex</code>
+and <code>rolledBack: true</code> when execution failed and rollback ran.
+Prevalidation errors do not require rollback.</p>
+<pre><code>{
+  "status": "error",
+  "code": "not_found",
+  "message": "Clip ... is not in the timeline.",
+  "revision": 12,
+  "opIndex": 1,
+  "rolledBack": true
+}</code></pre>
+<table>
+  <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td>invalid_argument</td><td>Missing, unknown, malformed, or out-of-range argument</td></tr>
+    <tr><td>not_found</td><td>Unknown API path, clip, track, marker, or playlist index</td></tr>
+    <tr><td>unavailable</td><td>Required media/timeline missing, track locked, or operation unsupported in the current state</td></tr>
+    <tr><td>busy</td><td>Another transaction owns the edit context</td></tr>
+    <tr><td>stale_revision</td><td>Read again before retrying the edit</td></tr>
+    <tr><td>result_too_large</td><td>Read response exceeds the 100,000-byte limit; request fewer clips using available filters</td></tr>
+  </tbody>
+</table>
+<p>There is no pagination or dry-run mode yet. Oversized successful edit batches
+remain successful but omit their results and include a message instructing you
+to read the results separately. Do not retry those edits as if they failed.</p>
+<p>Timeline writes reject unsupported transition operations. Non-ripple moves
+require empty destination space; lengthening requires available source media and
+appropriate adjacent space. Filter keyframe editing and analysis remain deferred;
+exports currently support the full timeline only.
+<code>timeline.seek</code> fails if the timeline cannot be loaded into the
+player, including when the existing GUI seek path has no producer to switch from.</p>
+<p>Coproducer chat allows up to 15 tool rounds per prompt. This is separate from
+the 500-operation batch limit. When the chat limit is reached, it shows a diagnostic
+notice; earlier successful edits remain applied.</p>
+
+<h2 id="reference">Generated API reference</h2>
+%%API_REFERENCE%%
+
+<h2 id="tools">Generated MCP tool reference</h2>
+%%MCP_REFERENCE%%
+
+<h2 id="building">Building and contributing</h2>
+<p>The shared operations, catalog, invocation, and transactions live in <code>src/api</code>.
+MCP transport and adapters, including tool generation and edit batches, live in
+<code>src/mcp</code>. AI providers live in <code>src/coproducer</code>; the Coproducer
+dock coordinates chat and scripts. The documentation generator intentionally uses
+both the API catalog and MCP adapter to produce this shared reference.</p>
+<p><code>docs/src/scripting-api.html.in</code> is the input template; generation
+replaces its API and MCP reference placeholders and writes a complete
+<code>index.html</code> alongside the JSON catalogs.</p>
+<p>With <code>SHOTCUT_BUILD_TESTS=ON</code>, the <code>exportpresetproperties</code>
+CTest covers preset IDs, resolution, profile extraction, and two-pass properties
+without launching Shotcut or encoding video. It requires installed MLT preset and
+profile data; set <code>MLT_DATA</code> if MLT cannot locate that data.</p>
+<p>In Shotcut, choose <strong>Help &gt; API Documentation...</strong> to generate a fresh
+reference in the application cache and open it in your default browser.
+No source checkout, build tools, or network connection is required.</p>
+<p>From a configured native build environment:</p>
+<pre><code>cmake --build &lt;build-directory&gt; --target api-docs-check
+cmake --build &lt;build-directory&gt; --target shared-api-docs</code></pre>
+<p>The generated site is at <code>&lt;build-directory&gt;/docs/scripting-api/index.html</code>.
+The default native build runs the completeness check. With <code>BUILD_DOCS=ON</code>,
+the existing <code>docs</code> target also builds this site alongside the existing
+QDoc reference for filter-development and internal QML APIs.
+Cross-compiling does not run the target executable; generate and check these
+docs from a native build.</p>
+<p>The executable supports headless developer commands, which do not open Shotcut,
+initialize MLT, load a project, or modify settings:</p>
+<pre><code>shotcut --check-api-docs
+shotcut --generate-api-docs &lt;HTML-template&gt; &lt;output-directory&gt;</code></pre>
+<p>Add documentation next to API declarations using <code>Q_CLASSINFO</code>:</p>
+<pre><code>Q_CLASSINFO("doc", "Object description.")
+Q_CLASSINFO("doc.someProperty", "Property description.")
+Q_CLASSINFO("mcp.someMethod", "read")
+Q_CLASSINFO("doc.someMethod", "Behavior and returned data.")
+Q_CLASSINFO("arg.someMethod.clipId", "Clip id.")
+Q_CLASSINFO("arg.someMethod.count", "integer!|Required option.")
+Q_CLASSINFO("arg.someMethod.enabled", "boolean|Optional setting.")</code></pre>
+<p>The catalog infers positional types and requiredness from Qt meta-objects.
+For a trailing <code>QVariantMap options</code>, metadata specifies option types
+and requiredness (<code>!</code>). The checker requires descriptions for every
+API object, property, method, positional parameter, and option, and types for
+parameters and options. It also rejects duplicate paths and invalid method kinds.
+No descriptions are copied into this template or a separate runtime table:
+the generated API reference uses the same catalog as MCP discovery, and the
+MCP reference uses the same tool definitions as the live server.</p>
+</body>
+</html>
