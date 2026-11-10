@@ -59,6 +59,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/durationdialog.cpp dialogs/durationdialog.h
   dialogs/durationdialog.ui
   dialogs/editmarkerdialog.cpp dialogs/editmarkerdialog.h
+  dialogs/edittransactiondialog.cpp dialogs/edittransactiondialog.h
   dialogs/filedatedialog.cpp dialogs/filedatedialog.h
   dialogs/filedownloaddialog.cpp dialogs/filedownloaddialog.h
   dialogs/listselectiondialog.cpp dialogs/listselectiondialog.h

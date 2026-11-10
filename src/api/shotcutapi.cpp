@@ -18,6 +18,7 @@
 #include "api/shotcutapi.h"
 
 #include "api/transaction.h"
+#include "dialogs/edittransactiondialog.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
@@ -57,6 +58,14 @@ ShotcutApi::ShotcutApi(QObject *parent)
     , m_undo(new ApiUndo(this))
     , m_jobs(new ApiJobs(this))
 {
+    auto *editDialog = new EditTransactionDialog(&MAIN);
+    connect(&Transaction::singleton(),
+            &Transaction::opened,
+            editDialog,
+            &EditTransactionDialog::begin);
+    connect(&Transaction::singleton(), &Transaction::closed, editDialog, &QWidget::hide);
+    if (Transaction::singleton().isOpen())
+        editDialog->begin(Transaction::singleton().text());
     connect(MAIN.undoStack(), &QUndoStack::indexChanged, this, &ShotcutApi::bumpRevision);
     connect(&MAIN, &MainWindow::producerOpened, this, &ShotcutApi::bumpRevision);
     connect(&MAIN, &MainWindow::profileChanged, this, &ShotcutApi::bumpRevision);
