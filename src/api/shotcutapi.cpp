@@ -73,6 +73,7 @@ ShotcutApi::ShotcutApi(QObject *parent)
     connect(m_playlist, &ApiPlaylist::changed, this, &ShotcutApi::bumpRevision);
     connect(m_markers, &ApiMarkers::changed, this, &ShotcutApi::bumpRevision);
     connect(m_filters, &ApiFilters::changed, this, &ShotcutApi::bumpRevision);
+    connect(m_filters, &ApiFilters::analysisChanged, m_jobs, &ApiJobs::changed);
     // Changes inside a transaction count only if it commits; a rollback leaves the project as it was.
     connect(&Transaction::singleton(),
             &Transaction::closed,

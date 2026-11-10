@@ -19,18 +19,29 @@
 
 #include "Logger.h"
 #include "api/apicatalog.h"
+#include "api/filteranimation.h"
 #include "api/transaction.h"
 #include "commands/filtercommands.h"
 #include "controllers/filtercontroller.h"
 #include "docks/timelinedock.h"
+#include "jobqueue.h"
+#include "jobs/meltjob.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/multitrackmodel.h"
+#include "qmltypes/qmlfilter.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 
 #include <MltFilter.h>
+#include <MltPlaylist.h>
+#include <memory>
+#include <QDomDocument>
+#include <QFileInfo>
+#include <QProcessEnvironment>
 #include <QRegularExpression>
+#include <QTemporaryFile>
 #include <QUndoStack>
 
 #include <cmath>
@@ -129,6 +140,87 @@ bool declaredTrue(const QVariant &value)
     return text == "1" || text == "true" || text == "yes";
 }
 
+bool supportsAnalysis(const QString &service)
+{
+    return service == "loudness" || service == "vidstab" || service == "opencv.tracker";
+}
+
+MeltJob *createAnalysisJob(
+    Mlt::Producer &producer, Mlt::Filter &filter, int in, int out, QString &error)
+{
+    error.clear();
+    int rawIndex = -1;
+    for (int i = 0; i < producer.filter_count(); ++i) {
+        std::unique_ptr<Mlt::Filter> candidate(producer.filter(i));
+        if (candidate->get_service() == filter.get_service()) {
+            rawIndex = i;
+            break;
+        }
+    }
+    if (rawIndex < 0 || !supportsAnalysis(QString::fromUtf8(filter.get("mlt_service")))
+        || out < in) {
+        error = QObject::tr("The filter cannot be analyzed on this producer.");
+        return nullptr;
+    }
+    Mlt::Producer copy(MLT.profile(), "xml-string", MLT.XML(&producer).toUtf8().constData());
+    if (!copy.is_valid() || rawIndex >= copy.filter_count()) {
+        error = QObject::tr("Cannot copy the analysis producer.");
+        return nullptr;
+    }
+    std::unique_ptr<Mlt::Filter> analysis(copy.filter(rawIndex));
+    if (QString::fromUtf8(analysis->get("mlt_service"))
+        != QString::fromUtf8(filter.get("mlt_service"))) {
+        error = QObject::tr("The analysis filter changed while copying the producer.");
+        return nullptr;
+    }
+    const QString uuid = QUuid::createUuid().toString();
+    analysis->set(kShotcutHashProperty, uuid.toUtf8().constData());
+    analysis->clear("results");
+    analysis->set("disable", 0);
+    analysis->set_in_and_out(in, out);
+    const bool audio = QString::fromUtf8(filter.get("mlt_service")) == "loudness";
+    if (!audio)
+        analysis->set("analyze", 1);
+    if (QString::fromUtf8(filter.get("mlt_service")) == "opencv.tracker")
+        analysis->set("_reset", 1);
+    Mlt::Playlist render(MLT.profile());
+    render.append(copy, in, out);
+    QDomDocument dom;
+    const auto parsed = dom.setContent(MLT.XML(&render, true));
+    if (!parsed) {
+        error = QObject::tr("Invalid analysis XML: %1").arg(parsed.errorMessage);
+        return nullptr;
+    }
+    auto output = std::make_unique<QTemporaryFile>(Util::writableTemporaryFile({}));
+    if (!output->open()) {
+        error = QObject::tr("Cannot create analysis output: %1").arg(output->errorString());
+        return nullptr;
+    }
+    output->close();
+    auto consumer = dom.createElement("consumer");
+    consumer.setAttribute("mlt_service", "xml");
+    consumer.setAttribute("all", 1);
+    consumer.setAttribute(audio ? "video_off" : "audio_off", 1);
+    consumer.setAttribute("resource", output->fileName());
+    const auto profiles = dom.elementsByTagName("profile");
+    dom.documentElement().insertAfter(consumer, profiles.isEmpty() ? QDomNode() : profiles.at(0));
+    auto *job = new MeltJob(output->fileName(),
+                            dom.toString(2),
+                            MLT.profile().frame_rate_num(),
+                            MLT.profile().frame_rate_den(),
+                            Settings.jobPriority(),
+                            false);
+    auto environment = QProcessEnvironment::systemEnvironment();
+    // Keep analyzed filters in result XML instead of a reference to the input XML file.
+    environment.insert("MLT_XML_DEEP", "1");
+    job->setProcessEnvironment(environment);
+    job->setProperty("analysisUuid", uuid);
+    job->setProperty("analysisState", "running");
+    job->setProperty("jobType", "analysis");
+    output.release()->setParent(job);
+    return job;
+}
+
 } // namespace
 
 ApiFilters::ApiFilters(QObject *parent)
@@ -152,9 +244,19 @@ QmlMetadata *ApiFilters::filterMetadata(const QString &id) const
 
 QVariantMap ApiFilters::metadataSnapshot(QmlMetadata *meta) const
 {
+    QVariantList keyframeParameters;
+    for (int i = 0; i < meta->keyframes()->parameterCount(); ++i) {
+        const auto *parameter = meta->keyframes()->parameter(i);
+        if (meta->keyframes()->property("enabled").toBool() && !parameter->isColor()
+            && !reservedProperty(parameter->property()))
+            keyframeParameters.append(QVariantMap{{"property", parameter->property()},
+                                                  {"rectangle", parameter->isRectangle()}});
+    }
     return {{"metadataId", meta->uniqueId()},
+            {"keyframeParameters", keyframeParameters},
             {"name", meta->name()},
             {"service", meta->mlt_service()},
+            {"supportsAnalysis", supportsAnalysis(meta->mlt_service())},
             {"isAudio", meta->isAudio()},
             {"needsGPU", meta->needsGPU()},
             {"isGpuCompatible", meta->isGpuCompatible()},
@@ -359,6 +461,10 @@ bool ApiFilters::prepareParameters(Mlt::Service &service,
         const auto key = name.toUtf8();
         const auto descriptor = descriptors.value(name).toMap();
         const auto type = descriptor.value("type").toString();
+        if (name == "analyze" && supportsAnalysis(QString::fromUtf8(service.get("mlt_service")))) {
+            fail(ErrorCode::InvalidArgument, tr("Use filters.analyze() to start filter analysis."));
+            return false;
+        }
         if (reservedProperty(name) || declaredTrue(descriptor.value("readonly"))) {
             fail(ErrorCode::InvalidArgument,
                  tr("Filter property %1 is reserved or read-only.").arg(name));
@@ -466,6 +572,8 @@ QVariant ApiFilters::add(const QVariantMap &target,
     if (!prepareParameters(filter, parameters, values))
         return {};
     filter.inherit(values);
+    if (supportsAnalysis(meta->mlt_service()) && !meta->isAudio())
+        filter.set("analyze", 0);
     if (!meta->objectName().isEmpty())
         filter.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
     filter.set_in_and_out(resolved.in, resolved.out);
@@ -565,6 +673,12 @@ QVariant ApiFilters::setParameters(const QVariantMap &target,
     Mlt::Properties values;
     if (!prepareParameters(service, parameters, values))
         return {};
+    return applyParameters(resolved, index, values);
+}
+
+QVariant ApiFilters::applyParameters(Target &resolved, int index, Mlt::Properties &values)
+{
+    auto service = MAIN.filterController()->attachedModel()->doGetService(resolved.producer, index);
     bool changed = false;
     for (int i = 0; i < values.count(); ++i) {
         const char *name = values.get_name(i);
@@ -586,6 +700,203 @@ QVariant ApiFilters::setParameters(const QVariantMap &target,
         }
     }
     return filterSnapshot(resolved.producer, index);
+}
+
+bool ApiFilters::animationParameter(Mlt::Service &service,
+                                    const QString &parameter,
+                                    bool &rectangle) const
+{
+    const auto *meta = MAIN.filterController()->metadataForService(&service);
+    const auto *spec = meta && meta->keyframes()->property("enabled").toBool()
+                           ? meta->keyframes()->parameter(parameter)
+                           : nullptr;
+    const auto descriptor = parameterMetadata(service).value(parameter).toMap();
+    if (reservedProperty(parameter) || !spec || spec->isColor()
+        || declaredTrue(descriptor.value("readonly"))) {
+        fail(ErrorCode::Unavailable,
+             tr("Not a supported numeric or rectangle keyframe parameter: %1.").arg(parameter));
+        return false;
+    }
+    rectangle = spec->isRectangle();
+    return true;
+}
+
+QVariant ApiFilters::keyframes(const QVariantMap &target, int index, const QString &parameter) const
+{
+    Target resolved;
+    Mlt::Service service;
+    bool rectangle = false;
+    if (!resolveTarget(target, resolved, false)
+        || !checkFilter(resolved.producer, index, service, false)
+        || !animationParameter(service, parameter, rectangle))
+        return {};
+    const int duration = service.get_int("out") > 0 || service.get_int("in") > 0
+                             ? service.get_int("out") - service.get_int("in") + 1
+                             : resolved.out - resolved.in + 1;
+    Mlt::Properties copy;
+    copy.inherit(service);
+    return QVariantMap{{"parameter", parameter},
+                       {"rectangle", rectangle},
+                       {"duration", duration},
+                       {"keys", FilterAnimation::read(copy, parameter, rectangle, duration)}};
+}
+
+QVariant ApiFilters::setKeyframes(const QVariantMap &target,
+                                  int index,
+                                  const QString &parameter,
+                                  const QVariantList &keys)
+{
+    ApiCallGuard guard;
+    Target resolved;
+    Mlt::Service service;
+    bool rectangle = false;
+    if (!resolveTarget(target, resolved, true)
+        || !checkFilter(resolved.producer, index, service, true)
+        || !animationParameter(service, parameter, rectangle))
+        return {};
+    const int duration = service.get_int("out") > 0 || service.get_int("in") > 0
+                             ? service.get_int("out") - service.get_int("in") + 1
+                             : resolved.out - resolved.in + 1;
+    Mlt::Properties values;
+    QString error;
+    if (!FilterAnimation::write(values, parameter, rectangle, duration, keys, error))
+        return fail(ErrorCode::InvalidArgument, error);
+    values.set(kShotcutAnimInProperty, 0);
+    values.set(kShotcutAnimOutProperty, 0);
+    if (!applyParameters(resolved, index, values).isValid())
+        return {};
+    return keyframes(target, index, parameter);
+}
+
+QVariant ApiFilters::removeKeyframes(const QVariantMap &target,
+                                     int index,
+                                     const QString &parameter,
+                                     const QVariantList &frames)
+{
+    ApiCallGuard guard;
+    const auto snapshot = keyframes(target, index, parameter);
+    if (!snapshot.isValid())
+        return {};
+    auto keys = snapshot.toMap().value("keys").toList();
+    QSet<int> requested;
+    for (const auto &frame : frames) {
+        if (!matchesJsonType(frame, "integer") || frame.toDouble() < 0
+            || frame.toDouble() >= snapshot.toMap().value("duration").toInt()
+            || requested.contains(frame.toInt()))
+            return fail(ErrorCode::InvalidArgument,
+                        tr("Give unique existing integer keyframe frames."));
+        requested.insert(frame.toInt());
+    }
+    if (requested.isEmpty())
+        return fail(ErrorCode::InvalidArgument, tr("Give at least one keyframe frame."));
+    QVariant lastValue;
+    for (int i = keys.size() - 1; i >= 0; --i) {
+        if (requested.remove(keys[i].toMap().value("frame").toInt())) {
+            lastValue = keys[i].toMap().value("value");
+            keys.removeAt(i);
+        }
+    }
+    if (!requested.isEmpty())
+        return fail(ErrorCode::NotFound, tr("A requested keyframe does not exist."));
+    if (!keys.isEmpty())
+        return setKeyframes(target, index, parameter, keys);
+    Target resolved;
+    Mlt::Service service;
+    if (!resolveTarget(target, resolved, true)
+        || !checkFilter(resolved.producer, index, service, true))
+        return {};
+    Mlt::Properties values;
+    const auto key = parameter.toUtf8();
+    if (snapshot.toMap().value("rectangle").toBool()) {
+        const auto rect = lastValue.toMap();
+        values.set(key.constData(),
+                   rect.value("x").toDouble(),
+                   rect.value("y").toDouble(),
+                   rect.value("width").toDouble(),
+                   rect.value("height").toDouble(),
+                   rect.value("opacity").toDouble());
+    } else {
+        values.set(key.constData(), lastValue.toDouble());
+    }
+    values.set(kShotcutAnimInProperty, 0);
+    values.set(kShotcutAnimOutProperty, 0);
+    if (!applyParameters(resolved, index, values).isValid())
+        return {};
+    return keyframes(target, index, parameter);
+}
+
+QVariant ApiFilters::analyze(const QVariantMap &target, int index)
+{
+    if (Transaction::singleton().isOpen())
+        return fail(ErrorCode::Busy, tr("Start analysis outside an edit transaction."));
+    Target resolved;
+    Mlt::Service service;
+    if (!resolveTarget(target, resolved, true)
+        || !checkFilter(resolved.producer, index, service, true))
+        return {};
+    const QString native = QString::fromUtf8(service.get("mlt_service"));
+    if (!supportsAnalysis(native))
+        return fail(ErrorCode::Unavailable,
+                    tr("This filter does not use Shotcut's analysis pipeline."));
+    for (auto *job : JOBS.jobs()) {
+        const auto state = job->property("analysisState").toString();
+        if (state == "running"
+            && job->property("analysisService").value<quintptr>()
+                   == reinterpret_cast<quintptr>(service.get_service()))
+            return fail(ErrorCode::Busy, tr("Analysis is already running for this filter."));
+    }
+    if (native == "vidstab") {
+        const QFileInfo filename(QString::fromUtf8(service.get("filename")));
+        if (!filename.isAbsolute() || filename.exists() || !filename.dir().exists())
+            return fail(ErrorCode::InvalidArgument,
+                        tr("Set filename to an absolute, nonexistent stabilization output file."));
+        QTemporaryFile probe(filename.dir().filePath(".shotcut-analysis-XXXXXX"));
+        if (!probe.open())
+            return fail(ErrorCode::Unavailable,
+                        tr("Analysis output folder is not writable: %1").arg(probe.errorString()));
+    }
+    auto filter = std::make_shared<Mlt::Filter>(service);
+    const int in = service.get_int("in") || service.get_int("out") ? service.get_int("in")
+                                                                   : resolved.in;
+    const int out = service.get_int("in") || service.get_int("out") ? service.get_int("out")
+                                                                    : resolved.out;
+    QString error;
+    auto *job = createAnalysisJob(resolved.producer, *filter, in, out, error);
+    if (!job)
+        return fail(ErrorCode::Unavailable, error);
+    if (native == "vidstab") {
+        const QString filename = QString::fromUtf8(service.get("filename"));
+        QFile reservation(filename);
+        if (!reservation.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
+            delete job;
+            return fail(ErrorCode::Unavailable,
+                        tr("Cannot reserve stabilization output: %1").arg(reservation.errorString()));
+        }
+        job->setProperty("analysisFilename", filename);
+    }
+    filter->set(kShotcutHashProperty, job->property("analysisUuid").toString().toUtf8().constData());
+    job->setProperty("analysisService",
+                     QVariant::fromValue(reinterpret_cast<quintptr>(service.get_service())));
+    job->setLabel(
+        tr("Analyze %1").arg(filterSnapshot(resolved.producer, index).value("name").toString()));
+    auto *delegate = new AnalyzeDelegate(*filter);
+    delegate->setParent(job);
+    connect(
+        job,
+        &AbstractJob::finished,
+        this,
+        [this, delegate, filter](AbstractJob *job, bool isSuccess) {
+            delegate->onAnalyzeFinished(job, isSuccess);
+            if (job->property("analysisState").toString() == "applied")
+                MAIN.filterController()->onFilterEdited(*filter, {QStringLiteral("results")});
+            if (QString::fromUtf8(filter->get(kShotcutHashProperty))
+                == job->property("analysisUuid").toString())
+                filter->clear(kShotcutHashProperty);
+            emit analysisChanged();
+        },
+        Qt::QueuedConnection);
+    JOBS.add(job);
+    return QVariantMap{{"jobId", job->id()}};
 }
 
 } // namespace Api

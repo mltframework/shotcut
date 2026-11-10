@@ -506,13 +506,18 @@ void FilterController::onUndoOrRedo(Mlt::Service &service)
     }
 }
 
-void FilterController::onFilterEdited(Mlt::Service &service)
+void FilterController::onFilterEdited(Mlt::Service &service, const QStringList &properties)
 {
     MLT.refreshConsumer();
     if (m_currentFilter && m_mltService.is_valid()
         && service.get_service() == m_mltService.get_service()) {
         pauseUndoTracking();
-        emit m_currentFilter->changed(QString());
+        if (properties.contains(kShotcutAnimInProperty))
+            emit m_currentFilter->animateInChanged();
+        if (properties.contains(kShotcutAnimOutProperty))
+            emit m_currentFilter->animateOutChanged();
+        for (const auto &property : properties)
+            emit m_currentFilter->changed(property);
         resumeUndoTracking();
     }
     emit filterChanged(&service);

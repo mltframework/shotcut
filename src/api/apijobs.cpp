@@ -95,7 +95,10 @@ QVariantMap ApiJobs::snapshot(AbstractJob *job) const
     QVariantMap result{{"id", job->id()},
                        {"label", job->label()},
                        {"target", job->target()},
-                       {"type", qobject_cast<EncodeJob *>(job) ? "export" : "job"},
+                       {"type",
+                        job->property("jobType").isValid() ? job->property("jobType").toString()
+                        : qobject_cast<EncodeJob *>(job)   ? "export"
+                                                           : "job"},
                        {"status", status},
                        {"progress", job->progress()},
                        {"elapsedMs", job->elapsedMs()},
@@ -104,6 +107,11 @@ QVariantMap ApiJobs::snapshot(AbstractJob *job) const
                             || status == "paused"}};
     if (status == "failed")
         result.insert("error", job->failureMessage());
+    if (job->property("analysisState").isValid()) {
+        result.insert("analysisState", job->property("analysisState"));
+        if (job->property("analysisError").isValid())
+            result.insert("analysisError", job->property("analysisError"));
+    }
     return result;
 }
 

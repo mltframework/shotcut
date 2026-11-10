@@ -362,14 +362,20 @@ void SetParametersCommand::apply(Mlt::Properties &values)
         LOG_ERROR() << "Filter not found" << m_row << text();
         return;
     }
+    QStringList properties;
     for (int i = 0; i < m_newParameters.count(); ++i) {
         const char *name = m_newParameters.get_name(i);
+        const bool isAnimationMode = !qstrcmp(name, kShotcutAnimInProperty)
+                                     || !qstrcmp(name, kShotcutAnimOutProperty);
+        const int oldDuration = isAnimationMode ? service.time_to_frames(service.get(name)) : 0;
         service.clear(name);
         if (values.property_exists(name))
             service.pass_property(values, name);
+        if (!isAnimationMode || oldDuration != service.time_to_frames(service.get(name)))
+            properties.append(QString::fromUtf8(name));
     }
     emit m_model.changed();
-    MAIN.filterController()->onFilterEdited(service);
+    MAIN.filterController()->onFilterEdited(service, properties);
 }
 
 void SetParametersCommand::redo()

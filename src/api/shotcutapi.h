@@ -48,7 +48,9 @@ class ShotcutApi : public ApiObject
     Q_CLASSINFO("doc.timeline", "Timeline tracks, clips, selection, and edits.")
     Q_CLASSINFO("doc.playlist", "The project source bin.")
     Q_CLASSINFO("doc.markers", "Timeline point and range markers.")
-    Q_CLASSINFO("doc.filters", "Filter metadata and static edits on clips, tracks, and output.")
+    Q_CLASSINFO(
+        "doc.filters",
+        "Filter metadata, parameter/keyframe edits, and analysis on clips, tracks, and output.")
     Q_CLASSINFO("doc.undo", "Explicit synchronous script undo grouping.")
     Q_CLASSINFO("doc.jobs", "Job status, cancellation, export presets and timeline export launch.")
     Q_PROPERTY(QString version READ version CONSTANT)

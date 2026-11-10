@@ -288,6 +288,65 @@ when undoable edits were committed:</p>
 actual shared MCP tool descriptions and input schemas. Auxiliary tools such as
 forum and documentation search are outside this reference.</p>
 
+<h3>Filter keyframes and analysis</h3>
+<p><code>filters.metadata(metadataId).keyframeParameters</code> lists supported numeric
+and rectangle properties. Use native MLT values, not the percentages displayed in the UI.
+Color keyframes and arbitrary animation expressions are not supported. Ganged properties
+must be edited explicitly. <code>filters.keyframes(target, index, parameter)</code> returns
+the filter duration and a <code>keys</code> array. Frames are integers relative to the
+filter start: frame zero is the filter's inclusive in-point, not timeline frame zero.
+This applies equally to clip, track, and output filters.</p>
+<p><code>setKeyframes</code> replaces a complete curve; read and merge the existing keys
+first to preserve them. <code>removeKeyframes</code> removes specified existing frames;
+removing all keys keeps the earliest key's value as a static value. Both operations are undoable and disable the
+filter's simple animate-in/out mode without removing other parameter curves.</p>
+<pre><code>const target = {clipId: shotcut.timeline.clipIds({selectedOnly: true})[0]}
+shotcut.undo.macro("Animate brightness", function () {
+    const filter = shotcut.filters.add(target, "brightness")
+    shotcut.filters.setKeyframes(target, filter.index, "level", [
+        {frame: 0, value: 0.5, interpolation: "linear"},
+        {frame: 24, value: 1.0, interpolation: "smoothNatural"}
+    ])
+})</code></pre>
+<p>Interpolation names are <code>discrete</code>, <code>linear</code>,
+<code>smooth</code> (loose), <code>smoothNatural</code>, and <code>smoothTight</code>.
+Easing names combine <code>sinusoidal</code>, <code>quadratic</code>, <code>cubic</code>,
+<code>quartic</code>, <code>quintic</code>, <code>exponential</code>, <code>circular</code>,
+<code>back</code>, <code>elastic</code>, or <code>bounce</code> with
+<code>In</code>, <code>Out</code>, or <code>InOut</code>, for example
+<code>quadraticInOut</code>. Linear is the default.</p>
+<p><code>filters.analyze(target, index)</code> launches a background job using the
+existing filter settings, without changing selection. Supported services are
+<code>loudness</code> (Normalize: Two Pass), <code>vidstab</code> (Stabilize), and
+<code>opencv.tracker</code> (Motion Tracker), subject to installed plugins.
+Normal metadata restrictions still apply; Normalize: Two Pass and Stabilize are clip-only.
+Configure the tracker rectangle/algorithm or stabilization filename before launching.
+API-added job-based video analysis filters start with <code>analyze=0</code> to prevent
+preview from writing analysis files; use <code>filters.analyze()</code> rather than
+setting that property directly.
+Stabilization requires an absolute output filename that does not already exist;
+external files are not undone or deleted. Other analysis mechanisms, such as
+360: Stabilize's playback-driven analysis, are not part of this job pipeline.</p>
+<pre><code>// Launch outside undo.macro() and outside shotcut_edit.
+const started = shotcut.filters.analyze(target, filterIndex)
+// Poll from a timer; do not spin synchronously.
+const state = shotcut.jobs.job(started.jobId)
+// Cancel a pending or running process with shotcut.jobs.cancel(started.jobId).</code></pre>
+<p>The MCP equivalent is <code>filters_analyze</code>; keyframe edits use
+<code>shotcut_edit</code>, and <code>filters_keyframes</code> reads a curve.
+Job snapshots have type <code>analysis</code> and <code>analysisState</code>:
+<code>running</code>, <code>applied</code>,
+<code>failed</code>, or <code>canceled</code>. Check this field as well as process
+<code>status</code>; a successful process does not guarantee result application.
+Failures include <code>analysisError</code> and a job log entry.</p>
+<p>Successful results apply automatically and are not undoable, matching GUI analysis.
+Clients do not need to wait or poll for results to be applied. Application does not
+wait for active script/MCP transactions to finish. As with GUI analysis, results
+are not checked against edits made while analysis ran. Neither background analysis nor result application
+opens a modal edit dialog.</p>
+<p>GUI and API analysis share the completion delegate: results update matching tagged
+filters in the project and pending export jobs, including motion-tracker model data.</p>
+
 <h2 id="undo-and-revisions">Undo and revisions</h2>
 <h3>Background jobs and exports</h3>
 <p><code>jobs.list()</code> and <code>jobs.job(id)</code> read the normal Jobs queue.
@@ -322,7 +381,7 @@ filename. <code>v2pass=true</code> or <code>pass=1</code>/<code>pass=2</code> re
 the normal two-pass pair, with each pass property generated for its job. Invalid or
 conflicting pass markers fail instead of being silently ignored.</p>
 <p>Streaming, source/bin exports, range exports, image sequences, arbitrary encoder
-properties, and filter analysis launch are not included. Missing media or filters
+properties are not included. Missing media or filters
 still requiring analysis cause an explicit error, not a dialog or automatic analysis.
 Jobs follow existing queue pause/scheduling behavior.</p>
 <pre><code>const result = shotcut.jobs.startExport("/absolute/path/output.mp4", "default")
@@ -412,7 +471,7 @@ remain successful but omit their results and include a message instructing you
 to read the results separately. Do not retry those edits as if they failed.</p>
 <p>Timeline writes reject unsupported transition operations. Non-ripple moves
 require empty destination space; lengthening requires available source media and
-appropriate adjacent space. Filter keyframe editing and analysis remain deferred;
+appropriate adjacent space. Color keyframe editing remains deferred;
 exports currently support the full timeline only.
 <code>timeline.seek</code> fails if the timeline cannot be loaded into the
 player, including when the existing GUI seek path has no producer to switch from.</p>
