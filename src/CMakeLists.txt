@@ -18,6 +18,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   api/apitimeline.cpp api/apitimeline.h
   api/apiundo.cpp api/apiundo.h
   api/apiutil.cpp api/apiutil.h
+  api/filteranimation.cpp api/filteranimation.h
   api/shotcutapi.cpp api/shotcutapi.h
   api/transaction.cpp api/transaction.h
   autosavefile.cpp autosavefile.h

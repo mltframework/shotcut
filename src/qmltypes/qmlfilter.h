@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
-    QString resultsFromXml(const QString &fileName);
+    QString resultsFromXml(const QString &fileName, QString &error);
     void updateFilter(Mlt::Filter &filter, const QString &results);
     void updateJob(EncodeJob *job, const QString &results);
 

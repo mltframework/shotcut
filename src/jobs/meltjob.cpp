@@ -151,7 +151,9 @@ void MeltJob::start()
         args << QStringLiteral("out=%1").arg(m_out);
     }
     LOG_DEBUG() << meltPath.absoluteFilePath() + " " + args.join(' ');
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QProcessEnvironment env = processEnvironment();
+    if (env.isEmpty())
+        env = QProcessEnvironment::systemEnvironment();
 #ifndef Q_OS_MAC
     // These environment variables fix rich text rendering for high DPI
     // fractional or otherwise.

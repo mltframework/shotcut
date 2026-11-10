@@ -56,6 +56,14 @@ target_include_directories(test_exportpresetproperties PRIVATE ${CMAKE_SOURCE_DI
 target_link_libraries(test_exportpresetproperties PRIVATE Qt6::Core Qt6::Xml Qt6::Test PkgConfig::mlt++)
 add_test(NAME exportpresetproperties COMMAND test_exportpresetproperties)
 
+add_executable(test_filteranimation
+  test_filteranimation.cpp
+  ${CMAKE_SOURCE_DIR}/src/api/filteranimation.cpp
+)
+target_include_directories(test_filteranimation PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(test_filteranimation PRIVATE Qt6::Core Qt6::Test PkgConfig::mlt++)
+add_test(NAME filteranimation COMMAND test_filteranimation)
+
 add_executable(test_addonqmlgenerator
   test_addonqmlgenerator.cpp
   ${CMAKE_SOURCE_DIR}/src/controllers/addonqmlgenerator.cpp
