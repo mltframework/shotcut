@@ -34,6 +34,20 @@ target_include_directories(test_exportpresetdialog PRIVATE ${CMAKE_SOURCE_DIR}/s
 target_link_libraries(test_exportpresetdialog PRIVATE Qt6::Widgets Qt6::Test)
 add_test(NAME exportpresetdialog COMMAND test_exportpresetdialog -platform offscreen)
 
+add_executable(test_edittransactiondialog
+  test_edittransactiondialog.cpp
+  ${CMAKE_SOURCE_DIR}/src/api/transaction.cpp
+  ${CMAKE_SOURCE_DIR}/src/dialogs/edittransactiondialog.cpp
+)
+target_include_directories(test_edittransactiondialog PRIVATE
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/CuteLogger/include
+)
+target_link_libraries(test_edittransactiondialog PRIVATE
+  Qt6::Widgets Qt6::Network Qt6::Test PkgConfig::mlt++ CuteLogger
+)
+add_test(NAME edittransactiondialog COMMAND test_edittransactiondialog -platform offscreen)
+
 add_executable(test_exportpresetproperties
   test_exportpresetproperties.cpp
   ${CMAKE_SOURCE_DIR}/src/exportpreset.cpp

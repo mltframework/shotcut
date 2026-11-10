@@ -338,6 +338,11 @@ prefixed with <code>Script: </code>. A successful MCP edit batch creates one und
 Empty, read-only, and action-only batches create no undo entry.
 The transaction foundation also groups synchronous QML edit calls into an
 automatic macro that closes after the script returns to the event loop.</p>
+<p>While a script or MCP edit transaction is open, a non-cancelable application-modal
+dialog prevents GUI interaction with the project. Nested groups share this dialog,
+which remains active until commit or rollback finishes. Command-owned progress and
+error dialogs can still appear above it. The dialog does not cover AI/network waits,
+standalone reads or actions, or background jobs.</p>
 <p>Use <code>shotcut.undo.macro(text, callback)</code> for an explicit, named,
 synchronous group. It returns the callback's result. Any thrown value or API error
 rolls back the group, even if an API error is caught inside the callback.
