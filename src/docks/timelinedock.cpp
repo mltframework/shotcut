@@ -55,6 +55,7 @@
 #include <QDialogButtonBox>
 #include <QGuiApplication>
 #include <QMenu>
+#include <QMessageBox>
 #include <QProgressBar>
 #include <QQmlContext>
 #include <QQuickItem>
@@ -1708,8 +1709,13 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Audio Mixing Assistant..."), this);
     connect(action, &QAction::triggered, this, [&]() {
-        if (m_model.trackList().size() > 1)
+        if (m_model.trackList().size() > 0)
             showAudioMixingAssistantDialog();
+        else
+            QMessageBox::information(this,
+                                     tr("Audio Mixing Assistant"),
+                                     tr("Add a track to the timeline to use the Audio Mixing "
+                                        "Assistant."));
     });
     Actions.add("timelineAudioMixingAssistantAction", action);
 
