@@ -621,7 +621,7 @@ bool ProxyManager::isValidVideo(Mlt::Producer producer)
         service = QString::fromLatin1(producer.get("mlt_service"));
         producer.set("video_index", video_index);
     }
-    if (service == "avformat") {
+    if (service == "avformat" || service == "osv") {
         QString key = QStringLiteral("meta.media.%1.codec.pix_fmt").arg(video_index);
         QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
         // Cover art is usually 90000 fps and should not be proxied
@@ -660,7 +660,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
             setProxy(hashProxy);
             return true;
         }
-        if (service.startsWith("avformat")) {
+        if (service.startsWith("avformat") || service == "osv") {
             const auto externalProxy = existingExternalProxy(res);
             if (!externalProxy.isEmpty()) {
                 setProxy(externalProxy);

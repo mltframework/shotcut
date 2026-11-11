@@ -2521,7 +2521,7 @@ void MainWindow::openVideo()
     QStringList filenames = QFileDialog::getOpenFileNames(this,
                                                           tr("Open File"),
                                                           path,
-                                                          tr("All Files (*);;MLT XML (*.mlt)"),
+                                                          tr("All Files (*);;MLT XML (*.mlt);;DJI Osmo 360 (*.osv *.OSV)"),
                                                           nullptr,
                                                           Util::getFileDialogOptions());
 
@@ -5478,7 +5478,7 @@ void MainWindow::on_actionOpenXML_triggered()
     QStringList filenames = QFileDialog::getOpenFileNames(this,
                                                           tr("Open File"),
                                                           path,
-                                                          tr("MLT XML (*.mlt);;All Files (*)"),
+                                                          tr("MLT XML (*.mlt);;DJI Osmo 360 (*.osv *.OSV);;All Files (*)"),
                                                           nullptr,
                                                           Util::getFileDialogOptions());
     if (filenames.length() > 0) {
