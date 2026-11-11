@@ -5174,6 +5174,13 @@ void TimelineDock::addAdjustmentClip()
         return;
     producer.set("mlt_image_format", "rgba");
     producer.set("meta.fx_cut", 1);
+    // Give the dummy clip the profile's media size: filters applied to an
+    // adjustment clip (e.g. Size, Position & Rotate / affine) read
+    // meta.media.width/height from the frame to compute their geometry.
+    // Without them the affine transition gets 0x0 and paints a black mask
+    // over the clips below.
+    producer.set("meta.media.width", profile.width());
+    producer.set("meta.media.height", profile.height());
     producer.set(kShotcutProducerProperty, "adjustment");
     producer.set(kShotcutCaptionProperty, tr("Adjustment Clip").toUtf8().constData());
     MLT.setDurationFromDefault(&producer);
