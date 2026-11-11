@@ -1064,6 +1064,8 @@ void KeyframesModel::reload()
 
 void KeyframesModel::onFilterChanged(const QString &property)
 {
+    if (m_filter->animateIn() > 0 || m_filter->animateOut() > 0)
+        return;
     bool isKeyframeProperty = false;
     for (int p = 0; p < m_metadata->keyframes()->parameterCount() && isKeyframeProperty == false;
          p++) {
@@ -1099,11 +1101,13 @@ void KeyframesModel::onFilterChanged(const QString &property)
         endInsertRows();
         emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
     } else {
-        // Keyframe count is unchanged. A value must have changed.
+        // A replacement curve can change positions and interpolation without changing key count.
         emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
         emit dataChanged(index(0, 0, index(i)),
                          index(m_keyframeCounts[i] - 1, 0, index(i)),
-                         QVector<int>() << NumericValueRole << NameRole);
+                         QVector<int>()
+                             << NumericValueRole << NameRole << FrameNumberRole << KeyframeTypeRole
+                             << PrevKeyframeTypeRole << MinimumFrameRole << MaximumFrameRole);
     }
 }
 

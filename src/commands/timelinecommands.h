@@ -105,7 +105,9 @@ public:
                   int trackIndex,
                   int position,
                   const QString &xml,
-                  bool seek = true,
+                  bool seek,
+                  bool rippleAllTracks,
+                  bool rippleMarkers,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
@@ -184,6 +186,8 @@ public:
                   MarkersModel &markersModel,
                   int trackIndex,
                   int clipIndex,
+                  bool rippleAllTracks,
+                  bool rippleMarkers,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
@@ -340,6 +344,8 @@ public:
                     int trackDelta,
                     int positionDelta,
                     bool ripple,
+                    bool rippleAllTracks,
+                    bool rippleMarkers,
                     QUndoCommand *parent = 0);
     void addClip(int trackIndex, int clipIndex);
     void redo();
@@ -441,6 +447,8 @@ public:
                       int clipIndex,
                       int delta,
                       bool ripple,
+                      bool rippleAllTracks,
+                      bool rippleMarkers,
                       bool redo = true,
                       QUndoCommand *parent = 0);
     void redo();
@@ -474,6 +482,8 @@ public:
                        int clipIndex,
                        int delta,
                        bool ripple,
+                       bool rippleAllTracks,
+                       bool rippleMarkers,
                        bool redo = true,
                        QUndoCommand *parent = 0);
     void redo();
@@ -591,6 +601,35 @@ private:
     int m_markerOldStart;
     int m_markerNewStart;
     QList<Markers::Marker> m_markers;
+};
+
+class CreateTransitionCommand : public QUndoCommand
+{
+public:
+    CreateTransitionCommand(MultitrackModel &model,
+                            int trackIndex,
+                            int leftIndex,
+                            int rightIndex,
+                            int duration,
+                            bool preserve,
+                            bool ripple,
+                            bool rippleAllTracks,
+                            QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+    int transitionIndex() const { return m_transitionIndex; }
+
+private:
+    MultitrackModel &m_model;
+    int m_trackIndex;
+    int m_leftIndex;
+    int m_rightIndex;
+    int m_duration;
+    bool m_preserve;
+    bool m_ripple;
+    bool m_rippleAllTracks;
+    int m_transitionIndex = -1;
+    UndoHelper m_undoHelper;
 };
 
 class TrimTransitionInCommand : public TrimCommand

@@ -1234,13 +1234,17 @@ void AudioMixingAssistantDialog::applyApprovedRecommendations()
             if (service && service->is_valid()
                 && replacesAssistantFilter(*service, recommendation)) {
                 MAIN.undoStack()->push(new Filter::RemoveCommand(*attachedModel,
+                                                                 *attachedModel->producer(),
                                                                  attachedModel->name(filterRow),
                                                                  *service,
                                                                  filterRow));
             }
         }
-        MAIN.undoStack()->push(
-            new Filter::AddCommand(*attachedModel, title, filter, attachedModel->rowCount()));
+        MAIN.undoStack()->push(new Filter::AddCommand(*attachedModel,
+                                                      *attachedModel->producer(),
+                                                      title,
+                                                      filter,
+                                                      attachedModel->rowCount()));
     }
     MAIN.undoStack()->endMacro();
 }

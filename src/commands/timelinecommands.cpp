@@ -205,6 +205,8 @@ InsertCommand::InsertCommand(MultitrackModel &model,
                              int position,
                              const QString &xml,
                              bool seek,
+                             bool rippleAllTracks,
+                             bool rippleMarkers,
                              QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -214,8 +216,8 @@ InsertCommand::InsertCommand(MultitrackModel &model,
     , m_xml(xml)
     , m_undoHelper(m_model)
     , m_seek(seek)
-    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_rippleAllTracks(rippleAllTracks)
+    , m_rippleMarkers(rippleMarkers)
     , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
@@ -468,6 +470,8 @@ RemoveCommand::RemoveCommand(MultitrackModel &model,
                              MarkersModel &markersModel,
                              int trackIndex,
                              int clipIndex,
+                             bool rippleAllTracks,
+                             bool rippleMarkers,
                              QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -475,8 +479,8 @@ RemoveCommand::RemoveCommand(MultitrackModel &model,
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_undoHelper(m_model)
-    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_rippleAllTracks(rippleAllTracks)
+    , m_rippleMarkers(rippleMarkers)
     , m_markerRemoveStart(-1)
     , m_markerRemoveEnd(-1)
 {
@@ -820,8 +824,13 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(
-    TimelineDock &timeline, int trackDelta, int positionDelta, bool ripple, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(TimelineDock &timeline,
+                                 int trackDelta,
+                                 int positionDelta,
+                                 bool ripple,
+                                 bool rippleAllTracks,
+                                 bool rippleMarkers,
+                                 QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
     , m_model(*timeline.model())
@@ -829,8 +838,8 @@ MoveClipCommand::MoveClipCommand(
     , m_trackDelta(trackDelta)
     , m_positionDelta(positionDelta)
     , m_ripple(ripple)
-    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_rippleAllTracks(rippleAllTracks)
+    , m_rippleMarkers(rippleMarkers)
     , m_undoHelper(m_model)
     , m_redo(false)
     , m_earliestStart(-1)
@@ -1329,6 +1338,8 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model,
                                      int clipIndex,
                                      int delta,
                                      bool ripple,
+                                     bool rippleAllTracks,
+                                     bool rippleMarkers,
                                      bool redo,
                                      QUndoCommand *parent)
     : TrimCommand(parent)
@@ -1338,8 +1349,8 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model,
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
-    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple)
+    , m_rippleAllTracks(rippleAllTracks)
+    , m_rippleMarkers(rippleMarkers && m_ripple)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip in point"));
@@ -1437,6 +1448,8 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model,
                                        int clipIndex,
                                        int delta,
                                        bool ripple,
+                                       bool rippleAllTracks,
+                                       bool rippleMarkers,
                                        bool redo,
                                        QUndoCommand *parent)
     : TrimCommand(parent)
@@ -1446,8 +1459,8 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model,
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
-    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple)
+    , m_rippleAllTracks(rippleAllTracks)
+    , m_rippleMarkers(rippleMarkers && m_ripple)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip out point"));
@@ -1760,6 +1773,78 @@ void AddTransitionCommand::undo()
             m_markersModel.doReplace(m_markers);
         }
     }
+}
+
+CreateTransitionCommand::CreateTransitionCommand(MultitrackModel &model,
+                                                 int trackIndex,
+                                                 int leftIndex,
+                                                 int rightIndex,
+                                                 int duration,
+                                                 bool preserve,
+                                                 bool ripple,
+                                                 bool rippleAllTracks,
+                                                 QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_leftIndex(leftIndex)
+    , m_rightIndex(rightIndex)
+    , m_duration(duration)
+    , m_preserve(preserve)
+    , m_ripple(ripple)
+    , m_rippleAllTracks(ripple && rippleAllTracks)
+    , m_undoHelper(model)
+{
+    setText(QObject::tr("Add transition"));
+    m_undoHelper.setText(text());
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+}
+
+void CreateTransitionCommand::redo()
+{
+    LOG_DEBUG() << m_trackIndex << m_leftIndex << m_rightIndex << m_duration << m_preserve
+                << m_ripple << m_rippleAllTracks;
+    m_undoHelper.recordBeforeState(m_rippleAllTracks ? QSet<int>() : QSet<int>{m_trackIndex});
+    const auto left = m_model.makeIndex(m_trackIndex, m_leftIndex);
+    const int boundary = m_model.data(left, MultitrackModel::StartRole).toInt()
+                         + m_model.data(left, MultitrackModel::DurationRole).toInt();
+    int rightIndex = m_rightIndex;
+    m_transitionIndex = -1;
+    if (m_preserve) {
+        if (rightIndex > m_leftIndex + 1) {
+            if (m_ripple) {
+                m_model.removeClip(m_trackIndex, m_leftIndex + 1, m_rippleAllTracks);
+            } else if (!m_model.moveClip(m_trackIndex,
+                                         m_trackIndex,
+                                         rightIndex,
+                                         boundary,
+                                         false,
+                                         false)) {
+                LOG_ERROR() << "Failed to close transition gap";
+                m_undoHelper.recordAfterState();
+                return;
+            }
+            rightIndex = m_leftIndex + 1;
+        }
+        // Extend the right clip, then overlap exactly that extension. This avoids mix_out's
+        // whole-clip special case when the source in point equals the transition duration.
+        m_model.trimClipIn(m_trackIndex, rightIndex, -m_duration, true, false);
+        m_transitionIndex
+            = m_model.addTransition(m_trackIndex, rightIndex, boundary - m_duration, true, false);
+    } else {
+        m_transitionIndex = m_model.addTransition(m_trackIndex,
+                                                  rightIndex,
+                                                  boundary - m_duration,
+                                                  m_ripple,
+                                                  m_rippleAllTracks);
+    }
+    m_undoHelper.recordAfterState();
+}
+
+void CreateTransitionCommand::undo()
+{
+    LOG_DEBUG() << m_trackIndex << m_leftIndex << m_rightIndex;
+    m_undoHelper.undoChanges();
 }
 
 TrimTransitionInCommand::TrimTransitionInCommand(MultitrackModel &model,

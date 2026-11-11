@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <!-- Shared template for build-time documentation and the runtime Help command. -->
+        <file alias="docs/scripting-api.html.in">../docs/src/scripting-api.html.in</file>
         <file>resources/glaxnimate.rawr</file>
         <file>resources/qtquickcontrols2-dark.conf</file>
         <file>resources/qtquickcontrols2-light.conf</file>

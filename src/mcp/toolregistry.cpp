@@ -17,6 +17,8 @@
 
 #include "mcp/toolregistry.h"
 
+#include "Logger.h"
+
 #include <QJsonValue>
 
 namespace Shotcut {
@@ -63,6 +65,7 @@ QJsonObject ToolRegistry::call(const QString &name,
     }
 
     try {
+        LOG_DEBUG() << "MCP tool" << name;
         return tool.handler(arguments);
     } catch (...) {
         if (error)

@@ -18,6 +18,7 @@
 #include "ConsoleAppender.h"
 #include "FileAppender.h"
 #include "Logger.h"
+#include "api/apidocs.h"
 #include "gpuinfo.h"
 #include "mainwindow.h"
 #include "settings.h"
@@ -410,6 +411,12 @@ protected:
 
 int main(int argc, char **argv)
 {
+    // Documentation uses only meta-objects, not the GUI or media engine.
+    if (argc > 1
+        && (!qstrcmp(argv[1], "--check-api-docs") || !qstrcmp(argv[1], "--generate-api-docs"))) {
+        QCoreApplication app(argc, argv);
+        return Shotcut::Api::runDocumentationCommand(app.arguments());
+    }
 #if defined(Q_OS_WIN) && defined(QT_DEBUG)
     // Attach to a parent console for console logging.
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {

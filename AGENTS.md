@@ -65,9 +65,32 @@ To properly debug on Windows you must set the environment variable `QSG_RHI_BACK
 - `src/actions.cpp` — global action registry
 - `src/settings.cpp` — persistent settings
 
-## No Automated Tests
+## Automated Tests
 
-There are no C++ unit tests. The only automated tests are JavaScript tests for EDL/chapters export:
+C++ QtTest tests in `tests/` are registered with CTest. Enable them with
+`SHOTCUT_BUILD_TESTS=ON` (off by default) in your configured build:
+
+```bash
+cmake -S . -B <build-directory> -DSHOTCUT_BUILD_TESTS=ON
+cmake --build <build-directory>
+ctest --test-dir <build-directory> --output-on-failure
+
+# Focused export preset checks
+ctest --test-dir <build-directory> -R '^exportpresetproperties$' --output-on-failure
+```
+
+Tests require Qt Test and the dependencies of the tested components. Preset tests
+need installed MLT preset/profile data; set `MLT_DATA` to the MLT data directory
+if it cannot be located automatically.
+
+On Windows, include the installed Shotcut root, its `bin` and `lib` directories,
+the Qt/compiler runtime directory, and the build's `CuteLogger` directory in
+`PATH`. Some MLT builds locate plugins relative to the test executable instead
+of honoring `MLT_REPOSITORY`. If a test reports no plugins and looks under
+`tests/lib/mlt`, run a temporary copy of that executable beside the installed
+Shotcut executable, where `lib/mlt` is available, and remove the copy afterward.
+
+JavaScript tests cover EDL/chapters export:
 
 ```bash
 node src/qml/export-edl/test-node.js

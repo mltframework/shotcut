@@ -3195,34 +3195,28 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer *producer)
     mlt_service service = producer->get_service();
 
     // Check if it was on the multitrack tractor.
-    if (service == m_tractor->get_service())
+    if (service == m_tractor->get_service()) {
         emit filteredChanged();
-    else if (producer->get(kMultitrackItemProperty)) {
-        // Check if it was a clip.
-        QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));
-        auto parts = s.split(':');
-        if (parts.length() == 2) {
-            QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
-            QVector<int> roles;
-            roles << FadeInRole;
-            roles << FadeOutRole;
-            roles << IsFilteredRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-        }
-    } else
-        for (int i = 0; i < m_trackList.size(); i++) {
-            // Check if it was on one of the tracks.
-            QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList[i].mlt_index));
-            if (service == track.data()->get_service()) {
-                QModelIndex modelIndex = index(i, 0);
-                QVector<int> roles;
-                roles << IsFilteredRole;
-                roles << GainRole;
-                roles << GainEnabledRole;
-                emit dataChanged(modelIndex, modelIndex, roles);
-                break;
+        return;
+    }
+    for (int i = 0; i < m_trackList.size(); i++) {
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList[i].mlt_index));
+        if (service == track->get_service()) {
+            QModelIndex modelIndex = index(i, 0);
+            emit dataChanged(modelIndex, modelIndex, {IsFilteredRole, GainRole, GainEnabledRole});
+        } else {
+            Mlt::Playlist playlist(*track);
+            for (int j = 0; j < playlist.count(); j++) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
+                if (clip && clip->parent().get_service() == service) {
+                    QModelIndex modelIndex = makeIndex(i, j);
+                    emit dataChanged(modelIndex,
+                                     modelIndex,
+                                     {FadeInRole, FadeOutRole, IsFilteredRole});
+                }
             }
         }
+    }
 }
 
 void MultitrackModel::onFilterChanged(Mlt::Service *filter)
@@ -3800,6 +3794,23 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::getClipInfo(int trackIndex, int 
         }
     }
     return std::unique_ptr<Mlt::ClipInfo>(result);
+}
+
+QPair<int, int> MultitrackModel::getClipFilterRange(int trackIndex,
+                                                    int clipIndex,
+                                                    const Mlt::ClipInfo &info)
+{
+    int in = info.frame_in;
+    int out = info.frame_out;
+    const auto left = getClipInfo(trackIndex, clipIndex - 1);
+    if (left && left->producer && left->producer->is_valid()
+        && left->producer->get(kShotcutTransitionProperty))
+        in -= left->frame_count;
+    const auto right = getClipInfo(trackIndex, clipIndex + 1);
+    if (right && right->producer && right->producer->is_valid()
+        && right->producer->get(kShotcutTransitionProperty))
+        out += right->frame_count;
+    return {in, out};
 }
 
 void MultitrackModel::setClipGroup(int trackIndex, int position, int group)

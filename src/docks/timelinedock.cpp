@@ -2294,7 +2294,9 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
                                                                trackIndex,
                                                                clipIndex,
                                                                m_position - info->start,
-                                                               ripple));
+                                                               ripple,
+                                                               Settings.timelineRippleAllTracks(),
+                                                               Settings.timelineRippleMarkers()));
         if (ripple)
             setPosition(info->start);
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
@@ -2312,7 +2314,9 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
                                                                 trackIndex,
                                                                 clipIndex,
                                                                 delta,
-                                                                ripple));
+                                                                ripple,
+                                                                Settings.timelineRippleAllTracks(),
+                                                                Settings.timelineRippleMarkers()));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
@@ -2903,6 +2907,16 @@ void TimelineDock::append(int trackIndex)
 
 void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
 {
+    removeWithRipplePolicy(trackIndex,
+                           clipIndex,
+                           ignoreTransition,
+                           Settings.timelineRippleAllTracks(),
+                           Settings.timelineRippleMarkers());
+}
+
+void TimelineDock::removeWithRipplePolicy(
+    int trackIndex, int clipIndex, bool ignoreTransition, bool rippleAllTracks, bool rippleMarkers)
+{
     if (!m_model.trackList().count())
         return;
     if (isTrackLocked(trackIndex)) {
@@ -2915,8 +2929,12 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
     if (!ignoreTransition && isTransition(trackIndex, clipIndex)) {
         MAIN.undoStack()->beginMacro(tr("Ripple delete transition"));
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
-        MAIN.undoStack()->push(
-            new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
+        MAIN.undoStack()->push(new Timeline::RemoveCommand(m_model,
+                                                           m_markersModel,
+                                                           trackIndex,
+                                                           clipIndex,
+                                                           rippleAllTracks,
+                                                           rippleMarkers));
         if (clipIndex > 0 && info->producer && info->producer->is_valid()) {
             // verify the clip after belongs to transition
             Mlt::Tractor transition(*info->producer);
@@ -2928,7 +2946,9 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
                                                                        trackIndex,
                                                                        clipIndex,
                                                                        -info->frame_count,
-                                                                       true));
+                                                                       true,
+                                                                       rippleAllTracks,
+                                                                       rippleMarkers));
             // verify the clip before belongs to transition
             transitionClip.reset(transition.track(0));
             neighborClip = producerForClip(trackIndex, clipIndex - 1);
@@ -2938,14 +2958,20 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
                                                                         trackIndex,
                                                                         clipIndex - 1,
                                                                         -info->frame_count,
-                                                                        true));
+                                                                        true,
+                                                                        rippleAllTracks,
+                                                                        rippleMarkers));
         }
         MAIN.undoStack()->endMacro();
     } else {
         Mlt::Producer clip = producerForClip(trackIndex, clipIndex);
         if (clip.is_valid()) {
-            MAIN.undoStack()->push(
-                new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
+            MAIN.undoStack()->push(new Timeline::RemoveCommand(m_model,
+                                                               m_markersModel,
+                                                               trackIndex,
+                                                               clipIndex,
+                                                               rippleAllTracks,
+                                                               rippleMarkers));
         }
     }
 }
@@ -2958,6 +2984,16 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
 */
 
 void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
+{
+    liftWithRipplePolicy(trackIndex,
+                         clipIndex,
+                         ignoreTransition,
+                         Settings.timelineRippleAllTracks(),
+                         Settings.timelineRippleMarkers());
+}
+
+void TimelineDock::liftWithRipplePolicy(
+    int trackIndex, int clipIndex, bool ignoreTransition, bool rippleAllTracks, bool rippleMarkers)
 {
     if (!m_model.trackList().count())
         return;
@@ -2992,7 +3028,9 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
                                                     trackIndex,
                                                     clipIndex + (clipBefore.is_blank() ? 0 : 1),
                                                     -duration,
-                                                    false));
+                                                    false,
+                                                    rippleAllTracks,
+                                                    rippleMarkers));
             // verify the clip before belongs to transition
             transitionClip.reset(transition.track(0));
             if (duration < info->frame_count)
@@ -3003,7 +3041,9 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
                                                                         trackIndex,
                                                                         clipIndex - 1,
                                                                         -duration,
-                                                                        false));
+                                                                        false,
+                                                                        rippleAllTracks,
+                                                                        rippleMarkers));
         } else {
             MAIN.undoStack()->push(new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
         }
@@ -3285,23 +3325,16 @@ void TimelineDock::emitSelectedFromSelection()
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
         if (!info)
             continue;
+        const auto filterRange = m_model.getClipFilterRange(trackIndex, clipIndex, *info);
+        info->producer->set(kFilterInProperty, filterRange.first);
+        info->producer->set(kFilterOutProperty, filterRange.second);
         auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
         if (info2 && info2->producer && info2->producer->is_valid()
             && info2->producer->get(kShotcutTransitionProperty)) {
             // Factor in a transition left of the clip.
-            info->producer->set(kFilterInProperty, info->frame_in - info2->frame_count);
             info->producer->set(kPlaylistStartProperty, info2->start);
         } else {
-            info->producer->set(kFilterInProperty, info->frame_in);
             info->producer->set(kPlaylistStartProperty, info->start);
-        }
-        info2 = m_model.getClipInfo(trackIndex, clipIndex + 1);
-        if (info2 && info2->producer && info2->producer->is_valid()
-            && info2->producer->get(kShotcutTransitionProperty)) {
-            // Factor in a transition right of the clip.
-            info->producer->set(kFilterOutProperty, info->frame_out + info2->frame_count);
-        } else {
-            info->producer->set(kFilterOutProperty, info->frame_out);
         }
         info->producer
             ->set(kMultitrackItemProperty,
@@ -4120,7 +4153,12 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         // A move that nets no change has nothing to do or undo.
         if (toTrack == fromTrack && position == 0)
             return;
-        auto command = new Timeline::MoveClipCommand(*this, toTrack - fromTrack, position, ripple);
+        auto command = new Timeline::MoveClipCommand(*this,
+                                                     toTrack - fromTrack,
+                                                     position,
+                                                     ripple,
+                                                     Settings.timelineRippleAllTracks(),
+                                                     Settings.timelineRippleMarkers());
         for (const auto &clip : selection()) {
             command->addClip(clip.y(), clip.x());
         }
@@ -4223,8 +4261,15 @@ bool TimelineDock::trimClipIn(
         }
 
         m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::TrimClipInCommand(
-            m_model, m_markersModel, trackIndex, oldClipIndex, m_trimDelta, ripple, false));
+        m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model,
+                                                            m_markersModel,
+                                                            trackIndex,
+                                                            oldClipIndex,
+                                                            m_trimDelta,
+                                                            ripple,
+                                                            Settings.timelineRippleAllTracks(),
+                                                            Settings.timelineRippleMarkers(),
+                                                            false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, m_updateCommand->position() + delta);
@@ -4316,8 +4361,15 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         }
 
         m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::TrimClipOutCommand(
-            m_model, m_markersModel, trackIndex, clipIndex, m_trimDelta, ripple, false));
+        m_trimCommand.reset(new Timeline::TrimClipOutCommand(m_model,
+                                                             m_markersModel,
+                                                             trackIndex,
+                                                             clipIndex,
+                                                             m_trimDelta,
+                                                             ripple,
+                                                             Settings.timelineRippleAllTracks(),
+                                                             Settings.timelineRippleMarkers(),
+                                                             false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
@@ -4449,12 +4501,15 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                                                               : 0);
                             bool lastClip = mltTrackIndex == tractor.count() - 1
                                             && mltClipIndex == playlist.count() - 1;
-                            MAIN.undoStack()->push(new Timeline::InsertCommand(m_model,
-                                                                               m_markersModel,
-                                                                               trackIndex,
-                                                                               insertPosition,
-                                                                               MLT.XML(&clip),
-                                                                               lastClip));
+                            MAIN.undoStack()->push(
+                                new Timeline::InsertCommand(m_model,
+                                                            m_markersModel,
+                                                            trackIndex,
+                                                            insertPosition,
+                                                            MLT.XML(&clip),
+                                                            lastClip,
+                                                            Settings.timelineRippleAllTracks(),
+                                                            Settings.timelineRippleMarkers()));
 
                             if (pendingTransition.duration > 0) {
                                 const int rightClipIndex = clipIndexAtPosition(trackIndex,
@@ -4534,7 +4589,9 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                                                                trackIndex,
                                                                position,
                                                                xmlToUse,
-                                                               seek));
+                                                               seek,
+                                                               Settings.timelineRippleAllTracks(),
+                                                               Settings.timelineRippleMarkers()));
         }
         if (m_position < 0) {
             // This happens when pasting in a new session

@@ -16,7 +16,9 @@
  */
 
 #include "encodedock.h"
+
 #include "ui_encodedock.h"
+#include <functional>
 
 #include "Logger.h"
 #include "dialogs/addencodepresetdialog.h"
@@ -26,6 +28,7 @@
 #include "gpuinfo.h"
 #include "jobqueue.h"
 #include "jobs/encodejob.h"
+#include "jobs/exportjobbuilder.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "models/markersmodel.h"
@@ -52,12 +55,6 @@ static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
 static const QRegularExpression kIsoDateRegex(
     QStringLiteral("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"));
 static const QRegularExpression kIso639Regex(QStringLiteral("^[A-Za-z]{3}$"));
-#ifdef Q_OS_WIN
-static const QString kNullTarget = "nul";
-#else
-static const QString kNullTarget = "/dev/null";
-#endif
-
 static double getBufferSize(Mlt::Properties &preset, const char *property);
 
 static Mlt::Filter getReframeFilter(Mlt::Service *service)
@@ -1306,226 +1303,30 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
     return p;
 }
 
-void EncodeDock::collectProperties(QDomElement &node, int realtime)
+void EncodeDock::addProcessingProperties(Mlt::Properties &properties)
 {
-    Mlt::Properties *p = collectProperties(realtime);
-    if (p && p->is_valid()) {
-        for (int i = 0; i < p->count(); i++) {
-            if (p->get_name(i) && strcmp(p->get_name(i), ""))
-                node.setAttribute(p->get_name(i), p->get(i));
-        }
-
-        const auto processingMode = Settings.processingMode();
-        if (processingMode == ShotcutSettings::Native10Cpu
-            || processingMode == ShotcutSettings::Linear10Cpu
-            || processingMode == ShotcutSettings::Linear10GpuCpu) {
-            if (!p->property_exists("mlt_image_format")) {
-                const char *trc = p->get("color_trc");
-                const bool isHlg = !::qstrcmp(trc, "arib-std-b67");
-                const bool isPq = !::qstrcmp(trc, "smpte2084");
-                if (isHlg || isPq)
-                    node.setAttribute("mlt_image_format", "yuv420p10");
-                else
-                    node.setAttribute("mlt_image_format", "rgba64");
-            }
-        }
-        if ((processingMode == ShotcutSettings::Linear10Cpu
-             || processingMode == ShotcutSettings::Linear10GpuCpu)
-            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")
-            && ::qstrcmp(p->get("color_trc"), "smpte2084")) {
-            if (!p->property_exists("mlt_color_trc"))
-                node.setAttribute("mlt_color_trc", "linear");
-
-            // Prevent an 8-bit linear export
-            const auto imageFormat = node.attribute("mlt_image_format");
-            if (node.attribute("mlt_color_trc") == QStringLiteral("linear")
-                && imageFormat != QStringLiteral("rgba64")
-                && imageFormat != QStringLiteral("yuv444p10")
-                && imageFormat != QStringLiteral("yuv420p10")) {
-                node.setAttribute("mlt_image_format", "rgba64");
-            }
+    const auto processingMode = Settings.processingMode();
+    if (processingMode == ShotcutSettings::Native10Cpu
+        || processingMode == ShotcutSettings::Linear10Cpu
+        || processingMode == ShotcutSettings::Linear10GpuCpu) {
+        if (!properties.property_exists("mlt_image_format")) {
+            const char *trc = properties.get("color_trc");
+            const bool isHlg = !::qstrcmp(trc, "arib-std-b67");
+            const bool isPq = !::qstrcmp(trc, "smpte2084");
+            setIfNotSet(&properties, "mlt_image_format", isHlg || isPq ? "yuv420p10" : "rgba64");
         }
     }
-    delete p;
-}
-
-void EncodeDock::setSubtitleProperties(QDomElement &node, Mlt::Producer *service)
-{
-    if (!service) {
-        return;
+    if ((processingMode == ShotcutSettings::Linear10Cpu
+         || processingMode == ShotcutSettings::Linear10GpuCpu)
+        && ::qstrcmp(properties.get("color_trc"), "arib-std-b67")
+        && ::qstrcmp(properties.get("color_trc"), "smpte2084")) {
+        setIfNotSet(&properties, "mlt_color_trc", "linear");
+        const QString imageFormat = QString::fromLatin1(properties.get("mlt_image_format"));
+        if (!::qstrcmp(properties.get("mlt_color_trc"), "linear")
+            && imageFormat != QStringLiteral("rgba64") && imageFormat != QStringLiteral("yuv444p10")
+            && imageFormat != QStringLiteral("yuv420p10"))
+            properties.set("mlt_image_format", "rgba64");
     }
-    int subIndex = 0;
-    for (int i = 0; i < service->filter_count(); i++) {
-        QScopedPointer<Mlt::Filter> filter(service->filter(i));
-        if (filter && filter->is_valid()
-            && filter->get("mlt_service") == QStringLiteral("subtitle_feed")) {
-            QString key = QStringLiteral("subtitle.%1.feed").arg(subIndex);
-            node.setAttribute(key, filter->get("feed"));
-            key = QStringLiteral("subtitle.%1.lang").arg(subIndex);
-            node.setAttribute(key, filter->get("lang"));
-            subIndex++;
-        }
-    }
-}
-
-QPoint EncodeDock::addConsumerElement(
-    Mlt::Producer *service, QDomDocument &dom, const QString &target, int realtime, int pass)
-{
-    QDomElement consumerNode = dom.createElement("consumer");
-    QDomNodeList profiles = dom.elementsByTagName("profile");
-    if (profiles.isEmpty())
-        dom.documentElement().insertAfter(consumerNode, dom.documentElement());
-    else
-        dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
-    consumerNode.setAttribute("mlt_service", "avformat");
-    consumerNode.setAttribute("target", pass == 1 ? kNullTarget : target);
-    collectProperties(consumerNode, realtime);
-    if ("libx265" == ui->videoCodecCombo->currentText()) {
-        if (pass == 1 || pass == 2) {
-            QString x265params = consumerNode.attribute("x265-params");
-            x265params = QStringLiteral("pass=%1:stats=%2:%3")
-                             .arg(pass)
-                             .arg(QString(target).replace(":", "\\:") + "_2pass.log")
-                             .arg(x265params);
-            consumerNode.setAttribute("x265-params", x265params);
-        }
-    } else if ("libsvtav1" == ui->videoCodecCombo->currentText()) {
-        if (pass == 1 || pass == 2) {
-            QStringList encParams;
-            encParams << QStringLiteral("passes=2");
-            encParams << QStringLiteral("pass=%1").arg(pass);
-            encParams << QStringLiteral("stats=%1")
-                             .arg(QString(target).replace(":", "\\:") + "_2pass.log");
-            QString origParams = consumerNode.attribute("svtav1-params");
-            if (!origParams.isEmpty())
-                encParams << origParams;
-            consumerNode.setAttribute("svtav1-params", encParams.join(':'));
-        }
-    } else {
-        if (pass == 1 || pass == 2) {
-            consumerNode.setAttribute("pass", pass);
-            consumerNode.setAttribute("passlogfile", target + "_2pass.log");
-        }
-        if (pass == 1) {
-            consumerNode.setAttribute("fastfirstpass", 1);
-            consumerNode.removeAttribute("acodec");
-            consumerNode.setAttribute("an", 1);
-        } else {
-            consumerNode.removeAttribute("fastfirstpass");
-        }
-    }
-    if (ui->formatCombo->currentIndex() == 0 && ui->audioCodecCombo->currentIndex() == 0
-        && (target.endsWith(".mp4") || target.endsWith(".mov")))
-        consumerNode.setAttribute("strict", "experimental");
-    if (!ui->disableSubtitlesCheckbox->isChecked())
-        setSubtitleProperties(consumerNode, service);
-
-    return QPoint(consumerNode.hasAttribute("frame_rate_num")
-                      ? consumerNode.attribute("frame_rate_num").toInt()
-                      : MLT.profile().frame_rate_num(),
-                  consumerNode.hasAttribute("frame_rate_den")
-                      ? consumerNode.attribute("frame_rate_den").toInt()
-                      : MLT.profile().frame_rate_den());
-}
-
-MeltJob *EncodeDock::convertReframe(Mlt::Producer *service,
-                                    QTemporaryFile *tmp,
-                                    const QString &target,
-                                    int realtime,
-                                    int pass,
-                                    const QThread::Priority priority)
-{
-    MeltJob *job = nullptr;
-
-    // Look for the reframe filter
-    for (auto i = 0; !job && i < service->filter_count(); ++i) {
-        Mlt::Filter filter(service->filter(i));
-        if (!::qstrcmp("reframe", filter.get(kShotcutFilterProperty))
-            && !filter.get_int("disable")) {
-            // If it exists, make another XML with new profile based on reframe rect width and height
-            auto rect = filter.anim_get_rect("rect", 0);
-            LOG_DEBUG() << "Found Reframe" << rect.w << "x" << rect.h << tmp->fileName();
-            Mlt::Profile reframeProfile;
-            reframeProfile.set_explicit(1);
-            reframeProfile.set_colorspace(MLT.profile().colorspace());
-            reframeProfile.set_frame_rate(MLT.profile().frame_rate_num(),
-                                          MLT.profile().frame_rate_den());
-            reframeProfile.set_sample_aspect(1, 1);
-            reframeProfile.set_width(rect.w);
-            reframeProfile.set_height(rect.h);
-            reframeProfile.set_progressive(MLT.profile().progressive());
-            auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
-            reframeProfile.set_display_aspect(rect.w / gcd, rect.h / gcd);
-            LOG_DEBUG() << "reframe profile" << reframeProfile.width() << "x"
-                        << reframeProfile.height();
-            Mlt::Producer
-                producer(reframeProfile,
-                         "consumer",
-                         (QStringLiteral("xml:%1").arg(tmp->fileName())).toUtf8().constData());
-            Mlt::Filter affine;
-            auto rectPropertyName("rect");
-            // TODO: GPU filters on the tractor do not work yet
-            if (Settings.playerGPU()) {
-                affine = Mlt::Filter(reframeProfile, "movit.rect");
-                affine.set("valign", "middle");
-                filter.set("halign", "center");
-            } else {
-                affine = Mlt::Filter(reframeProfile, "affine");
-                affine.set("transition.valign", "middle");
-                affine.set("transition.halign", "center");
-                rectPropertyName = "transition.rect";
-            }
-            producer.attach(affine);
-
-            // set affine rect width and height same as video mode
-            // compute (negate) new affine rect X and Y for each reframe rect keyframe
-            // melt .mlt -attach affine transition.rect='-250 0 1280 720' -consumer avformat:test.mp4 width=404 height=720 display_aspect_num=404 display_aspect_den=720 sample_aspect_num=1 sample_aspect_den=1 an=1
-            auto anim = filter.get_anim("rect");
-            if (anim->key_count() > 0) {
-                // Handle keyframes
-                for (auto k = 0; k < anim->key_count(); ++k) {
-                    auto frameNum = anim->key_get_frame(k);
-                    if (frameNum >= 0) {
-                        rect = filter.anim_get_rect("rect", frameNum);
-                        rect.x = -rect.x;
-                        rect.y = -rect.y;
-                        rect.w = MLT.profile().width();
-                        rect.h = MLT.profile().height();
-                        affine.anim_set(rectPropertyName, rect, frameNum, 0, anim->key_get_type(k));
-                        if (k + 1 == anim->key_count())
-                            affine.anim_set(rectPropertyName, rect, service->get_out());
-                    }
-                }
-            } else {
-                // No keyframes
-                rect.x = -rect.x;
-                rect.y = -rect.y;
-                rect.w = MLT.profile().width();
-                rect.h = MLT.profile().height();
-                affine.set(rectPropertyName, rect);
-            }
-
-            // Serialize
-            Mlt::Consumer consumer(reframeProfile, "xml", "string");
-            consumer.set("root", "");
-            consumer.connect(producer);
-            consumer.start();
-
-            // Parse XML to add consumer element
-            QXmlStreamReader xmlReader(consumer.get("string"));
-            QDomDocument dom;
-            dom.setContent(&xmlReader);
-
-            auto fps = addConsumerElement(service, dom, target, realtime, pass);
-            job = new EncodeJob(QDir::toNativeSeparators(target),
-                                dom.toString(2),
-                                fps.x(),
-                                fps.y(),
-                                priority);
-            tmp->setParent(job); // job gets ownership to delete object and temp file
-        }
-    }
-    return job;
 }
 
 MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
@@ -1534,111 +1335,33 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
                                    int pass,
                                    const QThread::Priority priority)
 {
-    QString caption = tr("Export Video/Audio");
-    if (Util::warnIfNotWritable(target, this, caption))
-        return nullptr;
-
-    if (JOBS.targetIsInProgress(target)) {
-        QMessageBox::warning(this,
-                             windowTitle(),
-                             QObject::tr("A job already exists for %1").arg(target));
+    std::unique_ptr<Mlt::Properties> properties(collectProperties(realtime));
+    if (!properties || !properties->is_valid()) {
+        LOG_ERROR() << "Cannot resolve Export settings.";
+        QMessageBox::warning(this, tr("Export Video/Audio"), tr("Cannot resolve Export settings."));
         return nullptr;
     }
+    addProcessingProperties(*properties);
 
-    // if image sequence, change filename to include number
-    QString mytarget = target;
-    if (!ui->disableVideoCheckbox->isChecked()) {
-        const QString &codec = ui->videoCodecCombo->currentText();
-        if (codec == "bmp" || codec == "dpx" || codec == "png" || codec == "ppm"
-            || (codec == "libwebp" && ui->formatCombo->currentText() == "image2")
-            || codec == "targa" || codec == "tiff"
-            || (codec == "mjpeg" && ui->formatCombo->currentText() == "image2")) {
-            QFileInfo fi(mytarget);
-            mytarget
-                = QStringLiteral("%1/%2-%05d.%3").arg(fi.path(), fi.baseName(), fi.completeSuffix());
-        }
-    }
-
-    // Fix in/out points of filters on clip-only project.
-    QScopedPointer<Mlt::Producer> tempProducer;
-    if (MLT.isSeekable(service) && service->type() != mlt_service_chain_type)
-        if (ui->fromCombo->currentData().toString() == "clip"
-            || ui->fromCombo->currentData().toString() == "batch") {
-            QString xml = MLT.XML(service);
-            tempProducer.reset(
-                new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
-            service = tempProducer.data();
-            int producerIn = tempProducer->get_in();
-            if (producerIn > 0) {
-                int n = tempProducer->filter_count();
-                for (int i = 0; i < n; i++) {
-                    QScopedPointer<Mlt::Filter> filter(tempProducer->filter(i));
-                    if (filter->get_in() > 0)
-                        filter->set_in_and_out(filter->get_in() - producerIn,
-                                               filter->get_out() - producerIn);
-                }
-            }
-        }
-
-    // get temp filename
-    auto tmp = new QTemporaryFile{Util::writableTemporaryFile(target)};
-    if (!tmp->open()) {
-        LOG_ERROR() << "Failed to create temporary file" << tmp->fileName();
-        delete tmp;
-        return nullptr;
-    }
-    QString fileName = tmp->fileName();
-    auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
-    MLT.saveXML(fileName, service, false /* without relative paths */, tmp, isProxy);
-    tmp->close();
-
-    // parse xml
-    QFile f1(fileName);
-    if (!f1.open(QIODevice::ReadOnly)) {
-        LOG_ERROR() << "Failed to open XML file for reading" << fileName;
-        return nullptr;
-    }
-    QXmlStreamReader xmlReader(&f1);
-    QDomDocument dom(fileName);
-    dom.setContent(&xmlReader);
-    f1.close();
-
-    // Check if the target file is a member of the project.
-    QString xml = dom.toString(0);
-    if (xml.contains(QDir::fromNativeSeparators(target))) {
-        QMessageBox::warning(this,
-                             caption,
-                             tr("You cannot write to a file that is in your project.\n"
-                                "Try again with a different folder or file name."));
-        return nullptr;
-    }
-
-    // Add autoclose to playlists.
-    QDomNodeList playlists = dom.elementsByTagName("playlist");
-    for (auto i = 0; i < playlists.length(); ++i)
-        playlists.item(i).toElement().setAttribute("autoclose", 1);
-
-    MeltJob *job = convertReframe(service, tmp, mytarget, realtime, pass, priority);
-
-    if (!job) {
-        auto fps = addConsumerElement(service, dom, mytarget, realtime, pass);
-        job = new EncodeJob(QDir::toNativeSeparators(target),
-                            dom.toString(2),
-                            fps.x(),
-                            fps.y(),
-                            priority);
-        job->setUseMultiConsumer(ui->widthSpinner->value() != MLT.profile().width()
-                                 || ui->heightSpinner->value() != MLT.profile().height()
-                                 || double(ui->aspectNumSpinner->value())
-                                            / double(ui->aspectDenSpinner->value())
-                                        != MLT.profile().dar()
-                                 || (ui->fromCombo->currentData().toString() != "clip"
-                                     && qFloor(ui->fpsSpinner->value() * 10000.0)
-                                            != qFloor(MLT.profile().fps() * 10000.0)));
-        delete tmp;
-    }
-
+    ExportJobOptions options;
+    options.realtime = realtime;
+    options.pass = pass;
+    options.priority = priority;
+    options.useHardwareDecoder = Settings.encodeHardwareDecoder();
+    options.includeSubtitles = !ui->disableSubtitlesCheckbox->isChecked();
     const auto &from = ui->fromCombo->currentData().toString();
+    options.adjustClipFilterRanges = from == "clip" || from == "batch";
+    options.useProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
+    options.strictFormatCompatibility = ui->formatCombo->currentIndex() == 0
+                                        && ui->audioCodecCombo->currentIndex() == 0;
+    options.useMultiConsumer = ui->widthSpinner->value() != MLT.profile().width()
+                               || ui->heightSpinner->value() != MLT.profile().height()
+                               || double(ui->aspectNumSpinner->value())
+                                          / double(ui->aspectDenSpinner->value())
+                                      != MLT.profile().dar()
+                               || (from != "clip"
+                                   && qFloor(ui->fpsSpinner->value() * 10000.0)
+                                          != qFloor(MLT.profile().fps() * 10000.0));
     if (MAIN.isMultitrackValid() && from.startsWith("marker:")) {
         bool ok = false;
         int index = from.mid(7).toInt(&ok);
@@ -1647,10 +1370,15 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
             markersModel.load(MAIN.multitrack());
             auto marker = markersModel.getMarker(index);
             if (marker.end > marker.start) {
-                job->setInAndOut(marker.start, marker.end - 1);
+                options.in = marker.start;
+                options.out = marker.end - 1;
             }
         }
     }
+    QString error;
+    auto *job = ExportJobBuilder::create(service, target, *properties, options, error);
+    if (!job)
+        QMessageBox::warning(this, tr("Export Video/Audio"), error);
     return job;
 }
 

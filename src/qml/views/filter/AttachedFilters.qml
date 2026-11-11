@@ -24,10 +24,12 @@ Rectangle {
     id: attachedFilters
     property bool selectedCanMoveUp: false
     property bool selectedCanMoveDown: false
+    property int _currentFilterIndex: -1
 
     signal filterClicked(int index)
 
     function setCurrentFilter(index) {
+        _currentFilterIndex = index;
         indexDelay.index = index;
         indexDelay.running = true;
     }
@@ -43,6 +45,7 @@ Rectangle {
         onTriggered: {
             // Delay the index setting to allow model updates to complete
             attachedFiltersView.currentIndex = index;
+            attachedFiltersView.possiblySelectFirstFilter();
         }
     }
 
@@ -56,7 +59,7 @@ Rectangle {
             property var modelData: model
             property var viewData: ListView
             property int _dragTarget: ListView.view ? ListView.view.dragTarget : -1
-            property int _currentIndex: ListView.currentIndex ? ListView.currentIndex : -1
+            property int _currentIndex: attachedFilters._currentFilterIndex
 
             height: filterDelegateText.implicitHeight
             width: parent ? parent.width : undefined
@@ -154,10 +157,8 @@ Rectangle {
             property int dragTarget: -1
 
             function possiblySelectFirstFilter() {
-                if (count > 0 && currentIndex === -1) {
-                    currentIndex = 0;
-                    filterClicked(currentIndex);
-                }
+                if (count > 0 && attachedFilters._currentFilterIndex === -1)
+                    filterClicked(0);
             }
 
             function updateMobility() {
@@ -202,11 +203,12 @@ Rectangle {
                 updateMobility();
             }
             onCurrentIndexChanged: {
-                possiblySelectFirstFilter();
                 positionViewAtIndex(currentIndex, ListView.Contain);
                 updateMobility();
             }
-            onCountChanged: possiblySelectFirstFilter()
+            onCountChanged: {
+                attachedFilters.setCurrentFilter(attachedFilters._currentFilterIndex);
+            }
 
             MouseArea {
                 property int oldIndex: -1
@@ -319,6 +321,7 @@ Rectangle {
             }
 
             highlight: Rectangle {
+                visible: attachedFilters._currentFilterIndex >= 0 && attachedFiltersView.currentIndex === attachedFilters._currentFilterIndex
                 color: activePalette.highlight
                 width: parent ? parent.width : undefined
             }

@@ -106,6 +106,7 @@ static bool requireProducer(Mlt::Producer &producer, const QString &what)
 namespace Filter {
 
 AddCommand::AddCommand(AttachedFiltersModel &model,
+                       Mlt::Producer &producer,
                        const QString &name,
                        Mlt::Service &service,
                        int row,
@@ -113,7 +114,7 @@ AddCommand::AddCommand(AttachedFiltersModel &model,
                        QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
-    , m_producer(*model.producer())
+    , m_producer(producer)
     , m_producerUuid(MLT.ensureHasUuid(m_producer))
     , m_type(type)
 {
@@ -191,6 +192,7 @@ bool AddCommand::mergeWith(const QUndoCommand *other)
 }
 
 RemoveCommand::RemoveCommand(AttachedFiltersModel &model,
+                             Mlt::Producer &producer,
                              const QString &name,
                              Mlt::Service &service,
                              int row,
@@ -198,7 +200,7 @@ RemoveCommand::RemoveCommand(AttachedFiltersModel &model,
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
-    , m_producer(*model.producer())
+    , m_producer(producer)
     , m_producerUuid(MLT.ensureHasUuid(m_producer))
     , m_service(service)
 {
@@ -229,13 +231,17 @@ void RemoveCommand::undo()
     m_model.doAddService(producer, m_service, m_row);
 }
 
-MoveCommand::MoveCommand(
-    AttachedFiltersModel &model, const QString &name, int fromRow, int toRow, QUndoCommand *parent)
+MoveCommand::MoveCommand(AttachedFiltersModel &model,
+                         Mlt::Producer &producer,
+                         const QString &name,
+                         int fromRow,
+                         int toRow,
+                         QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_fromRow(fromRow)
     , m_toRow(toRow)
-    , m_producer(*model.producer())
+    , m_producer(producer)
     , m_producerUuid(MLT.ensureHasUuid(m_producer))
 {
     setText(QObject::tr("Move %1 filter").arg(name));
@@ -266,12 +272,16 @@ void MoveCommand::undo()
     m_model.doMoveService(producer, m_toRow, m_fromRow);
 }
 
-DisableCommand::DisableCommand(
-    AttachedFiltersModel &model, const QString &name, int row, bool disabled, QUndoCommand *parent)
+DisableCommand::DisableCommand(AttachedFiltersModel &model,
+                               Mlt::Producer &producer,
+                               const QString &name,
+                               int row,
+                               bool disabled,
+                               QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
-    , m_producer(*model.producer())
+    , m_producer(producer)
     , m_producerUuid(MLT.ensureHasUuid(m_producer))
     , m_disabled(disabled)
 {
@@ -322,6 +332,62 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
         setText(that->text());
         return true;
     */
+}
+
+SetParametersCommand::SetParametersCommand(AttachedFiltersModel &model,
+                                           Mlt::Producer &producer,
+                                           const QString &name,
+                                           int row,
+                                           Mlt::Properties &values,
+                                           QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_producerUuid(MLT.ensureHasUuid(producer))
+    , m_row(row)
+{
+    setText(QObject::tr("Change %1 filter").arg(name));
+    auto service = model.doGetService(producer, row);
+    for (int i = 0; i < values.count(); ++i)
+        m_oldParameters.pass_property(service, values.get_name(i));
+    m_newParameters.inherit(values);
+}
+
+void SetParametersCommand::apply(Mlt::Properties &values)
+{
+    Mlt::Producer producer = findProducer(m_producerUuid);
+    if (!requireProducer(producer, text()))
+        return;
+    auto service = m_model.doGetService(producer, m_row);
+    if (!service.is_valid()) {
+        LOG_ERROR() << "Filter not found" << m_row << text();
+        return;
+    }
+    QStringList properties;
+    for (int i = 0; i < m_newParameters.count(); ++i) {
+        const char *name = m_newParameters.get_name(i);
+        const bool isAnimationMode = !qstrcmp(name, kShotcutAnimInProperty)
+                                     || !qstrcmp(name, kShotcutAnimOutProperty);
+        const int oldDuration = isAnimationMode ? service.time_to_frames(service.get(name)) : 0;
+        service.clear(name);
+        if (values.property_exists(name))
+            service.pass_property(values, name);
+        if (!isAnimationMode || oldDuration != service.time_to_frames(service.get(name)))
+            properties.append(QString::fromUtf8(name));
+    }
+    emit m_model.changed();
+    MAIN.filterController()->onFilterEdited(service, properties);
+}
+
+void SetParametersCommand::redo()
+{
+    LOG_DEBUG() << text() << m_row;
+    apply(m_newParameters);
+}
+
+void SetParametersCommand::undo()
+{
+    LOG_DEBUG() << text() << m_row;
+    apply(m_oldParameters);
 }
 
 PasteCommand::PasteCommand(AttachedFiltersModel &model,

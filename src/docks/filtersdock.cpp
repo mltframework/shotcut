@@ -92,6 +92,13 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel,
 
 void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index)
 {
+    if (filter && m_qview.rootContext()->contextProperty("filter").value<QObject *>() == filter
+        && m_qview.rootContext()->contextProperty("metadata").value<QObject *>() == meta) {
+        QMetaObject::invokeMethod(m_qview.rootObject(),
+                                  "setCurrentFilterIndex",
+                                  Q_ARG(QVariant, QVariant(index)));
+        return;
+    }
     closeAddOnMetadataHelp();
 
     if (filter && filter->producer().is_valid()) {
