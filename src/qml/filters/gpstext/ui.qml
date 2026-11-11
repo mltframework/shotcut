@@ -46,12 +46,10 @@ Shotcut.KeyframableFilter {
         combo_smoothing.currentIndex = combo_smoothing.get_smooth_index_from_val(filter.get('smoothing_value'));
         speed_multiplier.value = filter.get('speed_multiplier');
         updates_per_second.text = filter.get('updates_per_second');
-        if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
-        {
+        if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '') {
             gps_processing_start.text = filter.get('gps_start_text');
             filter.set('gps_processing_start_time', filter.get('gps_start_text'));
-        }
-        else 
+        } else
             gps_processing_start.text = filter.get('gps_processing_start_time');
     }
 
@@ -151,8 +149,8 @@ Shotcut.KeyframableFilter {
             filter.set('videofile_timezone_seconds', 0);
             filter.set('speed_multiplier', 1);
             if (filter.isAtLeastVersion(9))
-            	filter.set('updates_per_second', -1);
-            else 
+                filter.set('updates_per_second', -1);
+            else
                 filter.set('updates_per_second', 1);
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
         } else {
@@ -187,7 +185,6 @@ Shotcut.KeyframableFilter {
         }
     }
 
-
     //timer to update Ui in case of automatic gps file detection
     Timer {
         id: autoGpsFileDetectionTimer
@@ -195,7 +192,7 @@ Shotcut.KeyframableFilter {
         interval: 250
         repeat: true
         onTriggered: {
-            const res = filter.get('resource')
+            const res = filter.get('resource');
             if (res) {
                 autoGpsFileDetectionTimer.stop();
                 gpsFile.url = res;

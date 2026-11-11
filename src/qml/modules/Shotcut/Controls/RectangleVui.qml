@@ -45,20 +45,15 @@ Shotcut.VuiBase {
     }
 
     function rectIsUnitless(rect) {
-        return Math.abs(rect.x) <= 1 && Math.abs(rect.y) <= 1 && Math.abs(rect.width) <= 1
-            && Math.abs(rect.height) <= 1;
+        return Math.abs(rect.x) <= 1 && Math.abs(rect.y) <= 1 && Math.abs(rect.width) <= 1 && Math.abs(rect.height) <= 1;
     }
 
     // getRect already returns pixels for a '%' rect. A normalized 0..1 value has
     // no '%' until this control writes profile pixels and sets shotcut:rectPixels.
     function readRect(position) {
         var value = filter.getRect(rectProperty, position);
-        if (normalizedCoordinates && !rectStoredInPixels() && rawRectString().indexOf('%') < 0
-                && rectIsUnitless(value)) {
-            value = Qt.rect(value.x * profile.width,
-                            value.y * profile.height,
-                            value.width * profile.width,
-                            value.height * profile.height);
+        if (normalizedCoordinates && !rectStoredInPixels() && rawRectString().indexOf('%') < 0 && rectIsUnitless(value)) {
+            value = Qt.rect(value.x * profile.width, value.y * profile.height, value.width * profile.width, value.height * profile.height);
         }
         return value;
     }
@@ -70,8 +65,7 @@ Shotcut.VuiBase {
     }
 
     function sameRect(a, b) {
-        return Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5
-            && Math.abs(a.width - b.width) < 0.5 && Math.abs(a.height - b.height) < 0.5;
+        return Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5 && Math.abs(a.width - b.width) < 0.5 && Math.abs(a.height - b.height) < 0.5;
     }
 
     function markRectPixels() {
@@ -103,10 +97,7 @@ Shotcut.VuiBase {
             var scaled = value;
             if (rectIsUnitless(value)) {
                 anyUnitless = true;
-                scaled = Qt.rect(value.x * profile.width,
-                                 value.y * profile.height,
-                                 value.width * profile.width,
-                                 value.height * profile.height);
+                scaled = Qt.rect(value.x * profile.width, value.y * profile.height, value.width * profile.width, value.height * profile.height);
             }
             keys.push(pos);
             keys.push(scaled);
@@ -138,10 +129,7 @@ Shotcut.VuiBase {
     function rectangleIsEnabled(position) {
         if (!rectKeyframes)
             return true;
-        return position <= 0
-            || (position >= (filter.animateIn - 1)
-                && position <= (filter.duration - filter.animateOut))
-            || position >= (filter.duration - 1);
+        return position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function rotationHandleEnabled(position) {
@@ -149,10 +137,7 @@ Shotcut.VuiBase {
             return false;
         if (!rotationKeyframes)
             return true;
-        return position <= 0
-            || (position >= (filter.animateIn - 1)
-                && position <= (filter.duration - filter.animateOut))
-            || position >= (filter.duration - 1);
+        return position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function setRectangleControl() {
@@ -174,8 +159,7 @@ Shotcut.VuiBase {
     // These slots are a cache, so a load or zoom reload must not push a command.
     function seedRectSlot(name, rect) {
         var raw = filter.get(name);
-        if (raw !== undefined && raw !== null && String(raw) !== ''
-                && sameRect(filter.getRect(name), rect))
+        if (raw !== undefined && raw !== null && String(raw) !== '' && sameRect(filter.getRect(name), rect))
             return;
         filter.setRectNoUndo(name, rect);
     }
@@ -209,12 +193,8 @@ Shotcut.VuiBase {
 
     function applyRectEdit(position) {
         var rect = rectangle.rectangle;
-        var pixel = Qt.rect(rect.x / rectangle.widthScale,
-                            rect.y / rectangle.heightScale,
-                            rect.width / rectangle.widthScale,
-                            rect.height / rectangle.heightScale);
-        if ((filterRect.width <= 0 || filterRect.height <= 0)
-                && sameRect(pixel, displayRect(filterRect)))
+        var pixel = Qt.rect(rect.x / rectangle.widthScale, rect.y / rectangle.heightScale, rect.width / rectangle.widthScale, rect.height / rectangle.heightScale);
+        if ((filterRect.width <= 0 || filterRect.height <= 0) && sameRect(pixel, displayRect(filterRect)))
             return;
         blockUpdate = true;
         filterRect.x = pixel.x;

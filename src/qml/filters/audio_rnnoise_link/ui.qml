@@ -28,7 +28,9 @@ Item {
     }
 
     Connections {
-        function onChanged() { setControls(); }
+        function onChanged() {
+            setControls();
+        }
         target: filter
     }
 

@@ -25,7 +25,7 @@ Rectangle {
     component ControlButton: Rectangle {
         id: _btn
 
-        signal clicked()
+        signal clicked
 
         property bool active: false
 
@@ -153,24 +153,56 @@ Rectangle {
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 11; startY: 2
-                            PathLine { x: 3; y: 11 }
-                            PathLine { x: 11; y: 20 }
-                            PathLine { x: 14; y: 20 }
-                            PathLine { x: 6; y: 11 }
-                            PathLine { x: 14; y: 2 }
+                            startX: 11
+                            startY: 2
+                            PathLine {
+                                x: 3
+                                y: 11
+                            }
+                            PathLine {
+                                x: 11
+                                y: 20
+                            }
+                            PathLine {
+                                x: 14
+                                y: 20
+                            }
+                            PathLine {
+                                x: 6
+                                y: 11
+                            }
+                            PathLine {
+                                x: 14
+                                y: 2
+                            }
                         }
 
                         // Right chevron
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 18; startY: 2
-                            PathLine { x: 10; y: 11 }
-                            PathLine { x: 18; y: 20 }
-                            PathLine { x: 21; y: 20 }
-                            PathLine { x: 13; y: 11 }
-                            PathLine { x: 21; y: 2 }
+                            startX: 18
+                            startY: 2
+                            PathLine {
+                                x: 10
+                                y: 11
+                            }
+                            PathLine {
+                                x: 18
+                                y: 20
+                            }
+                            PathLine {
+                                x: 21
+                                y: 20
+                            }
+                            PathLine {
+                                x: 13
+                                y: 11
+                            }
+                            PathLine {
+                                x: 21
+                                y: 2
+                            }
                         }
                     }
                 }
@@ -189,9 +221,16 @@ Rectangle {
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 5; startY: 2
-                            PathLine { x: 19; y: 11 }
-                            PathLine { x: 5; y: 20 }
+                            startX: 5
+                            startY: 2
+                            PathLine {
+                                x: 19
+                                y: 11
+                            }
+                            PathLine {
+                                x: 5
+                                y: 20
+                            }
                         }
                     }
 
@@ -205,19 +244,39 @@ Rectangle {
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 4; startY: 3
-                            PathLine { x: 8; y: 3 }
-                            PathLine { x: 8; y: 19 }
-                            PathLine { x: 4; y: 19 }
+                            startX: 4
+                            startY: 3
+                            PathLine {
+                                x: 8
+                                y: 3
+                            }
+                            PathLine {
+                                x: 8
+                                y: 19
+                            }
+                            PathLine {
+                                x: 4
+                                y: 19
+                            }
                         }
 
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 12; startY: 3
-                            PathLine { x: 16; y: 3 }
-                            PathLine { x: 16; y: 19 }
-                            PathLine { x: 12; y: 19 }
+                            startX: 12
+                            startY: 3
+                            PathLine {
+                                x: 16
+                                y: 3
+                            }
+                            PathLine {
+                                x: 16
+                                y: 19
+                            }
+                            PathLine {
+                                x: 12
+                                y: 19
+                            }
                         }
                     }
                 }
@@ -235,24 +294,56 @@ Rectangle {
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 1; startY: 2
-                            PathLine { x: 9; y: 11 }
-                            PathLine { x: 1; y: 20 }
-                            PathLine { x: 4; y: 20 }
-                            PathLine { x: 12; y: 11 }
-                            PathLine { x: 4; y: 2 }
+                            startX: 1
+                            startY: 2
+                            PathLine {
+                                x: 9
+                                y: 11
+                            }
+                            PathLine {
+                                x: 1
+                                y: 20
+                            }
+                            PathLine {
+                                x: 4
+                                y: 20
+                            }
+                            PathLine {
+                                x: 12
+                                y: 11
+                            }
+                            PathLine {
+                                x: 4
+                                y: 2
+                            }
                         }
 
                         // Right chevron
                         ShapePath {
                             fillColor: "white"
                             strokeColor: "transparent"
-                            startX: 8; startY: 2
-                            PathLine { x: 16; y: 11 }
-                            PathLine { x: 8; y: 20 }
-                            PathLine { x: 11; y: 20 }
-                            PathLine { x: 19; y: 11 }
-                            PathLine { x: 11; y: 2 }
+                            startX: 8
+                            startY: 2
+                            PathLine {
+                                x: 16
+                                y: 11
+                            }
+                            PathLine {
+                                x: 8
+                                y: 20
+                            }
+                            PathLine {
+                                x: 11
+                                y: 20
+                            }
+                            PathLine {
+                                x: 19
+                                y: 11
+                            }
+                            PathLine {
+                                x: 11
+                                y: 2
+                            }
                         }
                     }
                 }
@@ -275,9 +366,16 @@ Rectangle {
                             fillColor: "transparent"
                             capStyle: ShapePath.RoundCap
                             joinStyle: ShapePath.RoundJoin
-                            startX: hdrWindow.fullScreen ? 8 : 1; startY: hdrWindow.fullScreen ? 2 : 8
-                            PathLine { x: hdrWindow.fullScreen ? 2 : 1; y: hdrWindow.fullScreen ? 2 : 1 }
-                            PathLine { x: hdrWindow.fullScreen ? 2 : 8; y: hdrWindow.fullScreen ? 8 : 1 }
+                            startX: hdrWindow.fullScreen ? 8 : 1
+                            startY: hdrWindow.fullScreen ? 2 : 8
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 2 : 1
+                                y: hdrWindow.fullScreen ? 2 : 1
+                            }
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 2 : 8
+                                y: hdrWindow.fullScreen ? 8 : 1
+                            }
                         }
 
                         // Top-right corner
@@ -287,9 +385,16 @@ Rectangle {
                             fillColor: "transparent"
                             capStyle: ShapePath.RoundCap
                             joinStyle: ShapePath.RoundJoin
-                            startX: hdrWindow.fullScreen ? 14 : 21; startY: hdrWindow.fullScreen ? 2 : 8
-                            PathLine { x: hdrWindow.fullScreen ? 20 : 21; y: hdrWindow.fullScreen ? 2 : 1 }
-                            PathLine { x: hdrWindow.fullScreen ? 20 : 14; y: hdrWindow.fullScreen ? 8 : 1 }
+                            startX: hdrWindow.fullScreen ? 14 : 21
+                            startY: hdrWindow.fullScreen ? 2 : 8
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 20 : 21
+                                y: hdrWindow.fullScreen ? 2 : 1
+                            }
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 20 : 14
+                                y: hdrWindow.fullScreen ? 8 : 1
+                            }
                         }
 
                         // Bottom-left corner
@@ -299,9 +404,16 @@ Rectangle {
                             fillColor: "transparent"
                             capStyle: ShapePath.RoundCap
                             joinStyle: ShapePath.RoundJoin
-                            startX: hdrWindow.fullScreen ? 8 : 1; startY: hdrWindow.fullScreen ? 20 : 14
-                            PathLine { x: hdrWindow.fullScreen ? 2 : 1; y: hdrWindow.fullScreen ? 20 : 21 }
-                            PathLine { x: hdrWindow.fullScreen ? 2 : 8; y: hdrWindow.fullScreen ? 14 : 21 }
+                            startX: hdrWindow.fullScreen ? 8 : 1
+                            startY: hdrWindow.fullScreen ? 20 : 14
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 2 : 1
+                                y: hdrWindow.fullScreen ? 20 : 21
+                            }
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 2 : 8
+                                y: hdrWindow.fullScreen ? 14 : 21
+                            }
                         }
 
                         // Bottom-right corner
@@ -311,9 +423,16 @@ Rectangle {
                             fillColor: "transparent"
                             capStyle: ShapePath.RoundCap
                             joinStyle: ShapePath.RoundJoin
-                            startX: hdrWindow.fullScreen ? 14 : 21; startY: hdrWindow.fullScreen ? 20 : 14
-                            PathLine { x: hdrWindow.fullScreen ? 20 : 21; y: hdrWindow.fullScreen ? 20 : 21 }
-                            PathLine { x: hdrWindow.fullScreen ? 20 : 14; y: hdrWindow.fullScreen ? 14 : 21 }
+                            startX: hdrWindow.fullScreen ? 14 : 21
+                            startY: hdrWindow.fullScreen ? 20 : 14
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 20 : 21
+                                y: hdrWindow.fullScreen ? 20 : 21
+                            }
+                            PathLine {
+                                x: hdrWindow.fullScreen ? 20 : 14
+                                y: hdrWindow.fullScreen ? 14 : 21
+                            }
                         }
                     }
                 }
@@ -530,7 +649,28 @@ Rectangle {
                         spacing: 4
 
                         Repeater {
-                            model: [{label: qsTr("Auto"), nits: 0}, {label: "400", nits: 400}, {label: "600", nits: 600}, {label: "1000", nits: 1000}, {label: "1600", nits: 1600}]
+                            model: [
+                                {
+                                    label: qsTr("Auto"),
+                                    nits: 0
+                                },
+                                {
+                                    label: "400",
+                                    nits: 400
+                                },
+                                {
+                                    label: "600",
+                                    nits: 600
+                                },
+                                {
+                                    label: "1000",
+                                    nits: 1000
+                                },
+                                {
+                                    label: "1600",
+                                    nits: 1600
+                                }
+                            ]
 
                             delegate: Rectangle {
                                 readonly property bool _sel: hdrWindow.displayPeakNits === modelData.nits
@@ -576,7 +716,28 @@ Rectangle {
                         spacing: 4
 
                         Repeater {
-                            model: [{label: qsTr("Auto"), nits: 0}, {label: "400", nits: 400}, {label: "1000", nits: 1000}, {label: "4000", nits: 4000}, {label: "10000", nits: 10000}]
+                            model: [
+                                {
+                                    label: qsTr("Auto"),
+                                    nits: 0
+                                },
+                                {
+                                    label: "400",
+                                    nits: 400
+                                },
+                                {
+                                    label: "1000",
+                                    nits: 1000
+                                },
+                                {
+                                    label: "4000",
+                                    nits: 4000
+                                },
+                                {
+                                    label: "10000",
+                                    nits: 10000
+                                }
+                            ]
 
                             delegate: Rectangle {
                                 readonly property bool _sel: hdrWindow.contentPeakNits === modelData.nits
@@ -683,4 +844,3 @@ Rectangle {
         }
     }
 }
-

@@ -220,8 +220,8 @@ Item {
         if (thick !== undefined)
             used_params.push(filterset_getparams('thickness', thick));
         //note: we don't generally want to change rect on a preset change
-        if (rect !== undefined) 
-            used_params.push(filterset_getparams("rect", rect))
+        if (rect !== undefined)
+            used_params.push(filterset_getparams("rect", rect));
         if (grid !== undefined)
             used_params.push(filterset_getparams('show_grid', grid));
         if (legendunit !== undefined)
@@ -413,7 +413,6 @@ Item {
         }
     }
 
-
     //timer to update Ui in case of automatic gps file detection
     Timer {
         id: autoGpsFileDetectionTimer
@@ -421,7 +420,7 @@ Item {
         interval: 250
         repeat: true
         onTriggered: {
-            const res = filter.get('resource')
+            const res = filter.get('resource');
             if (res) {
                 autoGpsFileDetectionTimer.stop();
                 gpsFile.url = res;
@@ -1550,7 +1549,6 @@ Item {
             }
         }
 
-        
         //special row for size & poz so we center the buttons
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
@@ -1568,8 +1566,8 @@ Item {
             columns: 2
 
             RowLayout { //position
-                Layout.column: 0 
-                Layout.row: 0; 
+                Layout.column: 0
+                Layout.row: 0
                 Shotcut.DoubleSpinBox {
                     id: rectX
 
@@ -1611,8 +1609,8 @@ Item {
                 }
             }
             RowLayout { //size
-                Layout.column: 0 
-                Layout.row: 1; 
+                Layout.column: 0
+                Layout.row: 1
                 Shotcut.DoubleSpinBox {
                     id: rectW
 
@@ -1723,7 +1721,7 @@ Item {
                         }
                         setFilter();
                     }
-                    onClicked: button_correct_ar.correct_ar();
+                    onClicked: button_correct_ar.correct_ar()
                     Shotcut.HoverTip {
                         text: qsTr('Shrink to the correct map aspect ratio (or 1:1)')
                     }

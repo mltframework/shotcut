@@ -25,7 +25,7 @@ DropArea {
 
     Component.onCompleted: {
         if (!video.oldVideoOutput)
-            video.setVideoSink(videoOutput.videoSink)
+            video.setVideoSink(videoOutput.videoSink);
     }
 
     VideoOutput {

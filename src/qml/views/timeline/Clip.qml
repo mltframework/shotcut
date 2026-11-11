@@ -564,8 +564,7 @@ Rectangle {
 
             ToolTip {
                 visible: adjustGainEnabled && (parent.containsMouse || parent.dragging)
-                text: clipRoot.quantizedGain(clipRoot.gain).toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" +
-                    qsTr('Hold %1 to adjust\n%1 double-click to reset').arg(application.OS === 'macOS' ? '⌥⌘' : 'Ctrl+Alt'))
+                text: clipRoot.quantizedGain(clipRoot.gain).toFixed(1) + ' dB' + (parent.dragging ? '' : "\n" + qsTr('Hold %1 to adjust\n%1 double-click to reset').arg(application.OS === 'macOS' ? '⌥⌘' : 'Ctrl+Alt'))
                 delay: parent.pressed ? 0 : 500
                 timeout: parent.pressed ? -1 : 5000
                 onVisibleChanged: {

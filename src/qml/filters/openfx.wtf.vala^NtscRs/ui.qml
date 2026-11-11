@@ -245,13 +245,7 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.Preset {
             id: preset
-            parameters: ['36', '30', '46', '38', '0', '1', '52', '4', '53', '54',
-                         '6', '34', '2', '3', '33', '45', '11', '12', '13', '14',
-                         '49', '50', '51', '15', '16', '17', '18', '35', '31',
-                         '19', '20', '21', '22', '55', '57', '56', '58', '42',
-                         '5', '43', '44', '37', '7', '8', '9', '23', '24', '26',
-                         '47', '27', '48', '39', '28', '29', '40', '41', '25',
-                         '10', '61', '32', '59', '60', 'SrgbGammaCorrect']
+            parameters: ['36', '30', '46', '38', '0', '1', '52', '4', '53', '54', '6', '34', '2', '3', '33', '45', '11', '12', '13', '14', '49', '50', '51', '15', '16', '17', '18', '35', '31', '19', '20', '21', '22', '55', '57', '56', '58', '42', '5', '43', '44', '37', '7', '8', '9', '23', '24', '26', '47', '27', '48', '39', '28', '29', '40', '41', '25', '10', '61', '32', '59', '60', 'SrgbGammaCorrect']
             Layout.columnSpan: 3
             onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
@@ -307,12 +301,30 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Alternating', text: qsTr('Alternating')},
-                {value: 'Upper only', text: qsTr('Upper only')},
-                {value: 'Lower only', text: qsTr('Lower only')},
-                {value: 'Interleaved (upper first)', text: qsTr('Interleaved (upper first)')},
-                {value: 'Interleaved (lower first)', text: qsTr('Interleaved (lower first)')},
-                {value: 'Both', text: qsTr('Both')}
+                {
+                    value: 'Alternating',
+                    text: qsTr('Alternating')
+                },
+                {
+                    value: 'Upper only',
+                    text: qsTr('Upper only')
+                },
+                {
+                    value: 'Lower only',
+                    text: qsTr('Lower only')
+                },
+                {
+                    value: 'Interleaved (upper first)',
+                    text: qsTr('Interleaved (upper first)')
+                },
+                {
+                    value: 'Interleaved (lower first)',
+                    text: qsTr('Interleaved (lower first)')
+                },
+                {
+                    value: 'Both',
+                    text: qsTr('Both')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -338,8 +350,14 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Constant K (blurry)', text: qsTr('Constant K (blurry)')},
-                {value: 'Butterworth (sharper)', text: qsTr('Butterworth (sharper)')}
+                {
+                    value: 'Constant K (blurry)',
+                    text: qsTr('Constant K (blurry)')
+                },
+                {
+                    value: 'Butterworth (sharper)',
+                    text: qsTr('Butterworth (sharper)')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -365,9 +383,18 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Notch', text: qsTr('Notch')},
-                {value: 'Box', text: qsTr('Box')},
-                {value: 'None', text: qsTr('None')}
+                {
+                    value: 'Notch',
+                    text: qsTr('Notch')
+                },
+                {
+                    value: 'Box',
+                    text: qsTr('Box')
+                },
+                {
+                    value: 'None',
+                    text: qsTr('None')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -393,9 +420,18 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Full', text: qsTr('Full')},
-                {value: 'Light', text: qsTr('Light')},
-                {value: 'None', text: qsTr('None')}
+                {
+                    value: 'Full',
+                    text: qsTr('Full')
+                },
+                {
+                    value: 'Light',
+                    text: qsTr('Light')
+                },
+                {
+                    value: 'None',
+                    text: qsTr('None')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -488,10 +524,22 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: '0 degrees', text: qsTr('0 degrees')},
-                {value: '90 degrees', text: qsTr('90 degrees')},
-                {value: '180 degrees', text: qsTr('180 degrees')},
-                {value: '270 degrees', text: qsTr('270 degrees')}
+                {
+                    value: '0 degrees',
+                    text: qsTr('0 degrees')
+                },
+                {
+                    value: '90 degrees',
+                    text: qsTr('90 degrees')
+                },
+                {
+                    value: '180 degrees',
+                    text: qsTr('180 degrees')
+                },
+                {
+                    value: '270 degrees',
+                    text: qsTr('270 degrees')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -538,10 +586,22 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Box', text: qsTr('Box')},
-                {value: 'Notch', text: qsTr('Notch')},
-                {value: '1-line comb', text: qsTr('1-line comb')},
-                {value: '2-line comb', text: qsTr('2-line comb')}
+                {
+                    value: 'Box',
+                    text: qsTr('Box')
+                },
+                {
+                    value: 'Notch',
+                    text: qsTr('Notch')
+                },
+                {
+                    value: '1-line comb',
+                    text: qsTr('1-line comb')
+                },
+                {
+                    value: '2-line comb',
+                    text: qsTr('2-line comb')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -588,9 +648,18 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'Full', text: qsTr('Full')},
-                {value: 'Light', text: qsTr('Light')},
-                {value: 'None', text: qsTr('None')}
+                {
+                    value: 'Full',
+                    text: qsTr('Full')
+                },
+                {
+                    value: 'Light',
+                    text: qsTr('Light')
+                },
+                {
+                    value: 'None',
+                    text: qsTr('None')
+                }
             ]
             onActivated: {
                 if (blockUpdate)
@@ -1371,10 +1440,22 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             model: [
-                {value: 'SP (Standard Play)', text: qsTr('SP (Standard Play)')},
-                {value: 'LP (Long Play)', text: qsTr('LP (Long Play)')},
-                {value: 'EP (Extended Play)', text: qsTr('EP (Extended Play)')},
-                {value: 'None', text: qsTr('None')}
+                {
+                    value: 'SP (Standard Play)',
+                    text: qsTr('SP (Standard Play)')
+                },
+                {
+                    value: 'LP (Long Play)',
+                    text: qsTr('LP (Long Play)')
+                },
+                {
+                    value: 'EP (Extended Play)',
+                    text: qsTr('EP (Extended Play)')
+                },
+                {
+                    value: 'None',
+                    text: qsTr('None')
+                }
             ]
             onActivated: {
                 if (blockUpdate)

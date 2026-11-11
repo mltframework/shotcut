@@ -74,9 +74,7 @@ Rectangle {
     }
 
     function _gainScalePosition(dB) {
-        return Math.max(0.0,
-                        Math.min(1.0,
-                                 (dB - _minimumGainDb) / (_maximumGainDb - _minimumGainDb)));
+        return Math.max(0.0, Math.min(1.0, (dB - _minimumGainDb) / (_maximumGainDb - _minimumGainDb)));
     }
 
     function _formatDb(value) {
@@ -85,16 +83,11 @@ Rectangle {
     }
 
     function _inlineMeterScalePosition(dB) {
-        return Math.max(0.0,
-                        Math.min(1.0,
-                                 (dB - _minimumGainDb) / (0.0 - _minimumGainDb)));
+        return Math.max(0.0, Math.min(1.0, (dB - _minimumGainDb) / (0.0 - _minimumGainDb)));
     }
 
     function _mixColor(a, b, t) {
-        return Qt.rgba(a.r + (b.r - a.r) * t,
-                       a.g + (b.g - a.g) * t,
-                       a.b + (b.b - a.b) * t,
-                       a.a + (b.a - a.a) * t);
+        return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, a.a + (b.a - a.a) * t);
     }
 
     function _audioLevelColor(level) {
@@ -126,10 +119,7 @@ Rectangle {
             color = _mixColor(yellow, red, (levelPos - pYellow) / (pRed - pYellow));
         }
 
-        return Qt.rgba(color.r * shapedBrightness,
-                       color.g * shapedBrightness,
-                       color.b * shapedBrightness,
-                       1.0);
+        return Qt.rgba(color.r * shapedBrightness, color.g * shapedBrightness, color.b * shapedBrightness, 1.0);
     }
 
     function _indicatorAudioLevel() {
@@ -160,9 +150,7 @@ Rectangle {
     }
 
     function _syncTrackGain() {
-        const gain = Math.max(_minimumGainDb,
-                              Math.min(_maximumGainDb,
-                                       Math.round(trackGain * 10) / 10));
+        const gain = Math.max(_minimumGainDb, Math.min(_maximumGainDb, Math.round(trackGain * 10) / 10));
         _blockTrackGainUpdate = true;
         volumeSlider.value = gain;
         inlineVolumeSlider.value = gain;
@@ -209,12 +197,8 @@ Rectangle {
         if (!volumePopup.opened)
             return;
 
-        const buttonCenter = volumeButton.mapToItem(trackHeadRoot,
-                                                    volumeButton.width / 2,
-                                                    volumeButton.height / 2);
-        const popupButtonCenter = popupMuteButton.mapToItem(trackHeadRoot,
-                                                            popupMuteButton.width / 2,
-                                                            popupMuteButton.height / 2);
+        const buttonCenter = volumeButton.mapToItem(trackHeadRoot, volumeButton.width / 2, volumeButton.height / 2);
+        const popupButtonCenter = popupMuteButton.mapToItem(trackHeadRoot, popupMuteButton.width / 2, popupMuteButton.height / 2);
         volumePopup.x += Math.round(buttonCenter.x - popupButtonCenter.x);
         volumePopup.y += Math.round(buttonCenter.y - popupButtonCenter.y);
     }
@@ -324,286 +308,136 @@ Rectangle {
             spacing: trackHeadRoot.stackedHeaderLayout ? 4 : 0
 
             Rectangle {
-            color: 'transparent'
-            width: trackHeadHeaderFlow.width - (trackHeadRoot.stackedHeaderLayout ? 0 : trackHeadButtons.implicitWidth)
-            radius: 2
-            border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse) ? activePalette.shadow : 'transparent'
-            height: nameEdit.height
+                color: 'transparent'
+                width: trackHeadHeaderFlow.width - (trackHeadRoot.stackedHeaderLayout ? 0 : trackHeadButtons.implicitWidth)
+                radius: 2
+                border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse) ? activePalette.shadow : 'transparent'
+                height: nameEdit.height
 
-            MouseArea {
-                id: trackNameMouseArea
+                MouseArea {
+                    id: trackNameMouseArea
 
-                height: parent.height
-                width: nameEdit.width
-                hoverEnabled: true
-                onClicked: {
-                    if (!timeline.isFloating()) {
-                        nameEdit.focus = true;
-                        nameEdit.selectAll();
+                    height: parent.height
+                    width: nameEdit.width
+                    hoverEnabled: true
+                    onClicked: {
+                        if (!timeline.isFloating()) {
+                            nameEdit.focus = true;
+                            nameEdit.selectAll();
+                        }
                     }
                 }
-            }
 
-            Control {
-                Shotcut.HoverTip {
+                Control {
+                    Shotcut.HoverTip {
+                        text: trackName
+                    }
+
+                    contentItem: Label {
+                        text: trackName
+                        color: activePalette.windowText
+                        elide: Qt.ElideRight
+                        leftPadding: 4
+                        topPadding: 3
+                        width: nameEdit.width
+                    }
+                }
+
+                TextField {
+                    id: nameEdit
+
+                    visible: focus
+                    width: parent.width
+                    selectByMouse: true
                     text: trackName
-                }
-
-                contentItem: Label {
-                    text: trackName
-                    color: activePalette.windowText
-                    elide: Qt.ElideRight
-                    leftPadding: 4
-                    topPadding: 3
-                    width: nameEdit.width
+                    onEditingFinished: {
+                        timeline.setTrackName(index, text);
+                        focus = false;
+                    }
+                    Keys.onTabPressed: editingFinished()
                 }
             }
-
-            TextField {
-                id: nameEdit
-
-                visible: focus
-                width: parent.width
-                selectByMouse: true
-                text: trackName
-                onEditingFinished: {
-                    timeline.setTrackName(index, text);
-                    focus = false;
-                }
-                Keys.onTabPressed: editingFinished()
-            }
-        }
 
             RowLayout {
-            id: trackHeadButtons
-            spacing: 8
+                id: trackHeadButtons
+                spacing: 8
 
-            Item {
-                Layout.alignment: Qt.AlignVCenter
-                width: 14
-                height: 14
-                visible: trackHeadRoot.trackAudioLevelSupported && !trackHeadRoot.inlineAudioControlsEnabled
+                Item {
+                    Layout.alignment: Qt.AlignVCenter
+                    width: 14
+                    height: 14
+                    visible: trackHeadRoot.trackAudioLevelSupported && !trackHeadRoot.inlineAudioControlsEnabled
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: 10
-                    height: 10
-                    radius: 5
-                    antialiasing: true
-                    color: trackHeadRoot._audioLevelColor(trackHeadRoot._indicatorAudioLevel())
-                    border.color: activePalette.shadow
-                    border.width: 1
-                }
-
-                MouseArea {
-                    id: audioLevelIndicatorMouseArea
-
-                    anchors.fill: parent
-                    acceptedButtons: Qt.NoButton
-                    hoverEnabled: true
-
-                    ToolTip {
-                        parent: audioLevelIndicatorMouseArea
-                        visible: audioLevelIndicatorMouseArea.containsMouse
-                        delay: 0
-                        timeout: -1
-                        text: trackHeadRoot._indicatorAudioLevelText()
-                    }
-                }
-            }
-
-            ToolButton {
-                id: lockButton
-
-                icon.name: isLocked ? 'object-locked' : 'object-unlocked'
-                icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
-                icon.width: 16
-                icon.height: 16
-                padding: 1
-                focusPolicy: Qt.NoFocus
-                onClicked: timeline.setTrackLock(index, !isLocked)
-                transformOrigin: Item.Center
-
-                Shotcut.HoverTip {
-                    text: (isLocked ? qsTr('Unlock track') : qsTr('Lock track')) + application.actionFirstShortcut('timelineToggleTrackLockedAction')
-                }
-
-                SequentialAnimation {
-                    id: lockButtonAnim
-
-                    loops: 2
-
-                    NumberAnimation {
-                        target: lockButton
-                        property: 'scale'
-                        to: 2
-                        duration: 200
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: 10
+                        height: 10
+                        radius: 5
+                        antialiasing: true
+                        color: trackHeadRoot._audioLevelColor(trackHeadRoot._indicatorAudioLevel())
+                        border.color: activePalette.shadow
+                        border.width: 1
                     }
 
-                    NumberAnimation {
-                        target: lockButton
-                        property: 'scale'
-                        to: 1
-                        duration: 200
-                    }
-                }
-            }
+                    MouseArea {
+                        id: audioLevelIndicatorMouseArea
 
-            ToolButton {
-                id: volumeButton
+                        anchors.fill: parent
+                        acceptedButtons: Qt.NoButton
+                        hoverEnabled: true
 
-                icon.name: isMute ? 'audio-volume-muted' : 'player-volume'
-                icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/actions/player-volume.png'
-                icon.width: 16
-                icon.height: 16
-                padding: 1
-                focusPolicy: Qt.NoFocus
-
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    onClicked: mouse => {
-                        trackHeadRoot._pendingVolumeClickModifiers = mouse.modifiers;
-                        volumeButtonSingleClickTimer.restart();
-                    }
-                    onDoubleClicked: mouse => {
-                        volumeButtonSingleClickTimer.stop();
-                        trackHeadRoot._handleVolumeButtonDoubleClick();
-                    }
-                }
-
-                Shotcut.HoverTip {
-                    text: trackHeadRoot.inlineAudioControlsEnabled ? (qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')) : (volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction'))
-                }
-
-                Popup {
-                    id: volumePopup
-
-                    parent: trackHeadRoot
-                    x: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).x - padding)
-                    y: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).y - padding)
-                    width: 220
-                    height: 36
-                    padding: 6
-                    modal: false
-                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                    onOpened: trackHeadRoot._positionVolumePopupOverVolumeButton()
-
-                    background: Rectangle {
-                        radius: 3
-                        color: activePalette.base
-                        border.color: activePalette.mid
-                    }
-
-                    contentItem: RowLayout {
-                        spacing: 6
-
-                        ToolButton {
-                            id: popupMuteButton
-
-                            Layout.alignment: Qt.AlignVCenter
-                            icon.name: isMute ? 'audio-volume-muted' : 'audio-volume-high'
-                            icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
-                            icon.width: 16
-                            icon.height: 16
-                            width: volumeButton.width
-                            height: volumeButton.height
-                            padding: volumeButton.padding
-                            focusPolicy: Qt.NoFocus
-                            onClicked: {
-                                timeline.toggleTrackMute(index);
-                                volumePopup.close();
-                            }
-
-                            Shotcut.HoverTip {
-                                text: isMute ? qsTr('Unmute') : qsTr('Mute')
-                            }
-                        }
-
-                        Slider {
-                            id: volumeSlider
-
-                            Layout.fillWidth: true
-                            Layout.alignment: Qt.AlignVCenter
-                            from: _minimumGainDb
-                            to: _maximumGainDb
-                            stepSize: 0.1
-                            snapMode: Slider.SnapAlways
-                            live: true
-                            value: 0
-                            implicitHeight: 24
-                            implicitWidth: 120
-                            onValueChanged: trackHeadRoot._setTrackGain(value)
-                            ToolTip.visible: false
-
-                            MouseArea {
-                                id: volumeSliderMouseArea
-
-                                anchors.fill: parent
-                                acceptedButtons: Qt.LeftButton
-                                hoverEnabled: true
-                                property bool _dragging: false
-                                property real _pressX: 0
-                                property real _pressY: 0
-
-                                onPressed: mouse => {
-                                        _dragging = false;
-                                        _pressX = mouse.x;
-                                        _pressY = mouse.y;
-                                        mouse.accepted = true;
-                                }
-
-                                onDoubleClicked: mouse => {
-                                        _dragging = false;
-                                        trackHeadRoot._resetTrackGain();
-                                        mouse.accepted = true;
-                                }
-
-                                onPositionChanged: mouse => {
-                                    if (!(mouse.buttons & Qt.LeftButton))
-                                        return;
-                                    if (!_dragging) {
-                                        if (Math.abs(mouse.x - _pressX) < 3 && Math.abs(mouse.y - _pressY) < 3)
-                                            return;
-                                        _dragging = true;
-                                    }
-                                    trackHeadRoot._setTrackGainFromMouse(volumeSlider, mouse.x);
-                                }
-
-                                onWheel: wheel => {
-                                    const step = 0.1;
-                                    const delta = wheel.angleDelta.y > 0 ? step : -step;
-                                    volumeSlider.value = Math.max(volumeSlider.from,
-                                                                  Math.min(volumeSlider.to,
-                                                                           Math.round((volumeSlider.value + delta) * 10) / 10));
-                                    wheel.accepted = true;
-                                }
-                            }
-                        }
-
-                        Label {
-                            Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredWidth: 52
-                            horizontalAlignment: Text.AlignRight
-                            text: (Math.abs(trackGain) < 0.05) ? '0 dB' : ((trackGain > 0 ? '+' : '') + (Math.round(trackGain * 10) / 10).toFixed(1) + ' dB')
-                            color: activePalette.windowText
-                            font.pixelSize: 10
+                        ToolTip {
+                            parent: audioLevelIndicatorMouseArea
+                            visible: audioLevelIndicatorMouseArea.containsMouse
+                            delay: 0
+                            timeout: -1
+                            text: trackHeadRoot._indicatorAudioLevelText()
                         }
                     }
                 }
-            }
-
-            Item {
-                width: 20
-                height: 20
 
                 ToolButton {
-                    id: hideButton
+                    id: lockButton
 
-                    anchors.centerIn: parent
-                    visible: isVideo
-                    icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
-                    icon.source: isHidden ? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                    icon.name: isLocked ? 'object-locked' : 'object-unlocked'
+                    icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                    icon.width: 16
+                    icon.height: 16
+                    padding: 1
+                    focusPolicy: Qt.NoFocus
+                    onClicked: timeline.setTrackLock(index, !isLocked)
+                    transformOrigin: Item.Center
+
+                    Shotcut.HoverTip {
+                        text: (isLocked ? qsTr('Unlock track') : qsTr('Lock track')) + application.actionFirstShortcut('timelineToggleTrackLockedAction')
+                    }
+
+                    SequentialAnimation {
+                        id: lockButtonAnim
+
+                        loops: 2
+
+                        NumberAnimation {
+                            target: lockButton
+                            property: 'scale'
+                            to: 2
+                            duration: 200
+                        }
+
+                        NumberAnimation {
+                            target: lockButton
+                            property: 'scale'
+                            to: 1
+                            duration: 200
+                        }
+                    }
+                }
+
+                ToolButton {
+                    id: volumeButton
+
+                    icon.name: isMute ? 'audio-volume-muted' : 'player-volume'
+                    icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/actions/player-volume.png'
                     icon.width: 16
                     icon.height: 16
                     padding: 1
@@ -611,53 +445,200 @@ Rectangle {
 
                     MouseArea {
                         anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton
                         onClicked: mouse => {
-                            if (mouse.modifiers & Qt.AltModifier) {
-                                timeline.toggleOtherTracksHidden(index);
-                            } else {
-                                timeline.toggleTrackHidden(index);
-                            }
+                            trackHeadRoot._pendingVolumeClickModifiers = mouse.modifiers;
+                            volumeButtonSingleClickTimer.restart();
+                        }
+                        onDoubleClicked: mouse => {
+                            volumeButtonSingleClickTimer.stop();
+                            trackHeadRoot._handleVolumeButtonDoubleClick();
                         }
                     }
 
                     Shotcut.HoverTip {
-                        text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + application.actionFirstShortcut('timelineToggleTrackHiddenAction')
+                        text: trackHeadRoot.inlineAudioControlsEnabled ? (qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction')) : (volumePopup.opened ? qsTr('Mute/Unmute - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction') : qsTr('Adjust track volume - Alt+Click to toggle mute of other tracks') + application.actionFirstShortcut('timelineToggleTrackMuteAction'))
+                    }
+
+                    Popup {
+                        id: volumePopup
+
+                        parent: trackHeadRoot
+                        x: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).x - padding)
+                        y: Math.round(volumeButton.mapToItem(trackHeadRoot, 0, 0).y - padding)
+                        width: 220
+                        height: 36
+                        padding: 6
+                        modal: false
+                        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                        onOpened: trackHeadRoot._positionVolumePopupOverVolumeButton()
+
+                        background: Rectangle {
+                            radius: 3
+                            color: activePalette.base
+                            border.color: activePalette.mid
+                        }
+
+                        contentItem: RowLayout {
+                            spacing: 6
+
+                            ToolButton {
+                                id: popupMuteButton
+
+                                Layout.alignment: Qt.AlignVCenter
+                                icon.name: isMute ? 'audio-volume-muted' : 'audio-volume-high'
+                                icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
+                                icon.width: 16
+                                icon.height: 16
+                                width: volumeButton.width
+                                height: volumeButton.height
+                                padding: volumeButton.padding
+                                focusPolicy: Qt.NoFocus
+                                onClicked: {
+                                    timeline.toggleTrackMute(index);
+                                    volumePopup.close();
+                                }
+
+                                Shotcut.HoverTip {
+                                    text: isMute ? qsTr('Unmute') : qsTr('Mute')
+                                }
+                            }
+
+                            Slider {
+                                id: volumeSlider
+
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignVCenter
+                                from: _minimumGainDb
+                                to: _maximumGainDb
+                                stepSize: 0.1
+                                snapMode: Slider.SnapAlways
+                                live: true
+                                value: 0
+                                implicitHeight: 24
+                                implicitWidth: 120
+                                onValueChanged: trackHeadRoot._setTrackGain(value)
+                                ToolTip.visible: false
+
+                                MouseArea {
+                                    id: volumeSliderMouseArea
+
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    hoverEnabled: true
+                                    property bool _dragging: false
+                                    property real _pressX: 0
+                                    property real _pressY: 0
+
+                                    onPressed: mouse => {
+                                        _dragging = false;
+                                        _pressX = mouse.x;
+                                        _pressY = mouse.y;
+                                        mouse.accepted = true;
+                                    }
+
+                                    onDoubleClicked: mouse => {
+                                        _dragging = false;
+                                        trackHeadRoot._resetTrackGain();
+                                        mouse.accepted = true;
+                                    }
+
+                                    onPositionChanged: mouse => {
+                                        if (!(mouse.buttons & Qt.LeftButton))
+                                            return;
+                                        if (!_dragging) {
+                                            if (Math.abs(mouse.x - _pressX) < 3 && Math.abs(mouse.y - _pressY) < 3)
+                                                return;
+                                            _dragging = true;
+                                        }
+                                        trackHeadRoot._setTrackGainFromMouse(volumeSlider, mouse.x);
+                                    }
+
+                                    onWheel: wheel => {
+                                        const step = 0.1;
+                                        const delta = wheel.angleDelta.y > 0 ? step : -step;
+                                        volumeSlider.value = Math.max(volumeSlider.from, Math.min(volumeSlider.to, Math.round((volumeSlider.value + delta) * 10) / 10));
+                                        wheel.accepted = true;
+                                    }
+                                }
+                            }
+
+                            Label {
+                                Layout.alignment: Qt.AlignVCenter
+                                Layout.preferredWidth: 52
+                                horizontalAlignment: Text.AlignRight
+                                text: (Math.abs(trackGain) < 0.05) ? '0 dB' : ((trackGain > 0 ? '+' : '') + (Math.round(trackGain * 10) / 10).toFixed(1) + ' dB')
+                                color: activePalette.windowText
+                                font.pixelSize: 10
+                            }
+                        }
                     }
                 }
-            }
 
-            Item {
-                width: 20
-                height: 20
+                Item {
+                    width: 20
+                    height: 20
 
-                ToolButton {
-                    id: filterButton
+                    ToolButton {
+                        id: hideButton
 
-                    anchors.centerIn: parent
-                    visible: isFiltered
-                    icon.name: 'view-filter'
-                    icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
-                    icon.width: 16
-                    icon.height: 16
-                    padding: 1
-                    focusPolicy: Qt.NoFocus
-                    onClicked: {
-                        trackHeadRoot.clicked();
-                        nameEdit.focus = false;
-                        timeline.filteredClicked();
-                    }
+                        anchors.centerIn: parent
+                        visible: isVideo
+                        icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
+                        icon.source: isHidden ? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                        icon.width: 16
+                        icon.height: 16
+                        padding: 1
+                        focusPolicy: Qt.NoFocus
 
-                    Shotcut.HoverTip {
-                        text: qsTr('Filters')
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: mouse => {
+                                if (mouse.modifiers & Qt.AltModifier) {
+                                    timeline.toggleOtherTracksHidden(index);
+                                } else {
+                                    timeline.toggleTrackHidden(index);
+                                }
+                            }
+                        }
+
+                        Shotcut.HoverTip {
+                            text: qsTr('Show/Hide - Alt+Click to toggle visibility of other tracks') + application.actionFirstShortcut('timelineToggleTrackHiddenAction')
+                        }
                     }
                 }
-            }
+
+                Item {
+                    width: 20
+                    height: 20
+
+                    ToolButton {
+                        id: filterButton
+
+                        anchors.centerIn: parent
+                        visible: isFiltered
+                        icon.name: 'view-filter'
+                        icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                        icon.width: 16
+                        icon.height: 16
+                        padding: 1
+                        focusPolicy: Qt.NoFocus
+                        onClicked: {
+                            trackHeadRoot.clicked();
+                            nameEdit.focus = false;
+                            timeline.filteredClicked();
+                        }
+
+                        Shotcut.HoverTip {
+                            text: qsTr('Filters')
+                        }
+                    }
+                }
             }
         }
 
         Rectangle {
-            visible: trackHeadRoot.inlineAudioControlsEnabled
-                     && trackHeadRoot.trackAudioLevelSupported
+            visible: trackHeadRoot.inlineAudioControlsEnabled && trackHeadRoot.trackAudioLevelSupported
             width: parent.width - 6
             height: trackHeadRoot.stackedHeaderLayout ? 28 : 30
             color: 'transparent'
@@ -700,10 +681,7 @@ Rectangle {
 
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        width: Math.max(0,
-                                        Math.round(parent.width * trackHeadRoot._inlineMeterScalePosition(Math.max(trackHeadRoot._minimumGainDb,
-                                                                                                            Math.min(0.0,
-                                                                                                              trackHeadRoot._indicatorAudioLevel())))))
+                        width: Math.max(0, Math.round(parent.width * trackHeadRoot._inlineMeterScalePosition(Math.max(trackHeadRoot._minimumGainDb, Math.min(0.0, trackHeadRoot._indicatorAudioLevel())))))
                         height: parent.height - 2
                         clip: true
 
@@ -791,10 +769,7 @@ Rectangle {
                         onWheel: wheel => {
                             const step = 0.1;
                             const delta = wheel.angleDelta.y > 0 ? step : -step;
-                            inlineVolumeSlider.value = Math.max(inlineVolumeSlider.from,
-                                                                Math.min(inlineVolumeSlider.to,
-                                                                         Math.round((inlineVolumeSlider.value + delta) * 10)
-                                                                         / 10));
+                            inlineVolumeSlider.value = Math.max(inlineVolumeSlider.from, Math.min(inlineVolumeSlider.to, Math.round((inlineVolumeSlider.value + delta) * 10) / 10));
                             inlineSliderWheelTipTimer.restart();
                             wheel.accepted = true;
                         }

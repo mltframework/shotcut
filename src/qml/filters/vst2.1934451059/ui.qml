@@ -495,21 +495,34 @@ Shotcut.KeyframableFilter {
             id: channelMask
             Layout.columnSpan: 3
         }
-
     }
 
     Connections {
-        function onChanged() { setControls(); }
-        function onInChanged() { updateSimpleKeyframes(); }
-        function onOutChanged() { updateSimpleKeyframes(); }
-        function onAnimateInChanged() { updateSimpleKeyframes(); }
-        function onAnimateOutChanged() { updateSimpleKeyframes(); }
-        function onPropertyChanged(name) { setControls(); }
+        function onChanged() {
+            setControls();
+        }
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+        function onPropertyChanged(name) {
+            setControls();
+        }
         target: filter
     }
 
     Connections {
-        function onPositionChanged() { setControls(); }
+        function onPositionChanged() {
+            setControls();
+        }
         target: producer
     }
 }
