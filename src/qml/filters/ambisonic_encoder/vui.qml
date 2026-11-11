@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,20 +63,15 @@ Shotcut.VuiBase {
 
     Component.onCompleted: translate.update()
 
-    Flickable {
+    Item {
         anchors.fill: parent
-        interactive: false
         clip: true
-        contentWidth: video.rect.width * zoom
-        contentHeight: video.rect.height * zoom
-        contentX: video.offset.x
-        contentY: video.offset.y
 
         Item {
             id: videoItem
 
-            x: video.rect.x + 0.5 * video.rect.width
-            y: video.rect.y + 0.5 * video.rect.height
+            x: video.rect.x + 0.5 * video.rect.width - video.offset.x
+            y: video.rect.y + 0.5 * video.rect.height - video.offset.y
             opacity: 0.5
             antialiasing: true
             transform: Translate {
