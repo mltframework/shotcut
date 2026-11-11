@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Meltytech, LLC
+ * Copyright (c) 2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,15 +87,20 @@ Shotcut.VuiBase {
         setRectangleControl();
     }
 
-    Item {
+    Flickable {
         anchors.fill: parent
+        interactive: false
         clip: true
+        contentWidth: video.rect.width * zoom
+        contentHeight: video.rect.height * zoom
+        contentX: video.offset.x
+        contentY: video.offset.y
 
         Item {
             id: videoItem
 
-            x: video.rect.x - video.offset.x
-            y: video.rect.y - video.offset.y
+            x: video.rect.x
+            y: video.rect.y
             width: video.rect.width
             height: video.rect.height
             scale: zoom
