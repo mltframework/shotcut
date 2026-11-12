@@ -269,7 +269,11 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
             slideshow->mix_add(i + 1, &crossFade);
 
             // Add luma transition
-            Mlt::Transition luma(MLT.profile(), Settings.playerGPU() ? "movit.luma_mix" : "luma");
+            Mlt::Transition luma(MLT.profile(),
+                                 Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
+                                     ? "placebo.luma_mix"
+                                 : Settings.playerGPU() ? "movit.luma_mix"
+                                                        : "luma");
             applyLumaTransitionProperties(&luma, config);
             slideshow->mix_add(i + 1, &luma);
 

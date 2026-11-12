@@ -433,7 +433,7 @@ int VideoWidget::reconfigure(bool isMulti)
     QString serviceName = property("mlt_service").toString();
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty()) {
-            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "sdl2_audio"));
+            m_consumer.reset(new Mlt::Consumer(previewProfile(), "sdl2_audio"));
             if (m_consumer->is_valid())
                 serviceName = "sdl2_audio";
             else
@@ -441,10 +441,10 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer.reset();
         }
         if (isMulti)
-            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "multi"));
+            m_consumer.reset(new Mlt::Consumer(previewProfile(), "multi"));
         else
             m_consumer.reset(
-                new Mlt::FilteredConsumer(previewProfile(), serviceName.toLatin1().constData()));
+                new Mlt::Consumer(previewProfile(), serviceName.toLatin1().constData()));
 
         m_threadStartEvent.reset();
         m_threadStopEvent.reset();
@@ -466,6 +466,12 @@ int VideoWidget::reconfigure(bool isMulti)
         switch (processingMode) {
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
+            break;
+        case ShotcutSettings::Linear16GpuCpu:
+            m_consumer->set("mlt_image_format",
+                            isDeckLinkHdr ? "yuv444p10"
+                            : hdrPreview  ? "yuv420p10"
+                                          : "yuv420p");
             break;
         case ShotcutSettings::Native10Cpu:
         case ShotcutSettings::Linear10GpuCpu:
@@ -510,6 +516,7 @@ int VideoWidget::reconfigure(bool isMulti)
         HdrTransfer hdrTransfer = hdrTransferFromTrc(QLatin1String(activeTrc));
         emit hdrTransferChanged(hdrTransfer);
         if (processingMode == ShotcutSettings::Linear10Cpu
+            || processingMode == ShotcutSettings::Linear16GpuCpu
             || (processingMode == ShotcutSettings::Linear10GpuCpu && !MLT.isHDR())) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {

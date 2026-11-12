@@ -197,7 +197,7 @@ public:
 protected:
     Mlt::Repository *m_repo;
     QScopedPointer<Mlt::Producer> m_producer;
-    QScopedPointer<Mlt::FilteredConsumer> m_consumer;
+    QScopedPointer<Mlt::Consumer> m_consumer;
 
 private:
     Mlt::Profile m_profile;

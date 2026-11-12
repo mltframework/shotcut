@@ -2557,7 +2557,10 @@ int MultitrackModel::addTransition(
 
             // Add transitions
             Mlt::Transition dissolve(MLT.profile(),
-                                     Settings.playerGPU() ? "movit.luma_mix" : "luma");
+                                     Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
+                                         ? "placebo.luma_mix"
+                                     : Settings.playerGPU() ? "movit.luma_mix"
+                                                            : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-2");
             if (!Settings.playerGPU()) {
                 dissolve.set("alpha_over", 1);
@@ -3040,7 +3043,10 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
 
             // Add transitions.
             Mlt::Transition dissolve(MLT.profile(),
-                                     Settings.playerGPU() ? "movit.luma_mix" : "luma");
+                                     Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
+                                         ? "placebo.luma_mix"
+                                     : Settings.playerGPU() ? "movit.luma_mix"
+                                                            : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-2");
             if (!Settings.playerGPU()) {
                 dissolve.set("alpha_over", 1);
@@ -3130,7 +3136,10 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
 
             // Add transitions.
             Mlt::Transition dissolve(MLT.profile(),
-                                     Settings.playerGPU() ? "movit.luma_mix" : "luma");
+                                     Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
+                                         ? "placebo.luma_mix"
+                                     : Settings.playerGPU() ? "movit.luma_mix"
+                                                            : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-2");
             if (!Settings.playerGPU()) {
                 dissolve.set("alpha_over", 1);
@@ -3638,6 +3647,8 @@ Mlt::Transition *MultitrackModel::getVideoBlendTransition(int trackIndex) const
 {
     auto transition = getTransition("qtblend", trackIndex);
     if (!transition)
+        transition = getTransition("placebo.blend", trackIndex);
+    if (!transition)
         transition = getTransition("movit.overlay", trackIndex);
     if (!transition)
         transition = getTransition("frei0r.cairoblend", trackIndex);
@@ -3741,6 +3752,7 @@ QString MultitrackModel::trackTransitionService()
                 QString transitionService = service->get("mlt_service");
                 if (transitionService == QStringLiteral("qtblend")
                     || transitionService == QStringLiteral("movit.overlay")
+                    || transitionService == QStringLiteral("placebo.blend")
                     || transitionService == QStringLiteral("frei0r.cairoblend")) {
                     return transitionService;
                 }
@@ -3748,7 +3760,10 @@ QString MultitrackModel::trackTransitionService()
             service.reset(service->producer());
         }
     }
-    return Settings.playerGPU() ? QStringLiteral("movit.overlay") : QStringLiteral("qtblend");
+    return Settings.playerGPU() ? QStringLiteral("movit.overlay")
+           : Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
+               ? QStringLiteral("placebo.blend")
+               : QStringLiteral("qtblend");
 }
 
 void MultitrackModel::adjustTrackFilters()

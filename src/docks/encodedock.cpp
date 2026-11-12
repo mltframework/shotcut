@@ -1345,6 +1345,10 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
                 node.setAttribute("mlt_image_format", "rgba64");
             }
         }
+        if (processingMode == ShotcutSettings::Linear16GpuCpu) {
+            node.setAttribute("mlt_image_format", "vulkan");
+            node.setAttribute("mlt_color_trc", "linear");
+        }
     }
     delete p;
 }

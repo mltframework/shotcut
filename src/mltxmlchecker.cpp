@@ -531,7 +531,9 @@ void MltXmlChecker::checkUnlinkedFile(const QString &mlt_service)
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
         // not a builtin luma wipe file
-        if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !fileName.startsWith('%'))
+        if ((mlt_service != "luma" && mlt_service != "movit.luma_mix"
+             && mlt_service != "placebo.luma_mix")
+            || !fileName.startsWith('%'))
             // not a Stabilize filter without Analyze results
             if (fileName != "vidstab.trf")
                 // not the generic <producer> resource

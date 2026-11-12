@@ -88,7 +88,14 @@ class ShotcutSettings : public QObject
 public:
     static const qsizetype MaxPath{32767};
     enum TimelineScrolling { NoScrolling, CenterPlayhead, PageScrolling, SmoothScrolling };
-    enum ProcessingMode { Native8Cpu, Linear8Cpu, Native10Cpu, Linear10Cpu, Linear10GpuCpu };
+    enum ProcessingMode {
+        Native8Cpu,
+        Linear8Cpu,
+        Native10Cpu,
+        Linear10Cpu,
+        Linear10GpuCpu,
+        Linear16GpuCpu
+    };
 
     static ShotcutSettings &singleton();
     void log();

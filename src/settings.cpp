@@ -48,13 +48,12 @@ struct ModeMap
     ShotcutSettings::ProcessingMode id;
     const char *name;
 };
-static constexpr ModeMap kModeMap[] = {
-    {ShotcutSettings::Native8Cpu, "Native8Cpu"},
-    {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
-    {ShotcutSettings::Native10Cpu, "Native10Cpu"},
-    {ShotcutSettings::Linear10Cpu, "Linear10Cpu"},
-    {ShotcutSettings::Linear10GpuCpu, "Linear10GpuCpu"},
-};
+static constexpr ModeMap kModeMap[] = {{ShotcutSettings::Native8Cpu, "Native8Cpu"},
+                                       {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
+                                       {ShotcutSettings::Native10Cpu, "Native10Cpu"},
+                                       {ShotcutSettings::Linear10Cpu, "Linear10Cpu"},
+                                       {ShotcutSettings::Linear10GpuCpu, "Linear10GpuCpu"},
+                                       {ShotcutSettings::Linear16GpuCpu, "Linear16GpuCpu"}};
 } // anonymous namespace
 
 ShotcutSettings &ShotcutSettings::singleton()
@@ -640,7 +639,7 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString 
 bool ShotcutSettings::isHdrCompatibleProcessingMode()
 {
     const auto mode = processingMode();
-    return mode == Native10Cpu || mode == Linear10GpuCpu;
+    return mode == Native10Cpu || mode == Linear10GpuCpu || mode == Linear16GpuCpu;
 }
 
 bool ShotcutSettings::showConvertClipDialog() const

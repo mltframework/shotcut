@@ -52,6 +52,7 @@
 #include <cmath>
 #include <unistd.h>
 
+#define USE_VULKAN 1
 namespace Mlt {
 
 static constexpr int kThumbnailOutSeekFactor = 5;
@@ -70,6 +71,10 @@ Controller::Controller()
     }
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
+    if (m_processingMode == ShotcutSettings::Linear16GpuCpu) {
+        // Allocate GPU and publish it
+        Filter(m_profile, "placebo.render");
+    }
     resetLocale();
     initFiltersClipboard();
     updateAvformatCaching(0);
@@ -1913,13 +1918,6 @@ void Controller::configureHardwareDecoder(bool enable)
 #elif defined(Q_OS_LINUX)
             qputenv(var, "vaapi");
 #endif
-        }
-        var = "MLT_AVFORMAT_HWACCEL_PPS";
-        if (Settings.playerPreviewScale() == 0) {
-            if (!qEnvironmentVariableIsSet(var))
-                qputenv(var, "124416000"); // 1080p60
-        } else {
-            qunsetenv(var);
         }
     } else {
         qunsetenv("MLT_AVFORMAT_HWACCEL");

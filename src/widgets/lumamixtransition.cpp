@@ -209,6 +209,9 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
             if (name == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
             else if (name == "luma"
+                     && QStringLiteral("placebo.luma_mix") == transition.get("mlt_service"))
+                return new Mlt::Transition(transition);
+            else if (name == "luma"
                      && QStringLiteral("movit.luma_mix") == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
         }

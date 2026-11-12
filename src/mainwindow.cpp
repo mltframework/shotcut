@@ -1146,6 +1146,10 @@ void MainWindow::setupSettingsMenu()
         group->addAction(ui->actionLinear10bitCpu);
     if (ui->actionLinear10bitGpuCpu->isVisible())
         group->addAction(ui->actionLinear10bitGpuCpu);
+    if (ui->actionLinear16GpuCpu->isVisible()) {
+        ui->actionLinear16GpuCpu->setData(ShotcutSettings::Linear16GpuCpu);
+        group->addAction(ui->actionLinear16GpuCpu);
+    }
     for (auto a : group->actions()) {
         const auto mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
         if (Settings.processingMode() == mode) {
@@ -2184,6 +2188,9 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
         break;
     case ShotcutSettings::Linear10GpuCpu:
         ui->actionLinear10bitGpuCpu->setChecked(true);
+        break;
+    case ShotcutSettings::Linear16GpuCpu:
+        ui->actionLinear16GpuCpu->setChecked(true);
         break;
     }
     MLT.videoWidget()->setProperty("processing_mode", mode);

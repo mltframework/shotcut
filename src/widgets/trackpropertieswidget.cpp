@@ -80,6 +80,8 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
     if (showBlend) {
         QScopedPointer<Mlt::Transition> transition(getTransition("qtblend"));
         if (!transition)
+            transition.reset(getTransition("placebo.blend"));
+        if (!transition)
             transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
             ui->blendModeCombo->blockSignals(true);
