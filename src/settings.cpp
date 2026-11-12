@@ -70,6 +70,10 @@ ShotcutSettings &ShotcutSettings::singleton()
         } else {
             instance.reset(new ShotcutSettings(appDataForSession));
         }
+#if defined(Q_OS_WIN)
+        if (instance->settings.value("player/audioDriver").toString() == "winmm")
+            instance->setPlayerAudioDriver("wasapi");
+#endif
     }
     return *instance;
 }
@@ -936,7 +940,7 @@ void ShotcutSettings::setPlayerJumpSeconds(double i)
 QString ShotcutSettings::playerAudioDriver() const
 {
 #if defined(Q_OS_WIN)
-    auto s = playerAudioChannels() > 2 ? "directsound" : "winmm";
+    auto s = playerAudioChannels() > 2 ? "directsound" : "wasapi";
 #else
     auto s = "pulseaudio";
 #endif

@@ -258,7 +258,7 @@ public:
         QCommandLineOption sdlAudioDriverOption(
             "SDL_AUDIODRIVER",
             QCoreApplication::translate("main", "Which operating system audio API to use: %1")
-                .arg("directsound, wasapi, winmm"),
+                .arg("directsound, wasapi"),
             QCoreApplication::translate("main", "string"),
             "wasapi");
         parser.addOption(sdlAudioDriverOption);

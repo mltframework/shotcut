@@ -1224,7 +1224,6 @@ void MainWindow::setupSettingsMenu()
 #if defined(Q_OS_WIN)
     group->addAction(submenu->addAction("DirectSound"))->setData("directsound");
     group->addAction(submenu->addAction("WASAPI"))->setData("wasapi");
-    group->addAction(submenu->addAction("Waveform Audio"))->setData("winmm");
 #else
     group->addAction(submenu->addAction("ALSA"))->setData("alsa");
     group->addAction(submenu->addAction("ESound"))->setData("esd");
@@ -1238,7 +1237,7 @@ void MainWindow::setupSettingsMenu()
         if (data == Settings.playerAudioDriver())
             a->setChecked(true);
         if ((data == "directsound" && Settings.playerAudioChannels() > 2)
-            || (data == "winmm" && Settings.playerAudioChannels() <= 2) || (data == "pulseaudio")) {
+            || (data == "wasapi" && Settings.playerAudioChannels() <= 2) || data == "pulseaudio") {
             a->setText(a->text() + QString::fromLatin1(" (%1)").arg(tr("default")));
         }
     }
