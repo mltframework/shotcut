@@ -3629,8 +3629,8 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service &service, int du
 bool MultitrackModel::warnIfInvalid(Mlt::Service &service)
 {
     if (!service.is_valid()) {
-        const char *plugin = Settings.playerGPU() ? "Movit overlay" : "qtblend";
-        const char *plugins = Settings.playerGPU() ? "Movit" : "qt";
+        const char *plugin = Settings.processingMode() == ShotcutSettings::Linear16GpuCpu ? "placebo.blend" : (Settings.playerGPU() ? "Movit overlay" : "qtblend");
+        const char *plugins = Settings.processingMode() == ShotcutSettings::Linear16GpuCpu ? "libplacebo" : Settings.playerGPU() ? "Movit" : "Qt";
         LongUiTask::cancel();
         QMessageBox::critical(&MAIN,
                               qApp->applicationName(),
