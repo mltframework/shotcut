@@ -733,6 +733,10 @@ void FilterController::setTrackTransitionService(const QString &service)
         m_metadataModel.setHidden("qtBlendMode", true);
         m_metadataModel.setHidden("blendMode", true);
         m_metadataModel.setHidden("movitBlendMode", false);
+    } else if (service == QStringLiteral("placebo.blend")) {
+        m_metadataModel.setHidden("qtBlendMode", true);
+        m_metadataModel.setHidden("blendMode", true);
+        m_metadataModel.setHidden("movitBlendMode", false);
     } else {
         m_metadataModel.setHidden("qtBlendMode", true);
         m_metadataModel.setHidden("blendMode", true);

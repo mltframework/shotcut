@@ -31,6 +31,7 @@
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 static const char *BLEND_PROPERTY_QTBLEND = "compositing";
+static const char *BLEND_PROPERTY_PLACEBO = "mode";
 static const char *MIX_PROPERTY_DUCK_ATTENUATION = "duck_attenuation";
 static const char *MIX_PROPERTY_DUCK_FADE_IN = "duck_fade_in";
 static const char *MIX_PROPERTY_DUCK_FADE_OUT = "duck_fade_out";
@@ -79,8 +80,12 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
 
     if (showBlend) {
         QScopedPointer<Mlt::Transition> transition(getTransition("qtblend"));
-        if (!transition)
+        auto blendProperty = BLEND_PROPERTY_QTBLEND;
+        if (!transition) {
             transition.reset(getTransition("placebo.blend"));
+            if (transition)
+                blendProperty = BLEND_PROPERTY_PLACEBO;
+        }
         if (!transition)
             transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
@@ -127,7 +132,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track,
             ui->blendModeLabel->show();
             ui->blendModeCombo->show();
 
-            QString blendMode = transition->get(BLEND_PROPERTY_QTBLEND);
+            QString blendMode = transition->get(blendProperty);
             if (transition->get_int("disable"))
                 blendMode = QString();
             else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
@@ -288,15 +293,18 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
             connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
             MAIN.undoStack()->push(command);
         } else {
+            auto blendProperty = BLEND_PROPERTY_QTBLEND;
             transition.reset(getTransition("qtblend"));
+            if (!transition) {
+                transition.reset(getTransition("placebo.blend"));
+                if (transition)
+                    blendProperty = BLEND_PROPERTY_PLACEBO;
+            }
             if (!transition)
                 transition.reset(getTransition("movit.overlay"));
             if (transition && transition->is_valid()) {
-                Timeline::ChangeBlendModeCommand *command
-                    = new Timeline::ChangeBlendModeCommand(*transition,
-                                                           BLEND_PROPERTY_QTBLEND,
-                                                           ui->blendModeCombo->itemData(index)
-                                                               .toString());
+                Timeline::ChangeBlendModeCommand *command = new Timeline::ChangeBlendModeCommand(
+                    *transition, blendProperty, ui->blendModeCombo->itemData(index).toString());
                 connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
                 MAIN.undoStack()->push(command);
             }
