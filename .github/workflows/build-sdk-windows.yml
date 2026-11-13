@@ -43,6 +43,7 @@ jobs:
             mingw-w64-ucrt-x86_64-libwebp
             mingw-w64-ucrt-x86_64-libxml2
             mingw-w64-ucrt-x86_64-lilv
+            mingw-w64-ucrt-x86_64-llama.cpp
             mingw-w64-ucrt-x86_64-openblas
             mingw-w64-ucrt-x86_64-openssl
             mingw-w64-ucrt-x86_64-opus
@@ -65,6 +66,7 @@ jobs:
             mingw-w64-ucrt-x86_64-vid.stab
             mingw-w64-ucrt-x86_64-vulkan-headers
             mingw-w64-ucrt-x86_64-vulkan-loader
+            mingw-w64-ucrt-x86_64-whisper.cpp
             mingw-w64-ucrt-x86_64-x264
             mingw-w64-ucrt-x86_64-x265
             mingw-w64-ucrt-x86_64-zimg

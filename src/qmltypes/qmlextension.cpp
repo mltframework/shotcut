@@ -26,6 +26,7 @@
 #include <QQmlComponent>
 
 const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
+const QString QmlExtension::LLAMA_ID = QStringLiteral("llamamodel");
 
 /*!
     \qmltype QmlExtensionFile
