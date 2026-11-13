@@ -2517,12 +2517,13 @@ void MainWindow::openVideo()
     path.append("/*");
 #endif
     LOG_DEBUG() << Util::getFileDialogOptions();
-    QStringList filenames = QFileDialog::getOpenFileNames(this,
-                                                          tr("Open File"),
-                                                          path,
-                                                          tr("All Files (*);;MLT XML (*.mlt)"),
-                                                          nullptr,
-                                                          Util::getFileDialogOptions());
+    QStringList filenames = QFileDialog::getOpenFileNames(
+        this,
+        tr("Open File"),
+        path,
+        tr("All Files (*);;MLT XML (*.mlt);;DJI Osmo 360 (*.osv *.OSV)"),
+        nullptr,
+        Util::getFileDialogOptions());
 
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
@@ -5474,12 +5475,13 @@ void MainWindow::on_actionOpenXML_triggered()
 #ifdef Q_OS_MAC
     path.append("/*");
 #endif
-    QStringList filenames = QFileDialog::getOpenFileNames(this,
-                                                          tr("Open File"),
-                                                          path,
-                                                          tr("MLT XML (*.mlt);;All Files (*)"),
-                                                          nullptr,
-                                                          Util::getFileDialogOptions());
+    QStringList filenames = QFileDialog::getOpenFileNames(
+        this,
+        tr("Open File"),
+        path,
+        tr("MLT XML (*.mlt);;DJI Osmo 360 (*.osv *.OSV);;All Files (*)"),
+        nullptr,
+        Util::getFileDialogOptions());
     if (filenames.length() > 0) {
         QString url = filenames.first();
         MltXmlChecker checker;
