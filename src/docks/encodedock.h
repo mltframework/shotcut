@@ -54,7 +54,7 @@ public:
     explicit EncodeDock(QWidget *parent = 0);
     ~EncodeDock();
 
-    void loadPresetFromProperties(Mlt::Properties &);
+    void loadPresetFromProperties(Mlt::Properties &, bool isDefault = false);
     bool isExportInProgress() const;
 
 signals:

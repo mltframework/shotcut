@@ -194,7 +194,7 @@ EncodeDock::~EncodeDock()
     delete m_profiles;
 }
 
-void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
+void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset, bool isDefault)
 {
     double audioQuality = -1.0;
     int videoQuality = -1;
@@ -496,7 +496,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
         }
     }
-    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, false);
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, isDefault);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
     if (m_extension.isEmpty()) {
@@ -1850,7 +1850,7 @@ void EncodeDock::resetOptions()
         preset.set("acodec", "aac");
     }
     preset.set("meta.preset.extension", "mp4");
-    loadPresetFromProperties(preset);
+    loadPresetFromProperties(preset, true);
 }
 
 Mlt::Producer *EncodeDock::fromProducer(bool usePlaylistBin) const
@@ -2566,7 +2566,6 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
     ui->gopSpinner->setEnabled(!intraOnly);
     ui->strictGopCheckBox->setEnabled(!intraOnly);
     ui->bFramesSpinner->setEnabled(!intraOnly);
-    onVideoCodecComboChanged(index);
 }
 
 void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)
@@ -2672,7 +2671,7 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
         value = QString::fromLatin1(properties->get("pix_fmt"));
         if (value.contains("p010le"))
             properties->set("pix_fmt", "yuv420p10le");
-        loadPresetFromProperties(*properties);
+        loadPresetFromProperties(*properties, true);
     }
 }
 
