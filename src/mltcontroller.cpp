@@ -1053,17 +1053,20 @@ bool Controller::isAudioFilter(const QString &name)
 int Controller::realTime() const
 {
     int realtime = 1;
-    if (!Settings.playerRealtime()) {
+#if QT_POINTER_SIZE == 4
+    // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
+    int threadCount = 1;
+#else
+    int threadCount = QThread::idealThreadCount();
+#endif
+    threadCount = threadCount > 2 ? qMin(threadCount - 1, 3) : 1;
+
+    if (Settings.processingMode() == ShotcutSettings::Linear16GpuCpu) {
+        realtime = Settings.playerRealtime() ? qMin(threadCount, 2) : -qMin(threadCount, 2);
+    } else if (!Settings.playerRealtime()) {
         if (Settings.playerGPU()) {
             return -1;
         }
-#if QT_POINTER_SIZE == 4
-        // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
-        int threadCount = 1;
-#else
-        int threadCount = QThread::idealThreadCount();
-#endif
-        threadCount = threadCount > 2 ? qMin(threadCount - 1, 4) : 1;
         realtime = -threadCount;
     }
     return realtime;

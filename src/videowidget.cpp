@@ -467,14 +467,9 @@ int VideoWidget::reconfigure(bool isMulti)
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
             break;
-        case ShotcutSettings::Linear16GpuCpu:
-            m_consumer->set("mlt_image_format",
-                            isDeckLinkHdr ? "yuv444p10"
-                            : hdrPreview  ? "yuv420p10"
-                                          : "yuv420p");
-            break;
         case ShotcutSettings::Native10Cpu:
         case ShotcutSettings::Linear10GpuCpu:
+        case ShotcutSettings::Linear16GpuCpu:
             m_consumer->set("mlt_image_format",
                             isDeckLinkHdr ? "yuv444p10"
                             : hdrPreview  ? "yuv420p10"
