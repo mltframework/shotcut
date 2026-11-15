@@ -1070,7 +1070,24 @@ void VideoWidget::setSnapToGrid(bool snap)
 void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data data)
 {
     auto frame = Mlt::EventData(data).to_frame();
-    if (frame.is_valid() && frame.get_int("rendered")) {
+    // A synchronous consumer marks the frame rendered before the picture is
+    // fetched. Pull it here so a failed fetch is visible before display.
+    if (frame.is_valid() && frame.get_int("rendered") && !frame.get_int("get_image_error")
+        && !frame.get_data("image")) {
+        mlt_image_format format = mlt_image_yuv422;
+        if (const char *name = widget->consumer()->get("mlt_image_format")) {
+            if (name[0])
+                format = mlt_image_format_id(name);
+        }
+        if (format > mlt_image_none && format < mlt_image_invalid) {
+            int width = 0;
+            int height = 0;
+            frame.get_image(format, width, height);
+        }
+    }
+    // get_image_error is the checkerboard substituted for a failed fetch.
+    // Keep the picture already on screen.
+    if (frame.is_valid() && frame.get_int("rendered") && !frame.get_int("get_image_error")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
         if (widget->m_frameRenderer) {
             // Old path: dispatch to FrameRenderer thread
