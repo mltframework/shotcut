@@ -2138,7 +2138,9 @@ void EncodeDock::on_encodeButton_clicked()
         // Batch encode
         int threadCount = QThread::idealThreadCount();
         if (threadCount > 2 && ui->parallelCheckbox->isChecked())
-            threadCount = qMin(threadCount - 1, 4);
+            threadCount = qMin(threadCount - 1,
+                               (Settings.processingMode() == ShotcutSettings::Linear16GpuCpu) ? 3
+                                                                                              : 4);
         else
             threadCount = 1;
         enqueueAnalysis();

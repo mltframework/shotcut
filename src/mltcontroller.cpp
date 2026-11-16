@@ -1062,7 +1062,7 @@ int Controller::realTime() const
     threadCount = threadCount > 2 ? qMin(threadCount - 1, 3) : 1;
 
     if (Settings.processingMode() == ShotcutSettings::Linear16GpuCpu) {
-        realtime = Settings.playerRealtime() ? qMin(threadCount, 2) : -qMin(threadCount, 2);
+        realtime = Settings.playerRealtime() ? qMin(threadCount, 2) : -qMin(threadCount, 3);
     } else if (!Settings.playerRealtime()) {
         if (Settings.playerGPU()) {
             return -1;
