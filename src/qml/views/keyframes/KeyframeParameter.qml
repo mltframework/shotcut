@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2026 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ Item {
     property double minimum: 0
     property double maximum: 1
     property bool isLocked: false
-    property bool isLoop: false
 
     signal clicked(var keyframe, var parameter)
     signal rightClicked(var keyframe, var parameter)
@@ -50,7 +49,6 @@ Item {
     clip: true
     onMinimumChanged: canvas.requestPaint()
     onMaximumChanged: canvas.requestPaint()
-    onIsLoopChanged: canvas.requestPaint()
 
     // When maximum == minimum only show the middle label
     Text {
@@ -97,26 +95,28 @@ Item {
             return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
         }
 
-        function drawCatmullRom(ctx, pts, i, alpha, tension) {
-            var g = i - 2 >= 0 ? i - 2 : i - 1;
+        function drawCatmullRom(ctx, i, alpha, tension) {
+            var g = i - 2 >= 0 ? i - 2 : i;
             var h = i - 1 >= 0 ? i - 1 : i;
-            var j = i + 1 < pts.length ? i + 1 : i;
+            var j = i + 1 < keyframesRepeater.count ? i + 1 : i;
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
             var p = [
                 {
-                    "x": pts[g].x,
-                    "y": pts[g].y
+                    "x": keyframesRepeater.itemAt(g).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(g).y + heightOffset
                 },
                 {
-                    "x": pts[h].x,
-                    "y": pts[h].y
+                    "x": keyframesRepeater.itemAt(h).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(h).y + heightOffset
                 },
                 {
-                    "x": pts[i].x,
-                    "y": pts[i].y
+                    "x": keyframesRepeater.itemAt(i).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(i).y + heightOffset
                 },
                 {
-                    "x": pts[j].x,
-                    "y": pts[j].y
+                    "x": keyframesRepeater.itemAt(j).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(j).y + heightOffset
                 }
             ];
             if (p[0].x == p[1].x) {
@@ -125,7 +125,7 @@ Item {
             if (p[3].x == p[2].x) {
                 p[3].x += 10000;
             }
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var m1 = 0.0;
                 var m2 = 0.0;
@@ -148,14 +148,16 @@ Item {
             }
         }
 
-        function drawSinusoidal(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawSinusoidal(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var factor = 0;
                 if (ease === 1) {
@@ -172,14 +174,16 @@ Item {
             }
         }
 
-        function drawPow(ctx, pts, i, order, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawPow(ctx, i, order, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var factor = 0;
                 if (ease === 1) {
@@ -200,14 +204,16 @@ Item {
             }
         }
 
-        function drawExponential(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawExponential(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var factor = 0;
                 if (t === 0.0) {
@@ -232,14 +238,16 @@ Item {
             }
         }
 
-        function drawCircular(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawCircular(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var factor = 0;
                 if (ease === 1) {
@@ -260,14 +268,16 @@ Item {
             }
         }
 
-        function drawBack(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawBack(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
-            var step = 1 / keyframesRepeater.itemAt(0).width;
+            var step = 1 / keyframesRepeater.itemAt(i).width;
             for (var t = 0.0; t < 1.0; t += step) {
                 var factor = 0;
                 if (ease === 1) {
@@ -291,11 +301,13 @@ Item {
             }
         }
 
-        function drawElastic(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawElastic(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
             var step = 1.0 / xd;
@@ -345,11 +357,13 @@ Item {
             return 0;
         }
 
-        function drawBounce(ctx, pts, i, ease) {
-            var x1 = pts[i - 1].x;
-            var y1 = pts[i - 1].y;
-            var x2 = pts[i].x;
-            var y2 = pts[i].y;
+        function drawBounce(ctx, i, ease) {
+            var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+            var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+            var x1 = keyframesRepeater.itemAt(i - 1).x + widthOffset;
+            var y1 = keyframesRepeater.itemAt(i - 1).y + heightOffset;
+            var x2 = keyframesRepeater.itemAt(i).x + widthOffset;
+            var y2 = keyframesRepeater.itemAt(i).y + heightOffset;
             var xd = x2 - x1;
             var yd = y2 - y1;
             var step = 1.0 / xd;
@@ -359,231 +373,136 @@ Item {
             }
         }
 
-        function drawSegment(ctx, pts, i) {
-            switch (pts[i - 1].interpolation) {
-            case KeyframesModel.DiscreteInterpolation:
-                ctx.lineTo(pts[i].x, pts[i - 1].y);
-                break;
-            default:
-            case KeyframesModel.LinearInterpolation:
-                ctx.lineTo(pts[i].x, pts[i].y);
-                break;
-            case KeyframesModel.SmoothLooseInterpolation:
-                drawCatmullRom(ctx, pts, i, 0.0, 1.0);
-                break;
-            case KeyframesModel.SmoothNaturalInterpolation:
-                drawCatmullRom(ctx, pts, i, 0.5, -1.0);
-                break;
-            case KeyframesModel.SmoothTightInterpolation:
-                drawCatmullRom(ctx, pts, i, 0.5, 0.0);
-                break;
-            case KeyframesModel.EaseInSinusoidal:
-                drawSinusoidal(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutSinusoidal:
-                drawSinusoidal(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutSinusoidal:
-                drawSinusoidal(ctx, pts, i, 0);
-                break;
-            case KeyframesModel.EaseInQuadratic:
-                drawPow(ctx, pts, i, 2, 1);
-                break;
-            case KeyframesModel.EaseOutQuadratic:
-                drawPow(ctx, pts, i, 2, -1);
-                break;
-            case KeyframesModel.EaseInOutQuadratic:
-                drawPow(ctx, pts, i, 2, 0);
-                break;
-            case KeyframesModel.EaseInCubic:
-                drawPow(ctx, pts, i, 3, 1);
-                break;
-            case KeyframesModel.EaseOutCubic:
-                drawPow(ctx, pts, i, 3, -1);
-                break;
-            case KeyframesModel.EaseInOutCubic:
-                drawPow(ctx, pts, i, 3, 0);
-                break;
-            case KeyframesModel.EaseInQuartic:
-                drawPow(ctx, pts, i, 4, 1);
-                break;
-            case KeyframesModel.EaseOutQuartic:
-                drawPow(ctx, pts, i, 4, -1);
-                break;
-            case KeyframesModel.EaseInOutQuartic:
-                drawPow(ctx, pts, i, 4, 0);
-                break;
-            case KeyframesModel.EaseInQuintic:
-                drawPow(ctx, pts, i, 5, 1);
-                break;
-            case KeyframesModel.EaseOutQuintic:
-                drawPow(ctx, pts, i, 5, -1);
-                break;
-            case KeyframesModel.EaseInOutQuintic:
-                drawPow(ctx, pts, i, 5, 0);
-                break;
-            case KeyframesModel.EaseInExponential:
-                drawExponential(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutExponential:
-                drawExponential(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutExponential:
-                drawExponential(ctx, pts, i, 0);
-                break;
-            case KeyframesModel.EaseInCircular:
-                drawCircular(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutCircular:
-                drawCircular(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutCircular:
-                drawCircular(ctx, pts, i, 0);
-                break;
-            case KeyframesModel.EaseInBack:
-                drawBack(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutBack:
-                drawBack(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutBack:
-                drawBack(ctx, pts, i, 0);
-                break;
-            case KeyframesModel.EaseInElastic:
-                drawElastic(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutElastic:
-                drawElastic(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutElastic:
-                drawElastic(ctx, pts, i, 0);
-                break;
-            case KeyframesModel.EaseInBounce:
-                drawBounce(ctx, pts, i, 1);
-                break;
-            case KeyframesModel.EaseOutBounce:
-                drawBounce(ctx, pts, i, -1);
-                break;
-            case KeyframesModel.EaseInOutBounce:
-                drawBounce(ctx, pts, i, 0);
-                break;
-            }
-            if (pts[i - 1].interpolation !== KeyframesModel.DiscreteInterpolation)
-                ctx.lineTo(pts[i].x, pts[i].y);
-            ctx.moveTo(pts[i].x, pts[i].y);
-        }
-
-        function keyframePoints() {
-            const pts = [];
-            const widthOffset = keyframesRepeater.itemAt(0).width / 2;
-            const heightOffset = keyframesRepeater.itemAt(0).height / 2;
-            for (let i = 0; i < keyframesRepeater.count; i++) {
-                const item = keyframesRepeater.itemAt(i);
-                pts.push({
-                    "x": item.x + widthOffset,
-                    "y": item.y + heightOffset,
-                    "interpolation": item.interpolation
-                });
-            }
-            return pts;
-        }
-
-        function cyclePoints(pts, offset, seamless) {
-            const n = pts.length;
-            const period = pts[n - 1].x - pts[0].x;
-            const result = [];
-            if (seamless)
-                result.push({
-                    "x": pts[n - 2].x + offset - period,
-                    "y": pts[n - 2].y,
-                    "interpolation": pts[n - 2].interpolation
-                });
-            for (let i = 0; i < n; i++)
-                result.push({
-                    "x": pts[i].x + offset,
-                    "y": pts[i].y,
-                    "interpolation": pts[i].interpolation
-                });
-            if (seamless)
-                result.push({
-                    "x": pts[1].x + offset + period,
-                    "y": pts[1].y,
-                    "interpolation": pts[1].interpolation
-                });
-            return result;
-        }
-
-        function drawGhostMarker(ctx, p) {
-            const size = keyframesRepeater.itemAt(0).width / 2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y - size);
-            ctx.lineTo(p.x + size, p.y);
-            ctx.lineTo(p.x, p.y + size);
-            ctx.lineTo(p.x - size, p.y);
-            ctx.closePath();
-            ctx.stroke();
-        }
-
+        visible: isCurve
         anchors.fill: parent
-        onWidthChanged: requestPaint()
         onPaint: {
-            const ctx = getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (!keyframesRepeater.count)
-                return;
+            var ctx = getContext("2d");
             ctx.strokeStyle = activePalette.buttonText;
             ctx.lineWidth = 1;
-            const pts = keyframePoints();
-            const n = pts.length;
-            const loop = isLoop && n >= 2 && pts[n - 1].x > pts[0].x;
-            const period = loop ? pts[n - 1].x - pts[0].x : 0;
-            const seamless = loop && pts[0].y === pts[n - 1].y;
-            const cycle = loop ? cyclePoints(pts, 0, seamless) : pts;
-            const first = seamless ? 1 : 0;
-            const last = first + n - 1;
-            if (isCurve) {
-                ctx.beginPath();
-                ctx.moveTo(0, cycle[first].y);
-                ctx.lineTo(cycle[first].x, cycle[first].y);
-                for (let i = first + 1; i <= last; i++)
-                    drawSegment(ctx, cycle, i);
-                if (loop)
-                    ctx.lineTo(cycle[last].x, cycle[first].y);
-                else
-                    ctx.lineTo(width, cycle[last].y);
-                ctx.stroke();
-            }
-            if (loop) {
-                ctx.globalAlpha = 0.4;
-                if (isCurve && !seamless)
-                    drawGhostMarker(ctx, {
-                        "x": pts[n - 1].x,
-                        "y": pts[0].y
-                    });
-                ctx.setLineDash([4, 3]);
-                for (let c = 1; pts[0].x + c * period < width && c * n < 10000; c++) {
-                    const ghost = cyclePoints(pts, c * period, seamless);
-                    if (isCurve) {
-                        ctx.beginPath();
-                        ctx.moveTo(ghost[first].x, ghost[first].y);
-                        for (let i = first + 1; i <= last; i++)
-                            drawSegment(ctx, ghost, i);
-                        ctx.lineTo(ghost[last].x, ghost[first].y);
-                        ctx.stroke();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            if (keyframesRepeater.count) {
+                var widthOffset = keyframesRepeater.itemAt(0).width / 2;
+                var heightOffset = keyframesRepeater.itemAt(0).height / 2;
+                // Draw extent before first keyframe.
+                ctx.moveTo(0, keyframesRepeater.itemAt(0).y + heightOffset);
+                ctx.lineTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset);
+                // Draw lines between keyframes.
+                for (var i = 1; i < keyframesRepeater.count; i++) {
+                    switch (keyframesRepeater.itemAt(i - 1).interpolation) {
+                    case KeyframesModel.DiscreteInterpolation:
+                        ctx.lineTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i - 1).y + heightOffset);
+                        break;
+                    default:
+                    case KeyframesModel.LinearInterpolation:
+                        ctx.lineTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
+                        break;
+                    case KeyframesModel.SmoothLooseInterpolation:
+                        drawCatmullRom(ctx, i, 0.0, 1.0);
+                        break;
+                    case KeyframesModel.SmoothNaturalInterpolation:
+                        drawCatmullRom(ctx, i, 0.5, -1.0);
+                        break;
+                    case KeyframesModel.SmoothTightInterpolation:
+                        drawCatmullRom(ctx, i, 0.5, 0.0);
+                        break;
+                    case KeyframesModel.EaseInSinusoidal:
+                        drawSinusoidal(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutSinusoidal:
+                        drawSinusoidal(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutSinusoidal:
+                        drawSinusoidal(ctx, i, 0);
+                        break;
+                    case KeyframesModel.EaseInQuadratic:
+                        drawPow(ctx, i, 2, 1);
+                        break;
+                    case KeyframesModel.EaseOutQuadratic:
+                        drawPow(ctx, i, 2, -1);
+                        break;
+                    case KeyframesModel.EaseInOutQuadratic:
+                        drawPow(ctx, i, 2, 0);
+                        break;
+                    case KeyframesModel.EaseInCubic:
+                        drawPow(ctx, i, 3, 1);
+                        break;
+                    case KeyframesModel.EaseOutCubic:
+                        drawPow(ctx, i, 3, -1);
+                        break;
+                    case KeyframesModel.EaseInOutCubic:
+                        drawPow(ctx, i, 3, 0);
+                        break;
+                    case KeyframesModel.EaseInQuartic:
+                        drawPow(ctx, i, 4, 1);
+                        break;
+                    case KeyframesModel.EaseOutQuartic:
+                        drawPow(ctx, i, 4, -1);
+                        break;
+                    case KeyframesModel.EaseInOutQuartic:
+                        drawPow(ctx, i, 4, 0);
+                        break;
+                    case KeyframesModel.EaseInQuintic:
+                        drawPow(ctx, i, 5, 1);
+                        break;
+                    case KeyframesModel.EaseOutQuintic:
+                        drawPow(ctx, i, 5, -1);
+                        break;
+                    case KeyframesModel.EaseInOutQuintic:
+                        drawPow(ctx, i, 5, 0);
+                        break;
+                    case KeyframesModel.EaseInExponential:
+                        drawExponential(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutExponential:
+                        drawExponential(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutExponential:
+                        drawExponential(ctx, i, 0);
+                        break;
+                    case KeyframesModel.EaseInCircular:
+                        drawCircular(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutCircular:
+                        drawCircular(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutCircular:
+                        drawCircular(ctx, i, 0);
+                        break;
+                    case KeyframesModel.EaseInBack:
+                        drawBack(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutBack:
+                        drawBack(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutBack:
+                        drawBack(ctx, i, 0);
+                        break;
+                    case KeyframesModel.EaseInElastic:
+                        drawElastic(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutElastic:
+                        drawElastic(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutElastic:
+                        drawElastic(ctx, i, 0);
+                        break;
+                    case KeyframesModel.EaseInBounce:
+                        drawBounce(ctx, i, 1);
+                        break;
+                    case KeyframesModel.EaseOutBounce:
+                        drawBounce(ctx, i, -1);
+                        break;
+                    case KeyframesModel.EaseInOutBounce:
+                        drawBounce(ctx, i, 0);
+                        break;
                     }
-                    ctx.setLineDash([]);
-                    for (let i = first + 1; i <= last && ghost[i].x <= width; i++)
-                        drawGhostMarker(ctx, ghost[i]);
-                    if (isCurve && !seamless && ghost[last].x <= width)
-                        drawGhostMarker(ctx, {
-                            "x": ghost[last].x,
-                            "y": ghost[first].y
-                        });
-                    ctx.setLineDash([4, 3]);
+                    ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
                 }
-                ctx.setLineDash([]);
-                ctx.globalAlpha = 1;
+                // Draw extent after last keyframe.
+                ctx.lineTo(width, keyframesRepeater.itemAt(i - 1).y + heightOffset);
             }
+            ctx.stroke();
         }
     }
 

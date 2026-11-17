@@ -172,19 +172,17 @@ QmlFilter::~QmlFilter() {}
     \qmlmethod string Filter::get(string name, int position = -1)
     \brief Returns the value of MLT property \a name as a string.
     If time \a position is \c -1 (default), returns the current value;
-    otherwise returns the control value at a keyframe or the interpolated value between keyframes.
+    otherwise returns the interpolated value at that frame position.
     To get an integer value, convert the result using \c parseInt(), e.g. \c parseInt(filter.get("someProperty")).
 */
 
 QString QmlFilter::get(QString name, int position)
 {
     if (m_service.is_valid()) {
-        auto properties = propertiesForValueRead(name, position);
         if (position < 0)
-            return QString::fromUtf8(properties.get(qUtf8Printable(name)));
+            return QString::fromUtf8(m_service.get(qUtf8Printable(name)));
         else
-            return QString::fromUtf8(
-                properties.anim_get(qUtf8Printable(name), position, duration()));
+            return QString::fromUtf8(m_service.anim_get(qUtf8Printable(name), position, duration()));
     } else {
         return QString();
     }
@@ -200,11 +198,10 @@ QColor QmlFilter::getColor(QString name, int position)
 {
     mlt_color color = {0, 0, 0, 0};
     if (m_service.is_valid()) {
-        auto properties = propertiesForValueRead(name, position);
         if (position < 0)
-            color = properties.get_color(qUtf8Printable(name));
+            color = m_service.get_color(qUtf8Printable(name));
         else
-            color = properties.anim_get_color(qUtf8Printable(name), position, duration());
+            color = m_service.anim_get_color(qUtf8Printable(name), position, duration());
     }
     return QColor(color.r, color.g, color.b, color.a);
 }
@@ -218,11 +215,10 @@ QColor QmlFilter::getColor(QString name, int position)
 double QmlFilter::getDouble(QString name, int position)
 {
     if (m_service.is_valid()) {
-        auto properties = propertiesForValueRead(name, position);
         if (position < 0)
-            return properties.get_double(qUtf8Printable(name));
+            return m_service.get_double(qUtf8Printable(name));
         else
-            return properties.anim_get_double(qUtf8Printable(name), position, duration());
+            return m_service.anim_get_double(qUtf8Printable(name), position, duration());
     } else {
         return 0.0;
     }
@@ -239,17 +235,15 @@ QRectF QmlFilter::getRect(QString name, int position)
 {
     if (!m_service.is_valid())
         return QRectF();
-    auto properties = propertiesForValueRead(name, position);
-    const char *s = properties.get(qUtf8Printable(name));
+    const char *s = m_service.get(qUtf8Printable(name));
     if (s) {
-        const bool hasPercent = ::strchr(s, '%');
         mlt_rect rect;
         if (position < 0) {
-            rect = properties.get_rect(qUtf8Printable(name));
+            rect = m_service.get_rect(qUtf8Printable(name));
         } else {
-            rect = properties.anim_get_rect(qUtf8Printable(name), position, duration());
+            rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
         }
-        if (hasPercent) {
+        if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
                           qRound(rect.w * MLT.profile().width()),
@@ -283,8 +277,7 @@ void QmlFilter::removeRectPercents(QString name)
                 int position;
                 mlt_keyframe_type keyType;
                 anim->key_get(i, position, keyType);
-                auto properties = propertiesForValueRead(name, position);
-                rect = properties.anim_get_rect(qUtf8Printable(name), position, duration());
+                rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
                 auto r = QRectF(qRound(rect.x * MLT.profile().width()),
                                 qRound(rect.y * MLT.profile().height()),
                                 qRound(rect.w * MLT.profile().width()),
@@ -368,7 +361,8 @@ void QmlFilter::set(QString name, QString value, int position)
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
-        if (!animation.is_valid() || !animation.is_key(position) || value != get(name, position)) {
+        if (!animation.is_valid() || !animation.is_key(position)
+            || value != m_service.anim_get(qUtf8Printable(name), position, duration())) {
             m_service.anim_set(qUtf8Printable(name), qUtf8Printable(value), position, duration());
             emit changed(name);
             updateUndoCommand(name);
@@ -391,8 +385,9 @@ void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyfram
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
+        auto mltColor = m_service.anim_get_color(qUtf8Printable(name), position, duration());
         if (!animation.is_valid() || !animation.is_key(position)
-            || value != getColor(name, position)) {
+            || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
             m_service.anim_set(qUtf8Printable(name),
                                Util::mltColorFromQColor(value),
                                position,
@@ -424,7 +419,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
         // Only set an animation keyframe if it does not already exist with the same value.
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
         if (!animation.is_valid() || !animation.is_key(position)
-            || value != getDouble(name, position)) {
+            || value != m_service.anim_get_double(qUtf8Printable(name), position, duration())) {
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
@@ -453,9 +448,8 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
-        auto properties = propertiesForValueRead(name, position);
         if (!animation.is_valid() || !animation.is_key(position)
-            || value != properties.anim_get_int(qUtf8Printable(name), position, duration())) {
+            || value != m_service.anim_get_int(qUtf8Printable(name), position, duration())) {
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
@@ -489,8 +483,7 @@ void QmlFilter::set(QString name,
             updateUndoCommand(name);
         }
     } else {
-        auto properties = propertiesForValueRead(name, position);
-        mlt_rect rect = properties.anim_get_rect(qUtf8Printable(name), position, duration());
+        mlt_rect rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
         // Only set an animation keyframe if it does not already exist with the same value.
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
         if (!animation.is_valid() || !animation.is_key(position) || x != rect.x || y != rect.y
@@ -1082,39 +1075,6 @@ int QmlFilter::keyframeIndex(Mlt::Animation &animation, int position)
         }
     }
     return result;
-}
-
-// Returns properties for reading the value at position. Normally this wraps
-// the service properties. At the original endpoint of a loop, playback
-// evaluates to the first value, but controls need the authored endpoint value.
-//
-// For that endpoint, return a temporary copy with looping disabled so the
-// existing typed MLT getters can read the authored value using the same
-// locale and profile. Never disable looping on the live animation: rendering
-// may read it concurrently. Changes to the returned copy are not applied to
-// the service.
-Mlt::Properties QmlFilter::propertiesForValueRead(const QString &name, int position)
-{
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (43 << 8))
-    if (position >= 0) {
-        auto animation = getAnimation(name);
-        if (animation.is_valid() && animation.get_loop() && animation.key_count() >= 2
-            && position == animation.key_get_frame(animation.key_count() - 1)) {
-            Mlt::Properties properties;
-            properties.set_lcnumeric(mlt_properties_get_lcnumeric(m_service.get_properties()));
-            properties.set("_profile", m_service.get_data("_profile"), 0);
-            properties.set(qUtf8Printable(name), m_service.get(qUtf8Printable(name)));
-            properties.anim_get(qUtf8Printable(name), position, duration());
-            Mlt::Animation copy(properties.get_animation(qUtf8Printable(name)));
-            copy.set_loop(false);
-            return properties;
-        }
-    }
-#else
-    Q_UNUSED(name)
-    Q_UNUSED(position)
-#endif
-    return Mlt::Properties(m_service.get_properties());
 }
 
 void QmlFilter::startUndoTracking()

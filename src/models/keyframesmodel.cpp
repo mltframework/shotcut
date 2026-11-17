@@ -28,21 +28,10 @@
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
-static void notifyPropertyChanged(Mlt::Properties &properties, const QString &name)
-{
-    const QByteArray propertyName = name.toUtf8();
-    mlt_events_fire(properties.get_properties(),
-                    "property-changed",
-                    mlt_event_data_from_string(propertyName.constData()));
-}
-
 /*!
     \qmltype KeyframesModel
     \inqmlmodule org.shotcut.qml
     \brief A two-level item model describing a filter's keyframeable parameters and their keyframes.
-
-    The read-only \c supportsLoop property indicates whether the build supports keyframe looping
-    (MLT 7.43.0 or newer).
 
     \c KeyframesModel is available as the \c parameters context property in the Keyframes panel.
     The top level contains one row per keyframeable parameter; each parameter row contains
@@ -88,15 +77,6 @@ KeyframesModel::KeyframesModel(QObject *parent)
 {}
 
 KeyframesModel::~KeyframesModel() {}
-
-bool KeyframesModel::supportsLoop() const
-{
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (43 << 8))
-    return true;
-#else
-    return false;
-#endif
-}
 
 int KeyframesModel::rowCount(const QModelIndex &parent) const
 {
@@ -239,19 +219,11 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                         QString units = m_metadata->keyframes()
                                             ->parameter(m_metadataIndex[index.internalId()])
                                             ->units();
-                        QString description = QStringLiteral("%1 - %2\n%3%4")
-                                                  .arg(QmlApplication::singleton().timeFromFrames(
-                                                      position))
-                                                  .arg(type)
-                                                  .arg(value)
-                                                  .arg(units);
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (43 << 8))
-                        if (animation.get_loop() && animation.key_count() >= 2
-                            && index.row() == animation.key_count() - 1)
-                            description += tr(
-                                "\nLoop endpoint (playback wraps to the first value)");
-#endif
-                        return description;
+                        return QStringLiteral("%1 - %2\n%3%4")
+                            .arg(QmlApplication::singleton().timeFromFrames(position))
+                            .arg(type)
+                            .arg(value)
+                            .arg(units);
                     }
                     case FrameNumberRole:
                         return position;
@@ -366,14 +338,6 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                 max = 0;
             return max;
         }
-        case LoopRole: {
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (43 << 8))
-            Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[index.row()]);
-            return animation.is_valid() && animation.get_loop();
-#else
-            return false;
-#endif
-        }
         default:
             break;
         }
@@ -413,7 +377,6 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     roles[MaximumValueRole] = "maximum";
     roles[LowestValueRole] = "lowest";
     roles[HighestValueRole] = "highest";
-    roles[LoopRole] = "isLoop";
     roles[FrameNumberRole] = "frame";
     roles[KeyframeTypeRole] = "interpolation";
     roles[PrevKeyframeTypeRole] = "prevInterpolation";
@@ -475,7 +438,8 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                         m_filter->updateUndoCommand(key);
                     }
                 }
-                notifyPropertyChanged(m_filter->service(), name);
+                mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+                mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex;
                 if (keyframeIndex > 0) {
                     modelIndex = index(keyframeIndex - 1, 0, index(parameterIndex));
@@ -593,7 +557,8 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                         m_filter->updateUndoCommand(key);
                     }
                 }
-                notifyPropertyChanged(m_filter->service(), name);
+                mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+                mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex,
                                  modelIndex,
@@ -670,7 +635,8 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
             m_filter->updateUndoCommand(key);
         }
     }
-    notifyPropertyChanged(m_filter->service(), name);
+    mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+    mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
     updateNeighborsMinMax(parameterIndex, keyframeIndex);
@@ -923,51 +889,6 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex,
                      index(parameterIndex),
                      QVector<int>() << LowestValueRole << HighestValueRole);
     m_filter->endUndoCommand();
-}
-
-/*!
-    \qmlmethod void KeyframesModel::setLoop(int parameterIndex, bool loop)
-    \brief Sets whether the keyframes of parameter \a parameterIndex repeat.
-
-    The last keyframe is the interpolation target; its frame evaluates to the first value.
-*/
-
-void KeyframesModel::setLoop(int parameterIndex, bool loop)
-{
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (43 << 8))
-    if (!m_filter || parameterIndex < 0 || parameterIndex >= m_propertyNames.count())
-        return;
-    QString name = m_propertyNames[parameterIndex];
-    auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
-    QStringList names = QStringList() << name << parameter->gangedProperties()
-                                      << parameter->gangedRectProperties();
-    m_filter->startUndoParameterCommand(loop ? tr("Enable keyframe loop")
-                                             : tr("Disable keyframe loop"));
-    for (auto &key : names) {
-        Mlt::Animation animation = m_filter->getAnimation(key);
-        if (animation.is_valid() && animation.get_loop() != loop) {
-            animation.set_loop(loop);
-            // Regenerate the property string so that the undo state includes the loop.
-            m_filter->service().get(key.toUtf8().constData());
-            m_filter->updateUndoCommand(key);
-        }
-    }
-    m_filter->endUndoCommand();
-    notifyPropertyChanged(m_filter->service(), name);
-    emit dataChanged(index(parameterIndex),
-                     index(parameterIndex),
-                     QVector<int>() << LoopRole << LowestValueRole << HighestValueRole);
-    if (m_keyframeCounts[parameterIndex] > 0)
-        emit dataChanged(index(0, 0, index(parameterIndex)),
-                         index(m_keyframeCounts[parameterIndex] - 1, 0, index(parameterIndex)),
-                         QVector<int>() << NumericValueRole << NameRole);
-    emit m_filter->changed(name);
-    emit m_filter->propertyChanged(name);
-#else
-    Q_UNUSED(parameterIndex)
-    Q_UNUSED(loop)
-    LOG_ERROR() << "Keyframe looping requires MLT 7.43.0 or newer";
-#endif
 }
 
 /*!
@@ -1240,42 +1161,4 @@ void KeyframesModel::updateNeighborsMinMax(int parameterIndex, int keyframeIndex
 QStringList KeyframesModel::gangedProperties(int parameterIndex) const
 {
     return m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties();
-}
-
-void KeyframesModel::matchFirstValue(int parameterIndex)
-{
-    if (!m_filter || parameterIndex < 0 || parameterIndex >= m_propertyNames.count()) {
-        LOG_ERROR() << "Invalid parameter index" << parameterIndex;
-        return;
-    }
-    const QString name = m_propertyNames[parameterIndex];
-    auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
-    QStringList names = QStringList() << name << parameter->gangedProperties()
-                                      << parameter->gangedRectProperties();
-    names.removeDuplicates();
-    m_filter->startUndoParameterCommand(tr("Match First Keyframe Value"));
-    for (const auto &key : names) {
-        Mlt::Animation animation = m_filter->getAnimation(key);
-        if (!animation.is_valid() || animation.key_count() < 2)
-            continue;
-        const int lastIndex = animation.key_count() - 1;
-        const int lastFrame = animation.key_get_frame(lastIndex);
-        const auto lastType = animation.key_get_type(lastIndex);
-        const QString value = m_filter->get(key, animation.key_get_frame(0));
-        if (m_filter->service().anim_set(qUtf8Printable(key),
-                                         qUtf8Printable(value),
-                                         lastFrame,
-                                         m_filter->duration())) {
-            LOG_ERROR() << "Failed to match keyframe value" << key;
-        } else if (animation.key_set_type(lastIndex, lastType)) {
-            LOG_ERROR() << "Failed to restore keyframe type" << key;
-        } else {
-            animation.interpolate();
-            m_filter->service().get(qUtf8Printable(key));
-            m_filter->updateUndoCommand(key);
-        }
-    }
-    m_filter->endUndoCommand();
-    emit m_filter->changed(name);
-    emit m_filter->propertyChanged(name);
 }

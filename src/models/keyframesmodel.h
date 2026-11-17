@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2026 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ class QmlFilter;
 class KeyframesModel : public QAbstractItemModel
 {
     Q_OBJECT
-    Q_PROPERTY(bool supportsLoop READ supportsLoop CONSTANT)
 
 public:
     enum InterpolationType {
@@ -80,7 +79,6 @@ public:
         MaximumValueRole,            /// parameter only
         LowestValueRole,             /// parameter only
         HighestValueRole,            /// parameter only
-        LoopRole,                    /// parameter only
         FrameNumberRole,             /// keyframe only
         KeyframeTypeRole,            /// keyframe only
         PrevKeyframeTypeRole,        /// keyframe only
@@ -91,7 +89,6 @@ public:
 
     explicit KeyframesModel(QObject *parent = 0);
     virtual ~KeyframesModel();
-    bool supportsLoop() const;
 
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
@@ -117,8 +114,6 @@ public:
                                               int keyframeIndex,
                                               double value,
                                               int position);
-    Q_INVOKABLE void setLoop(int parameterIndex, bool loop);
-    void matchFirstValue(int parameterIndex);
     Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
     Q_INVOKABLE bool advancedKeyframesInUse();
     Q_INVOKABLE void removeAdvancedKeyframes();
