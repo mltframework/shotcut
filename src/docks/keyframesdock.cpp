@@ -193,6 +193,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutBounAction"]);
     m_keyTypeNextMenu->addMenu(keyEaseInOutMenu);
     m_keyMenu->addMenu(m_keyTypeNextMenu);
+    m_keyMenu->addAction(Actions["keyframesMatchFirstAction"]);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
     Actions.loadFromMenu(m_keyMenu);
 
@@ -1076,6 +1077,12 @@ void KeyframesDock::setupActions()
     });
     Actions.add("keyframesRemoveAction", action);
 
+    action = new QAction(tr("Match First Keyframe Value"), this);
+    connect(action, &QAction::triggered, this, [this]() {
+        m_model.matchFirstValue(currentParameter());
+    });
+    Actions.add("keyframesMatchFirstAction", action);
+
     action = new QAction(tr("Rebuild Audio Waveform"), this);
     action->setEnabled(Settings.timelineShowWaveforms());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -1319,6 +1326,9 @@ void KeyframesDock::onKeyframeRightClicked()
     }
     m_keyTypePrevMenu->setEnabled(!firstKey);
     m_keyTypeNextMenu->setEnabled(!lastKey);
+    Actions["keyframesMatchFirstAction"]->setVisible(
+        lastKey && m_model.keyframeCount(currentParameter()) >= 2
+        && m_model.data(m_model.index(currentParameter()), KeyframesModel::LoopRole).toBool());
     m_keyMenu->popup(QCursor::pos());
 }
 

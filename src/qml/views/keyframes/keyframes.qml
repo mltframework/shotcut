@@ -179,6 +179,7 @@ Rectangle {
                             trackName: model.name
                             delegateIndex: index
                             isCurve: model.isCurve
+                            isLoop: model.isLoop
                             width: headerWidth
                             height: Logic.trackHeight(isCurve)
                             current: index === currentTrack
@@ -594,6 +595,7 @@ Rectangle {
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
             isCurve: model.isCurve
+            isLoop: model.isLoop
             minimum: model.minimum
             maximum: model.maximum
             height: Logic.trackHeight(model.isCurve)
