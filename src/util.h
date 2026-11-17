@@ -49,6 +49,7 @@ public:
     static void showInFolder(const QString &path);
     static bool warnIfNotWritable(const QString &filePath, QWidget *parent, const QString &caption);
     static QString producerTitle(const Mlt::Producer &producer);
+    static QString clipDisplayName(Mlt::Producer *producer);
     static QString removeFileScheme(QUrl &url, bool fromPercentEncoding = true);
     static const QStringList sortedFileList(const QList<QUrl> &urls);
     static int coerceMultiple(int value, int multiple = 2);
@@ -113,6 +114,8 @@ public:
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool openUrl(const QUrl &url);
     static bool isHttpsOnHost(const QString &urlString, QStringView host);
+    // Requires https, except http is allowed for localhost/loopback (e.g. local API servers).
+    static bool isAllowedApiBaseUrl(const QString &urlString);
     static bool cpuHasAVX2();
     static int msToPosition(int64_t ms);
     static bool isPostUserFilter(Mlt::Filter *filter);

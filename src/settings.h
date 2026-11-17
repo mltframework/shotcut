@@ -426,6 +426,20 @@ public:
     void setNotesZoom(int zoom);
     int notesZoom() const;
 
+    // Coproducer
+    QString coproducerProvider() const;
+    void setCoproducerProvider(const QString &provider);
+    QString coproducerBaseUrl() const;
+    void setCoproducerBaseUrl(const QString &url);
+    QString coproducerModel() const;
+    void setCoproducerModel(const QString &model);
+    QString coproducerModelPath() const;
+    void setCoproducerModelPath(const QString &path);
+    QString coproducerApiKey() const;
+    void setCoproducerApiKey(const QString &key);
+    QString coproducerMode() const;
+    void setCoproducerMode(const QString &mode);
+
     // Files
     QString filesViewMode() const;
     void setFilesViewMode(const QString &viewMode);
