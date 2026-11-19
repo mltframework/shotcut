@@ -621,7 +621,7 @@ bool ProxyManager::isValidVideo(Mlt::Producer producer)
         service = QString::fromLatin1(producer.get("mlt_service"));
         producer.set("video_index", video_index);
     }
-    if (service == "avformat") {
+    if (supportsExternalProxyService(service)) {
         QString key = QStringLiteral("meta.media.%1.codec.pix_fmt").arg(video_index);
         QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
         // Cover art is usually 90000 fps and should not be proxied
@@ -660,7 +660,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
             setProxy(hashProxy);
             return true;
         }
-        if (service.startsWith("avformat")) {
+        if (supportsExternalProxyService(service)) {
             const auto externalProxy = existingExternalProxy(res);
             if (!externalProxy.isEmpty()) {
                 setProxy(externalProxy);
@@ -880,13 +880,35 @@ static QString folderProxyFilePath(const QString &resource)
     return QString();
 }
 
+static QVector<ProxyManager::ExternalProxyResolver> &externalProxyResolvers()
+{
+    static QVector<ProxyManager::ExternalProxyResolver> resolvers = {
+        &ProxyManager::GoProProxyFilePath,
+        &ProxyManager::DJIProxyFilePath,
+    };
+    return resolvers;
+}
+
+void ProxyManager::registerExternalProxyResolver(ExternalProxyResolver resolver)
+{
+    if (!resolver)
+        return;
+    auto &resolvers = externalProxyResolvers();
+    if (!resolvers.contains(resolver))
+        resolvers.append(resolver);
+}
+
+bool ProxyManager::supportsExternalProxyService(const QString &service)
+{
+    return service.startsWith(QLatin1String("avformat")) || service == QLatin1String("osv");
+}
+
 QString ProxyManager::existingExternalProxy(const QString &resource)
 {
-    const auto gopro = GoProProxyFilePath(resource);
-    if (QFile::exists(gopro))
-        return gopro;
-    const auto dji = DJIProxyFilePath(resource);
-    if (QFile::exists(dji))
-        return dji;
+    for (ExternalProxyResolver resolver : externalProxyResolvers()) {
+        const QString candidate = resolver(resource);
+        if (!candidate.isEmpty() && QFile::exists(candidate))
+            return candidate;
+    }
     return folderProxyFilePath(resource);
 }
