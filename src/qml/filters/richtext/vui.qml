@@ -122,23 +122,15 @@ Shotcut.VuiBase {
         document.reset();
     }
 
-    Flickable {
-        id: flickable
-
+    Item {
         anchors.fill: parent
-        flickableDirection: Flickable.VerticalFlick
-        interactive: false
         clip: true
-        contentWidth: video.rect.width * zoom
-        contentHeight: video.rect.height * zoom
-        contentX: video.offset.x
-        contentY: video.offset.y
 
         Item {
             id: videoItem
 
-            x: video.rect.x
-            y: video.rect.y
+            x: video.rect.x - video.offset.x
+            y: video.rect.y - video.offset.y
             width: video.rect.width
             height: video.rect.height
             scale: zoom
