@@ -1176,10 +1176,14 @@ void KeyframesModel::onFilterChanged(const QString &property)
         }
         beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
         endInsertRows();
-        emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
+        emit dataChanged(index(i),
+                         index(i),
+                         QVector<int>() << LoopRole << LowestValueRole << HighestValueRole);
     } else {
         // Keyframe count is unchanged. A value must have changed.
-        emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
+        emit dataChanged(index(i),
+                         index(i),
+                         QVector<int>() << LoopRole << LowestValueRole << HighestValueRole);
         emit dataChanged(index(0, 0, index(i)),
                          index(m_keyframeCounts[i] - 1, 0, index(i)),
                          QVector<int>() << NumericValueRole << NameRole);
@@ -1255,24 +1259,43 @@ void KeyframesModel::matchFirstValue(int parameterIndex)
     names.removeDuplicates();
     m_filter->startUndoParameterCommand(tr("Match First Keyframe Value"));
     for (const auto &key : names) {
-        Mlt::Animation animation = m_filter->getAnimation(key);
+        const char *serializedAnimation = m_filter->service().get(qUtf8Printable(key));
+        if (!serializedAnimation)
+            continue;
+        // Keep the positional read and edit from overwriting the live animation's cached string.
+        Mlt::Properties properties;
+        properties.set_lcnumeric(mlt_properties_get_lcnumeric(m_filter->service().get_properties()));
+        properties.set("_profile", m_filter->service().get_data("_profile"), 0);
+        properties.set_string(qUtf8Printable(key), serializedAnimation);
+        const int length = m_filter->duration();
+        properties.anim_get(qUtf8Printable(key), 0, length);
+        Mlt::Animation animation = properties.get_animation(qUtf8Printable(key));
         if (!animation.is_valid() || animation.key_count() < 2)
             continue;
         const int lastIndex = animation.key_count() - 1;
         const int lastFrame = animation.key_get_frame(lastIndex);
         const auto lastType = animation.key_get_type(lastIndex);
-        const QString value = m_filter->get(key, animation.key_get_frame(0));
-        if (m_filter->service().anim_set(qUtf8Printable(key),
-                                         qUtf8Printable(value),
-                                         lastFrame,
-                                         m_filter->duration())) {
+        const char *firstValue = properties.anim_get(qUtf8Printable(key),
+                                                     animation.key_get_frame(0),
+                                                     length);
+        if (!firstValue) {
+            LOG_ERROR() << "Failed to read first keyframe value" << key;
+            continue;
+        }
+        const QString value = QString::fromUtf8(firstValue);
+        if (properties.anim_set(qUtf8Printable(key), qUtf8Printable(value), lastFrame, length)) {
             LOG_ERROR() << "Failed to match keyframe value" << key;
         } else if (animation.key_set_type(lastIndex, lastType)) {
             LOG_ERROR() << "Failed to restore keyframe type" << key;
         } else {
             animation.interpolate();
-            m_filter->service().get(qUtf8Printable(key));
-            m_filter->updateUndoCommand(key);
+            const char *updatedAnimation = properties.get(qUtf8Printable(key));
+            if (!updatedAnimation
+                || m_filter->service().set_string(qUtf8Printable(key), updatedAnimation)) {
+                LOG_ERROR() << "Failed to publish matched keyframe value" << key;
+            } else {
+                m_filter->updateUndoCommand(key);
+            }
         }
     }
     m_filter->endUndoCommand();

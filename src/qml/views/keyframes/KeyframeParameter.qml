@@ -27,6 +27,8 @@ Item {
     property double maximum: 1
     property bool isLocked: false
     property bool isLoop: false
+    property real viewportStart: 0
+    property real viewportEnd: width
 
     signal clicked(var keyframe, var parameter)
     signal rightClicked(var keyframe, var parameter)
@@ -51,6 +53,8 @@ Item {
     onMinimumChanged: canvas.requestPaint()
     onMaximumChanged: canvas.requestPaint()
     onIsLoopChanged: canvas.requestPaint()
+    onViewportStartChanged: canvas.requestPaint()
+    onViewportEndChanged: canvas.requestPaint()
 
     // When maximum == minimum only show the middle label
     Text {
@@ -561,7 +565,10 @@ Item {
                         "y": pts[0].y
                     });
                 ctx.setLineDash([4, 3]);
-                for (let c = 1; pts[0].x + c * period < width && c * n < 10000; c++) {
+                const markerRadius = keyframesRepeater.itemAt(0).width / 2;
+                const firstGhostCycle = Math.max(1, Math.ceil((parameterRoot.viewportStart - markerRadius - pts[n - 1].x) / period));
+                const maxGhostCycles = Math.max(1, Math.floor(10000 / n));
+                for (let c = firstGhostCycle; pts[0].x + c * period < parameterRoot.viewportEnd && c - firstGhostCycle < maxGhostCycles; c++) {
                     const ghost = cyclePoints(pts, c * period, seamless);
                     if (isCurve) {
                         ctx.beginPath();

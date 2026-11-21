@@ -592,8 +592,12 @@ Rectangle {
         model: parameters
 
         KeyframeParameter {
+            id: parameterItem
+
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
+            viewportStart: parameterItem.mapFromItem(tracksFlickable.contentItem, tracksFlickable.contentX, 0).x
+            viewportEnd: parameterItem.mapFromItem(tracksFlickable.contentItem, tracksFlickable.contentX + tracksFlickable.width, 0).x
             isCurve: model.isCurve
             isLoop: model.isLoop
             minimum: model.minimum
