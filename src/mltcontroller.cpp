@@ -1834,8 +1834,8 @@ void Controller::setPreviewScale(int scale)
         width = (height == m_profile.height())
                     ? m_profile.width()
                     : Util::coerceMultiple(
-                          height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
-                          * m_profile.sample_aspect_den() / m_profile.sample_aspect_num());
+                        height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
+                        * m_profile.sample_aspect_den() / m_profile.sample_aspect_num());
     }
     LOG_DEBUG() << width << "x" << height;
     m_previewProfile.set_width(width);

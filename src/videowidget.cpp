@@ -723,7 +723,8 @@ void VideoWidget::setVideoSink(QVideoSink *sink)
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((target("avx2")))
 #endif
-static void shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
+static void
+shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
 {
     int i = 0;
     for (; i + 16 <= n; i += 16) {
@@ -737,7 +738,8 @@ static void shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((target("avx2")))
 #endif
-static void interleaveUVPlanes_AVX2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
+static void
+interleaveUVPlanes_AVX2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
 {
     // AVX2 unpack operates within 128-bit lanes; permute to restore linear order.
     // unpacklo(u,v): lane0 = u0v0u1v1u2v2u3v3, lane1 = u8v8...u11v11

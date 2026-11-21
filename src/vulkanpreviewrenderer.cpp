@@ -337,6 +337,7 @@ public:
         float uniforms[20];
         const QMatrix4x4 matrix = m_rhi->clipSpaceCorrMatrix();
         memcpy(uniforms, matrix.constData(), 16 * sizeof(float));
+        // std140 buf: matrix, sdrWhite, encodeSdr, opacity, pad.
         uniforms[16] = 203.f / 80.f;
         uniforms[17] = m_hdr ? 0.f : 1.f;
         uniforms[18] = m_opacity;

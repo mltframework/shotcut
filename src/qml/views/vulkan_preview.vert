@@ -7,7 +7,7 @@ layout(location = 0) out vec2 vUv;
 layout(std140, binding = 0) uniform buf {
     mat4 matrix;
     float sdrWhite;
-    float toneMap;
+    float encodeSdr;
     float opacity;
     float pad;
 };
