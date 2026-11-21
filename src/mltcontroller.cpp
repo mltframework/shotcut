@@ -26,6 +26,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
+#include "vulkanpreview.h"
 #if defined(Q_OS_WIN)
 #include "widgets/d3dvideowidget.h"
 #include "widgets/openglvideowidget.h"
@@ -72,6 +73,12 @@ Controller::Controller()
     m_repo = Mlt::Factory::init();
     m_processingMode = Settings.processingMode();
     if (m_processingMode == ShotcutSettings::Linear16GpuCpu) {
+        // init_gpu() publishes placebo.vulkan only when this is already vulkan.
+        // The player is constructed before readPlayerSettings() would set it, and
+        // a D3D11 GPU created first cannot be shared with the decoder.
+        if (Settings.playerPreviewHardwareDecoder()
+            && !qEnvironmentVariableIsSet("MLT_AVFORMAT_HWACCEL"))
+            ::qputenv("MLT_AVFORMAT_HWACCEL", "vulkan");
         // Allocate GPU and publish it
         Filter(m_profile, "placebo.render");
     }
@@ -86,7 +93,9 @@ Controller &Controller::singleton(QObject *parent)
     if (!instance) {
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
-        if (Settings.playerOldVideoOutput()) {
+        // Linear 16-bit GPU with a Vulkan scene graph draws in VideoWidget.
+        // The old D3D/OpenGL/Metal widgets stay available for every other mode.
+        if (Settings.playerOldVideoOutput() && !VulkanPreview::usesSceneGraph()) {
 #if defined(Q_OS_WIN)
             if (QSGRendererInterface::Direct3D11 == QQuickWindow::graphicsApi())
                 instance = new D3DVideoWidget(parent);
@@ -218,8 +227,19 @@ bool Controller::openXML(const QString &filename)
 
 void Controller::close()
 {
+    // pauseOnClose() is false while the displayed frame belongs to the
+    // producer about to be dropped. Stopping joins get_image. pause() would
+    // start the consumer again on that producer.
+    const bool holdConsumer = !pauseOnClose();
+    if (holdConsumer && m_consumer && !m_consumer->is_stopped())
+        m_consumer->stop();
     if (m_profile.is_explicit()) {
-        pause();
+        if (holdConsumer && m_consumer && m_consumer->is_stopped()) {
+            if (m_producer && !isPaused())
+                m_producer->set_speed(0);
+        } else {
+            pause();
+        }
     } else if (m_consumer && !m_consumer->is_stopped()) {
         m_consumer->stop();
     }
@@ -997,7 +1017,10 @@ QImage Controller::image(Mlt::Frame *frame, int width, int height)
         }
         mlt_image_format format = mlt_image_rgba;
         const uchar *image = frame->get_image(format, width, height);
-        if (image) {
+        // Conversion from mlt_image_vulkan fails without changing the pointer.
+        // Copying that struct as pixels crashes. A thumbnail is not worth a
+        // GPU download on this thread.
+        if (image && format == mlt_image_rgba) {
             QImage temp(width, height, QImage::Format_ARGB32);
             memcpy(temp.scanLine(0), image, size_t(width * height * 4));
             result = temp.rgbSwapped();
@@ -1811,8 +1834,8 @@ void Controller::setPreviewScale(int scale)
         width = (height == m_profile.height())
                     ? m_profile.width()
                     : Util::coerceMultiple(
-                        height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
-                        * m_profile.sample_aspect_den() / m_profile.sample_aspect_num());
+                          height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
+                          * m_profile.sample_aspect_den() / m_profile.sample_aspect_num());
     }
     LOG_DEBUG() << width << "x" << height;
     m_previewProfile.set_width(width);

@@ -17,6 +17,7 @@
 
 import QtQuick
 import QtMultimedia
+import org.shotcut.qml
 
 DropArea {
     clip: true
@@ -24,19 +25,29 @@ DropArea {
     property real _zoom: (video.zoom > 0) ? video.zoom : 1
 
     Component.onCompleted: {
-        if (!video.oldVideoOutput)
+        if (!video.oldVideoOutput && !video.vulkanPreview)
             video.setVideoSink(videoOutput.videoSink)
     }
 
     VideoOutput {
         id: videoOutput
-        visible: !video.oldVideoOutput
+        visible: !video.oldVideoOutput && !video.vulkanPreview
 
         width: video.rect.width * _zoom
         height: video.rect.height * _zoom
         x: video.rect.x + (video.rect.width - width) / 2 - video.offset.x
         y: video.rect.y + (video.rect.height - height) / 2 - video.offset.y
         fillMode: VideoOutput.Stretch
+    }
+
+    VulkanVideoItem {
+        id: vulkanOutput
+        visible: video.vulkanPreview
+
+        width: video.rect.width * _zoom
+        height: video.rect.height * _zoom
+        x: video.rect.x + (video.rect.width - width) / 2 - video.offset.x
+        y: video.rect.y + (video.rect.height - height) / 2 - video.offset.y
     }
 
     Canvas {

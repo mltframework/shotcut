@@ -18,6 +18,7 @@
 import QtQuick
 import QtQuick.Shapes
 import QtMultimedia
+import org.shotcut.qml
 
 Rectangle {
     color: "black"
@@ -43,10 +44,14 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: hdrWindow.setVideoSink(videoOutput.videoSink)
+    Component.onCompleted: {
+        if (!hdrWindow.vulkanPreview)
+            hdrWindow.setVideoSink(videoOutput.videoSink)
+    }
 
     VideoOutput {
         id: videoOutput
+        visible: !hdrWindow.vulkanPreview
 
         anchors.fill: parent
         fillMode: VideoOutput.PreserveAspectFit
@@ -57,6 +62,17 @@ Rectangle {
 
             fragmentShader: "hdr_gain.frag.qsb"
         }
+    }
+
+    VulkanVideoItem {
+        id: vulkanOutput
+        visible: hdrWindow.vulkanPreview
+        hdr: true
+        anchors.centerIn: parent
+
+        property real frameAspect: (frameWidth > 0 && frameHeight > 0) ? frameWidth / frameHeight : 1
+        width: (parent.height * frameAspect) <= parent.width ? parent.height * frameAspect : parent.width
+        height: (parent.height * frameAspect) <= parent.width ? parent.height : parent.width / frameAspect
     }
 
     // Drag to move window — only starts after actual movement so that

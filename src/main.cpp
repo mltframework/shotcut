@@ -21,6 +21,7 @@
 #include "gpuinfo.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "vulkanpreview.h"
 
 #include <framework/mlt_log.h>
 #include <QCommandLineParser>
@@ -567,6 +568,9 @@ int main(int argc, char **argv)
         LOG_INFO() << "Linux version" << QSysInfo::productVersion();
         LOG_INFO() << "QPA platform =" << a.platformName() << "-" << s_qpaPlatformNote;
 #endif
+        // Linear 16-bit GPU selects Vulkan here, before the first window.
+        // A safe-mode restart passes OpenGL and graphicsBackend() keeps it.
+        VulkanPreview::applyGraphicsApi();
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" << a.applicationDirPath();
@@ -619,6 +623,8 @@ int main(int argc, char **argv)
         MainWindow::changeTheme(Settings.theme());
         QQuickStyle::setStyle("Fusion");
 
+        VulkanPreview::publishAdapter();
+
         a.mainWindow = &MAIN;
         // Tell the watchdog parent process (if any) that startup got far enough to show a window.
         QObject::connect(a.mainWindow, &MainWindow::windowShown, []() {
@@ -627,8 +633,18 @@ int main(int argc, char **argv)
         });
         if (!a.appDirArg.isEmpty())
             a.mainWindow->hideSetDataDirectory();
-        if (Settings.drawMethod() != QSGRendererInterface::Vulkan)
+        if (QQuickWindow::graphicsApi() != QSGRendererInterface::Vulkan)
             a.mainWindow->setProperty("windowOpacity", 0.0);
+        // The embedded player is a QQuickWidget. Its scene graph adopts the
+        // top-level widget's VkDevice, so that device has to be created with
+        // the external-memory extensions and the placebo GPU.
+        if (VulkanPreview::usesSceneGraph()) {
+            // The device index has to be published before the native window
+            // is created. Creating the window can build the backing-store device.
+            VulkanPreview::prepareCompositor(nullptr);
+            a.mainWindow->winId();
+            VulkanPreview::prepareCompositor(a.mainWindow->windowHandle());
+        }
         a.mainWindow->show();
         a.processEvents();
         a.mainWindow->setFullScreen(a.isFullScreen);
@@ -756,8 +772,8 @@ int main(int argc, char **argv)
             return {timer.elapsed(), hung};
         };
 
-        const auto firstRun = runChildAndWait(
-            (qEnvironmentVariableIsSet("QSG_RHI_BACKEND") ? qgetenv("QSG_RHI_BACKEND") : "d3d11"));
+        const QByteArray graphicsBackend = VulkanPreview::graphicsBackend();
+        const auto firstRun = runChildAndWait(graphicsBackend.constData());
         const bool firstRunCrashed = QProcess::CrashExit == child.exitStatus() || child.exitCode();
         if (firstRun.hung || (firstRunCrashed && firstRun.elapsedMs <= kWatchdogTimeoutMs)) {
             LOG_WARNING() << (firstRun.hung

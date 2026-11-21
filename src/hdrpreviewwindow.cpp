@@ -23,6 +23,7 @@
 #include "player.h"
 #include "qmltypes/qmlutilities.h"
 #include "settings.h"
+#include "vulkanpreview.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -100,6 +101,8 @@ HdrPreviewWindow::HdrPreviewWindow(QWindow *parent)
     m_displayPeakNits = Settings.playerHdrDisplayPeakNits();
     m_contentPeakNits = Settings.playerHdrContentPeakNits();
     m_toneMapping = Settings.playerHdrToneMapping();
+    VulkanPreview::syncHdrSettings();
+    VulkanPreview::prepare(this);
 
     QDir qmlDir = QmlUtilities::qmlDir();
     setSource(QUrl::fromLocalFile(qmlDir.filePath("views/HdrPreview.qml")));
@@ -496,6 +499,40 @@ void HdrPreviewWindow::keyReleaseEvent(QKeyEvent *event)
         QQuickView::keyReleaseEvent(event);
 }
 
+bool HdrPreviewWindow::vulkanPreview() const
+{
+    return VulkanPreview::active();
+}
+
+void HdrPreviewWindow::noteDisplayedFrame(const SharedFrame &frame)
+{
+    // The Vulkan preview does not push a QVideoFrame. Keep the transport
+    // readout moving from the displayed MLT frame instead.
+    if (!vulkanPreview() || !isVisible() || !frame.is_valid())
+        return;
+    // pushFrame() never runs for the Vulkan preview, so confirm the swap chain here.
+    if (!m_loggedSwapChain && swapChain()) {
+        m_loggedSwapChain = true;
+        if (!m_lastScreen && screen())
+            m_lastScreen = screen();
+        emit hdrModeConfirmed(isHdrAvailable());
+    }
+    updateHdrGain();
+    m_lastKnownHdrMode = isHdrMode();
+    const int frameNum = frame.get_position();
+    if (m_videoPosition != frameNum) {
+        m_videoPosition = frameNum;
+        emit videoPositionChanged();
+    }
+    if (auto *prod = MLT.producer()) {
+        const int len = qMax(0, prod->get_length() - 1);
+        if (m_videoDuration != len) {
+            m_videoDuration = len;
+            emit videoDurationChanged();
+        }
+    }
+}
+
 void HdrPreviewWindow::setHdrTransfer(HdrTransfer transfer)
 {
     if (m_hdrTransfer != transfer) {
@@ -514,6 +551,7 @@ void HdrPreviewWindow::setDisplayPeakNits(int nits)
     if (m_displayPeakNits != nits) {
         m_displayPeakNits = nits;
         Settings.setPlayerHdrDisplayPeakNits(nits);
+        VulkanPreview::syncHdrSettings();
         emit displayPeakNitsChanged();
         updateHdrGain();
         if (m_hdrTransfer != HdrTransfer::SDR)
@@ -527,6 +565,7 @@ void HdrPreviewWindow::setContentPeakNits(int nits)
     if (m_contentPeakNits != nits) {
         m_contentPeakNits = nits;
         Settings.setPlayerHdrContentPeakNits(nits);
+        VulkanPreview::syncHdrSettings();
         emit contentPeakNitsChanged();
         updateHdrGain();
         if (m_hdrTransfer != HdrTransfer::SDR)
@@ -540,6 +579,7 @@ void HdrPreviewWindow::setToneMapping(bool enabled)
     if (m_toneMapping != enabled) {
         m_toneMapping = enabled;
         Settings.setPlayerHdrToneMapping(enabled);
+        VulkanPreview::syncHdrSettings();
         emit toneMappingChanged();
         updateHdrGain();
         if (m_hdrTransfer != HdrTransfer::SDR)
@@ -549,6 +589,12 @@ void HdrPreviewWindow::setToneMapping(bool enabled)
 
 void HdrPreviewWindow::invalidateVideoNode()
 {
+    // The Vulkan preview has no video node. The next exported frame already
+    // uses the new settings, so only a paused picture needs a render.
+    if (vulkanPreview()) {
+        MLT.refreshConsumer();
+        return;
+    }
     // Push an invalid frame so QQuickVideoOutput::updatePaintNode()
     // deletes the existing QSGVideoNode.  The next valid frame will
     // then create a fresh node whose shader picks up the updated
@@ -654,6 +700,17 @@ void HdrPreviewWindow::updateHdrGain()
     // User-overridden display peak, or actual.
     float effectiveMaxNits = (m_displayPeakNits > 0) ? static_cast<float>(m_displayPeakNits)
                                                      : actualMaxNits;
+    if (vulkanPreview()) {
+        // The Vulkan item applies no gain. libplacebo tone maps to these peaks.
+        const int actual = qRound(actualMaxNits);
+        if (actual != m_publishedActualNits) {
+            m_publishedActualNits = actual;
+            VulkanPreview::setActualDisplayNits(actual);
+            if (m_displayPeakNits <= 0)
+                MLT.refreshConsumer();
+        }
+        return;
+    }
     float displayMaxLinear = effectiveMaxNits / 100.0f;
     if (displayMaxLinear <= 1.0f)
         return;

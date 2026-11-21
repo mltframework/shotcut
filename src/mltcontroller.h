@@ -198,6 +198,9 @@ protected:
     Mlt::Repository *m_repo;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Consumer> m_consumer;
+    // pause() starts the consumer again on the current producer. A caller that
+    // is about to drop that producer returns false so close() only stops it.
+    virtual bool pauseOnClose() const { return true; }
 
 private:
     Mlt::Profile m_profile;

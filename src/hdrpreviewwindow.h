@@ -45,6 +45,7 @@ class HdrPreviewWindow : public QQuickView
     Q_PROPERTY(int videoDuration READ videoDuration NOTIFY videoDurationChanged)
     Q_PROPERTY(QString positionText READ positionText NOTIFY videoPositionChanged)
     Q_PROPERTY(QString durationText READ durationText NOTIFY videoDurationChanged)
+    Q_PROPERTY(bool vulkanPreview READ vulkanPreview CONSTANT)
 
 public:
     explicit HdrPreviewWindow(QWindow *parent = nullptr);
@@ -70,6 +71,7 @@ public:
     int videoDuration() const { return m_videoDuration; }
     QString positionText() const;
     QString durationText() const;
+    bool vulkanPreview() const;
 
     Q_INVOKABLE void triggerPlayPause();
     Q_INVOKABLE void triggerRewind();
@@ -80,6 +82,7 @@ public:
 
 public slots:
     void pushFrame(const QVideoFrame &frame);
+    void noteDisplayedFrame(const SharedFrame &frame);
     void setHdrTransfer(HdrTransfer transfer);
     void setPlaying(bool playing);
 
@@ -122,6 +125,7 @@ private:
     QTimer m_screenChangeTimer;
     bool m_loggedSwapChain{false};
     bool m_loggedGainSkip{false};
+    int m_publishedActualNits{0};
     bool m_lastKnownHdrMode{false};
     bool m_pendingWasHdrMode{false};
     bool m_warnedAboutScreenChange{false};

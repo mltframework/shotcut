@@ -3765,10 +3765,11 @@ QString MultitrackModel::trackTransitionService()
             service.reset(service->producer());
         }
     }
-    return Settings.playerGPU() ? QStringLiteral("movit.overlay")
-           : Settings.processingMode() == ShotcutSettings::Linear16GpuCpu
-               ? QStringLiteral("placebo.blend")
-               : QStringLiteral("qtblend");
+    // playerGPU() is true for Linear 16-bit too. That mode composites with
+    // placebo, not Movit: Movit would sample the Vulkan picture as an OpenGL texture.
+    if (Settings.processingMode() == ShotcutSettings::Linear16GpuCpu)
+        return QStringLiteral("placebo.blend");
+    return Settings.playerGPU() ? QStringLiteral("movit.overlay") : QStringLiteral("qtblend");
 }
 
 void MultitrackModel::adjustTrackFilters()

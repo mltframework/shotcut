@@ -23,6 +23,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "settings.h"
 #include "util.h"
+#include "vulkanpreview.h"
 
 #include <Mlt.h>
 #include <functional>
@@ -109,6 +110,9 @@ VideoWidget::VideoWidget(QObject *parent)
             Qt::QueuedConnection);
     connect(&m_refreshTimer, &QTimer::timeout, this, &VideoWidget::onRefreshTimeout);
     connect(this, &VideoWidget::rectChanged, this, &VideoWidget::zoomChanged);
+    VulkanPreview::syncHdrSettings();
+    VulkanPreview::prepare(quickWindow());
+    VulkanPreview::setHostVisible(quickWindow(), isVisible());
     LOG_DEBUG() << "end";
 }
 
@@ -127,7 +131,7 @@ VideoWidget::~VideoWidget()
 void VideoWidget::initialize()
 {
     LOG_DEBUG() << "begin";
-    if (m_oldVideoOutput) {
+    if (oldVideoOutput()) {
         m_frameRenderer = new FrameRenderer();
         connect(m_frameRenderer,
                 &FrameRenderer::frameDisplayed,
@@ -253,7 +257,10 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
                                   ? m_sharedFrame
                                   : (m_frameRenderer ? m_frameRenderer->getDisplayFrame()
                                                      : SharedFrame());
-    if (sourceFrame.is_valid()) {
+    // The displayed frame is a Vulkan image. Pulling RGBA here downloads it
+    // on the UI thread while the consumer queue may be waiting for this
+    // thread to signal the preview semaphore.
+    if (sourceFrame.is_valid() && !vulkanPreview()) {
         constexpr int kDragThumbnailHeight = 45;
         Mlt::Frame displayFrame(sourceFrame.clone(false, true));
         QImage displayImage = MLT.image(&displayFrame,
@@ -321,6 +328,8 @@ void VideoWidget::keyPressEvent(QKeyEvent *event)
 bool VideoWidget::event(QEvent *event)
 {
     bool result = QQuickWidget::event(event);
+    if (event->type() == QEvent::Show || event->type() == QEvent::Hide)
+        VulkanPreview::setHostVisible(quickWindow(), isVisible());
     if (event->type() == QEvent::PaletteChange) {
         if (m_frameRenderer && m_sharedFrame.is_valid())
             onFrameDisplayed(m_sharedFrame);
@@ -330,8 +339,20 @@ bool VideoWidget::event(QEvent *event)
     return result;
 }
 
+bool VideoWidget::pauseOnClose() const
+{
+    // pause() leaves the consumer inside get_image, then starts it again on
+    // the producer about to be dropped. A Vulkan frame's images belong to that
+    // producer, so the next submit loses the device.
+    return !VulkanPreview::active();
+}
+
 int VideoWidget::setProducer(Mlt::Producer *producer, bool isMulti)
 {
+    // close() has stopped the consumer. Start it again only after reconfigure
+    // connects the new producer. open() relies on Player::onProducerOpened().
+    const bool resumeConsumer = VulkanPreview::active() && m_consumer && m_consumer->is_valid()
+                                && !m_consumer->is_stopped();
     int error = Controller::setProducer(producer, isMulti);
 
     if (!error) {
@@ -341,6 +362,8 @@ int VideoWidget::setProducer(Mlt::Producer *producer, bool isMulti)
             resizeVideo(width(), height());
         }
     }
+    if (resumeConsumer && m_consumer && m_consumer->is_valid() && m_consumer->is_stopped())
+        m_consumer->start();
     return error;
 }
 
@@ -469,11 +492,19 @@ int VideoWidget::reconfigure(bool isMulti)
             break;
         case ShotcutSettings::Native10Cpu:
         case ShotcutSettings::Linear10GpuCpu:
-        case ShotcutSettings::Linear16GpuCpu:
             m_consumer->set("mlt_image_format",
                             isDeckLinkHdr ? "yuv444p10"
                             : hdrPreview  ? "yuv420p10"
                                           : "rgba64");
+            break;
+        case ShotcutSettings::Linear16GpuCpu:
+            if (vulkanPreview())
+                m_consumer->set("mlt_image_format", "vulkan");
+            else
+                m_consumer->set("mlt_image_format",
+                                isDeckLinkHdr ? "yuv444p10"
+                                : hdrPreview  ? "yuv420p10"
+                                              : "rgba64");
             break;
         default: // Native8Cpu
             m_consumer->set("mlt_image_format",
@@ -517,6 +548,10 @@ int VideoWidget::reconfigure(bool isMulti)
         } else {
             m_consumer->clear("mlt_color_trc");
         }
+        // The Vulkan preview converts linear light for each window itself.
+        m_consumer->set("color_trc_off",
+                        !qstrcmp(m_consumer->get("mlt_image_format"), "vulkan")
+                            && m_consumer->get("mlt_color_trc"));
         LOG_DEBUG() << "mlt_image_format" << m_consumer->get("mlt_image_format") << "mlt_color_trc"
                     << m_consumer->get("mlt_color_trc") << "color_trc"
                     << m_consumer->get("color_trc");
@@ -653,7 +688,14 @@ bool VideoWidget::imageIsProxy() const
 
 bool VideoWidget::oldVideoOutput() const
 {
-    return m_oldVideoOutput;
+    // Linear 16-bit GPU on the Vulkan scene graph uses this Quick player.
+    // The old D3D/OpenGL widget is not the current output in that mode.
+    return m_oldVideoOutput && !VulkanPreview::usesSceneGraph();
+}
+
+bool VideoWidget::vulkanPreview() const
+{
+    return VulkanPreview::active();
 }
 
 void VideoWidget::requestImage()
@@ -681,8 +723,7 @@ void VideoWidget::setVideoSink(QVideoSink *sink)
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((target("avx2")))
 #endif
-static void
-shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
+static void shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
 {
     int i = 0;
     for (; i + 16 <= n; i += 16) {
@@ -696,8 +737,7 @@ shiftYPlane_AVX2(const uint16_t *src, uint16_t *dst, int n)
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((target("avx2")))
 #endif
-static void
-interleaveUVPlanes_AVX2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
+static void interleaveUVPlanes_AVX2(const uint16_t *srcU, const uint16_t *srcV, uint16_t *dst, int n)
 {
     // AVX2 unpack operates within 128-bit lanes; permute to restore linear order.
     // unpacklo(u,v): lane0 = u0v0u1v1u2v2u3v3, lane1 = u8v8...u11v11
@@ -1004,7 +1044,10 @@ void VideoWidget::showFrame(Mlt::Frame frame, QByteArray p016Buffer)
     } else if (isVui && !m_savedQmlSource.isEmpty() && source() != m_savedQmlSource) {
         setSource(m_savedQmlSource);
     }
-    pushFrameToSink(m_sharedFrame, std::move(p016Buffer));
+    if (vulkanPreview())
+        VulkanPreview::notifyItems();
+    else
+        pushFrameToSink(m_sharedFrame, std::move(p016Buffer));
     emit frameDisplayed(m_sharedFrame);
     if (m_imageRequested) {
         m_imageRequested = false;
@@ -1088,6 +1131,20 @@ void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_dat
     // get_image_error is the checkerboard substituted for a failed fetch.
     // Keep the picture already on screen.
     if (frame.is_valid() && frame.get_int("rendered") && !frame.get_int("get_image_error")) {
+        if (widget->vulkanPreview()) {
+            // A test card or a CPU frame is not an mlt_vulkan_image. Casting it
+            // and walking the planes crashes as soon as the picture is not the
+            // steady Vulkan path.
+            mlt_image_format format = mlt_image_format(frame.get_int("format"));
+            if (format == mlt_image_vulkan) {
+                const char *trc = widget->consumer()->get("color_trc");
+                const bool hdrContent = trc
+                                        && (!qstrcmp(trc, "arib-std-b67")
+                                            || !qstrcmp(trc, "smpte2084"));
+                if (void *image = frame.get_data("image"))
+                    VulkanPreview::exportFrame(static_cast<mlt_vulkan_image *>(image), hdrContent);
+            }
+        }
         int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
         if (widget->m_frameRenderer) {
             // Old path: dispatch to FrameRenderer thread

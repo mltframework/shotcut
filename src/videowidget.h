@@ -68,6 +68,7 @@ class VideoWidget : public QQuickWidget, public Controller
     Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
     Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
     Q_PROPERTY(bool oldVideoOutput READ oldVideoOutput CONSTANT)
+    Q_PROPERTY(bool vulkanPreview READ vulkanPreview CONSTANT)
 
 public:
     VideoWidget(QObject *parent = 0);
@@ -116,6 +117,7 @@ public:
     bool snapToGrid() const { return m_snapToGrid; }
     int maxTextureSize() const { return m_maxTextureSize; }
     bool oldVideoOutput() const;
+    bool vulkanPreview() const;
     void toggleVuiDisplay();
     Q_INVOKABLE void setVideoSink(QVideoSink *sink);
 
@@ -192,6 +194,7 @@ private slots:
     void onRefreshTimeout();
 
 protected:
+    bool pauseOnClose() const override;
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;

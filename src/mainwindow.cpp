@@ -1205,6 +1205,32 @@ void MainWindow::setupSettingsMenu()
                 QApplication::closeAllWindows();
             }
             ui->actionLinear10bitGpuCpu->setChecked(true);
+#if defined(Q_OS_WIN)
+        } else if ((oldMode == ShotcutSettings::Linear16GpuCpu)
+                   != (newMode == ShotcutSettings::Linear16GpuCpu)) {
+            QMessageBox dialog(QMessageBox::Information,
+                               qApp->applicationName(),
+                               tr("Shotcut must restart to change the preview graphics API "
+                                  "for 16-bit GPU processing.\n"
+                                  "Change the processing mode and restart?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.adjustSize();
+            if (dialog.exec() == QMessageBox::Yes) {
+                Settings.setProcessingMode(newMode);
+                m_exitCode = EXIT_RESTART;
+                QApplication::closeAllWindows();
+            }
+            for (auto a : action->actionGroup()->actions()) {
+                if (oldMode == a->data().toInt()) {
+                    a->setChecked(true);
+                    break;
+                }
+            }
+#endif
         } else {
             setProcessingMode((ShotcutSettings::ProcessingMode) action->data().toInt());
         }
@@ -4827,6 +4853,10 @@ void MainWindow::onHdrPreviewToggled(bool checked)
                     &Mlt::VideoWidget::videoFrameReady,
                     m_hdrPreviewWindow,
                     &HdrPreviewWindow::pushFrame);
+            connect(videoWidget,
+                    &Mlt::VideoWidget::frameDisplayed,
+                    m_hdrPreviewWindow,
+                    &HdrPreviewWindow::noteDisplayedFrame);
             connect(videoWidget,
                     &Mlt::VideoWidget::hdrTransferChanged,
                     m_hdrPreviewWindow,

@@ -38,6 +38,7 @@
 #include "qmltypes/qmlrichtextmenu.h"
 #include "qmltypes/timelineitems.h"
 #include "settings.h"
+#include "vulkanvideoitem.h"
 
 #include <QCoreApplication>
 #include <QCursor>
@@ -64,6 +65,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<SubtitlesModel>("org.shotcut.qml", 1, 0, "SubtitlesModel");
     qmlRegisterType<SubtitlesSelectionModel>("org.shotcut.qml", 1, 0, "SubtitlesSelectionModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
+    qmlRegisterType<VulkanVideoItem>("org.shotcut.qml", 1, 0, "VulkanVideoItem");
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml",
                                               1,
