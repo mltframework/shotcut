@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,9 +70,12 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
             if (service == "count") {
                 producer = Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
             } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
+                const QString decodeResource = (service == "avformat")
+                                                   ? Util::softwareDecodeResource(resource)
+                                                   : resource;
                 producer = Mlt::Producer(m_profile,
                                          service.toUtf8().constData(),
-                                         resource.toUtf8().constData());
+                                         decodeResource.toUtf8().constData());
             }
             if (producer.is_valid()) {
                 result = makeThumbnail(producer, frameNumber, requestedSize);

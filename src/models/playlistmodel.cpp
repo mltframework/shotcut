@@ -83,10 +83,15 @@ public:
                                                    service.toUtf8().constData(),
                                                    "loader-nogl");
             } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
-                LOG_DEBUG() << service << m_producer.get("resource");
+                const char *rawResource = m_producer.get("resource");
+                const QString resource = service == "avformat"
+                                             ? Util::softwareDecodeResource(
+                                                 QString::fromUtf8(rawResource ? rawResource : ""))
+                                             : QString::fromUtf8(rawResource ? rawResource : "");
+                LOG_DEBUG() << service << resource;
                 m_tempProducer = new Mlt::Producer(m_profile,
                                                    service.toUtf8().constData(),
-                                                   m_producer.get("resource"));
+                                                   resource.toUtf8().constData());
             }
             if (m_tempProducer && m_tempProducer->is_valid()) {
                 Mlt::Filter scaler(m_profile, "swscale");

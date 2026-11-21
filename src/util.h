@@ -74,6 +74,9 @@ public:
     static QFileDialog::Options getFileDialogOptions();
     static bool isMemoryLow();
     static QString removeQueryString(const QString &s);
+    // CPU-side producers (waveforms, thumbnails) must not open a second Vulkan
+    // decoder on the preview device. Avformat reads hwaccel= from the resource.
+    static QString softwareDecodeResource(const QString &resource);
     static int greatestCommonDivisor(int m, int n);
     static void normalizeFrameRate(double fps, int &numerator, int &denominator);
     static QString textColor(const QColor &color);

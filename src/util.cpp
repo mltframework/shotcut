@@ -581,6 +581,15 @@ QString Util::removeQueryString(const QString &s)
     return s;
 }
 
+QString Util::softwareDecodeResource(const QString &resource)
+{
+    if (resource.isEmpty() || resource.contains(QLatin1String("hwaccel=")))
+        return resource;
+    return resource
+           + (resource.contains(QLatin1Char('?')) ? QLatin1String("&hwaccel=none")
+                                                  : QLatin1String("?hwaccel=none"));
+}
+
 int Util::greatestCommonDivisor(int m, int n)
 {
     int gcd, remainder;

@@ -132,8 +132,14 @@ Mlt::Producer *AudioLevelsTask::tempProducer()
             service = "avformat";
         else if (service.startsWith("xml"))
             service = "xml-nogl";
-        m_tempProducer.reset(
-            new Mlt::Producer(m_profile, service.toUtf8().constData(), producer->get("resource")));
+        const char *rawResource = producer->get("resource");
+        const QString resource = (service == QLatin1String("avformat"))
+                                     ? Util::softwareDecodeResource(
+                                         QString::fromUtf8(rawResource ? rawResource : ""))
+                                     : QString::fromUtf8(rawResource ? rawResource : "");
+        m_tempProducer.reset(new Mlt::Producer(m_profile,
+                                               service.toUtf8().constData(),
+                                               resource.toUtf8().constData()));
         if (m_tempProducer->is_valid()) {
             Mlt::Filter channels(m_profile, "audiochannels");
             Mlt::Filter converter(m_profile, "audioconvert");
