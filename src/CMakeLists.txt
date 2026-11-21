@@ -157,6 +157,9 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   spatialmedia/spatialmedia.cpp spatialmedia/spatialmedia.h
   transportcontrol.h
   util.cpp util.h
+  vulkanpreview.cpp vulkanpreview.h
+  vulkanpreviewrenderer.cpp vulkanpreviewrenderer.h
+  vulkanvideoitem.cpp vulkanvideoitem.h
   videowidget.cpp videowidget.h
   hdrpreviewwindow.cpp hdrpreviewwindow.h
   widgets/alsawidget.cpp widgets/alsawidget.h
@@ -295,7 +298,23 @@ if(QSB_EXECUTABLE)
       COMMENT "Compiling HDR gain shader"
     )
   endif()
-  add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB})
+  set(VULKAN_PREVIEW_VERT ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/vulkan_preview.vert)
+  set(VULKAN_PREVIEW_VERT_QSB ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/vulkan_preview.vert.qsb)
+  set(VULKAN_PREVIEW_FRAG ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/vulkan_preview.frag)
+  set(VULKAN_PREVIEW_FRAG_QSB ${CMAKE_CURRENT_SOURCE_DIR}/qml/views/vulkan_preview.frag.qsb)
+  add_custom_command(
+    OUTPUT ${VULKAN_PREVIEW_VERT_QSB}
+    COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${VULKAN_PREVIEW_VERT_QSB} ${VULKAN_PREVIEW_VERT}
+    DEPENDS ${VULKAN_PREVIEW_VERT}
+    COMMENT "Compiling Vulkan preview vertex shader"
+  )
+  add_custom_command(
+    OUTPUT ${VULKAN_PREVIEW_FRAG_QSB}
+    COMMAND ${QSB_EXECUTABLE} --glsl "100 es,120,150" --hlsl 50 --msl 12 -o ${VULKAN_PREVIEW_FRAG_QSB} ${VULKAN_PREVIEW_FRAG}
+    DEPENDS ${VULKAN_PREVIEW_FRAG}
+    COMMENT "Compiling Vulkan preview fragment shader"
+  )
+  add_custom_target(hdr_shaders ALL DEPENDS ${HDR_GAIN_QSB} ${VULKAN_PREVIEW_VERT_QSB} ${VULKAN_PREVIEW_FRAG_QSB})
   add_dependencies(shotcut hdr_shaders)
 endif()
 
