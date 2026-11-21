@@ -29,6 +29,7 @@ Rectangle {
     property bool current: false
     property bool isCurve: false
     property bool zoomHeight: false
+    property bool isLoop: false
     property int delegateIndex: -1
 
     signal clicked
@@ -226,6 +227,28 @@ Rectangle {
 
                 Shotcut.HoverTip {
                     text: ((delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')) + ' (' + (application.OS === 'macOS' ? '⌥' : 'Alt+') + '])'
+                }
+            }
+
+            ToolButton {
+                id: loopButton
+
+                visible: delegateIndex >= 0 && parameters.supportsLoop
+                checkable: true
+                checked: isLoop
+                icon.name: 'media-playback-loop'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/media-playback-loop.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                focusPolicy: Qt.NoFocus
+                onClicked: {
+                    parameters.setLoop(delegateIndex, !isLoop);
+                    checked = Qt.binding(() => isLoop);
+                }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Loop keyframes')
                 }
             }
 

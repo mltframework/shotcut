@@ -179,6 +179,7 @@ Rectangle {
                             trackName: model.name
                             delegateIndex: index
                             isCurve: model.isCurve
+                            isLoop: model.isLoop
                             width: headerWidth
                             height: Logic.trackHeight(isCurve)
                             current: index === currentTrack
@@ -591,9 +592,14 @@ Rectangle {
         model: parameters
 
         KeyframeParameter {
+            id: parameterItem
+
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
+            viewportStart: parameterItem.mapFromItem(tracksFlickable.contentItem, tracksFlickable.contentX, 0).x
+            viewportEnd: parameterItem.mapFromItem(tracksFlickable.contentItem, tracksFlickable.contentX + tracksFlickable.width, 0).x
             isCurve: model.isCurve
+            isLoop: model.isLoop
             minimum: model.minimum
             maximum: model.maximum
             height: Logic.trackHeight(model.isCurve)
