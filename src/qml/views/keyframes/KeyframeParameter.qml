@@ -53,8 +53,14 @@ Item {
     onMinimumChanged: canvas.requestPaint()
     onMaximumChanged: canvas.requestPaint()
     onIsLoopChanged: canvas.requestPaint()
-    onViewportStartChanged: canvas.requestPaint()
-    onViewportEndChanged: canvas.requestPaint()
+    onViewportStartChanged: {
+        if (isLoop)
+            canvas.requestPaint();
+    }
+    onViewportEndChanged: {
+        if (isLoop)
+            canvas.requestPaint();
+    }
 
     // When maximum == minimum only show the middle label
     Text {
