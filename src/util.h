@@ -76,6 +76,7 @@ public:
     static QString removeQueryString(const QString &s);
     // CPU-side producers (waveforms, thumbnails) must not open a second Vulkan
     // decoder on the preview device. Avformat reads hwaccel= from the resource.
+    // Plain files use "\?". A "format:" prefix uses "?".
     static QString softwareDecodeResource(const QString &resource);
     static int greatestCommonDivisor(int m, int n);
     static void normalizeFrameRate(double fps, int &numerator, int &denominator);

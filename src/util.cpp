@@ -581,13 +581,52 @@ QString Util::removeQueryString(const QString &s)
     return s;
 }
 
+static bool resourceHasFormatPrefix(const QString &resource)
+{
+    // A file is not prefixed with an input format. Device resources are
+    // "format:target". A drive letter and "scheme://" are not a format prefix.
+    const int colon = resource.indexOf(QLatin1Char(':'));
+    if (colon <= 1 || resource.startsWith(QLatin1Char('/'))
+        || resource.startsWith(QLatin1Char('\\')) || resource.mid(colon, 3) == QLatin1String("://")
+        || Util::hasDriveLetter(resource))
+        return false;
+    const QString prefix = resource.left(colon);
+    for (const QChar c : prefix) {
+        if (!c.isLetterOrNumber())
+            return false;
+    }
+    return true;
+}
+
+static int unescapedQuestion(const QString &resource)
+{
+    for (int i = resource.indexOf(QLatin1Char('?')); i >= 0;
+         i = resource.indexOf(QLatin1Char('?'), i + 1)) {
+        if (i == 0 || resource.at(i - 1) != QLatin1Char('\\'))
+            return i;
+    }
+    return -1;
+}
+
 QString Util::softwareDecodeResource(const QString &resource)
 {
     if (resource.isEmpty() || resource.contains(QLatin1String("hwaccel=")))
         return resource;
-    return resource
-           + (resource.contains(QLatin1Char('?')) ? QLatin1String("&hwaccel=none")
-                                                  : QLatin1String("?hwaccel=none"));
+
+    // "format:target" takes an unescaped '?'. A plain file keeps '?' in the name
+    // and starts its query at "\?" (a leading "\\?\" path prefix is not a query).
+    if (resourceHasFormatPrefix(resource)) {
+        return resource
+               + (unescapedQuestion(resource) >= 0 ? QLatin1String("&hwaccel=none")
+                                                   : QLatin1String("?hwaccel=none"));
+    }
+    int searchFrom = resource.startsWith(QLatin1String("\\\\?\\")) ? 4 : 0;
+    const int escaped = resource.indexOf(QLatin1String("\\?"), searchFrom);
+    const int encoded = resource.indexOf(QLatin1String("%5C?"), searchFrom);
+    const bool hasQuery = escaped >= 0 || encoded >= 0;
+    if (hasQuery)
+        return resource + QLatin1String("&hwaccel=none");
+    return resource + QLatin1String("\\?hwaccel=none");
 }
 
 int Util::greatestCommonDivisor(int m, int n)
