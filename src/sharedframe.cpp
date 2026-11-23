@@ -76,6 +76,10 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     Mlt::Frame cloneFrame(mlt_frame_init(NULL));
     cloneFrame.inherit(d->f);
     cloneFrame.set("_producer", d->f.get_data("_producer", size), size);
+    // inherit() copies strings only. The linear-light encoder looks this up.
+    size = 0;
+    if (void *transform = d->f.get_data("_color_transform", size))
+        cloneFrame.set("_color_transform", transform, 0);
 #if LIBMLT_VERSION_INT >= ((7 << 16) + (41 << 8))
     mlt_frame_copy_convert_image(cloneFrame.get_frame(), d->f.get_frame());
 #else
@@ -195,6 +199,8 @@ const uint8_t *SharedFrame::get_image(mlt_image_format format) const
     if (format == native_format) {
         // Native format is requested. Return frame image.
         image = (uint8_t *) d->f.get_image(format, width, height, 0);
+        if (format != native_format)
+            image = nullptr;
     } else {
         // Non-native format is requested. Return a cached converted image.
         const char *formatName = mlt_image_format_name(format);
@@ -224,7 +230,13 @@ const uint8_t *SharedFrame::get_image(mlt_image_format format) const
 
         // Get the image from the cache frame.
         // This will cause a conversion if it was just created.
+        // A Vulkan frame is not pixels. Callers such as the video scopes walk
+        // width * height from this pointer and do not check it, so only return
+        // a buffer that is actually the format they asked for.
+        const mlt_image_format requested = format;
         image = (uint8_t *) cacheFrame->get_image(format, width, height, 0);
+        if (!image || format != requested)
+            image = nullptr;
 
         nonConstData->m.unlock();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023 Meltytech, LLC
+ * Copyright (c) 2019-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,6 +149,8 @@ void VideoZoomWidget::paintEvent(QPaintEvent *)
     const uint8_t *pImg = m_frame.get_image(mlt_image_rgb);
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
+    if (!pImg || iWidth < 1 || iHeight < 1)
+        return;
     int wWidth = width() - (width() % m_zoom);
     int wHeight = height() - (height() % m_zoom);
     int ix = m_imageOffset.x();
@@ -308,12 +310,15 @@ QPoint VideoZoomWidget::posToPixel(const QPoint &pos)
 
 VideoZoomWidget::PixelValues VideoZoomWidget::pixelToValues(const QPoint &pixel)
 {
-    PixelValues values;
+    PixelValues values = {};
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     int imageOffset = iWidth * pixel.y() + pixel.x();
-    const uint8_t *pRgb = m_frame.get_image(mlt_image_rgb) + imageOffset * 3;
+    const uint8_t *pRgbBase = m_frame.get_image(mlt_image_rgb);
     const uint8_t *pYuv = m_frame.get_image(mlt_image_yuv420p);
+    if (!pRgbBase || !pYuv)
+        return values;
+    const uint8_t *pRgb = pRgbBase + imageOffset * 3;
     const uint8_t *pY = pYuv + imageOffset;
     const uint8_t *pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2))
                         + (pixel.x() / 2);

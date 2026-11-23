@@ -48,7 +48,9 @@ void VideoRgbWaveformScopeWidget::refreshScope(const QSize &size, bool full)
     int width = m_frame.get_image_width();
     int height = m_frame.get_image_height();
 
-    if (m_frame.is_valid() && width && height) {
+    const uint8_t *src = (m_frame.is_valid() && width && height) ? m_frame.get_image(mlt_image_rgb)
+                                                                 : nullptr;
+    if (src) {
         if (m_renderImg.width() != width) {
             m_renderImg = QImage(width, 256, QImage::QImage::Format_RGBX8888);
         }
@@ -56,7 +58,6 @@ void VideoRgbWaveformScopeWidget::refreshScope(const QSize &size, bool full)
         QColor bgColor(0, 0, 0, 0xff);
         m_renderImg.fill(bgColor);
 
-        const uint8_t *src = m_frame.get_image(mlt_image_rgb);
         uint8_t *dst = m_renderImg.scanLine(0);
 
         for (int y = 0; y < height; y++) {

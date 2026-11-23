@@ -65,6 +65,26 @@ DecklinkHdrPrimaries decklinkHdrPrimaries(int preset)
     return {0.7080, 0.2920, 0.1700, 0.7970, 0.1310, 0.0460, 0.3127, 0.3290};
 }
 
+QImage thumbnailFromPreview(QQuickWidget *widget, const QRectF &videoRect, int height)
+{
+    if (!widget || height < 1 || !videoRect.isValid())
+        return {};
+    const QImage framebuffer = widget->grabFramebuffer();
+    if (framebuffer.isNull())
+        return {};
+    // grabFramebuffer() is device pixels and leaves the image ratio at 1.
+    // m_rect is in logical pixels, so use the widget ratio, not the image's.
+    const qreal dpr = widget->devicePixelRatio() > 0 ? widget->devicePixelRatio() : 1;
+    const QRect crop(qRound(videoRect.x() * dpr),
+                     qRound(videoRect.y() * dpr),
+                     qRound(videoRect.width() * dpr),
+                     qRound(videoRect.height() * dpr));
+    const QRect visible = crop.intersected(framebuffer.rect());
+    if (visible.isEmpty())
+        return {};
+    return framebuffer.copy(visible).scaledToHeight(height, Qt::SmoothTransformation);
+}
+
 } // namespace
 
 VideoWidget::VideoWidget(QObject *parent)
@@ -257,18 +277,33 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
                                   ? m_sharedFrame
                                   : (m_frameRenderer ? m_frameRenderer->getDisplayFrame()
                                                      : SharedFrame());
-    // The displayed frame is a Vulkan image. Pulling RGBA here downloads it
-    // on the UI thread while the consumer queue may be waiting for this
-    // thread to signal the preview semaphore.
-    if (sourceFrame.is_valid() && !vulkanPreview()) {
-        constexpr int kDragThumbnailHeight = 45;
+    constexpr int kDragThumbnailHeight = 45;
+    QImage displayImage;
+    if (sourceFrame.is_valid() && vulkanPreview()) {
+        // The displayed frame is a Vulkan image. Pulling RGBA here downloads it
+        // on the UI thread while the consumer queue may be waiting for this
+        // thread to signal the preview semaphore. The picture is already drawn.
+        displayImage = thumbnailFromPreview(this, m_rect, kDragThumbnailHeight);
+    } else if (sourceFrame.is_valid()) {
         Mlt::Frame displayFrame(sourceFrame.clone(false, true));
-        QImage displayImage = MLT.image(&displayFrame,
-                                        kDragThumbnailHeight * MLT.profile().dar(),
-                                        kDragThumbnailHeight)
-                                  .scaledToHeight(kDragThumbnailHeight);
-        drag->setPixmap(QPixmap::fromImage(displayImage));
+        // Straight rgba64 to rgba leaves linear light in an 8-bit pixmap, which
+        // is black. A non-RGB request makes the color transform encode it first.
+        int transformSize = 0;
+        if (displayFrame.get_int("format") == mlt_image_rgba64
+            && mlt_image_color_trc_id(displayFrame.get("color_trc")) == mlt_color_trc_linear
+            && displayFrame.get_data("_color_transform", transformSize)) {
+            mlt_image_format yuv = mlt_image_yuv422;
+            int width = 0;
+            int height = 0;
+            displayFrame.get_image(yuv, width, height);
+        }
+        displayImage = MLT.image(&displayFrame,
+                                 kDragThumbnailHeight * MLT.profile().dar(),
+                                 kDragThumbnailHeight)
+                           .scaledToHeight(kDragThumbnailHeight);
     }
+    if (!displayImage.isNull())
+        drag->setPixmap(QPixmap::fromImage(displayImage));
     drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::CopyAction);
 }

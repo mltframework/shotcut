@@ -104,13 +104,14 @@ void VideoVectorScopeWidget::refreshScope(const QSize &size, bool full)
     int width = m_frame.get_image_width();
     int height = m_frame.get_image_height();
 
-    if (m_frame.is_valid() && width && height) {
+    const uint8_t *src = (m_frame.is_valid() && width && height)
+                             ? m_frame.get_image(mlt_image_yuv420p)
+                             : nullptr;
+    if (src) {
         if (m_renderImg.width() != 256) {
             m_renderImg = QImage(256, 256, QImage::Format_RGBX8888);
         }
         m_renderImg.fill(0);
-
-        const uint8_t *src = m_frame.get_image(mlt_image_yuv420p);
         const uint8_t *uSrc = src + (width * height);
         const uint8_t *vSrc = uSrc + (width * height / 4);
         uint8_t *dst = m_renderImg.scanLine(0);
