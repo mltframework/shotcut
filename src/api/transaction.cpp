@@ -57,9 +57,6 @@ void Transaction::begin(const QString &text, Origin origin)
         m_text = text;
         m_failed = false;
         m_failureReason.clear();
-        // Script callbacks can be empty or fail before editing; preserve redo in that case.
-        if (origin != Origin::Script)
-            openMacro();
         LOG_DEBUG() << "begin" << text << (m_auto ? "(auto)" : "");
         ++m_depth;
         emit opened(text);
@@ -86,15 +83,14 @@ Transaction::Result Transaction::end()
 
 void Transaction::touch(const QString &text)
 {
-    if (m_depth > 0) {
-        if (!m_macro)
-            openMacro();
-        return;
+    if (m_depth == 0) {
+        m_auto = true;
+        m_autoCloseDue = false;
+        begin(text);
+        QTimer::singleShot(0, this, &Transaction::onAutoCloseDue);
     }
-    m_auto = true;
-    m_autoCloseDue = false;
-    begin(text);
-    QTimer::singleShot(0, this, &Transaction::onAutoCloseDue);
+    if (!m_macro)
+        openMacro();
 }
 
 void Transaction::fail(const QString &reason)

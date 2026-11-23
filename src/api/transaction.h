@@ -29,9 +29,9 @@ namespace Api {
 
 // Groups all undo commands pushed by API calls into a single undo entry.
 //
-// Transactions nest; only the outermost begin()/end() pair opens and closes
-// the QUndoStack macro. A failure anywhere in the nest rolls back the whole
-// transaction when the outermost level ends, leaving no undo or redo entry.
+// Transactions nest; touch() opens the QUndoStack macro on the first edit and
+// the outermost end() closes it. A failure anywhere in the nest rolls back the
+// whole transaction when the outermost level ends, leaving no undo or redo entry.
 //
 // touch() starts an "auto" transaction if none is open. It closes when control
 // returns to the event loop, so a burst of synchronous calls (e.g., one QML

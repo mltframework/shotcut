@@ -190,6 +190,74 @@ private slots:
         QCOMPARE(stack.count(), 0);
     }
 
+    void untouchedTransactionPreservesRedo_data()
+    {
+        QTest::addColumn<bool>("script");
+        QTest::addColumn<bool>("fail");
+        QTest::newRow("coproducer-empty") << false << false;
+        QTest::newRow("coproducer-failed") << false << true;
+        QTest::newRow("script-empty") << true << false;
+        QTest::newRow("script-failed") << true << true;
+    }
+
+    void untouchedTransactionPreservesRedo()
+    {
+        QFETCH(bool, script);
+        QFETCH(bool, fail);
+        QWidget window;
+        EditTransactionDialog dialog(&window);
+        auto &transaction = Transaction::singleton();
+        QUndoStack stack;
+        int value = 0;
+        bool blockedDuringUndo = false;
+        stack.push(new ModalUndoCommand(value, dialog, blockedDuringUndo));
+        stack.undo();
+        transaction.setUndoStack(&stack);
+        transaction.begin("Untouched",
+                          script ? Transaction::Origin::Script : Transaction::Origin::Coproducer);
+        const bool redoAvailableDuringTransaction = stack.canRedo();
+        if (fail)
+            transaction.fail("Invalid operation");
+        const auto result = transaction.end();
+        transaction.setUndoStack(nullptr);
+        const bool redoAvailableAfterTransaction = stack.canRedo();
+        stack.redo();
+        QVERIFY(redoAvailableDuringTransaction);
+        QVERIFY(redoAvailableAfterTransaction);
+        QCOMPARE(result, fail ? Transaction::Result::RolledBack : Transaction::Result::Empty);
+        QCOMPARE(value, 1);
+        QCOMPARE(stack.count(), 1);
+    }
+
+    void autoTransactionGroupsEdits()
+    {
+        QWidget window;
+        EditTransactionDialog dialog(&window);
+        auto &transaction = Transaction::singleton();
+        QUndoStack stack;
+        int value = 0;
+        bool blockedDuringUndo = false;
+        transaction.setUndoStack(&stack);
+        transaction.enterCall();
+        transaction.touch("Auto edit");
+        stack.push(new ModalUndoCommand(value, dialog, blockedDuringUndo));
+        transaction.touch();
+        stack.push(new ModalUndoCommand(value, dialog, blockedDuringUndo));
+        transaction.leaveCall();
+        QCoreApplication::processEvents();
+        const bool closed = !transaction.isOpen();
+        if (!closed)
+            transaction.end();
+        transaction.setUndoStack(nullptr);
+        const int commandCount = stack.count();
+        const int childCount = stack.command(0)->childCount();
+        stack.undo();
+        QVERIFY(closed);
+        QCOMPARE(commandCount, 1);
+        QCOMPARE(childCount, 2);
+        QCOMPARE(value, 0);
+    }
+
     void blocksWithoutProcessingEvents()
     {
         QWidget window;
