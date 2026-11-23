@@ -79,6 +79,13 @@ static bool isHardwareEncoder(const QString &vcodec)
            || vcodec.endsWith("_videotoolbox");
 }
 
+// Separate from isHardwareEncoder(). Those codecs still take a CPU frame.
+// Only a *_vulkan encoder can accept mlt_image_format=vulkan.
+static bool isVulkanEncoder(const QString &vcodec)
+{
+    return vcodec.endsWith("_vulkan");
+}
+
 EncodeDock::EncodeDock(QWidget *parent)
     : QDockWidget(parent)
     , ui(new Ui::EncodeDock)
@@ -1346,7 +1353,9 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
             }
         }
         if (processingMode == ShotcutSettings::Linear16GpuCpu) {
-            node.setAttribute("mlt_image_format", "vulkan");
+            // A software encoder cannot take a Vulkan frame. rgba64 is the linear download.
+            const QString vcodec = QString::fromLatin1(p->get("vcodec"));
+            node.setAttribute("mlt_image_format", isVulkanEncoder(vcodec) ? "vulkan" : "rgba64");
             node.setAttribute("mlt_color_trc", "linear");
         }
     }

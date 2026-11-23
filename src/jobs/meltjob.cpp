@@ -42,6 +42,7 @@ MeltJob::MeltJob(const QString &name,
     , m_previousPercent(0)
     , m_currentFrame(0)
     , m_useMultiConsumer(false)
+    , m_attachPlacebo(false)
 {
     setTarget(name);
     if (!xml.isEmpty()) {
@@ -132,6 +133,15 @@ void MeltJob::start()
     args << "-verbose";
     args << "-progress2";
     args << "-abort";
+    // melt publishes the shared Vulkan device when any argument starts with
+    // "placebo.". A clip-only XML has no placebo service, so the avformat
+    // producer would open before a device exists. "-attach" is parsed before
+    // the producer; a later one still appends the producer as a cut and the
+    // XML consumer is no longer attached to it. "placebo." is not a filter.
+    if (m_attachPlacebo) {
+        args << QStringLiteral("-attach");
+        args << QStringLiteral("placebo.");
+    }
     if (!m_xml.isNull()) {
         if (m_useMultiConsumer) {
             args << "xml:" + QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
@@ -194,6 +204,11 @@ void MeltJob::setIsStreaming(bool streaming)
 void MeltJob::setUseMultiConsumer(bool multi)
 {
     m_useMultiConsumer = multi;
+}
+
+void MeltJob::setAttachPlacebo(bool attach)
+{
+    m_attachPlacebo = attach;
 }
 
 void MeltJob::setInAndOut(int in, int out)

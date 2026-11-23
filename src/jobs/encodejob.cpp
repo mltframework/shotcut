@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,9 @@ EncodeJob::EncodeJob(const QString &name,
                      QThread::Priority priority)
     : MeltJob(name, xml, frameRateNum, frameRateDen, priority)
 {
+    if (Settings.processingMode() == ShotcutSettings::Linear16GpuCpu)
+        setAttachPlacebo();
+
     QAction *action = new QAction(tr("Open"), this);
     action->setData("Open");
     action->setToolTip(tr("Open the output file in the Shotcut player"));
