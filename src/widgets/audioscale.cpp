@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "iecscale.h"
 
 #include <QFont>
+#include <QMouseEvent>
 #include <QPainter>
 
 AudioScale::AudioScale(QWidget *parent)
@@ -33,6 +34,7 @@ AudioScale::AudioScale(QWidget *parent)
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setMinimumWidth(fontMetrics().horizontalAdvance("-60"));
     setFocusPolicy(Qt::NoFocus);
+    setCursor(Qt::PointingHandCursor);
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50;
 }
 
@@ -41,16 +43,39 @@ void AudioScale::paintEvent(QPaintEvent *)
     QPainter p(this);
     const int h = IEC_Scale(-dbscale[0]) * height() - 2;
     foreach (int i, dbscale) {
+        if (i == dbscale[0])
+            continue;
+        const QString text = QString::asprintf("%d", i);
         if (height() > width()) {
-            if (i != dbscale[0]) {
-                double xf = IEC_Scale(i) * h;
-                QString s = QString::asprintf("%d", i);
-                p.drawText(width() - fontMetrics().horizontalAdvance(s), height() - xf - 1, s);
-            }
+            const double xf = IEC_Scale(i) * h;
+            const int x = width() - fontMetrics().horizontalAdvance(text);
+            p.drawText(x, height() - xf - 1, text);
         } else {
             double xf = IEC_Scale(i) * (double) width();
-            p.drawText(xf * 40.0 / 42.0 - 10, height() - 2, QString::asprintf("%d", i));
+            p.drawText(xf * 40.0 / 42.0 - 10, height() - 2, text);
         }
     }
     p.end();
+}
+
+void AudioScale::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton && height() > width()) {
+        const int h = IEC_Scale(-dbscale[0]) * height() - 2;
+        for (int i : dbscale) {
+            if (i == dbscale[0])
+                continue;
+            const QString text = QString::asprintf("%d", i);
+            const int textWidth = fontMetrics().horizontalAdvance(text);
+            const int x = width() - textWidth;
+            const int y = qRound(height() - IEC_Scale(i) * h - 1);
+            const QRect labelRect(x, y - fontMetrics().ascent(), textWidth, fontMetrics().height());
+            if (labelRect.contains(event->pos())) {
+                emit volumeSelected(IEC_Scale(i));
+                event->accept();
+                return;
+            }
+        }
+    }
+    QWidget::mousePressEvent(event);
 }

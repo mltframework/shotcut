@@ -34,7 +34,7 @@
 
 #include <limits>
 
-#define VOLUME_KNEE (88)
+#define VOLUME_KNEE (880)
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
 
@@ -144,15 +144,26 @@ Player::Player(QWidget *parent)
     QBoxLayout *volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setSpacing(0);
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
-    volumeLayoutH->addWidget(new AudioScale);
+    AudioScale *dbScale = new AudioScale;
+    volumeLayoutH->addWidget(dbScale);
     m_volumeSlider = new QSlider(Qt::Vertical);
     m_volumeSlider->setFocusPolicy(Qt::NoFocus);
     m_volumeSlider->setMinimumHeight(VOLUME_SLIDER_HEIGHT);
     m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_volumeSlider->setSingleStep(10);
+    m_volumeSlider->setPageStep(100);
     volumeLayoutH->addWidget(m_volumeSlider);
+    const auto setVolumeFromScale = [this](double gain) {
+        const int volume = qRound(gain * VOLUME_KNEE);
+        if (volume == m_volumeSlider->value())
+            onVolumeChanged(volume);
+        else
+            m_volumeSlider->setValue(volume);
+    };
+    connect(dbScale, &AudioScale::volumeSelected, this, setVolumeFromScale);
     volumeLayoutV->addLayout(volumeLayoutH);
-    m_volumeSlider->setRange(0, 99);
-    m_volumeSlider->setValue(Settings.playerVolume());
+    m_volumeSlider->setRange(0, 990);
+    m_volumeSlider->setValue(qRound(Settings.playerVolume() * 10));
     setVolume(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
@@ -1391,7 +1402,7 @@ void Player::onVolumeChanged(int volume)
 {
     const double gain = setVolume(volume);
     emit showStatusMessage(QStringLiteral("%L1 dB").arg(IEC_dB(gain)));
-    Settings.setPlayerVolume(volume);
+    Settings.setPlayerVolume(volume / 10.0);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
     m_volumeButton->setIcon(

@@ -872,14 +872,14 @@ void ShotcutSettings::setPlayerScrubAudio(bool b)
     settings.setValue("player/scrubAudio", b);
 }
 
-int ShotcutSettings::playerVolume() const
+double ShotcutSettings::playerVolume() const
 {
-    return settings.value("player/volume", 88).toInt();
+    return settings.value("player/volume", 88).toDouble();
 }
 
-void ShotcutSettings::setPlayerVolume(int i)
+void ShotcutSettings::setPlayerVolume(double volume)
 {
-    settings.setValue("player/volume", i);
+    settings.setValue("player/volume", volume);
 }
 
 float ShotcutSettings::playerZoom() const

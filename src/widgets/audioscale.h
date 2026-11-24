@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,20 @@
 
 #include <QWidget>
 
+class QMouseEvent;
+
 class AudioScale : public QWidget
 {
     Q_OBJECT
 public:
     explicit AudioScale(QWidget *parent = 0);
 
+signals:
+    void volumeSelected(double gain);
+
 protected:
     void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
     QVector<int> dbscale;

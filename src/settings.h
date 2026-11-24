@@ -195,8 +195,8 @@ public:
     void setPlayerRealtime(bool);
     bool playerScrubAudio() const;
     void setPlayerScrubAudio(bool);
-    int playerVolume() const;
-    void setPlayerVolume(int);
+    double playerVolume() const;
+    void setPlayerVolume(double);
     float playerZoom() const;
     void setPlayerZoom(float);
     int playerPreviewScale() const;
