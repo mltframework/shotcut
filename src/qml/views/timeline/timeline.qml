@@ -742,10 +742,18 @@ Rectangle {
 
                 visible: timeline.position > -1
                 color: application.playheadColor
-                width: 1
+                width: root.snapToDevicePixel(1)
                 height: root.height - horizontalScrollBar.height
                 x: root.snapToDevicePixel(timeline.position * multitrack.scaleFactor - tracksFlickable.contentX)
                 y: 0
+
+                Rectangle {
+                    width: root.snapToDevicePixel(0.5)
+                    height: parent.height
+                    color: "black"
+                    x: parent.width
+                    opacity: 0.5
+                }
             }
 
             Shotcut.TimelinePlayhead {
