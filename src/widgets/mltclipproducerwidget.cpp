@@ -227,11 +227,12 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     if (mismatch) {
         QIcon icon = QIcon(":/icons/oxygen/32x32/status/task-attempt.png");
         m_errorIcon->setPixmap(icon.pixmap(QSize(24, 24)));
-        m_errorText->setText(tr("Subclip profile does not match project profile.\nThis may provide "
-                                "unexpected results"));
+        m_errorText->setText(
+            tr("Nested project Video Mode does not match project Video Mode.\nThis may provide "
+               "unexpected results"));
     } else {
         QIcon icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
         m_errorIcon->setPixmap(icon.pixmap(QSize(24, 24)));
-        m_errorText->setText(tr("Subclip profile matches project profile."));
+        m_errorText->setText(tr("Nested project Video Mode matches project Video Mode."));
     }
 }

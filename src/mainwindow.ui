@@ -873,10 +873,10 @@
   </action>
   <action name="actionOpenXML">
    <property name="text">
-    <string>Open MLT XML As Clip...</string>
+    <string>Open MLT Project As Clip (Nested)...</string>
    </property>
    <property name="toolTip">
-    <string>Open a MLT XML project file as a virtual clip</string>
+    <string>Open a MLT XML project file as a nested project clip</string>
    </property>
   </action>
   <action name="actionScrubAudio">
