@@ -1018,11 +1018,6 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Lift"), this);
     action->setShortcut(QKeySequence(Qt::Key_Z));
-    QList<QKeySequence> liftShortcuts;
-    liftShortcuts << QKeySequence(Qt::Key_Z);
-    liftShortcuts << QKeySequence(Qt::Key_Backspace);
-    liftShortcuts << QKeySequence(Qt::Key_Delete);
-    action->setShortcuts(liftShortcuts);
     icon = QIcon::fromTheme("lift", QIcon(":/icons/oxygen/32x32/actions/lift.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
@@ -1033,6 +1028,14 @@ void TimelineDock::setupActions()
         liftSelection();
     });
     Actions.add("timelineLiftAction", action);
+    action = new QAction(action->text(), this);
+    QList<QKeySequence> liftShortcuts;
+    liftShortcuts << QKeySequence(Qt::Key_Backspace);
+    liftShortcuts << QKeySequence(Qt::Key_Delete);
+    action->setShortcuts(liftShortcuts);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+    addAction(action);
+    connect(action, &QAction::triggered, Actions["timelineLiftAction"], &QAction::trigger);
 
     action = new QAction(tr("Overwrite"), this);
     action->setShortcut(QKeySequence(Qt::Key_B));
