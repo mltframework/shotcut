@@ -37,10 +37,14 @@ Rectangle {
         filterConfig.source = "";
     }
 
-    function setCurrentFilter(index) {
-        clearCurrentFilter();
+    function setCurrentFilterIndex(index) {
         attachedFilters.setCurrentFilter(index);
         selectedIndex = index;
+    }
+
+    function setCurrentFilter(index) {
+        clearCurrentFilter();
+        setCurrentFilterIndex(index);
         filterConfig.source = metadata ? metadata.qmlFilePath : "";
     }
 

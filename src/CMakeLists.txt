@@ -5,6 +5,22 @@ option(SHOTCUT_ENABLE_LLAMA_SERVER "Enable the llama-server local model provider
 add_executable(shotcut WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
+  api/apicatalog.cpp api/apicatalog.h
+  api/apidocs.cpp api/apidocs.h
+  api/apifilters.cpp api/apifilters.h
+  api/apiinvoker.cpp api/apiinvoker.h
+  api/apijobs.cpp api/apijobs.h
+  api/apimarkers.cpp api/apimarkers.h
+  api/apiobject.cpp api/apiobject.h
+  api/apiplayer.cpp api/apiplayer.h
+  api/apiplaylist.cpp api/apiplaylist.h
+  api/apiproject.cpp api/apiproject.h
+  api/apitimeline.cpp api/apitimeline.h
+  api/apiundo.cpp api/apiundo.h
+  api/apiutil.cpp api/apiutil.h
+  api/filteranimation.cpp api/filteranimation.h
+  api/shotcutapi.cpp api/shotcutapi.h
+  api/transaction.cpp api/transaction.h
   autosavefile.cpp autosavefile.h
   commands/filtercommands.cpp commands/filtercommands.h
   commands/markercommands.cpp commands/markercommands.h
@@ -18,9 +34,10 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   coproducer/openaicompatibleprovider.cpp coproducer/openaicompatibleprovider.h
   mcp/forumsearch.cpp mcp/forumsearch.h
   mcp/httpserver.cpp mcp/httpserver.h
+  mcp/mcpbridge.cpp mcp/mcpbridge.h
   mcp/mcpclient.cpp mcp/mcpclient.h
+  mcp/mcpedittool.cpp mcp/mcpedittool.h
   mcp/mcpserver.cpp mcp/mcpserver.h
-  mcp/projectinspector.cpp mcp/projectinspector.h
   mcp/shotcuttools.cpp mcp/shotcuttools.h
   mcp/tooldefinition.h
   mcp/toolregistry.cpp mcp/toolregistry.h
@@ -43,6 +60,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/durationdialog.cpp dialogs/durationdialog.h
   dialogs/durationdialog.ui
   dialogs/editmarkerdialog.cpp dialogs/editmarkerdialog.h
+  dialogs/edittransactiondialog.cpp dialogs/edittransactiondialog.h
   dialogs/filedatedialog.cpp dialogs/filedatedialog.h
   dialogs/filedownloaddialog.cpp dialogs/filedownloaddialog.h
   dialogs/listselectiondialog.cpp dialogs/listselectiondialog.h
@@ -83,6 +101,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/scopedock.cpp docks/scopedock.h
   docks/subtitlesdock.cpp docks/subtitlesdock.h
   docks/timelinedock.cpp docks/timelinedock.h
+  exportpreset.cpp exportpreset.h
   FlatpakWrapperGenerator.cpp FlatpakWrapperGenerator.h
   gpuinfo.cpp gpuinfo.h
   htmlgenerator.h htmlgenerator.cpp
@@ -91,6 +110,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/bitrateviewerjob.h jobs/bitrateviewerjob.cpp
   jobs/dockerpulljob.h jobs/dockerpulljob.cpp
   jobs/encodejob.cpp jobs/encodejob.h
+  jobs/exportjobbuilder.cpp jobs/exportjobbuilder.h
   jobs/ffmpegjob.cpp jobs/ffmpegjob.h
   jobs/ffprobejob.cpp jobs/ffprobejob.h
   jobs/gopro2gpxjob.cpp jobs/gopro2gpxjob.h
@@ -385,7 +405,8 @@ if(WIN32)
     install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   endif()
 
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/ PATTERN "scripts" EXCLUDE)
+  install(DIRECTORY qml/scripts/ DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/scripts)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/resources DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
@@ -418,7 +439,8 @@ if(APPLE)
   endif()
 
   install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/ PATTERN "scripts" EXCLUDE)
+  install(DIRECTORY qml/scripts/ DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/scripts)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
@@ -430,9 +452,11 @@ if(UNIX AND NOT APPLE)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_BINARY_DIR}/share/shotcut/filter-sets SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_BINARY_DIR}/share/shotcut/voices SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/elements ${CMAKE_BINARY_DIR}/share/shotcut/elements SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml/scripts ${CMAKE_BINARY_DIR}/share/shotcut/scripts SYMBOLIC)
   include(GNUInstallDirs)
   install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/ PATTERN "scripts" EXCLUDE)
+  install(DIRECTORY qml/scripts/ DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/scripts)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/elements DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)

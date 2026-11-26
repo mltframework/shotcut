@@ -26,13 +26,8 @@
 namespace Shotcut {
 namespace Mcp {
 
-QJsonObject shotcutProjectInspectTool(const QJsonObject &arguments);
-QJsonObject shotcutTimelineSummaryTool(const QJsonObject &arguments);
-
-ToolDefinition makeProjectInspectTool();
 ToolDefinition makeForumSearchTool();
 ToolDefinition makeDocumentationSearchTool();
-ToolDefinition makeTimelineSummaryTool();
 ToolRegistry createShotcutToolRegistry();
 
 } // namespace Mcp

@@ -36,6 +36,7 @@
 #include <QGuiApplication>
 #include <QIODevice>
 #include <QTemporaryFile>
+#include <QTimer>
 #include <QtXml>
 
 /*!
@@ -1503,8 +1504,11 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
-    if (isSuccess) {
-        QString results = resultsFromXml(fileName);
+    QString error;
+    if (isSuccess && job->status() != "canceled") {
+        QString results = resultsFromXml(fileName, error);
+        if (!error.isEmpty())
+            results.clear();
         if (!results.isEmpty()) {
             // look for filters by UUID in each pending export job.
             foreach (AbstractJob *job, JOBS.jobs()) {
@@ -1534,26 +1538,45 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
                     updateFilter(filter, results);
             }
             emit MAIN.filterController()->attachedModel()->changed();
+            job->setProperty("analysisState", "applied");
         }
-    } else if (!job->property("filename").isNull()) {
-        QFile file(job->property("filename").toString());
-        if (file.exists() && file.size() == 0)
-            file.remove();
+    } else {
+        job->setProperty("analysisState", job->status() == "canceled" ? "canceled" : "failed");
+        if (job->status() != "canceled")
+            error = job->failureMessage().isEmpty() ? tr("Filter analysis process failed.")
+                                                    : job->failureMessage();
+        const auto filename = job->property("analysisFilename").isValid()
+                                  ? job->property("analysisFilename").toString()
+                                  : job->property("filename").toString();
+        QFile file(filename);
+        if (!filename.isEmpty() && file.exists() && file.size() == 0 && !file.remove())
+            LOG_WARNING() << "Cannot remove empty analysis output:" << file.errorString();
+    }
+    if (!error.isEmpty()) {
+        job->setProperty("analysisState", "failed");
+        job->setProperty("analysisError", error);
+        job->appendToLog(error);
+        LOG_WARNING() << error;
     }
     QFile::remove(fileName);
     deleteLater();
 }
 
-QString AnalyzeDelegate::resultsFromXml(const QString &fileName)
+QString AnalyzeDelegate::resultsFromXml(const QString &fileName, QString &error)
 {
     // parse the xml
+    error.clear();
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
-        LOG_ERROR() << "Failed to open job XML for reading" << fileName;
-        return QString();
+        error = tr("Cannot read analysis results: %1").arg(file.errorString());
+        return {};
     }
     QDomDocument dom(fileName);
-    dom.setContent(&file);
+    const auto parsed = dom.setContent(&file);
+    if (!parsed) {
+        error = tr("Invalid analysis results XML: %1").arg(parsed.errorMessage);
+        return {};
+    }
     file.close();
 
     QDomNodeList filters = dom.elementsByTagName("filter");
@@ -1573,14 +1596,16 @@ QString AnalyzeDelegate::resultsFromXml(const QString &fileName)
         if (found) {
             for (int j = 0; j < properties.size(); j++) {
                 QDomNode propertyNode = properties.at(j);
-                if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
+                if (propertyNode.attributes().namedItem("name").toAttr().value() == "results"
+                    && !propertyNode.toElement().text().isEmpty()) {
                     return propertyNode.toElement().text();
                 }
             }
             break;
         }
     }
-    return QString();
+    error = tr("The analysis job produced no results for this filter.");
+    return {};
 }
 
 void AnalyzeDelegate::updateFilter(Mlt::Filter &filter, const QString &results)

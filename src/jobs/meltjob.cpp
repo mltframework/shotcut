@@ -36,12 +36,14 @@ MeltJob::MeltJob(const QString &name,
                  const QString &xml,
                  int frameRateNum,
                  int frameRateDen,
-                 QThread::Priority priority)
+                 QThread::Priority priority,
+                 bool useHardwareDecoder)
     : AbstractJob(name, priority)
     , m_isStreaming(false)
     , m_previousPercent(0)
     , m_currentFrame(0)
     , m_useMultiConsumer(false)
+    , m_useHardwareDecoder(useHardwareDecoder)
 {
     setTarget(name);
     if (!xml.isEmpty()) {
@@ -149,7 +151,9 @@ void MeltJob::start()
         args << QStringLiteral("out=%1").arg(m_out);
     }
     LOG_DEBUG() << meltPath.absoluteFilePath() + " " + args.join(' ');
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QProcessEnvironment env = processEnvironment();
+    if (env.isEmpty())
+        env = QProcessEnvironment::systemEnvironment();
 #ifndef Q_OS_MAC
     // These environment variables fix rich text rendering for high DPI
     // fractional or otherwise.
@@ -163,7 +167,7 @@ void MeltJob::start()
     if (!Settings.playerGPU())
         env.insert("QT_QPA_PLATFORM", "offscreen");
 #endif
-    if (!Settings.encodeHardwareDecoder()) {
+    if (!m_useHardwareDecoder) {
         env.remove("MLT_AVFORMAT_HWACCEL");
     }
     env.remove("MLT_AVFORMAT_HWACCEL_PPS");

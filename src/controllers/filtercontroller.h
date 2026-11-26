@@ -50,6 +50,7 @@ public:
     QmlFilter *currentFilter() const { return m_currentFilter.data(); }
     bool isOutputTrackSelected() const;
     void onUndoOrRedo(Mlt::Service &service);
+    void onFilterEdited(Mlt::Service &service, const QStringList &properties);
     int currentIndex() const { return m_currentFilterIndex; }
     void addOrEditFilter(Mlt::Filter *filter, const QStringList &key_properties);
     void setTrackTransitionService(const QString &service);

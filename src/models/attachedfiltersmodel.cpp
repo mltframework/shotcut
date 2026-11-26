@@ -361,8 +361,11 @@ bool AttachedFiltersModel::setData(const QModelIndex &index, const QVariant &, i
         if (isSourceClip()) {
             doSetDisabled(*m_producer.data(), index.row(), !disabled);
         } else {
-            MAIN.undoStack()->push(
-                new Filter::DisableCommand(*this, name(index.row()), index.row(), !disabled));
+            MAIN.undoStack()->push(new Filter::DisableCommand(*this,
+                                                              *m_producer,
+                                                              name(index.row()),
+                                                              index.row(),
+                                                              !disabled));
         }
     } else {
         LOG_ERROR() << "Invalid filter index" << index.row();
@@ -488,7 +491,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent,
         doMoveService(*m_producer, sourceRow, destinationRow);
     } else {
         MAIN.undoStack()->push(
-            new Filter::MoveCommand(*this, name(sourceRow), sourceRow, destinationRow));
+            new Filter::MoveCommand(*this, *m_producer, name(sourceRow), sourceRow, destinationRow));
     }
 
     return true;
@@ -594,7 +597,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
                 doAddService(*m_producer, filter, insertRow);
             } else {
                 MAIN.undoStack()->push(
-                    new Filter::AddCommand(*this, meta->name(), filter, insertRow));
+                    new Filter::AddCommand(*this, *m_producer, meta->name(), filter, insertRow));
             }
         }
     } break;
@@ -625,7 +628,8 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             if (isSourceClip()) {
                 doAddService(*m_producer, link, insertRow);
             } else {
-                MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), link, insertRow));
+                MAIN.undoStack()->push(
+                    new Filter::AddCommand(*this, *m_producer, meta->name(), link, insertRow));
             }
         }
     } break;
@@ -656,8 +660,12 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
                     if (i == filterSetProducer.filter_count() - 1) {
                         type = Filter::AddCommand::AddSetLast;
                     }
-                    MAIN.undoStack()->push(
-                        new Filter::AddCommand(*this, meta->name(), *filter, insertRow, type));
+                    MAIN.undoStack()->push(new Filter::AddCommand(*this,
+                                                                  *m_producer,
+                                                                  meta->name(),
+                                                                  *filter,
+                                                                  insertRow,
+                                                                  type));
                 }
             }
             delete filter;
@@ -704,7 +712,8 @@ int AttachedFiltersModel::addService(Mlt::Service *service)
         if (isSourceClip()) {
             doAddService(*m_producer, filter, insertRow);
         } else {
-            MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), filter, insertRow));
+            MAIN.undoStack()->push(
+                new Filter::AddCommand(*this, *m_producer, meta->name(), filter, insertRow));
         }
     }
     return insertRow;
@@ -798,11 +807,13 @@ void AttachedFiltersModel::remove(int row)
         if (linkIndex >= 0) {
             Mlt::Chain chain(*(m_producer.get()));
             Mlt::Link *link = chain.link(linkIndex);
-            MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), *link, row));
+            MAIN.undoStack()->push(
+                new Filter::RemoveCommand(*this, *m_producer, name(row), *link, row));
             delete link;
         } else if (mltIndex >= 0) {
             QScopedPointer<Mlt::Filter> removeFilter(m_producer->filter(mltIndex));
-            MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), *removeFilter, row));
+            MAIN.undoStack()->push(
+                new Filter::RemoveCommand(*this, *m_producer, name(row), *removeFilter, row));
         }
     }
 }
@@ -963,12 +974,29 @@ Mlt::Producer AttachedFiltersModel::getFilterSetProducer(QmlMetadata *meta)
 
 int AttachedFiltersModel::findInsertRow(QmlMetadata *meta)
 {
+    return findInsertRow(*m_producer, meta);
+}
+
+int AttachedFiltersModel::serviceCount(Mlt::Producer &producer) const
+{
+    int count = userLinkCount(&producer);
+    for (int i = 0; i < producer.filter_count(); ++i) {
+        QScopedPointer<Mlt::Filter> filter(producer.filter(i));
+        if (Util::isUserFilter(filter.data()))
+            ++count;
+    }
+    return count;
+}
+
+int AttachedFiltersModel::findInsertRow(Mlt::Producer &producer, QmlMetadata *meta)
+{
     // Put the filter after the last filter that is less than or equal in sort order.
     int insertRow = 0;
-    for (int i = m_metaList.count() - 1; i >= 0; i--) {
-        if (isTrackVolumeFilter(i))
+    for (int i = serviceCount(producer) - 1; i >= 0; i--) {
+        auto service = doGetService(producer, i);
+        if (service.get(kShotcutTrackVolumeProperty))
             continue;
-        if (sortOrder(m_metaList[i]) <= sortOrder(meta)) {
+        if (sortOrder(MAIN.filterController()->metadataForService(&service)) <= sortOrder(meta)) {
             insertRow = i + 1;
             break;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@ public:
               const QString &xml,
               int frameRateNum,
               int frameRateDen,
-              const QThread::Priority priority);
+              const QThread::Priority priority,
+              bool useHardwareDecoder);
 
 private slots:
     void onVideoQualityTriggered();
