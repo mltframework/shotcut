@@ -344,9 +344,13 @@ static ProxyPiece vulkanPiece(const ProxyVideoRequest &request, const ColorTags 
     piece.beforeInput << QStringLiteral("-hwaccel") << QStringLiteral("vulkan");
     piece.beforeInput << QStringLiteral("-hwaccel_output_format") << QStringLiteral("vulkan");
     piece.beforeInput << QStringLiteral("-hwaccel_device") << QStringLiteral("vk");
-    piece.filter = QStringLiteral("scale_vulkan=w=-2:h=%1:format=nv12,%2")
-                       .arg(request.resolution)
-                       .arg(setparamsFilter(tags, request.fullRange));
+    // Same role as yadif=deint=interlaced: progressive frames pass through,
+    // and frames marked interlaced are deinterlaced before the scale.
+    if (request.scanMode == kProxyScanAutomatic)
+        piece.filter = QStringLiteral("bwdif_vulkan=deint=interlaced,");
+    piece.filter += QStringLiteral("scale_vulkan=w=-2:h=%1:format=nv12,%2")
+                        .arg(request.resolution)
+                        .arg(setparamsFilter(tags, request.fullRange));
     piece.tail = containerAndAudio(request);
     piece.tail << h264VulkanEncoder(true);
     return piece;

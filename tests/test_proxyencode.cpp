@@ -474,6 +474,8 @@ private slots:
         request.hardwareCodecs = {QStringLiteral("h264_vaapi")};
 
         const ProxyVideoCommand command = buildProxyVideoCommand(request);
+        QVERIFY(videoFilter(command.args)
+                    .startsWith(QStringLiteral("bwdif_vulkan=deint=interlaced,scale_vulkan=")));
         QVERIFY(!videoFilter(command.args).contains(QStringLiteral("yadif")));
         QVERIFY(!videoFilter(command.args).contains(QStringLiteral("hwdownload")));
         const QString fallbackFilter = videoFilter(command.fallbackArgs);
