@@ -1786,6 +1786,8 @@ void MainWindow::setupSettingsMenu()
     ui->actionUseProxy->setChecked(Settings.proxyEnabled());
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
+    // Hide this always, but temporarily in case we change our mind.
+    ui->actionProxyConfigureHardware->setVisible(false);
 
     // Initialize the preview scaling submenu
 #if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))

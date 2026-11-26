@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,8 @@ public:
               QThread::Priority priority = Settings.jobPriority());
     virtual ~FfmpegJob();
     void start();
+    // Used when the first command fails. Retried once, without changing the output file.
+    void setFallbackArgs(const QStringList &args);
 
 public slots:
     virtual void stop();
@@ -40,11 +42,16 @@ private slots:
     void onOpenTriggered();
     void onReadyRead();
 
+protected slots:
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
+
 private:
     QStringList m_args;
+    QStringList m_fallbackArgs;
     double m_duration;
     int m_previousPercent;
     bool m_isOpenLog;
+    bool m_triedFallback;
 };
 
 #endif // FFMPEGJOB_H

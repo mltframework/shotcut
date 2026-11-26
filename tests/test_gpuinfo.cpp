@@ -90,6 +90,19 @@ private slots:
                  QString("hevc_nvenc"));
     }
 
+    void selectsVulkanEncoders()
+    {
+        QCOMPARE(preferredHardwareVcodec(QStringList{"h264_vulkan"}, "libx264", 0u, false),
+                 QString("h264_vulkan"));
+        QCOMPARE(preferredHardwareVcodec(QStringList{"hevc_vulkan"}, "libx265", 0u, false),
+                 QString("hevc_vulkan"));
+        QCOMPARE(preferredHardwareVcodec(QStringList{"av1_vulkan"}, "libsvtav1", 0u, false),
+                 QString("av1_vulkan"));
+        // Detection lists VA-API before Vulkan, and the first match is used.
+        const QStringList hw{"h264_vaapi", "h264_vulkan"};
+        QCOMPARE(preferredHardwareVcodec(hw, "libx264", 0u, false), QString("h264_vaapi"));
+    }
+
     void returnsEmptyWhenNoneCompatible()
     {
         const QStringList hw{"h264_nvenc", "hevc_nvenc"};

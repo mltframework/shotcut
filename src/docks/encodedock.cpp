@@ -2645,6 +2645,9 @@ static QStringList codecs()
     codecs << "h264_vaapi";
     codecs << "hevc_vaapi";
     codecs << "av1_vaapi";
+    codecs << "h264_vulkan";
+    codecs << "hevc_vulkan";
+    codecs << "av1_vulkan";
 #endif
     return codecs;
 }
@@ -2809,6 +2812,13 @@ bool EncodeDock::detectHardwareEncoders()
                  << "vaapi=vaapi0:"
                  << "-filter_hw_device"
                  << "vaapi0"
+                 << "-vf"
+                 << "format=nv12,hwupload";
+        else if (codec.endsWith("_vulkan"))
+            args << "-init_hw_device"
+                 << "vulkan=vk:0"
+                 << "-filter_hw_device"
+                 << "vk"
                  << "-vf"
                  << "format=nv12,hwupload";
         else if (codec == "hevc_qsv")

@@ -23,6 +23,7 @@
 #include "jobs/ffmpegjob.h"
 #include "jobs/qimagejob.h"
 #include "mltcontroller.h"
+#include "proxyencode.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
@@ -47,6 +48,15 @@ static constexpr char kProxyImageExtension[] = ".jpg";
 static constexpr char kProxyPendingImageExtension[] = ".pending.jpg";
 static constexpr float kProxyResolutionRatio = 1.3f;
 static constexpr int kFallbackProxyResolution = 540;
+
+static_assert(static_cast<int>(ProxyManager::Automatic) == kProxyScanAutomatic, "scan mode");
+static_assert(static_cast<int>(ProxyManager::Progressive) == kProxyScanProgressive, "scan mode");
+static_assert(static_cast<int>(ProxyManager::InterlacedTopFieldFirst) == kProxyScanTopFieldFirst,
+              "scan mode");
+static_assert(static_cast<int>(ProxyManager::InterlacedBottomFieldFirst)
+                  == kProxyScanBottomFieldFirst,
+              "scan mode");
+
 static const QStringList kPixFmtsWithAlpha
     = {"pal8",         "argb",         "rgba",         "abgr",         "bgra",
        "yuva420p",     "yuva422p",     "yuva444p",     "yuva420p9be",  "yuva420p9le",
@@ -94,12 +104,8 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
 {
     // Always regenerate per preview scaling or 540 if not specified
     QString resource = ProxyManager::resource(producer);
-    QStringList args;
     QString hash = Util::getHash(producer);
     QString fileName = ProxyManager::dir().filePath(hash + kProxyPendingVideoExtension);
-    QString filters;
-    auto hwCodecs = Settings.encodeHardware();
-    QString hwFilters;
 
     if (JOBS.targetIsInProgress(fileName)) {
         LOG_ERROR() << "A job is already in progress for" << fileName;
@@ -115,268 +121,67 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
     file.resize(0);
     file.close();
 
-    args << "-loglevel"
-         << "verbose";
-    args << "-noautorotate";
-    args << "-i" << resource;
-    args << "-max_muxing_queue_size"
-         << "9999";
-    // transcode all streams except data, subtitles, and attachments
-    auto audioIndex = producer.property_exists(kDefaultAudioIndexProperty)
-                          ? producer.get_int(kDefaultAudioIndexProperty)
-                          : producer.get_int("audio_index");
-    if (producer.get_int("video_index") < audioIndex) {
-        if (Util::hasiPhoneAmbisonic(&producer))
-            args << "-map"
-                 << "0:V?"
-                 << "-map"
-                 << "0:a:0";
-        else
-            args << "-map"
-                 << "0:V?"
-                 << "-map"
-                 << "0:a?";
-    } else {
-        args << "-map"
-             << "0:a?"
-             << "-map"
-             << "0:V?";
+    const int videoIndex = producer.get_int("video_index");
+    const QString codecKey = QStringLiteral("meta.media.%1.codec.name").arg(videoIndex);
+    const QString codecName = QString::fromLatin1(producer.get(codecKey.toLatin1().constData()));
+    const QString widthKey = QStringLiteral("meta.media.%1.codec.width").arg(videoIndex);
+    const QString heightKey = QStringLiteral("meta.media.%1.codec.height").arg(videoIndex);
+    int pictureWidth = producer.get_int(widthKey.toLatin1().constData());
+    int pictureHeight = producer.get_int(heightKey.toLatin1().constData());
+    if (pictureWidth <= 0)
+        pictureWidth = producer.get_int("meta.media.width");
+    if (pictureHeight <= 0)
+        pictureHeight = producer.get_int("meta.media.height");
+
+    // yadif cannot run on D3D11 frames. An explicit interlaced scan stays off
+    // that graph. scale_d3d11 samples the whole aligned surface, so a pad of
+    // more than 16 pixels is decoded and scaled in software.
+    const bool explicitDeinterlace = scanMode == InterlacedTopFieldFirst
+                                     || scanMode == InterlacedBottomFieldFirst;
+    if (nativeProxyHwPolicy() == ProxyHwPolicy::Windows && Settings.proxyUseHardware()
+        && !explicitDeinterlace) {
+        const ProxyD3d11Surface surface = proxyD3d11Surface(codecName, pictureWidth, pictureHeight);
+        if (!surface.fits) {
+            LOG_DEBUG() << "D3D11 surface" << surface.alignedWidth << "x" << surface.alignedHeight
+                        << "is larger than" << pictureWidth << "x" << pictureHeight << codecName
+                        << "; using software decode and scale";
+        }
     }
-    args << "-map_metadata"
-         << "0"
-         << "-ignore_unknown";
-    args << "-vf";
 
     // Detect rotation from either an explicit "rotate" property (user override)
     // or from the stream's codec metadata. If non-zero the rotation will be
     // injected into the proxy file after transcoding via a fast -c copy pass so
     // that media players and MLT read it automatically from the proxy.
-    auto videoIndex = producer.get_int("video_index");
-    QString rotateKey = QStringLiteral("meta.media.%1.codec.rotate").arg(videoIndex);
+    const QString rotateKey = QStringLiteral("meta.media.%1.codec.rotate").arg(videoIndex);
     int rotation = producer.property_exists("rotate")
                        ? producer.get_int("rotate")
                        : producer.get_int(rotateKey.toLatin1().constData());
     rotation = ((rotation % 360) + 360) % 360;
 
-    if (scanMode == Automatic) {
-        filters = QStringLiteral("yadif=deint=interlaced,");
-    } else if (scanMode != Progressive) {
-        filters = QStringLiteral("yadif=parity=%1,")
-                      .arg(scanMode == InterlacedTopFieldFirst ? "tff" : "bff");
-    }
-    filters += QStringLiteral("scale=width=-2:height=%1").arg(resolution());
-    if (Settings.proxyUseHardware()
-        && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
-        hwFilters = ",format=nv12,hwupload";
-    }
-    if (fullRange) {
-        args << filters + ":in_range=full:out_range=full" + hwFilters;
-        args << "-color_range"
-             << "jpeg";
-    } else {
-        args << filters + ":in_range=mpeg:out_range=mpeg" + hwFilters;
-        args << "-color_range"
-             << "mpeg";
-    }
-    switch (producer.get_int("meta.media.colorspace")) {
-    case 601:
-        if (producer.get_int("meta.media.height") == 576) {
-            args << "-color_primaries"
-                 << "bt470bg";
-            args << "-color_trc"
-                 << "smpte170m";
-            args << "-colorspace"
-                 << "bt470bg";
-        } else {
-            args << "-color_primaries"
-                 << "smpte170m";
-            args << "-color_trc"
-                 << "smpte170m";
-            args << "-colorspace"
-                 << "smpte170m";
-        }
-        break;
-    case 170:
-        args << "-color_primaries"
-             << "smpte170m";
-        args << "-color_trc"
-             << "smpte170m";
-        args << "-colorspace"
-             << "smpte170m";
-        break;
-    case 240:
-        args << "-color_primaries"
-             << "smpte240m";
-        args << "-color_trc"
-             << "smpte240m";
-        args << "-colorspace"
-             << "smpte240m";
-        break;
-    case 470:
-        args << "-color_primaries"
-             << "bt470bg";
-        args << "-color_trc"
-             << "bt470bg";
-        args << "-colorspace"
-             << "bt470bg";
-        break;
-    case 2020:
-        args << "-color_primaries"
-             << "bt2020";
-        args << "-colorspace"
-             << "bt2020nc";
-        break;
-    default:
-        args << "-color_primaries"
-             << "bt709";
-        args << "-color_trc"
-             << "bt709";
-        args << "-colorspace"
-             << "bt709";
-        break;
-    }
-    if (!aspectRatio.isNull()) {
-        args << "-aspect" << QStringLiteral("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
-    }
-    args << "-f"
-         << "mp4"
-         << "-codec:a"
-         << "ac3"
-         << "-b:a"
-         << "256k";
-    args << "-pix_fmt"
-         << "yuv420p";
-    if (Settings.proxyUseHardware()) {
-        if (hwCodecs.contains("hevc_nvenc")) {
-            args << "-codec:v"
-                 << "hevc_nvenc";
-            args << "-rc"
-                 << "constqp";
-            args << "-qp:v"
-                 << "37";
-            args << "-b_ref_mode"
-                 << "0";
-        } else if (hwCodecs.contains("hevc_qsv")) {
-            args << "-load_plugin"
-                 << "hevc_hw";
-            args << "-codec:v"
-                 << "hevc_qsv";
-            args << "-q:v"
-                 << "36";
-        } else if (hwCodecs.contains("hevc_amf")) {
-            args << "-codec:v"
-                 << "hevc_amf";
-            args << "-rc"
-                 << "1";
-            args << "-qp_i"
-                 << "32"
-                 << "-qp_p"
-                 << "32";
-        } else if (hwCodecs.contains("hevc_vaapi")) {
-            args << "-init_hw_device"
-                 << "vaapi=vaapi0:"
-                 << "-filter_hw_device"
-                 << "vaapi0";
-            args << "-codec:v"
-                 << "hevc_vaapi";
-            args << "-qp"
-                 << "37";
-        } else if (hwCodecs.contains("hevc_mf")) {
-            args << "-codec:v"
-                 << "hevc_mf";
-            args << "-rate_control"
-                 << "quality";
-            args << "-quality"
-                 << "27";
-            args << "-hw_encoding"
-                 << "true"
-                 << "-pix_fmt"
-                 << "nv12";
-        } else if (hwCodecs.contains("h264_nvenc")) {
-            args << "-codec:v"
-                 << "h264_nvenc";
-            args << "-rc"
-                 << "constqp";
-            args << "-qp:v"
-                 << "37";
-            args << "-b_ref_mode"
-                 << "0";
-        } else if (hwCodecs.contains("h264_vaapi")) {
-            args << "-init_hw_device"
-                 << "vaapi=vaapi0:"
-                 << "-filter_hw_device"
-                 << "vaapi0";
-            args << "-codec:v"
-                 << "h264_vaapi";
-            args << "-qp"
-                 << "30";
-#if (defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM))
-        } else if (!fullRange && hwCodecs.contains("hevc_videotoolbox")) {
-            args << "-codec:v"
-                 << "hevc_videotoolbox";
-            args << "-q:v"
-                 << "45";
-        } else if (!fullRange && hwCodecs.contains("h264_videotoolbox")) {
-            args << "-codec:v"
-                 << "h264_videotoolbox";
-            args << "-q:v"
-                 << "45";
-#else
-        } else if (hwCodecs.contains("hevc_videotoolbox")) {
-            args << "-codec:v"
-                 << "hevc_videotoolbox";
-            args << "-b:v"
-                 << "5M";
-        } else if (hwCodecs.contains("h264_videotoolbox")) {
-            args << "-codec:v"
-                 << "h264_videotoolbox";
-            args << "-b:v"
-                 << "8M";
-#endif
-        } else if (hwCodecs.contains("h264_qsv")) {
-            args << "-codec:v"
-                 << "h264_qsv";
-            args << "-q:v"
-                 << "36";
-        } else if (hwCodecs.contains("h264_amf")) {
-            args << "-codec:v"
-                 << "h264_amf";
-            args << "-rc"
-                 << "1";
-            args << "-qp_i"
-                 << "32"
-                 << "-qp_p"
-                 << "32";
-        } else if (hwCodecs.contains("h264_mf")) {
-            args << "-codec:v"
-                 << "h264_mf";
-            args << "-rate_control"
-                 << "quality";
-            args << "-quality"
-                 << "41";
-            args << "-hw_encoding"
-                 << "true"
-                 << "-pix_fmt"
-                 << "nv12";
-        }
-    }
-    if (!args.contains("-codec:v")) {
-        args << "-codec:v"
-             << "libx264";
-        args << "-preset"
-             << "veryfast";
-        args << "-crf"
-             << "23";
-    }
-    args << "-g"
-         << QString::fromLatin1(hwCodecs.contains("hevc_nvenc")   ? "0"
-                                : hwCodecs.contains("h264_nvenc") ? "2"
-                                                                  : "1");
-    args << "-bf"
-         << "0";
-    args << "-y" << fileName;
+    ProxyVideoRequest request;
+    request.resource = resource;
+    request.outputFile = fileName;
+    request.resolution = resolution();
+    request.fullRange = fullRange;
+    request.scanMode = scanMode;
+    request.aspectRatio = aspectRatio;
+    request.colorspace = producer.get_int("meta.media.colorspace");
+    request.mediaHeight = producer.get_int("meta.media.height");
+    request.videoIndex = videoIndex;
+    request.audioIndex = producer.property_exists(kDefaultAudioIndexProperty)
+                             ? producer.get_int(kDefaultAudioIndexProperty)
+                             : producer.get_int("audio_index");
+    request.iPhoneAmbisonic = Util::hasiPhoneAmbisonic(&producer);
+    request.hardware = Settings.proxyUseHardware();
+    request.hardwareCodecs = Settings.encodeHardware();
+    request.codecName = codecName;
+    request.pictureWidth = pictureWidth;
+    request.pictureHeight = pictureHeight;
 
-    FfmpegJob *job = new FfmpegJob(fileName, args, true);
+    const ProxyVideoCommand command = buildProxyVideoCommand(request);
+    FfmpegJob *job = new FfmpegJob(fileName, command.args, true);
+    if (!command.fallbackArgs.isEmpty())
+        job->setFallbackArgs(command.fallbackArgs);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
     job->setTarget(fileName);
     if (replace) {
