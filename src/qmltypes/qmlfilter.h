@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,6 +176,7 @@ private:
     int m_changeInProgress;
 
     int keyframeIndex(Mlt::Animation &animation, int position);
+    Mlt::Properties propertiesForValueRead(const QString &name, int position);
 };
 
 class AnalyzeDelegate : public QObject
