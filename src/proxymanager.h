@@ -57,9 +57,12 @@ public:
     static bool removePending();
     static QString GoProProxyFilePath(const QString &resource);
     static QString DJIProxyFilePath(const QString &resource);
+    using ExternalProxyResolver = QString (*)(const QString &resource);
+    static void registerExternalProxyResolver(ExternalProxyResolver resolver);
+    static bool supportsExternalProxyService(const QString &service);
     // <project>/proxies/<fileName> if it exists, else the configured proxy folder. Empty if neither.
     static QString hashProxyFilePath(const QString &fileName, const QDir &projectFolder);
-    // First existing GoPro, DJI, or Proxy/Proxies-folder proxy. Empty if none.
+    // First existing GoPro, DJI, registered-resolver, or Proxy/Proxies-folder proxy. Empty if none.
     static QString existingExternalProxy(const QString &resource);
 };
 
